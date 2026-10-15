@@ -69,54 +69,29 @@ To solve it, we simply removed it from the dependency graph.
 
 ## Windows Builds and Signing
 
-Buildkite builds and signs the Windows x64 NSIS installer; only Buildkite uploads it to GitHub Releases.
-GitHub Actions runs unsigned Linux cross-builds (`just build-desktop-windows`), including fork PRs. Buildkite excludes forks.
+Buildkite builds the Windows x64 installer on a Windows agent and signs it with Automattic's certificate through the CI Toolkit's Azure Trusted Signing setup.
+The signing credentials come from the Windows queue's environment.
+The Tauri `signCommand` hook in `.buildkite/commands/sign-windows.cjs` signs and verifies the app, the NSIS plugins, the uninstaller, and the installer, so a broken signing setup fails the build.
+GitHub Actions still runs the unsigned cross-build (`just build-desktop-windows`) as a check, including for fork pull requests, which Buildkite does not build.
+Windows updater artifacts remain disabled, and SmartScreen may still warn until the certificate has built up reputation.
 
-`.buildkite/commands/build-desktop-windows.ps1` prepares the tools and CI Toolkit's Azure signing setup, then calls `just build-desktop-windows-signed <config-path>` with a temporary Tauri config.
-Windows agents need Git Bash and Visual Studio C++ build tools.
+### Release Upload
 
-### CI Setup
+On `v<version>` tags, the Windows build fails unless the tag matches the version in `tauri.conf.json`.
+Once the Windows build and the macOS step finish, an upload step attaches the installer to the tag's draft release.
+It never creates or publishes a release, and when several drafts exist for the tag it picks the one holding the macOS `.dmg`.
+Retrying the step replaces the installer and leaves notes and other assets alone; do not rebuild the tag, since the macOS step would create another draft.
+Before publishing, merge any other drafts for the tag into the one you publish and confirm that the installer's SHA256 matches the Buildkite artifact.
 
-Supply these values through CI secrets, using Automattic's existing signing account and certificate profile:
-
-- `AZURE_TENANT_ID`
-- `AZURE_CLIENT_ID`
-- `AZURE_CLIENT_SECRET`
-- `AZURE_ENDPOINT`
-- `AZURE_CODE_SIGNING_ACCOUNT`
-- `AZURE_CERTIFICATE_PROFILE`
-
-The CI Toolkit supplies SignTool and its configuration.
-The upload job uses the macOS queue's existing `GITHUB_TOKEN`.
-
-Tauri's `sign-windows.cjs` hook signs and verifies the app, uninstaller, bundled signable dependencies, and installer with SHA256 and a timestamp.
-Authenticode signing is separate from updater signing; Windows updater artifacts remain disabled.
-SmartScreen may still show reputation warnings.
-
-### Releases and Verification
-
-For `v<version>` tags, the Windows build fails early unless the tag matches `tauri.conf.json`.
-The upload step waits for the Windows build to succeed and for the macOS step to finish, then downloads `Harper_<version>_x64-setup.exe` from the Windows build and attaches it to the tag's draft release.
-Retrying the upload replaces the installer in the draft and leaves notes and other assets alone; it does not rebuild or re-sign.
-Retry the upload step rather than rebuilding the tag: a rebuild runs the macOS step again, which creates another draft, and the upload then refuses to choose between two drafts holding a `.dmg`.
-
-The uploader never creates a release and never modifies a published one.
-When several drafts exist for the tag, it uses the one holding the macOS `.dmg`, which the macOS step creates earlier in the same build.
-If it fails because no draft exists yet, retry it once the macOS or GitHub Actions jobs have created one.
-If it fails because no single draft holds the `.dmg`, reconcile the drafts on GitHub and retry.
-
-The GitHub Actions workflows can leave further drafts for the tag even when the Windows upload succeeds.
-Before publishing, wait for the GitHub Actions workflows and the Buildkite pipeline to finish, move the assets of any other draft for the tag into the one you publish, delete the emptied drafts, and confirm that the draft holds the Windows installer with the same SHA256 as the Buildkite artifact.
-
-Run `just test-desktop-release` for the signing and upload tests; GitHub Actions runs them on every pull request.
+`just test-desktop-release` runs the signing and upload tests.
 
 ### Windows Smoke Test
 
-Download the signed installer from the chosen commit's Buildkite build. On Windows:
+Before a release, or after changing the signing setup, download the installer from the Buildkite build and check it on Windows:
 
-1. Check the installer's signature with `Get-AuthenticodeSignature .\Harper_<version>_x64-setup.exe`. Expect `Status: Valid` and an Automattic signer.
-2. Install Harper, launch it, and check that settings open and the highlighter starts.
-3. In the installation directory, check `harper-desktop.exe` and `uninstall.exe` with `Get-AuthenticodeSignature`. Both must have valid Automattic signatures.
-4. Quit Harper from its tray menu, uninstall it, and confirm that its installation directory is removed.
+1. Check the installer with `Get-AuthenticodeSignature`. Expect `Status: Valid` and an Automattic signer.
+2. Install and launch Harper, open the settings, and check that the highlighter starts.
+3. Check `harper-desktop.exe` and `uninstall.exe` in the installation directory the same way.
+4. Quit Harper from the tray menu, uninstall it, and confirm that the installation directory is gone.
 
-Record the build number and smoke-test result with the release's testing evidence, or in the PR when validating a signing change. Build-time signature verification does not replace this installed-app check.
+Build-time verification does not replace this check of the installed app.
