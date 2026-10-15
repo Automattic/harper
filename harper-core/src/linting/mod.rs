@@ -27,6 +27,7 @@ mod apart_from;
 mod arrive_to;
 mod as_how;
 mod as_to_interrogative;
+mod asap;
 mod ask_no_preposition;
 mod aspire_to;
 mod avoid_contractions;
