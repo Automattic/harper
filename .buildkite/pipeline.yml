@@ -44,3 +44,6 @@ steps:
         allow_failure: true
     command: bash .buildkite/commands/release-desktop-windows.sh
     plugins: [$NVM_PLUGIN]
+    notify:
+      - github_commit_status:
+          context: "Upload Windows desktop release"

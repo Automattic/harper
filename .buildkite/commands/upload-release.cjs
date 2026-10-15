@@ -57,10 +57,12 @@ async function uploadRelease({ repository, tag, assets, token, request = fetch, 
 			body,
 			signal: AbortSignal.timeout(10 * 60 * 1000),
 		}).catch((error) => {
-			throw new Error(
+			const wrapped = new Error(
 				`GitHub ${method} ${url} failed: ${error.message}${error.cause ? `: ${error.cause.message}` : ''}`,
 				{ cause: error },
 			);
+			wrapped.transient = true;
+			throw wrapped;
 		});
 		if (!response.ok) {
 			const details = await response.json().catch(() => ({}));
@@ -69,6 +71,7 @@ async function uploadRelease({ repository, tag, assets, token, request = fetch, 
 					(details.errors ? ` ${JSON.stringify(details.errors)}` : ''),
 			);
 			error.status = response.status;
+			error.transient = response.status >= 500 && response.status < 600;
 			throw error;
 		}
 		return response.status === 204 ? null : response.json();
@@ -103,7 +106,8 @@ async function uploadRelease({ repository, tag, assets, token, request = fetch, 
 				);
 				break;
 			} catch (error) {
-				if (!(error.status >= 500 && error.status < 600) || attempt === 3) throw error;
+				// Network failures and 5xx responses are retried; refusals and 4xx are not.
+				if (!error.transient || attempt === 3) throw error;
 				console.warn(`${error.message}. Retrying ${name} (${attempt + 1}/3).`);
 				await wait(attempt * 1000);
 			}

@@ -252,6 +252,24 @@ for (const failure of ['upload', 'delete', 'list']) {
 	});
 }
 
+test('retries an upload after a network failure', async (t) => {
+	const { state, options } = await fixture(t);
+	let failed = false;
+	const request = async (url, init) => {
+		if (init.method === 'POST' && !failed) {
+			failed = true;
+			throw new Error('fetch failed', { cause: new Error('read ECONNRESET') });
+		}
+		return options.request(url, init);
+	};
+	await uploadRelease({ ...options, request });
+	assert.equal(state.calls.filter((call) => call.method === 'POST').length, 1);
+	assert.deepEqual(
+		options.wait.mock.calls.map((call) => call.arguments),
+		[[1000]],
+	);
+});
+
 test('stops after three attempts when the upload keeps returning 5xx', async (t) => {
 	const { state, options } = await fixture(t);
 	const request = async (url, init) => {
