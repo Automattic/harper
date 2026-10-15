@@ -87,7 +87,7 @@ impl ExprLinter for AllIntentsAndPurposes {
 
         Some(Lint {
             span: whole_span,
-            lint_kind: LintKind::Nonstandard,
+            lint_kind: LintKind::Preposition,
             suggestions,
             message,
             priority: 50,
