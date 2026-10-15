@@ -6,10 +6,10 @@ use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::patterns::AnyPattern;
 use crate::patterns::UPOSSet;
-use crate::{Token, TokenStringExt};
+use crate::{CharStringExt, Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind};
-use crate::linting::expr_linter::Chunk;
+use crate::linting::expr_linter::{Chunk, find_the_only_token_matching};
 
 pub struct MissingPreposition {
     expr: SequenceExpr,
@@ -52,11 +52,11 @@ impl ExprLinter for MissingPreposition {
 
         // A form of "have" before an adjective and a noun is usually the main
         // verb of possession ("it has new formats"), which needs no preposition.
-        let aux = matched_tokens.iter().find(|t| t.kind.is_upos(UPOS::AUX))?;
-        let aux: String = aux.span.get_content(source).iter().collect();
-        if ["has", "have", "had", "having"]
-            .iter()
-            .any(|form| aux.eq_ignore_ascii_case(form))
+        let aux =
+            find_the_only_token_matching(matched_tokens, source, |t, _| t.kind.is_upos(UPOS::AUX))?;
+        if aux
+            .get_ch(source)
+            .eq_any_ignore_ascii_case_str(&["has", "have", "had", "having"])
         {
             return None;
         }
