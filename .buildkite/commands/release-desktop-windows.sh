@@ -12,4 +12,4 @@ buildkite-agent artifact download "*Harper_${VERSION}_x64-setup.exe" . --step bu
 [[ -f "$INSTALLER" ]] || { echo "No Windows installer downloaded" >&2; exit 1; }
 
 echo "--- :rocket: Upload Windows installer to the draft release"
-node .buildkite/commands/upload-release.cjs "v0.0.0-upload-test" "$INSTALLER"
+node .buildkite/commands/upload-release.cjs "$BUILDKITE_TAG" "$INSTALLER"
