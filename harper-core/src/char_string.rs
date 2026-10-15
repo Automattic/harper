@@ -210,12 +210,19 @@ impl CharStringExt for [char] {
     }
 
     fn strip_prefix_ignore_ascii_case_chars(&self, prefix: &[char]) -> Option<&[char]> {
-        (self.len() >= prefix.len()
-            && self
-                .iter()
-                .zip(prefix)
-                .all(|(a, b)| a.eq_ignore_ascii_case(b)))
-        .then_some(&self[prefix.len()..])
+        if self.len() < prefix.len() {
+            return None;
+        }
+
+        if self
+            .iter()
+            .zip(prefix)
+            .all(|(a, b)| a.eq_ignore_ascii_case(b))
+        {
+            Some(&self[prefix.len()..])
+        } else {
+            None
+        }
     }
 }
 
