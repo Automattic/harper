@@ -70,7 +70,6 @@ To solve it, we simply removed it from the dependency graph.
 ## Windows Builds and Signing
 
 Buildkite builds the Windows x64 installer on a Windows agent and signs it with Automattic's certificate through the CI Toolkit's Azure Trusted Signing setup.
-The signing credentials come from the Windows queue's environment.
 The Tauri `signCommand` hook in `.buildkite/commands/sign-windows.cjs` signs and verifies the app, the NSIS plugins, the uninstaller, and the installer, so a broken signing setup fails the build.
 GitHub Actions still runs the unsigned cross-build (`just build-desktop-windows`) as a check, including for fork pull requests, which Buildkite does not build.
 Windows updater artifacts remain disabled, and SmartScreen may still warn until the certificate has built up reputation.
