@@ -2,10 +2,8 @@
 title: Harper Desktop
 ---
 
-Harper Desktop aims to (eventually) serve the needs of users on a variety of platforms.
-One day, we hope for it to include support for macOS, Windows, and Linux.
-Right now, it supports macOS and Windows.
-Because we hope to add new platforms, there are structures in the code that would not make sense for an app specifically designed with only one operating system in mind.
+Harper Desktop supports macOS and Windows, and we hope to add Linux support in the future.
+The code separates platform-specific behavior from the parts shared across operating systems to make adding new platforms easier.
 
 This document will serve to give a tour of how the code for the Desktop app is structured and, more importantly, why it is structured that way.
 
@@ -69,33 +67,31 @@ To solve it, we simply removed it from the dependency graph.
 
 ## Windows Builds and Signing
 
-Buildkite produces the signed Windows x64 installer using Automattic's certificate; signing or signature-verification failures fail the build.
-GitHub Actions also checks an unsigned Windows build, including for fork pull requests.
-Windows updater artifacts remain disabled.
-
-### Release Upload
-
-Release tags must match the version in `harper-desktop/src-tauri/tauri.conf.json`.
-Buildkite attaches the signed installer to an existing draft release; publishing remains manual.
-When several drafts exist for the tag, it uses the one holding the macOS `.dmg`.
-
-If the upload fails, retry only the Windows upload step after resolving the error.
-Retrying replaces the Windows installer without changing release notes or other assets.
-Avoid rebuilding the whole tag, which can create another draft.
-
-Before publishing, ensure the chosen draft holds the signed Windows installer, the macOS build, and the other expected assets.
-If several drafts exist, move their assets and notes into the one you publish and delete the rest.
-Verify that the Windows installer's SHA256 matches the Buildkite artifact.
+Buildkite builds and signs the Windows x64 installer with Automattic's certificate.
+The build fails if signing or signature verification fails.
+GitHub Actions also builds an unsigned installer to check changes, including fork pull requests.
 
 Run `just test-desktop-release` to check the signing and upload scripts.
 
-### Windows Smoke Test
+### Releases
 
-Before a release, or after changing the signing setup, download the installer from the Buildkite build and check it on Windows:
+Release tags must use `v<version>`, where `<version>` matches the version in `harper-desktop/src-tauri/tauri.conf.json`.
+Buildkite attaches the signed installer to an existing draft release, which a maintainer publishes manually.
+If there are multiple drafts for the tag, exactly one must contain the macOS `.dmg` for the upload to proceed.
 
-1. Check the installer with `Get-AuthenticodeSignature`. Expect `Status: Valid` and an Automattic signer.
-2. Install and launch Harper, open the settings, and check that the highlighter starts.
-3. Check `harper-desktop.exe` and `uninstall.exe` in the installation directory the same way.
+If an upload fails, resolve the error and retry only the Windows upload step.
+A retry replaces the Windows installer without changing release notes or other assets.
+Avoid rebuilding the entire tag, which can create another draft.
+
+Before publishing, check that the draft includes the signed Windows installer, the macOS build, and all other expected assets.
+Copy any missing assets and release notes from other drafts before deleting those drafts.
+Confirm that the Windows installer's SHA256 matches the Buildkite artifact.
+
+### Testing on Windows
+
+Before publishing a release, or after changing the signing setup, download the installer from Buildkite and test it on Windows:
+
+1. Check the installer's signature with `Get-AuthenticodeSignature`. Expect `Status: Valid` and an Automattic signer.
+2. Install and launch Harper, open its settings, and check that the highlighter starts.
+3. Check the signatures of `harper-desktop.exe` and `uninstall.exe` in the installation directory the same way.
 4. Quit Harper from the tray menu, uninstall it, and confirm that the installation directory is gone.
-
-Build-time verification does not replace this check of the installed app.
