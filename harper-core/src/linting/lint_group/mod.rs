@@ -194,6 +194,7 @@ use super::no_harm_no_foul::NoHarmNoFoul;
 use super::no_longer::NoLonger;
 use super::no_longer_pronoun::NoLongerPronoun;
 use super::no_match_for::NoMatchFor;
+use super::nobel_noble::NobelNoble;
 use super::nobody::Nobody;
 use super::nominal_wants::NominalWants;
 use super::nor_modal_pronoun::NorModalPronoun;
@@ -819,6 +820,7 @@ impl LintGroup {
         insert_expr_rule!(NoLongerPronoun);
         insert_expr_rule!(NoMatchFor);
         insert_struct_rule!(NoOxfordComma);
+        insert_expr_rule!(NobelNoble);
         insert_expr_rule!(Nobody);
         insert_expr_rule!(NominalWants);
         insert_expr_rule!(NorModalPronoun);
