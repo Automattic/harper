@@ -53,7 +53,7 @@ impl ExprLinter for MissingPreposition {
         Some({
             Lint {
                 span: matched_tokens[2..4].span()?,
-                lint_kind: LintKind::Miscellaneous,
+                lint_kind: LintKind::MissingWord,
                 suggestions: vec![],
                 message: "You may be missing a preposition here.".to_owned(),
                 priority: 31,

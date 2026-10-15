@@ -160,6 +160,14 @@ export const LINT_KIND_STYLES: Record<
 		softClass: 'bg-sky-50',
 		activeClass: 'border-[rgba(28,26,22,0.14)] shadow-sky-500/10',
 	},
+	MissingWord: {
+		label: 'Missing Word',
+		dotClass: 'bg-amber-500',
+		haloClass: 'bg-amber-100',
+		textClass: 'text-amber-700',
+		softClass: 'bg-amber-50',
+		activeClass: 'border-[rgba(28,26,22,0.14)] shadow-amber-500/10',
+	},
 	Nonstandard: {
 		label: 'Nonstandard',
 		dotClass: 'bg-stone-500',

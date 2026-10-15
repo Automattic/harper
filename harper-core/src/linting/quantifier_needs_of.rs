@@ -32,7 +32,7 @@ impl ExprLinter for QuantifierNeedsOf {
     fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
         Some(Lint {
             span: matched_tokens.get(2)?.span,
-            lint_kind: LintKind::Miscellaneous,
+            lint_kind: LintKind::MissingWord,
             suggestions: vec![Suggestion::InsertAfter(" of".chars().collect())],
             message: "Add `of` in this quantity phrase.".to_owned(),
             priority: 32,
