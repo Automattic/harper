@@ -36,7 +36,6 @@ steps:
 
   - label: ":github: Upload harper-desktop release for Windows"
     key: release-desktop-windows
-    if: build.tag =~ /^v[0-9]+/
     depends_on:
       - build-desktop-windows
       # Let the existing macOS release creator finish before looking for a draft.
