@@ -48,6 +48,14 @@ pub fn lint_to_code_actions<'a>(
                     Suggestion::InsertAfter(with) => {
                         format!("{}{}", lint.get_str(source), with.to_string())
                     }
+                    Suggestion::RemovePrefix(n) => {
+                        let orig = lint.get_str(source);
+                        orig.chars().skip(*n).collect()
+                    }
+                    Suggestion::RemoveSuffix(n) => {
+                        let orig = lint.get_str(source);
+                        orig.chars().take(orig.chars().count() - *n).collect()
+                    }
                 };
 
                 Some(CodeAction {
