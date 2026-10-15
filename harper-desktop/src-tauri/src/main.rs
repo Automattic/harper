@@ -236,7 +236,7 @@ pub fn popup_debug() {
         || {},
     )
     .unwrap();
-    highlighter.run_window_for_each_monitor();
+    highlighter.run_window_for_each_monitor().unwrap();
 }
 
 /// Run as a highlighter process.
