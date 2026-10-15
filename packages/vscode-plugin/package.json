@@ -61,6 +61,8 @@
 		"onLanguage:plaintext",
 		"onLanguage:python",
 		"onLanguage:quarto",
+		"onLanguage:rmd",
+		"onLanguage:rmarkdown",
 		"onLanguage:ruby",
 		"onLanguage:rust",
 		"onLanguage:scala",
