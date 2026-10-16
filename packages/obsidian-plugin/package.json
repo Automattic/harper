@@ -12,7 +12,7 @@
 		"@vitest/browser": "^4.0.16",
 		"@vitest/browser-playwright": "^4.0.16",
 		"obsidian": "^1.7.2",
-		"rollup": "4.35.0",
+		"rollup": "4.59.0",
 		"rollup-plugin-peer-deps-external": "^2.2.4",
 		"rollup-plugin-svg-import": "^3.0.0",
 		"typescript": "catalog:",
