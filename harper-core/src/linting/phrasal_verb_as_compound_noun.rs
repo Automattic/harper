@@ -57,6 +57,7 @@ enum Context {
     ItsFollowedByThatOrWhich,
     ItsActuallyPartOfANounPhrase,
     ItsFollowedByVerb,
+    ItsFollowedByAModalVerb,
 }
 
 impl PhrasalVerbAsCompoundNoun {
@@ -200,6 +201,16 @@ impl PhrasalVerbAsCompoundNoun {
             ])
         {
             return Err(Why::Contextual(Context::ItsFollowedByThatOrWhich));
+        }
+
+        // A modal verb after it means it's the subject, so it's a noun:
+        // "setup can optionally install Hopper", "cleanup will remove the cache".
+        if let Some(next_tok) = maybe_next_tok
+            && next_tok.get_ch(source).eq_any_ignore_ascii_case_str(&[
+                "can", "could", "may", "might", "must", "shall", "should", "will", "would",
+            ])
+        {
+            return Err(Why::Contextual(Context::ItsFollowedByAModalVerb));
         }
 
         // If the compound noun is followed by another noun, check for larger compound nouns.
@@ -805,6 +816,22 @@ mod tests {
     fn dont_flag_meltdown_3591() {
         assert_no_lints(
             "Unfortunately, Meltdown ended up being problematic.",
+            test_linter(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_setup_before_modal_issue_4627() {
+        assert_no_lints(
+            "setup can optionally install Hopper with approval",
+            test_linter(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_compound_noun_before_other_modals() {
+        assert_no_lints(
+            "Then cleanup will remove the cache, and backup should run nightly.",
             test_linter(),
         );
     }
