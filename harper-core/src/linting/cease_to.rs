@@ -35,10 +35,7 @@ impl ExprLinter for CeaseTo {
             .chain(seize.iter().copied())
             .collect();
 
-        let suggestions = vec![Suggestion::replace_with_match_case(
-            cease,
-            span.get_content(src),
-        )];
+        let suggestions = Suggestion::replace_with_match_case(cease, span.get_content(src));
 
         Some(Lint {
             span,

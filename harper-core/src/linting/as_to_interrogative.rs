@@ -44,10 +44,10 @@ impl ExprLinter for AsToInterrogative {
         Some(Lint {
             span: matched_tokens[2].span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
+            suggestions: Suggestion::replace_with_match_case_str(
                 "as to",
                 matched_tokens[2].get_ch(source),
-            )],
+            ),
             message: "This construction requires `as to` instead of just `to`.".to_owned(),
             ..Default::default()
         })

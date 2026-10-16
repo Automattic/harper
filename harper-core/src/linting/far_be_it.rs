@@ -37,10 +37,7 @@ impl ExprLinter for FarBeIt {
         // We can only correct using `far be it for`, otherwise we recommend rephrasing the sentence.
         let (suggestions, message) = if span.get_content(src).eq_str("for") {
             (
-                vec![Suggestion::replace_with_match_case(
-                    vec!['f', 'r', 'o', 'm'],
-                    content,
-                )],
+                Suggestion::replace_with_match_case(vec!['f', 'r', 'o', 'm'], content),
                 "`Far be it for` is a common error for `far be it from`".to_owned(),
             )
         } else {

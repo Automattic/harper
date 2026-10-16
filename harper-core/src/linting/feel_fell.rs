@@ -50,10 +50,7 @@ impl ExprLinter for FeelFell {
         Some(Lint {
             span: fell_token.span,
             lint_kind: LintKind::Typo,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "feel",
-                fell_token.get_ch(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("feel", fell_token.get_ch(src)),
             message: "It looks like this is a typo, did you mean `feel`?".to_owned(),
             ..Default::default()
         })

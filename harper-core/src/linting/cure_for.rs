@@ -31,12 +31,12 @@ impl ExprLinter for CureFor {
         let against = matched_tokens.last()?;
 
         let template: Vec<char> = against.get_ch(source).to_vec();
-        let suggestion = Suggestion::replace_with_match_case_str("for", &template);
+        let suggestions = Suggestion::replace_with_match_case_str("for", &template);
 
         Some(Lint {
             span: Span::new(against.span.start, against.span.end),
             lint_kind: LintKind::Usage,
-            suggestions: vec![suggestion],
+            suggestions,
             message: "Prefer `cure for` when describing a treatment target.".to_owned(),
             priority: 31,
         })

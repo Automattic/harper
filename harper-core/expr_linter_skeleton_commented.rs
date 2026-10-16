@@ -79,10 +79,10 @@ impl ExprLinter for ExprLinterSkeleton {
         // EDIT It's worth keeping in mind that though there are some helper functions that
         // EDIT   work with `String` or `&str` or string literals, most of this infrastructure
         // EDIT   natively works with `Vec<char>` or `&[char]`.
-        let suggestions = vec![Suggestion::replace_with_match_case_str(
+        let suggestions = Suggestion::replace_with_match_case_str(
             "correction",
             span.get_content(source),
-        )];
+        );
 
         // EDIT You can return different messages depending on what the problem is and what
         // EDIT   the suggestions are.

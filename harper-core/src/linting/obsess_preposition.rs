@@ -80,7 +80,7 @@ impl ExprLinter for ObsessPreposition {
 
         let suggestions = ok_prep_vec
             .iter()
-            .map(|p| Suggestion::replace_with_match_case(p.chars().collect(), prep_chars))
+            .flat_map(|p| Suggestion::replace_with_match_case(p.chars().collect(), prep_chars))
             .collect();
 
         let message = if ok_prep_vec.len() == 1 {

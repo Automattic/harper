@@ -49,10 +49,10 @@ impl ExprLinter for WrongApostrophe {
         Some(Lint {
             span: whole_span,
             lint_kind: LintKind::Typo,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 replacement_str.chars().collect(),
                 &lettercase_template,
-            )],
+            ),
             message: format!("Did you mean `{replacement_str}`?"),
             priority: 57,
         })

@@ -44,10 +44,7 @@ impl ExprLinter for ThatThan {
         Some(Lint {
             span: that_tok.span,
             lint_kind: LintKind::Typo,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "than",
-                that_tok.get_ch(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("than", that_tok.get_ch(src)),
             message: "This looks like a comparison that should use `than` rather than `that`."
                 .to_owned(),
             priority: 31,

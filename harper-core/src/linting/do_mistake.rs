@@ -77,7 +77,7 @@ impl ExprLinter for DoMistake {
         Some(Lint {
             span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case(make, chars)],
+            suggestions: Suggestion::replace_with_match_case(make, chars),
             message: "In English we `make` mistakes, not `do` them".to_owned(),
             ..Default::default()
         })

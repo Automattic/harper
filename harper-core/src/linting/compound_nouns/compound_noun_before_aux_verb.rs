@@ -55,7 +55,7 @@ impl ExprLinter for CompoundNounBeforeAuxVerb {
         Some(Lint {
             span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case(word.to_vec(), orig)],
+            suggestions: Suggestion::replace_with_match_case(word.to_vec(), orig),
             message: format!(
                 "The auxiliary verb “{}” implies the existence of the closed compound noun “{}”.",
                 matched_tokens[4].get_ch(source).to_string(),

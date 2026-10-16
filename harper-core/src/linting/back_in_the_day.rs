@@ -54,10 +54,10 @@ impl ExprLinter for BackInTheDay {
         Some(Lint {
             span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 "back in the day".chars().collect(),
                 chars,
-            )],
+            ),
             message: "Use the more idiomatic version of this phrase.".to_owned(),
             priority: 127,
         })

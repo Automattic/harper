@@ -41,10 +41,10 @@ impl ExprLinter for IAmAgreement {
         Some(Lint {
             span: toks.span()?,
             lint_kind: LintKind::Agreement,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 "I am".chars().collect(),
                 toks.span()?.get_content(src),
-            )],
+            ),
             message: "The first-person singular pronoun `I` requires the verb form `am`; `are` belongs to second-person or plural contexts.".to_owned(),
             priority: 31,
         })

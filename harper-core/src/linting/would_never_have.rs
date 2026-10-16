@@ -62,10 +62,8 @@ impl ExprLinter for WouldNeverHave {
             if is_contraction { "'ve" } else { " have" }
         );
 
-        let suggestions = vec![Suggestion::replace_with_match_case(
-            new_phrasing.chars().collect(),
-            modal_have_chars,
-        )];
+        let suggestions =
+            Suggestion::replace_with_match_case(new_phrasing.chars().collect(), modal_have_chars);
 
         let message = format!("For a more standard style, consider using `{new_phrasing}`.");
 

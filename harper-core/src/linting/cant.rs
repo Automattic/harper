@@ -49,7 +49,7 @@ impl ExprLinter for Cant {
         Some(Lint {
             span: token.span,
             lint_kind: LintKind::Enhancement,
-            suggestions: vec![Suggestion::replace_with_match_case_str(cannot, jargon)],
+            suggestions: Suggestion::replace_with_match_case_str(cannot, jargon),
             message: "`Cant` is secret language or jargon. If that's not what you mean you should use `can't` here.".to_owned(),
             priority: 127,
         })

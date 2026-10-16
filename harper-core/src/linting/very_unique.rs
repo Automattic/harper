@@ -48,6 +48,7 @@ impl ExprLinter for VeryUnique {
                 "unique".chars().collect(),
                 very_unique_chars,
             )))
+            .flatten()
             .collect::<Vec<_>>();
 
         Some(Lint {

@@ -48,10 +48,7 @@ impl ExprLinter for FullToTheBrim {
         Some(Lint {
             span,
             lint_kind: LintKind::Grammar,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "with",
-                span.get_content(source),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("with", span.get_content(source)),
             message: "The correct preposition with this idiom is 'with', not 'of'".to_owned(),
             ..Default::default()
         })

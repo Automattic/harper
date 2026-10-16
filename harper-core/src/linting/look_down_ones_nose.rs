@@ -41,12 +41,12 @@ impl ExprLinter for LookDownOnesNose {
         Some(Lint {
             lint_kind: LintKind::Usage,
             span: toks.span()?,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 format!("{lookstr} down {pronstr} {nosestr}")
                     .chars()
                     .collect(),
                 toks.span()?.get_content(src),
-            )],
+            ),
             message: "The correct idiom is `look down one's nose`.".to_owned(),
             ..Default::default()
         })

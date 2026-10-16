@@ -42,10 +42,7 @@ impl ExprLinter for ComfortableWith {
         Some(Lint {
             span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "with",
-                span.get_content(source),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("with", span.get_content(source)),
             message: "The standard preposition after `comfortable` is `with`".to_owned(),
             ..Default::default()
         })

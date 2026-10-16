@@ -120,7 +120,7 @@ impl<D: Dictionary> ExprLinter for DisjointPrefixes<D> {
 
         let suggestions = suggestions
             .iter()
-            .map(|s| {
+            .flat_map(|s| {
                 Suggestion::replace_with_match_case(s.chars().collect(), toks_span.get_content(src))
             })
             .collect();

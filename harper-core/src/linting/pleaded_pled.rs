@@ -52,7 +52,7 @@ fn to_lint(toks: &[Token], src: &[char], pref: Prefer) -> Option<Lint> {
     Some(Lint {
         span: tokspan,
         lint_kind: LintKind::Usage,
-        suggestions: vec![Suggestion::replace_with_match_case_str(target_word, word)],
+        suggestions: Suggestion::replace_with_match_case_str(target_word, word),
         message: format!("Use `{}` instead of `{}`.", target_word, source_word),
         ..Default::default()
     })

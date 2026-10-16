@@ -75,10 +75,10 @@ impl ExprLinter for SimplePastToPastParticiple {
             .get_past_participle_for_preterite(&simple_past)
             .filter(|pp| !pp.eq_ignore_ascii_case(&simple_past))
         {
-            let suggestions = vec![Suggestion::replace_with_match_case(
+            let suggestions = Suggestion::replace_with_match_case(
                 past_participle.chars().collect(),
                 verb_tok.get_ch(src),
-            )];
+            );
 
             let message = format!(
                 "Use the past participle `{}` instead of `{}` when using compound tenses or passive voice.",

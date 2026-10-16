@@ -91,7 +91,7 @@ impl<D: Dictionary> ExprLinter for WentAheadAndAgreement<D> {
         let original_content = verb2_span.get_content(src);
         let suggestions = past_verbs
             .into_iter()
-            .map(|pv| Suggestion::replace_with_match_case(pv, original_content))
+            .flat_map(|pv| Suggestion::replace_with_match_case(pv, original_content))
             .collect();
 
         Some(Lint {

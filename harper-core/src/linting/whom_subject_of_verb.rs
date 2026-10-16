@@ -62,7 +62,7 @@ impl ExprLinter for WhomSubjectOfVerb {
         Some(Lint {
             span: whom_span,
             lint_kind: LintKind::Grammar,
-            suggestions: vec![Suggestion::replace_with_match_case(who_vec, whom_chars)],
+            suggestions: Suggestion::replace_with_match_case(who_vec, whom_chars),
             message: "“Whom” is used for the object of a verb and “who” is used for the subject of a verb.".to_owned(),
             ..Default::default()
         })

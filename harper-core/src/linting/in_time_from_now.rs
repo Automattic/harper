@@ -62,7 +62,7 @@ impl ExprLinter for InTimeFromNow {
             suggestions: vec![
                 Suggestion::replace_with_match_case(without_in, template_chars),
                 Suggestion::replace_with_match_case(without_from_now, template_chars),
-            ],
+            ].into_iter().flatten().collect(),
             ..Default::default()
         })
     }

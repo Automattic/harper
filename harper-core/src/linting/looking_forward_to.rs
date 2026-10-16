@@ -75,10 +75,10 @@ impl ExprLinter for LookingForwardTo {
             message: format!(
                 "The verb `{verb}` must be in the gerund form (verb + -ing) after 'looking forward to'.",
             ),
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 gerund_form.chars().collect(),
                 span.get_content(src),
-            )],
+            ),
             ..Default::default()
         })
     }

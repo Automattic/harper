@@ -36,10 +36,10 @@ impl ExprLinter for JumpTheGun {
         Some(Lint {
             span: det_ws_gun_span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
+            suggestions: Suggestion::replace_with_match_case_str(
                 "the gun",
                 det_ws_gun_span.get_content(source),
-            )],
+            ),
             message: "The correct idiom is `jump the gun`".to_owned(),
             ..Default::default()
         })

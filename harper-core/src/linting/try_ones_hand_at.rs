@@ -38,10 +38,7 @@ impl ExprLinter for TryOnesHandAt {
         Some(Lint {
             span: hands_span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case(
-                vec!['h', 'a', 'n', 'd'],
-                hands_chars,
-            )],
+            suggestions: Suggestion::replace_with_match_case(vec!['h', 'a', 'n', 'd'], hands_chars),
             message: "This idiom uses the singular `hand`.".to_owned(),
             ..Default::default()
         })

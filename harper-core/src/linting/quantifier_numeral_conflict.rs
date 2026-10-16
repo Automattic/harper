@@ -71,10 +71,10 @@ impl ExprLinter for QuantifierNumeralConflict {
                 return Some(Lint {
                     span: qtok.span,
                     lint_kind: LintKind::Usage,
-                    suggestions: vec![Suggestion::replace_with_match_case(
+                    suggestions: Suggestion::replace_with_match_case(
                         "every".chars().collect(),
                         qtok.get_ch(src),
-                    )],
+                    ),
                     message: "Use 'every' instead of 'each' before a number.".to_owned(),
                     ..Default::default()
                 });

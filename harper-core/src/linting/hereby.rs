@@ -35,10 +35,10 @@ impl ExprLinter for Hereby {
         Some(Lint {
             span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 "hereby".chars().collect(),
                 orig_chars,
-            )],
+            ),
             message: "Did you mean the closed compound `hereby`?".to_owned(),
             ..Default::default()
         })

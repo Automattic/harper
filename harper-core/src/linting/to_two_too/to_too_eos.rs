@@ -39,10 +39,10 @@ impl Linter for ToTooEos {
                 Lint {
                     span: tok.span,
                     lint_kind: LintKind::WordChoice,
-                    suggestions: vec![Suggestion::replace_with_match_case_str(
+                    suggestions: Suggestion::replace_with_match_case_str(
                         "too",
                         tok.get_ch(document.get_source()),
-                    )],
+                    ),
                     message: "Use `too` when expressing similarity.".to_owned(),
                     priority: 63,
                 }

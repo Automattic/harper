@@ -187,7 +187,7 @@ impl WeirLinter {
             ReplacementStrategy::MatchCase => self
                 .replacements
                 .iter()
-                .map(|s| Suggestion::replace_with_match_case(s.chars().collect(), orig))
+                .flat_map(|s| Suggestion::replace_with_match_case(s.chars().collect(), orig))
                 .collect(),
             ReplacementStrategy::Exact => self
                 .replacements

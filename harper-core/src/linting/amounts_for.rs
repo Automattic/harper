@@ -57,7 +57,7 @@ impl ExprLinter for AmountsFor {
                         "accounts for".chars().collect(),
                         span.get_content(src),
                     ),
-                ],
+                ].into_iter().flatten().collect(),
                 message: "`amounts for` is not idiomatic English. You probably meant `amounts to` or `accounts for`.".to_owned(),
                 priority: 63,
             });
@@ -78,7 +78,7 @@ impl ExprLinter for AmountsFor {
                         "account for".chars().collect(),
                         span.get_content(src),
                     ),
-                ],
+                ].into_iter().flatten().collect(),
                 message: "`amounts for` is not idiomatic English. You probably meant `amounts to` or `accounts for`.".to_owned(),
                 priority: 63,
             });

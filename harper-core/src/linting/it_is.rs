@@ -63,10 +63,7 @@ impl ExprLinter for ItIs {
         Some(Lint {
             span,
             lint_kind: LintKind::Miscellaneous,
-            suggestions: vec![Suggestion::replace_with_match_case(
-                "it's".chars().collect(),
-                text,
-            )],
+            suggestions: Suggestion::replace_with_match_case("it's".chars().collect(), text),
             message: "Consider using 'it's' (it is) instead of 'its' (possessive form).".to_owned(),
             priority: 31,
         })

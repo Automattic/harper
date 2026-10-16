@@ -53,10 +53,7 @@ impl ExprLinter for InStock {
         Some(Lint {
             span: tok.span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "in",
-                tok.get_ch(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("in", tok.get_ch(src)),
             message: "The correct usage is `in stock` not `on stock`.".to_owned(),
             ..Default::default()
         })

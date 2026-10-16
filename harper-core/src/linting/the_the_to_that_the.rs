@@ -37,7 +37,7 @@ impl ExprLinter for TheTheToThatThe {
             lint_kind: LintKind::Typo,
             suggestions: ["that the", "the"]
                 .iter()
-                .map(|s| Suggestion::replace_with_match_case_str(s, ch))
+                .flat_map(|s| Suggestion::replace_with_match_case_str(s, ch))
                 .collect(),
             message: "Did you mean `that the` or just `the`?".to_owned(),
             // Higher priority (lower number) than `RepeatedWords`

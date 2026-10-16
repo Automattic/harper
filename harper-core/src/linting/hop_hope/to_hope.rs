@@ -38,10 +38,10 @@ impl ExprLinter for ToHope {
         Some(Lint {
             span: offending_word.span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 char_string!("hope").to_vec(),
                 word_chars,
-            )],
+            ),
             message: "Did you mean to use 'hope' instead of 'hop' in this context?".to_owned(),
             ..Default::default()
         })

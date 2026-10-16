@@ -79,10 +79,10 @@ impl ExprLinter for ThingThink {
         Some(Lint {
             span: thing_span,
             lint_kind: LintKind::Typo,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 ['t', 'h', 'i', 'n', 'k'].to_vec(),
                 thing_span.get_content(src),
-            )],
+            ),
             message: "Did you mean `think`?".to_owned(),
             priority: 31,
         })

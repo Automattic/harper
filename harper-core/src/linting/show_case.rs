@@ -40,10 +40,8 @@ impl ExprLinter for ShowCase {
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let span = matched_tokens.span()?;
 
-        let suggestions = vec![Suggestion::replace_with_match_case_str(
-            "showcase",
-            span.get_content(source),
-        )];
+        let suggestions =
+            Suggestion::replace_with_match_case_str("showcase", span.get_content(source));
 
         Some(Lint {
             span,

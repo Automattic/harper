@@ -48,10 +48,10 @@ impl ExprLinter for AsHow {
         Some(Lint {
             span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
+            suggestions: Suggestion::replace_with_match_case_str(
                 "as to how",
                 span.get_content(src),
-            )],
+            ),
             message: "Consider rephrasing to 'as to how'".to_owned(),
             ..Default::default()
         })

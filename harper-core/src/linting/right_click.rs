@@ -51,7 +51,7 @@ impl ExprLinter for RightClick {
         Some(Lint {
             span,
             lint_kind: LintKind::Punctuation,
-            suggestions: vec![Suggestion::replace_with_match_case(replacement, template)],
+            suggestions: Suggestion::replace_with_match_case(replacement, template),
             message: "Hyphenate this mouse command.".to_owned(),
             priority: 40,
         })

@@ -54,10 +54,7 @@ impl ExprLinter for AccuseOf {
         Some(Lint {
             span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "of",
-                span.get_content(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("of", span.get_content(src)),
             message: "The correct preposition is `of`, not `for`.".to_owned(),
             ..Default::default()
         })

@@ -35,7 +35,7 @@ impl ExprLinter for OnceOrTwice {
         Some(Lint {
             span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case_str("or", original)],
+            suggestions: Suggestion::replace_with_match_case_str("or", original),
             message: "Did you mean “or”?".to_owned(),
             priority: 31,
         })

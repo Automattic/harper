@@ -66,7 +66,7 @@ impl<D: Dictionary> ExprLinter for WorthToDo<D> {
 
         let suggestions = gerunds
             .into_iter()
-            .map(|gerund| {
+            .flat_map(|gerund| {
                 Suggestion::replace_with_match_case(
                     gerund.chars().collect::<Vec<char>>(),
                     tolemchars,

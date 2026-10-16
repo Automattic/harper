@@ -53,10 +53,10 @@ impl ExprLinter for OneAndTheSame {
         Some(Lint {
             span: phrase,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 "one and the same".chars().collect(),
                 phrase.get_content(source),
-            )],
+            ),
             message: "The actual idiom is with the word `and`.".to_owned(),
             priority: 127,
         })

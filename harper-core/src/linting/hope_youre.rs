@@ -42,10 +42,10 @@ impl ExprLinter for HopeYoure {
         Some(Lint {
             span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 "you're".chars().collect(),
                 original,
-            )],
+            ),
             message: "Prefer `you're`—the contraction of “you are”—when expressing a hope about someone’s condition."
                 .into(),
             priority: 31,

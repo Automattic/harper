@@ -41,10 +41,10 @@ impl ExprLinter for DigUnderTheHood {
         Some(Lint {
             span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 look.chars().collect::<Vec<char>>(),
                 dig,
-            )],
+            ),
             message: "If the context is not automechanics, you may be mixing metaphors.".to_owned(),
             ..Default::default()
         })

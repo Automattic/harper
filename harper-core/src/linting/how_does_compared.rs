@@ -45,10 +45,7 @@ impl ExprLinter for HowDoesCompared {
         Some(Lint {
             span,
             lint_kind: LintKind::Grammar,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "compare",
-                span.get_content(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("compare", span.get_content(src)),
             message: "Use the base form of the verb `compare`.".to_owned(),
             ..Default::default()
         })

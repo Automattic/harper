@@ -30,7 +30,7 @@ impl ExprLinter for SomewhatSomething {
         Some(Lint {
             span,
             lint_kind: LintKind::Style,
-            suggestions: vec![Suggestion::replace_with_match_case_str("something", og)],
+            suggestions: Suggestion::replace_with_match_case_str("something", og),
             message: "Consider using `something of a` in more formal writing.".to_owned(),
             priority: 63,
         })

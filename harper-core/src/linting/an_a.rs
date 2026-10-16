@@ -94,10 +94,7 @@ impl Linter for AnA {
                     lints.push(Lint {
                         span: first.span,
                         lint_kind: LintKind::Miscellaneous,
-                        suggestions: vec![Suggestion::replace_with_match_case(
-                            replacement,
-                            chars_first,
-                        )],
+                        suggestions: Suggestion::replace_with_match_case(replacement, chars_first),
                         message: "Incorrect indefinite article.".to_owned(),
                         priority: 31,
                     })

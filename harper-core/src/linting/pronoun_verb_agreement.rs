@@ -223,7 +223,7 @@ impl<D: Dictionary> ExprLinter for PronounVerbAgreement<D> {
 
         let suggestions = suggs
             .into_iter()
-            .map(|s| Suggestion::replace_with_match_case(s, verb_chars))
+            .flat_map(|s| Suggestion::replace_with_match_case(s, verb_chars))
             .collect();
 
         Some(Lint {

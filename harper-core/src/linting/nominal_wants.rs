@@ -95,10 +95,7 @@ impl ExprLinter for NominalWants {
         Some(Lint {
             span: offender_span,
             lint_kind: LintKind::Miscellaneous,
-            suggestions: vec![Suggestion::replace_with_match_case(
-                replacement_chars,
-                offender_chars,
-            )],
+            suggestions: Suggestion::replace_with_match_case(replacement_chars, offender_chars),
             message: format!("Did you mean `{replacement}`?"),
             priority: 55,
         })

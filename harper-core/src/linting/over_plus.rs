@@ -62,7 +62,7 @@ impl ExprLinter for OverPlus {
 
         let suggestions = token_slices
             .iter()
-            .map(|t| {
+            .flat_map(|t| {
                 Suggestion::replace_with_match_case(
                     t.get_ch(src).unwrap().to_vec(),
                     span.get_content(src),

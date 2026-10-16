@@ -69,10 +69,7 @@ impl ExprLinter for TillDate {
         Some(Lint {
             span: till_span,
             lint_kind: LintKind::Regionalism,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "to",
-                till_span.get_content(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("to", till_span.get_content(src)),
             message: "Outside Indian English, prefer `to date`.".to_owned(),
             ..Default::default()
         })

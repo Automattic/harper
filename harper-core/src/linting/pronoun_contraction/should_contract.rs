@@ -89,7 +89,7 @@ impl ExprLinter for ShouldContract {
             lint_kind: LintKind::WordChoice,
             suggestions: correct
                 .into_iter()
-                .map(|v| Suggestion::replace_with_match_case(v, span.get_content(source)))
+                .flat_map(|v| Suggestion::replace_with_match_case(v, span.get_content(source)))
                 .collect(),
             message: "Use the contraction or separate the words instead.".to_owned(),
             priority: 31,
