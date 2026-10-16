@@ -10,12 +10,15 @@ import Panel from './Panel.svelte';
  * and controls navigation visibility. The default slot holds slide-specific
  * content; the `outside` slot renders below the clipped panel. `onBack` and
  * `onNext` synchronously update the parent's active slide before focus moves.
+ * `nextDisabled` blocks forward navigation through both the button and keyboard
+ * shortcuts without preventing users from going back.
  */
 export let title: string;
 export let lede: string;
 export let slideProgress: number;
 export let onBack: () => void;
 export let onNext: () => void;
+export let nextDisabled = false;
 
 let heading: HTMLElement;
 
@@ -26,7 +29,7 @@ onMount(() => {
 
 /** Move within the walkthrough bounds, then focus the new heading after rendering. */
 async function changeStep(direction: -1 | 1) {
-	if (direction === -1 ? slideProgress <= 0 : slideProgress >= 1) return;
+	if (direction === -1 ? slideProgress <= 0 : slideProgress >= 1 || nextDisabled) return;
 	if (direction === -1) onBack();
 	else onNext();
 	await tick();
@@ -113,7 +116,7 @@ function handleKeydown(event: KeyboardEvent) {
 					</Button>
 				{/if}
 				{#if slideProgress < 1}
-					<Button size="sm" color="primary" class="bg-primary-600! text-white! hover:bg-primary-700! focus:ring-primary-300! motion-reduce:transition-none" on:click={() => changeStep(1)}>
+					<Button size="sm" color="primary" class="bg-primary-600! text-white! hover:bg-primary-700! focus:ring-primary-300! motion-reduce:transition-none" disabled={nextDisabled} on:click={() => changeStep(1)}>
 						<span>Next</span>
 						<ChevronRightIcon className="size-5" />
 					</Button>

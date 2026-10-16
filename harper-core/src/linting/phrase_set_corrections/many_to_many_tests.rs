@@ -588,6 +588,44 @@ fn got_ride_of() {
     );
 }
 
+// Hallucination
+
+#[test]
+fn fix_hallucinisation() {
+    assert_suggestion_result(
+        "candybar left over from halloween [mmm moldy hallucinisation goodness! >_>]",
+        test_linter(),
+        "candybar left over from halloween [mmm moldy hallucination goodness! >_>]",
+    )
+}
+
+#[test]
+fn fix_hallucinisations() {
+    assert_suggestion_result(
+        "I havent really experienced hallucinisations or delusions, but this interpertation of movie is extremely intriguing",
+        test_linter(),
+        "I havent really experienced hallucinations or delusions, but this interpertation of movie is extremely intriguing",
+    )
+}
+
+#[test]
+fn fix_hallucinization() {
+    assert_suggestion_result(
+        "The hallucinization machine makers will be long gone to their retirement homes on private islands",
+        test_linter(),
+        "The hallucination machine makers will be long gone to their retirement homes on private islands",
+    )
+}
+
+#[test]
+fn fix_hallucinizations() {
+    assert_suggestion_result(
+        "He was treated for schizophrenia so I think the meds helped him with the voices and hallucinizations.",
+        test_linter(),
+        "He was treated for schizophrenia so I think the meds helped him with the voices and hallucinations.",
+    )
+}
+
 // Hijack
 
 #[test]
@@ -1471,6 +1509,80 @@ fn fix_reversed_engineers_noun() {
         test_linter(),
         "Expert reverse engineers with 2-15 years of industrial experience at BlueSurf Technologies.",
     );
+}
+
+// SeizeControlOf
+
+#[test]
+fn fix_seize_control() {
+    assert_suggestion_result(
+        "ninja token addresses were blocked from future activities to seize control over the network",
+        test_linter(),
+        "ninja token addresses were blocked from future activities to seize control of the network",
+    )
+}
+
+#[test]
+fn fix_sieze_control() {
+    assert_suggestion_result(
+        "The problem is that by choosing to sieze control over distribution is that they now cannot sieze control over production without breaking their ...",
+        test_linter(),
+        "The problem is that by choosing to seize control of distribution is that they now cannot seize control of production without breaking their ...",
+    )
+}
+
+#[test]
+fn fix_seized_control() {
+    assert_suggestion_result(
+        "part of a revolution in self-publishing as artists and poets seized control over the dissemination of their work",
+        test_linter(),
+        "part of a revolution in self-publishing as artists and poets seized control of the dissemination of their work",
+    )
+}
+
+#[test]
+fn fix_siezed_control() {
+    assert_suggestion_result(
+        "You siezed control over a large portion of the Ferelden hinterlands that you never gave back, you occupy a castle that's technically on ...",
+        test_linter(),
+        "You seized control of a large portion of the Ferelden hinterlands that you never gave back, you occupy a castle that's technically on ...",
+    )
+}
+
+#[test]
+fn fix_seizes_control() {
+    assert_suggestion_result(
+        "Former Brigadier-General Ansumane Mané seizes control over military barracks in Bissau, marking the beginning of the Guinea-Bissau Civil War",
+        test_linter(),
+        "Former Brigadier-General Ansumane Mané seizes control of military barracks in Bissau, marking the beginning of the Guinea-Bissau Civil War",
+    )
+}
+
+#[test]
+fn fix_siezes_control() {
+    assert_suggestion_result(
+        "The Obsidian's mech forces the other player into coexistence and siezes control over the planet when they flip from the Firmament.",
+        test_linter(),
+        "The Obsidian's mech forces the other player into coexistence and seizes control of the planet when they flip from the Firmament.",
+    )
+}
+
+#[test]
+fn fix_seizing_control() {
+    assert_suggestion_result(
+        "... by either shooting them or seizing control over them by creating connections in a short subgame",
+        test_linter(),
+        "... by either shooting them or seizing control of them by creating connections in a short subgame",
+    )
+}
+
+#[test]
+fn fix_siezing_control() {
+    assert_suggestion_result(
+        "Siezing control over the internet is the modern day equivalent of 'siezing the means of production.'.",
+        test_linter(),
+        "Seizing control of the internet is the modern day equivalent of 'siezing the means of production.'.",
+    )
 }
 
 // SideTangent

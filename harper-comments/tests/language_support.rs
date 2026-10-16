@@ -82,7 +82,7 @@ create_test!(ignore_comments.ps1, 1);
 
 // Zig tests - covering //, ///, and //! comments
 create_test!(clean.zig, 0);
-create_test!(dirty.zig, 5);
+create_test!(dirty.zig, 4);
 
 // These are to make sure nothing crashes.
 create_test!(empty.js, 0);

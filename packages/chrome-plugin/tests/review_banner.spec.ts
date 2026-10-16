@@ -23,13 +23,25 @@ test.describe('review banner', () => {
 		const extensionId = background.url().split('/')[2];
 
 		const popupUrl = `chrome-extension://${extensionId}/popup.html`;
-		await page.goto(popupUrl);
+
+		// Let startup finish writing the installation date before replacing it.
+		await expect
+			.poll(
+				() =>
+					background.evaluate(async () => {
+						const { installedOn } = await chrome.storage.local.get('installedOn');
+						return typeof installedOn === 'string';
+					}),
+				{ timeout: 30000 },
+			)
+			.toBe(true);
 
 		await background.evaluate(() =>
 			chrome.storage.local.set({
 				installedOn: new Date(Date.now() - 15 * 86400000).toISOString(),
 			}),
 		);
+		await page.goto(popupUrl);
 
 		await page.getByText("Let's start writing").click();
 
