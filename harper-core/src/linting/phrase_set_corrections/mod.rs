@@ -829,6 +829,21 @@ pub fn lint_group() -> LintGroup {
             "Corrects `backhand compliment` to `backhanded compliment`.",
             LintKind::Spelling
         ),
+        "BackwardEngineer" => (
+            &[
+                (&["backward engineer",    "backwards engineer"],    &["reverse engineer"]),
+                (&["backward engineers",   "backwards engineers"],   &["reverse engineers"]),
+                (&["backward-engineer",    "backwards-engineer"],    &["reverse-engineer"]),
+                (&["backward-engineers",   "backwards-engineers"],   &["reverse-engineers"]),
+                (&["backward engineering", "backwards engineering"], &["reverse engineering"]),
+                (&["backward-engineering", "backwards-engineering"], &["reverse-engineering"]),
+                (&["backward engineered",  "backwards engineered"],  &["reverse engineered"]),
+                (&["backward-engineered",  "backwards-engineered"],  &["reverse-engineered"]),
+            ],
+            "The much more common term is `reverse engineer`.",
+            "Suggests changing the less common `backward/backwards engineer` to the more usual `reverse engineer`.",
+            LintKind::WordChoice
+        ),
         "BainBane" => (
             &[
                 (&["bain of my existence","bain of my existance"], &["bane of my existence"]),
