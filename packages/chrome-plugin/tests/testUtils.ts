@@ -71,6 +71,13 @@ export function getDraftEditor(page: Page): Locator {
 
 /** Replace the content of a text editor. */
 export async function replaceEditorContent(editorEl: Locator, text: string, softBreaks = false) {
+	// Seed form controls in one update so popup tests cannot click lints for partial words.
+	// Rich editors still need keyboard selection, deletion, and line breaks.
+	if (await isFormElement(editorEl)) {
+		await editorEl.fill(text);
+		return;
+	}
+
 	// Let the editor update its own selection state through its keyboard handler.
 	await editorEl.focus();
 	await editorEl.press('ControlOrMeta+a');
@@ -78,9 +85,18 @@ export async function replaceEditorContent(editorEl: Locator, text: string, soft
 
 	const lines = text.split('\n');
 	const breakKey = softBreaks ? 'Shift+Enter' : 'Enter';
+	const needsCharacterInput = await editorEl.evaluate((el) =>
+		el.classList.contains('public-DraftEditor-content'),
+	);
 
 	for (let i = 0; i < lines.length; i++) {
-		await editorEl.pressSequentially(lines[i]);
+		if (needsCharacterInput) {
+			// Draft.js needs character key events at a normal typing cadence for its selection model.
+			await editorEl.pressSequentially(lines[i], { delay: 200 });
+		} else {
+			// Native text input updates the editor model without exposing partial words to linting.
+			await editorEl.page().keyboard.insertText(lines[i]);
+		}
 		if (i < lines.length - 1) {
 			await editorEl.press(breakKey);
 		}
@@ -179,14 +195,14 @@ export async function assertLocatorsResolveEqually(page: Page, a: Locator, b: Lo
 	expect(areSame).toBe(true);
 }
 
-/** Locates the first Harper highlight on the page and clicks it.
- * It should result in the popup opening.
- * Returns whether the highlight was found. */
+/** Click the first Harper highlight and check that its popup opens.
+ * Returns false if no highlight was found; a missing popup fails the test. */
 export async function clickHarperHighlight(page: Page): Promise<boolean> {
 	const center = await waitForHarperHighlightCenter(page);
 	if (center == null) return false;
 
 	await page.mouse.click(center.x, center.y);
+	await expect(page.locator('.harper-container')).toBeVisible();
 	return true;
 }
 
@@ -208,24 +224,20 @@ export async function openHarperPopupFromEditorPointerDown(
 		return false;
 	}
 
-	try {
-		await editor.dispatchEvent('pointerdown', {
-			bubbles: true,
-			composed: true,
-			button: 0,
-			buttons: 1,
-			clientX: center.x,
-			clientY: center.y,
-			pointerId: 1,
-			pointerType: 'mouse',
-			screenX: center.x,
-			screenY: center.y,
-		});
-		await page.locator('.harper-container').waitFor({ state: 'visible', timeout: 2000 });
-		return true;
-	} catch {
-		return false;
-	}
+	await editor.dispatchEvent('pointerdown', {
+		bubbles: true,
+		composed: true,
+		button: 0,
+		buttons: 1,
+		clientX: center.x,
+		clientY: center.y,
+		pointerId: 1,
+		pointerType: 'mouse',
+		screenX: center.x,
+		screenY: center.y,
+	});
+	await expect(page.locator('.harper-container')).toBeVisible();
+	return true;
 }
 
 /** Grab the first `<textarea />` on a page. */
@@ -333,9 +345,8 @@ export async function testCanIgnoreSuggestion(
 		const testText = 'This is a mistaek.';
 		await replaceEditorContent(editor, testText);
 
-		// test.slow() does not extend assertion timeouts during linter startup.
-		await expect(getHarperHighlights(page)).toHaveCount(1, { timeout: 30000 });
 		await waitForHighlightsToSettle(page);
+		await expect(getHarperHighlights(page)).toHaveCount(1, { timeout: 30000 });
 
 		// Open the popup for the highlight and click Ignore.
 		const opened = await clickHarperHighlight(page);
