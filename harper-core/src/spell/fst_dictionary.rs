@@ -27,6 +27,8 @@ const TRANSPOSITION_COST_ONE: bool = true;
 
 static DICT: LazyLock<Arc<FstDictionary>> =
     LazyLock::new(|| Arc::new((*MutableDictionary::curated()).clone().into()));
+static SPANISH_DICT: LazyLock<Arc<FstDictionary>> =
+    LazyLock::new(|| Arc::new((*MutableDictionary::curated_spanish()).clone().into()));
 
 thread_local! {
     // Builders are computationally expensive and do not depend on the word, so we store a
@@ -50,6 +52,10 @@ impl FstDictionary {
     /// in the Harper binary.
     pub fn curated() -> Arc<Self> {
         (*DICT).clone()
+    }
+
+    pub fn curated_spanish() -> Arc<Self> {
+        (*SPANISH_DICT).clone()
     }
 
     /// Construct a new [`FstDictionary`] using a wordlist as a source.
