@@ -72,7 +72,7 @@ export function getDraftEditor(page: Page): Locator {
 /** Replace the content of a text editor. */
 export async function replaceEditorContent(editorEl: Locator, text: string, softBreaks = false) {
 	// Seed form controls in one update so popup tests cannot click lints for partial words.
-	// Rich editors still need their keyboard-driven editing behavior.
+	// Rich editors still need keyboard selection, deletion, and line breaks.
 	if (await isFormElement(editorEl)) {
 		await editorEl.fill(text);
 		return;
@@ -85,9 +85,18 @@ export async function replaceEditorContent(editorEl: Locator, text: string, soft
 
 	const lines = text.split('\n');
 	const breakKey = softBreaks ? 'Shift+Enter' : 'Enter';
+	const needsCharacterInput = await editorEl.evaluate((el) =>
+		el.classList.contains('public-DraftEditor-content'),
+	);
 
 	for (let i = 0; i < lines.length; i++) {
-		await editorEl.pressSequentially(lines[i]);
+		if (needsCharacterInput) {
+			// Draft.js needs character key events at a normal typing cadence for its selection model.
+			await editorEl.pressSequentially(lines[i], { delay: 200 });
+		} else {
+			// Native text input updates the editor model without exposing partial words to linting.
+			await editorEl.page().keyboard.insertText(lines[i]);
+		}
 		if (i < lines.length - 1) {
 			await editorEl.press(breakKey);
 		}
@@ -102,6 +111,44 @@ export function getHarperSuggestionRows(page: Page): Locator {
 /** Locate the Harper highlights on a page. */
 export function getHarperHighlights(page: Page): Locator {
 	return page.locator('#harper-highlight');
+}
+
+export async function waitForHighlightsToSettle(
+	page: Page,
+	quietMs = 250,
+	timeoutMs = 30000,
+): Promise<void> {
+	let previous: string | undefined;
+	let changedAt = performance.now();
+
+	await expect
+		.poll(
+			async () => {
+				const snapshot = await getHarperHighlights(page).evaluateAll((highlights) =>
+					JSON.stringify(
+						highlights.flatMap((highlight) => {
+							const { x, y, width, height } = highlight.getBoundingClientRect();
+							const style = getComputedStyle(highlight);
+							if (width <= 0 || height <= 0 || style.visibility !== 'visible') return [];
+							return [[x, y, width, height, style.borderBottomColor, style.backgroundColor]];
+						}),
+					),
+				);
+				const now = performance.now();
+				if (snapshot === '[]' || snapshot !== previous) {
+					previous = snapshot;
+					changedAt = now;
+					return false;
+				}
+				return now - changedAt >= quietMs;
+			},
+			{
+				message: `Visible highlight boxes should stay unchanged for ${quietMs} ms`,
+				intervals: [10],
+				timeout: timeoutMs,
+			},
+		)
+		.toBe(true);
 }
 
 /**
@@ -148,14 +195,14 @@ export async function assertLocatorsResolveEqually(page: Page, a: Locator, b: Lo
 	expect(areSame).toBe(true);
 }
 
-/** Locates the first Harper highlight on the page and clicks it.
- * It should result in the popup opening.
- * Returns whether the highlight was found. */
+/** Click the first Harper highlight and check that its popup opens.
+ * Returns false if no highlight was found; a missing popup fails the test. */
 export async function clickHarperHighlight(page: Page): Promise<boolean> {
 	const center = await waitForHarperHighlightCenter(page);
 	if (center == null) return false;
 
 	await page.mouse.click(center.x, center.y);
+	await expect(page.locator('.harper-container')).toBeVisible();
 	return true;
 }
 
@@ -177,24 +224,20 @@ export async function openHarperPopupFromEditorPointerDown(
 		return false;
 	}
 
-	try {
-		await editor.dispatchEvent('pointerdown', {
-			bubbles: true,
-			composed: true,
-			button: 0,
-			buttons: 1,
-			clientX: center.x,
-			clientY: center.y,
-			pointerId: 1,
-			pointerType: 'mouse',
-			screenX: center.x,
-			screenY: center.y,
-		});
-		await page.locator('.harper-container').waitFor({ state: 'visible', timeout: 2000 });
-		return true;
-	} catch {
-		return false;
-	}
+	await editor.dispatchEvent('pointerdown', {
+		bubbles: true,
+		composed: true,
+		button: 0,
+		buttons: 1,
+		clientX: center.x,
+		clientY: center.y,
+		pointerId: 1,
+		pointerType: 'mouse',
+		screenX: center.x,
+		screenY: center.y,
+	});
+	await expect(page.locator('.harper-container')).toBeVisible();
+	return true;
 }
 
 /** Grab the first `<textarea />` on a page. */
@@ -254,10 +297,14 @@ export async function testBasicSuggestion(
 			await setup(page, editor);
 		}
 		await replaceEditorContent(editor, 'This is an test');
+		await assertEditorText(editor, 'This is an test');
+		await waitForHighlightsToSettle(page);
 
 		const opened = await clickHarperHighlight(page);
 		expect(opened).toBe(true);
-		await page.getByTitle('Click to replace "an" with "a"').click();
+		const suggestion = page.getByTitle('Click to replace "an" with "a"');
+		await expect(suggestion).toBeVisible();
+		await suggestion.click();
 
 		await assertEditorText(editor, 'This is a test');
 		await expect(editor).toBeFocused();
@@ -298,7 +345,7 @@ export async function testCanIgnoreSuggestion(
 		const testText = 'This is a mistaek.';
 		await replaceEditorContent(editor, testText);
 
-		// test.slow() does not extend assertion timeouts during linter startup.
+		await waitForHighlightsToSettle(page);
 		await expect(getHarperHighlights(page)).toHaveCount(1, { timeout: 30000 });
 
 		// Open the popup for the highlight and click Ignore.
@@ -338,6 +385,7 @@ export async function testCanBlockRuleSuggestion(
 			await setup(page, editor);
 		}
 		await replaceEditorContent(editor, 'I could of gone.');
+		await waitForHighlightsToSettle(page);
 
 		const opened = await clickHarperHighlight(page);
 		expect(opened).toBe(true);
@@ -386,12 +434,14 @@ export async function testMultipleSuggestionsAndUndo(
 		// Soft breaks: no false positives from concatenation + correct span alignment.
 		await replaceEditorContent(editor, 'Valid words\ntset here.', true);
 		await expect(getHarperHighlights(page)).toHaveCount(1, { timeout: 30000 });
+		await waitForHighlightsToSettle(page);
 		expect(await clickHarperHighlight(page)).toBe(true);
 		await page.getByTitle('Click to replace "tset" with "test"').click();
 		await assertEditorContains(editor, 'test here');
 
 		await replaceEditorContent(editor, 'The first tset.\nThe second tset.\nThe third tset.');
 		await expect(getHarperHighlights(page)).toHaveCount(3, { timeout: 30000 });
+		await waitForHighlightsToSettle(page);
 
 		// Get highlights sorted by visual position and click on the middle one
 		const sortedBoxes = await getSortedHighlightBoxes(page);
