@@ -2548,6 +2548,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AlleyAlly",
+								"state": true,
+								"label": "Alley Ally"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AllThough",
 								"state": true,
 								"label": "All Though"
