@@ -5699,6 +5699,13 @@
 						},
 						{
 							"OneOfMany": {
+								"names": ["PreferGradeable", "PreferGradable"],
+								"name": "PreferGradeable",
+								"labels": ["Prefer ‘Gradeable’", "Prefer ‘Gradable’"]
+							}
+						},
+						{
+							"OneOfMany": {
 								"names": ["PreferPleaded", "PreferPled"],
 								"name": "PreferPleaded",
 								"labels": ["Prefer ‘Pleaded’", "Prefer ‘Pled’"]

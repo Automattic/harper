@@ -226,7 +226,6 @@ use super::passionate_about::PassionateAbout;
 use super::pay_for_price::PayForPrice;
 use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 use super::pique_interest::PiqueInterest;
-use super::pleaded_pled::{PreferPleaded, PreferPled};
 use super::plural_decades::PluralDecades;
 use super::plural_wrong_word_of_phrase::PluralWrongWordOfPhrase;
 use super::possessive_noun::PossessiveNoun;
@@ -266,7 +265,6 @@ use super::show_case::ShowCase;
 use super::simple_past_to_past_participle::SimplePastToPastParticiple;
 use super::since_duration::SinceDuration;
 use super::single_be::SingleBe;
-use super::sneaked_snuck::{PreferSneaked, PreferSnuck};
 use super::some_without_article::SomeWithoutArticle;
 use super::something_is::SomethingIs;
 use super::somewhat_something::SomewhatSomething;
@@ -349,6 +347,7 @@ use super::be_adjective_confusions;
 use super::closed_compounds;
 use super::initialisms;
 use super::phrase_set_corrections;
+use super::preferred_variants;
 use super::proper_noun_capitalization_linters;
 use super::weir_rules;
 
@@ -626,12 +625,13 @@ impl LintGroup {
             };
         }
 
-        out.merge_from(weir_rules::lint_group());
-        out.merge_from(phrase_set_corrections::lint_group());
-        out.merge_from(proper_noun_capitalization_linters::lint_group());
+        out.merge_from(be_adjective_confusions::lint_group());
         out.merge_from(closed_compounds::lint_group());
         out.merge_from(initialisms::lint_group());
-        out.merge_from(be_adjective_confusions::lint_group());
+        out.merge_from(phrase_set_corrections::lint_group());
+        out.merge_from(preferred_variants::lint_group());
+        out.merge_from(proper_noun_capitalization_linters::lint_group());
+        out.merge_from(weir_rules::lint_group());
 
         // Add all the more complex rules to the group.
         // Please maintain alphabetical order.
@@ -855,10 +855,6 @@ impl LintGroup {
         insert_expr_rule!(PluralWrongWordOfPhrase);
         insert_struct_rule_with_dict!(PossessiveNoun);
         insert_expr_rule!(PossessiveYour);
-        insert_struct_rule!(PreferPleaded);
-        insert_struct_rule!(PreferPled);
-        insert_struct_rule!(PreferSneaked);
-        insert_struct_rule!(PreferSnuck);
         insert_expr_rule!(ProgressiveNeedsBe);
         insert_expr_rule!(PronounAre);
         insert_struct_rule!(PronounContraction);
@@ -920,8 +916,8 @@ impl LintGroup {
         insert_expr_rule!(Themself);
         insert_expr_rule!(ThenThan);
         insert_expr_rule!(ThereOwn);
-        insert_expr_rule!(Theres);
         insert_expr_rule!(Therein);
+        insert_expr_rule!(Theres);
         insert_expr_rule!(ThesesThese);
         insert_struct_rule!(TheyreConfusions);
         insert_expr_rule!(ThingThink);
