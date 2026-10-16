@@ -117,6 +117,30 @@ mod tests {
     }
 
     #[test]
+    fn dont_flag_the_re_acronym_issue_4580() {
+        assert_no_lints("The RE process was slow.", lint_group());
+    }
+
+    #[test]
+    fn dont_flag_the_re_acronym_mid_sentence() {
+        assert_no_lints("We did the RE work on the binary.", lint_group());
+    }
+
+    #[test]
+    fn still_flags_the_re_in_all_caps() {
+        assert_suggestion_result("THE RE IS A CAT.", lint_group(), "THERE IS A CAT.");
+    }
+
+    #[test]
+    fn still_flags_the_re_in_lowercase() {
+        assert_suggestion_result(
+            "I think the re is a cat.",
+            lint_group(),
+            "I think there is a cat.",
+        );
+    }
+
+    #[test]
     fn there_fore() {
         let test_sentence = "This is the reason; there fore, this is true.";
         let expected = "This is the reason; therefore, this is true.";
