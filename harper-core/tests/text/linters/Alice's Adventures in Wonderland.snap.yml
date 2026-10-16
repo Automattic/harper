@@ -1505,6 +1505,16 @@ Message: |
 
 
 
+Lint:    Punctuation (127 priority)
+Message: |
+    1139 | occasionally; and as for the baby, it was sneezing and howling alternately
+    1140 | without a moment’s pause. The only things in the kitchen that did not sneeze,
+         |           ^~~~~~~~ Did you mean the plural possessive?
+Suggest:
+  - Replace with: “moments’”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     1165 | well to introduce some other subject of conversation. While she was trying to
@@ -2217,6 +2227,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2066 | Queen merely remarking that a moment’s delay would cost them their lives.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 41 words long.
+
+
+
+Lint:    Punctuation (127 priority)
+Message: |
+    2065 | the shade: however, the moment they saw her, they hurried back to the game, the
+    2066 | Queen merely remarking that a moment’s delay would cost them their lives.
+         |                               ^~~~~~~~ Did you mean the plural possessive?
+Suggest:
+  - Replace with: “moments’”
 
 
 

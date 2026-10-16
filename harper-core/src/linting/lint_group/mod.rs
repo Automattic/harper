@@ -230,6 +230,7 @@ use super::pleaded_pled::{PreferPleaded, PreferPled};
 use super::plural_decades::PluralDecades;
 use super::plural_wrong_word_of_phrase::PluralWrongWordOfPhrase;
 use super::possessive_noun::PossessiveNoun;
+use super::possessive_plural_time::PossessivePluralTime;
 use super::possessive_your::PossessiveYour;
 use super::progressive_needs_be::ProgressiveNeedsBe;
 use super::pronoun_are::PronounAre;
@@ -854,6 +855,7 @@ impl LintGroup {
         insert_expr_rule!(PiqueInterest);
         insert_expr_rule!(PluralWrongWordOfPhrase);
         insert_struct_rule_with_dict!(PossessiveNoun);
+        insert_expr_rule!(PossessivePluralTime);
         insert_expr_rule!(PossessiveYour);
         insert_struct_rule!(PreferPleaded);
         insert_struct_rule!(PreferPled);

@@ -5475,6 +5475,15 @@ Suggest:
 
 
 
+Lint:    Punctuation (127 priority)
+Message: |
+    4373 | “No . . . I just remembered that to-day’s my birthday.”
+         |                                     ^~~~~ Did you mean the plural possessive?
+Suggest:
+  - Replace with: “days’”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4377 | It was seven o’clock when we got into the coupé with him and started for Long
@@ -6169,6 +6178,16 @@ Message: |
          |                  ^~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
 Suggest:
   - Replace with: “upstairs”
+
+
+
+Lint:    Punctuation (127 priority)
+Message: |
+    4783 | were not musty and laid away already in lavender but fresh and breathing and
+    4784 | redolent of this year’s shining motor-cars and of dances whose flowers were
+         |                  ^~~~~~ Did you mean the plural possessive?
+Suggest:
+  - Replace with: “years’”
 
 
 
