@@ -1,0 +1,29 @@
+# Corrects the eggcorn `bare with me` -> `bear with me`.
+expr main <(bare with [me, us, them, him, her, you, it]), bare>
+
+let message "The idiom is `bear with`, meaning to be patient."
+let description "Corrects the eggcorn `bare with` to `bear with`."
+let kind "Spelling"
+let becomes "bear"
+let strategy "MatchCase"
+
+# True positives
+
+test "Please bare with me here." "Please bear with me here."
+test "Bare with us while we fix it." "Bear with us while we fix it."
+test "Bare with me for a moment." "Bear with me for a moment."
+test "Can you bare with them a bit?" "Can you bear with them a bit?"
+test "Kindly bare with us." "Kindly bear with us."
+test "BARE WITH ME PLEASE." "BEAR WITH ME PLEASE."
+test "I'll ask you to bare with me." "I'll ask you to bear with me."
+test "Bare with him during the demo." "Bear with him during the demo."
+test "So bare with us, please." "So bear with us, please."
+test "Just bare with me for now." "Just bear with me for now."
+
+# False positives / true negatives
+
+allows "Please bear with me here."
+allows "They left the shelves bare with nothing on them."
+allows "The room was bare with white walls."
+allows "He fought the bear with a spear."
+allows "She stood bare in the cold."
