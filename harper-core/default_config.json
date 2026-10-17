@@ -5188,6 +5188,13 @@
 						},
 						{
 							"Bool": {
+								"name": "InOnesDefense",
+								"state": true,
+								"label": "In Ones Defense"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Insensitive",
 								"state": true,
 								"label": "Insensitive"
@@ -5198,13 +5205,6 @@
 								"name": "InspiredBy",
 								"state": true,
 								"label": "Inspired By"
-							}
-						},
-						{
-							"Bool": {
-								"name": "InOnesDefense",
-								"state": true,
-								"label": "In Ones Defense"
 							}
 						},
 						{
@@ -6024,6 +6024,13 @@
 								"name": "TongueInCheek",
 								"state": true,
 								"label": "Tongue In Cheek"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ToNoAvail",
+								"state": true,
+								"label": "To No Avail"
 							}
 						},
 						{

@@ -1,0 +1,9 @@
+expr main <(to no [vale, vail]), ([vale, vail])>
+
+let message "Use the correct phrase for being ineffective."
+let description "Corrects wrong variants of `to no avail`, meaning `without success`."
+let kind "WordChoice"
+let becomes "avail"
+
+test "I tried to install different versions to no vail." "I tried to install different versions to no avail."
+test "I've tried updating the gpu driver, reinstalling it but to no vale." "I've tried updating the gpu driver, reinstalling it but to no avail."
