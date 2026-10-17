@@ -1,0 +1,6 @@
+status: enabled
+mode: production-ready-config
+level: HIGH_PRIORITY_ONLY
+version: 2.10.4
+homepage: https://example.com/some/long/path/here
+script_path: /usr/local/bin/some/tool

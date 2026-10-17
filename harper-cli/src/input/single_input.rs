@@ -15,6 +15,7 @@ use harper_core::{
 use harper_ink::InkParser;
 use harper_literate_haskell::LiterateHaskellParser;
 use harper_python::PythonParser;
+use harper_yaml::YamlParser;
 
 use super::InputTrait;
 
@@ -146,6 +147,7 @@ impl SingleInputTrait for FileInput {
             Some("tex" | "latex" | "sty" | "cls" | "dtx") => Box::new(harper_tex::TeX::default()),
             Some("typ") => Box::new(harper_typst::Typst),
             Some("py") | Some("pyi") => Box::new(PythonParser::default()),
+            Some("yaml") | Some("yml") => Box::new(YamlParser::default()),
             Some("adoc") | Some("asciidoc") => Box::new(AsciidocParser::default()),
             Some("txt") => Box::new(PlainEnglish),
             _ => {
