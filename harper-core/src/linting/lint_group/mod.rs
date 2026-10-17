@@ -153,6 +153,7 @@ use super::inflected_verb_after_to::InflectedVerbAfterTo;
 use super::interested_in::InterestedIn;
 use super::it_looks_like_that::ItLooksLikeThat;
 use super::its_contraction::ItsContraction;
+use super::his_contraction::HisContraction;
 use super::its_possessive::ItsPossessive;
 use super::jealous_of::JealousOf;
 use super::johns_hopkins::JohnsHopkins;
@@ -781,6 +782,7 @@ impl LintGroup {
         insert_expr_rule!(ItLooksLikeThat);
         insert_struct_rule!(ItsContraction);
         insert_expr_rule!(ItsPossessive);
+        insert_expr_rule!(HisContraction);
         insert_expr_rule!(JealousOf);
         insert_expr_rule!(JohnsHopkins);
         insert_expr_rule!(JumpTheGun);
