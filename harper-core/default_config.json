@@ -6042,6 +6042,13 @@
 						},
 						{
 							"Bool": {
+								"name": "TrustIn",
+								"state": true,
+								"label": "Trust In"
+							}
+						},
+						{
+							"Bool": {
 								"name": "UnderneathOf",
 								"state": true,
 								"label": "Underneath of"
