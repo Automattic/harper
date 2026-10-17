@@ -2199,6 +2199,13 @@
 						},
 						{
 							"Bool": {
+								"name": "HisContraction",
+								"state": true,
+								"label": "His Contraction"
+							}
+						},
+						{
+							"Bool": {
 								"name": "MultipleSequentialPronouns",
 								"state": true,
 								"label": "Multiple Sequential Pronouns"
