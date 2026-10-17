@@ -1,0 +1,31 @@
+expr main <([VERB, AUX] bellow [DET, NUM]), bellow>
+
+let message "Did you mean `below`?"
+let description "Corrects `bellow` in common contexts where `below` is intended, while preserving valid verb and noun uses."
+let kind "Spelling"
+let becomes "below"
+let strategy "MatchCase"
+
+# True positives
+test "Going bellow the table is a bad idea." "Going below the table is a bad idea."
+test "The answer is bellow the heading." "The answer is below the heading."
+test "The temperature fell bellow zero." "The temperature fell below zero."
+test "The village lies bellow the mountain." "The village lies below the mountain."
+test "Going BELLOW the table is a bad idea." "Going BELOW the table is a bad idea."
+test "Going Bellow the table is a bad idea." "Going Below the table is a bad idea."
+
+# Valid verb and noun uses
+allows "They bellow at the referee."
+allows "The crowd began to bellow."
+allows "She told him to bellow loudly."
+allows "A bellow echoed through the valley."
+allows "The bull let out a loud bellow."
+allows "He bellowed for help."
+allows "She was bellowing across the room."
+
+# Correct spelling and boundary coverage
+allows "The table is below the window."
+allows "Scroll down below to see the examples."
+allows "I wrote bellow, then corrected it: bellow."
+allows "Look bellow for more information."
+allows "See bellow for details."
