@@ -161,6 +161,7 @@ mod it_looks_like_that;
 mod it_would_be;
 mod its_contraction;
 mod its_possessive;
+mod his_contraction;
 mod jealous_of;
 mod johns_hopkins;
 mod jump_the_gun;
