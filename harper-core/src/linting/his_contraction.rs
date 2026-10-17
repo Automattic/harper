@@ -1,7 +1,7 @@
 use harper_brill::UPOS;
 
 use crate::Token;
-use crate::expr::{Expr, ExprMap, OwnedExprExt, SequenceExpr};
+use crate::expr::{Expr, ExprMap, SequenceExpr};
 use crate::patterns::UPOSSet;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
@@ -39,7 +39,7 @@ impl ExprLinter for HisContraction {
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let offending_idx = self.expr.lookup(0, matched_tokens, source)?;
-        let span = matched_tokens[offending_idx].span;
+        let span = matched_tokens[*offending_idx].span;
 
         Some(Lint {
             span,
