@@ -168,11 +168,7 @@ mod tests {
     // Case sensitivity: should preserve original casing
     #[test]
     fn preserves_case_capitalized() {
-        assert_suggestion_result(
-            "His running late.",
-            test_linter(),
-            "He's running late.",
-        );
+        assert_suggestion_result("His running late.", test_linter(), "He's running late.");
     }
 
     // Ensure we don't flag correct contractions
