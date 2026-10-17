@@ -332,7 +332,9 @@ pub fn lint_group() -> LintGroup {
                 ("a certain extend", "a certain extent"),
                 ("to an extend", "to an extent"),
                 ("to some extend", "to some extent"),
-                ("to the extend that", "to the extent that")
+                ("to the extend that", "to the extent that"),
+                ("greater extend", "greater extent"),
+                ("lesser extend", "lesser extent")
             ],
             "Use `extent` for the noun and `extend` for the verb.",
             "Corrects `extend` to `extent` when the context is a noun.",
