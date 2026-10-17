@@ -1,7 +1,7 @@
 use harper_brill::UPOS;
 
 use crate::Token;
-use crate::expr::{AnchorStart, Expr, ExprMap, OwnedExprExt, SequenceExpr};
+use crate::expr::{Expr, ExprMap, OwnedExprExt, SequenceExpr};
 use crate::patterns::UPOSSet;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
@@ -17,15 +17,14 @@ impl Default for HisContraction {
     fn default() -> Self {
         let mut map = ExprMap::default();
 
-        // Pattern: "his" followed by verb / adjective (indicating contraction should be he's)
-        // Uses anchor start to match at beginning of chunks/sentences
-        let contraction_pattern = SequenceExpr::with(AnchorStart)
+        // A possessive followed by a verb, adjective, or auxiliary is likely a
+        // misspelling of the contraction "he's".
+        let contraction_pattern = SequenceExpr::default()
             .t_aco("his")
             .t_ws()
-            .then(UPOSSet::new(&[UPOS::VERB, UPOS::ADJ, UPOS::AUX]))
-            .t_ws();
+            .then(UPOSSet::new(&[UPOS::VERB, UPOS::ADJ, UPOS::AUX]));
 
-        map.insert(contraction_pattern, 1); // Capture index 1 points to "his"
+        map.insert(contraction_pattern, 0);
 
         Self { expr: map }
     }
@@ -63,7 +62,7 @@ mod tests {
     use crate::linting::pooled_linter::for_tests::create_test_pool;
 
     create_test_pool!(HisContraction, HisContraction, HisContraction::default());
-    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
     use super::HisContraction;
 
