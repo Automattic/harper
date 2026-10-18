@@ -5006,6 +5006,13 @@
 						},
 						{
 							"Bool": {
+								"name": "FuzzyLogic",
+								"state": true,
+								"label": "Fuzzy Logic"
+							}
+						},
+						{
+							"Bool": {
 								"name": "GildedAge",
 								"state": true,
 								"label": "Gilded Age"
