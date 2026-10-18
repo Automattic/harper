@@ -42,6 +42,7 @@ pub fn lint_group() -> LintGroup {
         "PleaseTakeALook"        => ("ptal", &["please take a look"]),
         "Really"                 => ("rly", &["really"]),
         "TalkToYouLater"         => ("ttyl", &["talk to you later"]),
+        "ToBeFair"               => ("tbf", &["to be fair"]),
         "ToBeHonest"             => ("tbh", &["to be honest"]),
     });
 
@@ -278,6 +279,15 @@ mod tests {
             "AIUI, in the US something that's entirely machine-generated is not eligible for copyright protection.",
             lint_group(),
             "As i understand it, in the US something that's entirely machine-generated is not eligible for copyright protection.",
+        );
+    }
+
+    #[test]
+    fn corrects_tbf() {
+        assert_suggestion_result(
+            "TBF pretty much no one connects their devices anymore to anything other than charging.",
+            lint_group(),
+            "To be fair pretty much no one connects their devices anymore to anything other than charging.",
         );
     }
 }

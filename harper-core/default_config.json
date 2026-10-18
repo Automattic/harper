@@ -375,6 +375,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ToBeFair",
+								"state": true,
+								"label": "To Be Fair"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ToBeHonest",
 								"state": true,
 								"label": "To Be Honest"
