@@ -67,7 +67,10 @@ impl ExprLinter for Damages {
         }
 
         // The word before "damages" may help us narrow down whether it's a noun or verb.
-        let prev_word_tok = match (pretoks.get(pretoks.len() - 2), pretoks.last()) {
+        let prev_word_tok = match (
+            pretoks.len().checked_sub(2).and_then(|i| pretoks.get(i)),
+            pretoks.last(),
+        ) {
             (Some(w), Some(sp)) if sp.kind.is_whitespace() && w.kind.is_word() => Some(w),
             _ => None,
         };
