@@ -375,6 +375,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ToBeFair",
+								"state": true,
+								"label": "To Be Fair"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ToBeHonest",
 								"state": true,
 								"label": "To Be Honest"
@@ -5006,6 +5013,13 @@
 						},
 						{
 							"Bool": {
+								"name": "FuzzyLogic",
+								"state": true,
+								"label": "Fuzzy Logic"
+							}
+						},
+						{
+							"Bool": {
 								"name": "GildedAge",
 								"state": true,
 								"label": "Gilded Age"
@@ -6024,6 +6038,13 @@
 								"name": "TongueInCheek",
 								"state": true,
 								"label": "Tongue In Cheek"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ToNoAvail",
+								"state": true,
+								"label": "To No Avail"
 							}
 						},
 						{
