@@ -173,8 +173,13 @@ impl RenderState {
     /// Draws highlights and the active popup from the same state used by hit-testing so visible
     /// regions and clickable regions do not drift apart.
     ///
+    /// Each monitor has its own window. `screen_rects` holds the bounds of every window, in the
+    /// screen coordinates that lints and hit-testing use, and `window` is the index of the one being
+    /// drawn. Lints are moved into that window's coordinates, and only one window draws the popup.
+    ///
     /// Each call also moves the sidebar toward its target by the time since the previous call.
-    pub fn render(&mut self, ui: &mut egui::Ui) {
+    pub fn render(&mut self, ui: &mut egui::Ui, screen_rects: &[egui::Rect], window: usize) {
+        let window_rect = screen_rects[window];
         let now = Instant::now();
         let time_since_last_render = self
             .last_render
@@ -194,13 +199,18 @@ impl RenderState {
         }
 
         for positioned_lint in self.lints() {
-            draw_highlight(ui, &positioned_lint.rect, &positioned_lint.lint);
+            draw_highlight(
+                ui,
+                &to_window_space(&positioned_lint.rect, window_rect),
+                &positioned_lint.lint,
+            );
         }
 
         if let Some(index) = self.highlighted_lint
             && let Some(positioned_lint) = self.lints().get(index)
+            && popup_window(screen_rects, &positioned_lint.rect) == Some(window)
         {
-            let rect = positioned_lint.rect;
+            let rect = to_window_space(&positioned_lint.rect, window_rect);
             let lint = positioned_lint.lint.clone();
             let source_text = positioned_lint.source_text.clone();
 
@@ -287,6 +297,33 @@ fn rect_bounds(rect: &Rect) -> egui::Rect {
         egui::pos2(rect.x as f32, rect.y as f32),
         egui::vec2(rect.width as f32, rect.height as f32),
     )
+}
+
+/// Moves a screen-space rectangle into the coordinates of the window at `window_rect`, whose
+/// top-left corner egui draws at the origin.
+fn to_window_space(rect: &Rect, window_rect: egui::Rect) -> Rect {
+    Rect::new(
+        rect.x - window_rect.min.x as f64,
+        rect.y - window_rect.min.y as f64,
+        rect.width,
+        rect.height,
+    )
+}
+
+/// Picks the index of the window that draws the popup for the lint at `lint_rect`: the window that
+/// contains the lint's center, or the nearest window when the center is outside all of them.
+///
+/// Egui moves popups that would be outside a window back inside it, so exactly one window may draw
+/// the popup. When the center is on the edge between two windows, the first one is picked.
+fn popup_window(screen_rects: &[egui::Rect], lint_rect: &Rect) -> Option<usize> {
+    let center = rect_bounds(lint_rect).center();
+
+    screen_rects
+        .iter()
+        .map(|screen_rect| screen_rect.distance_sq_to_pos(center))
+        .enumerate()
+        .min_by(|(_, a), (_, b)| a.total_cmp(b))
+        .map(|(index, _)| index)
 }
 
 fn lint_kind_color32(lint_kind: LintKind) -> egui::Color32 {
