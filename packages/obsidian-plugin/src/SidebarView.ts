@@ -1,5 +1,7 @@
+import type { EditorView } from '@codemirror/view';
 import { type IconName, ItemView, Menu, setIcon, type WorkspaceLeaf } from 'obsidian';
 import type HarperPlugin from './index';
+import type { Diagnostic } from './lint';
 import { LINT_KIND_COLORS } from './lintKindColor';
 
 export class SidebarView extends ItemView {
@@ -48,7 +50,7 @@ export class SidebarView extends ItemView {
 		container.appendChild(listContainer);
 
 		this.registerEvent(
-			this.app.workspace.on('harper:lint-updated', (errors: any[], editorView: any) => {
+			this.app.workspace.on('harper:lint-updated', (errors, editorView) => {
 				listContainer.innerHTML = '';
 
 				if (!errors || errors.length === 0) {
@@ -89,7 +91,7 @@ function createTitle(text: string, color?: string): HTMLSpanElement {
 	return title;
 }
 
-function getSeverityColor(error: any) {
+function getSeverityColor(error: Diagnostic) {
 	// find card color
 	let severityColor = '';
 
@@ -99,15 +101,15 @@ function getSeverityColor(error: any) {
 		const harperClass = classes.find((c: string) => c.startsWith('harper-lintRange-'));
 		if (harperClass) {
 			const lintKind = harperClass.replace('harper-lintRange-', '');
-			if (LINT_KIND_COLORS?.[lintKind]) {
-				severityColor = LINT_KIND_COLORS[lintKind];
+			if (lintKind in LINT_KIND_COLORS) {
+				severityColor = LINT_KIND_COLORS[lintKind as keyof typeof LINT_KIND_COLORS];
 			}
 		}
 	}
 	return severityColor;
 }
 
-function createTitleDiv(error: any): HTMLDivElement {
+function createTitleDiv(error: Diagnostic): HTMLDivElement {
 	const titleDiv = document.createElement('div');
 	titleDiv.style.display = 'flex';
 	titleDiv.style.flexWrap = 'wrap';
@@ -144,7 +146,7 @@ function createTitleDiv(error: any): HTMLDivElement {
 						.setTitle('Ignore Diagnostic')
 						.setIcon('eye-off')
 						.onClick(() => {
-							error.ignore();
+							error.ignore?.();
 						});
 				});
 			}
@@ -154,7 +156,7 @@ function createTitleDiv(error: any): HTMLDivElement {
 						.setTitle('Disable Rule')
 						.setIcon('ban')
 						.onClick(() => {
-							error.disable();
+							error.disable?.();
 						});
 				});
 			}
@@ -168,7 +170,7 @@ function createTitleDiv(error: any): HTMLDivElement {
 	return titleDiv;
 }
 
-function getWordsArroundError(error: any, editorView: any) {
+function getWordsArroundError(error: Diagnostic, editorView: EditorView) {
 	const doc = editorView.state.doc;
 	const problemText = doc.sliceString(error.from, error.to);
 
@@ -211,7 +213,7 @@ function getWordsArroundError(error: any, editorView: any) {
 	return textContainer;
 }
 
-function getErrorActions(error: any, editorView: any): HTMLDivElement {
+function getErrorActions(error: Diagnostic, editorView: EditorView): HTMLDivElement {
 	if (error.actions && error.actions.length > 0) {
 		const actionConst = document.createElement('div');
 		actionConst.style.display = 'flex';
@@ -219,7 +221,7 @@ function getErrorActions(error: any, editorView: any): HTMLDivElement {
 		actionConst.style.gap = '6px';
 		actionConst.style.marginTop = '4px';
 
-		error.actions.forEach((action: any) => {
+		error.actions.forEach((action) => {
 			const btn = document.createElement('button');
 			btn.textContent = action.name;
 			btn.title = action.title;
@@ -238,7 +240,7 @@ function getErrorActions(error: any, editorView: any): HTMLDivElement {
 	return document.createElement('div');
 }
 
-function createErrorCard(error: any, editorView: any, listContainer: HTMLDivElement) {
+function createErrorCard(error: Diagnostic, editorView: EditorView, listContainer: HTMLDivElement) {
 	try {
 		const card = createCard();
 

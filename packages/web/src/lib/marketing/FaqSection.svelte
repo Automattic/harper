@@ -9,6 +9,7 @@ type FaqItem = {
 
 export let items: FaqItem[] = [];
 export let title = 'FAQs';
+export let id: string | undefined = undefined;
 export let intro = '';
 export let introHref = '';
 export let introLinkText = '';
@@ -21,7 +22,10 @@ $: innerClass =
 		: 'mx-auto max-w-180 px-4 text-center md:px-14';
 </script>
 
-<section class="border-t border-black/10 bg-cream py-20 dark:border-white/10 dark:bg-black">
+<section
+	{id}
+	class="border-t border-black/10 bg-cream py-20 dark:border-white/10 dark:bg-black"
+>
 	<div class={innerClass}>
 		<div>
 			<h2

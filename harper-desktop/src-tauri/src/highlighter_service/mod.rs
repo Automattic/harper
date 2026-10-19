@@ -14,6 +14,7 @@ use tokio::sync::Mutex;
 /// The service will sync the changes to the underlying highlighter process.
 pub struct HighlighterService {
     config: Arc<Mutex<Config>>,
+    app: tauri::AppHandle,
     worker: StdMutex<Option<HighlighterWorker>>,
 }
 
@@ -21,9 +22,10 @@ impl HighlighterService {
     /// Create a new highlighter process service, without starting it.
     /// The provided config pointer will be automatically synced to the new process when changes are
     /// made.
-    pub fn new(config: Arc<Mutex<Config>>) -> Self {
+    pub fn new(config: Arc<Mutex<Config>>, app: tauri::AppHandle) -> Self {
         Self {
             config,
+            app,
             worker: StdMutex::new(None),
         }
     }
@@ -40,7 +42,10 @@ impl HighlighterService {
             return Ok(true);
         }
 
-        *worker = Some(HighlighterWorker::spawn(self.config.clone())?);
+        *worker = Some(HighlighterWorker::spawn(
+            self.config.clone(),
+            self.app.clone(),
+        )?);
 
         Ok(true)
     }

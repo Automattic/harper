@@ -8,6 +8,13 @@ import useIgnoredLintState, { useIgnoreLint } from './useIgnoredLintState';
 import useLintConfig from './useLintConfig';
 import usePersonalDictionary from './usePersonalDictionary';
 
+/** Keep lints paired with their target and original source, even if the editor changes. */
+type LintResult = {
+	target: Element;
+	source: string;
+	lints: Lint[];
+};
+
 /**
  * Lint given elements and return the resulting error targets.
  * Provides a loading state as well.
@@ -22,7 +29,7 @@ export default function useLintBoxes(richTexts: RichText[]): [IgnorableLintBox[]
 	const ignoreLint = useIgnoreLint();
 
 	const [targetBoxes, setTargetBoxes] = useState<IgnorableLintBox[][]>([]);
-	const [lints, setLints] = useState<Lint[][]>([]);
+	const [lintResults, setLintResults] = useState<LintResult[]>([]);
 	const [loading, setLoading] = useState(true);
 
 	const updateLints = useCallback(async () => {
@@ -46,17 +53,16 @@ export default function useLintBoxes(richTexts: RichText[]): [IgnorableLintBox[]
 			await linter.importIgnoredLints(ignoreState);
 		}
 
-		// We assume that a given index always refers to the same rich text field.
 		const newLints = await Promise.all(
 			richTexts.map(async (richText) => {
-				const contents = richText.getTextContent();
+				const source = richText.getTextContent();
 
-				return await linter.lint(contents);
+				return { target: richText.getTargetElement(), source, lints: await linter.lint(source) };
 			}),
 		);
 
 		setLoading(false);
-		setLints(newLints);
+		setLintResults(newLints);
 	}, [richTexts, linter, config, ignoreState, personalDictionary, dialect]);
 
 	useEffect(() => {
@@ -88,14 +94,22 @@ export default function useLintBoxes(richTexts: RichText[]): [IgnorableLintBox[]
 		let running = true;
 
 		function onFrame() {
-			const lintBoxes = lints.map((lintForText, index) => {
-				const richText = richTexts[index];
-				return lintForText
+			if (!running) return;
+
+			const lintBoxes = richTexts.map((richText, index) => {
+				const result = lintResults[index];
+				if (
+					result?.target !== richText.getTargetElement() ||
+					result.source !== richText.getTextContent()
+				)
+					return [];
+
+				return result.lints
 					.flatMap((lint) => richText.computeLintBox(lint))
 					.map((box) => {
 						return {
 							...box,
-							ignoreLint: () => ignoreLint(box.lint),
+							ignoreLint: () => ignoreLint(result.source, box.lint),
 						};
 					});
 			});
@@ -112,7 +126,7 @@ export default function useLintBoxes(richTexts: RichText[]): [IgnorableLintBox[]
 		return () => {
 			running = false;
 		};
-	}, [lints, richTexts, ignoreLint]);
+	}, [lintResults, richTexts, ignoreLint]);
 
 	return [targetBoxes, loading];
 }
