@@ -55,7 +55,7 @@ impl ExprLinter for LittleKnown {
     }
 
     fn description(&self) -> &str {
-        "A linter skeleton for contributors to copy into `harper_core/src/linting/` and rename."
+        "Fixes nonstandard uses of `little known`."
     }
 }
 
