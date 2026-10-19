@@ -331,3 +331,53 @@ fn lint_kind_color32(lint_kind: LintKind) -> egui::Color32 {
 
     egui::Color32::from_rgb(color.r, color.g, color.b)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// A built-in display at the origin, with an external display to its left and above it.
+    const BUILT_IN: egui::Rect =
+        egui::Rect::from_min_max(egui::pos2(0.0, 0.0), egui::pos2(1512.0, 982.0));
+    const EXTERNAL: egui::Rect =
+        egui::Rect::from_min_max(egui::pos2(-3008.0, -392.0), egui::pos2(0.0, 1300.0));
+    const SCREENS: [egui::Rect; 2] = [BUILT_IN, EXTERNAL];
+
+    #[test]
+    fn to_window_space_moves_rect_by_window_origin() {
+        let rect = Rect::new(-2900.0, -300.0, 30.0, 12.0);
+
+        assert_eq!(
+            to_window_space(&rect, EXTERNAL),
+            Rect::new(108.0, 92.0, 30.0, 12.0)
+        );
+        assert_eq!(to_window_space(&rect, BUILT_IN), rect);
+    }
+
+    #[test]
+    fn popup_window_contains_lint() {
+        let on_built_in = Rect::new(100.0, 100.0, 30.0, 12.0);
+        let on_external = Rect::new(-2900.0, -300.0, 30.0, 12.0);
+
+        assert_eq!(popup_window(&SCREENS, &on_built_in), Some(0));
+        assert_eq!(popup_window(&SCREENS, &on_external), Some(1));
+    }
+
+    #[test]
+    fn popup_window_is_nearest_when_lint_center_is_off_screen() {
+        let below_built_in = Rect::new(100.0, 975.0, 30.0, 20.0);
+        let left_of_external = Rect::new(-3030.0, 100.0, 30.0, 12.0);
+
+        assert_eq!(popup_window(&SCREENS, &below_built_in), Some(0));
+        assert_eq!(popup_window(&SCREENS, &left_of_external), Some(1));
+        assert_eq!(popup_window(&[BUILT_IN], &left_of_external), Some(0));
+    }
+
+    #[test]
+    fn popup_window_picks_one_window_for_lint_on_shared_edge() {
+        let on_edge = Rect::new(-15.0, 100.0, 30.0, 12.0);
+
+        assert_eq!(popup_window(&SCREENS, &on_edge), Some(0));
+        assert_eq!(popup_window(&[EXTERNAL, BUILT_IN], &on_edge), Some(0));
+    }
+}
