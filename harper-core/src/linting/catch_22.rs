@@ -39,10 +39,10 @@ impl ExprLinter for Catch22 {
         Some(Lint {
             span: toks[0].span,
             lint_kind: LintKind::Malapropism,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
+            suggestions: Suggestion::replace_with_match_case_str(
                 "catch",
                 toks[0].span.get_content(src),
-            )],
+            ),
             message: "This idiom uses 'catch' instead of 'cache' or 'cash'.".to_owned(),
             ..Default::default()
         })

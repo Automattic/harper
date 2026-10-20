@@ -53,10 +53,7 @@ impl ExprLinter for Handful {
         Some(Lint {
             span,
             lint_kind: LintKind::BoundaryError,
-            suggestions: vec![Suggestion::replace_with_match_case(
-                "handful".chars().collect(),
-                template,
-            )],
+            suggestions: Suggestion::replace_with_match_case("handful".chars().collect(), template),
             message: "Write this quantity as the single word `handful`.".to_owned(),
             priority: 31,
         })

@@ -130,10 +130,10 @@ impl ExprLinter for EffectToAffect {
         Some(Lint {
             span: target.span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
+            suggestions: Suggestion::replace_with_match_case_str(
                 replacement,
                 target.get_ch(source),
-            )],
+            ),
             message:
                 "Use `affect` for the verb meaning to influence; `effect` usually names the result."
                     .into(),

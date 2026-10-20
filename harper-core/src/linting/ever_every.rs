@@ -43,10 +43,10 @@ impl ExprLinter for EverEvery {
         Some(Lint {
             span,
             lint_kind: LintKind::Typo,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 content[..content.len() - 1].to_vec(),
                 content,
-            )],
+            ),
             message: "Is this `every` a typo that should be `ever`?".to_owned(),
             ..Default::default()
         })

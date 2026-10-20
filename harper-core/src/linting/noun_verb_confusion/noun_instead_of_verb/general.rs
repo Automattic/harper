@@ -112,10 +112,7 @@ impl ExprLinter for GeneralNounInsteadOfVerb {
         Some(Lint {
             span: noun_tok.span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case(
-                verb.chars().collect(),
-                noun_chars,
-            )],
+            suggestions: Suggestion::replace_with_match_case(verb.chars().collect(), noun_chars),
             message: format!("`{noun_text}` is a noun, the verb should be `{verb}`."),
             priority: 63,
         })

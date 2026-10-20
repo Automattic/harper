@@ -83,7 +83,10 @@ impl ExprLinter for ModalSeem {
             suggestions: vec![
                 Suggestion::replace_with_match_case("seem".chars().collect(), original),
                 Suggestion::replace_with_match_case("be".chars().collect(), original),
-            ],
+            ]
+            .into_iter()
+            .flatten()
+            .collect(),
             message: "Swap `seen` for a linking verb when it follows a modal before an adjective."
                 .to_owned(),
             priority: 32,

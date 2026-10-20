@@ -25,10 +25,7 @@ impl ExprLinter for BareBones {
         Some(Lint {
             span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "bones",
-                span.get_content(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("bones", span.get_content(src)),
             message: format!(
                 "If this is the idiom meaning `minimal`, it should be plural `bare{}bones`",
                 if toks.get(1)?.kind.is_hyphen() {

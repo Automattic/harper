@@ -41,10 +41,7 @@ impl ExprLinter for InterestedIn {
         Some(Lint {
             span: prep_span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case(
-                "in".chars().collect(),
-                prep_chars,
-            )],
+            suggestions: Suggestion::replace_with_match_case("in".chars().collect(), prep_chars),
             message: "The correct preposition to use with `interested` is `in`.".to_owned(),
             ..Default::default()
         })

@@ -29,10 +29,7 @@ impl ExprLinter for GetPassGoPass {
         Some(Lint {
             span,
             lint_kind: LintKind::Grammar,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "past",
-                span.get_content(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("past", span.get_content(src)),
             message: "Use the preposition `past` here and not the verb `pass`.".to_owned(),
             ..Default::default()
         })

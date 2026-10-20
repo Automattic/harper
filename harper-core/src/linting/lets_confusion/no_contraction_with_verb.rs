@@ -82,7 +82,10 @@ impl ExprLinter for NoContractionWithVerb {
             suggestions: vec![
                 Suggestion::replace_with_match_case_str("let's", template),
                 Suggestion::replace_with_match_case_str("let us", template),
-            ],
+            ]
+            .into_iter()
+            .flatten()
+            .collect(),
             message: "To suggest an action, use 'let's' or 'let us'.".to_owned(),
             priority: 31,
         })

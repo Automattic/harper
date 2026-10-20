@@ -57,10 +57,7 @@ impl ExprLinter for ImplementIn {
         Some(Lint {
             span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "in",
-                span.get_content(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("in", span.get_content(src)),
             message: "Prefer `in` over `into` in this usage.".to_owned(),
             ..Default::default()
         })

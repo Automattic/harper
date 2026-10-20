@@ -103,10 +103,10 @@ impl ExprLinter for DayAndAge {
         Some(Lint {
             span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 replacement.chars().collect(),
                 span.get_content(src),
-            )],
+            ),
             message: "The correct idiom is `in this day and age`.".to_owned(),
             ..Default::default()
         })

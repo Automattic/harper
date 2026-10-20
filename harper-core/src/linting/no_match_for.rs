@@ -49,13 +49,13 @@ impl ExprLinter for NoMatchFor {
         let phrase_toks = &toks[2..];
         let phrase_span = phrase_toks.span()?;
 
-        let suggestion =
+        let suggestions =
             Suggestion::replace_with_match_case_str("no match for", phrase_span.get_content(src));
 
         Some(Lint {
             span: phrase_span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![suggestion],
+            suggestions,
             message: "If you mean the idiom, it's `no match for`.".to_owned(),
             priority: 55,
         })

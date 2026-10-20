@@ -85,6 +85,7 @@ impl ExprLinter for RedundantAdditiveAdverbs {
                     toks.span()?.get_content(src),
                 ))
             })
+            .flatten()
             .collect::<Vec<_>>();
 
         let message = format!(

@@ -78,10 +78,10 @@ impl ExprLinter for QuiteQuiet {
             return Some(Lint {
                 span: quite_span,
                 lint_kind: LintKind::Typo,
-                suggestions: vec![Suggestion::replace_with_match_case(
+                suggestions: Suggestion::replace_with_match_case(
                     "quiet".chars().collect(),
                     quite_span.get_content(src),
-                )],
+                ),
                 message: "‘Quite’ might be a typo here. It means ‘rather’ but you might be trying to say ‘quiet’ (not noisy).".to_owned(),
                 priority: 63,
             });
@@ -91,10 +91,10 @@ impl ExprLinter for QuiteQuiet {
             return Some(Lint {
                 span: quiet_span,
                 lint_kind: LintKind::Typo,
-                suggestions: vec![Suggestion::replace_with_match_case(
+                suggestions: Suggestion::replace_with_match_case(
                     "quite".chars().collect(),
                     quiet_span.get_content(src),
-                )],
+                ),
                 message: "‘Quiet’ might be a typo here. It means ‘not noisy’ but you might be trying to say ‘quite’ (rather).".to_owned(),
                 priority: 63,
             });
@@ -104,10 +104,10 @@ impl ExprLinter for QuiteQuiet {
             return Some(Lint {
                 span: quiet_span,
                 lint_kind: LintKind::Typo,
-                suggestions: vec![Suggestion::replace_with_match_case(
+                suggestions: Suggestion::replace_with_match_case(
                     "quite".chars().collect(),
                     quiet_span.get_content(src),
-                )],
+                ),
                 message: "‘Quiet’ might be a typo here. It means ‘not noisy’ but you might be trying to say ‘quite’ (rather).".to_owned(),
                 priority: 63,
             });

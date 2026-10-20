@@ -62,10 +62,7 @@ impl ExprLinter for ReasonForDoing {
         Some(Lint {
             span: ofspan,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "for",
-                ofspan.get_content(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("for", ofspan.get_content(src)),
             message: "Use 'for' instead of 'of' with 'reason' and progressive verbs.".to_owned(),
             ..Default::default()
         })

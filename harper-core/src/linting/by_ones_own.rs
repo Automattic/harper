@@ -80,6 +80,7 @@ impl ExprLinter for ByOnesOwn {
                     .collect::<Vec<char>>();
                 Suggestion::replace_with_match_case(by_whoseself, span.get_content(src))
             }))
+            .flatten()
             .collect();
 
         Some(Lint {

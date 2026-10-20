@@ -48,10 +48,7 @@ impl ExprLinter for TakeSerious {
 
         let sugg_template = whole_phrase_span.get_content(source);
 
-        let suggestions = vec![Suggestion::replace_with_match_case(
-            sugg_value,
-            sugg_template,
-        )];
+        let suggestions = Suggestion::replace_with_match_case(sugg_value, sugg_template);
 
         Some(Lint {
             span: whole_phrase_span,

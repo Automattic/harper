@@ -729,7 +729,7 @@ impl ExprLinter for Regionalisms {
 
         let suggestions = other_terms
             .iter()
-            .map(|term| Suggestion::replace_with_match_case_str(term, flagged_term_chars))
+            .flat_map(|term| Suggestion::replace_with_match_case_str(term, flagged_term_chars))
             .collect::<Vec<_>>();
 
         let message = if other_terms.len() == 1 {

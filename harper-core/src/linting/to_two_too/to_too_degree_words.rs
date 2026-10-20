@@ -49,10 +49,7 @@ impl ExprLinter for ToTooDegreeWords {
         Some(Lint {
             span: to_tok.span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "too",
-                to_tok.get_ch(source),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("too", to_tok.get_ch(source)),
             message: "Use `too` here to mean ‘also’ or an excessive degree.".to_owned(),
             ..Default::default()
         })

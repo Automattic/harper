@@ -91,7 +91,7 @@ impl<D: Dictionary + 'static> ExprLinter for TransposedSpace<D> {
 
         let suggestions = values
             .iter()
-            .map(|value| {
+            .flat_map(|value| {
                 Suggestion::replace_with_match_case(
                     value.chars().collect(),
                     toks_span.get_content(src),

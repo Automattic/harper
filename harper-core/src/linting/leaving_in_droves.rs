@@ -29,10 +29,7 @@ impl ExprLinter for LeavingInDroves {
         Some(Lint {
             span,
             lint_kind: LintKind::Eggcorn,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "droves",
-                span.get_content(_src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("droves", span.get_content(_src)),
             message: "`Drones` is an eggcorn. The correct word is `droves`.".to_owned(),
             ..Default::default()
         })

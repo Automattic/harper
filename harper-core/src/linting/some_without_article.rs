@@ -30,9 +30,12 @@ impl ExprLinter for SomeWithoutArticle {
         let some_chars = matched_tokens.last()?.get_ch(source);
 
         let suggestions = vec![
-            Suggestion::ReplaceWith(some_chars.to_vec()),
+            vec![Suggestion::ReplaceWith(some_chars.to_vec())],
             Suggestion::replace_with_match_case("the same".chars().collect(), template),
-        ];
+        ]
+        .into_iter()
+        .flatten()
+        .collect();
 
         Some(Lint {
             span,

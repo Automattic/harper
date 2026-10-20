@@ -42,10 +42,10 @@ impl ExprLinter for WellEducated {
         Some(Lint {
             span,
             lint_kind: LintKind::Miscellaneous,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 "well-educated".chars().collect(),
                 original,
-            )],
+            ),
             message: "Prefer `well-educated` for this compound.".into(),
             priority: 35,
         })

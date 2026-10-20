@@ -76,7 +76,7 @@ fn to_lint(toks: &[Token], src: &[char], pref: Prefer) -> Option<Lint> {
         return Some(Lint {
             span: nountok.span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
+            suggestions: Suggestion::replace_with_match_case_str(
                 match (&pref, is_plural) {
                     (Prefer::Circle, false) => "circle",
                     (Prefer::Circle, true) => "circles",
@@ -85,7 +85,7 @@ fn to_lint(toks: &[Token], src: &[char], pref: Prefer) -> Option<Lint> {
                     _ => unreachable!(),
                 },
                 nountok.get_ch(src),
-            )],
+            ),
             message: if pref == Prefer::Circle {
                 "This idiom originally used `circle`, not `cycle`".to_owned()
             } else {
@@ -113,7 +113,7 @@ fn to_lint(toks: &[Token], src: &[char], pref: Prefer) -> Option<Lint> {
         return Some(Lint {
             span: tokspan,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
+            suggestions: Suggestion::replace_with_match_case_str(
                 match (&pref, is_plural) {
                     (Prefer::Circle, false) => "vicious circle",
                     (Prefer::Circle, true) => "vicious circles",
@@ -122,7 +122,7 @@ fn to_lint(toks: &[Token], src: &[char], pref: Prefer) -> Option<Lint> {
                     _ => return None, // Unreachable, but we don't risk crashing the LSP.
                 },
                 tokspan.get_content(src),
-            )],
+            ),
             message,
             ..Default::default()
         });
@@ -133,10 +133,7 @@ fn to_lint(toks: &[Token], src: &[char], pref: Prefer) -> Option<Lint> {
         return Some(Lint {
             span: adjtok.span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "vicious",
-                adjtok.get_ch(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("vicious", adjtok.get_ch(src)),
             message:
                 "The idiom uses the word `vicious`, not `viscous`, which describes thick liquids."
                     .to_owned(),

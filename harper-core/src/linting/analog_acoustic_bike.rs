@@ -49,7 +49,7 @@ impl ExprLinter for AnalogAcousticBike {
             ]
             .into_iter()
             .filter(|(add_ws, _, _)| *add_ws)
-            .map(|(_, qualifier, cycle)| {
+            .flat_map(|(_, qualifier, cycle)| {
                 Suggestion::replace_with_match_case(
                     join(qualifier, cycle),
                     full_span.get_content(src),

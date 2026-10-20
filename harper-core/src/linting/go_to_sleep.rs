@@ -53,10 +53,7 @@ impl ExprLinter for GoToSleep {
         Some(Lint {
             span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "to",
-                span.get_content(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("to", span.get_content(src)),
             message: "Use `go to sleep` instead of `go into sleep`.".to_owned(),
             ..Default::default()
         })

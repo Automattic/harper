@@ -220,14 +220,14 @@ impl ExprLinter for AvoidCurses {
 
         let m_suggestions: Vec<Suggestion> = morpheme_replacements
             .into_iter()
-            .map(|replacement| {
+            .flat_map(|replacement| {
                 Suggestion::replace_with_match_case(replacement.chars().collect(), bad_word_chars)
             })
             .collect();
 
         let w_suggestions: Vec<Suggestion> = word_replacements
             .into_iter()
-            .map(|replacement| {
+            .flat_map(|replacement| {
                 Suggestion::replace_with_match_case(replacement.chars().collect(), bad_word_chars)
             })
             .collect();

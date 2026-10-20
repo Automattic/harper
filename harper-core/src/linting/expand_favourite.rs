@@ -39,10 +39,7 @@ impl ExprLinter for ExpandFavourite {
             (_, true) => "favourites",
         };
 
-        let suggestions = vec![Suggestion::replace_with_match_case_str(
-            expanded,
-            span.get_content(src),
-        )];
+        let suggestions = Suggestion::replace_with_match_case_str(expanded, span.get_content(src));
         let message = format!("Use `{expanded}` instead of `{abbr}`.");
 
         Some(Lint {

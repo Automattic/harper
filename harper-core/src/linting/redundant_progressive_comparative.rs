@@ -52,10 +52,10 @@ impl ExprLinter for RedundantProgressiveComparative {
         Some(Lint {
             span,
             lint_kind: LintKind::Redundancy,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
+            suggestions: Suggestion::replace_with_match_case_str(
                 replacement,
                 span.get_content(src),
-            )],
+            ),
             message: message.to_owned(),
             priority: 31,
         })

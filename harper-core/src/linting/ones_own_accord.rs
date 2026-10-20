@@ -36,10 +36,7 @@ impl ExprLinter for OnesOwnAccord {
         Some(Lint {
             span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "of",
-                span.get_content(source),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("of", span.get_content(source)),
             message: "The correct preposition is `of`.".to_owned(),
             ..Default::default()
         })

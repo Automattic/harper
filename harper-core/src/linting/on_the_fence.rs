@@ -59,10 +59,7 @@ impl ExprLinter for OnTheFence {
         Some(Lint {
             span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "the",
-                span.get_content(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("the", span.get_content(src)),
             message: "If this is the idiom meaning `undecided`, it should be `on the fence`."
                 .to_owned(),
             ..Default::default()

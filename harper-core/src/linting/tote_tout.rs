@@ -67,10 +67,7 @@ impl ExprLinter for ToteTout {
             _ => return None,
         };
 
-        let suggestions = vec![Suggestion::replace_with_match_case_str(
-            corr,
-            span.get_content(src),
-        )];
+        let suggestions = Suggestion::replace_with_match_case_str(corr, span.get_content(src));
 
         Some(Lint {
             span,

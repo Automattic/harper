@@ -122,7 +122,7 @@ impl<D: Dictionary> ExprLinter for MassPlurals<D> {
 
         let suggestions: Vec<Suggestion> = valid_singulars
             .iter()
-            .map(|sing| {
+            .flat_map(|sing| {
                 Suggestion::replace_with_match_case(sing.clone().into(), span.get_content(src))
             })
             .collect();

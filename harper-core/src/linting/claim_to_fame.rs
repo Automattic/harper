@@ -62,10 +62,7 @@ impl ExprLinter for ClaimToFame {
         Some(Lint {
             span,
             lint_kind: LintKind::Eggcorn,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "to",
-                span.get_content(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("to", span.get_content(src)),
             message: "The correct idiom is `claim to fame`.".to_owned(),
             ..Default::default()
         })

@@ -35,10 +35,7 @@ impl ExprLinter for ThriveOn {
         Some(Lint {
             span,
             lint_kind: LintKind::Style,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "on",
-                span.get_content(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("on", span.get_content(src)),
             message: "Consider using `thrive on` instead of `thrive off` or `thrive off of`."
                 .to_owned(),
             ..Default::default()

@@ -38,10 +38,7 @@ impl ExprLinter for HavePronoun {
         Some(Lint {
             span,
             lint_kind: LintKind::Agreement,
-            suggestions: vec![Suggestion::replace_with_match_case(
-                "have".chars().collect(),
-                original,
-            )],
+            suggestions: Suggestion::replace_with_match_case("have".chars().collect(), original),
             message: "Use `have` with first-person singular or plural pronouns.".to_owned(),
             priority: 31,
         })

@@ -48,7 +48,10 @@ impl ExprLinter for SomethingIs {
             suggestions: vec![
                 Suggestion::replace_with_match_case(contraction, original),
                 Suggestion::replace_with_match_case(expanded, original),
-            ],
+            ]
+            .into_iter()
+            .flatten()
+            .collect(),
             message: "Prefer the contraction or full `is` rather than pluralizing this pronoun."
                 .into(),
             priority: 31,

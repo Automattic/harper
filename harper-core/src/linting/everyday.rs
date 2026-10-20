@@ -173,10 +173,10 @@ impl ExprLinter for Everyday {
         Some(Lint {
             span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
+            suggestions: Suggestion::replace_with_match_case_str(
                 replacement,
                 span.get_content(src),
-            )],
+            ),
             message: format!("You probably mean the {pos} `{replacement}` here."),
             priority: 31,
         })

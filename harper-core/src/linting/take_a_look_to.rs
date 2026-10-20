@@ -67,10 +67,10 @@ impl ExprLinter for TakeALookTo {
         Some(Lint {
             lint_kind: LintKind::Usage,
             span: to_span,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 vec!['a', 't'],
                 to_span.get_content(src),
-            )],
+            ),
             message: "This phrase uses `to` rather than `at`".to_owned(),
             ..Default::default()
         })

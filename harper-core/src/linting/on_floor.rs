@@ -71,10 +71,10 @@ impl ExprLinter for OnFloor {
         Some(Lint {
             lint_kind: LintKind::WordChoice,
             span,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
+            suggestions: Suggestion::replace_with_match_case_str(
                 "on",
                 span.get_content(source),
-            )],
+            ),
             message: format!(
                 "Corrects `{incorrect_preposition}` to `on` when talking about position inside a building",
             )

@@ -36,7 +36,7 @@ impl ExprLinter for OverTheyreToThere {
         Some(Lint {
             span: offender.span,
             lint_kind: LintKind::Grammar,
-            suggestions: vec![Suggestion::replace_with_match_case_str("there", template)],
+            suggestions: Suggestion::replace_with_match_case_str("there", template),
             message: "Did you mean `there`?".to_owned(),
             priority: 31,
         })

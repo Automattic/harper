@@ -66,7 +66,10 @@ impl ExprLinter for TheMy {
         let suggestions = vec![
             Suggestion::replace_with_match_case(possessive.to_vec(), span_content),
             Suggestion::replace_with_match_case("the".chars().collect(), span_content),
-        ];
+        ]
+        .into_iter()
+        .flatten()
+        .collect();
 
         Some(Lint {
             span,

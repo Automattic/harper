@@ -136,10 +136,10 @@ impl ExprLinter for ItsPossessive {
         Some(Lint {
             span,
             lint_kind: LintKind::Agreement,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
+            suggestions: Suggestion::replace_with_match_case_str(
                 "its",
                 span.get_content(source),
-            )],
+            ),
             message: "Use the possessive pronoun `its` (without an apostrophe) to show ownership. The word `it's` (with an apostrophe) is a contraction of 'it is' or 'it has' and should not be used to indicate possession.".to_owned(),
             priority: 31,
         })

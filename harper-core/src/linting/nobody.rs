@@ -45,10 +45,10 @@ impl ExprLinter for Nobody {
         Some(Lint {
             span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 "nobody".chars().collect(),
                 orig_chars,
-            )],
+            ),
             message: format!("Did you mean the closed compound `{}`?", "nobody"),
             ..Default::default()
         })

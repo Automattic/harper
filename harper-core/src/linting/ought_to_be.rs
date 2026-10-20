@@ -67,10 +67,7 @@ impl ExprLinter for OughtToBe {
         Some(Lint {
             span: replace_span,
             lint_kind: LintKind::Eggcorn,
-            suggestions: vec![Suggestion::replace_with_match_case(
-                "ought".chars().collect(),
-                original,
-            )],
+            suggestions: Suggestion::replace_with_match_case("ought".chars().collect(), original),
             message: "Did you mean `ought to be` (expressing expectation or obligation)?"
                 .to_owned(),
             priority: 31,

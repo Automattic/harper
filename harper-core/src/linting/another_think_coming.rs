@@ -30,10 +30,10 @@ impl ExprLinter for AnotherThinkComing {
         Some(Lint {
             span: toks[2..].span()?,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
+            suggestions: Suggestion::replace_with_match_case_str(
                 "another think coming",
                 toks.span()?.get_content(src),
-            )],
+            ),
             message: "Corrects `another thing coming` to `another think coming`".to_owned(),
             priority: 63,
         })

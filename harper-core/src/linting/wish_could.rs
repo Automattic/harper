@@ -54,10 +54,10 @@ impl ExprLinter for WishCould {
         Some(Lint {
             span: can_span,
             lint_kind: LintKind::Grammar,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
+            suggestions: Suggestion::replace_with_match_case_str(
                 "could",
                 can_span.get_content(src),
-            )],
+            ),
             message: "Use 'could' instead of 'can' after 'wish'.".to_owned(),
             ..Default::default()
         })

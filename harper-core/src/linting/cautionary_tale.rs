@@ -36,10 +36,10 @@ impl ExprLinter for CautionaryTale {
         Some(Lint {
             span: tail_span,
             lint_kind: LintKind::Miscellaneous,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 ['t', 'a', 'l', 'e'].to_vec(),
                 tail_text,
-            )],
+            ),
             message: "Did you mean `tale` (story)?".to_owned(),
             priority: 31,
         })

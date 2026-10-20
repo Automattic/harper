@@ -50,10 +50,7 @@ impl ExprLinter for FreePredicate {
         Some(Lint {
             span: offending.span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "free",
-                offending.get_ch(source),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("free", offending.get_ch(source)),
             message: "Use `free` here to show that something costs nothing.".to_owned(),
             priority: 38,
         })

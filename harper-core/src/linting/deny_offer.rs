@@ -35,7 +35,7 @@ impl ExprLinter for DenyOffer {
 
         let suggestions = corrections
             .iter()
-            .map(|correction| {
+            .flat_map(|correction| {
                 Suggestion::replace_with_match_case_str(correction, span.get_content(source))
             })
             .collect();

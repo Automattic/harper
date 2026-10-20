@@ -86,10 +86,10 @@ impl ExprLinter for BeAdjectiveLinter {
         Some(Lint {
             span: wtok.span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
+            suggestions: Suggestion::replace_with_match_case_str(
                 self.adjective,
                 wtok.span.get_content(src),
-            )],
+            ),
             message: self.message.to_owned(),
             ..Default::default()
         })

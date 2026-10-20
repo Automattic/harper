@@ -88,7 +88,7 @@ impl ExprLinter for VeryLess {
         };
 
         let suggestions = corrections
-            .map(|c| Suggestion::replace_with_match_case(c, span.get_content(src)))
+            .flat_map(|c| Suggestion::replace_with_match_case(c, span.get_content(src)))
             .collect();
 
         Some(Lint {

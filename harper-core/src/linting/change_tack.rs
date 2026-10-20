@@ -52,10 +52,10 @@ impl ExprLinter for ChangeTack {
         Some(Lint {
             span: tact_span,
             lint_kind: LintKind::Eggcorn,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 ['t', 'a', 'c', 'k'].to_vec(),
                 tact_chars,
-            )],
+            ),
             message: "A change in direction or approach is a change of `tack`. Not `tact` (or `tacks` or `tacts`).".to_owned(),
             priority: 32,
         })

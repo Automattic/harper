@@ -50,10 +50,7 @@ impl ExprLinter for ByTheBook {
         Some(Lint {
             span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "book",
-                span.get_content(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("book", span.get_content(src)),
             message: "Did you mean the idiom `by the book`?".to_owned(),
             ..Default::default()
         })

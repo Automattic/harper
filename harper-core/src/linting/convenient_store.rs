@@ -141,10 +141,8 @@ impl ExprLinter for ConvenientStore {
 
         let span = toks[0].span;
         let lint_kind = LintKind::Eggcorn;
-        let suggestions = vec![Suggestion::replace_with_match_case_str(
-            "convenience",
-            span.get_content(src),
-        )];
+        let suggestions =
+            Suggestion::replace_with_match_case_str("convenience", span.get_content(src));
         let message = "Did you mean `convenience store`?".to_owned();
         Some(Lint {
             span,

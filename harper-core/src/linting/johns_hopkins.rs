@@ -37,7 +37,7 @@ impl ExprLinter for JohnsHopkins {
         Some(Lint {
             span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case_str("Johns", template)],
+            suggestions: Suggestion::replace_with_match_case_str("Johns", template),
             message: "Use `Johns Hopkins` for this name.".to_owned(),
             priority: 31,
         })

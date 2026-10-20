@@ -33,10 +33,10 @@ impl ExprLinter for WasAloud {
         Some(Lint {
             span: matched_tokens.span()?,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 format!("{verb} allowed").chars().collect(),
                 matched_tokens[0].get_ch(source),
-            )],
+            ),
             message: format!("Did you mean `{verb} allowed`?"),
             priority: 31,
         })

@@ -49,10 +49,10 @@ impl<D: Dictionary> ExprLinter for BarelyUn<D> {
         Some(Lint {
             span,
             lint_kind: LintKind::Miscellaneous, // as per `Oxymorons`
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 correction.to_vec(),
                 span.get_content(src),
-            )],
+            ),
             message: "Using `barely` with a negative adjective is a kind of double negative"
                 .to_owned(),
             ..Default::default()
