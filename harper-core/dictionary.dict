@@ -16650,6 +16650,7 @@ caption/~NSgVdG
 captious/JYp
 captiousness/Ng
 captivate/VdSGJn
+captivatingly/R
 captivation/Ng
 captivator/NSg
 captive/~NSgJV
@@ -17091,7 +17092,7 @@ centavo/NSg
 centenarian/NgSJ
 centenary/~JNSgV
 centennial/~JYNgS
-center/~NgJVdG<
+center/~NgJVdGe<
 centerboard/NSg<
 centerfold/NgS<
 centerpiece/~NgS<
@@ -17114,7 +17115,7 @@ centrality/Ng
 centralization/Nge
 centralize/VGdSe
 centralizer/NgS
-centre/NgSVGd!@_₹
+centre/NgSVGde!@_₹
 centre-left/NgS!@_₹
 centre-left/J!@_₹
 centre-right/NgS!@_₹
@@ -22067,6 +22068,7 @@ documented/~VU
 dodder/VdGSNg
 doddery/J
 doddle/NV
+dodecahedron/NgS
 dodge/~Vd>GSNgJZ
 dodgem/NS
 dodger/~Ng
@@ -25624,6 +25626,8 @@ follow/~Vd>GSNZz
 follower/~NgS
 following/~JPNwgSV
 followup/NgS
+follow-up/JNgS
+follow up/V/
 folly/~NSgV
 foment/VGdSN
 fomentation/Nmg
@@ -29549,6 +29553,7 @@ iconoclasm/Ng
 iconoclast/~NSg
 iconoclastic/J
 iconography/~Nwg
+icosahedron/NgS
 ictus/Ng
 icy/~J^>p
 id/~NSgIY
@@ -34955,6 +34960,7 @@ moi/~I
 moiety/NSg
 moil/VdGSNg
 moire/NSg
+moissanite/Nmg
 moist/~J^Y>pNVXn
 moisten/Vd>GZ
 moistener/NgS
@@ -36990,6 +36996,7 @@ ochre/NwgSJV!@_₹
 ocker/NSVJ
 octagon/~NgS
 octagonal/~J
+octahedron/NgS
 octal/NJ
 octane/~NwgS
 octave/~NgSVJ
@@ -40026,8 +40033,9 @@ polygon/~NSg
 polygonal/~J
 polygraph/N0gVGd
 polygraphs/N9V
+polyhedra/N9
 polyhedral/~J
-polyhedron/~NSg
+polyhedron/~N0Sg
 polymath/~N0g
 polymaths/N9
 polymer/~NwSg
@@ -40037,9 +40045,11 @@ polymerisation/Nmg!_₹
 polymerise/VGdS!_₹
 polymerization/~Nmg
 polymerize/VGdS
+polymorph/N0g
 polymorphic/J
 polymorphism/NmgS
 polymorphous/J
+polymorphs/N9
 polynomial/~NgSJ
 polyp/NgS
 polyphonic/~J
@@ -48346,7 +48356,7 @@ sussed out/V†
 susses out/V†
 sussing out/V†
 sustain/~VdGSNB
-sustainability/~Nmg
+sustainability/~NmgU
 sustainable/~JNU
 sustainably/Ry
 sustenance/Ng
@@ -53918,7 +53928,8 @@ zipper/~NgSVdG
 zipping/V6U
 zippy/J^>
 zircon/NgS
-zirconium/~Ng
+zirconia/Nmg
+zirconium/~Nmg
 zit/NSg
 zither/NgSV
 zloty/NSg
@@ -54283,6 +54294,12 @@ Logotherapy/Sg
 Longreads/Og
 Lua/Og              # programming language
 LuaTeX/Og           # TeX-based typesetting engine
+M1                  # Apple Silicon
+M2                  # Apple Silicon
+M3                  # Apple Silicon
+M4                  # Apple Silicon
+M5                  # Apple Silicon
+M6                  # Apple Silicon
 MAGA/ONwgS
 MCP/Ng              # model context protocol
 MMO/NgS             # massively multiplayer online
@@ -54330,6 +54347,7 @@ NTP/N               # network time protocol
 NYTimes/Sg
 NYU/Og
 NaN/NgS
+Neo/ONSg            # Apple Mac
 Neo4J/ONg
 Neovim/g            # code editor
 NetBSD/Og           # operating system
@@ -54408,6 +54426,7 @@ RL/Nmg              # reinforcement learning
 RNN/NgS             # recurrent neural network
 RPC/ONSg            # remote procedure call
 RPG/NgS             # role-playing game
+RTOS/N              # real-time operating system
 RTX/NSg
 Raytheon/Og
 React Native/Og     # framework

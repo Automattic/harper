@@ -332,7 +332,9 @@ pub fn lint_group() -> LintGroup {
                 ("a certain extend", "a certain extent"),
                 ("to an extend", "to an extent"),
                 ("to some extend", "to some extent"),
-                ("to the extend that", "to the extent that")
+                ("to the extend that", "to the extent that"),
+                ("greater extend", "greater extent"),
+                ("lesser extend", "lesser extent")
             ],
             "Use `extent` for the noun and `extend` for the verb.",
             "Corrects `extend` to `extent` when the context is a noun.",
@@ -688,6 +690,15 @@ pub fn lint_group() -> LintGroup {
             "Are you confusing `set up` and `set a bad example`? The latter does not use the word `up`.",
             "Corrects `set up a bad example` to `set a bad example`.",
             LintKind::Usage
+        ),
+        "Skyrocket" => (
+            &[
+                ("sky rocketed", "skyrocketed"),
+                ("sky rocketing", "skyrocketing"),
+            ],
+            "Did you mean the closed compound `skyrocket`?",
+            "Looks for incorrect spacing inside the closed compound `skyrocket`.",
+            LintKind::Miscellaneous
         ),
         "SubjectAndObjectPronoun" => (
             &[

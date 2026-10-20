@@ -36,6 +36,7 @@ pub fn lint_group() -> LintGroup {
         "Everyone"        => (&["every one"][..], "everyone"),
         "Everywhere"      => (&["every where"][..], "everywhere"),
         "Furthermore"     => (&["further more"][..], "furthermore"),
+        "Guesswork"       => (&["guess work"][..], "guesswork"),
         "Henceforth"      => (&["hence forth"][..], "henceforth"),
         "However"         => (&["how ever"][..], "however"),
         "Insofar"         => (&["in so far"][..], "insofar"),
@@ -60,6 +61,7 @@ pub fn lint_group() -> LintGroup {
         "Nothing"         => (&["no thing"][..], "nothing"),
         "Notwithstanding" => (&["not with standing"][..], "notwithstanding"),
         "Nowhere"         => (&["no where"][..], "nowhere"),
+        "Oftentimes"      => (&["often times"][..], "oftentimes"),
         "Overall"         => (&["over all"][..], "overall"),
         "Overclocking"    => (&["over clocking"][..], "overclocking"),
         "Overload"        => (&["over load"][..], "overload"),
@@ -396,6 +398,24 @@ mod tests {
             "But the trade off was that specific details about the invention, how it worked and how it's made were entered openly for anyone to look up.",
             lint_group(),
             "But the tradeoff was that specific details about the invention, how it worked and how it's made were entered openly for anyone to look up.",
+        );
+    }
+
+    #[test]
+    fn guesswork() {
+        assert_suggestion_result(
+            "Yes this is guess work and we need more evidence of the dangers but at the same time we need evidence of safety.",
+            lint_group(),
+            "Yes this is guesswork and we need more evidence of the dangers but at the same time we need evidence of safety.",
+        );
+    }
+
+    #[test]
+    fn oftentimes() {
+        assert_suggestion_result(
+            "the rust compiler is fast, but often times it has to perform a lot of unnecessary checks because crates contain more stuff than needed",
+            lint_group(),
+            "the rust compiler is fast, but oftentimes it has to perform a lot of unnecessary checks because crates contain more stuff than needed",
         );
     }
 }
