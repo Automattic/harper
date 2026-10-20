@@ -217,6 +217,7 @@ use super::open_the_light::OpenTheLight;
 use super::orthographic_consistency::OrthographicConsistency;
 use super::ought_to_be::OughtToBe;
 use super::out_of_date::OutOfDate;
+use super::out_of_outside_the_box::OutOfOutsideTheBox;
 use super::out_of_the_window::OutOfTheWindow;
 use super::over_plus::OverPlus;
 use super::oxford_commas::{NoOxfordComma, OxfordComma};
@@ -843,6 +844,7 @@ impl LintGroup {
         insert_expr_rule!(OrthographicConsistency);
         insert_expr_rule!(OughtToBe);
         insert_expr_rule!(OutOfDate);
+        insert_expr_rule!(OutOfOutsideTheBox);
         insert_expr_rule_with_dialect!(OutOfTheWindow);
         insert_expr_rule!(OverPlus);
         insert_struct_rule!(OxfordComma);
