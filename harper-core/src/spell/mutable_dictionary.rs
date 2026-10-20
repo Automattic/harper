@@ -463,6 +463,14 @@ mod tests {
     }
 
     #[test]
+    fn trilemma_in_curated_dictionary() {
+        let dict = MutableDictionary::curated();
+
+        assert!(dict.contains_word_str("trilemma"));
+        assert!(dict.contains_word_str("trilemmas"));
+    }
+
+    #[test]
     fn gets_prefixes_as_expected() {
         let mut dict = MutableDictionary::new();
         dict.append_word_str("predict", DictWordMetadata::default());

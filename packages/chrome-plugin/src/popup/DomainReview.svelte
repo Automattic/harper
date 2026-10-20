@@ -10,6 +10,7 @@ let {
 }: { domain: string; works: boolean; feedback: string; onSubmit: () => void } = $props();
 
 let submitting = $state(false);
+let successful = $state(false);
 
 async function handleSubmit(event: SubmitEvent) {
 	event.preventDefault();
@@ -29,6 +30,7 @@ async function handleSubmit(event: SubmitEvent) {
 
 	if (success) {
 		onSubmit();
+		successful = true;
 	}
 }
 </script>
@@ -72,7 +74,7 @@ async function handleSubmit(event: SubmitEvent) {
 			/>
 
 			<div class="flex items-center justify-between pt-2">
-				<Button type="submit" disabled={submitting}>Submit</Button>
+				<Button state={submitting ? (successful ? "success" : "loading") : "idle"} type="submit" disabled={submitting}>Submit</Button>
 			</div>
 		</div>
 	</form>
