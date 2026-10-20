@@ -73,6 +73,12 @@ impl FlatConfig {
         }
     }
 
+    /// Enable a rule and disable its `OneOfMany` alternative.
+    pub fn set_rule_pair(&mut self, on_key: impl ToString, off_key: impl ToString) {
+        self.set_rule_enabled(on_key, true);
+        self.set_rule_enabled(off_key, false);
+    }
+
     pub fn is_rule_enabled(&self, key: &str) -> bool {
         self.inner.get(key).cloned().flatten().unwrap_or(false)
     }
