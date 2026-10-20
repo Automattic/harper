@@ -73,6 +73,7 @@ create_test!(complex_gradle_build.gradle, 1);
 create_test!(complex_groovy_strings_regex.groovy, 1);
 create_test!(issue_1097.lua, 0);
 create_test!(basic.clj, 12);
+create_test!(mean.r, 1);
 
 // Checks that some comments are masked out
 create_test!(ignore_comments.rs, 1);

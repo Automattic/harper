@@ -61,6 +61,7 @@
 		"onLanguage:plaintext",
 		"onLanguage:python",
 		"onLanguage:quarto",
+		"onLanguage:r",
 		"onLanguage:ruby",
 		"onLanguage:rust",
 		"onLanguage:scala",
