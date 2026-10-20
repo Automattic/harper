@@ -8,6 +8,7 @@
 	"files": {
 		"ignoreUnknown": true,
 		"includes": [
+			".buildkite/**/*.cjs",
 			"**/packages/**/*",
 			"**/harper-desktop/**/*",
 			"**/*.json",

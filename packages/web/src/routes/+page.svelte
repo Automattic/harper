@@ -343,6 +343,7 @@ onMount(() => {
 	</section>
 
 	<FaqSection
+		id="faqs"
 		items={faqs}
 		title="Questions, answered."
 		intro="Don’t see yours?"

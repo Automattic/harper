@@ -13,7 +13,7 @@ function hasProgram(program) {
 
 if (hasProgram('vglrun')) {
 	console.log('Has vglrun');
-	spawnSync(`vglrun -d :0 -- ${chromiumExecutablePath} ${args}`, {
+	spawnSync(`vglrun -d "$DISPLAY" -- ${chromiumExecutablePath} ${args}`, {
 		stdio: [0, 1, 2, 3, 4],
 		shell: true,
 	});
