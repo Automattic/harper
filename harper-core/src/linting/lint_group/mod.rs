@@ -31,6 +31,7 @@ use super::apart_from::ApartFrom;
 use super::arrive_to::ArriveTo;
 use super::as_how::AsHow;
 use super::as_to_interrogative::AsToInterrogative;
+use super::asap::AsSoonAsPossible;
 use super::ask_no_preposition::AskNoPreposition;
 use super::aspire_to::AspireTo;
 use super::avoid_contractions::AvoidContractions;
@@ -217,6 +218,7 @@ use super::open_the_light::OpenTheLight;
 use super::orthographic_consistency::OrthographicConsistency;
 use super::ought_to_be::OughtToBe;
 use super::out_of_date::OutOfDate;
+use super::out_of_outside_the_box::OutOfOutsideTheBox;
 use super::out_of_the_window::OutOfTheWindow;
 use super::over_plus::OverPlus;
 use super::oxford_commas::{NoOxfordComma, OxfordComma};
@@ -347,6 +349,7 @@ use super::wrong_negative::WrongNegative;
 // Modules that create multiple linters each
 use super::be_adjective_confusions;
 use super::closed_compounds;
+use super::gonna_gotta_wanna;
 use super::initialisms;
 use super::phrase_set_corrections;
 use super::proper_noun_capitalization_linters;
@@ -632,6 +635,7 @@ impl LintGroup {
         out.merge_from(closed_compounds::lint_group());
         out.merge_from(initialisms::lint_group());
         out.merge_from(be_adjective_confusions::lint_group());
+        out.merge_from(gonna_gotta_wanna::lint_group(dialect));
 
         // Add all the more complex rules to the group.
         // Please maintain alphabetical order.
@@ -660,6 +664,7 @@ impl LintGroup {
         insert_expr_rule!(ApartFrom);
         insert_expr_rule!(ArriveTo);
         insert_expr_rule!(AsHow);
+        insert_expr_rule!(AsSoonAsPossible);
         insert_expr_rule!(AsToInterrogative);
         insert_expr_rule!(AskNoPreposition);
         insert_expr_rule!(AvoidContractions);
@@ -843,6 +848,7 @@ impl LintGroup {
         insert_expr_rule!(OrthographicConsistency);
         insert_expr_rule!(OughtToBe);
         insert_expr_rule!(OutOfDate);
+        insert_expr_rule!(OutOfOutsideTheBox);
         insert_expr_rule_with_dialect!(OutOfTheWindow);
         insert_expr_rule!(OverPlus);
         insert_struct_rule!(OxfordComma);

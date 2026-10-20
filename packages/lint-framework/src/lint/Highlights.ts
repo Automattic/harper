@@ -214,6 +214,9 @@ export default class Highlights {
 						backgroundColor: `${lintKindColor(box.lint.lint_kind)}22`,
 					},
 					id: 'harper-highlight',
+					attributes: {
+						'data-problem-text': box.lint.problem_text,
+					},
 				},
 				[],
 			);
