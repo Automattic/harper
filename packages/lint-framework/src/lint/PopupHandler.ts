@@ -219,13 +219,11 @@ export default class PopupHandler {
 				.slice(0, this.popupLint)
 				.filter(
 					(box) =>
-						box.lint.context_hash === previous.lint.context_hash &&
 						box.source === previous.source &&
 						box.lint.span.start === previous.lint.span.start &&
 						box.lint.span.end === previous.lint.span.end,
 				).length;
 			const matches = boxes.flatMap((box, index) =>
-				box.lint.context_hash === previous.lint.context_hash &&
 				box.source === previous.source &&
 				box.lint.span.start === previous.lint.span.start &&
 				box.lint.span.end === previous.lint.span.end &&
