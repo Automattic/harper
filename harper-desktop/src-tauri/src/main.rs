@@ -548,7 +548,12 @@ fn apply_highlighter_config(
     debounce_ms: &Rc<RefCell<u64>>,
     linter: &Rc<RefCell<LintGroup>>,
 ) {
-    let linter_config = config.create_linter();
+    if config.mutable_dictionary != *user_dictionary.borrow()
+        || config.dialect != *dialect.borrow()
+        || config.lint_config != linter.borrow().config
+    {
+        *linter.borrow_mut() = config.create_linter();
+    }
     *ignored_lints.borrow_mut() = config.ignored_lints;
     *user_dictionary.borrow_mut() = config.mutable_dictionary;
     *dialect.borrow_mut() = config.dialect;
@@ -562,5 +567,4 @@ fn apply_highlighter_config(
         Err(error) => eprintln!("failed to update integrations: {error}"),
     }
     *debounce_ms.borrow_mut() = config.debounce_ms;
-    *linter.borrow_mut() = linter_config;
 }
