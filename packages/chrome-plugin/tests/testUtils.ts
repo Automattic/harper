@@ -115,7 +115,7 @@ export function getHarperHighlights(page: Page): Locator {
 
 export async function waitForHighlightsToSettle(
 	page: Page,
-	quietMs = 250,
+	quietMs = 1000,
 	timeoutMs = 30000,
 ): Promise<void> {
 	let previous: string | undefined;
