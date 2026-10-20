@@ -375,6 +375,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ToBeFair",
+								"state": true,
+								"label": "To Be Fair"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ToBeHonest",
 								"state": true,
 								"label": "To Be Honest"
@@ -3541,6 +3548,12 @@
 						},
 						{
 							"Bool": {
+								"name": "BackwardEngineer",
+								"state": true
+							}
+						},
+						{
+							"Bool": {
 								"name": "Beforehand",
 								"state": true,
 								"label": "Beforehand"
@@ -4180,6 +4193,13 @@
 								"name": "WillContain",
 								"state": true,
 								"label": "Will Contain"
+							}
+						},
+						{
+							"Bool": {
+								"name": "WillGonna",
+								"state": true,
+								"label": "Will Gonna"
 							}
 						},
 						{
@@ -4999,6 +5019,13 @@
 						},
 						{
 							"Bool": {
+								"name": "FuzzyLogic",
+								"state": true,
+								"label": "Fuzzy Logic"
+							}
+						},
+						{
+							"Bool": {
 								"name": "GildedAge",
 								"state": true,
 								"label": "Gilded Age"
@@ -5177,6 +5204,13 @@
 								"name": "InNeedOf",
 								"state": true,
 								"label": "In Need Of"
+							}
+						},
+						{
+							"Bool": {
+								"name": "InOnesDefense",
+								"state": true,
+								"label": "In Ones Defense"
 							}
 						},
 						{
@@ -5629,6 +5663,13 @@
 						},
 						{
 							"Bool": {
+								"name": "OutOfOutsideTheBox",
+								"state": true,
+								"label": "OutOfOutsideTheBox"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Oxymorons",
 								"state": true,
 								"label": "Oxymorons"
@@ -6010,6 +6051,13 @@
 								"name": "TongueInCheek",
 								"state": true,
 								"label": "Tongue In Cheek"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ToNoAvail",
+								"state": true,
+								"label": "To No Avail"
 							}
 						},
 						{
