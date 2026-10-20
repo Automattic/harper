@@ -3548,6 +3548,12 @@
 						},
 						{
 							"Bool": {
+								"name": "BackwardEngineer",
+								"state": true
+							}
+						},
+						{
+							"Bool": {
 								"name": "Beforehand",
 								"state": true,
 								"label": "Beforehand"
@@ -5657,6 +5663,13 @@
 						},
 						{
 							"Bool": {
+								"name": "OutOfOutsideTheBox",
+								"state": true,
+								"label": "OutOfOutsideTheBox"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Oxymorons",
 								"state": true,
 								"label": "Oxymorons"
@@ -6059,6 +6072,13 @@
 								"name": "ToTheMannerBorn",
 								"state": true,
 								"label": "To The Manner Born"
+							}
+						},
+						{
+							"Bool": {
+								"name": "TrustIn",
+								"state": true,
+								"label": "Trust In"
 							}
 						},
 						{
