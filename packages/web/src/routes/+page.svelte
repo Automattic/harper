@@ -141,10 +141,6 @@ const faqs = [
 		q: "What Do I Do If My Question Isn’t Here?",
 		a: 'You can join our Discord and ask your questions there or you can start a discussion over at GitHub.',
 	},
-	{
-		q: "Why Isn’t Harper Working in Gmail?",
-		a: 'Harper will not run in Gmail unless the built-in grammar checker is disabled. If you wish to use Harper in Gmail, please disable the built-in grammar checker.',
-	},
 ];
 
 let liveFxVer = '';
