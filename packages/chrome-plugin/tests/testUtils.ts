@@ -161,8 +161,14 @@ export async function waitForHighlightsToSettle(
 export async function waitForHarperHighlightCenter(
 	page: Page,
 	timeoutMs = 30000,
+	/** Require that the highlight in question have this "problemText" before returning. */
+	problemText: string | null = null,
 ): Promise<ScreenPoint | null> {
-	const highlight = getHarperHighlights(page).first();
+	let highlight = getHarperHighlights(page).first();
+
+	if (problemText != null) {
+		highlight = highlight.and(page.locator(`[data-problem-text="${problemText}"]`));
+	}
 
 	try {
 		await highlight.waitFor({ state: 'visible', timeout: timeoutMs });
@@ -197,8 +203,12 @@ export async function assertLocatorsResolveEqually(page: Page, a: Locator, b: Lo
 
 /** Click the first Harper highlight and check that its popup opens.
  * Returns false if no highlight was found; a missing popup fails the test. */
-export async function clickHarperHighlight(page: Page): Promise<boolean> {
-	const center = await waitForHarperHighlightCenter(page);
+export async function clickHarperHighlight(
+	page: Page,
+	/** Require that the highlight be over specific text before clicking it. */
+	problemText: string | null = null,
+): Promise<boolean> {
+	const center = await waitForHarperHighlightCenter(page, undefined, problemText);
 	if (center == null) return false;
 
 	await page.mouse.click(center.x, center.y);
@@ -300,7 +310,7 @@ export async function testBasicSuggestion(
 		await assertEditorText(editor, 'This is an test');
 		await waitForHighlightsToSettle(page);
 
-		const opened = await clickHarperHighlight(page);
+		const opened = await clickHarperHighlight(page, 'an');
 		expect(opened).toBe(true);
 		const suggestion = page.getByTitle('Click to replace "an" with "a"');
 		await expect(suggestion).toBeVisible();
@@ -349,7 +359,7 @@ export async function testCanIgnoreSuggestion(
 		await expect(getHarperHighlights(page)).toHaveCount(1, { timeout: 30000 });
 
 		// Open the popup for the highlight and click Ignore.
-		const opened = await clickHarperHighlight(page);
+		const opened = await clickHarperHighlight(page, 'mistaek');
 		expect(opened).toBe(true);
 
 		// The popup captures the editor's cursor state on the next animation frame.

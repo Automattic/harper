@@ -501,6 +501,10 @@ impl ExprLinter for MissingTo {
                 | "mean"
                 | "means"
                 | "meant"
+                | "tried"
+                | "tries"
+                | "try"
+                | "trying"
                 | "want"
                 | "wanted"
                 | "wanting"
@@ -880,6 +884,19 @@ mod tests {
             "He found the thing and attempted solve it.",
             test_linter(),
             "He found the thing and attempted to solve it.",
+        );
+    }
+
+    #[test]
+    fn allows_trying_stuff_issue_4579() {
+        assert_no_lints("I was just trying stuff out.", test_linter());
+    }
+
+    #[test]
+    fn allows_try_with_a_noun_object() {
+        assert_no_lints(
+            "After trying stuff for hours, we tried things the docs suggested.",
+            test_linter(),
         );
     }
 }

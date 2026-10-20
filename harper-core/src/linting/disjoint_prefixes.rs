@@ -130,7 +130,8 @@ impl<D: Dictionary> ExprLinter for DisjointPrefixes<D> {
         let suggestions = suggestions
             .iter()
             .map(|s| {
-                Suggestion::replace_with_match_case(s.chars().collect(), toks_span.get_content(src))
+                // Copy casing from the prefix alone, so "Pre-Requisite" becomes "Prerequisite", not "PreRequisite"
+                Suggestion::replace_with_match_case(s.chars().collect(), toks[0].get_ch(src))
             })
             .collect();
 
@@ -238,6 +239,24 @@ mod tests {
             "WE NEED TO RE PROCESS THE DATA.",
             DisjointPrefixes::new(FstDictionary::curated()),
             "WE NEED TO REPROCESS THE DATA.",
+        );
+    }
+
+    #[test]
+    fn fix_title_case_hyphenated_to_joined_4381() {
+        assert_suggestion_result(
+            "Pre-Requisite",
+            DisjointPrefixes::new(FstDictionary::curated()),
+            "Prerequisite",
+        );
+    }
+
+    #[test]
+    fn fix_all_caps_hyphenated_to_joined() {
+        assert_suggestion_result(
+            "PRE-REQUISITE",
+            DisjointPrefixes::new(FstDictionary::curated()),
+            "PREREQUISITE",
         );
     }
 }
