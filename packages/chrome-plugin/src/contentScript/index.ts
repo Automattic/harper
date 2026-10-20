@@ -170,11 +170,14 @@ function scan() {
 		// editor, so treat it the same way we treat Lexical editors: don't skip it purely because
 		// spellcheck is disabled.
 		const isQuillEditor = element.classList.contains('ql-editor');
+		// Allow Gmail compose fields even when Gmail disables browser spellcheck.
+		const isGmail = window.location.hostname === 'mail.google.com';
 
 		if (
 			element.matches('[role="combobox"]') ||
 			element.getAttribute('data-enable-grammarly') === 'false' ||
 			(element.getAttribute('spellcheck') === 'false' &&
+				!isGmail &&
 				!isLexicalEditor &&
 				!isQuillEditor &&
 				element.getAttribute('data-language') !== 'markdown')
