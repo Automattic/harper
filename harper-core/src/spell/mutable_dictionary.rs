@@ -1,8 +1,13 @@
-use super::{FstDictionary, rune, word_map::WordMap};
+use super::{
+    CanonicalWordId, CaseFoldedWordId, FstDictionary, FuzzyMatchResult, rune,
+    word_map::{WordMap, WordMapEntry},
+};
+use crate::edit_distance::edit_distance_min_alloc;
+use itertools::Itertools;
 use std::sync::Arc;
-use std::sync::LazyLock;
+use std::{borrow::Cow, sync::LazyLock};
 
-use crate::DictWordMetadata;
+use crate::{CharString, CharStringExt, DictWordMetadata};
 
 use super::dictionary::Dictionary;
 
@@ -87,8 +92,205 @@ impl Default for MutableDictionary {
 }
 
 impl Dictionary for MutableDictionary {
-    fn get_word_map(&self) -> &WordMap {
-        &self.word_map
+    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
+        let mut found_words = self.word_map.get_case_folded_chars(word);
+        let first = &found_words.next()?.metadata;
+
+        if let Some(second) = found_words.next() {
+            let mut first = first.clone();
+            first.merge(&second.metadata);
+            found_words.for_each(|entry| {
+                first.merge(&entry.metadata);
+            });
+            Some(Cow::Owned(first))
+        } else {
+            Some(Cow::Borrowed(first))
+        }
+    }
+
+    fn contains_word(&self, word: &[char]) -> bool {
+        self.word_map
+            .contains_case_folded(CaseFoldedWordId::from_word_chars(word).0)
+    }
+
+    fn contains_word_str(&self, word: &str) -> bool {
+        let chars: CharString = word.chars().collect();
+        self.contains_word(&chars)
+    }
+
+    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
+        let chars: CharString = word.chars().collect();
+        self.get_word_metadata(&chars)
+    }
+
+    fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&'_ [char]> {
+        let mut entries = self.word_map.get_case_folded_chars(word);
+        let first = entries.next()?;
+        if entries.next().is_some() {
+            None
+        } else {
+            Some(first.canonical_spelling.as_slice())
+        }
+    }
+
+    fn get_correct_capitalizations_of(
+        &self,
+        word: &[char],
+    ) -> Box<dyn Iterator<Item = &[char]> + Send + '_> {
+        Box::new(
+            self.word_map
+                .get_case_folded_chars(word)
+                .map(|entry| entry.canonical_spelling.as_slice()),
+        )
+    }
+
+    fn get_word(&self, word: &[char]) -> Box<dyn Iterator<Item = &WordMapEntry> + Send + '_> {
+        Box::new(self.word_map.get_case_folded_chars(word))
+    }
+
+    fn get_word_str(&self, word: &str) -> Box<dyn Iterator<Item = &WordMapEntry> + Send + '_> {
+        let chars: CharString = word.chars().collect();
+        self.get_word(&chars)
+    }
+
+    fn get_word_exact(&self, word: &[char]) -> Option<&WordMapEntry> {
+        self.word_map
+            .get_canonical(CanonicalWordId::from_word_chars(word))
+    }
+
+    fn get_word_exact_str(&self, word: &str) -> Option<&WordMapEntry> {
+        let chars: CharString = word.chars().collect();
+        self.get_word_exact(&chars)
+    }
+
+    fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata> {
+        self.get_word_exact(word).map(|entry| &entry.metadata)
+    }
+
+    fn get_word_metadata_exact_str(&self, word: &str) -> Option<&DictWordMetadata> {
+        let chars: CharString = word.chars().collect();
+        self.get_word_metadata_exact(&chars)
+    }
+
+    fn fuzzy_match(
+        &'_ self,
+        word: &[char],
+        max_distance: u8,
+        max_results: usize,
+    ) -> Vec<FuzzyMatchResult<'_>> {
+        let misspelled_charslice = word.normalized();
+        let misspelled_charslice_lower = misspelled_charslice.to_lower();
+
+        let shortest_word_len = if misspelled_charslice.len() <= max_distance as usize {
+            1
+        } else {
+            misspelled_charslice.len() - max_distance as usize
+        };
+        let longest_word_len = misspelled_charslice.len() + max_distance as usize;
+
+        // Get candidate words
+        let words_to_search = self
+            .words_iter()
+            .filter(|word| (shortest_word_len..=longest_word_len).contains(&word.len()));
+
+        // Pre-allocated vectors for the edit-distance calculation
+        // 53 is the length of the longest word.
+        let mut buf_a = Vec::with_capacity(53);
+        let mut buf_b = Vec::with_capacity(53);
+
+        // Sort by edit-distance
+        words_to_search
+            .filter_map(|word| {
+                let dist =
+                    edit_distance_min_alloc(&misspelled_charslice, word, &mut buf_a, &mut buf_b);
+                let lowercase_dist = edit_distance_min_alloc(
+                    &misspelled_charslice_lower,
+                    word,
+                    &mut buf_a,
+                    &mut buf_b,
+                );
+
+                let smaller_dist = dist.min(lowercase_dist);
+                if smaller_dist <= max_distance {
+                    Some((word, smaller_dist))
+                } else {
+                    None
+                }
+            })
+            .sorted_unstable_by_key(|a| a.1)
+            .take(max_results)
+            .map(|(word, edit_distance)| FuzzyMatchResult {
+                word,
+                edit_distance,
+                metadata: Cow::Borrowed(self.get_word_metadata_exact(word).unwrap()),
+            })
+            .collect()
+    }
+
+    fn fuzzy_match_str(
+        &'_ self,
+        word: &str,
+        max_distance: u8,
+        max_results: usize,
+    ) -> Vec<FuzzyMatchResult<'_>> {
+        let word: Vec<_> = word.chars().collect();
+        self.fuzzy_match(&word, max_distance, max_results)
+    }
+
+    fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
+        Box::new(
+            self.word_map
+                .iter()
+                .map(|v| v.canonical_spelling.as_slice()),
+        )
+    }
+
+    fn word_count(&self) -> usize {
+        self.word_map.len()
+    }
+
+    fn contains_exact_word(&self, word: &[char]) -> bool {
+        self.word_map
+            .contains_canonical(CanonicalWordId::from_word_chars(word))
+    }
+
+    fn contains_exact_word_str(&self, word: &str) -> bool {
+        let word: CharString = word.chars().collect();
+        self.contains_exact_word(word.as_ref())
+    }
+
+    fn get_word_from_id(&self, id: &CanonicalWordId) -> Option<&[char]> {
+        self.word_map
+            .get_canonical(*id)
+            .map(|w| w.canonical_spelling.as_ref())
+    }
+
+    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
+        let mut found = Vec::new();
+
+        for word in self.words_iter() {
+            if let Some(item_prefix) = word.get(0..prefix.len())
+                && item_prefix == prefix
+            {
+                found.push(Cow::Borrowed(word));
+            }
+        }
+
+        found
+    }
+
+    fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>> {
+        let mut found = Vec::new();
+
+        for item in self.words_iter() {
+            if let Some(item_prefix) = word.get(0..item.len())
+                && item_prefix == item
+            {
+                found.push(Cow::Borrowed(item));
+            }
+        }
+
+        found
     }
 }
 
@@ -111,8 +313,94 @@ mod tests {
     use hashbrown::HashSet;
     use itertools::Itertools;
 
-    use crate::spell::{Dictionary, MutableDictionary};
+    use crate::spell::{
+        CanonicalWordId, Dictionary, FstDictionary, MergedDictionary, MutableDictionary,
+        TrieDictionary,
+    };
     use crate::{DictWordMetadata, char_string::char_string};
+
+    #[test]
+    fn case_variant_lookups_through_dictionary_wrappers() {
+        use std::sync::Arc;
+
+        let mut dict = MutableDictionary::new();
+        dict.append_word_str("Pr", DictWordMetadata::default());
+        dict.append_word_str(
+            "PR",
+            DictWordMetadata {
+                common: true,
+                ..Default::default()
+            },
+        );
+        dict.append_word_str("can't", DictWordMetadata::default());
+        let fst = Arc::new(FstDictionary::from(dict.clone()));
+        let mut merged = MergedDictionary::new();
+        merged.add_dictionary(fst.clone());
+        let dictionaries: Vec<Arc<dyn Dictionary>> = vec![
+            Arc::new(dict),
+            fst.clone(),
+            Arc::new(TrieDictionary::new(fst)),
+            Arc::new(merged),
+        ];
+
+        fn check(dict: impl Dictionary) {
+            assert!(dict.contains_word_str("pr"));
+            assert!(!dict.contains_exact_word_str("pr"));
+            assert!(dict.contains_exact_word_str("Pr"));
+            assert!(dict.contains_exact_word_str("PR"));
+            let mut variants: Vec<_> = dict
+                .get_word_str("pr")
+                .map(|entry| entry.canonical_spelling.iter().collect::<String>())
+                .collect();
+            variants.sort();
+            assert_eq!(variants, ["PR", "Pr"]);
+            assert_eq!(dict.get_correct_capitalizations_of(&['p', 'r']).count(), 2);
+            assert!(dict.get_correct_capitalization_of(&['p', 'r']).is_none());
+            assert!(!dict.get_word_metadata_exact_str("Pr").unwrap().common);
+            assert!(dict.get_word_metadata_exact_str("PR").unwrap().common);
+            assert!(dict.get_word_metadata_str("pr").unwrap().common);
+            assert_eq!(
+                dict.get_word_from_id(&CanonicalWordId::from_word_str("Pr")),
+                Some(['P', 'r'].as_slice())
+            );
+            assert!(
+                dict.get_word_from_id(&CanonicalWordId::from_word_str("pr"))
+                    .is_none()
+            );
+            assert!(dict.contains_word_str("CAN’T"));
+            assert!(!dict.contains_exact_word_str("can’t"));
+            assert!(dict.get_word_metadata_str("unknown").is_none());
+            assert!(dict.get_word_exact_str("unknown").is_none());
+            assert_eq!(dict.get_word_str("unknown").count(), 0);
+            assert_eq!(dict.words_iter().count(), 3);
+            assert_eq!(dict.word_count(), 3);
+        }
+
+        for dict in dictionaries {
+            check(dict.as_ref());
+            check(dict);
+        }
+    }
+
+    #[test]
+    fn duplicate_canonical_entries_merge_metadata() {
+        let mut dict = MutableDictionary::new();
+        dict.append_word_str("Pr", DictWordMetadata::default());
+        dict.append_word_str(
+            "Pr",
+            DictWordMetadata {
+                common: true,
+                ..Default::default()
+            },
+        );
+        assert_eq!(dict.word_count(), 1);
+        assert_eq!(dict.get_word_str("pr").count(), 1);
+        assert!(dict.get_word_metadata_exact_str("Pr").unwrap().common);
+        assert!(matches!(
+            dict.get_word_metadata_str("pr"),
+            Some(Cow::Borrowed(_))
+        ));
+    }
 
     #[test]
     fn curated_contains_no_duplicates() {

@@ -9,7 +9,6 @@ use indexmap::IndexMap;
 use crate::{
     DictWordMetadata,
     spell::{
-        Dictionary,
         dictionary::{ANNOTATIONS_STR, CURATED_DICT_STR},
         rune::{self, AttributeList, parse_word_list},
         word_id::{CanonicalWordId, CaseFoldedWordId},
@@ -249,11 +248,5 @@ impl FromIterator<WordMapEntry> for WordMap {
         let mut out = Self::new();
         out.extend(iter);
         out
-    }
-}
-
-impl Dictionary for WordMap {
-    fn get_word_map(&self) -> &WordMap {
-        self
     }
 }

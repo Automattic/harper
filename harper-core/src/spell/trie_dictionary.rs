@@ -4,7 +4,9 @@ use std::sync::{Arc, LazyLock};
 use trie_rs::Trie;
 use trie_rs::iter::{Keys, PrefixIter, SearchIter};
 
-use super::{Dictionary, FstDictionary, WordMap};
+use crate::DictWordMetadata;
+
+use super::{CanonicalWordId, Dictionary, FstDictionary, FuzzyMatchResult, WordMapEntry};
 
 /// A [`Dictionary`] optimized for pre- and postfix search.
 /// Wraps another dictionary to implement other operations.
@@ -33,8 +35,93 @@ impl<D: Dictionary> TrieDictionary<D> {
 }
 
 impl<D: Dictionary> Dictionary for TrieDictionary<D> {
-    fn get_word_map(&self) -> &WordMap {
-        self.inner.get_word_map()
+    fn contains_word(&self, word: &[char]) -> bool {
+        self.inner.contains_word(word)
+    }
+
+    fn contains_word_str(&self, word: &str) -> bool {
+        self.inner.contains_word_str(word)
+    }
+
+    fn contains_exact_word(&self, word: &[char]) -> bool {
+        self.inner.contains_exact_word(word)
+    }
+
+    fn contains_exact_word_str(&self, word: &str) -> bool {
+        self.inner.contains_exact_word_str(word)
+    }
+
+    fn fuzzy_match(
+        &'_ self,
+        word: &[char],
+        max_distance: u8,
+        max_results: usize,
+    ) -> Vec<FuzzyMatchResult<'_>> {
+        self.inner.fuzzy_match(word, max_distance, max_results)
+    }
+
+    fn fuzzy_match_str(
+        &'_ self,
+        word: &str,
+        max_distance: u8,
+        max_results: usize,
+    ) -> Vec<FuzzyMatchResult<'_>> {
+        self.inner.fuzzy_match_str(word, max_distance, max_results)
+    }
+
+    fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&'_ [char]> {
+        self.inner.get_correct_capitalization_of(word)
+    }
+
+    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
+        self.inner.get_word_metadata(word)
+    }
+
+    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
+        self.inner.get_word_metadata_str(word)
+    }
+
+    fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
+        self.inner.words_iter()
+    }
+
+    fn word_count(&self) -> usize {
+        self.inner.word_count()
+    }
+
+    fn get_word_from_id(&self, id: &CanonicalWordId) -> Option<&[char]> {
+        self.inner.get_word_from_id(id)
+    }
+
+    fn get_word(&self, word: &[char]) -> Box<dyn Iterator<Item = &WordMapEntry> + Send + '_> {
+        self.inner.get_word(word)
+    }
+
+    fn get_word_str(&self, word: &str) -> Box<dyn Iterator<Item = &WordMapEntry> + Send + '_> {
+        self.inner.get_word_str(word)
+    }
+
+    fn get_word_exact(&self, word: &[char]) -> Option<&WordMapEntry> {
+        self.inner.get_word_exact(word)
+    }
+
+    fn get_word_exact_str(&self, word: &str) -> Option<&WordMapEntry> {
+        self.inner.get_word_exact_str(word)
+    }
+
+    fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata> {
+        self.inner.get_word_metadata_exact(word)
+    }
+
+    fn get_word_metadata_exact_str(&self, word: &str) -> Option<&DictWordMetadata> {
+        self.inner.get_word_metadata_exact_str(word)
+    }
+
+    fn get_correct_capitalizations_of(
+        &self,
+        word: &[char],
+    ) -> Box<dyn Iterator<Item = &[char]> + Send + '_> {
+        self.inner.get_correct_capitalizations_of(word)
     }
 
     fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
@@ -59,6 +146,18 @@ mod tests {
     use crate::spell::MutableDictionary;
     use crate::spell::dictionary::Dictionary;
     use crate::spell::trie_dictionary::TrieDictionary;
+
+    #[test]
+    fn fuzzy_search_delegates_to_inner_fst() {
+        let mut inner = MutableDictionary::new();
+        inner.append_word_str("word", DictWordMetadata::default());
+        let dict = TrieDictionary::new(crate::spell::FstDictionary::from(inner));
+        let dict: &dyn Dictionary = &dict;
+        assert!(dict.fuzzy_match_str("word", 0, 10).is_empty());
+        let matches = dict.fuzzy_match(&['w', 'o', 'r', 'd', 's'], 1, 10);
+        assert_eq!(matches.len(), 1);
+        assert_eq!(matches[0].word, &['w', 'o', 'r', 'd']);
+    }
 
     #[test]
     fn gets_prefixes_as_expected() {

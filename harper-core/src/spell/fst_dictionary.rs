@@ -8,7 +8,7 @@ use fst::{IntoStreamer, Map as FstMap, Streamer, map::StreamWithState};
 use hashbrown::HashMap;
 use levenshtein_automata::{DFA, LevenshteinAutomatonBuilder};
 
-use super::{CanonicalWordId, Dictionary, FuzzyMatchResult, MutableDictionary, WordMap};
+use super::{CanonicalWordId, Dictionary, FuzzyMatchResult, MutableDictionary, WordMapEntry};
 use crate::{CharString, CharStringExt, DictWordMetadata};
 
 /// An immutable dictionary allowing for very fast spellchecking.
@@ -123,8 +123,51 @@ fn merge_best_distances(
 }
 
 impl Dictionary for FstDictionary {
-    fn get_word_map(&self) -> &WordMap {
-        self.mutable_dict.get_word_map()
+    fn contains_word(&self, word: &[char]) -> bool {
+        self.mutable_dict.contains_word(word)
+    }
+
+    fn contains_word_str(&self, word: &str) -> bool {
+        self.mutable_dict.contains_word_str(word)
+    }
+
+    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
+        self.mutable_dict.get_word_metadata(word)
+    }
+
+    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
+        self.mutable_dict.get_word_metadata_str(word)
+    }
+
+    fn get_word(&self, word: &[char]) -> Box<dyn Iterator<Item = &WordMapEntry> + Send + '_> {
+        self.mutable_dict.get_word(word)
+    }
+
+    fn get_word_str(&self, word: &str) -> Box<dyn Iterator<Item = &WordMapEntry> + Send + '_> {
+        self.mutable_dict.get_word_str(word)
+    }
+
+    fn get_word_exact(&self, word: &[char]) -> Option<&WordMapEntry> {
+        self.mutable_dict.get_word_exact(word)
+    }
+
+    fn get_word_exact_str(&self, word: &str) -> Option<&WordMapEntry> {
+        self.mutable_dict.get_word_exact_str(word)
+    }
+
+    fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata> {
+        self.mutable_dict.get_word_metadata_exact(word)
+    }
+
+    fn get_word_metadata_exact_str(&self, word: &str) -> Option<&DictWordMetadata> {
+        self.mutable_dict.get_word_metadata_exact_str(word)
+    }
+
+    fn get_correct_capitalizations_of(
+        &self,
+        word: &[char],
+    ) -> Box<dyn Iterator<Item = &[char]> + Send + '_> {
+        self.mutable_dict.get_correct_capitalizations_of(word)
     }
 
     fn fuzzy_match(
@@ -183,6 +226,51 @@ impl Dictionary for FstDictionary {
         merged.truncate(max_results);
 
         merged
+    }
+
+    fn fuzzy_match_str(
+        &'_ self,
+        word: &str,
+        max_distance: u8,
+        max_results: usize,
+    ) -> Vec<FuzzyMatchResult<'_>> {
+        self.fuzzy_match(
+            word.chars().collect::<Vec<_>>().as_slice(),
+            max_distance,
+            max_results,
+        )
+    }
+
+    fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
+        self.mutable_dict.words_iter()
+    }
+
+    fn word_count(&self) -> usize {
+        self.mutable_dict.word_count()
+    }
+
+    fn contains_exact_word(&self, word: &[char]) -> bool {
+        self.mutable_dict.contains_exact_word(word)
+    }
+
+    fn contains_exact_word_str(&self, word: &str) -> bool {
+        self.mutable_dict.contains_exact_word_str(word)
+    }
+
+    fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&'_ [char]> {
+        self.mutable_dict.get_correct_capitalization_of(word)
+    }
+
+    fn get_word_from_id(&self, id: &CanonicalWordId) -> Option<&[char]> {
+        self.mutable_dict.get_word_from_id(id)
+    }
+
+    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
+        self.mutable_dict.find_words_with_prefix(prefix)
+    }
+
+    fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>> {
+        self.mutable_dict.find_words_with_common_prefix(word)
     }
 }
 

@@ -1067,11 +1067,12 @@ fn print_word_derivations(word: &str, annot: &str, dictionary: &impl Dictionary)
 
     let id = CanonicalWordId::from_word_str(word);
 
-    let children = dictionary.get_word_map().iter().filter_map(|wme| {
-        wme.metadata
+    let children = dictionary.words_iter().filter(|word| {
+        dictionary
+            .get_word_metadata_exact(word)
+            .unwrap()
             .derived_from
             .contains(id)
-            .then_some(&wme.canonical_spelling)
     });
 
     println!(" - {word}");
