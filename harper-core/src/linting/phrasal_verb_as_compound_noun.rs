@@ -203,9 +203,11 @@ impl PhrasalVerbAsCompoundNoun {
             return Err(Why::Contextual(Context::ItsFollowedByThatOrWhich));
         }
 
-        // A modal verb after it means it's the subject, so it's a noun:
-        // "setup can optionally install Hopper", "cleanup will remove the cache".
-        if let Some(next_tok) = maybe_next_tok
+        // At the start, a modal verb after it means it's the subject, so it's a noun:
+        // "setup can optionally install Hopper". After another word it can be a phrasal
+        // verb ending a clause: "people that don't clean up can and will be banned".
+        if maybe_prev_tok.is_none()
+            && let Some(next_tok) = maybe_next_tok
             && next_tok.get_ch(source).eq_any_ignore_ascii_case_str(&[
                 "can", "could", "may", "might", "must", "shall", "should", "will", "would",
             ])
@@ -830,9 +832,21 @@ mod tests {
 
     #[test]
     fn dont_flag_compound_noun_before_other_modals() {
-        assert_no_lints(
-            "Then cleanup will remove the cache, and backup should run nightly.",
+        assert_no_lints("Cleanup will remove the cache.", test_linter());
+        assert_no_lints("Backup should run nightly.", test_linter());
+    }
+
+    #[test]
+    fn flag_phrasal_verb_ending_a_clause_before_a_modal() {
+        assert_suggestion_result(
+            "People that don't cleanup can and will be banned from the space.",
             test_linter(),
+            "People that don't clean up can and will be banned from the space.",
+        );
+        assert_suggestion_result(
+            "Couples that decide to breakup can still choose to remain good friends.",
+            test_linter(),
+            "Couples that decide to break up can still choose to remain good friends.",
         );
     }
 }
