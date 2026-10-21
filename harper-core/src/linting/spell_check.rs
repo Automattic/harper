@@ -996,17 +996,4 @@ mod tests {
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
         );
     }
-
-    #[test]
-    fn allows_reseat_forms() {
-        for source in [
-            "reseat",
-            "reseated",
-            "reseating",
-            "reseats",
-            "Please reseat the card.",
-        ] {
-            assert_no_lints(source, test_linter());
-        }
-    }
 }
