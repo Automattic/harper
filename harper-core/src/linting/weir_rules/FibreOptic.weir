@@ -1,4 +1,4 @@
-expr main <([fibre, fiber] optics [cable, cables, communication, connector, connectors, hardware, network, networks]), optics>
+expr main <([fibre, fiber][-, ( )]optics [cable, cables, communication, connector, connectors, hardware, network, networks]), optics>
 
 let message "When used as a compound adjective, use `fiber optic` instead of `fiber optics`."
 let description "Corrects `fiber optics` to `fiber optic` when used as a compound adjective."
