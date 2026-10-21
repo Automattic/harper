@@ -1,10 +1,10 @@
-use crate::{CharString, DictWordMetadata, spell::WordIdPair};
+use crate::{CharString, DictWordMetadata, spell::word_id::WordIdPair};
 
 #[derive(Debug, Clone, Eq, PartialEq, Hash)]
 pub struct WordMapEntry {
     pub metadata: DictWordMetadata,
     pub canonical_spelling: CharString,
-    pub(crate) word_ids: WordIdPair,
+    pub word_ids: WordIdPair,
 }
 
 impl WordMapEntry {

@@ -13,8 +13,6 @@ pub use self::trie_dictionary::TrieDictionary;
 pub use self::word_id::{CanonicalWordId, CaseFoldedWordId};
 pub use self::word_map::{WordMap, WordMapEntry};
 
-pub(crate) use self::word_id::WordIdPair;
-
 mod dictionary;
 mod fst_dictionary;
 mod merged_dictionary;

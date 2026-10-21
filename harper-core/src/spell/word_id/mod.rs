@@ -5,7 +5,7 @@
 
 pub use canonical_word_id::CanonicalWordId;
 pub use case_folded_word_id::CaseFoldedWordId;
-pub(crate) use word_id_pair::WordIdPair;
+pub use word_id_pair::WordIdPair;
 
 mod canonical_word_id;
 mod case_folded_word_id;
