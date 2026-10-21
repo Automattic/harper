@@ -2821,9 +2821,9 @@
 						},
 						{
 							"Bool": {
-								"name": "NobelPeacePrize",
+								"name": "NobelNoble",
 								"state": true,
-								"label": "Nobel Peace Prize"
+								"label": "Nobel / Noble"
 							}
 						},
 						{
@@ -4980,6 +4980,13 @@
 								"name": "FeelFell",
 								"state": true,
 								"label": "Feel Fell"
+							}
+						},
+						{
+							"Bool": {
+								"name": "FibreOptic",
+								"state": true,
+								"label": "Fibre Optic"
 							}
 						},
 						{
