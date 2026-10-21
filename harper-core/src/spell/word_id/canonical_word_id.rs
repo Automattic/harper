@@ -9,7 +9,7 @@ use crate::CharString;
 /// An identifier for a particular word with canonical casing.
 #[derive(Hash, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Debug, Serialize, Deserialize)]
 pub struct CanonicalWordId {
-    pub(super) hash: u64,
+    pub hash: u64,
 }
 
 impl CanonicalWordId {
@@ -33,7 +33,7 @@ impl CanonicalWordId {
     /// useful when the canonical word ID is the same as the case-folded word ID. This will only
     /// happen if the canonical ID was generated with a word that was already lowercased and
     /// normalized.
-    pub(crate) fn as_case_folded(self) -> CaseFoldedWordId {
+    pub fn as_case_folded(self) -> CaseFoldedWordId {
         CaseFoldedWordId { hash: self.hash }
     }
 }

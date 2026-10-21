@@ -55,14 +55,14 @@ impl Default for OrthFlags {
 
 impl OrthFlags {
     /// An `OrthFlags` with all casing-related flags set.
-    pub(crate) const CASE_FLAGS: OrthFlags = OrthFlags::LOWERCASE
+    pub const CASE_FLAGS: OrthFlags = OrthFlags::LOWERCASE
         .union(OrthFlags::TITLECASE)
         .union(OrthFlags::ALLCAPS)
         .union(OrthFlags::LOWER_CAMEL)
         .union(OrthFlags::UPPER_CAMEL);
 
     /// Mask out all flags not related to casing.
-    pub(crate) const fn case_flags(self) -> Self {
+    pub const fn case_flags(self) -> Self {
         self.intersection(Self::CASE_FLAGS)
     }
 

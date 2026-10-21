@@ -11,7 +11,7 @@ use crate::{CharString, CharStringExt, spell::CanonicalWordId};
 /// when lowercased.
 #[derive(Hash, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Debug, Serialize, Deserialize)]
 pub struct CaseFoldedWordId {
-    pub(super) hash: u64,
+    pub hash: u64,
 }
 
 impl CaseFoldedWordId {
