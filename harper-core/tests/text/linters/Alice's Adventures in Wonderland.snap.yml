@@ -978,6 +978,15 @@ Message: |
 
 
 
+Lint:    Capitalization (31 priority)
+Message: |
+     607 | Alas! it was too late to wish that! She went on growing, and growing, and very
+         |       ^~ This sentence does not start with a capital letter
+Suggest:
+  - Replace with: “It”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      607 | Alas! it was too late to wish that! She went on growing, and growing, and very

@@ -98,7 +98,12 @@ impl ExprLinter for OrthographicConsistency {
 
         if flags_to_check
             .into_iter()
-            .filter(|flag| canonical_flags.contains(*flag) != cur_flags.contains(*flag))
+            .filter(|flag| {
+                canonical_flags.contains(*flag) != cur_flags.contains(*flag)
+                    && ([OrthFlags::UPPER_CAMEL, OrthFlags::LOWER_CAMEL].contains(flag))
+                    && !canonical_flags.contains(OrthFlags::LOWERCASE)
+                    && !canonical_flags.contains(OrthFlags::TITLECASE)
+            })
             .count()
             != 0
             && let Some(canonical) = self.dict.get_correct_capitalization_of(chars)
@@ -471,5 +476,13 @@ mod tests {
     fn dont_accept_undefined_case_variants() {
         // "pr" isn't defined in the dictionary, so it should be linted.
         assert_lint_count("pr", OrthographicConsistency::default(), 1);
+    }
+
+    #[test]
+    fn lets_confusion_description() {
+        assert_no_lints(
+            "It's often hard to determine where the subject should go with the word `let`. This rule attempts to find common errors with redundancy and contractions that may lead to confusion for readers.",
+            OrthographicConsistency::default(),
+        )
     }
 }

@@ -4501,16 +4501,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (31 priority)
-Message: |
-    3409 | Her glance left me and sought the lighted top of the steps, where “Three o’Clock
-         |                                                                          ^~~~~~~ The canonical dictionary spelling is `o'clock`.
-    3410 | in the Morning,” a neat, sad little waltz of that year, was drifting out the
-Suggest:
-  - Replace with: “o'clock”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     3414 | dim, incalculable hours? Perhaps some unbelievable guest would arrive, a person
