@@ -35,6 +35,8 @@ pub trait Dictionary: Send + Sync {
         max_distance: u8,
         max_results: usize,
     ) -> Vec<FuzzyMatchResult<'_>>;
+    /// Gets the word's canonical capitalization, if exactly one exists.
+    /// If there are multiple possibilities, `None` is returned.
     fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&'_ [char]>;
     fn get_correct_capitalizations_of(
         &self,
