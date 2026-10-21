@@ -10,8 +10,6 @@ use crate::expr::{Filter, SequenceExpr};
 use crate::spell::{Dictionary, suggest_correct_spelling};
 use crate::{CharString, CharStringExt, Dialect, TokenStringExt, remove_lints_overlapping_expr};
 
-pub const SPELL_CHECK_PRIORITY: u8 = 63;
-
 pub struct SpellCheck<T>
 where
     T: Dictionary,
@@ -149,7 +147,7 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
                 lint_kind: LintKind::Spelling,
                 suggestions,
                 message,
-                priority: SPELL_CHECK_PRIORITY,
+                priority: 63,
             })
         }
 
@@ -980,5 +978,22 @@ mod tests {
         for source in ["hahah", "hahaha", "hahahah", "Hahahah", "HAHAHA"] {
             assert_no_lints(source, test_linter());
         }
+    }
+
+    #[test]
+    fn allows_surveilled_and_surveilling() {
+        assert_no_lints(
+            "The suspect was closely surveilled by the agents.",
+            test_linter(),
+        );
+        assert_no_lints("They were surveilling the premises.", test_linter());
+        assert_no_lints(
+            "The suspect was closely surveilled by the agents.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+        );
+        assert_no_lints(
+            "They were surveilling the premises.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+        );
     }
 }

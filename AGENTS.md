@@ -114,6 +114,8 @@ There are of course projects in this repository not listed above. If relevant, f
 
 ## Harper Desktop
 
+Read the [Desktop contributor documentation](packages/web/src/routes/docs/contributors/desktop/+page.md) for the app's architecture and its relationship to the Cargo workspace.
+
 ### Commands
 
 - Use `pnpm` for frontend packages; `harper-desktop/package.json` pins `pnpm@10.10.0`.
@@ -122,15 +124,12 @@ There are of course projects in this repository not listed above. If relevant, f
 - Frontend checks: `pnpm check` from `harper-desktop`.
 - Frontend build only: `pnpm build` from `harper-desktop`.
 - Full desktop checks: `just check-desktop` from repo root.
-- Rust checks: `cargo check -p harper-desktop --all-targets` from repo root.
-- Rust formatting/fix loop from repo root: `cargo fmt && cargo check -p harper-desktop --all-targets`.
 - Bundle builds match CI: `just build-desktop-linux` or `just build-desktop-macos`.
 - `just build-desktop-linux` builds deb/rpm/appimage bundles.
 - `just build-desktop-macos` builds app/dmg bundles.
 
 ### Architecture
 
-- Harper Desktop lives under `harper-desktop` and is part of the root Cargo and pnpm workspaces.
 - It is a SvelteKit SPA inside Tauri v2.
 - SSR is disabled in `harper-desktop/src/routes/+layout.ts`.
 - `harper-desktop/svelte.config.js` uses `adapter-static` with `fallback: "index.html"`.
@@ -263,3 +262,6 @@ Write a Weir rule to a new file with a name of your choosing, including `expr ma
 ## Tips
 
 Before finishing your turn, run `just format` or `cargo fmt` if you have made any changes. This can help diffs if a human decides to make a commit.
+
+Try to write in a functional style. Minimize adding state whenever it is possible while also respecting the user's query. If additional state is necessary, please centralize it to increase visibility.
+

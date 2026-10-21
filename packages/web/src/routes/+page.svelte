@@ -22,6 +22,7 @@ import type { Linter } from 'harper.js';
 import { isUpToDate, loadLiveVersions, liveVersions } from '$lib/marketing/versions';
 import { onMount } from 'svelte';
 import demoText from '../../../../demo.md?raw';
+    import Loader from '$lib/components/Loader.svelte';
 
 const editorContent = demoText.trim();
 let linter: Linter | null = null;
@@ -140,10 +141,6 @@ const faqs = [
 		q: "What Do I Do If My Question Isn’t Here?",
 		a: 'You can join our Discord and ask your questions there or you can start a discussion over at GitHub.',
 	},
-	{
-		q: "Why Isn’t Harper Working in Gmail?",
-		a: 'Harper will not run in Gmail unless the built-in grammar checker is disabled. If you wish to use Harper in Gmail, please disable the built-in grammar checker.',
-	},
 ];
 
 let liveFxVer = '';
@@ -205,7 +202,7 @@ onMount(() => {
 					<LazyEditor content={editorContent} {linter} />
 				{:else}
 					<div class='flex h-full items-center justify-center text-[0.82rem] text-[#807a6e] dark:text-white/55 [font-family:"JetBrains_Mono",monospace]'>
-						Loading Harper’s grammar engine...
+            <Loader />
 					</div>
 				{/if}
 			</div>
@@ -342,6 +339,7 @@ onMount(() => {
 	</section>
 
 	<FaqSection
+		id="faqs"
 		items={faqs}
 		title="Questions, answered."
 		intro="Don’t see yours?"

@@ -71,6 +71,71 @@ fn correct_awaited_for() {
     );
 }
 
+// BackwardEngineer
+
+#[test]
+fn backward_space_engineer() {
+    assert_suggestion_result(
+        "The idea would be to backward engineer such \"creation process\" to the extent given by tools and abilities.",
+        test_linter(),
+        "The idea would be to reverse engineer such \"creation process\" to the extent given by tools and abilities.",
+    );
+}
+
+#[test]
+fn backward_hyphen_engineer() {
+    assert_suggestion_result(
+        "Use Assignment 5 screenshots and R Manual to backward-engineer Motor Trend Car Road Tests data",
+        test_linter(),
+        "Use Assignment 5 screenshots and R Manual to reverse-engineer Motor Trend Car Road Tests data",
+    );
+}
+
+#[test]
+fn backward_hyphen_engineering() {
+    assert_suggestion_result(
+        "For the backward-engineering to work, I realize that the power spectra we have saved were done using these super high-accuracy settings",
+        test_linter(),
+        "For the reverse-engineering to work, I realize that the power spectra we have saved were done using these super high-accuracy settings",
+    );
+}
+
+#[test]
+fn backward_space_engineering() {
+    assert_suggestion_result(
+        "Note though, that CS is \"forward\" engineering, while Brain Science is backward engineering.",
+        test_linter(),
+        "Note though, that CS is \"forward\" engineering, while Brain Science is reverse engineering.",
+    );
+}
+
+#[test]
+fn backwards_hyphen_engineer() {
+    assert_suggestion_result(
+        "After leaving this talk, you'll be able to backwards-engineer these 'internal' APIs and replicate any trivial flow",
+        test_linter(),
+        "After leaving this talk, you'll be able to reverse-engineer these 'internal' APIs and replicate any trivial flow",
+    );
+}
+
+#[test]
+fn backwards_space_engineer() {
+    assert_suggestion_result(
+        "do this and you can backwards engineer what you should be getting",
+        test_linter(),
+        "do this and you can reverse engineer what you should be getting",
+    );
+}
+
+#[test]
+fn backwards_space_engineering() {
+    assert_suggestion_result(
+        "This chapter gives an overview the first assessment, the backwards engineering report along with the files you will need and some helpful hints.",
+        test_linter(),
+        "This chapter gives an overview the first assessment, the reverse engineering report along with the files you will need and some helpful hints.",
+    );
+}
+
 // BackhandedCompliment
 
 #[test]
@@ -134,6 +199,58 @@ fn correct_back_hand_compliments_hyphen() {
         "no praises, just tons of unnecessary back-hand compliments and lack of support",
         test_linter(),
         "no praises, just tons of unnecessary backhanded compliments and lack of support",
+    );
+}
+
+// BainBane
+
+#[test]
+fn fix_bain_of_my_existance() {
+    assert_suggestion_result(
+        "This is the bain of my existance, please help.",
+        test_linter(),
+        "This is the bane of my existence, please help.",
+    );
+}
+
+#[test]
+fn fix_bain_of_our() {
+    assert_suggestion_result(
+        "They are the bain of our existence on Apple hardware",
+        test_linter(),
+        "They are the bane of our existence on Apple hardware",
+    );
+}
+
+#[test]
+fn fix_bain_of_their() {
+    assert_suggestion_result(
+        "individual people in Apple might decide port scanning is the bain of their existence and send something",
+        test_linter(),
+        "individual people in Apple might decide port scanning is the bane of their existence and send something",
+    );
+}
+
+#[test]
+fn fix_bane_marie() {
+    assert_suggestion_result(
+        "The bane-marie is a favorite metaphor in my life for adding 'heat' (usually stress) to any idea, process, or person",
+        test_linter(),
+        "The bain-marie is a favorite metaphor in my life for adding 'heat' (usually stress) to any idea, process, or person",
+    );
+}
+
+#[test]
+fn fix_bane_maries() {
+    assert_good_and_bad_suggestions(
+        "They have bane Maries which is just a double broiler (water heated high under pans).",
+        test_linter(),
+        &[
+            // The way `replace_with_match_case` works by index breaks this
+            // "They have bains Marie which is just a double broiler (water heated high under pans).",
+            "They have bain Maries which is just a double broiler (water heated high under pans).",
+        ],
+        &[],
     );
 }
 
@@ -533,6 +650,154 @@ fn got_ride_of() {
         "I had to adjust the labels on the free version because you guys got ride of ...",
         test_linter(),
         "I had to adjust the labels on the free version because you guys got rid of ...",
+    );
+}
+
+// Hallucination
+
+#[test]
+fn fix_hallucinisation() {
+    assert_suggestion_result(
+        "candybar left over from halloween [mmm moldy hallucinisation goodness! >_>]",
+        test_linter(),
+        "candybar left over from halloween [mmm moldy hallucination goodness! >_>]",
+    )
+}
+
+#[test]
+fn fix_hallucinisations() {
+    assert_suggestion_result(
+        "I havent really experienced hallucinisations or delusions, but this interpertation of movie is extremely intriguing",
+        test_linter(),
+        "I havent really experienced hallucinations or delusions, but this interpertation of movie is extremely intriguing",
+    )
+}
+
+#[test]
+fn fix_hallucinization() {
+    assert_suggestion_result(
+        "The hallucinization machine makers will be long gone to their retirement homes on private islands",
+        test_linter(),
+        "The hallucination machine makers will be long gone to their retirement homes on private islands",
+    )
+}
+
+#[test]
+fn fix_hallucinizations() {
+    assert_suggestion_result(
+        "He was treated for schizophrenia so I think the meds helped him with the voices and hallucinizations.",
+        test_linter(),
+        "He was treated for schizophrenia so I think the meds helped him with the voices and hallucinations.",
+    )
+}
+
+// Hijack
+
+#[test]
+fn fix_hi_hyphen_jacked() {
+    assert_suggestion_result(
+        "Empty message in hi-jacked POST from javascript to C# MVC",
+        test_linter(),
+        "Empty message in hijacked POST from javascript to C# MVC",
+    );
+}
+
+#[test]
+fn fix_hi_hyphen_jackers() {
+    assert_suggestion_result(
+        "hi-jackers, including one with no experience at all, survived jumps",
+        test_linter(),
+        "hijackers, including one with no experience at all, survived jumps",
+    );
+}
+
+#[test]
+fn fix_hi_hyphen_jacking() {
+    assert_suggestion_result(
+        "should be thrown instead of hi-jacking the Error class to dynamically add a property to the object",
+        test_linter(),
+        "should be thrown instead of hijacking the Error class to dynamically add a property to the object",
+    );
+}
+
+#[test]
+fn fix_hi_hyphen_jacks() {
+    assert_suggestion_result(
+        "Instruments' UI Recorder hi-jacks my entire system",
+        test_linter(),
+        "Instruments' UI Recorder hijacks my entire system",
+    );
+}
+
+#[test]
+fn fix_high_space_jack() {
+    assert_suggestion_result(
+        "ISPs that high jack the nxdomain result to send you sponsored results of vaguely similar sounding websites",
+        test_linter(),
+        "ISPs that hijack the nxdomain result to send you sponsored results of vaguely similar sounding websites",
+    );
+}
+
+#[test]
+fn fix_high_hyphen_jack() {
+    assert_suggestion_result(
+        "because now we no longer high-jack the API calls",
+        test_linter(),
+        "because now we no longer hijack the API calls",
+    );
+}
+
+#[test]
+fn fix_high_hyphen_jacked() {
+    assert_suggestion_result(
+        "not possible for the moment because the click event is high-jacked",
+        test_linter(),
+        "not possible for the moment because the click event is hijacked",
+    );
+}
+
+#[test]
+fn fix_high_hyphen_jacker() {
+    assert_suggestion_result(
+        "Driving a #Polo will get you treated like some high-jacker or car thief on the road",
+        test_linter(),
+        "Driving a #Polo will get you treated like some hijacker or car thief on the road",
+    );
+}
+
+#[test]
+fn fix_high_space_jackers() {
+    assert_suggestion_result(
+        "America and the high jackers are both referring to the same act of terror.",
+        test_linter(),
+        "America and the hijackers are both referring to the same act of terror.",
+    );
+}
+
+#[test]
+fn fix_high_space_jacking() {
+    assert_suggestion_result(
+        "Security issue , Session high jacking prevention",
+        test_linter(),
+        "Security issue , Session hijacking prevention",
+    );
+}
+
+#[test]
+fn fix_high_hyphen_jacks() {
+    assert_suggestion_result(
+        "Kotlin Compiler Plugin which high-jacks Kotlin assert function calls",
+        test_linter(),
+        "Kotlin Compiler Plugin which hijacks Kotlin assert function calls",
+    );
+}
+
+#[test]
+fn fix_high_space_jacks() {
+    assert_suggestion_result(
+        "This high jacks the issue somewhat but, the Computation Scheduler only runs as many concurrent threads as there are cores",
+        test_linter(),
+        "This hijacks the issue somewhat but, the Computation Scheduler only runs as many concurrent threads as there are cores",
     );
 }
 
@@ -1309,6 +1574,80 @@ fn fix_reversed_engineers_noun() {
         test_linter(),
         "Expert reverse engineers with 2-15 years of industrial experience at BlueSurf Technologies.",
     );
+}
+
+// SeizeControlOf
+
+#[test]
+fn fix_seize_control() {
+    assert_suggestion_result(
+        "ninja token addresses were blocked from future activities to seize control over the network",
+        test_linter(),
+        "ninja token addresses were blocked from future activities to seize control of the network",
+    )
+}
+
+#[test]
+fn fix_sieze_control() {
+    assert_suggestion_result(
+        "The problem is that by choosing to sieze control over distribution is that they now cannot sieze control over production without breaking their ...",
+        test_linter(),
+        "The problem is that by choosing to seize control of distribution is that they now cannot seize control of production without breaking their ...",
+    )
+}
+
+#[test]
+fn fix_seized_control() {
+    assert_suggestion_result(
+        "part of a revolution in self-publishing as artists and poets seized control over the dissemination of their work",
+        test_linter(),
+        "part of a revolution in self-publishing as artists and poets seized control of the dissemination of their work",
+    )
+}
+
+#[test]
+fn fix_siezed_control() {
+    assert_suggestion_result(
+        "You siezed control over a large portion of the Ferelden hinterlands that you never gave back, you occupy a castle that's technically on ...",
+        test_linter(),
+        "You seized control of a large portion of the Ferelden hinterlands that you never gave back, you occupy a castle that's technically on ...",
+    )
+}
+
+#[test]
+fn fix_seizes_control() {
+    assert_suggestion_result(
+        "Former Brigadier-General Ansumane Mané seizes control over military barracks in Bissau, marking the beginning of the Guinea-Bissau Civil War",
+        test_linter(),
+        "Former Brigadier-General Ansumane Mané seizes control of military barracks in Bissau, marking the beginning of the Guinea-Bissau Civil War",
+    )
+}
+
+#[test]
+fn fix_siezes_control() {
+    assert_suggestion_result(
+        "The Obsidian's mech forces the other player into coexistence and siezes control over the planet when they flip from the Firmament.",
+        test_linter(),
+        "The Obsidian's mech forces the other player into coexistence and seizes control of the planet when they flip from the Firmament.",
+    )
+}
+
+#[test]
+fn fix_seizing_control() {
+    assert_suggestion_result(
+        "... by either shooting them or seizing control over them by creating connections in a short subgame",
+        test_linter(),
+        "... by either shooting them or seizing control of them by creating connections in a short subgame",
+    )
+}
+
+#[test]
+fn fix_siezing_control() {
+    assert_suggestion_result(
+        "Siezing control over the internet is the modern day equivalent of 'siezing the means of production.'.",
+        test_linter(),
+        "Seizing control of the internet is the modern day equivalent of 'siezing the means of production.'.",
+    )
 }
 
 // SideTangent

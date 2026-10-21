@@ -212,7 +212,7 @@ test.describe('Google Docs live regressions', () => {
 
 		const opened = await clickHarperHighlight(page);
 		expect(opened).toBe(true);
-		await page.getByTitle('Replace with "a"').click();
+		await page.getByTitle('Click to replace "an" with "a"').click();
 
 		await expect
 			.poll(() => getGoogleDocsAnnotatedText(page), { timeout: 20000 })
@@ -248,7 +248,7 @@ test.describe('Google Docs live regressions', () => {
 
 		const opened = await clickHarperHighlight(page);
 		expect(opened).toBe(true);
-		await page.getByTitle('Replace with "a"').click();
+		await page.getByTitle('Click to replace "an" with "a"').click();
 
 		await expect
 			.poll(() => getGoogleDocsAnnotatedText(page), { timeout: 20000 })

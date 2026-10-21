@@ -1,6 +1,7 @@
 use std::num::NonZeroU32;
 use std::sync::Arc;
 
+use egui_wgpu::wgpu::PresentMode;
 use egui_wgpu::winit::Painter;
 use egui_wgpu::{RendererOptions, WgpuConfiguration, WgpuSetup};
 use winit::dpi::{PhysicalPosition, PhysicalSize};
@@ -17,6 +18,10 @@ use super::render_state::RenderState;
 /// `Window` owns the native winit window plus egui/wgpu integration required to render into it. It
 /// deliberately does not own highlighter drawing decisions; those are supplied by `RenderState`
 /// during each redraw.
+///
+/// Each window owns its own egui context. A painter only receives the texture updates (such as
+/// font atlas changes) from passes run on its own window, so windows that share one context end
+/// up drawing with incomplete textures.
 pub struct Window {
     inner: Arc<WinitWindow>,
     egui_state: egui_winit::State,
@@ -25,11 +30,8 @@ pub struct Window {
 }
 
 impl Window {
-    pub async fn new(
-        event_loop: &ActiveEventLoop,
-        monitor: MonitorHandle,
-        context: egui::Context,
-    ) -> Result<Self, Error> {
+    pub async fn new(event_loop: &ActiveEventLoop, monitor: MonitorHandle) -> Result<Self, Error> {
+        let context = egui::Context::default();
         let position = monitor.position();
         let size = monitor.size();
         let window = Arc::new(
@@ -64,6 +66,7 @@ impl Window {
         let mut painter = Painter::new(
             context,
             WgpuConfiguration {
+                present_mode: PresentMode::Fifo,
                 wgpu_setup: WgpuSetup::from_display_handle(event_loop.owned_display_handle()),
                 ..Default::default()
             },

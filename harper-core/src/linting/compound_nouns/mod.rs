@@ -14,7 +14,10 @@ pub(crate) fn is_content_word(tok: &Token, src: &[char]) -> bool {
     tok.span.len() > 1
         && (meta.is_noun() || meta.is_adjective() || meta.is_verb() || meta.is_adverb())
         && !(meta.is_determiner() || meta.is_conjunction())
-        && (!meta.preposition || tok.get_ch(src).eq_str("bar"))
+        && (!meta.preposition
+            || tok
+                .get_ch(src)
+                .eq_any_ignore_ascii_case_str(&["bar", "through"]))
 }
 
 pub(crate) fn predicate(
@@ -383,5 +386,14 @@ mod tests {
             "You can star or watch this project or follow author to get release notifications in time.",
             test_linter(),
         );
+    }
+
+    #[test]
+    fn fix_big_break_through() {
+        assert_suggestion_result(
+            "I think a big break through is needed for AGI so I haven’t been worried about it.",
+            test_linter(),
+            "I think a big breakthrough is needed for AGI so I haven’t been worried about it.",
+        )
     }
 }

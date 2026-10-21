@@ -2,14 +2,16 @@ use std::sync::Arc;
 
 use hashbrown::HashSet;
 
-use crate::expr::Expr;
-use crate::linting::{
-    ExprLinter, LintKind, Suggestion,
-    expr_linter::{Chunk, at_start_of_sentence, preceded_by_word},
-    informal_laughter::is_informal_laughter,
+use crate::{
+    Lint, Token,
+    expr::Expr,
+    linting::{
+        ExprLinter, LintKind, Suggestion,
+        expr_linter::{Chunk, at_start_of_sentence, preceded_by_word},
+        informal_laughter::is_informal_laughter,
+    },
+    spell::{Dictionary, FstDictionary, TrieDictionary},
 };
-use crate::spell::{Dictionary, FstDictionary, TrieDictionary};
-use crate::{Lint, Token};
 
 pub struct SplitWords {
     dict: Arc<TrieDictionary<Arc<FstDictionary>>>,
@@ -115,7 +117,7 @@ impl ExprLinter for SplitWords {
                 continue;
             }
 
-            if is_anchor_split(&cand_meta, candidate) || is_anchor_split(&rem_meta, remainder) {
+            if is_anchor_split(&cand_meta) || is_anchor_split(&rem_meta) {
                 has_anchor_split = true;
             }
 
@@ -167,13 +169,14 @@ impl ExprLinter for SplitWords {
     }
 }
 
-fn is_anchor_split(meta: &crate::DictWordMetadata, word: &[char]) -> bool {
+/// Only tagged function words anchor splits; short non-function words like
+/// "ha" must not block spelling corrections such as `havent` → `haven't`.
+fn is_anchor_split(meta: &crate::DictWordMetadata) -> bool {
     meta.preposition
         || meta.is_determiner()
         || meta.is_conjunction()
         || meta.is_pronoun()
         || meta.is_adverb()
-        || word.len() <= 2
 }
 
 fn should_defer_to_spellcheck(
@@ -288,6 +291,23 @@ mod tests {
     #[test]
     fn ignores_single_word_misspelling_with_split_like_halves() {
         assert_no_lints("I love this extention!", SplitWords::default());
+    }
+
+    /// Regression: `havent` should defer to SpellCheck's `haven't` suggestion,
+    /// not split into `ha vent` (issue #4130).
+    #[test]
+    fn issue_4130_defers_havent_to_spellcheck() {
+        assert_no_lints("They havent reviewed it yet.", SplitWords::default());
+    }
+
+    /// Genuine short anchors like `at` should still produce splits.
+    #[test]
+    fn issue_4130_does_not_regress_real_short_anchors() {
+        assert_suggestion_result(
+            "don't seem to support symbolic links atall.",
+            SplitWords::default(),
+            "don't seem to support symbolic links at all.",
+        );
     }
 
     #[test]

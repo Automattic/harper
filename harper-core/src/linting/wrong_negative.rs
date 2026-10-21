@@ -1,7 +1,7 @@
 use crate::{
     CharStringExt, Lint, Token,
     expr::Expr,
-    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk, spell_check},
+    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
     spell::Dictionary,
 };
 
@@ -12,6 +12,7 @@ fn looks_negative_but_oov(token: &Token, source: &[char]) -> bool {
         && token
             .get_ch(source)
             .starts_with_any_ignore_ascii_case_str(NEGATIVE_PREFIXES)
+        && !token.get_ch(source).eq_ch(&['d', 'e', 'f', 'o'])
 }
 
 pub struct WrongNegative<D: Dictionary + 'static> {
@@ -77,7 +78,8 @@ impl<D: Dictionary + 'static> ExprLinter for WrongNegative<D> {
             }
             .to_string(),
             suggestions,
-            priority: spell_check::SPELL_CHECK_PRIORITY - 1, // higher priority (lower number) than spell check
+            // higher priority (lower number) than spell check
+            priority: 62,
         })
     }
 
@@ -95,7 +97,10 @@ mod tests {
     use crate::{
         Dialect,
         document::Document,
-        linting::{LintGroup, Linter, spell_check, tests::assert_suggestion_result},
+        linting::{
+            LintGroup, Linter, spell_check,
+            tests::{assert_no_lints, assert_suggestion_result},
+        },
         remove_overlaps,
         spell::FstDictionary,
     };
@@ -165,6 +170,14 @@ mod tests {
         assert_eq!(
             lints[0].message,
             "Could this be the negative word you intended?"
+        );
+    }
+
+    #[test]
+    fn dont_flag_defo() {
+        assert_no_lints(
+            "I defo used MSVC back then too",
+            WrongNegative::new(FstDictionary::curated()),
         );
     }
 }

@@ -124,6 +124,17 @@ pub fn lint_group() -> LintGroup {
             "Suggests replacing the nonstandard verb `combinate` with the standard `combine`.",
             LintKind::Nonstandard
         ),
+        "CondensateVerb" => (
+            &[
+                // "condensate" is a legitimate noun but a mistake when used as a verb.
+                ("condensated", "condensed"),
+                ("condensating", "condensing"),
+                // "condensates" is a legitimate plural but a mistake when used as a 3rd person singular present verb.
+            ],
+            "Did you mean `condense` rather than the nonstandard `condensate`?",
+            "Suggests replacing the nonstandard verb `condensate` with the standard `condense`.",
+            LintKind::Nonstandard
+        ),
         "CompulseToCompel" => (
             &[
                 ("compulse", "compel"),
@@ -321,7 +332,9 @@ pub fn lint_group() -> LintGroup {
                 ("a certain extend", "a certain extent"),
                 ("to an extend", "to an extent"),
                 ("to some extend", "to some extent"),
-                ("to the extend that", "to the extent that")
+                ("to the extend that", "to the extent that"),
+                ("greater extend", "greater extent"),
+                ("lesser extend", "lesser extent")
             ],
             "Use `extent` for the noun and `extend` for the verb.",
             "Corrects `extend` to `extent` when the context is a noun.",
@@ -668,6 +681,36 @@ pub fn lint_group() -> LintGroup {
             "Corrects `seam` to `seem` when used as a verb meaning `to appear` or `to give the impression`.",
             LintKind::Spelling
         ),
+        "SetABadExample" => (
+            &[
+                ("set up a bad example", "set a bad example"),
+                ("sets up a bad example", "sets a bad example"),
+                ("setting up a bad example", "setting a bad example"),
+            ],
+            "Are you confusing `set up` and `set a bad example`? The latter does not use the word `up`.",
+            "Corrects `set up a bad example` to `set a bad example`.",
+            LintKind::Usage
+        ),
+        "Skyrocket" => (
+            &[
+                ("sky rocketed", "skyrocketed"),
+                ("sky rocketing", "skyrocketing"),
+            ],
+            "Did you mean the closed compound `skyrocket`?",
+            "Looks for incorrect spacing inside the closed compound `skyrocket`.",
+            LintKind::Miscellaneous
+        ),
+        "SubjectAndObjectPronoun" => (
+            &[
+                ("subjective pronoun", "subject pronoun"),
+                ("subjective pronouns", "subject pronouns"),
+                ("objective pronoun", "object pronoun"),
+                ("objective pronouns", "object pronouns"),
+            ],
+            "`Subject -` and `object pronoun` are much more common than `subjective -` and `objective -`.",
+            "Standardizes `subjective pronoun` and `objective pronoun` to the more common `subject -` and `object -`.",
+            LintKind::Usage
+        ),
         "SubjunctiveWasToWere" => (
             &[
                 ("if only there was", "if only there were"),
@@ -788,6 +831,39 @@ pub fn lint_group() -> LintGroup {
             "Corrects `backhand compliment` to `backhanded compliment`.",
             LintKind::Spelling
         ),
+        "BackwardEngineer" => (
+            &[
+                (&["backward engineer",    "backwards engineer"],    &["reverse engineer"]),
+                (&["backward engineers",   "backwards engineers"],   &["reverse engineers"]),
+                (&["backward-engineer",    "backwards-engineer"],    &["reverse-engineer"]),
+                (&["backward-engineers",   "backwards-engineers"],   &["reverse-engineers"]),
+                (&["backward engineering", "backwards engineering"], &["reverse engineering"]),
+                (&["backward-engineering", "backwards-engineering"], &["reverse-engineering"]),
+                (&["backward engineered",  "backwards engineered"],  &["reverse engineered"]),
+                (&["backward-engineered",  "backwards-engineered"],  &["reverse-engineered"]),
+            ],
+            "The much more common term is `reverse engineer`.",
+            "Suggests changing the less common `backward/backwards engineer` to the more usual `reverse engineer`.",
+            LintKind::WordChoice
+        ),
+        "BainBane" => (
+            &[
+                (&["bain of my existence","bain of my existance"], &["bane of my existence"]),
+                (&["bain of our existence","bain of our existance"], &["bane of our existence"]),
+                (&["bain of your existence","bain of your existance"], &["bane of your existence"]),
+                (&["bain of his existence","bain of his existance"], &["bane of his existence"]),
+                (&["bain of her existence","bain of her existance"], &["bane of her existence"]),
+                (&["bain of its existence","bain of its existance"], &["bane of its existence"]),
+                (&["bain of their existence","bain of their existance"], &["bane of their existence"]),
+                (&["bane marie"], &["bain marie"]),
+                (&["bane-marie"], &["bain-marie"]),
+                (&["bane maries", "banes marie"], &["bains marie", "bain maries"]),
+                (&["bane-maries", "banes-marie"], &["bains-marie", "bain-maries"]),
+            ],
+            "Don't confuse `bane` (source of misery) with `bain` in `bain-marie` (double boiler).",
+            "Detects mixing up `bain` and `bane`.",
+            LintKind::Spelling
+        ),
         "CommitmentTo" => (
             &[
                 (&["commitment toward", "commitment towards"], &["commitment to"]),
@@ -895,6 +971,30 @@ pub fn lint_group() -> LintGroup {
             "The idiom is `to get rid of`, not `off` or `ride`.",
             "Corrects common misspellings of the idiom `get rid of`.",
             LintKind::Typo
+        ),
+        "Hallucination" => (
+            &[
+                (&["hallucinisation", "hallucinization"], &["hallucination"]),
+                (&["hallucinisations", "hallucinizations"], &["hallucinations"]),
+            ],
+            "The correct spelling is `hallucination`.",
+            "Corrects the misspelling `hallucinization`/`hallucinisation`.",
+            LintKind::Spelling
+        ),
+        "Hijack" => (
+            &[
+                // "hi jack" would result in false positives
+                (&["hi-jack", "high jack", "high-jack"], &["hijack"]),
+                (&["hi jacked", "hi-jacked", "high jacked", "high-jacked"], &["hijacked"]),
+                (&["hi jacker", "hi-jacker", "high jacker", "high-jacker"], &["hijacker"]),
+                (&["hi jackers", "hi-jackers", "high jackers", "high-jackers"], &["hijackers"]),
+                (&["hi jacking", "hi-jacking", "high jacking", "high-jacking"], &["hijacking"]),
+                (&["hi jackings", "hi-jackings", "high jackings", "high-jackings"], &["hijackings"]),
+                (&["hi jacks", "hi-jacks", "high jacks", "high-jacks"], &["hijacks"]),
+            ],
+            "The correct spelling is `hijack`.",
+            "Corrects misspellings of `hijack`.",
+            LintKind::Spelling
         ),
         "HolyWar" => (
             &[
@@ -1053,6 +1153,17 @@ pub fn lint_group() -> LintGroup {
             "Use `raise` instead of `rise` when referring to the act of asking a question.",
             "Corrects `rise the question` to `raise the question`.",
             LintKind::Grammar
+        ),
+        "SeizeControlOf" => (
+            &[
+                (&["seize control over", "sieze control over"], &["seize control of"]),
+                (&["seized control over", "siezed control over"], &["seized control of"]),
+                (&["seizes control over", "siezes control over"], &["seizes control of"]),
+                (&["seizing control over", "siezing control over"], &["seizing control of"]),
+            ],
+            "The standard preposition with the verb `seize` is `of`.",
+            "Corrects `seize control over` to `seize control of`.",
+            LintKind::Usage
         ),
         "SideTangent" => (
             &[

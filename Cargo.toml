@@ -1,6 +1,7 @@
 [workspace]
-members = ["harper-cli", "harper-core", "harper-ls", "harper-comments", "harper-wasm", "harper-tree-sitter", "harper-html", "harper-literate-haskell", "harper-typst", "harper-stats", "harper-pos-utils", "harper-brill", "harper-ink", "harper-python", "harper-jjdescription", "harper-thesaurus", "harper-asciidoc", "fuzz", "harper-tex", "harper-desktop/src-tauri", "harper-git-commit/"]
+members = ["harper-cli", "harper-core", "harper-ls", "harper-comments", "harper-wasm", "harper-tree-sitter", "harper-html", "harper-literate-haskell", "harper-typst", "harper-stats", "harper-pos-utils", "harper-brill", "harper-ink", "harper-python", "harper-jjdescription", "harper-thesaurus", "harper-asciidoc", "fuzz", "harper-tex", "harper-git-commit/"]
 resolver = "2"
+exclude = ["harper-desktop/src-tauri"]
 
 [profile.test]
 opt-level = 1

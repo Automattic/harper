@@ -1,6 +1,7 @@
 import type { VNode } from 'virtual-dom';
 import h from 'virtual-dom/h';
 import type { LintBox } from './Box';
+import { nonEditableAncestor } from './domUtils';
 import {
 	getCMRoot,
 	getDraftRoot,
@@ -213,6 +214,9 @@ export default class Highlights {
 						backgroundColor: `${lintKindColor(box.lint.lint_kind)}22`,
 					},
 					id: 'harper-highlight',
+					attributes: {
+						'data-problem-text': box.lint.problem_text,
+					},
 				},
 				[],
 			);
@@ -258,7 +262,7 @@ export default class Highlights {
 			}
 		}
 
-		return el.parentElement!;
+		return nonEditableAncestor(el.parentElement!);
 	}
 }
 
