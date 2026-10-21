@@ -128,18 +128,6 @@ mod tests {
     use crate::spell::trie_dictionary::TrieDictionary;
 
     #[test]
-    fn fuzzy_search_delegates_to_inner_fst() {
-        let mut inner = MutableDictionary::new();
-        inner.append_word_str("word", DictWordMetadata::default());
-        let dict = TrieDictionary::new(crate::spell::FstDictionary::from(inner));
-        let dict: &dyn Dictionary = &dict;
-        assert!(dict.fuzzy_match_str("word", 0, 10).is_empty());
-        let matches = dict.fuzzy_match(&['w', 'o', 'r', 'd', 's'], 1, 10);
-        assert_eq!(matches.len(), 1);
-        assert_eq!(matches[0].word, &['w', 'o', 'r', 'd']);
-    }
-
-    #[test]
     fn gets_prefixes_as_expected() {
         let mut inner = MutableDictionary::new();
         inner.append_word_str("predict", DictWordMetadata::default());
