@@ -10,15 +10,15 @@ pub struct WordMapEntry {
 impl WordMapEntry {
     /// Construct a new word map entry with default metadata.
     pub fn new(canonical_spelling: impl Into<CharString>) -> Self {
-        Self::_new(canonical_spelling.into())
+        Self::from_chars(canonical_spelling.into())
     }
 
     /// Construct a new word map entry with default metadata.
     pub fn new_str(canonical_spelling: &str) -> Self {
-        Self::_new(canonical_spelling.chars().collect())
+        Self::from_chars(canonical_spelling.chars().collect())
     }
 
-    fn _new(canonical_spelling: CharString) -> Self {
+    fn from_chars(canonical_spelling: CharString) -> Self {
         let word_ids = WordIdPair::from_word_chars(&canonical_spelling);
 
         Self {
