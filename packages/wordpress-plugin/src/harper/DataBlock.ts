@@ -23,7 +23,10 @@ export default class DataBlock {
 		return containers.map(
 			(cont) =>
 				new RichText(cont, this, async (newContent: string) => {
-					const { updateBlockAttributes } = dispatch('core/block-editor');
+					// Named Gutenberg stores do not expose their action types.
+					const { updateBlockAttributes } = dispatch('core/block-editor') as {
+						updateBlockAttributes(clientId: string, attributes: Record<string, string>): unknown;
+					};
 
 					const attributeName = cont.getAttribute('data-wp-block-attribute-key') ?? 'content';
 
@@ -36,6 +39,7 @@ export default class DataBlock {
 
 	public static getAllDataBlocks(): DataBlock[] {
 		const container = this.getContainer();
+		if (container === null) return [];
 
 		const targetNodes = [...getNodesFromQuerySelector(container, '[data-block]')];
 
@@ -61,11 +65,11 @@ export default class DataBlock {
 		});
 	}
 
-	public static getContainer(): Element {
-		const iframe = document.querySelector('iframe[name="editor-canvas"]');
-		const iframeDocument = iframe?.contentDocument || iframe?.contentWindow.document;
-		const container =
-			iframeDocument?.body || document.querySelector('.edit-post-visual-editor > div');
-		return container;
+	/** Find the current editor container, or return null while it loads or changes layouts. */
+	public static getContainer(): Element | null {
+		const iframe = document.querySelector<HTMLIFrameElement>('iframe[name="editor-canvas"]');
+		return (
+			iframe?.contentDocument?.body || document.querySelector('.edit-post-visual-editor > div')
+		);
 	}
 }

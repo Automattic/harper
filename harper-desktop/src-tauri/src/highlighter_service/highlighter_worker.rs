@@ -1,5 +1,9 @@
 use super::highlighter_process::HighlighterProcess;
-use crate::{communication::Server, config::Config};
+use crate::{
+    communication::{Request, Server},
+    config::Config,
+    windows::show_settings_window,
+};
 use std::{
     io,
     sync::Arc,
@@ -20,7 +24,7 @@ pub struct HighlighterWorker {
 
 impl HighlighterWorker {
     /// Spawns a new highlighter process and thread to manage it.
-    pub fn spawn(config: Arc<Mutex<Config>>) -> io::Result<Self> {
+    pub fn spawn(config: Arc<Mutex<Config>>, app: tauri::AppHandle) -> io::Result<Self> {
         let (shutdown_sender, shutdown_receiver) = oneshot::channel();
         let (startup_sender, startup_receiver) = std::sync::mpsc::sync_channel(1);
 
@@ -54,7 +58,7 @@ impl HighlighterWorker {
                     };
 
                     let _ = startup_sender.send(Ok(()));
-                    run_server_until_shutdown(&mut server, shutdown_receiver).await;
+                    run_server_until_shutdown(&mut server, shutdown_receiver, &app).await;
                     highlighter_process.terminate().await;
                 });
             })?;
@@ -108,6 +112,7 @@ impl Drop for HighlighterWorker {
 async fn run_server_until_shutdown<R, W>(
     server: &mut Server<R, W>,
     mut shutdown_receiver: oneshot::Receiver<()>,
+    app: &tauri::AppHandle,
 ) where
     R: AsyncRead + Unpin,
     W: AsyncWrite + Unpin,
@@ -117,6 +122,16 @@ async fn run_server_until_shutdown<R, W>(
             _ = &mut shutdown_receiver => break,
             request = server.receive_request() => {
                 match request {
+                    Ok(Some(Request::OpenSettings)) => {
+                        let settings_app = app.clone();
+                        if let Err(error) = app.run_on_main_thread(move || {
+                            if let Err(error) = show_settings_window(&settings_app) {
+                                eprintln!("failed to open settings window: {error}");
+                            }
+                        }) {
+                            eprintln!("failed to schedule settings window: {error}");
+                        }
+                    }
                     Ok(Some(_)) => {}
                     Ok(None) => break,
                     Err(error) => eprintln!("failed to receive highlighter request: {error}"),
