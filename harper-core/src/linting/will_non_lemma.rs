@@ -24,7 +24,7 @@ where
     pub fn new(dict: D) -> Self {
         Self {
             expr: Box::new(
-                SequenceExpr::word_set(&["will", "shall"])
+                SequenceExpr::word_set(["will", "shall"])
                     .t_ws()
                     .then_kind_where(|kind| {
                         kind.is_verb()
@@ -159,8 +159,7 @@ impl<D: Dictionary> ExprLinter for WillNonLemma<D> {
             span: toks.span()?,
             lint_kind: LintKind::Grammar,
             suggestions,
-            message: "`Will` and `shall` should be followed by a verb in its base form."
-                .to_string(),
+            message: "`Will` and `shall` should be followed by a verb in its base form.".to_owned(),
             ..Default::default()
         })
     }

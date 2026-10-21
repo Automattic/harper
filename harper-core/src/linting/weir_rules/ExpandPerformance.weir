@@ -1,0 +1,8 @@
+expr main perf
+
+let message "Use `performance` instead of `perf`"
+let description "Expands the abbreviation `perf` to the full word `performance` for clarity."
+let kind "Style"
+let becomes "performance"
+
+test "I have macos locally and i want to do some perf analysis." "I have macos locally and i want to do some performance analysis."

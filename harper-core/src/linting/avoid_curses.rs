@@ -238,7 +238,7 @@ impl ExprLinter for AvoidCurses {
             span,
             lint_kind: LintKind::WordChoice,
             suggestions,
-            message: "Try to avoid offensive language.".to_string(),
+            message: "Try to avoid offensive language.".to_owned(),
             ..Default::default()
         })
     }
@@ -259,6 +259,15 @@ mod tests {
             "He ate shit when he fell off the bike.",
             AvoidCurses::default(),
             1,
+        );
+    }
+
+    #[test]
+    fn allows_dickens_1656() {
+        assert_lint_count(
+            "Charles Dickens wrote many novels.",
+            AvoidCurses::default(),
+            0,
         );
     }
 

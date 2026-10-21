@@ -11,10 +11,10 @@ pub struct ArriveTo {
 impl Default for ArriveTo {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["arrive", "arrived", "arrives", "arriving"])
+            expr: SequenceExpr::word_set(["arrive", "arrived", "arrives", "arriving"])
                 .t_ws()
                 .t_aco("to")
-                .and_not(
+                .but_not(
                     SequenceExpr::anything()
                         .t_any()
                         .t_any()
@@ -41,7 +41,7 @@ impl ExprLinter for ArriveTo {
             span,
             lint_kind: LintKind::Usage,
             suggestions,
-            message: "If the noun is a destination, use 'at' or 'in' instead of 'to'.".to_string(),
+            message: "If the noun is a destination, use 'at' or 'in' instead of 'to'.".to_owned(),
             ..Default::default()
         })
     }
@@ -51,7 +51,7 @@ impl ExprLinter for ArriveTo {
     }
 
     fn description(&self) -> &str {
-        "A linter skeleton for contributors to copy into `harper_core/src/linting/` and rename."
+        "Corrects `arrive to` to `arrive at` or `arrive in`."
     }
 }
 

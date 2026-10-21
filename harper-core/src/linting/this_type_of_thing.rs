@@ -12,17 +12,17 @@ pub struct ThisTypeOfThing {
 impl Default for ThisTypeOfThing {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["this", "these", "that", "those"])
+            expr: SequenceExpr::word_set(["this", "these", "that", "those"])
                 .t_ws()
                 .then(
-                    SequenceExpr::word_set(&["kind", "kinds", "sort", "sorts", "type", "types"])
+                    SequenceExpr::word_set(["kind", "kinds", "sort", "sorts", "type", "types"])
                         .t_ws(),
                 )
                 .t_aco("of")
                 .t_ws()
-                .then_any_of(vec![
+                .then_any_of([
                     // "thing" is common in this construction and won't be part of a compound noun.
-                    Box::new(WordSet::new(&["thing", "things"])),
+                    Box::new(WordSet::new(["thing", "things"])) as Box<dyn Expr>,
                     // Other singular nouns may be part of hard-to-determine compound nouns, but plural nouns won't.
                     Box::new(
                         SequenceExpr::default()
@@ -143,7 +143,7 @@ impl ExprLinter for ThisTypeOfThing {
                 bad_tok.get_ch(src),
             )],
             message: "The grammatical number of the determiner and the two nouns must agree."
-                .to_string(),
+                .to_owned(),
             ..Default::default()
         })
     }

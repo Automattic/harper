@@ -1,0 +1,8 @@
+expr main [confs, configs]
+
+let message "Use `configurations` instead of `configs`"
+let description "Expands the abbreviation `configs` to the full word `configurations` for clarity."
+let kind "Style"
+let becomes "configurations"
+
+test "Community-maintained repository offering free V2ray configs to help you browse securely and privately." "Community-maintained repository offering free V2ray configurations to help you browse securely and privately."

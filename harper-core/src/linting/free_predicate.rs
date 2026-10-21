@@ -2,7 +2,6 @@ use crate::Token;
 use crate::TokenKind;
 use crate::char_string::CharStringExt;
 use crate::expr::{Expr, ExprMap, SequenceExpr};
-use crate::patterns::WhitespacePattern;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::linting::expr_linter::Chunk;
@@ -18,7 +17,7 @@ impl Default for FreePredicate {
         let no_modifier = SequenceExpr::with(linking_like)
             .t_ws()
             .then(matches_fee)
-            .then_optional(WhitespacePattern)
+            .then_optional_whitespace()
             .then(follows_fee);
 
         map.insert(no_modifier, 2);
@@ -28,7 +27,7 @@ impl Default for FreePredicate {
             .then_adverb()
             .t_ws()
             .then(matches_fee)
-            .then_optional(WhitespacePattern)
+            .then_optional_whitespace()
             .then(follows_fee);
 
         map.insert(with_adverb, 4);

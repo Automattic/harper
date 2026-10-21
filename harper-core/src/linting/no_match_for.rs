@@ -12,9 +12,9 @@ pub struct NoMatchFor {
 
 impl Default for NoMatchFor {
     fn default() -> Self {
-        let pre_context = FirstMatchOf::new(vec![
-            Box::new(InflectionOfBe::default()),
-            Box::new(WordSet::new(&[
+        let pre_context = FirstMatchOf::new([
+            Box::new(InflectionOfBe::default()) as Box<dyn Expr>,
+            Box::new(WordSet::new([
                 "I'm", "we're", "you're", "he's", "she's", "it's", "they're", "Im", "were",
                 "youre", "hes", "shes", "its", "theyre",
             ])),

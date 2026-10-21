@@ -12,7 +12,7 @@ pub struct ThePointFor {
 impl Default for ThePointFor {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::any_of(vec![Box::new(WordSet::new(&[
+            expr: SequenceExpr::any_of(vec![Box::new(WordSet::new([
                 // "that's" leads to false positives: "that's the point for me"
                 "is", "was", "what's", "whats",
             ]))])
@@ -60,7 +60,7 @@ impl ExprLinter for ThePointFor {
                 "of",
                 forspan.get_content(src),
             )],
-            message: "Did you mean `the point of`?".to_string(),
+            message: "Did you mean `the point of`?".to_owned(),
             ..Default::default()
         })
     }

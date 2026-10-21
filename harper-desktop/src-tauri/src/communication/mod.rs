@@ -1,3 +1,6 @@
+//! Contains the protocol for the communication between the highlighter [`Client`] and the main
+//! process [`Server`].
+
 mod client;
 mod error;
 mod framing;

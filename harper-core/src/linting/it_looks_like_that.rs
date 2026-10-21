@@ -11,7 +11,7 @@ pub struct ItLooksLikeThat {
 impl Default for ItLooksLikeThat {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::fixed_phrase("it looks like that")
+            expr: SequenceExpr::word_seq(&["it", "looks", "like", "that"])
                 .then_whitespace()
                 .then_kind_where(|kind| {
                     // Heuristics on the word after "that" which show "that" was used
@@ -54,7 +54,7 @@ impl ExprLinter for ItLooksLikeThat {
             span: that_span,
             lint_kind: LintKind::Redundancy,
             suggestions: vec![Suggestion::Remove],
-            message: "`that` is redundant and ungrammatical here".to_string(),
+            message: "`that` is redundant and ungrammatical here".to_owned(),
             priority: 31,
         })
     }

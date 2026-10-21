@@ -47,6 +47,12 @@ importers:
       '@tauri-apps/plugin-opener':
         specifier: ^2
         version: 2.5.4
+      '@tauri-apps/plugin-os':
+        specifier: ~2.3.2
+        version: 2.3.2
+      components:
+        specifier: workspace:*
+        version: link:../packages/components
       harper-editor:
         specifier: workspace:*
         version: link:../packages/harper-editor
@@ -74,7 +80,7 @@ importers:
         version: 5.43.12
       svelte-check:
         specifier: ^4.0.0
-        version: 4.3.4(picomatch@4.0.2)(svelte@5.43.12)(typescript@5.6.3)
+        version: 4.3.4(picomatch@4.0.3)(svelte@5.43.12)(typescript@5.6.3)
       tailwindcss:
         specifier: ^4.2.2
         version: 4.2.4
@@ -124,8 +130,8 @@ importers:
         specifier: ^2.3.0
         version: 2.3.0
       '@playwright/test':
-        specifier: ^1.58.0
-        version: 1.58.0
+        specifier: 1.60.0
+        version: 1.60.0
       '@sveltejs/vite-plugin-svelte':
         specifier: ^4.0.0
         version: 4.0.4(svelte@5.43.12)(vite@5.4.17(@types/node@22.13.10)(lightningcss@1.32.0)(sass@1.85.1)(terser@5.39.0))
@@ -153,21 +159,21 @@ importers:
       http-server:
         specifier: ^14.1.1
         version: 14.1.1
+      playwright:
+        specifier: 1.60.0
+        version: 1.60.0
       playwright-webextext:
-        specifier: ^0.0.4
-        version: 0.0.4(@playwright/test@1.58.0)(playwright@1.58.0)
-      prettier:
-        specifier: ^3.1.0
-        version: 3.5.3
-      prettier-plugin-svelte:
-        specifier: ^3.2.6
-        version: 3.3.3(prettier@3.5.3)(svelte@5.43.12)
+        specifier: ^0.0.5
+        version: 0.0.5(@playwright/test@1.60.0)(playwright@1.60.0)
       rollup-plugin-copy:
         specifier: ^3.5.0
         version: 3.5.0
       svelte:
         specifier: ^5.0.0
         version: 5.43.12
+      svelte-check:
+        specifier: ^4.3.3
+        version: 4.3.4(picomatch@4.0.3)(svelte@5.43.12)(typescript@5.6.3)
       svelte-preprocess:
         specifier: ^6.0.0
         version: 6.0.3(@babel/core@7.26.10)(postcss-load-config@4.0.2(postcss@8.5.6))(postcss@8.5.6)(sass@1.85.1)(svelte@5.43.12)(typescript@5.6.3)
@@ -301,7 +307,7 @@ importers:
         version: 4.0.16(msw@2.7.3(@types/node@22.13.10)(typescript@5.9.3))(vite@6.3.5(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.32.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))(vitest@4.0.16)
       '@vitest/browser-playwright':
         specifier: ^4.0.16
-        version: 4.0.16(msw@2.7.3(@types/node@22.13.10)(typescript@5.9.3))(playwright@1.58.0)(vite@6.3.5(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.32.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))(vitest@4.0.16)
+        version: 4.0.16(msw@2.7.3(@types/node@22.13.10)(typescript@5.9.3))(playwright@1.60.0)(vite@6.3.5(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.32.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))(vitest@4.0.16)
       '@vitest/ui':
         specifier: 4.0.16
         version: 4.0.16(vitest@4.0.16)
@@ -318,8 +324,8 @@ importers:
         specifier: ^7.1.1
         version: 7.1.1
       playwright:
-        specifier: ^1.58.0
-        version: 1.58.0
+        specifier: 1.60.0
+        version: 1.60.0
       type-fest:
         specifier: ^4.37.0
         version: 4.37.0
@@ -434,29 +440,41 @@ importers:
         version: 2.8.1
     devDependencies:
       '@playwright/test':
-        specifier: ^1.58.0
-        version: 1.58.0
+        specifier: 1.60.0
+        version: 1.60.0
       '@rollup/plugin-node-resolve':
         specifier: ^16.0.0
-        version: 16.0.1(rollup@4.53.3)
+        version: 16.0.1(rollup@4.35.0)
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.13.10
+      '@types/rollup-plugin-peer-deps-external':
+        specifier: ^2.2.6
+        version: 2.2.6(rollup@4.35.0)
       '@vitest/browser':
         specifier: ^4.0.16
         version: 4.0.16(msw@2.7.3(@types/node@22.13.10)(typescript@5.9.3))(vite@6.3.5(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.32.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))(vitest@4.0.16)
       '@vitest/browser-playwright':
         specifier: ^4.0.16
-        version: 4.0.16(msw@2.7.3(@types/node@22.13.10)(typescript@5.9.3))(playwright@1.58.0)(vite@6.3.5(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.32.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))(vitest@4.0.16)
+        version: 4.0.16(msw@2.7.3(@types/node@22.13.10)(typescript@5.9.3))(playwright@1.60.0)(vite@6.3.5(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.32.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))(vitest@4.0.16)
       obsidian:
         specifier: ^1.7.2
         version: 1.8.7(@codemirror/state@6.5.2)(@codemirror/view@6.36.4)
+      rollup:
+        specifier: 4.35.0
+        version: 4.35.0
       rollup-plugin-peer-deps-external:
         specifier: ^2.2.4
-        version: 2.2.4(rollup@4.53.3)
+        version: 2.2.4(rollup@4.35.0)
       rollup-plugin-svg-import:
         specifier: ^3.0.0
-        version: 3.0.0(rollup@4.53.3)
+        version: 3.0.0(rollup@4.35.0)
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
       vite:
         specifier: ^6.3.5
         version: 6.3.5(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.32.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0)
@@ -497,6 +515,12 @@ importers:
 
   packages/web:
     dependencies:
+      '@docsearch/css':
+        specifier: ^3.9.0
+        version: 3.9.0
+      '@docsearch/js':
+        specifier: ^3.9.0
+        version: 3.9.0(@algolia/client-search@5.21.0)(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.17.3)
       '@sveltepress/theme-default':
         specifier: ^5.0.7
         version: 5.0.8(4268f9b38bc0513d36dd7ea806650b17)
@@ -618,6 +642,9 @@ importers:
       '@wordpress/editor':
         specifier: ^14.20.0
         version: 14.20.0(@babel/core@7.25.7)(@emotion/is-prop-valid@1.3.1)(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.98.0)
+      '@wordpress/plugins':
+        specifier: ^7.20.0
+        version: 7.20.0(@emotion/is-prop-valid@1.3.1)(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@wordpress/preferences-persistence':
         specifier: ^2.17.0
         version: 2.20.0
@@ -634,9 +661,21 @@ importers:
         specifier: ^18.0.0
         version: 18.3.1(react@18.3.1)
     devDependencies:
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
+      '@types/react':
+        specifier: ^18.3.0
+        version: 18.3.18
+      '@types/react-dom':
+        specifier: ^18.3.0
+        version: 18.3.5(@types/react@18.3.18)
+      '@types/wordpress__edit-post':
+        specifier: ^8.4.2
+        version: 8.4.2(@babel/core@7.25.7)(@emotion/is-prop-valid@1.3.1)(@types/react-dom@18.3.5(@types/react@18.3.18))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.98.0)
       '@wordpress/scripts':
         specifier: ^30.9.0
-        version: 30.13.0(@playwright/test@1.58.0)(@types/eslint@9.6.1)(@types/node@22.13.10)(@types/webpack@4.41.40)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(type-fest@4.37.0)(typescript@5.9.3)
+        version: 30.13.0(@playwright/test@1.60.0)(@types/eslint@9.6.1)(@types/node@22.13.10)(@types/webpack@4.41.40)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(type-fest@4.37.0)(typescript@5.9.3)
       '@wp-now/wp-now':
         specifier: ^0.1.74
         version: 0.1.74
@@ -2886,8 +2925,8 @@ packages:
     resolution: {integrity: sha512-cq8o4cWH0ibXh9VGi5P20Tu9XF/0fFXl9EUinr9QfTM7a7p0oTA4iJRCQWppXR1Pg8dSM0UCItCkPwsk9qWWYA==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
 
-  '@playwright/test@1.58.0':
-    resolution: {integrity: sha512-fWza+Lpbj6SkQKCrU6si4iu+fD2dD3gxNHFhUPxsfXBPhnv3rRSQVd0NtBUT9Z/RhF/boCBcuUaMUSTRTopjZg==}
+  '@playwright/test@1.60.0':
+    resolution: {integrity: sha512-O71yZIbAh/PxDMNGns37GHBIfrVkEVyn+AXyIa5dOTfb4/xNvRWV+Vv/NMbNCtODB/pO7vLlF2OTmMVLhmr7Ag==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -4100,6 +4139,9 @@ packages:
   '@tauri-apps/plugin-opener@2.5.4':
     resolution: {integrity: sha512-1HnPkb+AmgO29HBazm4uPLKB+r7zzcTBW1d0fyYp1uP+jwtpoiNDGKMMzz58SFp49nOIrxdE3aUJtT57lfO9CQ==}
 
+  '@tauri-apps/plugin-os@2.3.2':
+    resolution: {integrity: sha512-n+nXWeuSeF9wcEsSPmRnBEGrRgOy6jjkSU+UVCOV8YUGKb2erhDOxis7IqRXiRVHhY8XMKks00BJ0OAdkpf6+A==}
+
   '@tootallnate/once@2.0.0':
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==}
     engines: {node: '>= 10'}
@@ -4305,6 +4347,11 @@ packages:
   '@types/reveal.js@5.0.5':
     resolution: {integrity: sha512-+8OFb1RlB69dZT1laNDq+xDSGrPY/VYARSSTxSC/rMl8s9X+W4dr7gHmoKRR9yu20JU8gvp18g9SVxvouk7SiQ==}
 
+  '@types/rollup-plugin-peer-deps-external@2.2.6':
+    resolution: {integrity: sha512-rR0p2+VZ5+RTyTA+MemzE7RQs3vkGNsYsEZIl+RahwrJOtEDEg+a5RCnigSwPkBtu4H7dyVHXyUZfiZU2dwjdw==}
+    peerDependencies:
+      rollup: '*'
+
   '@types/semver@7.5.8':
     resolution: {integrity: sha512-I8EUhyrgfLrcTkzV3TSsGyl1tSuPrEDzr0yd5m90UgNxQkyDXULk3b6MlQqTCpZpNtWe1K0hzclnZkTcLBe2UQ==}
 
@@ -4367,6 +4414,9 @@ packages:
 
   '@types/webpack@4.41.40':
     resolution: {integrity: sha512-u6kMFSBM9HcoTpUXnL6mt2HSzftqb3JgYV6oxIgL2dl6sX6aCa5k6SOkzv5DuZjBTPUE/dJltKtwwuqrkZHpfw==}
+
+  '@types/wordpress__edit-post@8.4.2':
+    resolution: {integrity: sha512-rH+ut+I4eedDTvwXnJOrH9jEyi+PhJZQ+KZ31k3BYb8Cmd1qdRK2hJ+kdZu0QJp4XP3HA0/Q6troqYfpkF8B+A==}
 
   '@types/ws@8.18.0':
     resolution: {integrity: sha512-8svvI3hMyvN0kKCJMvTJP/x6Y/EoQbepff882wL+Sn5QsXb3etnamgrJq4isrBxSJj5L2AuXcI0+bgkoAXGUJw==}
@@ -4848,6 +4898,13 @@ packages:
       react: ^18.0.0
       react-dom: ^18.0.0
 
+  '@wordpress/components@28.13.0':
+    resolution: {integrity: sha512-JaGcXYtFCvHqa62dtxMAMhu6afvefFOuwfUTNiLYg60CA4UDITt6gf+qhpvKNOzVg4qQRw10o/nryrOMoMAEEg==}
+    engines: {node: '>=18.12.0', npm: '>=8.19.2'}
+    peerDependencies:
+      react: ^18.0.0
+      react-dom: ^18.0.0
+
   '@wordpress/components@29.6.0':
     resolution: {integrity: sha512-kk9GxGnoGBqHz0S4gT2UJHQBwudE1AgTPOc3v3k72kZkDaT88ZayBd/4/gHsa659zImgrwXZ6SjQ6Nczt80Bgg==}
     engines: {node: '>=18.12.0', npm: '>=8.19.2'}
@@ -5184,6 +5241,7 @@ packages:
 
   '@wp-now/wp-now@0.1.74':
     resolution: {integrity: sha512-Id2DOqIyBnQ/zlzbA0gY70T/6/Jy+EjsiPeMave4emmCfg4DI8i3crrUXu8KLHNPUrUeAJIA/qpxCksg0KTtFQ==}
+    deprecated: 'Deprecated. Use @wp-playground/cli instead: https://wordpress.github.io/wordpress-playground/developers/local-development/wp-playground-cli#migrating-from-wp-now'
     hasBin: true
 
   '@wp-playground/blueprints@0.6.16':
@@ -5610,10 +5668,9 @@ packages:
     resolution: {integrity: sha512-NF+epuEdnUYVlGuhaxbbq+dvJttwLnGY+YixlXlME5KpQ5W3CnXA5cVTneY3SPbPDRkcjMbifrwmFYcClgOZeg==}
     engines: {node: '>= 0.8'}
 
-  basic-ftp@5.0.5:
-    resolution: {integrity: sha512-4Bcg1P8xhUuqcii/S0Z9wiHIrQVPMermM1any+MX5GeGD7faD3/msQUDGLol9wOcz4/jbg/WJnGqoJF6LiBdtg==}
+  basic-ftp@5.3.1:
+    resolution: {integrity: sha512-bopVNp6ugyA150DDuZfPFdt1KZ5a94ZDiwX4hMgZDzF+GttD80lEy8kj98kbyhLXnPvhtIo93mdnLIjpCAeeOw==}
     engines: {node: '>=10.0.0'}
-    deprecated: Security vulnerability fixed in 5.2.1, please upgrade
 
   batch@0.6.1:
     resolution: {integrity: sha512-x+VAiMRL6UPkx+kudNvxTl6hB2XNNCG2r+7wixVfIYwu/2HKRXimwQyaumLjMveWvT2Hkd/cAJw+QBMfJ/EKVw==}
@@ -7329,8 +7386,8 @@ packages:
     resolution: {integrity: sha512-gIXjKqtFuWEgzFRJA9WCQeSJLZDjgJUOMCMzxtvFq/37KojM1BFGufqsCy0r4qSQmYLsZYMeyRqzIWOMup03sw==}
     engines: {node: '>=14'}
 
-  form-data@4.0.2:
-    resolution: {integrity: sha512-hGfm/slu0ZabnNt4oaRZ6uREyfCj6P4fT/n6A1rGV+Z0VdGXjfOhVUpkn6qVQONHGIFwmveGXyDs75+nr6FM8w==}
+  form-data@4.0.4:
+    resolution: {integrity: sha512-KrGhL9Q4zjj0kiUt5OO4Mr/A/jlI2jDYs5eHBpYHPcBEVSiipAvn2Ko2HnPe20rmcuuvMHNdZFp+4IlGTMF0Ow==}
     engines: {node: '>= 6'}
 
   format@0.2.2:
@@ -9919,14 +9976,14 @@ packages:
   pkg-types@2.1.0:
     resolution: {integrity: sha512-wmJwA+8ihJixSoHKxZJRBQG1oY8Yr9pGLzRmSsNms0iNWyHHAlZCa7mmKiFR10YPZuz/2k169JiS/inOjBCZ2A==}
 
-  playwright-core@1.58.0:
-    resolution: {integrity: sha512-aaoB1RWrdNi3//rOeKuMiS65UCcgOVljU46At6eFcOFPFHWtd2weHRRow6z/n+Lec0Lvu0k9ZPKJSjPugikirw==}
+  playwright-core@1.60.0:
+    resolution: {integrity: sha512-9bW6zvX/m0lEbgTKJ6YppOKx8H3VOPBMOCFh2irXFOT4BbHgrx5hPjwJYLT40Lu+4qtD36qKc/Hn56StUW57IA==}
     engines: {node: '>=18'}
     hasBin: true
 
-  playwright-webextext@0.0.4:
-    resolution: {integrity: sha512-B5uIZSRtH6wi5HPhEwbEkZxEoAY5bUKCjqVW2qCsAYWQTQZ4ULOfsyglI+gfiohxrAzHT+mtkZMXZvHTtunsDg==}
-    engines: {node: '20'}
+  playwright-webextext@0.0.5:
+    resolution: {integrity: sha512-PhlMiWOfP8UmYTAbzR7uv09Twz+bkLqsgz/8EVcZROq7C6hgepJFYHD+pw4qFLK8mVGNv88N82yTdRdJDDgtdw==}
+    engines: {node: '>=20'}
     peerDependencies:
       '@playwright/test': '>=1.0.0'
       playwright: '>=1.0.0'
@@ -9936,8 +9993,8 @@ packages:
       playwright:
         optional: true
 
-  playwright@1.58.0:
-    resolution: {integrity: sha512-2SVA0sbPktiIY/MCOPX8e86ehA/e+tDNq+e5Y8qjKYti2Z/JG7xnronT/TXTIkKbYGWlCbuucZ6dziEgkoEjQQ==}
+  playwright@1.60.0:
+    resolution: {integrity: sha512-hheHdokM8cdqCb0lcE3s+zT4t4W+vvjpGxsZlDnikarzx8tSzMebh3UiFtgqwFwnTnjYQcsyMF8ei2mCO/tpeA==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -10236,17 +10293,6 @@ packages:
   prettier-linter-helpers@1.0.0:
     resolution: {integrity: sha512-GbK2cP9nraSSUF9N2XwUwqfzlAFlMNYYl+ShE/V+H8a9uNl/oUqB1w2EL54Jh0OlyRSd8RfWYJ3coVS4TROP2w==}
     engines: {node: '>=6.0.0'}
-
-  prettier-plugin-svelte@3.3.3:
-    resolution: {integrity: sha512-yViK9zqQ+H2qZD1w/bH7W8i+bVfKrD8GIFjkFe4Thl6kCT9SlAsXVNmt3jCvQOCsnOhcvYgsoVlRV/Eu6x5nNw==}
-    peerDependencies:
-      prettier: ^3.0.0
-      svelte: ^3.2.0 || ^4.0.0-next.0 || ^5.0.0-next.0
-
-  prettier@3.5.3:
-    resolution: {integrity: sha512-QQtaxnoDJeAkDvDKWCLiwIXkTgRhwYDEQCghU9Z6q03iyek/rxRh/2lC3HB7P8sWT2xC/y5JDctPLBIGzHKbhw==}
-    engines: {node: '>=14'}
-    hasBin: true
 
   pretty-bytes@5.6.0:
     resolution: {integrity: sha512-FFw039TmrBqFK8ma/7OL3sDz/VytdtJr044/QUJtH0wK9lb9jLq9tJyIxUwtQJHwar2BqtiA4iCWSwo9JLkzFg==}
@@ -11524,8 +11570,8 @@ packages:
   third-party-web@0.26.5:
     resolution: {integrity: sha512-tDuKQJUTfjvi9Fcrs1s6YAQAB9mzhTSbBZMfNgtWNmJlHuoFeXO6dzBFdGeCWRvYL50jQGK0jPsBZYxqZQJ2SA==}
 
-  third-party-web@0.29.0:
-    resolution: {integrity: sha512-nBDSJw5B7Sl1YfsATG2XkW5qgUPODbJhXw++BKygi9w6O/NKS98/uY/nR/DxDq2axEjL6halHW1v+jhm/j1DBQ==}
+  third-party-web@0.29.2:
+    resolution: {integrity: sha512-fegtha91tq2DHphyoiBXVHjVi2YG9zFaRnboT9C28tO1en9Y3wJsfspuy40F+u5wl3hHVbw7cnd1b67kEGHb8g==}
 
   through@2.3.8:
     resolution: {integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==}
@@ -15645,7 +15691,7 @@ snapshots:
 
   '@paulirish/trace_engine@0.0.44':
     dependencies:
-      third-party-web: 0.29.0
+      third-party-web: 0.29.2
 
   '@php-wasm/node-polyfills@0.6.16': {}
 
@@ -15670,9 +15716,9 @@ snapshots:
 
   '@pkgr/core@0.1.1': {}
 
-  '@playwright/test@1.58.0':
+  '@playwright/test@1.60.0':
     dependencies:
-      playwright: 1.58.0
+      playwright: 1.60.0
 
   '@pmmmwh/react-refresh-webpack-plugin@0.5.15(@types/webpack@4.41.40)(react-refresh@0.14.2)(type-fest@4.37.0)(webpack-dev-server@4.15.2)(webpack@5.98.0)':
     dependencies:
@@ -15967,16 +16013,6 @@ snapshots:
       resolve: 1.22.10
     optionalDependencies:
       rollup: 4.35.0
-
-  '@rollup/plugin-node-resolve@16.0.1(rollup@4.53.3)':
-    dependencies:
-      '@rollup/pluginutils': 5.1.4(rollup@4.53.3)
-      '@types/resolve': 1.20.2
-      deepmerge: 4.3.1
-      is-module: 1.0.0
-      resolve: 1.22.10
-    optionalDependencies:
-      rollup: 4.53.3
 
   '@rollup/plugin-replace@2.4.2(rollup@2.79.2)':
     dependencies:
@@ -16912,6 +16948,10 @@ snapshots:
     dependencies:
       '@tauri-apps/api': 2.11.0
 
+  '@tauri-apps/plugin-os@2.3.2':
+    dependencies:
+      '@tauri-apps/api': 2.11.0
+
   '@tootallnate/once@2.0.0': {}
 
   '@tootallnate/quickjs-emscripten@0.23.0': {}
@@ -17137,6 +17177,10 @@ snapshots:
 
   '@types/reveal.js@5.0.5': {}
 
+  '@types/rollup-plugin-peer-deps-external@2.2.6(rollup@4.35.0)':
+    dependencies:
+      rollup: 4.35.0
+
   '@types/semver@7.5.8': {}
 
   '@types/send@0.17.4':
@@ -17210,6 +17254,25 @@ snapshots:
       '@types/webpack-sources': 3.2.3
       anymatch: 3.1.3
       source-map: 0.6.1
+
+  '@types/wordpress__edit-post@8.4.2(@babel/core@7.25.7)(@emotion/is-prop-valid@1.3.1)(@types/react-dom@18.3.5(@types/react@18.3.18))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.98.0)':
+    dependencies:
+      '@types/react': 18.3.18
+      '@wordpress/components': 28.13.0(@emotion/is-prop-valid@1.3.1)(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@wordpress/data': 10.20.0(react@18.3.1)
+      '@wordpress/editor': 14.20.0(@babel/core@7.25.7)(@emotion/is-prop-valid@1.3.1)(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.98.0)
+      '@wordpress/element': 6.20.0
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@emotion/is-prop-valid'
+      - '@types/react-dom'
+      - bufferutil
+      - react
+      - react-dom
+      - supports-color
+      - utf-8-validate
+      - webpack
+      - webpack-virtual-modules
 
   '@types/ws@8.18.0':
     dependencies:
@@ -17538,11 +17601,11 @@ snapshots:
       tinyglobby: 0.2.15
       vite-plugin-pwa: 0.21.1(vite@6.3.5(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.32.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))(workbox-build@7.3.0(@types/babel__core@7.20.5))(workbox-window@7.3.0)
 
-  '@vitest/browser-playwright@4.0.16(msw@2.7.3(@types/node@22.13.10)(typescript@5.9.3))(playwright@1.58.0)(vite@6.3.5(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.32.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))(vitest@4.0.16)':
+  '@vitest/browser-playwright@4.0.16(msw@2.7.3(@types/node@22.13.10)(typescript@5.9.3))(playwright@1.60.0)(vite@6.3.5(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.32.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))(vitest@4.0.16)':
     dependencies:
       '@vitest/browser': 4.0.16(msw@2.7.3(@types/node@22.13.10)(typescript@5.9.3))(vite@6.3.5(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.32.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))(vitest@4.0.16)
       '@vitest/mocker': 4.0.16(msw@2.7.3(@types/node@22.13.10)(typescript@5.9.3))(vite@6.3.5(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.32.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))
-      playwright: 1.58.0
+      playwright: 1.60.0
       tinyrainbow: 3.0.3
       vitest: 4.0.16(@types/node@22.13.10)(@vitest/browser-playwright@4.0.16)(@vitest/ui@4.0.16)(jiti@2.6.1)(jsdom@20.0.3)(lightningcss@1.32.0)(msw@2.7.3(@types/node@22.13.10)(typescript@5.9.3))(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0)
     transitivePeerDependencies:
@@ -17689,7 +17752,7 @@ snapshots:
       cheerio: 1.0.0
       cockatiel: 3.2.1
       commander: 12.1.0
-      form-data: 4.0.2
+      form-data: 4.0.4
       glob: 11.0.1
       hosted-git-info: 4.1.0
       jsonc-parser: 3.3.1
@@ -18057,6 +18120,60 @@ snapshots:
       - '@types/react-dom'
       - supports-color
 
+  '@wordpress/components@28.13.0(@emotion/is-prop-valid@1.3.1)(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@ariakit/react': 0.4.15(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@babel/runtime': 7.25.7
+      '@emotion/cache': 11.14.0
+      '@emotion/css': 11.13.5
+      '@emotion/react': 11.14.0(@types/react@18.3.18)(react@18.3.1)
+      '@emotion/serialize': 1.3.3
+      '@emotion/styled': 11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.3.1))(@types/react@18.3.18)(react@18.3.1)
+      '@emotion/utils': 1.4.2
+      '@floating-ui/react-dom': 2.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@types/gradient-parser': 0.1.3
+      '@types/highlight-words-core': 1.2.1
+      '@use-gesture/react': 10.3.1(react@18.3.1)
+      '@wordpress/a11y': 4.20.0
+      '@wordpress/compose': 7.20.0(react@18.3.1)
+      '@wordpress/date': 5.20.0
+      '@wordpress/deprecated': 4.20.0
+      '@wordpress/dom': 4.20.0
+      '@wordpress/element': 6.20.0
+      '@wordpress/escape-html': 3.20.0
+      '@wordpress/hooks': 4.20.0
+      '@wordpress/html-entities': 4.20.0
+      '@wordpress/i18n': 5.20.0
+      '@wordpress/icons': 10.20.0(react@18.3.1)
+      '@wordpress/is-shallow-equal': 5.20.0
+      '@wordpress/keycodes': 4.20.0
+      '@wordpress/primitives': 4.20.0(react@18.3.1)
+      '@wordpress/private-apis': 1.20.0
+      '@wordpress/rich-text': 7.20.0(react@18.3.1)
+      '@wordpress/warning': 3.20.0
+      change-case: 4.1.2
+      clsx: 2.1.1
+      colord: 2.9.3
+      date-fns: 3.6.0
+      deepmerge: 4.3.1
+      fast-deep-equal: 3.1.3
+      framer-motion: 11.18.2(@emotion/is-prop-valid@1.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      gradient-parser: 0.1.5
+      highlight-words-core: 1.2.3
+      is-plain-object: 5.0.0
+      memize: 2.1.0
+      path-to-regexp: 6.3.0
+      re-resizable: 6.11.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react: 18.3.1
+      react-colorful: 5.6.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-dom: 18.3.1(react@18.3.1)
+      remove-accents: 0.5.0
+      uuid: 9.0.1
+    transitivePeerDependencies:
+      - '@emotion/is-prop-valid'
+      - '@types/react'
+      - supports-color
+
   '@wordpress/components@29.6.0(@emotion/is-prop-valid@1.3.1)(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@ariakit/react': 0.4.15(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -18261,11 +18378,11 @@ snapshots:
       '@babel/runtime': 7.25.7
       '@wordpress/deprecated': 4.20.0
 
-  '@wordpress/e2e-test-utils-playwright@1.20.0(@playwright/test@1.58.0)':
+  '@wordpress/e2e-test-utils-playwright@1.20.0(@playwright/test@1.60.0)':
     dependencies:
-      '@playwright/test': 1.58.0
+      '@playwright/test': 1.60.0
       change-case: 4.1.2
-      form-data: 4.0.2
+      form-data: 4.0.4
       get-port: 5.1.1
       lighthouse: 12.4.0
       mime: 3.0.0
@@ -18742,16 +18859,16 @@ snapshots:
       react: 18.3.1
       route-recognizer: 0.3.4
 
-  '@wordpress/scripts@30.13.0(@playwright/test@1.58.0)(@types/eslint@9.6.1)(@types/node@22.13.10)(@types/webpack@4.41.40)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(type-fest@4.37.0)(typescript@5.9.3)':
+  '@wordpress/scripts@30.13.0(@playwright/test@1.60.0)(@types/eslint@9.6.1)(@types/node@22.13.10)(@types/webpack@4.41.40)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(type-fest@4.37.0)(typescript@5.9.3)':
     dependencies:
       '@babel/core': 7.25.7
-      '@playwright/test': 1.58.0
+      '@playwright/test': 1.60.0
       '@pmmmwh/react-refresh-webpack-plugin': 0.5.15(@types/webpack@4.41.40)(react-refresh@0.14.2)(type-fest@4.37.0)(webpack-dev-server@4.15.2)(webpack@5.98.0)
       '@svgr/webpack': 8.1.0(typescript@5.9.3)
       '@wordpress/babel-preset-default': 8.20.0
       '@wordpress/browserslist-config': 6.20.0
       '@wordpress/dependency-extraction-webpack-plugin': 6.20.0(webpack@5.98.0)
-      '@wordpress/e2e-test-utils-playwright': 1.20.0(@playwright/test@1.58.0)
+      '@wordpress/e2e-test-utils-playwright': 1.20.0(@playwright/test@1.60.0)
       '@wordpress/eslint-plugin': 22.6.0(@babel/core@7.25.7)(@types/eslint@9.6.1)(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.10)(babel-plugin-macros@3.1.0))(typescript@5.9.3)(wp-prettier@3.0.3)
       '@wordpress/jest-preset-default': 12.20.0(@babel/core@7.25.7)(jest@29.7.0(@types/node@22.13.10)(babel-plugin-macros@3.1.0))
       '@wordpress/npm-package-json-lint-config': 5.20.0(npm-package-json-lint@6.4.0(typescript@5.9.3))
@@ -19308,7 +19425,7 @@ snapshots:
   axios@1.8.3:
     dependencies:
       follow-redirects: 1.15.9
-      form-data: 4.0.2
+      form-data: 4.0.4
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
@@ -19491,7 +19608,7 @@ snapshots:
     dependencies:
       safe-buffer: 5.1.2
 
-  basic-ftp@5.0.5: {}
+  basic-ftp@5.3.1: {}
 
   batch@0.6.1: {}
 
@@ -21506,11 +21623,12 @@ snapshots:
       cross-spawn: 7.0.6
       signal-exit: 4.1.0
 
-  form-data@4.0.2:
+  form-data@4.0.4:
     dependencies:
       asynckit: 0.4.0
       combined-stream: 1.0.8
       es-set-tostringtag: 2.1.0
+      hasown: 2.0.2
       mime-types: 2.1.35
 
   format@0.2.2: {}
@@ -21670,7 +21788,7 @@ snapshots:
 
   get-uri@6.0.4:
     dependencies:
-      basic-ftp: 5.0.5
+      basic-ftp: 5.3.1
       data-uri-to-buffer: 6.0.2
       debug: 4.4.0
     transitivePeerDependencies:
@@ -22925,7 +23043,7 @@ snapshots:
       decimal.js: 10.5.0
       domexception: 4.0.0
       escodegen: 2.1.0
-      form-data: 4.0.2
+      form-data: 4.0.4
       html-encoding-sniffer: 3.0.0
       http-proxy-agent: 5.0.0
       https-proxy-agent: 5.0.1
@@ -24578,16 +24696,16 @@ snapshots:
       exsolve: 1.0.4
       pathe: 2.0.3
 
-  playwright-core@1.58.0: {}
+  playwright-core@1.60.0: {}
 
-  playwright-webextext@0.0.4(@playwright/test@1.58.0)(playwright@1.58.0):
+  playwright-webextext@0.0.5(@playwright/test@1.60.0)(playwright@1.60.0):
     optionalDependencies:
-      '@playwright/test': 1.58.0
-      playwright: 1.58.0
+      '@playwright/test': 1.60.0
+      playwright: 1.60.0
 
-  playwright@1.58.0:
+  playwright@1.60.0:
     dependencies:
-      playwright-core: 1.58.0
+      playwright-core: 1.60.0
     optionalDependencies:
       fsevents: 2.3.2
 
@@ -24865,13 +24983,6 @@ snapshots:
   prettier-linter-helpers@1.0.0:
     dependencies:
       fast-diff: 1.3.0
-
-  prettier-plugin-svelte@3.3.3(prettier@3.5.3)(svelte@5.43.12):
-    dependencies:
-      prettier: 3.5.3
-      svelte: 5.43.12
-
-  prettier@3.5.3: {}
 
   pretty-bytes@5.6.0: {}
 
@@ -25372,14 +25483,14 @@ snapshots:
       globby: 10.0.1
       is-plain-object: 3.0.1
 
-  rollup-plugin-peer-deps-external@2.2.4(rollup@4.53.3):
+  rollup-plugin-peer-deps-external@2.2.4(rollup@4.35.0):
     dependencies:
-      rollup: 4.53.3
+      rollup: 4.35.0
 
-  rollup-plugin-svg-import@3.0.0(rollup@4.53.3):
+  rollup-plugin-svg-import@3.0.0(rollup@4.35.0):
     dependencies:
-      '@rollup/pluginutils': 5.1.4(rollup@4.53.3)
-      rollup: 4.53.3
+      '@rollup/pluginutils': 5.1.4(rollup@4.35.0)
+      rollup: 4.35.0
 
   rollup@2.79.2:
     optionalDependencies:
@@ -26222,18 +26333,6 @@ snapshots:
       brace: 0.11.1
       sirv-cli: 1.0.14
 
-  svelte-check@4.3.4(picomatch@4.0.2)(svelte@5.43.12)(typescript@5.6.3):
-    dependencies:
-      '@jridgewell/trace-mapping': 0.3.25
-      chokidar: 4.0.3
-      fdir: 6.4.4(picomatch@4.0.2)
-      picocolors: 1.1.1
-      sade: 1.8.1
-      svelte: 5.43.12
-      typescript: 5.6.3
-    transitivePeerDependencies:
-      - picomatch
-
   svelte-check@4.3.4(picomatch@4.0.2)(svelte@5.43.12)(typescript@5.9.3):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
@@ -26243,6 +26342,18 @@ snapshots:
       sade: 1.8.1
       svelte: 5.43.12
       typescript: 5.9.3
+    transitivePeerDependencies:
+      - picomatch
+
+  svelte-check@4.3.4(picomatch@4.0.3)(svelte@5.43.12)(typescript@5.6.3):
+    dependencies:
+      '@jridgewell/trace-mapping': 0.3.25
+      chokidar: 4.0.3
+      fdir: 6.4.4(picomatch@4.0.3)
+      picocolors: 1.1.1
+      sade: 1.8.1
+      svelte: 5.43.12
+      typescript: 5.6.3
     transitivePeerDependencies:
       - picomatch
 
@@ -26452,7 +26563,7 @@ snapshots:
 
   third-party-web@0.26.5: {}
 
-  third-party-web@0.29.0: {}
+  third-party-web@0.29.2: {}
 
   through@2.3.8: {}
 
@@ -27114,7 +27225,7 @@ snapshots:
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 22.13.10
-      '@vitest/browser-playwright': 4.0.16(msw@2.7.3(@types/node@22.13.10)(typescript@5.9.3))(playwright@1.58.0)(vite@6.3.5(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.32.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))(vitest@4.0.16)
+      '@vitest/browser-playwright': 4.0.16(msw@2.7.3(@types/node@22.13.10)(typescript@5.9.3))(playwright@1.60.0)(vite@6.3.5(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.32.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))(vitest@4.0.16)
       '@vitest/ui': 4.0.16(vitest@4.0.16)
       jsdom: 20.0.3
     transitivePeerDependencies:

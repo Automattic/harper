@@ -14,11 +14,11 @@ impl Default for MeansALotTo {
         Self {
             expr: SequenceExpr::default()
                 // Note that "meaning a lot to" is not used.
-                .t_set(&["mean", "means", "meant"])
+                .t_set(["mean", "means", "meant"])
                 .t_ws()
-                .then_any_of(vec![
-                    Box::new(FixedPhrase::from_phrase("a lot")),
-                    Box::new(WordSet::new(&["alot", "lot"])),
+                .then_any_of([
+                    Box::new(FixedPhrase::from_phrase("a lot")) as Box<dyn Expr>,
+                    Box::new(WordSet::new(["alot", "lot"])),
                 ])
                 .t_ws()
                 .t_aco("for"),
@@ -54,7 +54,7 @@ impl ExprLinter for MeansALotTo {
                 sug.chars().collect(),
                 span.get_content(src),
             )],
-            message: msg.to_string(),
+            message: msg.to_owned(),
             ..Default::default()
         })
     }

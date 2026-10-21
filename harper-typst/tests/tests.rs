@@ -334,3 +334,31 @@ fn parbreaks_in_list() {
         ]
     ))
 }
+
+#[test]
+fn condensed_apostrophes() {
+    let source = "Though I've not, that's for sure.";
+
+    let document = Document::new_curated(source, &Typst);
+    let token_kinds = document.tokens().map(|t| t.kind.clone()).collect_vec();
+    dbg!(&token_kinds);
+
+    assert!(matches!(
+        &token_kinds.as_slice(),
+        &[
+            TokenKind::Word(_),        // Though
+            TokenKind::Space(_),       //
+            TokenKind::Word(_),        // I've
+            TokenKind::Space(_),       //
+            TokenKind::Word(_),        // not
+            TokenKind::Punctuation(_), // ,
+            TokenKind::Space(_),       //
+            TokenKind::Word(_),        // that's
+            TokenKind::Space(_),       //
+            TokenKind::Word(_),        // for
+            TokenKind::Space(_),       //
+            TokenKind::Word(_),        // sure
+            TokenKind::Punctuation(_), // .
+        ]
+    ))
+}

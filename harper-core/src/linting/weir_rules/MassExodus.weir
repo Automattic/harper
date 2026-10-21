@@ -1,0 +1,9 @@
+expr main (max exodus)
+
+let message "Corrects `max exodues` to `mass exodus`."
+let description "Corrects the eggcorn `max exodues` to the idiomatic `mass exodus`."
+let kind "Eggcorn"
+let becomes "mass exodus"
+
+test "If we simplified the tax code it would help curb the max exodus of that money" "If we simplified the tax code it would help curb the mass exodus of that money"
+test "This triggers a max exodus as everyone wants out before their home values are underwater" "This triggers a mass exodus as everyone wants out before their home values are underwater"

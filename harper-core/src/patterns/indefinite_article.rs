@@ -9,7 +9,7 @@ pub struct IndefiniteArticle {
 impl Default for IndefiniteArticle {
     fn default() -> Self {
         Self {
-            inner: WordSet::new(&["a", "an"]),
+            inner: WordSet::new(["a", "an"]),
         }
     }
 }

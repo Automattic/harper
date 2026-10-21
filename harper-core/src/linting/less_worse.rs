@@ -11,9 +11,9 @@ pub struct LessWorse {
 impl Default for LessWorse {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["less", "least"])
+            expr: SequenceExpr::word_set(["less", "least"])
                 .t_ws_h()
-                .then_word_set(&["worse", "worst"]),
+                .then_word_set(["worse", "worst"]),
         }
     }
 }
@@ -88,7 +88,7 @@ impl ExprLinter for LessWorse {
                 .iter()
                 .map(|s| Suggestion::replace_with_match_case(s.to_vec(), template))
                 .collect::<Vec<_>>(),
-            message: message.to_string(),
+            message: message.to_owned(),
             priority: 126,
         })
     }

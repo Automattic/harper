@@ -1,0 +1,9 @@
+expr main (now know as)
+
+let message "Use `now known as` instead of `now know as`."
+let description "Corrects `now know as` to `now known as` for proper grammar."
+let kind "Usage"
+let becomes "now known as"
+
+test "This repository contain source code for new flow of FreeEDA now know as eSim" "This repository contain source code for new flow of FreeEDA now known as eSim"
+test "We allow authors to disable high-contrast (now know as forced-colors ) by declaring forced-colors-adjust" "We allow authors to disable high-contrast (now known as forced-colors ) by declaring forced-colors-adjust"

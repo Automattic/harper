@@ -1,7 +1,11 @@
 use harper_core::{
     Dialect, DictWordMetadata, IgnoredLints, linting::FlatConfig, spell::MutableDictionary,
 };
-use tokio::io::{AsyncBufReadExt, AsyncRead, AsyncWrite, BufReader, Stdin, Stdout};
+use std::time::Duration;
+use tokio::{
+    io::{AsyncBufReadExt, AsyncRead, AsyncWrite, BufReader, Stdin, Stdout},
+    time::timeout,
+};
 
 use super::error::ProtocolError;
 use super::framing::write_message;
@@ -23,6 +27,10 @@ where
             reader: BufReader::new(reader),
             writer,
         }
+    }
+
+    pub async fn open_settings(&mut self) -> Result<(), ProtocolError> {
+        self.send_ack_request(Request::OpenSettings).await
     }
 
     pub async fn get_lint_config(&mut self) -> Result<FlatConfig, ProtocolError> {
@@ -87,6 +95,31 @@ where
             Response::GetIntegrations { integrations } => Ok(integrations),
             _ => Err(ProtocolError::UnexpectedResponse {
                 expected: "GetIntegrations",
+            }),
+        }
+    }
+
+    pub async fn get_auto_enable_new_apps(&mut self) -> Result<bool, ProtocolError> {
+        match self.send_request(Request::GetAutoEnableNewApps).await? {
+            Response::GetAutoEnableNewApps { enabled } => Ok(enabled),
+            _ => Err(ProtocolError::UnexpectedResponse {
+                expected: "GetAutoEnableNewApps",
+            }),
+        }
+    }
+
+    /// Checks the parent's current app policy, registering and persisting an unknown app if allowed.
+    /// Explicitly disabled integrations are preserved even if the caller's snapshot is stale.
+    pub async fn resolve_integration(&mut self, bundle_id: &str) -> Result<bool, ProtocolError> {
+        match self
+            .send_request(Request::ResolveIntegration {
+                bundle_id: bundle_id.to_owned(),
+            })
+            .await?
+        {
+            Response::ResolveIntegration { enabled } => Ok(enabled),
+            _ => Err(ProtocolError::UnexpectedResponse {
+                expected: "ResolveIntegration",
             }),
         }
     }
@@ -157,7 +190,16 @@ where
         write_message(&mut self.writer, &request).await?;
 
         let mut line = String::new();
-        if self.reader.read_line(&mut line).await? == 0 {
+        let response = timeout(Duration::from_secs(5), self.reader.read_line(&mut line)).await;
+        let bytes_read = match response {
+            Ok(bytes_read) => bytes_read?,
+            Err(_) => {
+                eprintln!("parent process did not respond within 5 seconds; exiting highlighter");
+                std::process::exit(1);
+            }
+        };
+
+        if bytes_read == 0 {
             return Err(ProtocolError::UnexpectedEof);
         }
 

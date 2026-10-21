@@ -12,7 +12,7 @@ pub struct VeryUnique {
 impl Default for VeryUnique {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&[
+            expr: SequenceExpr::word_set([
                 "fairly", "pretty", "rather", "quite", "somewhat", "very",
             ])
             .t_ws()
@@ -54,7 +54,7 @@ impl ExprLinter for VeryUnique {
             span: very_unique_span,
             lint_kind: LintKind::WordChoice,
             suggestions,
-            message: "`Unique` is absolute, so consider using `unique` alone or a more precise adjective such as `special`, `rare`, or `unusual`.".to_string(),
+            message: "`Unique` is absolute, so consider using `unique` alone or a more precise adjective such as `special`, `rare`, or `unusual`.".to_owned(),
             priority: 57,
         })
     }

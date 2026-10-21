@@ -22,16 +22,6 @@ Message: |
 
 
 
-Lint:    Style (127 priority)
-Message: |
-       5 | **We the People** of the United States, in Order to form a more perfect Union,
-         |                                                            ^~~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
-       6 | establish Justice, insure domestic Tranquility, provide for the common defence,
-Suggest:
-  - Replace with: “perfecter”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
        6 | establish Justice, insure domestic Tranquility, provide for the common defence,
@@ -1770,18 +1760,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      675 | without its Consent, shall be deprived of its equal Suffrage in the Senate.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 143 words long.
-
-
-
-Lint:    Nonstandard (50 priority)
-Message: |
-     668 | proposing Amendments, which, in either Case, shall be valid to all Intents and
-         |                                                             ^~~~~~~~~~~~~~~~~~~
-     669 | Purposes, as Part of this Constitution, when ratified by the Legislatures of
-         | ~~~~~~~~ The correct form is 'to all intents and purposes'.
-Suggest:
-  - Replace with: “to all Intents and Purposes”
-  - Replace with: “for alL intents anD purposes”
 
 
 

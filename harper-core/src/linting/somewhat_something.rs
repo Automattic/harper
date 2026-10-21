@@ -10,13 +10,9 @@ pub struct SomewhatSomething {
 
 impl Default for SomewhatSomething {
     fn default() -> Self {
-        let pattern = SequenceExpr::aco("somewhat")
-            .then_whitespace()
-            .t_aco("of")
-            .then_whitespace()
-            .t_aco("a");
-
-        Self { expr: pattern }
+        Self {
+            expr: SequenceExpr::word_seq(&["somewhat", "of", "a"]),
+        }
     }
 }
 

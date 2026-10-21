@@ -11,11 +11,11 @@ pub struct GoToWar {
 impl Default for GoToWar {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["go", "goes", "going", "gone", "went"])
+            expr: SequenceExpr::word_set(["go", "goes", "going", "gone", "went"])
                 .t_ws()
                 .then_preposition()
                 .t_ws()
-                .then_word_set(&["war"]),
+                .then_word_set(["war"]),
         }
     }
 }
@@ -45,7 +45,7 @@ impl ExprLinter for GoToWar {
             span: prep_span,
             lint_kind: LintKind::Usage,
             suggestions: vec![Suggestion::replace_with_match_case_str("to", prep_chars)],
-            message: "Use `to` instead of `at`.".to_string(),
+            message: "Use `to` instead of `at`.".to_owned(),
             ..Default::default()
         })
     }

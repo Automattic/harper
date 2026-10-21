@@ -10,7 +10,7 @@ RUN apt-get update -y && apt-get install clang -y
 RUN mkdir -p /usr/build/
 WORKDIR /usr/build/
 
-RUN cargo install wasm-pack
+RUN cargo install wasm-pack --locked
 
 COPY . .
 
@@ -47,6 +47,7 @@ WORKDIR /usr/build/packages/harper-editor
 RUN pnpm build
 
 WORKDIR /usr/build/packages/web
+ENV ENABLE_ADMIN_ROUTES=false
 RUN pnpm install --engine-strict=false --shamefully-hoist
 RUN pnpm build
 

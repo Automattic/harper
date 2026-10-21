@@ -1,0 +1,6 @@
+expr main [(capitalised off of), (capitalised off)]
+
+let message "Did you mean `capitalised on`?"
+let description "Corrects `capitalise off` to `capitalise on`."
+let kind "Usage"
+let becomes "capitalised on"

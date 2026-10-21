@@ -3,17 +3,22 @@ use std::time::{Duration, Instant};
 use winit::application::ApplicationHandler;
 use winit::event::{ElementState, MouseButton, WindowEvent};
 use winit::event_loop::{ActiveEventLoop, ControlFlow, EventLoop};
+#[cfg(target_os = "macos")]
+use winit::platform::macos::{ActivationPolicy, EventLoopBuilderExtMacOS};
 use winit::window::WindowId;
 
 use super::AddToDictionary;
 use super::DisableRule;
 use super::Error;
 use super::IgnoreLint;
+use super::OpenSettings;
 use super::RefreshConfig;
 use super::render_state::{HitTarget, RenderState};
 use super::window::Window;
 use crate::os_broker::{LintText, OsBroker};
 use crate::rect::ActionableLint;
+
+const CONFIG_POLL_INTERVAL: Duration = Duration::from_secs(1);
 
 /// Owns the winit event loop and the overlay windows created for each monitor.
 ///
@@ -22,7 +27,6 @@ use crate::rect::ActionableLint;
 /// dispatch out of the public highlighter API.
 pub struct WindowManager {
     event_loop: EventLoop<()>,
-    context: egui::Context,
     rects: Vec<ActionableLint>,
     os_broker: Box<dyn OsBroker>,
     lint_text: LintText,
@@ -30,8 +34,7 @@ pub struct WindowManager {
     add_to_dictionary: AddToDictionary,
     disable_rule: DisableRule,
     refresh_config: RefreshConfig,
-    read_interval: Duration,
-    config_poll_interval: Duration,
+    open_settings: OpenSettings,
 }
 
 pub struct WindowManagerCallbacks {
@@ -40,25 +43,25 @@ pub struct WindowManagerCallbacks {
     pub add_to_dictionary: AddToDictionary,
     pub disable_rule: DisableRule,
     pub refresh_config: RefreshConfig,
-}
-
-pub struct WindowManagerIntervals {
-    pub read: Duration,
-    pub config_poll: Duration,
+    pub open_settings: OpenSettings,
 }
 
 impl WindowManager {
     /// Creates the event loop before windows exist because winit requires window creation to happen
     /// from inside that loop's lifecycle callbacks.
     pub fn new(
-        context: egui::Context,
         os_broker: Box<dyn OsBroker>,
         callbacks: WindowManagerCallbacks,
-        intervals: WindowManagerIntervals,
     ) -> Result<Self, Error> {
+        let mut event_loop_builder = EventLoop::builder();
+
+        #[cfg(target_os = "macos")]
+        event_loop_builder
+            .with_activation_policy(ActivationPolicy::Accessory)
+            .with_default_menu(false);
+
         Ok(Self {
-            event_loop: EventLoop::new()?,
-            context,
+            event_loop: event_loop_builder.build()?,
             rects: Vec::new(),
             os_broker,
             lint_text: callbacks.lint_text,
@@ -66,8 +69,7 @@ impl WindowManager {
             add_to_dictionary: callbacks.add_to_dictionary,
             disable_rule: callbacks.disable_rule,
             refresh_config: callbacks.refresh_config,
-            read_interval: intervals.read,
-            config_poll_interval: intervals.config_poll,
+            open_settings: callbacks.open_settings,
         })
     }
 
@@ -76,16 +78,10 @@ impl WindowManager {
         self.rects = rects;
     }
 
-    /// Lets callers tune OS polling without exposing the window-manager internals that schedule it.
-    pub fn set_read_interval(&mut self, read_interval: Duration) {
-        self.read_interval = read_interval;
-    }
-
     /// Transfers ownership into winit's application handler because `run_app` owns the process-level
     /// event loop until the overlay exits.
     pub fn run_window_for_each_monitor(self) -> Result<(), Error> {
         let mut app = WindowManagerApp::new(
-            self.context,
             self.rects,
             self.os_broker,
             WindowManagerCallbacks {
@@ -94,15 +90,12 @@ impl WindowManager {
                 add_to_dictionary: self.add_to_dictionary,
                 disable_rule: self.disable_rule,
                 refresh_config: self.refresh_config,
-            },
-            WindowManagerIntervals {
-                read: self.read_interval,
-                config_poll: self.config_poll_interval,
+                open_settings: self.open_settings,
             },
         );
 
-        self.event_loop
-            .set_control_flow(ControlFlow::WaitUntil(Instant::now() + self.read_interval));
+        // Run continuously without a read timer; VSync presentation provides backpressure.
+        self.event_loop.set_control_flow(ControlFlow::Poll);
         let result = self.event_loop.run_app(&mut app);
 
         if let Some(error) = app.error {
@@ -114,14 +107,10 @@ impl WindowManager {
 }
 
 struct WindowManagerApp {
-    context: egui::Context,
     windows: Vec<Window>,
     render_state: RenderState,
     os_broker: Box<dyn OsBroker>,
     lint_text: LintText,
-    read_interval: Duration,
-    config_poll_interval: Duration,
-    last_read: Instant,
     last_config_poll: Instant,
     refresh_config: RefreshConfig,
     hovered_lint: Option<usize>,
@@ -133,27 +122,21 @@ impl WindowManagerApp {
     /// Builds the mutable application state consumed by winit callbacks after `WindowManager` gives
     /// up direct control of the event loop.
     fn new(
-        context: egui::Context,
         rects: Vec<ActionableLint>,
         os_broker: Box<dyn OsBroker>,
         callbacks: WindowManagerCallbacks,
-        intervals: WindowManagerIntervals,
     ) -> Self {
-        let read_interval = intervals.read;
         Self {
-            context,
             windows: Vec::new(),
             render_state: RenderState::new(
                 rects,
                 callbacks.ignore_lint,
                 callbacks.add_to_dictionary,
                 callbacks.disable_rule,
+                callbacks.open_settings,
             ),
             os_broker,
             lint_text: callbacks.lint_text,
-            read_interval,
-            config_poll_interval: intervals.config_poll,
-            last_read: Instant::now() - read_interval,
             last_config_poll: Instant::now(),
             refresh_config: callbacks.refresh_config,
             hovered_lint: None,
@@ -165,8 +148,10 @@ impl WindowManagerApp {
     /// Refreshes lint geometry from the OS broker inside the event loop so repaint requests happen on
     /// the same thread that owns the overlay windows.
     fn read_rect_updates(&mut self) {
-        let rects = self.os_broker.get_boxes(self.lint_text.as_mut());
-        self.render_state.set_rects(rects);
+        let lints = self.os_broker.get_boxes(self.lint_text.as_mut());
+        if let Some(lints) = lints {
+            self.render_state.set_lints(lints);
+        }
 
         for window in &self.windows {
             window.request_redraw();
@@ -185,6 +170,7 @@ impl WindowManagerApp {
         };
 
         let hit_target = self.render_state.hit_target_at_pos(cursor_pos);
+
         self.hovered_lint = match hit_target {
             HitTarget::Lint(index) => Some(index),
             HitTarget::Popup | HitTarget::None => None,
@@ -230,21 +216,14 @@ impl ApplicationHandler for WindowManagerApp {
     fn about_to_wait(&mut self, event_loop: &ActiveEventLoop) {
         let now = Instant::now();
 
-        if now.duration_since(self.last_read) >= self.read_interval {
-            self.read_rect_updates();
-            self.last_read = now;
-        }
+        self.read_rect_updates();
 
-        if now.duration_since(self.last_config_poll) >= self.config_poll_interval {
+        if now.duration_since(self.last_config_poll) >= CONFIG_POLL_INTERVAL {
             self.refresh_config();
             self.last_config_poll = now;
         }
 
         self.update_cursor_hittest(event_loop);
-
-        let next_read = self.last_read + self.read_interval;
-        let next_config_poll = self.last_config_poll + self.config_poll_interval;
-        event_loop.set_control_flow(ControlFlow::WaitUntil(next_read.min(next_config_poll)));
     }
 
     fn resumed(&mut self, event_loop: &ActiveEventLoop) {
@@ -252,8 +231,10 @@ impl ApplicationHandler for WindowManagerApp {
             return;
         }
 
-        for monitor in event_loop.available_monitors() {
-            match pollster::block_on(Window::new(event_loop, monitor, self.context.clone())) {
+        let monitors = event_loop.available_monitors().collect::<Vec<_>>();
+
+        for monitor in monitors {
+            match pollster::block_on(Window::new(event_loop, monitor)) {
                 Ok(window) => self.windows.push(window),
                 Err(error) => {
                     self.error = Some(error);

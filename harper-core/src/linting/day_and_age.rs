@@ -11,13 +11,13 @@ pub struct DayAndAge {
 impl Default for DayAndAge {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["this", "these"])
+            expr: SequenceExpr::word_set(["this", "these"])
                 .t_ws()
-                .then_word_set(&["day", "days"])
+                .then_word_set(["day", "days"])
                 .t_ws()
-                .then_word_set(&["and", "in", "an", "on", "of"])
+                .then_word_set(["and", "in", "an", "on", "of"])
                 .t_ws()
-                .then_word_set(&["age", "ages"]),
+                .then_word_set(["age", "ages"]),
         }
     }
 }
@@ -107,7 +107,7 @@ impl ExprLinter for DayAndAge {
                 replacement.chars().collect(),
                 span.get_content(src),
             )],
-            message: "The correct idiom is `in this day and age`.".to_string(),
+            message: "The correct idiom is `in this day and age`.".to_owned(),
             ..Default::default()
         })
     }

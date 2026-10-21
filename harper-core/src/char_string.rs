@@ -1,5 +1,6 @@
 use crate::char_ext::CharExt;
 use std::borrow::Cow;
+use std::iter::Iterator;
 
 use smallvec::SmallVec;
 
@@ -31,9 +32,17 @@ pub trait CharStringExt: private::Sealed {
     /// Only normalizes the left side to lowercase and avoids allocations.
     fn eq_ch(&self, other: &[char]) -> bool;
 
+    /// Case-insensitive comparison with a character slice, not requiring the right-hand side to be lowercase.
+    /// Normalizes both sides to lowercase and avoids allocations.
+    fn eq_ch_lenient(&self, other: &[char]) -> bool;
+
     /// Case-insensitive comparison with a string slice, assuming the right-hand side is lowercase ASCII.
     /// Only normalizes the left side to lowercase and avoids allocations.
     fn eq_str(&self, other: &str) -> bool;
+
+    /// Case-insensitive comparison with a string slice, not requiring the right-hand side to be lowercase.
+    /// Normalizes both sides to lowercase and avoids allocations.
+    fn eq_str_lenient(&self, other: &str) -> bool;
 
     /// Case-insensitive comparison with any of a list of string slices, assuming the right-hand side is lowercase ASCII.
     /// Only normalizes the left side to lowercase and avoids allocations.
@@ -65,6 +74,9 @@ pub trait CharStringExt: private::Sealed {
 
     /// Check if the string contains any vowels
     fn contains_vowel(&self) -> bool;
+
+    /// Strip a prefix from the string, case-insensitively
+    fn strip_prefix_ignore_ascii_case_chars(&self, prefix: &[char]) -> Option<&[char]>;
 }
 
 impl CharStringExt for [char] {
@@ -101,6 +113,15 @@ impl CharStringExt for [char] {
     }
 
     fn eq_str(&self, other: &str) -> bool {
+        // Assert that the right-hand side is all-lowercase as required
+        debug_assert!(
+            other
+                .chars()
+                .all(|c| c.is_ascii_lowercase() || !c.is_ascii_alphabetic()),
+            "eq_str requires right-hand side to be lowercase ASCII, but got: {:?}",
+            other
+        );
+
         let mut chit = self.iter();
         let mut strit = other.chars();
 
@@ -118,12 +139,47 @@ impl CharStringExt for [char] {
         }
     }
 
+    fn eq_str_lenient(&self, other: &str) -> bool {
+        let mut chit = self.iter();
+        let mut strit = other.chars();
+
+        loop {
+            let (c, s) = (chit.next(), strit.next());
+            match (c, s) {
+                (Some(c), Some(s)) => {
+                    if !c.eq_ignore_ascii_case(&s) {
+                        return false;
+                    }
+                }
+                (None, None) => return true,
+                _ => return false,
+            }
+        }
+    }
+
     fn eq_ch(&self, other: &[char]) -> bool {
+        // Assert that the right-hand side is all-lowercase as required
+        debug_assert!(
+            other
+                .iter()
+                .all(|c| c.is_ascii_lowercase() || !c.is_ascii_alphabetic()),
+            "eq_ch requires right-hand side to be lowercase ASCII, but got: {:?}",
+            other
+        );
+
         self.len() == other.len()
             && self
                 .iter()
                 .zip(other.iter())
                 .all(|(a, b)| a.to_ascii_lowercase() == *b)
+    }
+
+    fn eq_ch_lenient(&self, other: &[char]) -> bool {
+        self.len() == other.len()
+            && self
+                .iter()
+                .zip(other.iter())
+                .all(|(a, b)| a.eq_ignore_ascii_case(b))
     }
 
     fn eq_any_ignore_ascii_case_str(&self, others: &[&str]) -> bool {
@@ -185,6 +241,15 @@ impl CharStringExt for [char] {
 
     fn contains_vowel(&self) -> bool {
         self.iter().any(|c| c.is_vowel())
+    }
+
+    fn strip_prefix_ignore_ascii_case_chars(&self, prefix: &[char]) -> Option<&[char]> {
+        (self.len() >= prefix.len()
+            && self
+                .iter()
+                .zip(prefix)
+                .all(|(a, b)| a.eq_ignore_ascii_case(b)))
+        .then_some(&self[prefix.len()..])
     }
 }
 
@@ -253,5 +318,37 @@ mod tests {
     #[test]
     fn differs_only_by_length_2() {
         assert!(!['c'].eq_str("cc"));
+    }
+
+    #[test]
+    #[should_panic]
+    fn right_side_must_be_all_lowercase_str() {
+        assert!(['c'].eq_str("C"))
+    }
+
+    #[test]
+    #[should_panic]
+    fn right_side_must_be_all_lowercase_ch() {
+        assert!(['c'].eq_ch(&['C']))
+    }
+
+    #[test]
+    fn lenient_right_side_can_be_all_lowercase_str() {
+        assert!(['H', 'e', 'l', 'l', 'o'].eq_str_lenient("hello"));
+    }
+
+    #[test]
+    fn lenient_right_side_can_be_mixed_case_str() {
+        assert!(['H', 'e', 'l', 'l', 'o'].eq_str_lenient("HeLlO"));
+    }
+
+    #[test]
+    fn lenient_right_side_can_be_all_lowercase_ch() {
+        assert!(['H', 'e', 'l', 'l', 'o'].eq_ch_lenient(&['h', 'e', 'l', 'l', 'o']));
+    }
+
+    #[test]
+    fn lenient_right_side_can_be_mixed_case_ch() {
+        assert!(['H', 'e', 'l', 'l', 'o'].eq_ch_lenient(&['H', 'E', 'L', 'L', 'O']));
     }
 }

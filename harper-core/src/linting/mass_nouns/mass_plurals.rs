@@ -12,10 +12,7 @@ pub struct MassPlurals<D> {
     dict: D,
 }
 
-impl<D> MassPlurals<D>
-where
-    D: Dictionary,
-{
+impl<D: Dictionary> MassPlurals<D> {
     pub fn new(dict: D) -> Self {
         let oov = SequenceExpr::default().then_oov();
         let looks_plural = SequenceExpr::with(|tok: &Token, src: &[char]| {
@@ -51,10 +48,7 @@ where
     }
 }
 
-impl<D> ExprLinter for MassPlurals<D>
-where
-    D: Dictionary,
-{
+impl<D: Dictionary> ExprLinter for MassPlurals<D> {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
@@ -138,7 +132,8 @@ where
             lint_kind: LintKind::Grammar,
             suggestions,
             message,
-            ..Default::default()
+            // higher priority (lower number) than split words
+            priority: 30,
         })
     }
 
@@ -150,18 +145,31 @@ where
 #[cfg(test)]
 mod tests {
     use crate::{
-        linting::tests::{assert_lint_count, assert_suggestion_result},
+        Dialect,
+        linting::{
+            LintGroup,
+            tests::{assert_lint_count, assert_suggestion_result},
+        },
         spell::FstDictionary,
     };
 
     use super::MassPlurals;
 
     #[test]
-    fn flag_advicess() {
-        assert_lint_count(
+    fn fix_bad_advices() {
+        assert_suggestion_result(
             "You gave me bad advices.",
             MassPlurals::new(FstDictionary::curated()),
-            1,
+            "You gave me bad advice.",
+        );
+    }
+
+    #[test]
+    fn fix_kind_of_advices() {
+        assert_suggestion_result(
+            "IMO these kind of advices never matters.",
+            LintGroup::new_curated(FstDictionary::curated(), Dialect::American),
+            "IMO these kind of advice never matters.",
         );
     }
 
@@ -207,6 +215,15 @@ mod tests {
             "Transit costs were high in terms of time, finances, and vehicle wear and tears, which posed significant obstacles to international commerce",
             MassPlurals::new(FstDictionary::curated()),
             "Transit costs were high in terms of time, finances, and vehicle wear and tear, which posed significant obstacles to international commerce",
+        );
+    }
+
+    #[test]
+    fn fix_horsepowers() {
+        assert_suggestion_result(
+            "It's around about 60 horsepowers. So, you can't go in and say, \"Well, we got more horsepowers than our rivals.\" because it's got the same and through that restriction they've created an absolute banger. I'm so excited about this car.",
+            MassPlurals::new(FstDictionary::curated()),
+            "It's around about 60 horsepower. So, you can't go in and say, \"Well, we got more horsepower than our rivals.\" because it's got the same and through that restriction they've created an absolute banger. I'm so excited about this car.",
         );
     }
 }

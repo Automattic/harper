@@ -1,4 +1,4 @@
-use super::Expr;
+use super::{AsBoxedExpr, Expr};
 use crate::{Span, Token};
 
 /// A naive expr collection that naively iterates through a list of patterns,
@@ -11,8 +11,10 @@ pub struct FirstMatchOf {
 }
 
 impl FirstMatchOf {
-    pub fn new(exprs: Vec<Box<dyn Expr>>) -> Self {
-        Self { exprs }
+    pub fn new(exprs: impl IntoIterator<Item = impl AsBoxedExpr>) -> Self {
+        Self {
+            exprs: exprs.into_iter().map(|e| e.into_boxed_expr()).collect(),
+        }
     }
 
     pub fn add(&mut self, expr: impl Expr + 'static) {
@@ -20,7 +22,7 @@ impl FirstMatchOf {
     }
 
     pub fn add_boxed(&mut self, expr: Box<dyn Expr>) {
-        self.exprs.push(Box::new(expr));
+        self.exprs.push(expr);
     }
 }
 

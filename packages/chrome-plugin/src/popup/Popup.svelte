@@ -6,6 +6,7 @@ import Fa from 'svelte-fa';
 import logo from '/logo.png';
 import detectBrowserEngine from '../detectBrowserEngine';
 import { main, type PopupState } from '../PopupState';
+import DomainReview from './DomainReview.svelte';
 import Main from './Main.svelte';
 import Onboarding from './Onboarding.svelte';
 import ReportProblematicLint from './ReportProblematicLint.svelte';
@@ -70,21 +71,23 @@ function openUpdateHelpPage() {
           popupState = main();
        }}><Fa icon={faArrowLeft}/></Button>
     {:else}
-      <div onclick={openUpdateHelpPage}>
+      <button type="button" class="cursor-pointer" onclick={openUpdateHelpPage}>
         {#if versionMismatch}
           <span class="ml-1" title={`Newer version available: ${latestVersion ?? ''}. Click to find out more.`}>⚠️</span>
         {/if}
         <span class="text-sm font-mono">{version}</span>
-      </div>
+      </button>
     {/if}
   </header>
 
   {#if popupState.page == "onboarding"}
     <Onboarding onConfirm={() => { popupState = main();}} />
   {:else if popupState.page == "main"}
-    <Main /> 
+    <Main onReviewDomain={(works, domain) => { popupState = { page: 'domain-review', works, domain, feedback: "" }} }/>
   {:else if popupState.page == 'report-error'}
     <ReportProblematicLint example={popupState.example} rule_id={popupState.rule_id} feedback={popupState.feedback} onSubmit={() => { popupState = main();}} />
+  {:else if popupState.page == 'domain-review'}
+    <DomainReview works={popupState.works} domain={popupState.domain} feedback={popupState.feedback} onSubmit={() => { popupState = main();}} />
   {/if}
 
   <footer class="flex items-center justify-center gap-6 px-3 py-2 text-sm border-t border-gray-100 rounded-b-lg bg-white/60 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-100">

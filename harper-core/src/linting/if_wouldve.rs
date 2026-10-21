@@ -16,13 +16,13 @@ impl Default for IfWouldve {
                 .t_ws()
                 .then(NominalPhrase)
                 .t_ws()
-                .then_any_of(vec![
+                .then_any_of([
                     Box::new(
-                        SequenceExpr::word_set(&["would", "had"])
+                        SequenceExpr::word_set(["would", "had"])
                             .t_ws()
-                            .then_word_set(&["have", "of"]),
-                    ),
-                    Box::new(WordSet::new(&["would've", "wouldve", "had've", "hadve"])),
+                            .then_word_set(["have", "of"]),
+                    ) as Box<dyn Expr>,
+                    Box::new(WordSet::new(["would've", "wouldve", "had've", "hadve"])),
                 ])
                 .t_ws()
                 .then_verb_past_participle_form(),
@@ -86,7 +86,7 @@ impl ExprLinter for IfWouldve {
                     vec!['h', 'a', 'd'],
                     span.get_content(src),
                 )],
-                message: "If this is counterfactual or hypothetical, use `had` after `if` rather than `would have` or `had have`.".to_string(),
+                message: "If this is counterfactual or hypothetical, use `had` after `if` rather than `would have` or `had have`.".to_owned(),
                 ..Default::default()
             })
         })

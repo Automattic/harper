@@ -14,9 +14,7 @@ impl Default for Hereby {
         // Require a verb that is not also a noun. Otherwise sentences like
         // "I got here by skill" — where "skill" is a noun object of "by" —
         // match because "skill" is tagged as both verb and noun.
-        let pattern = SequenceExpr::aco("here")
-            .then_whitespace()
-            .t_aco("by")
+        let pattern = SequenceExpr::word_seq(&["here", "by"])
             .then_whitespace()
             .then_kind_is_but_is_not(TokenKind::is_verb, TokenKind::is_noun);
 

@@ -37,10 +37,27 @@ function getConfigLinter(): Promise<LocalLinterType> {
 export interface Integration {
 	bundle_id: string;
 	enabled: boolean;
+	display_name: string;
+}
+
+export interface AppSearchResult {
+	name: string;
+	bundle_id: string;
 }
 
 export type AccessibilityPermissionStatus = 'Granted' | 'NotGranted' | 'Unsupported';
 
+/** Serializable Rust updater outcome; an installed update may still require a restart. */
+export interface UpdateResult {
+	status: 'up-to-date' | 'updated' | 'error';
+	currentVersion: string | null;
+	latestVersion: string | null;
+	message: string;
+	error: string | null;
+}
+
+/** Provides an easy-to-use interface for interacting with the main Rust Tauri process.
+ * Relevant because that is where the canonical state is stored. */
 export class Client {
 	static async getLintConfig(): Promise<LintConfig> {
 		return await invoke<LintConfig>('get_lint_config');
@@ -74,6 +91,36 @@ export class Client {
 
 	static async setDebounceMs(debounceMs: number): Promise<void> {
 		await invoke('set_debounce_ms', { debounceMs });
+	}
+
+	/** Check if the app is configured to auto update. */
+	static async getAutoUpdate(): Promise<boolean> {
+		return await invoke<boolean>('get_auto_update');
+	}
+
+	/** Configure the app to auto update. */
+	static async setAutoUpdate(autoUpdate: boolean): Promise<void> {
+		await invoke('set_auto_update', { autoUpdate });
+	}
+
+	static async getCurrentVersion(): Promise<string> {
+		return await invoke<string>('get_current_version');
+	}
+
+	static async getLatestVersion(): Promise<string> {
+		return await invoke<string>('get_latest_version');
+	}
+
+	static async updateToLatest(): Promise<UpdateResult> {
+		return await invoke<UpdateResult>('update_to_latest');
+	}
+
+	static async getOnboardingCompleted(): Promise<boolean> {
+		return await invoke<boolean>('get_onboarding_completed');
+	}
+
+	static async setOnboardingCompleted(onboardingCompleted: boolean): Promise<void> {
+		await invoke('set_onboarding_completed', { onboardingCompleted });
 	}
 
 	static async getLaunchAtStartup(): Promise<boolean> {
@@ -124,6 +171,14 @@ export class Client {
 		return await invoke<Integration[]>('get_integrations');
 	}
 
+	static async getAutoEnableNewApps(): Promise<boolean> {
+		return await invoke<boolean>('get_auto_enable_new_apps');
+	}
+
+	static async setAutoEnableNewApps(autoEnableNewApps: boolean): Promise<void> {
+		await invoke('set_auto_enable_new_apps', { autoEnableNewApps });
+	}
+
 	static async addIntegration(bundleId: string): Promise<void> {
 		await invoke('add_integration', { bundleId });
 	}
@@ -134,6 +189,14 @@ export class Client {
 
 	static async setIntegrationEnabled(bundleId: string, enabled: boolean): Promise<void> {
 		await invoke('set_integration_enabled', { bundleId, enabled });
+	}
+
+	static async getApplicationIconDataUrl(bundleId: string): Promise<string> {
+		return await invoke<string>('get_application_icon_data_url', { bundleId });
+	}
+
+	static async searchApps(query: string): Promise<AppSearchResult[]> {
+		return await invoke<AppSearchResult[]>('search_apps', { query });
 	}
 
 	static async launchApp(bundleId: string): Promise<void> {
@@ -155,20 +218,30 @@ export class Client {
 			'Accessibility permission request timed out',
 		);
 	}
+
+	static async startHighlighterService(): Promise<boolean> {
+		return await invoke<boolean>('start_highlighter_service');
+	}
+
+	static async stopHighlighterService(): Promise<boolean> {
+		return await invoke<boolean>('stop_highlighter_service');
+	}
 }
 
-function withTimeout<T>(promise: Promise<T>, timeoutMs: number, message: string): Promise<T> {
+async function withTimeout<T>(promise: Promise<T>, timeoutMs: number, message: string): Promise<T> {
 	let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
 	const timeout = new Promise<never>((_, reject) => {
 		timeoutId = setTimeout(() => reject(new Error(message)), timeoutMs);
 	});
 
-	return Promise.race([promise, timeout]).finally(() => {
+	try {
+		return await Promise.race([promise, timeout]);
+	} finally {
 		if (timeoutId) {
 			clearTimeout(timeoutId);
 		}
-	});
+	}
 }
 
 function rustDialectToDialect(dialect: RustDialect): Dialect {

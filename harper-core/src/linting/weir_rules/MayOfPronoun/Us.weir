@@ -1,0 +1,8 @@
+expr main (may of us)
+let message "Did you mean `many of us`?"
+let description "Corrects the typo `may of us` to `many of us`"
+let kind "Typo"
+let becomes "many of us"
+
+test "It's really a great work, maybe may of us want to use this to generate a 3D model for 2D real images" "It's really a great work, maybe many of us want to use this to generate a 3D model for 2D real images"
+test "great, you don't know how so may of us are looking forward to this" "great, you don't know how so many of us are looking forward to this"

@@ -1,0 +1,10 @@
+expr main (cross platform)
+
+let message "`Cross-platform` should always be hyphenated in all positions."
+let description "Unlike some compound modifiers, `cross-platform` should always be hyphenated."
+let kind "Punctuation"
+let becomes "cross-platform"
+
+test "A C++11 single-file header-only cross platform HTTP/HTTPS library." "A C++11 single-file header-only cross-platform HTTP/HTTPS library."
+test "Cross Platform Tutorial." "Cross-Platform Tutorial."
+test "Cross platform / architecture install option" "Cross-platform / architecture install option"

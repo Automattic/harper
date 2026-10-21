@@ -1,0 +1,34 @@
+# Corrects the missing preposition in `take advantage of` when `of` is dropped,
+# e.g. "taking advantage a bug" -> "taking advantage of a bug".
+expr verbs [take, takes, took, taken, taking]
+expr adverbials [lot, couple, few, bit, little, while, number, most, whole, same, first, second, third, entire, other, best, worst, latter, former, moment, time, way]
+expr main <(@verbs advantage [a, an, the] !@adverbials), (advantage [a, an, the]), ( )>
+
+let message "The idiom is `take advantage of`. Did you drop the `of`?"
+let description "Corrects the missing preposition in the idiom `take advantage of` when `of` is dropped."
+let kind "Usage"
+let becomes " of "
+
+# True positives
+
+test "He was taking advantage a stack overflow." "He was taking advantage of a stack overflow."
+test "They took advantage a vulnerability." "They took advantage of a vulnerability."
+test "We take advantage an opportunity." "We take advantage of an opportunity."
+test "She takes advantage the discount." "She takes advantage of the discount."
+test "The attacker has taken advantage a bug." "The attacker has taken advantage of a bug."
+test "Attackers take advantage the weakness." "Attackers take advantage of the weakness."
+test "He took advantage an old exploit." "He took advantage of an old exploit."
+test "Taking advantage a flaw, he won." "Taking advantage of a flaw, he won."
+test "The worm took advantage a race condition." "The worm took advantage of a race condition."
+test "It takes advantage an unpatched system." "It takes advantage of an unpatched system."
+
+# False positives / true negatives
+
+allows "He took advantage a lot."
+allows "They take advantage a few times."
+allows "She took advantage a couple of times."
+allows "We take advantage a little too often."
+allows "It happened the whole time."
+allows "He took advantage of a system."
+allows "The advantage a company enjoys is huge."
+allows "He gained the advantage a fighter needs."

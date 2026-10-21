@@ -12,9 +12,9 @@ pub struct Addicting {
 impl Default for Addicting {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::aco("addicting").then_longest_of(vec![
+            expr: SequenceExpr::aco("addicting").then_longest_of([
                 // matches `addicting` without anything after
-                Box::new(AnchorEnd),
+                Box::new(AnchorEnd) as Box<dyn Expr>,
                 // Semicolon is not handled like comma is for `Chunk` - TODO: remove when #3405 is fixed
                 Box::new(SequenceExpr::default().then_semicolon()),
                 // matches `addicting` <ws> [ any word but not a reflexive pronoun or object pronoun ]
@@ -22,8 +22,8 @@ impl Default for Addicting {
                     // positive - any word
                     Box::new(SequenceExpr::any_word()),
                     // negative - reflexive pronoun or object pronoun
-                    Box::new(SequenceExpr::unless(FirstMatchOf::new(vec![
-                        Box::new(ReflexivePronoun::with_common_errors()),
+                    Box::new(SequenceExpr::unless(FirstMatchOf::new([
+                        Box::new(ReflexivePronoun::with_common_errors()) as Box<dyn Expr>,
                         Box::new(SequenceExpr::default().then_object_pronoun()),
                     ]))),
                 ]))),

@@ -1,11 +1,11 @@
 {
 	"name": "harper-desktop",
-	"version": "0.1.0",
+	"version": "2.13.0",
 	"description": "",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build",
+		"build": "vite build -l warn",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
@@ -16,6 +16,8 @@
 		"@tauri-apps/api": "^2",
 		"@tauri-apps/plugin-autostart": "^2.5.1",
 		"@tauri-apps/plugin-opener": "^2",
+		"@tauri-apps/plugin-os": "~2.3.2",
+		"components": "workspace:*",
 		"harper-editor": "workspace:*",
 		"harper.js": "workspace:*"
 	},

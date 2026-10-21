@@ -71,7 +71,7 @@ impl ExprLinter for TakeALookTo {
                 vec!['a', 't'],
                 to_span.get_content(src),
             )],
-            message: "This phrase uses `to` rather than `at`".to_string(),
+            message: "This phrase uses `to` rather than `at`".to_owned(),
             ..Default::default()
         })
     }

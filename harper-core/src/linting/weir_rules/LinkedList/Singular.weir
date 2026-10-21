@@ -1,0 +1,14 @@
+expr main link list
+
+let message "If you mean the low-level data structure, use `linked list` instead of `link list`."
+let description "Corrects `link list` to `linked list`."
+let kind "Usage"
+let becomes "linked list"
+
+#TODO broken due to #3741 - replace_with_match_case works by index
+#test "Backtracking/Examples/Reverse Link List Recursion.java" "Backtracking/Examples/Reverse Linked List Recursion.java"
+#test "006 Link List/       → More linked list practice" "006 Linked List/       → More linked list practice"
+#test "LIST OF DATA STRUCTURES · Link List. Singly linked list; Doubly linked list; Circular linked list · Stacks. Array based; Link List based · Queues." "LIST OF DATA STRUCTURES · Linked List. Singly linked list; Doubly linked list; Circular linked list · Stacks. Array based; Linked List based · Queues."
+test "Doubly link list with header circular." "Doubly linked list with header circular."
+test "link list implementation in c language." "linked list implementation in c language."
+test "use one pointer to construct double-link list." "use one pointer to construct double-linked list."

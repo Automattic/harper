@@ -52,15 +52,24 @@ pub(crate) struct DirInput {
 impl DirInput {
     /// An iterator of the files inside the directory, as [`FileInput`].
     pub(crate) fn iter_files(&self) -> anyhow::Result<impl Iterator<Item = FileInput>> {
-        Ok(std::fs::read_dir(&self.path)?.filter_map(|dir_entry| {
-            if let Ok(dir_entry) = dir_entry
-                && let Ok(file) = FileInput::try_from_path(&dir_entry.path())
-            {
-                Some(file)
-            } else {
-                None
-            }
-        }))
+        let iter = std::fs::read_dir(&self.path)?
+            .flatten()
+            .map(|e| e.path())
+            .filter(|p| {
+                p.file_name().is_some_and(|raw_name| {
+                    // Skip any files with this exact name
+                    raw_name != ".DS_Store" && {
+                        let name = raw_name.to_string_lossy().to_lowercase();
+                        // SKip all files whose names start with these characters
+                        !name.starts_with("._")
+                        // Skip all files whose names have these extensions
+                        && !name.ends_with(".json")
+                    }
+                })
+            })
+            .filter_map(|p| FileInput::try_from_path(&p).ok());
+
+        Ok(iter)
     }
 }
 impl MultiInputTrait for DirInput {

@@ -1011,6 +1011,17 @@ Message: |
 
 
 
+Lint:    Regionalism (127 priority)
+Message: |
+     610 | door, and the other arm curled round her head. Still she went on growing, and,
+     611 | as a last resource, she put one arm out of the window, and one foot up the
+         |                                        ^~~ If this is the idiom about abandoning a plan, it's more usual to leave out `of` in Australian English
+     612 | chimney, and said to herself “Now I can do no more, whatever happens. What will
+Suggest:
+  - Remove error
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      615 | Luckily for Alice, the little magic bottle had now had its full effect, and she
@@ -1059,12 +1070,13 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Regionalism (127 priority)
 Message: |
-     668 | “Sure, it’s an arm, yer honour!” (He pronounced it “arrum.”)
-         |                                                     ^~~~~ `arrum` should probably be written as `arr um`.
+     681 | thought Alice. “I wonder what they’ll do next! As for pulling me out of the
+         |                                                                     ^~~ If this is the idiom about abandoning a plan, it's more usual to leave out `of` in Australian English
+     682 | window, I only wish they could! I’m sure I don’t want to stay in here any
 Suggest:
-  - Replace with: “arr um”
+  - Remove error
 
 
 
@@ -3188,16 +3200,6 @@ Suggest:
   - Replace with: “beauty”
   - Replace with: “beaut”
   - Replace with: “beauts”
-
-
-
-Lint:    Typo (31 priority)
-Message: |
-    2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
-    2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
-         |                           ^~~~~~ `beauti` should probably be written as `beau ti`.
-Suggest:
-  - Replace with: “beau ti”
 
 
 

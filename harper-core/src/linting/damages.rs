@@ -26,7 +26,7 @@ pub struct Damages {
 impl Default for Damages {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["damages", "damage"]),
+            expr: SequenceExpr::word_set(["damages", "damage"]),
         }
     }
 }
@@ -115,7 +115,7 @@ impl ExprLinter for Damages {
         // Or it could be a noun. Or it could still be unknown.
 
         // Check if it's the object of the verb "to pay"
-        let pay_det = SequenceExpr::word_set(&["paid", "pay", "paying", "pays"])
+        let pay_det = SequenceExpr::word_set(["paid", "pay", "paying", "pays"])
             .then_optional(SequenceExpr::default().t_ws().then_determiner())
             .t_ws();
 
@@ -152,7 +152,7 @@ impl ExprLinter for Damages {
                 damage_chars[..6].to_vec(),
                 damage_chars,
             )],
-            message: "Singular `damage` is correct when not referring to a court case.".to_string(),
+            message: "Singular `damage` is correct when not referring to a court case.".to_owned(),
             ..Default::default()
         })
     }

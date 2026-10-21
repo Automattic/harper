@@ -13,7 +13,7 @@ impl Default for InFavourOfDoing {
         Self {
             expr: SequenceExpr::aco("in")
                 .t_ws()
-                .t_set(&["favour", "favor"])
+                .t_set(["favour", "favor"])
                 .t_ws()
                 .then_verb_progressive_form(),
         }
@@ -30,7 +30,7 @@ impl ExprLinter for InFavourOfDoing {
             span: toks[fav_idx].span,
             lint_kind: LintKind::Usage,
             suggestions: vec![Suggestion::InsertAfter(" of".chars().collect())],
-            message: "The word `of` is missing.".to_string(),
+            message: "The word `of` is missing.".to_owned(),
             ..Default::default()
         })
     }

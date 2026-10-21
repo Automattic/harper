@@ -6,11 +6,11 @@ use crate::case::Case::Upper;
 use crate::char_ext::CharExt;
 use crate::{CaseIterExt, Dialect};
 
-#[derive(PartialEq)]
+#[derive(Debug, PartialEq)]
 pub enum InitialSound {
     Vowel,
     Consonant,
-    Either, // for SQL
+    Either,
 }
 
 /// Checks whether a provided word begins with a vowel _sound_. Returns `None` if `word` is empty.
@@ -66,6 +66,17 @@ pub fn starts_with_vowel(word: &[char], dialect: Dialect) -> Option<InitialSound
 
     if matches!(word, ['u', 'b', 'i', ..]) {
         return Some(InitialSound::Either);
+    }
+
+    // Treat formats like `mp3` the same as `MP3`: the leading `m` is read as
+    // the letter name “em”, so it takes `an` rather than `a`.
+    if matches!(word, ['m', 'p', digit, ..] if digit.is_ascii_digit()) {
+        return Some(InitialSound::Vowel);
+    }
+
+    // `npm` is officially an all-lowercase initialism pronounced letter-by-letter
+    if matches!(word, ['n', 'p', 'm']) {
+        return Some(InitialSound::Vowel);
     }
 
     if matches!(word, ['e', 'u', 'l', 'e', ..]) {
@@ -206,5 +217,18 @@ fn is_likely_acronym(word: &[char]) -> bool {
         matches!(vowel_map, [false, true, false] | [false, true, true])
     } else {
         false
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_npm_4139() {
+        assert_eq!(
+            starts_with_vowel(&['n', 'p', 'm'].to_vec(), Dialect::American),
+            Some(InitialSound::Vowel)
+        );
     }
 }

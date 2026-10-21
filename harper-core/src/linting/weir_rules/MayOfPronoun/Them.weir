@@ -1,0 +1,8 @@
+expr main (may of them)
+let message "Did you mean `many of them`?"
+let description "Corrects the typo `may of them` to `many of them`"
+let kind "Typo"
+let becomes "many of them"
+
+test "For may of them they don't follow proper semver." "For many of them they don't follow proper semver."
+test "Sorting keys in a group may be controversial though, as it seems may of them are ordered by important" "Sorting keys in a group may be controversial though, as it seems many of them are ordered by important"

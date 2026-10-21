@@ -11,7 +11,7 @@ pub struct TryOnesHandAt {
 impl Default for TryOnesHandAt {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["try", "tried", "tries", "trying"])
+            expr: SequenceExpr::word_set(["try", "tried", "tries", "trying"])
                 .t_ws()
                 .then_possessive_determiner()
                 .t_ws()
@@ -42,7 +42,7 @@ impl ExprLinter for TryOnesHandAt {
                 vec!['h', 'a', 'n', 'd'],
                 hands_chars,
             )],
-            message: "This idiom uses the singular `hand`.".to_string(),
+            message: "This idiom uses the singular `hand`.".to_owned(),
             ..Default::default()
         })
     }
