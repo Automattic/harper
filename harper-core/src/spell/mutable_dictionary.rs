@@ -1,6 +1,5 @@
 use super::{
-    CanonicalWordId, CaseFoldedWordId, FstDictionary, FuzzyMatchResult, rune,
-    word_map::{WordMap, WordMapEntry},
+    CanonicalWordId, CaseFoldedWordId, FstDictionary, FuzzyMatchResult, rune, word_map::WordMap,
 };
 use crate::edit_distance::edit_distance_min_alloc;
 use itertools::Itertools;
@@ -144,32 +143,10 @@ impl Dictionary for MutableDictionary {
         )
     }
 
-    fn get_word(&self, word: &[char]) -> Box<dyn Iterator<Item = &WordMapEntry> + Send + '_> {
-        Box::new(self.word_map.get_case_folded_chars(word))
-    }
-
-    fn get_word_str(&self, word: &str) -> Box<dyn Iterator<Item = &WordMapEntry> + Send + '_> {
-        let chars: CharString = word.chars().collect();
-        self.get_word(&chars)
-    }
-
-    fn get_word_exact(&self, word: &[char]) -> Option<&WordMapEntry> {
+    fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata> {
         self.word_map
             .get_canonical(CanonicalWordId::from_word_chars(word))
-    }
-
-    fn get_word_exact_str(&self, word: &str) -> Option<&WordMapEntry> {
-        let chars: CharString = word.chars().collect();
-        self.get_word_exact(&chars)
-    }
-
-    fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata> {
-        self.get_word_exact(word).map(|entry| &entry.metadata)
-    }
-
-    fn get_word_metadata_exact_str(&self, word: &str) -> Option<&DictWordMetadata> {
-        let chars: CharString = word.chars().collect();
-        self.get_word_metadata_exact(&chars)
+            .map(|entry| &entry.metadata)
     }
 
     fn fuzzy_match(
@@ -349,15 +326,15 @@ mod tests {
             assert!(dict.contains_exact_word_str("Pr"));
             assert!(dict.contains_exact_word_str("PR"));
             let mut variants: Vec<_> = dict
-                .get_word_str("pr")
-                .map(|entry| entry.canonical_spelling.iter().collect::<String>())
+                .get_correct_capitalizations_of(&['p', 'r'])
+                .map(|word| word.iter().collect::<String>())
                 .collect();
             variants.sort();
             assert_eq!(variants, ["PR", "Pr"]);
             assert_eq!(dict.get_correct_capitalizations_of(&['p', 'r']).count(), 2);
             assert!(dict.get_correct_capitalization_of(&['p', 'r']).is_none());
-            assert!(!dict.get_word_metadata_exact_str("Pr").unwrap().common);
-            assert!(dict.get_word_metadata_exact_str("PR").unwrap().common);
+            assert!(!dict.get_word_metadata_exact(&['P', 'r']).unwrap().common);
+            assert!(dict.get_word_metadata_exact(&['P', 'R']).unwrap().common);
             assert!(dict.get_word_metadata_str("pr").unwrap().common);
             assert_eq!(
                 dict.get_word_from_id(&CanonicalWordId::from_word_str("Pr")),
@@ -370,8 +347,12 @@ mod tests {
             assert!(dict.contains_word_str("CAN’T"));
             assert!(!dict.contains_exact_word_str("can’t"));
             assert!(dict.get_word_metadata_str("unknown").is_none());
-            assert!(dict.get_word_exact_str("unknown").is_none());
-            assert_eq!(dict.get_word_str("unknown").count(), 0);
+            assert!(dict.get_word_metadata_exact(&['p', 'r']).is_none());
+            assert_eq!(
+                dict.get_correct_capitalizations_of(&['x', 'y', 'z'])
+                    .count(),
+                0
+            );
             assert_eq!(dict.words_iter().count(), 3);
             assert_eq!(dict.word_count(), 3);
         }
@@ -394,8 +375,8 @@ mod tests {
             },
         );
         assert_eq!(dict.word_count(), 1);
-        assert_eq!(dict.get_word_str("pr").count(), 1);
-        assert!(dict.get_word_metadata_exact_str("Pr").unwrap().common);
+        assert_eq!(dict.get_correct_capitalizations_of(&['p', 'r']).count(), 1);
+        assert!(dict.get_word_metadata_exact(&['P', 'r']).unwrap().common);
         assert!(matches!(
             dict.get_word_metadata_str("pr"),
             Some(Cow::Borrowed(_))

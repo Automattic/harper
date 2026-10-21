@@ -1,8 +1,8 @@
 use blanket::blanket;
 use std::borrow::Cow;
 
+use super::CanonicalWordId;
 use super::FuzzyMatchResult;
-use super::{CanonicalWordId, WordMapEntry};
 use crate::DictWordMetadata;
 
 pub(crate) static CURATED_DICT_STR: &str = include_str!("../../dictionary.dict");
@@ -47,12 +47,7 @@ pub trait Dictionary: Send + Sync {
     /// empty.
     fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>>;
 
-    fn get_word(&self, word: &[char]) -> Box<dyn Iterator<Item = &WordMapEntry> + Send + '_>;
-    fn get_word_str(&self, word: &str) -> Box<dyn Iterator<Item = &WordMapEntry> + Send + '_>;
-    fn get_word_exact(&self, word: &[char]) -> Option<&WordMapEntry>;
-    fn get_word_exact_str(&self, word: &str) -> Option<&WordMapEntry>;
     fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata>;
-    fn get_word_metadata_exact_str(&self, word: &str) -> Option<&DictWordMetadata>;
 
     /// Iterate over the words in the dictionary.
     fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_>;

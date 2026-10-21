@@ -6,7 +6,7 @@ use trie_rs::iter::{Keys, PrefixIter, SearchIter};
 
 use crate::DictWordMetadata;
 
-use super::{CanonicalWordId, Dictionary, FstDictionary, FuzzyMatchResult, WordMapEntry};
+use super::{CanonicalWordId, Dictionary, FstDictionary, FuzzyMatchResult};
 
 /// A [`Dictionary`] optimized for pre- and postfix search.
 /// Wraps another dictionary to implement other operations.
@@ -93,28 +93,8 @@ impl<D: Dictionary> Dictionary for TrieDictionary<D> {
         self.inner.get_word_from_id(id)
     }
 
-    fn get_word(&self, word: &[char]) -> Box<dyn Iterator<Item = &WordMapEntry> + Send + '_> {
-        self.inner.get_word(word)
-    }
-
-    fn get_word_str(&self, word: &str) -> Box<dyn Iterator<Item = &WordMapEntry> + Send + '_> {
-        self.inner.get_word_str(word)
-    }
-
-    fn get_word_exact(&self, word: &[char]) -> Option<&WordMapEntry> {
-        self.inner.get_word_exact(word)
-    }
-
-    fn get_word_exact_str(&self, word: &str) -> Option<&WordMapEntry> {
-        self.inner.get_word_exact_str(word)
-    }
-
     fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata> {
         self.inner.get_word_metadata_exact(word)
-    }
-
-    fn get_word_metadata_exact_str(&self, word: &str) -> Option<&DictWordMetadata> {
-        self.inner.get_word_metadata_exact_str(word)
     }
 
     fn get_correct_capitalizations_of(

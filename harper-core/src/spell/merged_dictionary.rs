@@ -5,9 +5,7 @@ use std::sync::Arc;
 use foldhash::quality::FixedState;
 use itertools::Itertools;
 
-use super::{
-    CanonicalWordId, FstDictionary, FuzzyMatchResult, WordMapEntry, dictionary::Dictionary,
-};
+use super::{CanonicalWordId, FstDictionary, FuzzyMatchResult, dictionary::Dictionary};
 use crate::{CharString, DictWordMetadata};
 
 /// A simple wrapper over [`Dictionary`] that allows
@@ -138,40 +136,10 @@ impl Dictionary for MergedDictionary {
         self.get_word_metadata(&chars)
     }
 
-    fn get_word(&self, word: &[char]) -> Box<dyn Iterator<Item = &WordMapEntry> + Send + '_> {
-        let matches: Vec<_> = self
-            .children
-            .iter()
-            .map(|child| child.get_word(word))
-            .collect();
-        Box::new(matches.into_iter().flatten())
-    }
-
-    fn get_word_str(&self, word: &str) -> Box<dyn Iterator<Item = &WordMapEntry> + Send + '_> {
-        let chars: CharString = word.chars().collect();
-        self.get_word(&chars)
-    }
-
-    fn get_word_exact(&self, word: &[char]) -> Option<&WordMapEntry> {
-        self.children
-            .iter()
-            .find_map(|child| child.get_word_exact(word))
-    }
-
-    fn get_word_exact_str(&self, word: &str) -> Option<&WordMapEntry> {
-        let chars: CharString = word.chars().collect();
-        self.get_word_exact(&chars)
-    }
-
     fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata> {
         self.children
             .iter()
             .find_map(|child| child.get_word_metadata_exact(word))
-    }
-
-    fn get_word_metadata_exact_str(&self, word: &str) -> Option<&DictWordMetadata> {
-        let chars: CharString = word.chars().collect();
-        self.get_word_metadata_exact(&chars)
     }
 
     fn get_correct_capitalizations_of(
@@ -255,7 +223,7 @@ mod tests {
     use crate::spell::{Dictionary, MergedDictionary, MutableDictionary};
 
     #[test]
-    fn merged_borrows_entries_and_combines_metadata_from_children() {
+    fn merged_borrows_exact_metadata_and_combines_metadata_from_children() {
         use std::borrow::Cow;
 
         let mut first = MutableDictionary::new();
@@ -280,20 +248,19 @@ mod tests {
         merged.add_dictionary(second.clone());
 
         assert!(std::ptr::eq(
-            merged.get_word_exact_str("Pr").unwrap(),
-            first.get_word_exact_str("Pr").unwrap()
+            merged.get_word_metadata_exact(&['P', 'r']).unwrap(),
+            first.get_word_metadata_exact(&['P', 'r']).unwrap()
         ));
         assert!(std::ptr::eq(
-            merged.get_word_exact_str("PR").unwrap(),
-            second.get_word_exact_str("PR").unwrap()
+            merged.get_word_metadata_exact(&['P', 'R']).unwrap(),
+            second.get_word_metadata_exact(&['P', 'R']).unwrap()
         ));
-        assert!(!merged.get_word_metadata_exact_str("Pr").unwrap().common);
+        assert!(!merged.get_word_metadata_exact(&['P', 'r']).unwrap().common);
         let metadata = merged.get_word_metadata_str("pr").unwrap();
         assert!(metadata.common);
         assert!(matches!(metadata, Cow::Owned(_)));
         assert_eq!(merged.word_count(), 3);
         assert_eq!(merged.words_iter().count(), 3);
-        assert_eq!(merged.get_word_str("pr").count(), 3);
         assert_eq!(
             merged.get_correct_capitalizations_of(&['p', 'r']).count(),
             3
@@ -307,10 +274,10 @@ mod tests {
         outer.add_dictionary(Arc::new(merged));
         assert!(outer.get_word_metadata_str("pr").unwrap().common);
         assert!(std::ptr::eq(
-            outer.get_word_exact_str("PR").unwrap(),
-            second.get_word_exact_str("PR").unwrap()
+            outer.get_word_metadata_exact(&['P', 'R']).unwrap(),
+            second.get_word_metadata_exact(&['P', 'R']).unwrap()
         ));
-        assert_eq!(outer.get_word_str("pr").count(), 3);
+        assert_eq!(outer.get_correct_capitalizations_of(&['p', 'r']).count(), 3);
     }
 
     #[test]
@@ -320,10 +287,9 @@ mod tests {
         assert!(!dict.contains_word_str("Pr"));
         assert!(!dict.contains_exact_word_str("Pr"));
         assert!(dict.get_word_metadata_str("Pr").is_none());
-        assert!(dict.get_word_metadata_exact_str("Pr").is_none());
+        assert!(dict.get_word_metadata_exact(&['P', 'r']).is_none());
         assert!(dict.get_correct_capitalization_of(&['P', 'r']).is_none());
         assert_eq!(dict.get_correct_capitalizations_of(&['P', 'r']).count(), 0);
-        assert_eq!(dict.get_word_str("Pr").count(), 0);
         assert_eq!(dict.words_iter().count(), 0);
         assert_eq!(dict.word_count(), 0);
     }

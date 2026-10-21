@@ -8,7 +8,7 @@ use fst::{IntoStreamer, Map as FstMap, Streamer, map::StreamWithState};
 use hashbrown::HashMap;
 use levenshtein_automata::{DFA, LevenshteinAutomatonBuilder};
 
-use super::{CanonicalWordId, Dictionary, FuzzyMatchResult, MutableDictionary, WordMapEntry};
+use super::{CanonicalWordId, Dictionary, FuzzyMatchResult, MutableDictionary};
 use crate::{CharString, CharStringExt, DictWordMetadata};
 
 /// An immutable dictionary allowing for very fast spellchecking.
@@ -139,28 +139,8 @@ impl Dictionary for FstDictionary {
         self.mutable_dict.get_word_metadata_str(word)
     }
 
-    fn get_word(&self, word: &[char]) -> Box<dyn Iterator<Item = &WordMapEntry> + Send + '_> {
-        self.mutable_dict.get_word(word)
-    }
-
-    fn get_word_str(&self, word: &str) -> Box<dyn Iterator<Item = &WordMapEntry> + Send + '_> {
-        self.mutable_dict.get_word_str(word)
-    }
-
-    fn get_word_exact(&self, word: &[char]) -> Option<&WordMapEntry> {
-        self.mutable_dict.get_word_exact(word)
-    }
-
-    fn get_word_exact_str(&self, word: &str) -> Option<&WordMapEntry> {
-        self.mutable_dict.get_word_exact_str(word)
-    }
-
     fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata> {
         self.mutable_dict.get_word_metadata_exact(word)
-    }
-
-    fn get_word_metadata_exact_str(&self, word: &str) -> Option<&DictWordMetadata> {
-        self.mutable_dict.get_word_metadata_exact_str(word)
     }
 
     fn get_correct_capitalizations_of(
