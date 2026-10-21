@@ -1,4 +1,5 @@
 use std::collections::BTreeMap;
+use std::io::Write;
 
 use ariadne::{Color, Fmt, Label, Report, ReportKind, Source};
 use hashbrown::HashMap;
@@ -10,10 +11,40 @@ use harper_core::{
 
 use crate::{
     input::InputTrait,
-    lint::{FullInputInfo, ReportStyle, print_formatted_items, rgb_for_lint_kind},
+    lint::{FullInputInfo, ReportStyle, format_items, rgb_for_lint_kind},
 };
 
 pub fn single_input_report(
+    // Properties of the current input
+    input_info: &FullInputInfo,
+    // Linting results of this input
+    named_lints: &BTreeMap<String, Vec<Lint>>,
+    lint_count: (usize, usize),
+    lint_kinds: &HashMap<LintKind, usize>,
+    lint_rules: &HashMap<String, usize>,
+    // Reporting parameters
+    batch_mode: bool, // If true, we are processing multiple files, which affects how we report
+    report_info: (&ReportStyle, bool),
+) {
+    // Inputs may be linted in parallel, so each report is built whole and written in one go:
+    // printing piece by piece let two reports interleave on stdout (#4513).
+    let mut out = Vec::new();
+    write_single_input_report(
+        &mut out,
+        input_info,
+        named_lints,
+        lint_count,
+        lint_kinds,
+        lint_rules,
+        batch_mode,
+        report_info,
+    );
+    std::io::stdout().lock().write_all(&out).ok();
+}
+
+#[allow(clippy::too_many_arguments)]
+fn write_single_input_report(
+    out: &mut Vec<u8>,
     // Properties of the current input
     input_info: &FullInputInfo,
     // Linting results of this input
@@ -41,7 +72,8 @@ pub fn single_input_report(
         for (rule_name, lints) in named_lints {
             for lint in lints {
                 let (line, col) = char_index_to_line_col(source_chars, lint.span.start);
-                println!(
+                writeln!(
+                    out,
                     "{}:{}:{}: {}::{}: {}",
                     input.plain_path(),
                     line,
@@ -49,7 +81,8 @@ pub fn single_input_report(
                     lint.lint_kind,
                     rule_name,
                     lint.message
-                );
+                )
+                .ok();
             }
         }
         return;
@@ -64,20 +97,23 @@ pub fn single_input_report(
     if batch_mode && longest > MAX_LINE_LEN && matches!(report_mode, ReportStyle::FullAriadne) {
         report_mode = &ReportStyle::BriefCountsOnly;
         if !quiet {
-            println!(
+            writeln!(
+                out,
                 "{}: Longest line: {longest} exceeds max line length: {MAX_LINE_LEN}",
                 input.format_path()
-            );
+            )
+            .ok();
         }
     }
 
     // Report the number of lints no matter what report mode we are in
     if lint_count_before == 0 {
         if !quiet {
-            println!("{}: No lints found", input.format_path());
+            writeln!(out, "{}: No lints found", input.format_path()).ok();
         }
     } else {
-        println!(
+        writeln!(
+            out,
             "{}: {}",
             input.format_path(),
             match (lint_count_before, lint_count_after) {
@@ -85,7 +121,8 @@ pub fn single_input_report(
                     format!("{before} lints before overlap removal, {after} after"),
                 (before, _) => format!("{before} lints"),
             }
-        );
+        )
+        .ok();
     }
 
     // If we are in Ariadne mode, print the report
@@ -119,7 +156,9 @@ pub fn single_input_report(
             }
 
             let report = report_builder.finish();
-            report.print((&input_identifier, Source::from(source))).ok();
+            report
+                .write_for_stdout((&input_identifier, Source::from(source)), &mut *out)
+                .ok();
         }
     }
 
@@ -139,8 +178,8 @@ pub fn single_input_report(
             })
             .collect();
 
-        println!("lint kinds:");
-        print_formatted_items(lk_vec, input.color);
+        writeln!(out, "lint kinds:").ok();
+        out.extend_from_slice(format_items(lk_vec, input.color).as_bytes());
     }
 
     if !lint_rules.is_empty() {
@@ -152,8 +191,8 @@ pub fn single_input_report(
             .map(|(rn, c)| (None, format!("<{rn}: {c}>")))
             .collect();
 
-        println!("rules:");
-        print_formatted_items(r_vec, input.color);
+        writeln!(out, "rules:").ok();
+        out.extend_from_slice(format_items(r_vec, input.color).as_bytes());
     }
 }
 

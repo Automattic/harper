@@ -166,3 +166,44 @@ fn default_format_unchanged() {
         "default format should include lint count summary"
     );
 }
+
+#[test]
+fn directory_reports_do_not_interleave() {
+    let dir = tempfile::tempdir().unwrap();
+    let text = "This is an test. He go to school.\n".repeat(40);
+    for i in 0..32 {
+        std::fs::write(dir.path().join(format!("f{i}.md")), &text).unwrap();
+    }
+
+    let output = harper_cli()
+        .args(["--no-color", "lint", "--format", "default"])
+        .arg(dir.path())
+        .output()
+        .unwrap();
+    let stdout = String::from_utf8_lossy(&output.stdout);
+
+    // Files are linted in parallel. Each report is a "fN.md: K lints" line followed by
+    // its own "╭─[ fN.md:1:1 ]" box; two reports printed at once break that pairing (#4513).
+    let mut awaiting_box: Option<&str> = None;
+    let mut reports = 0;
+    for line in stdout.lines() {
+        if !line.starts_with(' ') && line.contains(".md: ") && line.contains(" lints") {
+            let path = line.split(": ").next().unwrap();
+            let name = path.rsplit('/').next().unwrap();
+            assert!(
+                awaiting_box.is_none(),
+                "report for {name} started inside another one:\n{stdout}"
+            );
+            awaiting_box = Some(name);
+            reports += 1;
+        } else if let Some(rest) = line.trim_start().strip_prefix("╭─[ ") {
+            let name = rest.split(':').next().unwrap();
+            assert_eq!(
+                awaiting_box.take(),
+                Some(name),
+                "box for {name} is not under its own header:\n{stdout}"
+            );
+        }
+    }
+    assert_eq!(reports, 32, "{stdout}");
+}

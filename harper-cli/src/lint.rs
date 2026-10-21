@@ -548,6 +548,15 @@ pub fn print_formatted_items(
     items: impl IntoIterator<Item = (Option<String>, String)>,
     color: bool,
 ) {
+    print!("{}", format_items(items, color));
+}
+
+/// The items laid out as `print_formatted_items` prints them, ending in a newline.
+pub fn format_items(
+    items: impl IntoIterator<Item = (Option<String>, String)>,
+    color: bool,
+) -> String {
+    let mut out = String::new();
     let mut first_on_line = true;
     let mut len_so_far = 0;
 
@@ -574,9 +583,10 @@ pub fn print_formatted_items(
         } else {
             ("", "")
         };
-        print!("{}{}{}{}", before, set, text, reset);
+        out.push_str(&format!("{}{}{}{}", before, set, text, reset));
         len_so_far += len_to_add;
         first_on_line = false;
     }
-    println!();
+    out.push('\n');
+    out
 }
