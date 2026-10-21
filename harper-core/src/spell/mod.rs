@@ -11,7 +11,6 @@ pub use self::merged_dictionary::MergedDictionary;
 pub use self::mutable_dictionary::MutableDictionary;
 pub use self::trie_dictionary::TrieDictionary;
 pub use self::word_id::{CanonicalWordId, CaseFoldedWordId};
-pub use self::word_map::{WordMap, WordMapEntry};
 
 mod dictionary;
 mod fst_dictionary;
