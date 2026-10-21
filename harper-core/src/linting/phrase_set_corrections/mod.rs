@@ -332,7 +332,9 @@ pub fn lint_group() -> LintGroup {
                 ("a certain extend", "a certain extent"),
                 ("to an extend", "to an extent"),
                 ("to some extend", "to some extent"),
-                ("to the extend that", "to the extent that")
+                ("to the extend that", "to the extent that"),
+                ("greater extend", "greater extent"),
+                ("lesser extend", "lesser extent")
             ],
             "Use `extent` for the noun and `extend` for the verb.",
             "Corrects `extend` to `extent` when the context is a noun.",
@@ -828,6 +830,21 @@ pub fn lint_group() -> LintGroup {
             "The correct spelling is `backhanded`.",
             "Corrects `backhand compliment` to `backhanded compliment`.",
             LintKind::Spelling
+        ),
+        "BackwardEngineer" => (
+            &[
+                (&["backward engineer",    "backwards engineer"],    &["reverse engineer"]),
+                (&["backward engineers",   "backwards engineers"],   &["reverse engineers"]),
+                (&["backward-engineer",    "backwards-engineer"],    &["reverse-engineer"]),
+                (&["backward-engineers",   "backwards-engineers"],   &["reverse-engineers"]),
+                (&["backward engineering", "backwards engineering"], &["reverse engineering"]),
+                (&["backward-engineering", "backwards-engineering"], &["reverse-engineering"]),
+                (&["backward engineered",  "backwards engineered"],  &["reverse engineered"]),
+                (&["backward-engineered",  "backwards-engineered"],  &["reverse-engineered"]),
+            ],
+            "The much more common term is `reverse engineer`.",
+            "Suggests changing the less common `backward/backwards engineer` to the more usual `reverse engineer`.",
+            LintKind::WordChoice
         ),
         "BainBane" => (
             &[

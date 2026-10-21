@@ -1081,6 +1081,24 @@ fn correct_to_an_extend() {
     );
 }
 
+#[test]
+fn correct_lesser_extend() {
+    assert_suggestion_result(
+        "Unlike the US (and to a lesser extend, Europe), Chinese do not have a majority of their wealth invested in stocks.",
+        test_linter(),
+        "Unlike the US (and to a lesser extent, Europe), Chinese do not have a majority of their wealth invested in stocks.",
+    );
+}
+
+#[test]
+fn correct_greater_extend() {
+    assert_suggestion_result(
+        "which seems to lead to columns being loaded to a greater extend than necessary",
+        test_linter(),
+        "which seems to lead to columns being loaded to a greater extent than necessary",
+    );
+}
+
 // FlauntForFlout
 
 #[test]
