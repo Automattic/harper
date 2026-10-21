@@ -14,7 +14,7 @@ impl Default for QuantifierNeedsOf {
         let expr = SequenceExpr::default()
             .then_indefinite_article()
             .t_ws()
-            .then_word_set(&["couple", "lot"])
+            .then_word_set(["couple", "lot"])
             .t_ws()
             .then_plural_nominal();
 

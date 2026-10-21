@@ -12,7 +12,7 @@ pub struct WasAloud {
 
 impl Default for WasAloud {
     fn default() -> Self {
-        let pattern = SequenceExpr::word_set(&["was", "were", "be", "been"])
+        let pattern = SequenceExpr::word_set(["was", "were", "be", "been"])
             .then_whitespace()
             .then_exact_word("aloud");
 

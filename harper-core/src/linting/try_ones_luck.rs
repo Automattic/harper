@@ -11,7 +11,7 @@ pub struct TryOnesLuck {
 impl Default for TryOnesLuck {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["try", "tried", "tries", "trying"])
+            expr: SequenceExpr::word_set(["try", "tried", "tries", "trying"])
                 .t_ws()
                 .t_aco("out")
                 .t_ws()

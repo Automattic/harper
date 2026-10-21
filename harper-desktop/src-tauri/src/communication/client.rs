@@ -29,6 +29,10 @@ where
         }
     }
 
+    pub async fn open_settings(&mut self) -> Result<(), ProtocolError> {
+        self.send_ack_request(Request::OpenSettings).await
+    }
+
     pub async fn get_lint_config(&mut self) -> Result<FlatConfig, ProtocolError> {
         match self.send_request(Request::GetLintConfig).await? {
             Response::GetLintConfig { config } => Ok(config),
@@ -91,6 +95,31 @@ where
             Response::GetIntegrations { integrations } => Ok(integrations),
             _ => Err(ProtocolError::UnexpectedResponse {
                 expected: "GetIntegrations",
+            }),
+        }
+    }
+
+    pub async fn get_auto_enable_new_apps(&mut self) -> Result<bool, ProtocolError> {
+        match self.send_request(Request::GetAutoEnableNewApps).await? {
+            Response::GetAutoEnableNewApps { enabled } => Ok(enabled),
+            _ => Err(ProtocolError::UnexpectedResponse {
+                expected: "GetAutoEnableNewApps",
+            }),
+        }
+    }
+
+    /// Checks the parent's current app policy, registering and persisting an unknown app if allowed.
+    /// Explicitly disabled integrations are preserved even if the caller's snapshot is stale.
+    pub async fn resolve_integration(&mut self, bundle_id: &str) -> Result<bool, ProtocolError> {
+        match self
+            .send_request(Request::ResolveIntegration {
+                bundle_id: bundle_id.to_owned(),
+            })
+            .await?
+        {
+            Response::ResolveIntegration { enabled } => Ok(enabled),
+            _ => Err(ProtocolError::UnexpectedResponse {
+                expected: "ResolveIntegration",
             }),
         }
     }

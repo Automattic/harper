@@ -1,8 +1,8 @@
 <script lang="ts">
+import { Button, Checkbox, CheckIcon, Input, Select, SettingRow } from 'components';
 import type { Dialect } from 'harper.js';
 import { onMount } from 'svelte';
 import { Client } from '$lib/client';
-import { DesktopUpdater } from '$lib/DesktopUpdater';
 import { DIALECT_OPTIONS } from '../settings-data';
 
 const DialectValue = {
@@ -166,8 +166,8 @@ async function setAutoUpdate(enabled: boolean) {
 async function loadUpdateVersions() {
 	try {
 		const [current, latest] = await Promise.all([
-			DesktopUpdater.getCurrentVersion(),
-			DesktopUpdater.getLatestVersion(),
+			Client.getCurrentVersion(),
+			Client.getLatestVersion(),
 		]);
 		currentVersion = current;
 		latestVersion = latest;
@@ -182,15 +182,14 @@ async function checkForUpdates() {
 	updateStatus = 'Checking for updates...';
 
 	try {
-		await Client.setLastUpdateCheck(Date.now());
-		const result = await DesktopUpdater.updateToLatest();
+		const result = await Client.updateToLatest();
 		updateStatus = result.message;
 
 		if (result.latestVersion != null) {
 			latestVersion = result.latestVersion;
 		}
 
-		currentVersion = result.currentVersion ?? (await DesktopUpdater.getCurrentVersion());
+		currentVersion = result.currentVersion ?? (await Client.getCurrentVersion());
 	} catch (error) {
 		autoUpdateError = `Unable to check for updates: ${error}`;
 		updateStatus = '';
@@ -274,41 +273,33 @@ function settingsValueToDialect(value: string): Dialect {
         <div class="stanza">
           <div class="eyebrow">General</div>
           <div class="rows">
-            <div class="row top">
-              <div>
-                <strong>Keep Harper in the menu bar</strong>
-                <p>Shows the Harper icon so you can open settings without opening the main app.</p>
-              </div>
-              <button
-                class:checked={menuBar}
-                class="checkbox"
-                type="button"
-                role="checkbox"
+            <SettingRow top>
+              <strong>Keep Harper in the menu bar</strong>
+              <p>Shows the Harper icon so you can open settings without opening the main app.</p>
+              <Checkbox
+                slot="control"
+                appearance="settings"
+                checked={menuBar}
                 disabled
                 title="Not wired yet"
-                aria-checked={menuBar}
               >
-                {#if menuBar}<span class="settings-icon icon-check" aria-hidden="true"></span>{/if}
-              </button>
-            </div>
+                {#if menuBar}<CheckIcon className="control-icon" />{/if}
+              </Checkbox>
+            </SettingRow>
 
-            <div class="row">
-              <div>
-                <strong>Launch Harper at startup</strong>
-                <p>Harper will start silently when you log in.</p>
-              </div>
-              <button
-                class:checked={launchAtStartup}
-                class="checkbox"
-                type="button"
-                role="checkbox"
+            <SettingRow>
+              <strong>Launch Harper at startup</strong>
+              <p>Harper will start silently when you log in.</p>
+              <Checkbox
+                slot="control"
+                appearance="settings"
+                checked={launchAtStartup}
                 disabled={isLaunchAtStartupLoading || isLaunchAtStartupSaving}
-                aria-checked={launchAtStartup}
                 on:click={() => setLaunchAtStartup(!launchAtStartup)}
               >
-                {#if launchAtStartup}<span class="settings-icon icon-check" aria-hidden="true"></span>{/if}
-              </button>
-            </div>
+                {#if launchAtStartup}<CheckIcon className="control-icon" />{/if}
+              </Checkbox>
+            </SettingRow>
             {#if isLaunchAtStartupLoading}
               <p class="result-summary">Loading startup setting...</p>
             {:else if launchAtStartupError}
@@ -317,35 +308,32 @@ function settingsValueToDialect(value: string): Dialect {
               <p class="result-summary">Saving startup setting...</p>
             {/if}
 
-            <div class="row top">
-              <div>
-                <strong>Automatically check for updates</strong>
-                <p>Harper will check for new versions daily.</p>
-                <p class="result-summary">
-                  Current version: {currentVersion || 'loading...'} · Latest version: {latestVersion || 'loading...'}
-                </p>
-              </div>
-              <button
-                class:checked={autoUpdate}
-                class="checkbox"
-                type="button"
-                role="checkbox"
+            <SettingRow top>
+              <strong>Automatically check for updates</strong>
+              <p>Harper will check for new versions daily.</p>
+              <p class="result-summary">
+                Current version: {currentVersion || 'loading...'} · Latest version: {latestVersion || 'loading...'}
+              </p>
+              <Checkbox
+                slot="control"
+                appearance="settings"
+                checked={autoUpdate}
                 disabled={isAutoUpdateLoading || isAutoUpdateSaving}
-                aria-checked={autoUpdate}
                 on:click={() => setAutoUpdate(!autoUpdate)}
               >
-                {#if autoUpdate}<span class="settings-icon icon-check" aria-hidden="true"></span>{/if}
-              </button>
-            </div>
+                {#if autoUpdate}<CheckIcon className="control-icon" />{/if}
+              </Checkbox>
+            </SettingRow>
             <div class="inline-row">
-              <button
+              <Button
+                unstyled
                 class="button"
                 type="button"
                 disabled={isCheckingForUpdates}
                 on:click={checkForUpdates}
               >
                 {isCheckingForUpdates ? 'Checking...' : 'Check for updates'}
-              </button>
+              </Button>
             </div>
             {#if isAutoUpdateLoading}
               <p class="result-summary">Loading update setting...</p>
@@ -368,17 +356,18 @@ function settingsValueToDialect(value: string): Dialect {
           </p>
           <div class="inline-row">
             <label for="dialect">English dialect:</label>
-            <select
+            <Select
+              unstyled
               id="dialect"
               class="select wide"
               disabled={isDialectLoading || isDialectSaving}
               bind:value={dialect}
-              on:change={(event) => setDialect(event.currentTarget.value)}
+              on:change={(event) => setDialect((event.detail.currentTarget as HTMLSelectElement).value)}
             >
               {#each DIALECT_OPTIONS as option}
                 <option value={option.value}>{option.label}</option>
               {/each}
-            </select>
+            </Select>
           </div>
           {#if isDialectLoading}
             <p class="result-summary">Loading dialect...</p>
@@ -399,15 +388,15 @@ function settingsValueToDialect(value: string): Dialect {
           </p>
           <div class="inline-row">
             <label for="debounce-ms">Debounce delay:</label>
-            <input
+            <Input
+              unstyled
               id="debounce-ms"
               class="select"
               type="number"
               min="0"
               step="50"
               disabled={isDebounceLoading || isDebounceSaving}
-              value={debounceMsInput}
-              on:input={(event) => (debounceMsInput = event.currentTarget.value)}
+              bind:value={debounceMsInput}
               on:change={saveDebounceMs}
             />
             <span>ms</span>

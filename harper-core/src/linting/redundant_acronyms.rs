@@ -24,10 +24,13 @@ const ACRONYMS: &[(&str, &[&str], &str, Flag)] = &[
         "machine",
         None,
     ),
+    ("BWT", &["Burrows-Wheeler"], "transform", None),
+    ("FFT", &["Fast Fourier"], "transform", None),
     ("GOP", &["Grand Old"], "Party", None),
     ("GUI", &["graphical user"], "interface", None),
     ("LCD", &["liquid crystal"], "display", None),
     ("LLM", &["large language"], "model", None),
+    ("PCB", &["printed circuit"], "board", None),
     // Note: "pin number" (not capitalized) is used to refer to GPIO pins etc.
     ("PIN", &["personal identification"], "number", AllCapsOnly),
     (
@@ -424,6 +427,58 @@ mod tests {
             &[
                 "And because I didn't have US dollars, I used zip ties [music] instead of a proper microonal bass.",
                 "And because I didn't have USD, I used zip ties [music] instead of a proper microonal bass.",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn correct_pcb_board() {
+        assert_good_and_bad_suggestions(
+            "The PCB board is based on an STM32F microcontroller.",
+            RedundantAcronyms::default(),
+            &[
+                "The PCB is based on an STM32F microcontroller.",
+                "The printed circuit board is based on an STM32F microcontroller.",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn correct_pcb_boards() {
+        assert_good_and_bad_suggestions(
+            "course project aimed to classify PCB boards as defect or non-defect - ChethanaVaisali/PCB_Classification.",
+            RedundantAcronyms::default(),
+            &[
+                "course project aimed to classify PCBs as defect or non-defect - ChethanaVaisali/PCB_Classification.",
+                "course project aimed to classify printed circuit boards as defect or non-defect - ChethanaVaisali/PCB_Classification.",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn correct_bwt_transform() {
+        assert_good_and_bad_suggestions(
+            "TSuffix Arrays: It turns out the way we generated the BWT transform above was quite inefficient.",
+            RedundantAcronyms::default(),
+            &[
+                "TSuffix Arrays: It turns out the way we generated the BWT above was quite inefficient.",
+                "TSuffix Arrays: It turns out the way we generated the Burrows-Wheeler transform above was quite inefficient.",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn correct_fft_transform() {
+        assert_good_and_bad_suggestions(
+            "In fact, the FFT transform does not have to process functions of equally spaced time samples",
+            RedundantAcronyms::default(),
+            &[
+                "In fact, the FFT does not have to process functions of equally spaced time samples",
+                "In fact, the Fast Fourier transform does not have to process functions of equally spaced time samples",
             ],
             &[],
         );

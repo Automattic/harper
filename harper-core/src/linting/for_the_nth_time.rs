@@ -1,7 +1,7 @@
 use crate::{
     Lint, Token,
     expr::{AnchorEnd, Expr, SequenceExpr},
-    linting::{ExprLinter, LintKind, Suggestion, debug::format_lint_match, expr_linter::Chunk},
+    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
 };
 
 pub struct ForTheNthTime {
@@ -13,7 +13,7 @@ impl Default for ForTheNthTime {
         Self {
             expr: SequenceExpr::aco("for")
                 .t_ws()
-                .t_set(&[
+                .t_set([
                     "first",
                     "second",
                     "third",
@@ -59,7 +59,7 @@ impl Default for ForTheNthTime {
                 // .then(AnchorEnd),
                 .then_any_of([
                     Box::new(AnchorEnd) as Box<dyn Expr>,
-                    Box::new(SequenceExpr::whitespace().t_set(&["and", "but"])),
+                    Box::new(SequenceExpr::whitespace().t_set(["and", "but"])),
                 ]),
         }
     }
@@ -68,14 +68,7 @@ impl Default for ForTheNthTime {
 impl ExprLinter for ForTheNthTime {
     type Unit = Chunk;
 
-    fn match_to_lint_with_context(
-        &self,
-        matched_tokens: &[Token],
-        source: &[char],
-        context: Option<(&[Token], &[Token])>,
-    ) -> Option<Lint> {
-        eprintln!("🚨 {}", format_lint_match(matched_tokens, context, source));
-
+    fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
         Some(Lint {
             span: matched_tokens[0].span,
             lint_kind: LintKind::Usage,

@@ -2,14 +2,16 @@ use std::sync::Arc;
 
 use hashbrown::HashSet;
 
-use crate::expr::Expr;
-use crate::linting::{
-    ExprLinter, LintKind, Suggestion,
-    expr_linter::{Chunk, at_start_of_sentence, preceded_by_word},
-    informal_laughter::is_informal_laughter,
+use crate::{
+    Lint, Token,
+    expr::Expr,
+    linting::{
+        ExprLinter, LintKind, Suggestion,
+        expr_linter::{Chunk, at_start_of_sentence, preceded_by_word},
+        informal_laughter::is_informal_laughter,
+    },
+    spell::{Dictionary, FstDictionary, TrieDictionary},
 };
-use crate::spell::{Dictionary, FstDictionary, TrieDictionary};
-use crate::{Lint, Token};
 
 pub struct SplitWords {
     dict: Arc<TrieDictionary<Arc<FstDictionary>>>,
@@ -115,7 +117,7 @@ impl ExprLinter for SplitWords {
                 continue;
             }
 
-            if is_anchor_split(&cand_meta, candidate) || is_anchor_split(&rem_meta, remainder) {
+            if is_anchor_split(&cand_meta) || is_anchor_split(&rem_meta) {
                 has_anchor_split = true;
             }
 
@@ -167,13 +169,14 @@ impl ExprLinter for SplitWords {
     }
 }
 
-fn is_anchor_split(meta: &crate::DictWordMetadata, word: &[char]) -> bool {
+/// Only tagged function words anchor splits; short non-function words like
+/// "ha" must not block spelling corrections such as `havent` → `haven't`.
+fn is_anchor_split(meta: &crate::DictWordMetadata) -> bool {
     meta.preposition
         || meta.is_determiner()
         || meta.is_conjunction()
         || meta.is_pronoun()
         || meta.is_adverb()
-        || word.len() <= 2
 }
 
 fn should_defer_to_spellcheck(
@@ -193,6 +196,7 @@ fn should_defer_to_spellcheck(
                     || tok.kind.is_pronoun()
                     || tok.kind.is_adjective()
                     || tok.kind.is_possessive_determiner()
+                    || tok.kind.is_preposition()
             })
     });
 
@@ -208,10 +212,14 @@ fn should_defer_to_spellcheck(
 
 #[cfg(test)]
 mod tests {
+    use itertools::Itertools;
+
+    use crate::Document;
     use crate::linting::tests::{
         assert_good_and_bad_suggestions, assert_lint_message, assert_no_lints,
         assert_suggestion_result,
     };
+    use crate::linting::{Linter, Suggestion};
 
     use super::SplitWords;
 
@@ -285,6 +293,23 @@ mod tests {
         assert_no_lints("I love this extention!", SplitWords::default());
     }
 
+    /// Regression: `havent` should defer to SpellCheck's `haven't` suggestion,
+    /// not split into `ha vent` (issue #4130).
+    #[test]
+    fn issue_4130_defers_havent_to_spellcheck() {
+        assert_no_lints("They havent reviewed it yet.", SplitWords::default());
+    }
+
+    /// Genuine short anchors like `at` should still produce splits.
+    #[test]
+    fn issue_4130_does_not_regress_real_short_anchors() {
+        assert_suggestion_result(
+            "don't seem to support symbolic links atall.",
+            SplitWords::default(),
+            "don't seem to support symbolic links at all.",
+        );
+    }
+
     #[test]
     fn corrects_doesthe() {
         assert_suggestion_result("doesthe", SplitWords::default(), "does the");
@@ -342,15 +367,6 @@ mod tests {
     }
 
     #[test]
-    fn not_confident_proc_should_be_pro_c() {
-        assert_lint_message(
-            "proc",
-            SplitWords::default(),
-            "`proc` should possibly be written as `pro c`.",
-        );
-    }
-
-    #[test]
     fn confident_thankyou_should_be_thank_you() {
         assert_lint_message(
             "thankyou",
@@ -363,6 +379,53 @@ mod tests {
     fn allows_informal_laughter() {
         for source in ["hah", "haha", "hahah", "hahaha", "Hahahah"] {
             assert_no_lints(source, SplitWords::default());
+        }
+    }
+
+    #[test]
+    fn does_not_split_iff() {
+        assert_no_lints("iff", SplitWords::default());
+    }
+
+    /// Checks for a condition where the SplitWords rule would correct a word to be composed of a
+    /// single letter (which is not a word), followed by a valid word.
+    ///
+    /// For example, `comitted` -> `c omitted`.
+    #[test]
+    fn never_corrects_to_invalid_single_letter_words() {
+        let triggers = [
+            "comitted", "testc", "testh", "testb", "testq", "testx", "testg", "teste", "testj",
+            "shes", "proc",
+        ];
+        let relevant_letters = ['c', 'd', 't', 'h', 'b', 'x', 'e', 'j', 's'];
+
+        for trigger in triggers {
+            let mut rule = SplitWords::default();
+
+            let doc = Document::new_plain_english_curated(trigger);
+            let lints = rule.lint(&doc);
+
+            for lint in lints {
+                dbg!(&lint);
+
+                for sug in lint.suggestions {
+                    match sug {
+                        Suggestion::ReplaceWith(items) => {
+                            // Words created by the rule.
+                            let created_words = items.split(|c| c == &' ');
+
+                            for word in created_words {
+                                if word.len() == 1
+                                    && relevant_letters.iter().contains(&word.first().unwrap())
+                                {
+                                    panic!("Encountered bad output {word:?}")
+                                }
+                            }
+                        }
+                        _ => (),
+                    }
+                }
+            }
         }
     }
 }

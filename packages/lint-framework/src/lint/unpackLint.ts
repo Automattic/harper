@@ -31,15 +31,19 @@ export default async function unpackLint(
 	linter: Linter,
 ): Promise<UnpackedLint> {
 	const span = lint.span();
+	const unpackedSpan = { start: span.start, end: span.end };
+	span.free();
 
 	return {
-		span: { start: span.start, end: span.end },
+		span: unpackedSpan,
 		message_html: lint.message_html(),
 		problem_text: lint.get_problem_text(),
 		lint_kind: lint.lint_kind() as LintKind,
 		lint_kind_pretty: lint.lint_kind_pretty(),
 		suggestions: lint.suggestions().map((sug) => {
-			return { kind: sug.kind(), replacement_text: sug.get_replacement_text() };
+			const unpacked = { kind: sug.kind(), replacement_text: sug.get_replacement_text() };
+			sug.free();
+			return unpacked;
 		}),
 		context_hash: (await linter.contextHash(text, lint)).toString(),
 		source: text,

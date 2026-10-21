@@ -109,7 +109,7 @@ mod tests {
     #[test]
     fn gives_the_right_message_for_canadian_english() {
         assert_lint_message(
-            "This all works great unless I use middlware and then it all goes out the window.",
+            "This all works great unless I use middlware and then it all goes out of the window.",
             OutOfTheWindow::new(Dialect::Canadian),
             "If this is the idiom about abandoning a plan, it's more usual to leave out `of` in Canadian English",
         );

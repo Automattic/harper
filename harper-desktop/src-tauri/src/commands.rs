@@ -2,16 +2,17 @@
 //! environment. Use [`application_message_handler`] to load them into the Tauri runtime.
 
 use crate::config::Config;
+use crate::desktop_updater::{DesktopUpdater, UpdateResult};
 use crate::highlighter_service::HighlighterService;
 use crate::os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker};
-use crate::{IntegrationView, PlatformBroker, platform_broker};
+use crate::{IntegrationView, PlatformBroker};
 use base64::{Engine as _, engine::general_purpose};
 use harper_core::{
     Dialect, DictWordMetadata, IgnoredLints,
     linting::FlatConfig,
     spell::{Dictionary, MutableDictionary},
 };
-use std::sync::{Arc, Mutex as StdMutex};
+use std::sync::{Arc, RwLock};
 use tauri::ipc::Invoke;
 use tauri::{Manager, Runtime, State};
 use tokio::sync::Mutex;
@@ -24,8 +25,11 @@ pub fn application_message_handler<R: Runtime>() -> impl Fn(Invoke<R>) -> bool {
         set_debounce_ms,
         get_auto_update,
         set_auto_update,
-        get_last_update_check,
-        set_last_update_check,
+        get_current_version,
+        get_latest_version,
+        update_to_latest,
+        get_onboarding_completed,
+        set_onboarding_completed,
         set_dialect,
         set_lint_config,
         get_dictionary,
@@ -33,6 +37,8 @@ pub fn application_message_handler<R: Runtime>() -> impl Fn(Invoke<R>) -> bool {
         ignore_lint,
         add_to_dictionary,
         get_integrations,
+        get_auto_enable_new_apps,
+        set_auto_enable_new_apps,
         add_integration,
         remove_integration,
         set_integration_enabled,
@@ -100,23 +106,44 @@ async fn set_auto_update(
 }
 
 #[tauri::command]
-async fn get_last_update_check(
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<Option<u64>, String> {
-    Ok(config.lock().await.last_update_check)
+fn get_current_version<R: Runtime>(app: tauri::AppHandle<R>) -> String {
+    DesktopUpdater::current_version(&app)
 }
 
 #[tauri::command]
-async fn set_last_update_check(
-    last_update_check: Option<u64>,
+async fn get_latest_version() -> Result<String, String> {
+    DesktopUpdater::latest_version().await
+}
+
+#[tauri::command]
+async fn update_to_latest<R: Runtime>(
+    app: tauri::AppHandle<R>,
+    updater: State<'_, DesktopUpdater>,
+) -> Result<UpdateResult, String> {
+    updater
+        .update_to_latest(&app, false)
+        .await
+        .ok_or_else(|| "Manual update check was unexpectedly skipped.".into())
+}
+
+#[tauri::command]
+async fn get_onboarding_completed(config: State<'_, Arc<Mutex<Config>>>) -> Result<bool, String> {
+    Ok(config.lock().await.onboarding_completed)
+}
+
+#[tauri::command]
+async fn set_onboarding_completed(
+    onboarding_completed: bool,
     config: State<'_, Arc<Mutex<Config>>>,
 ) -> Result<(), String> {
     let mut config = config.lock().await;
-    config.last_update_check = last_update_check;
-    config
-        .save_to_system()
-        .await
-        .map_err(|error| error.to_string())?;
+    let previous_value = config.onboarding_completed;
+    config.onboarding_completed = onboarding_completed;
+
+    if let Err(error) = config.save_to_system().await {
+        config.onboarding_completed = previous_value;
+        return Err(error.to_string());
+    }
 
     Ok(())
 }
@@ -229,11 +256,11 @@ async fn add_to_dictionary(
 #[tauri::command]
 async fn get_integrations(
     config: State<'_, Arc<Mutex<Config>>>,
-    broker: State<'_, StdMutex<PlatformBroker>>,
+    broker: State<'_, RwLock<PlatformBroker>>,
 ) -> Result<Vec<IntegrationView>, String> {
     let integrations = config.lock().await.integrations.clone();
     let broker = broker
-        .lock()
+        .read()
         .map_err(|error| format!("Failed to read platform broker: {error}"))?;
 
     Ok(integrations
@@ -244,6 +271,26 @@ async fn get_integrations(
             enabled: integration.enabled,
         })
         .collect())
+}
+
+#[tauri::command]
+async fn get_auto_enable_new_apps(config: State<'_, Arc<Mutex<Config>>>) -> Result<bool, String> {
+    Ok(config.lock().await.auto_enable_new_apps)
+}
+
+#[tauri::command]
+async fn set_auto_enable_new_apps(
+    auto_enable_new_apps: bool,
+    config: State<'_, Arc<Mutex<Config>>>,
+) -> Result<(), String> {
+    let mut config = config.lock().await;
+    let previous = config.auto_enable_new_apps;
+    config.auto_enable_new_apps = auto_enable_new_apps;
+    if let Err(error) = config.save_to_system().await {
+        config.auto_enable_new_apps = previous;
+        return Err(error.to_string());
+    }
+    Ok(())
 }
 
 #[tauri::command]
@@ -298,9 +345,9 @@ async fn get_application_icon_data_url<R: Runtime>(
     app_handle: tauri::AppHandle<R>,
 ) -> Result<String, String> {
     tauri::async_runtime::spawn_blocking(move || {
-        let broker = app_handle.state::<StdMutex<PlatformBroker>>();
+        let broker = app_handle.state::<RwLock<PlatformBroker>>();
         let icon_png = broker
-            .lock()
+            .read()
             .map_err(|error| format!("Failed to read platform broker: {error}"))?
             .application_icon_png(&bundle_id)?;
         let encoded = general_purpose::STANDARD.encode(icon_png);
@@ -312,13 +359,29 @@ async fn get_application_icon_data_url<R: Runtime>(
 }
 
 #[tauri::command]
-fn get_accessibility_permission_status() -> AccessibilityPermissionStatus {
-    platform_broker().accessibility_permission_status()
+fn get_accessibility_permission_status(
+    broker: State<'_, RwLock<PlatformBroker>>,
+) -> AccessibilityPermissionStatus {
+    match broker.read() {
+        Ok(broker) => broker.accessibility_permission_status(),
+        Err(error) => {
+            eprintln!("Failed to read platform broker: {error}");
+            AccessibilityPermissionStatus::Unsupported
+        }
+    }
 }
 
 #[tauri::command]
-fn request_accessibility_permission() -> AccessibilityPermissionStatus {
-    platform_broker().request_accessibility_permission()
+fn request_accessibility_permission(
+    broker: State<'_, RwLock<PlatformBroker>>,
+) -> AccessibilityPermissionStatus {
+    match broker.read() {
+        Ok(broker) => broker.request_accessibility_permission(),
+        Err(error) => {
+            eprintln!("Failed to read platform broker: {error}");
+            AccessibilityPermissionStatus::Unsupported
+        }
+    }
 }
 
 #[tauri::command]
@@ -360,17 +423,20 @@ pub(crate) async fn stop_highlighter_service(
 }
 
 #[tauri::command]
-fn launch_app(bundle_id: String) -> Result<(), String> {
-    platform_broker().launch_app_bundle(&bundle_id)
+fn launch_app(bundle_id: String, broker: State<'_, RwLock<PlatformBroker>>) -> Result<(), String> {
+    broker
+        .read()
+        .map_err(|error| format!("Failed to read platform broker: {error}"))?
+        .launch_app_bundle(&bundle_id)
 }
 
 #[tauri::command]
 fn search_apps(
     query: String,
-    broker: State<'_, StdMutex<PlatformBroker>>,
+    broker: State<'_, RwLock<PlatformBroker>>,
 ) -> Result<Vec<AppSearchResult>, String> {
     broker
-        .lock()
+        .read()
         .map_err(|error| format!("Failed to read platform broker: {error}"))?
         .search_apps(&query)
 }

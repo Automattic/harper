@@ -82,7 +82,7 @@ impl<D: Dictionary> ExprLinter for RegularIrregulars<D> {
                 irregulars, word
             ),
             suggestions,
-            ..Default::default()
+            priority: 62, // higher priority (lower number) than `SpellCheck` (which is 63)
         })
     }
 }
@@ -349,6 +349,18 @@ mod tests {
                 "I digged a bit deeper.",
                 RegularIrregulars::new(FstDictionary::curated()),
                 "I dug a bit deeper.",
+            );
+        }
+
+        #[test]
+        fn fix_feeded() {
+            use crate::Dialect;
+            use crate::spell::FstDictionary;
+
+            assert_suggestion_result(
+                "Rune is a TUI editor, so I feeded the same terminal sequences to the old and new apps.",
+                crate::linting::LintGroup::new_curated(FstDictionary::curated(), Dialect::American),
+                "Rune is a TUI editor, so I fed the same terminal sequences to the old and new apps.",
             );
         }
     }
