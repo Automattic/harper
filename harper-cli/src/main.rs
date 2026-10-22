@@ -21,7 +21,7 @@ use harper_core::{
     CharStringExt, Dialect, DictWordMetadata, OrthFlags, Span, TokenKind, TokenStringExt,
     linting::LintGroup,
     parsers::{IsolateEnglish, MarkdownOptions},
-    spell::{Dictionary, FstDictionary, MutableDictionary, WordId},
+    spell::{CanonicalWordId, Dictionary, FstDictionary, MutableDictionary},
     weir::WeirLinter,
 };
 #[cfg(feature = "training")]
@@ -1065,11 +1065,15 @@ fn line_to_parts(line: &str) -> (String, String) {
 fn print_word_derivations(word: &str, annot: &str, dictionary: &impl Dictionary) {
     println!("{word}/{annot}");
 
-    let id = WordId::from_word_str(word);
+    let id = CanonicalWordId::from_word_str(word);
 
-    let children = dictionary
-        .words_iter()
-        .filter(|e| dictionary.get_word_metadata(e).unwrap().derived_from == Some(id));
+    let children = dictionary.words_iter().filter(|word| {
+        dictionary
+            .get_word_metadata_exact(word)
+            .unwrap()
+            .derived_from
+            .contains(id)
+    });
 
     println!(" - {word}");
 
