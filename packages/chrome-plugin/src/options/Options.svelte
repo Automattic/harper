@@ -461,7 +461,7 @@ async function removeWeirpack(id: string) {
           <Textarea readonly bind:value={buttonText} />
           <Button
             size="sm"
-            color="light"
+            color="white"
             style="background-color: {isBlue ? 'blue' : ''}"
             bind:this={modifyHotkeyButton}
             on:click={() => {
@@ -532,7 +532,7 @@ async function removeWeirpack(id: string) {
               </div>
               <Button
                 size="sm"
-                color="light"
+                color="white"
                 disabled={weirpackBusy}
                 on:click={() => removeWeirpack(weirpack.id)}
               >
