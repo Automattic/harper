@@ -4,7 +4,7 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-@source "./src/lib/**/*.{svelte,ts}";
+@source "./**/*.{svelte,ts}";
 @source "./node_modules/flowbite-svelte/**/*.{svelte,ts,js}";
 
 @theme {
