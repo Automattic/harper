@@ -20,6 +20,8 @@ let searchQueryLower = $derived(searchQuery.toLowerCase());
 let expandedGroups: Record<string, boolean> = $state({});
 let dialect = $state(Dialect.American);
 let isolateEnglish = $state(false);
+let regexMask = $state('');
+let regexMaskError = $state('');
 let delay = $state(0);
 let delayLoaded = $state(false);
 let defaultEnabled = $state(false);
@@ -74,6 +76,19 @@ ProtocolClient.getDialect().then((d) => {
 
 ProtocolClient.getIsolateEnglish().then((value) => {
 	isolateEnglish = value;
+});
+
+ProtocolClient.getRegexMask().then((value) => {
+	regexMask = value;
+	const trimmed = value.trim();
+	if (trimmed.length > 0) {
+		try {
+			new RegExp(trimmed);
+			regexMaskError = '';
+		} catch (error) {
+			regexMaskError = error instanceof Error ? error.message : 'Invalid regular expression.';
+		}
+	}
 });
 
 ProtocolClient.getDelay().then((value) => {
@@ -221,6 +236,30 @@ function setIsolateEnglishFromCheckbox(event: Event): void {
 
 	isolateEnglish = input.checked;
 	ProtocolClient.setIsolateEnglish(input.checked);
+}
+
+function handleRegexMaskInput(event: Event): void {
+	const input = event.currentTarget;
+	if (!(input instanceof HTMLInputElement)) {
+		return;
+	}
+
+	const value = input.value;
+	regexMask = value;
+
+	const trimmed = value.trim();
+	if (trimmed.length > 0) {
+		try {
+			new RegExp(trimmed);
+			regexMaskError = '';
+		} catch (error) {
+			regexMaskError = error instanceof Error ? error.message : 'Invalid regular expression.';
+		}
+	} else {
+		regexMaskError = '';
+	}
+
+	ProtocolClient.setRegexMask(value);
 }
 
 function toggleGroup(groupKey: string) {
@@ -481,6 +520,29 @@ async function removeWeirpack(id: string) {
             </p>
           </div>
           <Textarea bind:value={userDict}></Textarea>
+        </div>
+      </div>
+
+      <div class="space-y-5">
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex flex-col">
+            <h3 class="text-sm">Regex Mask</h3>
+            <p class="text-xs text-gray-600 dark:text-gray-400">
+              Skip text matching a regular expression (e.g. <code
+                >\b[A-Z]&lbrace;1,3&rbrace;\d+\b</code
+              >).
+            </p>
+            {#if regexMaskError}
+              <p class="mt-1 text-xs text-red-500">{regexMaskError}</p>
+            {/if}
+          </div>
+          <input
+            type="text"
+            placeholder={"e.g. \\b[A-Z]{1,3}\\d+\\b"}
+            value={regexMask}
+            oninput={handleRegexMaskInput}
+            class="w-64 rounded-lg border border-cream-200 bg-white px-3 py-2 font-mono text-xs text-gray-900 shadow-sm outline-none transition focus:border-cream-300 focus:ring-2 focus:ring-primary-300 dark:border-cream-700 dark:bg-cream-900 dark:text-white dark:focus:border-cream-600 dark:focus:ring-primary-600"
+          />
         </div>
       </div>
     </Card>
