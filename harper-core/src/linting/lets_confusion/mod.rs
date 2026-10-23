@@ -96,4 +96,22 @@ mod tests {
     fn issue_4037_everybody() {
         assert_lint_count("Let's everybody take a seat.", LetsConfusion::default(), 0);
     }
+
+    #[test]
+    fn issue_4392_curly_apostrophe_them() {
+        assert_suggestion_result(
+            "As far as EULA let’s them, you can most likely still sue them.",
+            LetsConfusion::default(),
+            "As far as EULA lets them, you can most likely still sue them.",
+        );
+    }
+
+    #[test]
+    fn issue_4392_straight_apostrophe_them() {
+        assert_suggestion_result(
+            "As far as EULA let's them, you can most likely still sue them.",
+            LetsConfusion::default(),
+            "As far as EULA lets them, you can most likely still sue them.",
+        );
+    }
 }
