@@ -173,8 +173,13 @@ impl RenderState {
     /// Draws highlights and the active popup from the same state used by hit-testing so visible
     /// regions and clickable regions do not drift apart.
     ///
+    /// Each monitor has its own window. `screen_rects` holds the bounds of every window, in the
+    /// screen coordinates that lints and hit-testing use, and `window` is the index of the one being
+    /// drawn. Lints are moved into that window's coordinates, and only one window draws the popup.
+    ///
     /// Each call also moves the sidebar toward its target by the time since the previous call.
-    pub fn render(&mut self, ui: &mut egui::Ui) {
+    pub fn render(&mut self, ui: &mut egui::Ui, screen_rects: &[egui::Rect], window: usize) {
+        let window_rect = screen_rects[window];
         let now = Instant::now();
         let time_since_last_render = self
             .last_render
@@ -194,13 +199,18 @@ impl RenderState {
         }
 
         for positioned_lint in self.lints() {
-            draw_highlight(ui, &positioned_lint.rect, &positioned_lint.lint);
+            draw_highlight(
+                ui,
+                &to_window_space(&positioned_lint.rect, window_rect),
+                &positioned_lint.lint,
+            );
         }
 
         if let Some(index) = self.highlighted_lint
             && let Some(positioned_lint) = self.lints().get(index)
+            && popup_window(screen_rects, &positioned_lint.rect) == Some(window)
         {
-            let rect = positioned_lint.rect;
+            let rect = to_window_space(&positioned_lint.rect, window_rect);
             let lint = positioned_lint.lint.clone();
             let source_text = positioned_lint.source_text.clone();
 
@@ -289,8 +299,85 @@ fn rect_bounds(rect: &Rect) -> egui::Rect {
     )
 }
 
+/// Moves a screen-space rectangle into the coordinates of the window at `window_rect`, whose
+/// top-left corner egui draws at the origin.
+fn to_window_space(rect: &Rect, window_rect: egui::Rect) -> Rect {
+    Rect::new(
+        rect.x - window_rect.min.x as f64,
+        rect.y - window_rect.min.y as f64,
+        rect.width,
+        rect.height,
+    )
+}
+
+/// Picks the index of the window that draws the popup for the lint at `lint_rect`: the window that
+/// contains the lint's center, or the nearest window when the center is outside all of them.
+///
+/// Egui moves popups that would be outside a window back inside it, so exactly one window may draw
+/// the popup. When the center is on the edge between two windows, the first one is picked.
+fn popup_window(screen_rects: &[egui::Rect], lint_rect: &Rect) -> Option<usize> {
+    let center = rect_bounds(lint_rect).center();
+
+    screen_rects
+        .iter()
+        .map(|screen_rect| screen_rect.distance_sq_to_pos(center))
+        .enumerate()
+        .min_by(|(_, a), (_, b)| a.total_cmp(b))
+        .map(|(index, _)| index)
+}
+
 fn lint_kind_color32(lint_kind: LintKind) -> egui::Color32 {
     let color = lint_kind_color(lint_kind);
 
     egui::Color32::from_rgb(color.r, color.g, color.b)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// A built-in display at the origin, with an external display to its left and above it.
+    const BUILT_IN: egui::Rect =
+        egui::Rect::from_min_max(egui::pos2(0.0, 0.0), egui::pos2(1512.0, 982.0));
+    const EXTERNAL: egui::Rect =
+        egui::Rect::from_min_max(egui::pos2(-3008.0, -392.0), egui::pos2(0.0, 1300.0));
+    const SCREENS: [egui::Rect; 2] = [BUILT_IN, EXTERNAL];
+
+    #[test]
+    fn to_window_space_moves_rect_by_window_origin() {
+        let rect = Rect::new(-2900.0, -300.0, 30.0, 12.0);
+
+        assert_eq!(
+            to_window_space(&rect, EXTERNAL),
+            Rect::new(108.0, 92.0, 30.0, 12.0)
+        );
+        assert_eq!(to_window_space(&rect, BUILT_IN), rect);
+    }
+
+    #[test]
+    fn popup_window_contains_lint() {
+        let on_built_in = Rect::new(100.0, 100.0, 30.0, 12.0);
+        let on_external = Rect::new(-2900.0, -300.0, 30.0, 12.0);
+
+        assert_eq!(popup_window(&SCREENS, &on_built_in), Some(0));
+        assert_eq!(popup_window(&SCREENS, &on_external), Some(1));
+    }
+
+    #[test]
+    fn popup_window_is_nearest_when_lint_center_is_off_screen() {
+        let below_built_in = Rect::new(100.0, 975.0, 30.0, 20.0);
+        let left_of_external = Rect::new(-3030.0, 100.0, 30.0, 12.0);
+
+        assert_eq!(popup_window(&SCREENS, &below_built_in), Some(0));
+        assert_eq!(popup_window(&SCREENS, &left_of_external), Some(1));
+        assert_eq!(popup_window(&[BUILT_IN], &left_of_external), Some(0));
+    }
+
+    #[test]
+    fn popup_window_picks_one_window_for_lint_on_shared_edge() {
+        let on_edge = Rect::new(-15.0, 100.0, 30.0, 12.0);
+
+        assert_eq!(popup_window(&SCREENS, &on_edge), Some(0));
+        assert_eq!(popup_window(&[EXTERNAL, BUILT_IN], &on_edge), Some(0));
+    }
 }
