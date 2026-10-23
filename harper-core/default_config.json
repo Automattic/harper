@@ -5733,6 +5733,13 @@
 						},
 						{
 							"Bool": {
+								"name": "PassedPast",
+								"state": true,
+								"label": "Passed / Past"
+							}
+						},
+						{
+							"Bool": {
 								"name": "PassionateAbout",
 								"state": true,
 								"label": "Passionate About"
