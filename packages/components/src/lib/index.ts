@@ -34,6 +34,7 @@ export { default as GearIcon } from './icons/GearIcon.svelte';
 export { default as GridIcon } from './icons/GridIcon.svelte';
 export { default as InfoIcon } from './icons/InfoIcon.svelte';
 export { default as KeyIcon } from './icons/KeyIcon.svelte';
+export { default as MinusIcon } from './icons/MinusIcon.svelte';
 export { default as PackageIcon } from './icons/PackageIcon.svelte';
 export { default as PlayIcon } from './icons/PlayIcon.svelte';
 export { default as PlusIcon } from './icons/PlusIcon.svelte';
