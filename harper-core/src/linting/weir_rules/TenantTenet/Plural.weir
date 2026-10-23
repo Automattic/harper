@@ -1,0 +1,36 @@
+# `tenet` (a principle) is often written as `tenant` (a renter). The renter
+# reading is common in real writing, so this only fires after an adjective
+# that reads as a principle and before `of` or `is`, which is where the
+# mistake shows up, and it leaves `of the building`-style phrases alone.
+expr principle [core, central, fundamental, basic, guiding, cardinal, underlying, foundational, defining]
+expr place [building, mall, tower, complex, center, centre, property, estate, park, plaza, campus, facility, development, block, house, site, premises, office, floor, space, unit, airport, hotel, stadium, arena, shopping]
+expr main <(@principle tenants [(of !(DET @place)), is]), tenants>
+
+let message "Did you mean `tenets`? A `tenant` rents a place; a `tenet` is a principle."
+let description "Flags `tenants` where `tenets` (principles) is meant, after adjectives such as `core` or `fundamental`."
+let kind "Malapropism"
+let becomes "tenets"
+let strategy "MatchCase"
+
+test "These are the core tenants of our design." "These are the core tenets of our design."
+test "One of my core tenants is honesty." "One of my core tenets is honesty."
+test "Core Tenants of Highly Effective Software Teams" "Core Tenets of Highly Effective Software Teams"
+test "The basic tenants of JSX include jumping into JavaScript at any time." "The basic tenets of JSX include jumping into JavaScript at any time."
+test "We ignored the basic tenants of a Minimum Viable Product." "We ignored the basic tenets of a Minimum Viable Product."
+test "The following are the fundamental tenants of our approach to security." "The following are the fundamental tenets of our approach to security."
+test "This breaks one of the fundamental tenants of layered APIs." "This breaks one of the fundamental tenets of layered APIs."
+test "One of Fedora's core tenants is staying close to upstream." "One of Fedora's core tenets is staying close to upstream."
+test "As one of the language's fundamental tenants is readability, this should be cleaned up." "As one of the language's fundamental tenets is readability, this should be cleaned up."
+test "One of the core tenants of KiCad is having generic symbols." "One of the core tenets of KiCad is having generic symbols."
+test "It is one of the most basic tenants of Wesleyan theology." "It is one of the most basic tenets of Wesleyan theology."
+test "THE CENTRAL TENANTS OF THE FRAMEWORK ARE SIMPLE." "THE CENTRAL TENETS OF THE FRAMEWORK ARE SIMPLE."
+
+allows "The core tenants list is stored per region."
+allows "Basic tenants rights are protected by law."
+allows "Central tenants are in scope; the rest fall back to the parent."
+allows "It anchored the facility with two core tenants, Armstrong Marine and Winter Custom Yachts."
+allows "The two core tenants of the mall moved out last year."
+allows "The main tenants of the stadium are the national football team."
+allows "Key tenants include Pfizer and Novartis."
+allows "Commercial tenants of the building pay rent monthly."
+allows "Multi-tenant deployments keep tenants isolated from each other."
