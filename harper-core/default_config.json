@@ -2674,6 +2674,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ExMachina",
+								"state": true,
+								"label": "Ex Machina"
+							}
+						},
+						{
+							"Bool": {
 								"name": "FetalPosition",
 								"state": true,
 								"label": "Fetal Position"
