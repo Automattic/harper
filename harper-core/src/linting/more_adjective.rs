@@ -21,6 +21,10 @@ impl<D: Dictionary> MoreAdjective<D> {
                 .then_positive_adjective()
                 // Include a following "than adjective" which we'll use to identify a false positive #2925
                 // Or a following hyphen which we'll use to identify a false positive #3568
+                // Or a following noun the adjective modifies, where `more` quantifies the
+                // noun phrase ("more short videos") rather than the adjective — false positive #3688.
+                // Only when that noun is the phrase head: if another noun follows it, the word is
+                // itself adjectival ("more common plural noun") and we leave the suggestion alone.
                 .then_optional(FirstMatchOf::new([
                     Box::new(
                         SequenceExpr::whitespace()
@@ -29,6 +33,11 @@ impl<D: Dictionary> MoreAdjective<D> {
                             .then_positive_adjective(),
                     ) as Box<dyn Expr>,
                     Box::new(|tok: &Token, _source: &[char]| tok.kind.is_hyphen()),
+                    Box::new(
+                        SequenceExpr::whitespace()
+                            .then_noun()
+                            .then_unless(SequenceExpr::whitespace().then_noun()),
+                    ),
                 ])),
             dict,
         }
@@ -331,11 +340,66 @@ mod tests {
     }
 
     #[test]
+    fn dont_flag_more_short_videos_3688() {
+        assert_no_lints(
+            "I want to watch more short videos.",
+            MoreAdjective::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn dont_flag_real_world_quantified_adjective_noun_phrases_3688() {
+        for text in [
+            "Young people are living in more diverse arrangements than at any point in the last 40 years.",
+            "It is among the more common ways to form a plural noun.",
+        ] {
+            assert_no_lints(text, MoreAdjective::new(FstDictionary::curated()));
+        }
+    }
+
+    #[test]
     #[ignore = "this problem persists, even after changing the 'cut' and 'cute' annotations"]
     fn dont_correct_more_cut_to_cuter() {
         assert_no_lints(
             "they’re more cut from “one and done” cloth",
             MoreAdjective::new(FstDictionary::curated()),
+        );
+    }
+
+    // Real-world sentences (all present in harper-core/tests/text/) that exercise the
+    // trailing-noun head check from #3688. The contrast between a noun head (suppress)
+    // and a noun+adjective word that modifies a following noun (still suggest) shows the
+    // check is doing real work, not passing by coincidence.
+
+    #[test]
+    fn dont_flag_more_perfect_union_3688() {
+        // US Constitution: "a more perfect Union". "Union" is the noun head, so "more"
+        // quantifies the phrase and "perfecter" must not be suggested.
+        assert_no_lints(
+            "in Order to form a more perfect Union,",
+            MoreAdjective::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn dont_flag_more_even_then_3688() {
+        // The Great Gatsby: "loved me more even then". "then" is not a noun, so "even" is
+        // the head; "evener" must not be suggested.
+        assert_no_lints(
+            "and loved me more even then, do you see?",
+            MoreAdjective::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn flag_more_common_before_plural_noun_3688() {
+        // A Wikipedia part-of-speech article: "the more common plural noun". "plural" is
+        // followed by the noun "noun", so it's adjectival, not the head - the comparative
+        // suggestion for "common" should still surface.
+        assert_suggestion_result(
+            "as the more common plural noun.",
+            MoreAdjective::new(FstDictionary::curated()),
+            "as the commoner plural noun.",
         );
     }
 }
