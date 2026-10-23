@@ -1829,6 +1829,13 @@
 						},
 						{
 							"Bool": {
+								"name": "PossessivePluralTime",
+								"state": true,
+								"label": "Possessive Plural Time"
+							}
+						},
+						{
+							"Bool": {
 								"name": "PostItNoteHyphen",
 								"state": true,
 								"label": "Post It Note Hyphen"
