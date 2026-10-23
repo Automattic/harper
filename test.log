@@ -1,0 +1,19 @@
+Unable to find image 'rust:1-bookworm' locally
+1-bookworm: Pulling from library/rust
+Digest: sha256:114c7a4425406451c2866b6aafe69fe29b1b298832db1277d411ac73c82d04d6
+Status: Downloaded newer image for rust:1-bookworm
+failures:
+
+---- linting::spell_check::tests::afterwards_not_us stdout ----
+
+thread 'linting::spell_check::tests::afterwards_not_us' (6371) panicked at harper-core/src/linting/spell_check.rs:368:9:
+Expected "afterwards" to create 1 lints, but it created 0.
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    linting::spell_check::tests::afterwards_not_us
+
+test result: FAILED. 69 passed; 1 failed; 24 ignored; 0 measured; 6910 filtered out; finished in 0.49s
+
+error: test failed, to rerun pass `-p harper-core --lib`
