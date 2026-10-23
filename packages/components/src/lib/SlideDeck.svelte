@@ -111,7 +111,7 @@ function handleKeydown(event: KeyboardEvent) {
 
 			<div class="flex items-center justify-end gap-2 border-t border-black/10 bg-[#fbfaf7] px-6 pt-3 pb-4">
 				{#if slideProgress > 0}
-					<Button size="sm" color="light" class="bg-white! text-gray-900! hover:bg-gray-100! motion-reduce:transition-none" aria-label="Back" on:click={() => changeStep(-1)}>
+					<Button size="sm" color="white" class="bg-white! text-gray-900! hover:bg-gray-100! motion-reduce:transition-none" aria-label="Back" on:click={() => changeStep(-1)}>
 						<ChevronLeftIcon className="size-4" />
 					</Button>
 				{/if}

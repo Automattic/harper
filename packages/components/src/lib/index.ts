@@ -12,7 +12,6 @@ export {
 	TableHeadCell,
 } from 'flowbite-svelte';
 
-export { default as Arrow } from './Arrow.svelte';
 export { default as Button } from './Button.svelte';
 export { default as Card } from './Card.svelte';
 export { default as Checkbox } from './Checkbox.svelte';
@@ -22,6 +21,7 @@ export { default as GutterCenter } from './GutterCenter.svelte';
 export { default as IconButton } from './IconButton.svelte';
 export { default as Input } from './Input.svelte';
 export { default as Isolate } from './Isolate.svelte';
+export { default as Arrow } from './icons/Arrow.svelte';
 export { default as BookIcon } from './icons/BookIcon.svelte';
 export { default as CheckIcon } from './icons/CheckIcon.svelte';
 export { default as ChecklistIcon } from './icons/ChecklistIcon.svelte';
