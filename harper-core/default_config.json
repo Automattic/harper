@@ -3764,6 +3764,13 @@
 						},
 						{
 							"Bool": {
+								"name": "InTheMoodFor",
+								"state": true,
+								"label": "In The Mood For"
+							}
+						},
+						{
+							"Bool": {
 								"name": "IsBeenAuxSequence",
 								"state": true,
 								"label": "Is Been Aux Sequence"
