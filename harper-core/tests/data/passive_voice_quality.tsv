@@ -1,0 +1,104 @@
+# AI-authored synthetic cases and examples from issue #1500. Columns: category, text, expected lint spans (| separated, or -).
+issue-1500	Termination is guaranteed on any input.	is guaranteed
+issue-1500	Termination is guaranteed on any input by a finite state-space.	is guaranteed
+issue-1500	A finite state-space guarantees termination on any input.	-
+issue-1500	4 mL HCl were added to the solution.	were added
+issue-1500	We added 4 mL HCl to the solution.	-
+agent-boundary	The proposal was approved on Tuesday by the board.	was approved
+agent-boundary	The team was exhausted on Monday and the report was reviewed by Alice.	was reviewed
+coordination	The contract was signed by Alice and canceled by Bob.	was signed|canceled
+coordination	The report was reviewed by Maya but rejected by the board.	was reviewed|rejected
+coordination	The manuscript was written by Ada, edited by Ben, and published by a press.	was written|edited|published
+coordination	The contract was signed and filed by Alice.	was signed and filed
+coordination	The contract was signed, filed, and archived.	was signed, filed, and archived
+coordination	The contract was signed but never filed.	was signed but never filed
+coordination	The report was reviewed yet ultimately rejected.	was reviewed yet ultimately rejected
+coordination	The file was opened, inspected, but not changed.	was opened, inspected, but not changed
+coordination	The package was packed by Alice and sent by Bob.	was packed|sent
+coordination	The file was reviewed but the folder was deleted.	was reviewed|was deleted
+coordination	The candidate was interviewed but rejected the offer.	was interviewed
+coordination	The candidate was interviewed yet declined the offer.	was interviewed
+coordination	The candidate was interviewed but offered a job.	was interviewed but offered
+coordination	The witness was questioned but gave no answer.	was questioned
+coordination	The witness was questioned and gave no answer.	was questioned
+coordination	The witness was questioned but not charged.	was questioned but not charged
+coordination	The letter was written but never sent.	was written but never sent
+coordination	The report was signed by Alice and Bob.	was signed
+auxiliary	The report may or may not be approved.	may or may not be approved
+auxiliary	The package could not have been delivered.	could not have been delivered
+auxiliary	The policy should have already been revised.	should have already been revised
+auxiliary	The project is still being reviewed.	is still being reviewed
+auxiliary	The project was not being reviewed.	was not being reviewed
+auxiliary	The project will have been completed by Friday.	will have been completed
+auxiliary	The document might never be signed.	might never be signed
+auxiliary	The files are getting deleted.	are getting deleted
+auxiliary	The records have got altered.	have got altered
+auxiliary	The plan was going to be abandoned.	was going to be abandoned
+auxiliary	The work needs to be done.	to be done
+auxiliary	The report is expected to be published.	to be published
+question	Was the report signed by Alice?	Was the report signed
+question	Why was the report rejected?	was the report rejected
+question	Has the report been reviewed?	Has the report been reviewed
+question	Did the document get deleted?	Did the document get deleted
+question	Will the report be reviewed?	Will the report be reviewed
+question	Could the report have been reviewed?	Could the report have been reviewed
+question	Is the report being reviewed?	Is the report being reviewed
+question	Why has the report not been reviewed?	has the report not been reviewed
+question	Is that the reason the cups are put away?	are put
+question	Is that the reason the cups are being put away?	are being put
+question	Was the report that Alice wrote published?	Was the report that Alice wrote published
+question	Was the report written and approved?	Was the report written and approved
+question	Why did Alice say the report was rejected?	was rejected
+question	Was the written report useful?	-
+question	Has Alice written the report?	-
+question	Was Alice tired after the meeting?	-
+reduced	The report written by Alice was published by Bob.	was published
+reduced	The package sent yesterday arrived today.	-
+reduced	The package sent by Alice arrived today.	-
+reduced	Arrested by police, the man was questioned.	was questioned
+reduced	The results obtained by the team were surprising.	-
+reduced	The team obtained the results by hand.	-
+reduced	The man seen near the station left quickly.	-
+reduced	The door closed yesterday remains shut.	-
+reduced	The books read by children can be returned.	can be returned
+reduced	The book read yesterday was useful.	-
+reduced	The retired teacher wrote a book.	-
+state	She was interested in the proposal.	-
+state	She was interested by the proposal.	was interested
+state	The room was filled with smoke.	-
+state	The room was filled by the crew.	was filled
+state	The window was broken by vandals.	was broken
+state	The window is broken.	-
+state	The report was being prepared.	was being prepared
+state	The report is prepared.	-
+state	He was tired by noon.	-
+state	He was tired by the speech.	was tired
+state	She got dressed before lunch.	-
+state	She was dressed by her mother.	was dressed
+state	The tickets were sold by Friday.	were sold
+state	The tickets were sold by the vendor.	were sold
+state	He was born in Canada.	-
+state	He was born by cesarean section.	-
+state	The data is known to the team.	is known
+state	The data was discovered yesterday.	was discovered
+state	The method became widely accepted.	became widely accepted
+active	She has written the report by hand.	-
+active	The board had approved the proposal.	-
+active	The prices increased by ten percent.	-
+active	The committee voted by email.	-
+active	The report was a written document.	-
+active	He got signed copies of the book.	-
+active	He got written permission.	-
+active	The engine was running smoothly.	-
+active	The report was accurate and detailed.	-
+active	The report was an edited copy.	-
+active	She was reading by the window.	-
+active	The report was long but poorly written.	-
+boundary	The report was reviewed; the letter was mailed.	was reviewed|was mailed
+boundary	The report was reviewed, but Alice mailed it.	was reviewed
+boundary	The report was reviewed. The letter was mailed.	was reviewed|was mailed
+boundary	The report was `already` reviewed.	-
+case-shared-auxiliary	The report WAS or Was WRITTEN by Alice.	WAS or Was WRITTEN
+case-shared-auxiliary	The report Was or WAS WRITTEN by Alice.	Was or WAS WRITTEN
+nominal-auxiliary	The can was given to Alice.	was given
+nominal-auxiliary	The will was given to Alice.	was given
