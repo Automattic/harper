@@ -1,0 +1,29 @@
+# Corrects the eggcorn `slight of hand` -> `sleight of hand`.
+expr main <(slight of hand), slight>
+
+let message "The idiom is `sleight of hand`."
+let description "Corrects the eggcorn `slight of hand` to `sleight of hand`."
+let kind "Eggcorn"
+let becomes "sleight"
+let strategy "MatchCase"
+
+# True positives
+
+test "It was pure slight of hand." "It was pure sleight of hand."
+test "The magician used slight of hand." "The magician used sleight of hand."
+test "That was a slight of hand trick." "That was a sleight of hand trick."
+test "With some slight of hand, he swapped them." "With some sleight of hand, he swapped them."
+test "Slight of hand fooled the crowd." "Sleight of hand fooled the crowd."
+test "SLIGHT OF HAND is hard to master." "SLEIGHT OF HAND is hard to master."
+test "His slight of hand was flawless." "His sleight of hand was flawless."
+test "It relies on slight of hand." "It relies on sleight of hand."
+test "Pure slight of hand, nothing more." "Pure sleight of hand, nothing more."
+test "A bit of slight of hand did the trick." "A bit of sleight of hand did the trick."
+
+# False positives / true negatives
+
+allows "It was pure sleight of hand."
+allows "She felt a slight breeze on her face."
+allows "He took slight offense at the joke."
+allows "There was a slight delay in the release."
+allows "The change had only a slight effect."
