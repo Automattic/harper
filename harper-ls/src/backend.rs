@@ -397,7 +397,9 @@ impl Backend {
                 }
             }
             "mail" => Some(Box::new(PlainEnglish)),
-            "markdown" | "quarto" => Some(Box::new(Markdown::new(markdown_options))),
+            "markdown" | "quarto" | "rmarkdown" | "rmd" => {
+                Some(Box::new(Markdown::new(markdown_options)))
+            }
             "org" => Some(Box::new(OrgMode)),
             "plaintext" | "text" => Some(Box::new(PlainEnglish)),
             "python" => Some(Box::new(PythonParser::default())),
