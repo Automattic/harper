@@ -68,7 +68,8 @@ function openUpdateHelpPage() {
 }
 
 // Per-page heights: compact for the main view, taller for forms.
-let heightPx = $derived(popupState.page == 'main' ? 410 : 500);
+const PAGE_HEIGHTS: Record<string, number> = { main: 410, 'report-error': 580 };
+let heightPx = $derived(PAGE_HEIGHTS[popupState.page] ?? 500);
 const WIDTH_PX = 340;
 
 // Browser popups size themselves to the document, and stale CSS (e.g. #app min-h-screen) can keep
