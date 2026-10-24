@@ -27,6 +27,7 @@ mod apart_from;
 mod arrive_to;
 mod as_how;
 mod as_to_interrogative;
+mod asap;
 mod ask_no_preposition;
 mod aspire_to;
 mod avoid_contractions;
@@ -126,6 +127,7 @@ mod go_missing;
 mod go_so_far_as_to;
 mod go_to_sleep;
 mod go_to_war;
+mod gonna_gotta_wanna;
 mod good_at;
 mod handful;
 mod handful_of_more;
@@ -148,6 +150,7 @@ mod implement_in;
 mod in_demand_in_depth;
 mod in_favour_of_doing;
 mod in_on_the_cards;
+mod in_ones_defense;
 mod in_stock;
 mod in_time_from_now;
 mod inflected_verb_after_to;
@@ -208,6 +211,7 @@ mod no_harm_no_foul;
 mod no_longer;
 mod no_longer_pronoun;
 mod no_match_for;
+mod nobel_noble;
 mod nobody;
 mod nominal_wants;
 mod nor_modal_pronoun;
@@ -230,6 +234,7 @@ mod open_the_light;
 mod orthographic_consistency;
 mod ought_to_be;
 mod out_of_date;
+mod out_of_outside_the_box;
 mod out_of_the_window;
 mod over_plus;
 mod oxford_commas;
@@ -593,8 +598,13 @@ pub mod tests {
         // dbg!(&lints);
         if lints.len() != count {
             panic!(
-                "Expected \"{text}\" to create {count} lints, but it created {}.",
-                lints.len()
+                "Expected \"{text}\" to create {count} lints, but it created {}.\n{}",
+                lints.len(),
+                lints
+                    .iter()
+                    .map(|l| l.message.clone())
+                    .collect::<Vec<_>>()
+                    .join("\n")
             );
         }
     }

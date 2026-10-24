@@ -197,8 +197,12 @@ function applyFacingTransform(
 }
 </script>
 
+<svelte:head>
+  <link rel="preload" href="/harper-logo.svg" as="image" type="image/svg+xml">
+</svelte:head>
+
 <div class="w-full h-full relative">
-<canvas class="block w-full h-full font-serif text-lg" bind:this={canvasElement}>
-</canvas>
-<h3 class="bottom-1/4 z-10 w-full text-center absolute text-black !font-sans">Downloading Harper To Your Browser</h3>
-  </div>
+  <canvas class="block w-full h-full font-serif text-lg" bind:this={canvasElement}>
+  </canvas>
+  <h3 class="bottom-1/4 z-10 w-full text-center absolute text-black !font-sans">Downloading Harper To Your Browser</h3>
+</div>

@@ -73,13 +73,13 @@ create_test!(issue_109_ext.md, 0, Dialect::American);
 create_test!(chinese_lorem_ipsum.md, 2, Dialect::American);
 create_test!(obsidian_links.md, 2, Dialect::American);
 create_test!(issue_267.md, 0, Dialect::American);
-create_test!(proper_noun_capitalization.md, 3, Dialect::American);
+create_test!(proper_noun_capitalization.md, 2, Dialect::American);
 create_test!(amazon_hostname.md, 0, Dialect::American);
 create_test!(issue_159.md, 1, Dialect::American);
 create_test!(issue_358.md, 0, Dialect::American);
 create_test!(issue_195.md, 0, Dialect::American);
 create_test!(issue_118.md, 0, Dialect::American);
-create_test!(lots_of_latin.md, 1, Dialect::American);
+create_test!(lots_of_latin.md, 0, Dialect::American);
 create_test!(pr_504.md, 1, Dialect::American);
 create_test!(pr_452.md, 2, Dialect::American);
 create_test!(hex_basic_clean.md, 0, Dialect::American);
@@ -99,10 +99,10 @@ create_test!(issue_2233.md, 0, Dialect::American);
 create_test!(issue_2240.md, 0, Dialect::American);
 create_test!(allows_domain_extensions.md, 0, Dialect::American);
 // It just matters that it is > 1
-create_test!(issue_2151.md, 4, Dialect::British);
+create_test!(issue_2151.md, 3, Dialect::British);
 
 // Make sure it doesn't panic
 create_test!(lukas_homework.md, 4, Dialect::American);
 
 // Org mode tests
-create_org_test!(index.org, 49, Dialect::American);
+create_org_test!(index.org, 48, Dialect::American);

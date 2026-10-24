@@ -305,6 +305,7 @@ These configs are under the `markdown` key:
 | PowerShell          |         `powershell`          |            ✅ |
 | Plain Text          |      `plaintext`/`text`       |               |
 | Python              |           `python`            |            ✅ |
+| R                   |              `r`              |            ✅ |
 | Ruby                |            `ruby`             |            ✅ |
 | Rust                |            `rust`             |            ✅ |
 | Scala               |            `scala`            |            ✅ |
