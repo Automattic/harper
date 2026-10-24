@@ -3132,6 +3132,13 @@
 						},
 						{
 							"Bool": {
+								"name": "DoublePossessiveNounPhrase",
+								"state": true,
+								"label": "Double Possessive Noun Phrase"
+							}
+						},
+						{
+							"Bool": {
 								"name": "EverPronounRelPronoun",
 								"state": true,
 								"label": "Ever Pronoun + Relative Pronoun"
