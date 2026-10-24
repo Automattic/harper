@@ -3778,6 +3778,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ItAreTheOne",
+								"state": true,
+								"label": "It are the One"
+							}
+						},
+						{
+							"Bool": {
 								"name": "KnowNothingVerb",
 								"state": true,
 								"label": "Know Nothing Verb"
