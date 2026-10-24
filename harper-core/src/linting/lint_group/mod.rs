@@ -201,6 +201,7 @@ use super::nobody::Nobody;
 use super::nominal_wants::NominalWants;
 use super::nor_modal_pronoun::NorModalPronoun;
 use super::not_only_inversion::NotOnlyInversion;
+use super::noun_and_noun_are::NounAndNounAre;
 use super::noun_verb_confusion::NounVerbConfusion;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
 use super::numeric_range_en_dash::NumericRangeEnDash;
@@ -832,6 +833,7 @@ impl LintGroup {
         insert_expr_rule!(NominalWants);
         insert_expr_rule!(NorModalPronoun);
         insert_expr_rule!(NotOnlyInversion);
+        insert_expr_rule!(NounAndNounAre);
         insert_struct_rule!(NounVerbConfusion);
         insert_struct_rule!(NumberSuffixCapitalization);
         insert_expr_rule!(NumericRangeEnDash);
