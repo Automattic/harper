@@ -37,13 +37,13 @@ impl<D: Dictionary> MassPlurals<D> {
 
     fn is_mass_noun_in_dictionary(&self, chars: &[char]) -> bool {
         self.dict
-            .get_word_metadata(chars)
+            .get_word_metadata_folded(chars)
             .is_some_and(|wmd| wmd.is_mass_noun_only())
     }
 
     fn is_mass_noun_in_dictionary_str(&self, s: &str) -> bool {
         self.dict
-            .get_word_metadata_str(s)
+            .get_word_metadata_folded_str(s)
             .is_some_and(|wmd| wmd.is_mass_noun_only())
     }
 }

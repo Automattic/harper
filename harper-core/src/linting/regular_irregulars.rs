@@ -137,7 +137,7 @@ fn handle_plural_nouns(dict: &dyn Dictionary, suggs: &mut HashSet<String>, chars
         }
 
         let singulars = sg_candidates.iter().filter(|sg| {
-            dict.get_word_metadata(sg)
+            dict.get_word_metadata_folded(sg)
                 .is_some_and(|m| m.is_singular_noun())
         });
 
@@ -154,7 +154,7 @@ fn handle_plural_nouns(dict: &dyn Dictionary, suggs: &mut HashSet<String>, chars
                 let mut add_ies = drop_y.to_vec();
                 add_ies.extend(['i', 'e', 's']);
                 if dict
-                    .get_word_metadata(&add_ies)
+                    .get_word_metadata_folded(&add_ies)
                     .is_some_and(|m| m.is_plural_noun())
                 {
                     plurals.push(add_ies);
@@ -166,7 +166,7 @@ fn handle_plural_nouns(dict: &dyn Dictionary, suggs: &mut HashSet<String>, chars
                 let mut add_ves = drop_fe.to_vec();
                 add_ves.extend(['v', 'e', 's']);
                 if dict
-                    .get_word_metadata(&add_ves)
+                    .get_word_metadata_folded(&add_ves)
                     .is_some_and(|m| m.is_plural_noun())
                 {
                     plurals.push(add_ves);
@@ -177,7 +177,7 @@ fn handle_plural_nouns(dict: &dyn Dictionary, suggs: &mut HashSet<String>, chars
                 let mut add_ves = drop_f.to_vec();
                 add_ves.extend(['v', 'e', 's']);
                 if dict
-                    .get_word_metadata(&add_ves)
+                    .get_word_metadata_folded(&add_ves)
                     .is_some_and(|m| m.is_plural_noun())
                 {
                     plurals.push(add_ves);
@@ -189,7 +189,7 @@ fn handle_plural_nouns(dict: &dyn Dictionary, suggs: &mut HashSet<String>, chars
                 let mut add_es = sg.to_vec();
                 add_es.extend(['e', 's']);
                 if dict
-                    .get_word_metadata(&add_es)
+                    .get_word_metadata_folded(&add_es)
                     .is_some_and(|m| m.is_plural_noun())
                 {
                     plurals.push(add_es);
@@ -221,7 +221,7 @@ fn handle_past_verbs(dict: &dyn Dictionary, suggs: &mut HashSet<String>, chars: 
     }
 
     let lemmata = vp_candidates.into_iter().filter(|vp| {
-        dict.get_word_metadata(vp)
+        dict.get_word_metadata_folded(vp)
             .is_some_and(|m| m.is_verb_lemma())
     });
 

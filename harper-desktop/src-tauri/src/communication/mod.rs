@@ -55,7 +55,7 @@ mod tests {
 
         let (dictionary, request) = tokio::join!(client.get_dictionary(), server.receive_request());
 
-        assert!(dictionary.unwrap().contains_word_str("blorple"));
+        assert!(dictionary.unwrap().contains_folded_word_str("blorple"));
         assert!(matches!(request.unwrap(), Some(Request::GetDictionary)));
     }
 
@@ -259,7 +259,7 @@ mod tests {
                 .lock()
                 .await
                 .mutable_dictionary
-                .contains_word_str("blorple")
+                .contains_folded_word_str("blorple")
         );
     }
 

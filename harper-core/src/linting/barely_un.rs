@@ -24,7 +24,7 @@ impl<D: Dictionary + 'static> BarelyUn<D> {
                         .then(move |t: &Token, s: &[char]| {
                             t.get_ch(s)
                                 .strip_prefix_ignore_ascii_case_chars(&['u', 'n'])
-                                .and_then(|stem| dict_clone.get_word_metadata(stem))
+                                .and_then(|stem| dict_clone.get_word_metadata_folded(stem))
                                 .map(|md| md.is_positive_adjective())
                                 .unwrap_or(false)
                         }),

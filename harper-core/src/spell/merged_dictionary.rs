@@ -66,22 +66,17 @@ impl Default for MergedDictionary {
 }
 
 impl Dictionary for MergedDictionary {
-    fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&'_ [char]> {
+    fn contains_folded_word(&self, word: &[char]) -> bool {
         for child in &self.children {
-            if let Some(word) = child.get_correct_capitalization_of(word) {
-                return Some(word);
-            }
-        }
-        None
-    }
-
-    fn contains_word(&self, word: &[char]) -> bool {
-        for child in &self.children {
-            if child.contains_word(word) {
+            if child.contains_folded_word(word) {
                 return true;
             }
         }
         false
+    }
+
+    fn contains_folded_word_str(&self, word: &str) -> bool {
+        self.contains_folded_word(&word.chars().collect::<CharString>())
     }
 
     fn contains_exact_word(&self, word: &[char]) -> bool {
@@ -93,65 +88,8 @@ impl Dictionary for MergedDictionary {
         false
     }
 
-    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
-        let mut meta_iter = self
-            .children
-            .iter()
-            .filter_map(|d| d.get_word_metadata(word));
-
-        let first = meta_iter.next()?;
-
-        // Check if multiple entries were found for the word.
-        if let Some(second) = meta_iter.next() {
-            // If so, merge them.
-            let mut first = first.into_owned();
-            first.merge(&second);
-            meta_iter.for_each(|additional_md| {
-                first.merge(&additional_md);
-            });
-
-            Some(Cow::Owned(first))
-        } else {
-            // If not, return the sole found entry.
-            Some(first)
-        }
-    }
-
-    fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
-        Box::new(self.children.iter().flat_map(|c| c.words_iter()))
-    }
-
-    fn contains_word_str(&self, word: &str) -> bool {
-        let chars: CharString = word.chars().collect();
-        self.contains_word(&chars)
-    }
-
     fn contains_exact_word_str(&self, word: &str) -> bool {
-        let chars: CharString = word.chars().collect();
-        self.contains_exact_word(&chars)
-    }
-
-    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
-        let chars: CharString = word.chars().collect();
-        self.get_word_metadata(&chars)
-    }
-
-    fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata> {
-        self.children
-            .iter()
-            .find_map(|child| child.get_word_metadata_exact(word))
-    }
-
-    fn get_correct_capitalizations_of(
-        &self,
-        word: &[char],
-    ) -> Box<dyn Iterator<Item = &[char]> + Send + '_> {
-        let matches: Vec<_> = self
-            .children
-            .iter()
-            .map(|child| child.get_correct_capitalizations_of(word))
-            .collect();
-        Box::new(matches.into_iter().flatten())
+        self.contains_exact_word(&word.chars().collect::<CharString>())
     }
 
     fn fuzzy_match(
@@ -184,6 +122,69 @@ impl Dictionary for MergedDictionary {
             .sorted_by_key(|r| r.edit_distance)
             .take(max_results)
             .collect()
+    }
+
+    fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&'_ [char]> {
+        for child in &self.children {
+            if let Some(word) = child.get_correct_capitalization_of(word) {
+                return Some(word);
+            }
+        }
+        None
+    }
+
+    fn get_correct_capitalizations_of(
+        &self,
+        word: &[char],
+    ) -> Box<dyn Iterator<Item = &[char]> + Send + '_> {
+        let matches: Vec<_> = self
+            .children
+            .iter()
+            .map(|child| child.get_correct_capitalizations_of(word))
+            .collect();
+        Box::new(matches.into_iter().flatten())
+    }
+
+    fn get_word_metadata_folded(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
+        let mut meta_iter = self
+            .children
+            .iter()
+            .filter_map(|d| d.get_word_metadata_folded(word));
+
+        let first = meta_iter.next()?;
+
+        // Check if multiple entries were found for the word.
+        if let Some(second) = meta_iter.next() {
+            // If so, merge them.
+            let mut first = first.into_owned();
+            first.merge(&second);
+            meta_iter.for_each(|additional_md| {
+                first.merge(&additional_md);
+            });
+
+            Some(Cow::Owned(first))
+        } else {
+            // If not, return the sole found entry.
+            Some(first)
+        }
+    }
+
+    fn get_word_metadata_folded_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
+        self.get_word_metadata_folded(&word.chars().collect::<CharString>())
+    }
+
+    fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata> {
+        self.children
+            .iter()
+            .find_map(|child| child.get_word_metadata_exact(word))
+    }
+
+    fn get_word_metadata_exact_str(&self, word: &str) -> Option<&DictWordMetadata> {
+        self.get_word_metadata_exact(&word.chars().collect::<Vec<char>>())
+    }
+
+    fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
+        Box::new(self.children.iter().flat_map(|c| c.words_iter()))
     }
 
     fn word_count(&self) -> usize {
@@ -230,8 +231,8 @@ mod tests {
         let mut merged = MergedDictionary::new();
         merged.add_dictionary(Arc::new(user_dict));
 
-        assert!(merged.contains_word_str("Foo"));
-        assert!(merged.contains_word_str("foo"));
+        assert!(merged.contains_folded_word_str("Foo"));
+        assert!(merged.contains_folded_word_str("foo"));
 
         assert!(merged.contains_exact_word(&['F', 'o', 'o']));
         assert!(!merged.contains_exact_word(&['f', 'o', 'o']));

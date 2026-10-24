@@ -67,7 +67,7 @@ impl<D: Dictionary> ExprLinter for PossessiveNoun<D> {
 
         let replacement = format!("{singular}'s");
 
-        if !self.dict.contains_word_str(&replacement) {
+        if !self.dict.contains_folded_word_str(&replacement) {
             return None;
         }
 
