@@ -233,6 +233,7 @@ mod open_compounds;
 mod open_the_light;
 mod orthographic_consistency;
 mod ought_to_be;
+mod out_of_curiosity;
 mod out_of_date;
 mod out_of_outside_the_box;
 mod out_of_the_window;

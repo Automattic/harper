@@ -218,6 +218,7 @@ use super::open_compounds::OpenCompounds;
 use super::open_the_light::OpenTheLight;
 use super::orthographic_consistency::OrthographicConsistency;
 use super::ought_to_be::OughtToBe;
+use super::out_of_curiosity::OutOfCuriosity;
 use super::out_of_date::OutOfDate;
 use super::out_of_outside_the_box::OutOfOutsideTheBox;
 use super::out_of_the_window::OutOfTheWindow;
@@ -996,6 +997,9 @@ impl LintGroup {
 
         // Uses Sentence rather than Chunk
         out.add("NoHarmNoFoul", NoHarmNoFoul::default());
+
+        // Uses Sentence rather than Chunk
+        out.add("OutOfCuriosity", OutOfCuriosity::default());
 
         // Uses Sentence rather than Chunk
         out.add("PluralDecades", PluralDecades::default());

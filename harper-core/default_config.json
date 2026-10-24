@@ -5700,21 +5700,28 @@
 							"Bool": {
 								"name": "OnTopOf",
 								"state": true,
-								"label": "On Top Of"
+								"label": "On Top of"
+							}
+						},
+						{
+							"Bool": {
+								"name": "OutOfCuriosity",
+								"state": true,
+								"label": "Out of Curiosity"
 							}
 						},
 						{
 							"Bool": {
 								"name": "OutOfDate",
 								"state": true,
-								"label": "Out Of Date"
+								"label": "Out of Date"
 							}
 						},
 						{
 							"Bool": {
 								"name": "OutOfOutsideTheBox",
 								"state": true,
-								"label": "OutOfOutsideTheBox"
+								"label": "Out of Outside the Box"
 							}
 						},
 						{
