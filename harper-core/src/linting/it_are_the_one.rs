@@ -40,7 +40,7 @@ impl ExprLinter for ItAreTheOne {
             .span;
 
         let mut one = span.get_content(src).to_vec();
-        one.push((*one.last()? as u8 + ('s' as u8 - 'e' as u8)) as char);
+        one.push((*one.last()? as u8 + (b's' - b'e')) as char);
 
         Some(Lint {
             span,
