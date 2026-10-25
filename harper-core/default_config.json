@@ -2674,6 +2674,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ExMachina",
+								"state": true,
+								"label": "Ex Machina"
+							}
+						},
+						{
+							"Bool": {
 								"name": "FetalPosition",
 								"state": true,
 								"label": "Fetal Position"
@@ -3785,6 +3792,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ItAreTheOne",
+								"state": true,
+								"label": "It are the One"
+							}
+						},
+						{
+							"Bool": {
 								"name": "KnowNothingVerb",
 								"state": true,
 								"label": "Know Nothing Verb"
@@ -4336,6 +4350,13 @@
 								"name": "Alongside",
 								"state": true,
 								"label": "Alongside"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AltarAlter",
+								"state": true,
+								"label": "Altar / Alter"
 							}
 						},
 						{
@@ -5736,6 +5757,13 @@
 								"name": "PaleByComparison",
 								"state": true,
 								"label": "Pale by Comparison"
+							}
+						},
+						{
+							"Bool": {
+								"name": "PassedPast",
+								"state": true,
+								"label": "Passed / Past"
 							}
 						},
 						{
