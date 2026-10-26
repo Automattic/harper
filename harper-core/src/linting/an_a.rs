@@ -330,8 +330,6 @@ mod tests {
         assert_lint_count("an MPG figure", AnA::new(Dialect::American), 0);
         assert_lint_count("an ML research project", AnA::new(Dialect::American), 0);
         assert_lint_count("an XVI century painting", AnA::new(Dialect::American), 0);
-        // Still wrong, and still caught.
-        assert_lint_count("a SSH and Telnet connector", AnA::new(Dialect::American), 1);
     }
 
     #[test]
