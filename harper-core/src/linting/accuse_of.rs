@@ -15,7 +15,7 @@ impl Default for AccuseOf {
                 .t_set(["accuse", "accused", "accuses", "accusing"])
                 .then_optional(SequenceExpr::whitespace().then_object_pronoun())
                 .t_ws()
-                .t_aco("for")
+                .t_set(["for", "as"])
                 .but_not(SequenceExpr::word_seq(&["the", "accused"])),
         }
     }
@@ -58,7 +58,7 @@ impl ExprLinter for AccuseOf {
                 "of",
                 span.get_content(src),
             )],
-            message: "The correct preposition is `of`, not `for`.".to_owned(),
+            message: "The correct preposition is `of`, not `for` or `as`.".to_owned(),
             ..Default::default()
         })
     }
@@ -68,7 +68,7 @@ impl ExprLinter for AccuseOf {
     }
 
     fn description(&self) -> &str {
-        "Corrects `accuse for` to `accuse of`."
+        "Corrects `accuse for/as` to `accuse of`."
     }
 }
 
@@ -156,6 +156,15 @@ mod tests {
             "Once I dreamed about receiving an anonymous hate mail accusing me for wasting other developer's precious time.",
             AccuseOf::default(),
             "Once I dreamed about receiving an anonymous hate mail accusing me of wasting other developer's precious time.",
+        );
+    }
+
+    #[test]
+    fn fix_accused_as() {
+        assert_suggestion_result(
+            "The website collected controversy as those studies were accused as not being very impartial and potentially misleading.",
+            AccuseOf::default(),
+            "The website collected controversy as those studies were accused of not being very impartial and potentially misleading.",
         );
     }
 
