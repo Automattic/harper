@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "HarperMac",
+  "version": "0.1.0",
+  "description": "Grammar and spelling checking in web pages, powered by the HarperMac app on your Mac.",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": ["http://127.0.0.1:47321/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "all_frames": true,
+      "match_about_blank": true,
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "HarperMac",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  }
+}

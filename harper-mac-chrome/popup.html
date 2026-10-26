@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  :root { color-scheme: light dark; }
+  body { margin: 0; padding: 14px 16px; width: 260px; font: 13px/1.4 -apple-system, BlinkMacSystemFont, sans-serif; }
+  h1 { font-size: 14px; margin: 0 0 8px; }
+  .status { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #999; flex: none; }
+  .dot.ok { background: #30b050; }
+  .dot.bad { background: #e5484d; }
+  .hint { color: #888; font-size: 12px; margin: 0 0 12px; }
+  label { display: flex; align-items: center; gap: 8px; }
+  label[hidden] { display: none; }
+</style>
+</head>
+<body>
+  <h1>HarperMac</h1>
+  <div class="status"><span id="dot" class="dot"></span><span id="status">Checking…</span></div>
+  <p id="hint" class="hint" hidden>Open the HarperMac app, then reopen this popup.</p>
+  <label id="siteRow" hidden><input id="site" type="checkbox"><span id="siteLabel">Check on this site</span></label>
+  <script src="popup.js"></script>
+</body>
+</html>
