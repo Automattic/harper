@@ -63,7 +63,7 @@
 		"vitest": "latest",
 		"@vitest/browser-playwright": "latest",
 		"@vitest/coverage-v8": "latest",
-		"playwright": "latest"
+		"playwright": "1.60.0"
 	},
 	"keywords": [
 		"svelte"
