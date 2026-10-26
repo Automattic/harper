@@ -5807,6 +5807,12 @@
 								"state": true,
 								"label": "Praying Mantis"
 							}
+						},{
+							"Bool": {
+								"name": "PreferenceAsVerb",
+								"state": true,
+								"label": "Preference as Verb"
+							}
 						},
 						{
 							"OneOfMany": {
