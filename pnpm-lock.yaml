@@ -80,7 +80,7 @@ importers:
         version: 5.43.12
       svelte-check:
         specifier: ^4.0.0
-        version: 4.3.4(picomatch@4.0.3)(svelte@5.43.12)(typescript@5.6.3)
+        version: 4.3.4(picomatch@4.0.2)(svelte@5.43.12)(typescript@5.6.3)
       tailwindcss:
         specifier: ^4.2.2
         version: 4.2.4
@@ -11570,8 +11570,8 @@ packages:
   third-party-web@0.26.5:
     resolution: {integrity: sha512-tDuKQJUTfjvi9Fcrs1s6YAQAB9mzhTSbBZMfNgtWNmJlHuoFeXO6dzBFdGeCWRvYL50jQGK0jPsBZYxqZQJ2SA==}
 
-  third-party-web@0.29.2:
-    resolution: {integrity: sha512-fegtha91tq2DHphyoiBXVHjVi2YG9zFaRnboT9C28tO1en9Y3wJsfspuy40F+u5wl3hHVbw7cnd1b67kEGHb8g==}
+  third-party-web@0.30.0:
+    resolution: {integrity: sha512-p+PfyL5U0ediGzvwPzMSdD9MnC8rHW6nWJJVLIQvqN7RsSqfaZ+7n4c9GILqH36EYR0eXB9CzAeCRnKFr/9uJg==}
 
   through@2.3.8:
     resolution: {integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==}
@@ -15691,7 +15691,7 @@ snapshots:
 
   '@paulirish/trace_engine@0.0.44':
     dependencies:
-      third-party-web: 0.29.2
+      third-party-web: 0.30.0
 
   '@php-wasm/node-polyfills@0.6.16': {}
 
@@ -26333,6 +26333,18 @@ snapshots:
       brace: 0.11.1
       sirv-cli: 1.0.14
 
+  svelte-check@4.3.4(picomatch@4.0.2)(svelte@5.43.12)(typescript@5.6.3):
+    dependencies:
+      '@jridgewell/trace-mapping': 0.3.25
+      chokidar: 4.0.3
+      fdir: 6.4.4(picomatch@4.0.2)
+      picocolors: 1.1.1
+      sade: 1.8.1
+      svelte: 5.43.12
+      typescript: 5.6.3
+    transitivePeerDependencies:
+      - picomatch
+
   svelte-check@4.3.4(picomatch@4.0.2)(svelte@5.43.12)(typescript@5.9.3):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
@@ -26563,7 +26575,7 @@ snapshots:
 
   third-party-web@0.26.5: {}
 
-  third-party-web@0.29.2: {}
+  third-party-web@0.30.0: {}
 
   through@2.3.8: {}
 
