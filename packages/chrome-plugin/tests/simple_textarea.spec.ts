@@ -51,7 +51,7 @@ test('Focuses suggestions when opening the popup with the activation key', async
 	await page.waitForTimeout(50);
 	await page.keyboard.press('Shift');
 
-	const firstSuggestion = page.getByTitle('Replace with "a"');
+	const firstSuggestion = page.getByTitle('Click to replace "an" with "a"');
 	await firstSuggestion.waitFor({ state: 'visible' });
 	await assertLocatorIsFocused(page, firstSuggestion);
 
