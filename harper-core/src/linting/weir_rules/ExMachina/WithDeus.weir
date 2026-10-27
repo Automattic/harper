@@ -1,0 +1,8 @@
+expr main <(deus ex machine), machine>
+
+let message "This phrase is Latin and the spelling is `machina`."
+let description "Corrects the Latin phrase `deus ex machina`."
+let kind "Spelling"
+let becomes "machina"
+
+test "That deus ex machine stuff seems like enormous cope to me" "That deus ex machina stuff seems like enormous cope to me"

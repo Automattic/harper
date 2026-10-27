@@ -1,0 +1,19 @@
+expr main [<(past away), past>, <([law, laws] past), past>, <(past [pawn, pawns]), past>]
+
+let message "Did you mean `passed`?"
+let description "Corrects `past` to `passed`."
+let kind "WordChoice"
+let becomes "passed"
+
+# idioms
+
+test "You should know that the creator of this repository has past away" "You should know that the creator of this repository has passed away"
+
+# noun before
+
+test "... and all his cronies would throw out any laws past to tax the super rich." "... and all his cronies would throw out any laws passed to tax the super rich."
+
+# noun after
+
+test "each of which allows you to create a past pawn" "each of which allows you to create a passed pawn"
+test "Finally, blockading past pawns is always a solid positional idea" "Finally, blockading passed pawns is always a solid positional idea"
