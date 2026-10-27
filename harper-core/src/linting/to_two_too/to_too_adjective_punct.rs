@@ -1,8 +1,10 @@
+use harper_brill::UPOS;
+
 use crate::{
     Token, TokenKind,
     char_string::CharStringExt,
     expr::{Expr, SequenceExpr},
-    patterns::{SingleTokenPattern, WhitespacePattern, prepositional_preceder},
+    patterns::{SingleTokenPattern, prepositional_preceder},
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
@@ -20,9 +22,9 @@ impl Default for ToTooAdjectivePunct {
             .then_kind_is_but_is_not_except(
                 TokenKind::is_adjective,
                 TokenKind::is_verb,
-                &["standard"],
+                &["standard", "only"],
             )
-            .then_optional(WhitespacePattern)
+            .then_optional_whitespace()
             .then_sentence_terminator();
 
         Self {
@@ -39,11 +41,9 @@ impl ExprLinter for ToTooAdjectivePunct {
     }
 
     fn match_to_lint(&self, tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let to_index = tokens.iter().position(|t| {
-            t.span
-                .get_content(source)
-                .eq_ignore_ascii_case_chars(&['t', 'o'])
-        })?;
+        let to_index = tokens
+            .iter()
+            .position(|t| t.get_ch(source).eq_ch(&['t', 'o']))?;
 
         let mut idx = to_index + 1;
         while idx < tokens.len() && tokens[idx].kind.is_whitespace() {
@@ -53,7 +53,10 @@ impl ExprLinter for ToTooAdjectivePunct {
             return None;
         }
         let adjective = &tokens[idx];
-        if !adjective.kind.is_adjective() || !adjective.kind.is_positive_adjective() {
+        if !adjective.kind.is_adjective()
+            || !adjective.kind.is_positive_adjective()
+            || !adjective.kind.is_upos(UPOS::ADJ)
+        {
             return None;
         }
         if adjective.kind.is_preposition() {
@@ -74,9 +77,9 @@ impl ExprLinter for ToTooAdjectivePunct {
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "too",
-                to_tok.span.get_content(source),
+                to_tok.get_ch(source),
             )],
-            message: "Use `too` here to mean ‘also’ or an excessive degree.".to_string(),
+            message: "Use `too` here to mean ‘also’ or an excessive degree.".to_owned(),
             ..Default::default()
         })
     }

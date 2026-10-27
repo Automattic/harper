@@ -1,14 +1,9 @@
 import type { Extension, StateField } from '@codemirror/state';
-import type { Lint, LintConfig, Linter, Suggestion } from 'harper.js';
-import { binaryInlined, type Dialect, LocalLinter, SuggestionKind, WorkerLinter } from 'harper.js';
+import type { Lint, LintConfig, Linter, StructuredLintConfig, Suggestion } from 'harper.js';
+import { type Dialect, LocalLinter, SuggestionKind, WorkerLinter } from 'harper.js';
+import { slimBinaryInlined } from 'harper.js/slimBinaryInlined';
 import { minimatch } from 'minimatch';
-import type { MarkdownFileInfo, Workspace } from 'obsidian';
-import {
-	type CustomReplacements,
-	cloneCustomReplacements,
-	getCustomSuggestions,
-	normalizeCustomReplacements,
-} from './customSuggestions';
+import type { MarkdownFileInfo } from 'obsidian';
 import { type Action, linter } from './lint';
 import { lintKindClass } from './lintKindColor';
 
@@ -22,6 +17,7 @@ export type Settings = {
 	ignoredGlobs?: string[];
 	lintEnabled?: boolean;
 	regexMask?: string;
+	useWebStyleLints?: boolean;
 };
 
 const DEFAULT_DELAY = -1;
@@ -32,12 +28,12 @@ export default class State {
 	private harper: Linter;
 	private saveData: (data: any) => Promise<void>;
 	private delay: number;
-	private workspace: Workspace;
 	private onExtensionChange: () => void;
 	private ignoredGlobs?: string[];
 	private editorInfoField?: StateField<MarkdownFileInfo>;
 	private lintEnabled?: boolean;
 	private regexMask?: string;
+	private useWebStyleLints = false;
 
 	/** The CodeMirror extension objects that should be inserted by the host. */
 	private editorExtensions: Extension[];
@@ -50,7 +46,7 @@ export default class State {
 		onExtensionChange: () => void,
 		_editorInfoField?: StateField<MarkdownFileInfo>,
 	) {
-		this.harper = new WorkerLinter({ binary: binaryInlined });
+		this.harper = new WorkerLinter({ binary: slimBinaryInlined });
 		this.delay = DEFAULT_DELAY;
 		this.saveData = saveDataCallback;
 		this.onExtensionChange = onExtensionChange;
@@ -83,10 +79,10 @@ export default class State {
 		) {
 			if (settings.useWebWorker) {
 				this.harper.dispose();
-				this.harper = new WorkerLinter({ binary: binaryInlined, dialect: settings.dialect });
+				this.harper = new WorkerLinter({ binary: slimBinaryInlined, dialect: settings.dialect });
 			} else {
 				this.harper.dispose();
-				this.harper = new LocalLinter({ binary: binaryInlined, dialect: settings.dialect });
+				this.harper = new LocalLinter({ binary: slimBinaryInlined, dialect: settings.dialect });
 			}
 		} else {
 			await this.harper.clearIgnoredLints();
@@ -110,6 +106,7 @@ export default class State {
 		this.ignoredGlobs = settings.ignoredGlobs;
 		this.lintEnabled = settings.lintEnabled;
 		this.regexMask = settings.regexMask;
+		this.useWebStyleLints = settings.useWebStyleLints ?? false;
 
 		// Reinitialize it.
 		if (this.hasEditorLinter()) {
@@ -147,7 +144,7 @@ export default class State {
 					lints.map((lint) => {
 						const span = lint.span();
 
-						const actions = lint.suggestions().map((sug) => {
+						const actions: Action[] = lint.suggestions().map((sug): Action => {
 							return {
 								kind: 'suggestion' as const,
 								name:
@@ -220,8 +217,9 @@ export default class State {
 							to: span.end,
 							source: linterName,
 							severity: 'error',
-							markClass: lintKindClass(lint.lint_kind()),
+							markClass: `${lintKindClass(lint.lint_kind())} ${this.useWebStyleLints ? 'harper-web-style' : 'harper-squiggly-style'}`,
 							title: lint.lint_kind_pretty(),
+							message: lint.message(),
 							renderMessage: (_view) => {
 								const node = document.createElement('template');
 								node.innerHTML = lint.message_html();
@@ -279,6 +277,7 @@ export default class State {
 			ignoredGlobs: this.ignoredGlobs,
 			lintEnabled: this.lintEnabled,
 			regexMask: this.regexMask,
+			useWebStyleLints: this.useWebStyleLints,
 		};
 	}
 
@@ -308,6 +307,12 @@ export default class State {
 
 	public async getDescriptionHTML(): Promise<Record<string, string>> {
 		return await this.harper.getLintDescriptionsHTML();
+	}
+
+	/** Expose the structured lint configuration for UI rendering only.
+	 * Rule state must still be persisted through flat `lintSettings`. */
+	public async getStructuredLintConfig(): Promise<StructuredLintConfig> {
+		return await this.harper.getStructuredLintConfig();
 	}
 
 	/** Expose the default lint configuration for UI rendering. */
@@ -390,12 +395,13 @@ export default class State {
 	}
 }
 
-function suggestionToLabel(sug: Suggestion) {
-	if (sug.kind() === SuggestionKind.Remove) {
-		return 'Remove';
-	} else if (sug.kind() === SuggestionKind.Replace) {
-		return `Replace with “${sug.get_replacement_text()}”`;
-	} else if (sug.kind() === SuggestionKind.InsertAfter) {
-		return `Insert “${sug.get_replacement_text()}” after this.`;
+function suggestionToLabel(sug: Suggestion): string {
+	switch (sug.kind()) {
+		case SuggestionKind.Remove:
+			return 'Remove';
+		case SuggestionKind.Replace:
+			return `Replace with “${sug.get_replacement_text()}”`;
+		case SuggestionKind.InsertAfter:
+			return `Insert “${sug.get_replacement_text()}” after this.`;
 	}
 }

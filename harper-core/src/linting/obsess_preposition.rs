@@ -11,7 +11,7 @@ pub struct ObsessPreposition {
 impl Default for ObsessPreposition {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["obsess", "obsessed", "obsesses", "obsessing"])
+            expr: SequenceExpr::word_set(["obsess", "obsessed", "obsesses", "obsessing"])
                 .t_ws()
                 .then_preposition(),
         }
@@ -64,11 +64,11 @@ impl ExprLinter for ObsessPreposition {
         // 👎
         // obsessed of
 
-        if prep_chars.eq_ignore_ascii_case_str("over") {
+        if prep_chars.eq_str("over") {
             return None;
         }
 
-        if conj == Conj::Ed && prep_chars.eq_ignore_ascii_case_str("with") {
+        if conj == Conj::Ed && prep_chars.eq_str("with") {
             return None;
         }
 
@@ -86,7 +86,7 @@ impl ExprLinter for ObsessPreposition {
         let message = if ok_prep_vec.len() == 1 {
             format!("Use 'over' instead of '{}'.", String::from_iter(prep_chars))
         } else {
-            "For `excessively preoccupied with` use `obsessed with`. For `paid close attention to details` use `obsessed over`".to_string()
+            "For `excessively preoccupied with` use `obsessed with`. For `paid close attention to details` use `obsessed over`".to_owned()
         };
 
         Some(Lint {

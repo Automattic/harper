@@ -1,5 +1,5 @@
 export * from './lint/Box';
-export { default as computeLintBoxes } from './lint/computeLintBoxes';
+export { default as computeLintBoxes } from './lint/computeLintBoxes/index';
 export * from './lint/domUtils';
 export * from './lint/editorUtils';
 export { default as Highlights } from './lint/Highlights';

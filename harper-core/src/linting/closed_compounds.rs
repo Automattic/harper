@@ -6,11 +6,11 @@ pub fn lint_group() -> LintGroup {
     let mut group = LintGroup::empty();
 
     macro_rules! add_compound_mappings {
-        ($group:expr, { $($name:expr => ($bad:expr, $good:expr)),+ $(,)? }) => {
+        ($group:expr, { $($name:expr => ($bads:expr, $good:expr)),+ $(,)? }) => {
             $(
                 $group.add(
                     $name,
-                    Box::new(MapPhraseLinter::new_closed_compound($bad, $good)),
+                    Box::new(MapPhraseLinter::new_closed_compound($bads, $good)),
                 );
             )+
         };
@@ -21,64 +21,74 @@ pub fn lint_group() -> LintGroup {
     // The second column is the incorrect form of the word and the third column is the correct
     // form.
     add_compound_mappings!(group, {
-        "Anybody"         => ("any body", "anybody"),
-        "Anyhow"          => ("any how", "anyhow"),
-        "Anywhere"        => ("any where", "anywhere"),
-        "Backplane"       => ("back plane", "backplane"),
-        "Bypass"          => ("by pass", "bypass"),
-        "Chalkboard"      => ("chalk board", "chalkboard"),
-        "Deadlift"        => ("dead lift", "deadlift"),
-        "Desktop"         => ("desk top", "desktop"),
-        "Devops"          => ("dev ops", "devops"),
-        "Everybody"       => ("every body", "everybody"),
-        "Everyone"        => ("every one", "everyone"),
-        "Everywhere"      => ("every where", "everywhere"),
-        "Furthermore"     => ("further more", "furthermore"),
-        "Henceforth"      => ("hence forth", "henceforth"),
-        "However"         => ("how ever", "however"),
-        "Insofar"         => ("in so far", "insofar"),
-        "Instead"         => ("in stead", "instead"),
-        "Intact"          => ("in tact", "intact"),
-        "Itself"          => ("it self", "itself"),
-        "Keystroke"       => ("key stoke", "keystroke"),
-        "Keystrokes"      => ("key stokes", "keystrokes"),
-        "Laptop"          => ("lap top", "laptop"),
-        "Middleware"      => ("middle ware", "middleware"),
-        "Misunderstand"   => ("miss understand", "misunderstand"),
-        "Misunderstood"   => ("miss understood", "misunderstood"),
-        "Misuse"          => ("miss use", "misuse"),
-        "Misused"         => ("miss used", "misused"),
-        "Multicore"       => ("multi core", "multicore"),
-        "Multimedia"      => ("multi media", "multimedia"),
-        "Multithreading"  => ("multi threading", "multithreading"),
-        "Myself"          => ("my self", "myself"),
-        "Nonetheless"     => ("none the less", "nonetheless"),
-        "Nowhere"         => ("no where", "nowhere"),
-        "Nothing"         => ("no thing", "nothing"),
-        "Notwithstanding" => ("not with standing", "notwithstanding"),
-        "Overall"         => ("over all", "overall"),
-        "Overclocking"    => ("over clocking", "overclocking"),
-        "Overload"        => ("over load", "overload"),
-        "Overnight"       => ("over night", "overnight"),
-        "Postpone"        => ("post pone", "postpone"),
-        "Proofread"       => ("proof read", "proofread"),
-        "Regardless"      => ("regard less", "regardless"),
-        "Shortcoming"     => ("short coming", "shortcoming"),
-        "Shortcomings"    => ("short comings", "shortcomings"),
-        "Somebody"        => ("some body", "somebody"),
-        "Somehow"         => ("some how", "somehow"),
-        "Someone"         => ("some one", "someone"),
-        "Somewhere"       => ("some where", "somewhere"),
-        "There"           => ("the re", "there"),
-        "Therefore"       => ("there fore", "therefore"),
-        "Thereupon"       => ("there upon", "thereupon"),
-        "Underclock"      => ("under clock", "underclock"),
-        "Upset"           => ("up set", "upset"),
-        "Upward"          => ("up ward", "upward"),
-        "Whereupon"       => ("where upon", "whereupon"),
-        "Widespread"      => ("wide spread", "widespread"),
-        "Without"         => ("with out", "without"),
-        "Worldwide"       => ("world wide", "worldwide"),
+        "Anybody"         => (&["any body"][..], "anybody"),
+        "Anyhow"          => (&["any how"][..], "anyhow"),
+        "Anywhere"        => (&["any where"][..], "anywhere"),
+        "Backplane"       => (&["back plane"][..], "backplane"),
+        "Bypass"          => (&["by pass"][..], "bypass"),
+        "Chalkboard"      => (&["chalk board"][..], "chalkboard"),
+        "Codebase"        => (&["code base"][..], "codebase"),
+        "Codebases"       => (&["code bases"][..], "codebases"),
+        "Deadlift"        => (&["dead lift"][..], "deadlift"),
+        "Desktop"         => (&["desk top"][..], "desktop"),
+        "Devops"          => (&["dev ops"][..], "devops"),
+        "Everybody"       => (&["every body"][..], "everybody"),
+        "Everyone"        => (&["every one"][..], "everyone"),
+        "Everywhere"      => (&["every where"][..], "everywhere"),
+        "Furthermore"     => (&["further more"][..], "furthermore"),
+        "Guesswork"       => (&["guess work"][..], "guesswork"),
+        "Henceforth"      => (&["hence forth"][..], "henceforth"),
+        "However"         => (&["how ever"][..], "however"),
+        "Insofar"         => (&["in so far"][..], "insofar"),
+        "Instead"         => (&["in stead"][..], "instead"),
+        "Intact"          => (&["in tact"][..], "intact"),
+        "Itself"          => (&["it self"][..], "itself"),
+        "Keystroke"       => (&["key stoke", "key stroke"][..], "keystroke"),
+        "Keystrokes"      => (&["key stokes", "key strokes"][..], "keystrokes"),
+        "Laptop"          => (&["lap top"][..], "laptop"),
+        "Lifetime"        => (&["life time"][..], "lifetime"),
+        "Middleware"      => (&["middle ware"][..], "middleware"),
+        "Meanwhile"       => (&["mean while"][..], "meanwhile"),
+        "Misunderstand"   => (&["miss understand"][..], "misunderstand"),
+        "Misunderstood"   => (&["miss understood"][..], "misunderstood"),
+        "Misuse"          => (&["miss use"][..], "misuse"),
+        "Misused"         => (&["miss used"][..], "misused"),
+        "Multicore"       => (&["multi core"][..], "multicore"),
+        "Multimedia"      => (&["multi media"][..], "multimedia"),
+        "Multithreading"  => (&["multi threading"][..], "multithreading"),
+        "Myself"          => (&["my self"][..], "myself"),
+        "Nonetheless"     => (&["none the less"][..], "nonetheless"),
+        "Nothing"         => (&["no thing"][..], "nothing"),
+        "Notwithstanding" => (&["not with standing"][..], "notwithstanding"),
+        "Nowhere"         => (&["no where"][..], "nowhere"),
+        "Oftentimes"      => (&["often times"][..], "oftentimes"),
+        "Overall"         => (&["over all"][..], "overall"),
+        "Overclocking"    => (&["over clocking"][..], "overclocking"),
+        "Overload"        => (&["over load"][..], "overload"),
+        "Overnight"       => (&["over night"][..], "overnight"),
+        "Postpone"        => (&["post pone"][..], "postpone"),
+        "Proofread"       => (&["proof read"][..], "proofread"),
+        "Regardless"      => (&["regard less"][..], "regardless"),
+        "Shortcoming"     => (&["short coming"][..], "shortcoming"),
+        "Shortcomings"    => (&["short comings"][..], "shortcomings"),
+        "Somebody"        => (&["some body"][..], "somebody"),
+        "Somehow"         => (&["some how"][..], "somehow"),
+        "Someone"         => (&["some one"][..], "someone"),
+        "Somewhere"       => (&["some where"][..], "somewhere"),
+        "Straightforward" => (&["straight forward"][..], "straightforward"),
+        "Tenfold"         => (&["ten fold"][..], "tenfold"),
+        "There"           => (&["the re"][..], "there"),
+        "Therefore"       => (&["there fore"][..], "therefore"),
+        "Thereupon"       => (&["there upon"][..], "thereupon"),
+        "Tradeoff"        => (&["trade off"][..], "tradeoff"),
+        "Underclock"      => (&["under clock"][..], "underclock"),
+        "Upset"           => (&["up set"][..], "upset"),
+        "Upward"          => (&["up ward"][..], "upward"),
+        "Whereupon"       => (&["where upon"][..], "whereupon"),
+        "Widespread"      => (&["wide spread"][..], "widespread"),
+        "Without"         => (&["with out"][..], "without"),
+        "Worldwide"       => (&["world wide"][..], "worldwide"),
+        "Worthwhile"      => (&["worth while", "worth-while"][..], "worthwhile"),
     });
 
     group.set_all_rules_to(Some(true));
@@ -131,6 +141,13 @@ mod tests {
     fn mis_used() {
         let test_sentence = "The software was miss used.";
         let expected = "The software was misused.";
+        assert_suggestion_result(test_sentence, lint_group(), expected);
+    }
+
+    #[test]
+    fn mean_while() {
+        let test_sentence = "Mean while, the team kept working.";
+        let expected = "Meanwhile, the team kept working.";
         assert_suggestion_result(test_sentence, lint_group(), expected);
     }
 
@@ -280,6 +297,13 @@ mod tests {
     }
 
     #[test]
+    fn key_strokes() {
+        let test_sentence = "There may have been a missing key stroke.";
+        let expected = "There may have been a missing keystroke.";
+        assert_suggestion_result(test_sentence, lint_group(), expected);
+    }
+
+    #[test]
     fn with_out() {
         let test_sentence = "We left with out a map.";
         let expected = "We left without a map.";
@@ -305,5 +329,93 @@ mod tests {
         let test_sentence = "We listed three short comings in the postmortem.";
         let expected = "We listed three shortcomings in the postmortem.";
         assert_suggestion_result(test_sentence, lint_group(), expected);
+    }
+
+    #[test]
+    fn worth_while() {
+        let test_sentence =
+            "It's worth while documenting all the clientside events that the eventsService emits?";
+        let expected =
+            "It's worthwhile documenting all the clientside events that the eventsService emits?";
+        assert_suggestion_result(test_sentence, lint_group(), expected);
+    }
+
+    #[test]
+    fn worth_hyphen_while() {
+        let test_sentence = "I feel that the special case of looping over sequences that follow a standard iterator protocol (i.e. optionals) is important enough to be worth-while.";
+        let expected = "I feel that the special case of looping over sequences that follow a standard iterator protocol (i.e. optionals) is important enough to be worthwhile.";
+        assert_suggestion_result(test_sentence, lint_group(), expected);
+    }
+
+    #[test]
+    fn tenfold() {
+        assert_suggestion_result(
+            "If Andrew Kelly has done something wrong hasn’t Theo done that ten fold",
+            lint_group(),
+            "If Andrew Kelly has done something wrong hasn’t Theo done that tenfold",
+        )
+    }
+
+    #[test]
+    fn codebase() {
+        assert_suggestion_result(
+            "Having trouble communicating the problems in your code base?",
+            lint_group(),
+            "Having trouble communicating the problems in your codebase?",
+        )
+    }
+
+    #[test]
+    fn codebases() {
+        assert_suggestion_result(
+            "Tools to visualize large code bases in different ways.",
+            lint_group(),
+            "Tools to visualize large codebases in different ways.",
+        )
+    }
+
+    #[test]
+    fn straightforward() {
+        assert_suggestion_result(
+            "This new vulnerability has a somewhat straight forward path to exploitation and prints funds out of thin air.",
+            lint_group(),
+            "This new vulnerability has a somewhat straightforward path to exploitation and prints funds out of thin air.",
+        )
+    }
+
+    #[test]
+    fn lifetime() {
+        assert_suggestion_result(
+            "In a life time it's gone up by more than 10 fold.",
+            lint_group(),
+            "In a lifetime it's gone up by more than 10 fold.",
+        );
+    }
+
+    #[test]
+    fn tradeoff() {
+        assert_suggestion_result(
+            "But the trade off was that specific details about the invention, how it worked and how it's made were entered openly for anyone to look up.",
+            lint_group(),
+            "But the tradeoff was that specific details about the invention, how it worked and how it's made were entered openly for anyone to look up.",
+        );
+    }
+
+    #[test]
+    fn guesswork() {
+        assert_suggestion_result(
+            "Yes this is guess work and we need more evidence of the dangers but at the same time we need evidence of safety.",
+            lint_group(),
+            "Yes this is guesswork and we need more evidence of the dangers but at the same time we need evidence of safety.",
+        );
+    }
+
+    #[test]
+    fn oftentimes() {
+        assert_suggestion_result(
+            "the rust compiler is fast, but often times it has to perform a lot of unnecessary checks because crates contain more stuff than needed",
+            lint_group(),
+            "the rust compiler is fast, but oftentimes it has to perform a lot of unnecessary checks because crates contain more stuff than needed",
+        );
     }
 }

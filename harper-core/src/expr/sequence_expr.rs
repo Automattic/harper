@@ -2,15 +2,24 @@ use paste::paste;
 
 use crate::{
     CharStringExt, Lrc, Span, Token, TokenKind,
-    expr::{FirstMatchOf, FixedPhrase, LongestMatchOf},
-    patterns::{AnyPattern, IndefiniteArticle, WhitespacePattern, Word, WordSet},
+    expr::{AsBoxedExpr, FirstMatchOf, FixedPhrase, LongestMatchOf},
+    patterns::{AnyPattern, IndefiniteArticle, RelativePronoun, WhitespacePattern, Word, WordSet},
 };
 
 use super::{Expr, Optional, OwnedExprExt, Repeating, Step, UnlessStep};
 
-#[derive(Default)]
 pub struct SequenceExpr {
     exprs: Vec<Box<dyn Expr>>,
+    capture_range: Span<Box<dyn Expr>>,
+}
+
+impl Default for SequenceExpr {
+    fn default() -> Self {
+        Self {
+            exprs: Default::default(),
+            capture_range: Span::FULL,
+        }
+    }
 }
 
 /// Generate a `then_*` method from an available `is_*` function on [`TokenKind`].
@@ -55,13 +64,14 @@ impl Expr for SequenceExpr {
     fn run(&self, mut cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
         let mut window = Span::empty(cursor);
 
-        for cur_expr in &self.exprs {
+        for (i, cur_expr) in self.exprs.iter().enumerate() {
             let out = cur_expr.run(cursor, tokens, source)?;
 
-            // Only expand the window if the match actually covers some tokens
-            if out.end > out.start {
-                window.expand_to_include(out.start);
-                window.expand_to_include(out.end.checked_sub(1).unwrap_or(out.start));
+            // Zero-width assertions (like AnchorEnd) validate position without consuming tokens
+            // They should not expand the window or advance the cursor
+            if out.is_empty() {
+                // If zero-width, don't expand window or advance cursor - just validate position
+                continue;
             }
 
             // Only advance cursor if we actually matched something
@@ -70,7 +80,20 @@ impl Expr for SequenceExpr {
             } else if out.start < cursor {
                 cursor = out.start;
             }
-            // If both start and end are equal to cursor, don't move the cursor
+
+            if self.capture_range.start == i {
+                // This is the first expression being captured, set the window to start at the
+                // current cursor position.
+                // Even though it was set at the beginning of this function, it's necessary to set
+                // it again since the cursor may have advanced since then.
+                window = Span::empty(cursor);
+            } else if !self.capture_range.contains(i) {
+                // Current expression is outside of capture range and shouldn't be captured.
+                continue;
+            }
+
+            window.expand_to_include(out.start);
+            window.expand_to_include(out.end - 1);
         }
 
         Some(window)
@@ -105,7 +128,11 @@ impl SequenceExpr {
     }
 
     /// Match any word from the given set of words, case-insensitive.
-    pub fn word_set(words: &'static [&'static str]) -> Self {
+    pub fn word_set<I, S>(words: I) -> Self
+    where
+        I: IntoIterator<Item = S>,
+        S: AsRef<str>,
+    {
         Self::default().then_word_set(words)
     }
 
@@ -114,11 +141,21 @@ impl SequenceExpr {
         Self::default().then_any_word()
     }
 
+    /// Match any number.
+    pub fn number() -> Self {
+        Self::default().then_number()
+    }
+
     // Expressions of more than one token
 
     /// Optionally match an expression.
     pub fn optional(expr: impl Expr + 'static) -> Self {
         Self::default().then_optional(expr)
+    }
+
+    /// Match a series of words separated by whitespace.
+    pub fn word_seq(words: &'static [&'static str]) -> Self {
+        Self::default().then_word_seq(words)
     }
 
     /// Match a fixed phrase.
@@ -129,12 +166,12 @@ impl SequenceExpr {
     // Multiple expressions
 
     /// Match the first of multiple expressions.
-    pub fn any_of(exprs: Vec<Box<dyn Expr>>) -> Self {
+    pub fn any_of(exprs: impl IntoIterator<Item = impl AsBoxedExpr>) -> Self {
         Self::default().then_any_of(exprs)
     }
 
     /// Match the longest of multiple expressions.
-    pub fn longest_of(exprs: Vec<Box<dyn Expr>>) -> Self {
+    pub fn longest_of(exprs: impl IntoIterator<Item = impl AsBoxedExpr>) -> Self {
         Self::default().then_longest_of(exprs)
     }
 
@@ -172,7 +209,7 @@ impl SequenceExpr {
     /// If more than one of the provided expressions match, this function provides no guarantee
     /// as to which match will end up being used. If you need to get the longest of multiple
     /// matches, use [`Self::then_longest_of()`] instead.
-    pub fn then_any_of(mut self, exprs: Vec<Box<dyn Expr>>) -> Self {
+    pub fn then_any_of(mut self, exprs: impl IntoIterator<Item = impl AsBoxedExpr>) -> Self {
         self.exprs.push(Box::new(FirstMatchOf::new(exprs)));
         self
     }
@@ -181,7 +218,7 @@ impl SequenceExpr {
     ///
     /// If you don't need the longest match, prefer using the short-circuiting
     /// [`Self::then_any_of()`] instead.
-    pub fn then_longest_of(mut self, exprs: Vec<Box<dyn Expr>>) -> Self {
+    pub fn then_longest_of(mut self, exprs: impl IntoIterator<Item = impl AsBoxedExpr>) -> Self {
         self.exprs.push(Box::new(LongestMatchOf::new(exprs)));
         self
     }
@@ -194,12 +231,20 @@ impl SequenceExpr {
     }
 
     /// Pushes an expression that will match any word from the given set of words, case-insensitive.
-    pub fn then_word_set(self, words: &'static [&'static str]) -> Self {
+    pub fn then_word_set<I, S>(self, words: I) -> Self
+    where
+        I: IntoIterator<Item = S>,
+        S: AsRef<str>,
+    {
         self.then(WordSet::new(words))
     }
 
     /// Shorthand for [`Self::then_word_set`].
-    pub fn t_set(self, words: &'static [&'static str]) -> Self {
+    pub fn t_set<I, S>(self, words: I) -> Self
+    where
+        I: IntoIterator<Item = S>,
+        S: AsRef<str>,
+    {
         self.then_word_set(words)
     }
 
@@ -213,7 +258,7 @@ impl SequenceExpr {
         self.then_whitespace()
     }
 
-    /// Match against one or more whitespace tokens.
+    /// Match against whitespace tokens or a hyphen.
     pub fn then_whitespace_or_hyphen(self) -> Self {
         self.then(WhitespacePattern.or(|tok: &Token, _: &[char]| tok.kind.is_hyphen()))
     }
@@ -221,6 +266,16 @@ impl SequenceExpr {
     /// Shorthand for [`Self::then_whitespace_or_hyphen`].
     pub fn t_ws_h(self) -> Self {
         self.then_whitespace_or_hyphen()
+    }
+
+    /// Match against zero or more whitespace tokens.
+    pub fn then_optional_whitespace(self) -> Self {
+        self.then_optional(WhitespacePattern)
+    }
+
+    /// Shorthand for [`Self::then_optional_whitespace`].
+    pub fn t_ows(self) -> Self {
+        self.then_optional_whitespace()
     }
 
     /// Match against zero or more occurrences of the given expression. Like `*` in regex.
@@ -290,6 +345,19 @@ impl SequenceExpr {
         self.then(Word::new_exact(word))
     }
 
+    /// Match a series of words separated by whitespace.
+    pub fn then_word_seq(self, words: &'static [&'static str]) -> Self {
+        if let Some((first, rest)) = words.split_first() {
+            let mut expr = self.t_aco(first);
+            for word in rest {
+                expr = expr.t_ws().t_aco(word);
+            }
+            expr
+        } else {
+            self
+        }
+    }
+
     /// Match a fixed phrase.
     pub fn then_fixed_phrase(self, phrase: &'static str) -> Self {
         self.then(FixedPhrase::from_phrase(phrase))
@@ -298,10 +366,7 @@ impl SequenceExpr {
     /// Match any word except the ones in `words`.
     pub fn then_word_except(self, words: &'static [&'static str]) -> Self {
         self.then(move |tok: &Token, src: &[char]| {
-            !tok.kind.is_word()
-                || !words
-                    .iter()
-                    .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
+            !tok.kind.is_word() || !words.iter().any(|&word| tok.get_ch(src).eq_str(word))
         })
     }
 
@@ -332,10 +397,7 @@ impl SequenceExpr {
         F: Fn(&TokenKind) -> bool + Send + Sync + 'static,
     {
         self.then(move |tok: &Token, src: &[char]| {
-            pred_is(&tok.kind)
-                && !ex
-                    .iter()
-                    .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
+            pred_is(&tok.kind) && !ex.iter().any(|&word| tok.get_ch(src).eq_str(word))
         })
     }
 
@@ -396,9 +458,7 @@ impl SequenceExpr {
         self.then(move |tok: &Token, src: &[char]| {
             pred_is(&tok.kind)
                 && !pred_not(&tok.kind)
-                && !ex
-                    .iter()
-                    .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
+                && !ex.iter().any(|&word| tok.get_ch(src).eq_str(word))
         })
     }
 
@@ -432,9 +492,7 @@ impl SequenceExpr {
         self.then(move |tok: &Token, src: &[char]| {
             pred_is(&tok.kind)
                 && !preds_isnt.iter().any(|pred| pred(&tok.kind))
-                && !ex
-                    .iter()
-                    .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
+                && !ex.iter().any(|&word| tok.get_ch(src).eq_str(word))
         })
     }
 
@@ -486,9 +544,7 @@ impl SequenceExpr {
     {
         self.then(move |tok: &Token, src: &[char]| {
             preds_is.iter().any(|pred| pred(&tok.kind))
-                && !ex
-                    .iter()
-                    .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
+                && !ex.iter().any(|&word| tok.get_ch(src).eq_str(word))
         })
     }
 
@@ -504,9 +560,19 @@ impl SequenceExpr {
     {
         self.then(move |tok: &Token, src: &[char]| {
             preds.iter().any(|pred| pred(&tok.kind))
-                || words
-                    .iter()
-                    .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
+                || words.iter().any(|&word| tok.get_ch(src).eq_str(word))
+        })
+    }
+
+    /// Match a token where any of the first token kind predicates returns true
+    /// and the second returns false.
+    pub fn then_kind_any_but_not<F1, F2>(self, preds_is: &'static [F1], pred_not: F2) -> Self
+    where
+        F1: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+        F2: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+    {
+        self.then(move |tok: &Token, _src: &[char]| {
+            preds_is.iter().any(|pred| pred(&tok.kind)) && !pred_not(&tok.kind)
         })
     }
 
@@ -525,9 +591,7 @@ impl SequenceExpr {
         self.then(move |tok: &Token, src: &[char]| {
             preds_is.iter().any(|pred| pred(&tok.kind))
                 && !pred_not(&tok.kind)
-                && !ex
-                    .iter()
-                    .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
+                && !ex.iter().any(|&word| tok.get_ch(src).eq_str(word))
         })
     }
 
@@ -550,8 +614,10 @@ impl SequenceExpr {
 
     gen_then_from_is!(noun);
     gen_then_from_is!(proper_noun);
-    gen_then_from_is!(plural_noun);
     gen_then_from_is!(singular_noun);
+    gen_then_from_is!(plural_noun);
+    gen_then_from_is!(singular_noun_only);
+    gen_then_from_is!(plural_noun_only);
     gen_then_from_is!(mass_noun_only);
 
     // Pronouns
@@ -566,6 +632,10 @@ impl SequenceExpr {
     gen_then_from_is!(third_person_plural_pronoun);
     gen_then_from_is!(subject_pronoun);
     gen_then_from_is!(object_pronoun);
+
+    pub fn then_relative_pronoun(self) -> Self {
+        self.then(RelativePronoun::default())
+    }
 
     // Verbs
 
@@ -629,12 +699,39 @@ impl SequenceExpr {
     gen_then_from_is!(backslash);
     gen_then_from_is!(slash);
     gen_then_from_is!(percent);
+    gen_then_from_is!(degree);
+    gen_then_from_is!(open_single);
+    gen_then_from_is!(single_prime);
+    gen_then_from_is!(double_prime);
+    gen_then_from_is!(backtick);
+    gen_then_from_is!(plus);
 
     // Other
 
     gen_then_from_is!(case_separator);
     gen_then_from_is!(likely_homograph);
     gen_then_from_is!(sentence_terminator);
+}
+
+// Capture-range methods.
+impl SequenceExpr {
+    /// Start the capture at this point.
+    ///
+    /// [`Expr`] set before this point will be required for a match, but will not be captured in
+    /// the result.
+    pub fn start_capture(mut self) -> Self {
+        self.capture_range.start = self.exprs.len();
+        self
+    }
+
+    /// Start the capture at this point.
+    ///
+    /// [`Expr`] set after this point will be required for a match, but will not be captured in the
+    /// result.
+    pub fn end_capture(mut self) -> Self {
+        self.capture_range.end = self.exprs.len();
+        self
+    }
 }
 
 impl<S> From<S> for SequenceExpr
@@ -644,6 +741,7 @@ where
     fn from(step: S) -> Self {
         Self {
             exprs: vec![Box::new(step)],
+            ..Default::default()
         }
     }
 }
@@ -652,7 +750,7 @@ where
 mod tests {
     use crate::{
         Document, TokenKind,
-        expr::{ExprExt, SequenceExpr},
+        expr::{AnchorEnd, Expr, ExprExt, Repeating, SequenceExpr},
         linting::tests::SpanVecExt,
     };
 
@@ -681,5 +779,187 @@ mod tests {
         let doc = Document::new_plain_english_curated("Use a good example.");
         let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
         assert_eq!(matches.to_strings(&doc), vec!["Use", "example"]);
+    }
+
+    #[track_caller]
+    fn assert_no_matches_for(s: &str, expr: &SequenceExpr) {
+        let doc = Document::new_plain_english_curated(s);
+        let mut matches = expr.iter_matches_in_doc(&doc);
+        assert!(matches.next().is_none());
+    }
+
+    #[test]
+    fn test_start_capture() {
+        let expr = SequenceExpr::default()
+            .then_exact_word("hello")
+            .t_ws()
+            .start_capture()
+            .then_exact_word("world");
+
+        let doc = Document::new_plain_english_curated("hello world");
+        let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
+        assert_eq!(matches.to_strings(&doc), vec!["world"]);
+
+        assert_no_matches_for("world", &expr);
+        assert_no_matches_for(" world", &expr);
+    }
+
+    #[test]
+    fn test_end_capture() {
+        let expr = SequenceExpr::default()
+            .then_exact_word("hello")
+            .end_capture()
+            .t_ws()
+            .then_exact_word("world");
+
+        let doc = Document::new_plain_english_curated("hello world");
+        let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
+        assert_eq!(matches.to_strings(&doc), vec!["hello"]);
+
+        assert_no_matches_for("hello", &expr);
+        assert_no_matches_for("hello ", &expr);
+    }
+
+    #[test]
+    fn test_start_end_capture() {
+        let expr = SequenceExpr::default()
+            .then_exact_word("hello")
+            .t_ws()
+            .start_capture()
+            .then_exact_word("world")
+            .end_capture()
+            .t_ws()
+            .then_exact_word("testing");
+
+        let doc = Document::new_plain_english_curated("hello world testing");
+        let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
+        assert_eq!(matches.to_strings(&doc), vec!["world"]);
+
+        assert_no_matches_for("hello world", &expr);
+        assert_no_matches_for("world testing", &expr);
+        assert_no_matches_for("world", &expr);
+    }
+
+    #[test]
+    fn test_start_end_capture_multi_token() {
+        let expr = SequenceExpr::default()
+            .then_exact_word("hello")
+            .t_ws()
+            .start_capture()
+            .then_exact_word("world")
+            .t_ws()
+            .then_exact_word("testing")
+            .end_capture()
+            .t_ws()
+            .then_any_word();
+
+        let doc = Document::new_plain_english_curated("hello world testing something else");
+        let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
+        assert_eq!(matches.to_strings(&doc), vec!["world testing"]);
+    }
+
+    #[test]
+    fn test_start_end_capture_multi_match() {
+        let expr = SequenceExpr::default()
+            .then_exact_word("hello")
+            .t_ws()
+            .start_capture()
+            .then_any_word()
+            .t_ws()
+            .then_exact_word("world")
+            .end_capture()
+            .t_ws()
+            .then_exact_word("testing");
+
+        let doc = Document::new_plain_english_curated(
+            "hello one world testing hello two world testing hello three world something else",
+        );
+        let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
+        assert_eq!(matches.to_strings(&doc), vec!["one world", "two world"]);
+    }
+
+    #[test]
+    fn test_start_end_capture_multi_token_expr() {
+        let expr = SequenceExpr::default()
+            .then_exact_word("hello")
+            .t_ws()
+            .start_capture()
+            .then(Repeating::new(
+                Box::new(SequenceExpr::default().then_exact_word("world").t_ows()),
+                3,
+            ))
+            .end_capture()
+            .then_exact_word("testing");
+
+        let doc = Document::new_plain_english_curated("hello world world world testing");
+        let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
+        assert_eq!(matches.to_strings(&doc), vec!["world world world "]);
+
+        assert_no_matches_for("hello world world world", &expr);
+        assert_no_matches_for("world world world testing", &expr);
+        assert_no_matches_for("world world world", &expr);
+    }
+
+    #[test]
+    fn flag_foo_followed_by_bar_or_at_end_1() {
+        let expr = SequenceExpr::aco("foo").then_any_of([
+            Box::new(SequenceExpr::whitespace().t_aco("bar").then(AnchorEnd)) as Box<dyn Expr>,
+            Box::new(AnchorEnd),
+        ]);
+
+        let doc_with_bar = Document::new_plain_english_curated("foo bar");
+
+        let matches_with_bar = expr.iter_matches_in_doc(&doc_with_bar).collect::<Vec<_>>();
+
+        eprintln!("matches_with_bar: {:#?}", matches_with_bar);
+
+        // "foo bar" matches with span covering both tokens
+        assert_eq!(matches_with_bar.len(), 1);
+        assert_eq!(matches_with_bar[0].start, 0);
+        assert_eq!(matches_with_bar[0].end, 3);
+        assert_eq!(matches_with_bar.to_strings(&doc_with_bar), vec!["foo bar"]);
+    }
+
+    #[test]
+    fn flag_foo_followed_by_bar_or_at_end_2() {
+        let expr = SequenceExpr::aco("foo").then_any_of([
+            Box::new(SequenceExpr::whitespace().t_aco("bar").then(AnchorEnd)) as Box<dyn Expr>,
+            Box::new(AnchorEnd),
+        ]);
+
+        let doc_with_end = Document::new_plain_english_curated("foo");
+
+        let matches_with_end = expr.iter_matches_in_doc(&doc_with_end).collect::<Vec<_>>();
+
+        eprintln!("matches_with_end: {:#?}", matches_with_end);
+
+        // "foo" at end matches with span covering just "foo"
+        assert_eq!(matches_with_end.len(), 1);
+        assert_eq!(matches_with_end[0].start, 0);
+        assert_eq!(matches_with_end[0].end, 1);
+        assert_eq!(matches_with_end.to_strings(&doc_with_end), vec!["foo"]);
+    }
+
+    #[test]
+    fn flag_foo_followed_by_bar_or_at_end_3() {
+        let expr = SequenceExpr::aco("foo").then_any_of([
+            Box::new(SequenceExpr::whitespace().t_aco("bar").then(AnchorEnd)) as Box<dyn Expr>,
+            Box::new(AnchorEnd),
+        ]);
+
+        let doc_with_foo_bar_baz = Document::new_plain_english_curated("foo bar baz");
+
+        let matches_with_foo_bar_baz = expr
+            .iter_matches_in_doc(&doc_with_foo_bar_baz)
+            .collect::<Vec<_>>();
+
+        eprintln!("matches_with_foo_bar_baz: {:#?}", matches_with_foo_bar_baz);
+
+        // "foo bar baz" should NOT match because "bar" is not at the end
+        assert_eq!(matches_with_foo_bar_baz.len(), 0);
+        assert_eq!(
+            matches_with_foo_bar_baz.to_strings(&doc_with_foo_bar_baz),
+            Vec::<String>::new()
+        );
     }
 }

@@ -45,7 +45,7 @@ impl ExprLinter for DotInitialisms {
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let found_word_tok = matched_tokens.first()?;
-        let found_word = found_word_tok.span.get_content_string(source);
+        let found_word = found_word_tok.get_str(source);
 
         let correction = self.corrections.get(found_word.as_str())?;
 

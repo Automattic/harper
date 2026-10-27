@@ -11,11 +11,9 @@ pub struct SomeWithoutArticle {
 
 impl Default for SomeWithoutArticle {
     fn default() -> Self {
-        let expr = SequenceExpr::any_capitalization_of("the")
-            .t_ws()
-            .then_any_capitalization_of("some");
-
-        Self { expr }
+        Self {
+            expr: SequenceExpr::word_seq(&["the", "some"]),
+        }
     }
 }
 
@@ -29,7 +27,7 @@ impl ExprLinter for SomeWithoutArticle {
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let span = matched_tokens.span()?;
         let template = span.get_content(source);
-        let some_chars = matched_tokens.last()?.span.get_content(source);
+        let some_chars = matched_tokens.last()?.get_ch(source);
 
         let suggestions = vec![
             Suggestion::ReplaceWith(some_chars.to_vec()),

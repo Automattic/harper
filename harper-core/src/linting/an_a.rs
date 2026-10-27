@@ -1,8 +1,10 @@
 use itertools::Itertools;
 
-use crate::indefinite_article::{InitialSound, starts_with_vowel};
-use crate::linting::{Lint, LintKind, Linter, Suggestion};
-use crate::{Dialect, Document, TokenStringExt};
+use crate::{
+    CharStringExt, Dialect, Document, OrthFlags, TokenStringExt,
+    indefinite_article::{InitialSound, starts_with_vowel},
+    linting::{Lint, LintKind, Linter, Suggestion},
+};
 
 #[derive(Debug)]
 pub struct AnA {
@@ -43,6 +45,26 @@ impl Linter for AnA {
                     .next()
                     .unwrap_or(chars_second);
 
+                // Capital letter 'A' might be a test grade rather than an article
+                if chars_first == ['A'] {
+                    // Check for range of test grades starting with "A-"
+                    if second_idx == first_idx + 2
+                        && chunk[first_idx + 1].kind.is_hyphen()
+                        && ('B'..='F').contains(&chars_second[0])
+                    {
+                        continue;
+                    }
+
+                    // Check for an indefinite article before: "an A" or "a A"
+                    if let Some(prev) = document.get_next_word_from_offset(first_idx, -1)
+                        && prev
+                            .get_ch(document.get_source())
+                            .eq_any_ignore_ascii_case_chars(&[&['a'], &['a', 'n']])
+                    {
+                        continue;
+                    }
+                }
+
                 let is_a_an = match chars_first {
                     ['a'] => Some(true),
                     ['A'] => Some(true),
@@ -53,6 +75,28 @@ impl Linter for AnA {
 
                 let Some(a_an) = is_a_an else {
                     continue;
+                };
+
+                // An all-caps token whose entry licenses a lowercase spelling but no
+                // all-caps one is an ordinary word written for emphasis ("a FREE event"),
+                // not an initialism. Read it as the lowercase word. Entries that do
+                // license all-caps (`LAN`, `NAT`, `MA`) keep the initialism handling, as
+                // do Roman numerals, which are numbers rather than words.
+                let lowered;
+                let chars_second = match second.kind.as_word() {
+                    Some(Some(meta))
+                        if chars_second.len() > 1
+                            && chars_second
+                                .iter()
+                                .all(|c| !c.is_alphabetic() || c.is_uppercase())
+                            && meta.orth_info.contains(OrthFlags::LOWERCASE)
+                            && !meta.orth_info.contains(OrthFlags::ALLCAPS)
+                            && !meta.orth_info.contains(OrthFlags::ROMAN_NUMERALS) =>
+                    {
+                        lowered = chars_second.to_lower();
+                        lowered.as_ref()
+                    }
+                    _ => chars_second,
                 };
 
                 let should_be_a_an = match starts_with_vowel(chars_second, self.dialect)
@@ -76,7 +120,7 @@ impl Linter for AnA {
                             replacement,
                             chars_first,
                         )],
-                        message: "Incorrect indefinite article.".to_string(),
+                        message: "Incorrect indefinite article.".to_owned(),
                         priority: 31,
                     })
                 }
@@ -94,8 +138,10 @@ impl Linter for AnA {
 #[cfg(test)]
 mod tests {
     use super::AnA;
-    use crate::Dialect;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::{
+        Dialect,
+        linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result},
+    };
 
     #[test]
     fn detects_html_as_vowel() {
@@ -213,8 +259,18 @@ mod tests {
     }
 
     #[test]
+    fn allow_an_lowercase_mp3() {
+        assert_lint_count("an mp3 file", AnA::new(Dialect::American), 0);
+    }
+
+    #[test]
     fn disallow_a_mp_and_a_mp3() {
         assert_lint_count("a MP and a MP3?", AnA::new(Dialect::American), 2);
+    }
+
+    #[test]
+    fn disallow_a_lowercase_mp3() {
+        assert_lint_count("a mp3 file", AnA::new(Dialect::American), 1);
     }
 
     #[test]
@@ -242,6 +298,38 @@ mod tests {
             0,
         );
         assert_lint_count("a AM transmitter", AnA::new(Dialect::American), 1);
+    }
+
+    /// Issue #3921: an all-caps token whose entry has no all-caps spelling of its
+    /// own is an ordinary word written for emphasis, not an initialism.
+    #[test]
+    fn reads_emphasis_caps_as_words() {
+        assert_lint_count("a FREE event", AnA::new(Dialect::American), 0);
+        assert_lint_count(
+            "James Bond deals with a SPECTRE agent",
+            AnA::new(Dialect::American),
+            0,
+        );
+        assert_lint_count(
+            "a FLASH based filing system",
+            AnA::new(Dialect::American),
+            0,
+        );
+        assert_lint_count("a SYN flood attack", AnA::new(Dialect::American), 0);
+        assert_lint_count("a STUN server", AnA::new(Dialect::American), 0);
+    }
+
+    /// The same guard must not swallow initialisms whose entries do license an
+    /// all-caps spelling, nor Roman numerals, which are numbers rather than words.
+    #[test]
+    fn keeps_initialisms_and_roman_numerals() {
+        assert_lint_count("an SSH tunnel", AnA::new(Dialect::American), 0);
+        assert_lint_count("an FTP server", AnA::new(Dialect::American), 0);
+        assert_lint_count("an FTPS connection", AnA::new(Dialect::American), 0);
+        assert_lint_count("an FPS multiplayer game", AnA::new(Dialect::American), 0);
+        assert_lint_count("an MPG figure", AnA::new(Dialect::American), 0);
+        assert_lint_count("an ML research project", AnA::new(Dialect::American), 0);
+        assert_lint_count("an XVI century painting", AnA::new(Dialect::American), 0);
     }
 
     #[test]
@@ -335,5 +423,46 @@ mod tests {
     fn allow_an_and_a_for_led_2550() {
         assert_lint_count("an LED", AnA::new(Dialect::American), 0);
         assert_lint_count("a LED", AnA::new(Dialect::American), 0);
+    }
+
+    #[test]
+    fn allow_a_and_an_for_url() {
+        assert_lint_count(
+            "I pronounce URL as 'yoo-are-ell' so for me it's 'a URL'",
+            AnA::new(Dialect::American),
+            0,
+        );
+        assert_lint_count(
+            "But some people pronounce it like 'earl' so for them it's 'an URL'",
+            AnA::new(Dialect::American),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_a_f_grading_scale_3715() {
+        assert_no_lints("an A-F grading scale", AnA::new(Dialect::American));
+    }
+
+    #[test]
+    fn dont_flag_is_80_an_a_3715() {
+        assert_no_lints("Is 80 an A in Malaysia?", AnA::new(Dialect::American));
+    }
+
+    #[test]
+    fn dont_flag_an_npm_4139() {
+        assert_no_lints(
+            "Why lib/ or light-base/ alone forces an npm bump",
+            AnA::new(Dialect::American),
+        );
+    }
+
+    #[test]
+    fn correct_a_npm_4139() {
+        assert_suggestion_result(
+            "Why lib/ or light-base/ alone forces a npm bump",
+            AnA::new(Dialect::American),
+            "Why lib/ or light-base/ alone forces an npm bump",
+        );
     }
 }

@@ -1,0 +1,95 @@
+# frozen_string_literal: true
+
+UI.user_error!('Please run fastlane via `bundle exec`') unless FastlaneCore::Helper.bundler?
+
+APPLE_TEAM_ID = 'PZYM8XX95Q'
+
+GITHUB_REPO = 'Automattic/harper'
+
+CODE_SIGNING_STORAGE_OPTIONS = {
+  storage_mode: 's3',
+  s3_bucket: 'a8c-fastlane-match',
+  s3_region: 'us-east-2'
+}.freeze
+
+CODE_SIGNING_ENV_VARS = %w[
+  MATCH_S3_ACCESS_KEY
+  MATCH_S3_SECRET_ACCESS_KEY
+  MATCH_PASSWORD
+].freeze
+
+ASC_API_KEY_ENV_VARS = %w[
+  APP_STORE_CONNECT_API_KEY_KEY_ID
+  APP_STORE_CONNECT_API_KEY_ISSUER_ID
+  APP_STORE_CONNECT_API_KEY_KEY
+].freeze
+
+require 'tempfile'
+require 'fastlane/plugin/wpmreleasetoolkit'
+
+EnvManager = Fastlane::Wpmreleasetoolkit::EnvManager
+
+before_all do
+  # Use a temporary signing keychain in CI.
+  setup_ci
+
+  # Initialize EnvManager with values supplied by the Buildkite agent.
+  EnvManager.set_up(env_file_name: 'harper-desktop.env')
+end
+
+# Fetch the Developer ID Application certificate into the keychain.
+# @param readonly [Boolean] Use existing certificates without creating new ones.
+lane :set_up_signing do |readonly: true|
+  CODE_SIGNING_ENV_VARS.each { |k| EnvManager.get_required_env!(k) }
+  ASC_API_KEY_ENV_VARS.each { |k| EnvManager.get_required_env!(k) } unless readonly
+
+  sync_code_signing(
+    type: 'developer_id',
+    platform: 'macos',
+    team_id: APPLE_TEAM_ID,
+    # Developer ID cert is team-wide; no per-app storage key needed.
+    app_identifier: [],
+    api_key: readonly ? nil : app_store_connect_api_key,
+    readonly: readonly,
+    **CODE_SIGNING_STORAGE_OPTIONS
+  )
+end
+
+# Notarize a signed macOS package and staple its ticket.
+# @param package [String] Path to the signed .app or .dmg.
+lane :notarize_macos do |package:|
+  ASC_API_KEY_ENV_VARS.each { |k| EnvManager.get_required_env!(k) }
+
+  notarize(
+    package: package,
+    api_key: app_store_connect_api_key,
+    print_log: true
+  )
+end
+
+# Create a draft release with the signed and notarized macOS artifacts.
+# @param tag [String] Release tag.
+# @param dmg [String] Path to the signed disk image.
+# @param app_tarball [String] Path to the app updater archive.
+# @param app_signature [String] Path to the updater archive signature.
+lane :create_desktop_github_release do |tag:, dmg:, app_tarball:, app_signature:|
+  EnvManager.get_required_env!('GITHUB_TOKEN')
+
+  # `create_github_release` is create-only — a re-run on an existing tag
+  # requires deleting the partial draft on GitHub before retrying.
+
+  # `create_github_release` crashes with a FrozenError when no notes path is
+  # given (wpmreleasetoolkit 14.6.0 calls `gsub!` on a frozen empty literal).
+  # Pass an empty tempfile to get the action's intended "no notes" behavior.
+  Tempfile.create(['release-notes', '.md']) do |empty_notes|
+    empty_notes.close
+
+    create_github_release(
+      repository: GITHUB_REPO,
+      version: tag,
+      release_assets: [dmg, app_tarball, app_signature],
+      release_notes_file_path: empty_notes.path,
+      is_draft: true
+    )
+  end
+end

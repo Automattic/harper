@@ -96,7 +96,7 @@ impl ExprLinter for AffectToEffect {
             return None;
         }
 
-        let token_text = target.span.get_content_string(source);
+        let token_text = target.get_str(source);
         let lower = token_text.to_lowercase();
         let replacement = match lower.as_str() {
             "affect" => "effect",
@@ -109,7 +109,7 @@ impl ExprLinter for AffectToEffect {
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 replacement,
-                target.span.get_content(source),
+                target.get_ch(source),
             )],
             message: "`affect` is usually a verb; use `effect` here for the result or outcome."
                 .into(),
@@ -130,16 +130,16 @@ fn is_affect_word(token: &Token, source: &[char]) -> bool {
         return false;
     }
 
-    let text = token.span.get_content(source);
-    text.eq_ignore_ascii_case_chars(AFFECT) || text.eq_ignore_ascii_case_chars(AFFECTS)
+    let text = token.get_ch(source);
+    text.eq_ch(AFFECT) || text.eq_ch(AFFECTS)
 }
 
 fn is_take_form(chars: &[char]) -> bool {
-    chars.eq_ignore_ascii_case_str("take")
-        || chars.eq_ignore_ascii_case_str("takes")
-        || chars.eq_ignore_ascii_case_str("taking")
-        || chars.eq_ignore_ascii_case_str("took")
-        || chars.eq_ignore_ascii_case_str("taken")
+    chars.eq_str("take")
+        || chars.eq_str("takes")
+        || chars.eq_str("taking")
+        || chars.eq_str("took")
+        || chars.eq_str("taken")
 }
 
 fn is_modal_like(token: &Token, source: &[char], prev: &[char]) -> bool {
@@ -150,15 +150,15 @@ fn is_modal_like(token: &Token, source: &[char], prev: &[char]) -> bool {
         return true;
     }
 
-    prev.eq_ignore_ascii_case_str("do")
-        || prev.eq_ignore_ascii_case_str("does")
-        || prev.eq_ignore_ascii_case_str("did")
-        || prev.eq_ignore_ascii_case_str("don't")
-        || prev.eq_ignore_ascii_case_str("dont")
-        || prev.eq_ignore_ascii_case_str("doesn't")
-        || prev.eq_ignore_ascii_case_str("doesnt")
-        || prev.eq_ignore_ascii_case_str("didn't")
-        || prev.eq_ignore_ascii_case_str("didnt")
+    prev.eq_str("do")
+        || prev.eq_str("does")
+        || prev.eq_str("did")
+        || prev.eq_str("don't")
+        || prev.eq_str("dont")
+        || prev.eq_str("doesn't")
+        || prev.eq_str("doesnt")
+        || prev.eq_str("didn't")
+        || prev.eq_str("didnt")
 }
 
 fn matches_preceding_context(token: &Token, source: &[char]) -> bool {
@@ -187,7 +187,7 @@ fn matches_preceding_context_impl(
         return false;
     }
 
-    let content = token.span.get_content(source);
+    let content = token.get_ch(source);
     let is_take_form_word = is_take_form(content);
 
     if behaves_like_verb(token, source, content) && !is_take_form_word {

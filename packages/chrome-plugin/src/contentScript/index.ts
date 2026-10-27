@@ -21,6 +21,7 @@ const fw = new LintFramework(
 		ignoreLint: (hash) => ProtocolClient.ignoreHash(hash),
 		getActivationKey: () => ProtocolClient.getActivationKey(),
 		getHotkey: () => ProtocolClient.getHotkey(),
+		getDelay: () => ProtocolClient.getDelay(),
 		openOptions: () => ProtocolClient.openOptions(),
 		addToUserDictionary: (words) => ProtocolClient.addToUserDictionary(words),
 		reportError: (lint: UnpackedLint, ruleId: string) =>
@@ -56,6 +57,41 @@ const keepAliveCallback = () => {
 
 keepAliveCallback();
 
+/**
+ * Returns the reasons Harper should skip this textarea while scanning for targets.
+ * An empty array means the textarea is eligible to be added.
+ */
+function getTextareaReasons(element: HTMLTextAreaElement, requireVisible: boolean): string[] {
+	const reasons = [];
+
+	if (requireVisible && !isVisible(element)) {
+		reasons.push('not-visible');
+	}
+
+	if (element.getAttribute('data-enable-grammarly') === 'false') {
+		reasons.push('grammarly-disabled');
+	}
+
+	if (element.disabled) {
+		reasons.push('disabled');
+	}
+
+	if (element.readOnly) {
+		reasons.push('readonly');
+	}
+
+	return reasons;
+}
+
+function maybeAddTextareaTarget(element: HTMLTextAreaElement, requireVisible: boolean) {
+	const reasons = getTextareaReasons(element, requireVisible);
+	if (reasons.length > 0) {
+		return;
+	}
+
+	fw.addTarget(element);
+}
+
 function scan() {
 	void syncGoogleDocsBridge();
 
@@ -64,16 +100,7 @@ function scan() {
 	}
 
 	document.querySelectorAll<HTMLTextAreaElement>('textarea').forEach((element) => {
-		if (
-			!isVisible(element) ||
-			element.getAttribute('data-enable-grammarly') === 'false' ||
-			element.disabled ||
-			element.readOnly
-		) {
-			return;
-		}
-
-		fw.addTarget(element);
+		maybeAddTextareaTarget(element, true);
 	});
 
 	document
@@ -86,27 +113,29 @@ function scan() {
 			fw.addTarget(element);
 		});
 
-	document.querySelectorAll('[data-testid="gutenberg-editor"]').forEach((element) => {
-		const leafs = leafNodes(element);
+	document
+		.querySelectorAll('[data-testid="gutenberg-editor"], .block-editor-iframe__body')
+		.forEach((element) => {
+			const leafs = leafNodes(element);
 
-		const seenBlockContainers = new Set<Element>();
+			const seenBlockContainers = new Set<Element>();
 
-		for (const leaf of leafs) {
-			const blockContainer = getClosestBlockAncestor(leaf, element);
+			for (const leaf of leafs) {
+				const blockContainer = getClosestBlockAncestor(leaf, element);
 
-			if (!blockContainer || seenBlockContainers.has(blockContainer)) {
-				continue;
+				if (!blockContainer || seenBlockContainers.has(blockContainer)) {
+					continue;
+				}
+
+				seenBlockContainers.add(blockContainer);
+
+				if (!isVisible(blockContainer)) {
+					continue;
+				}
+
+				fw.addTarget(blockContainer);
 			}
-
-			seenBlockContainers.add(blockContainer);
-
-			if (!isVisible(blockContainer)) {
-				continue;
-			}
-
-			fw.addTarget(blockContainer);
-		}
-	});
+		});
 
 	document
 		.querySelectorAll<HTMLElement>('.cm-editor .cm-content[contenteditable="true"]')
@@ -135,10 +164,24 @@ function scan() {
 			return;
 		}
 
+		const isLexicalEditor = element.getAttribute('data-lexical-editor') === 'true';
+		// Slack's message compose box (Quill-based) sets spellcheck="false" and provides its own
+		// spelling/autocomplete UI, but otherwise behaves like a normal rich-text contenteditable
+		// editor, so treat it the same way we treat Lexical editors: don't skip it purely because
+		// spellcheck is disabled.
+		const isQuillEditor = element.classList.contains('ql-editor');
+		// Allow Gmail and Outlook compose fields even when they disable browser spellcheck.
+		const isWebmail =
+			window.location.hostname === 'mail.google.com' ||
+			window.location.hostname === 'outlook.live.com';
+
 		if (
 			element.matches('[role="combobox"]') ||
 			element.getAttribute('data-enable-grammarly') === 'false' ||
 			(element.getAttribute('spellcheck') === 'false' &&
+				!isWebmail &&
+				!isLexicalEditor &&
+				!isQuillEditor &&
 				element.getAttribute('data-language') !== 'markdown')
 		) {
 			return;
@@ -191,5 +234,18 @@ new MutationObserver(scan).observe(document.body, {
 	childList: true,
 	subtree: true,
 });
+
+document.addEventListener(
+	'focusin',
+	(event) => {
+		const target = event.target;
+		if (!(target instanceof HTMLTextAreaElement)) {
+			return;
+		}
+
+		maybeAddTextareaTarget(target, false);
+	},
+	{ capture: true },
+);
 
 setTimeout(scan, 1000);

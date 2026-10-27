@@ -36,7 +36,7 @@ impl ExprLinter for Bought {
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::replace_with_match_case(
                 "bought".chars().collect(),
-                typo.span.get_content(source),
+                typo.get_ch(source),
             )],
             message: "Prefer the past-tense form `bought` here.".to_owned(),
             priority: 31,
@@ -58,7 +58,7 @@ impl Bought {
             return false;
         }
 
-        let text = token.span.get_content_string(source);
+        let text = token.get_str(source);
         let lower = text.to_ascii_lowercase();
 
         let Some((stem, suffix)) = lower.split_once('\'') else {

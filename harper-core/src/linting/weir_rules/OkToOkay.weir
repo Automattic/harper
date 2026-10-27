@@ -1,0 +1,22 @@
+expr main (ok)
+
+let message "Use `okay` instead of `ok`."
+let description "Corrects `ok` to `okay`."
+let kind "Spelling"
+let becomes "okay"
+
+test "ok" "okay"
+test "ok." "okay."
+test "ok," "okay,"
+test "ok!" "okay!"
+test "ok?" "okay?"
+test "Please say ok." "Please say okay."
+test "It is ok." "It is okay."
+test "We are ok today." "We are okay today."
+test "ok then" "okay then"
+test "ok, then let's go." "okay, then let's go."
+
+allows "The word okay is already correct."
+allows "Oklahoma is a state."
+allows "An okapi is an animal."
+allows "The code looks okay to me."

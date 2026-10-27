@@ -11,7 +11,7 @@ pub struct Misspell {
 
 impl Default for Misspell {
     fn default() -> Self {
-        let expr = SequenceExpr::word_set(&["miss"]).t_ws_h().then_word_set(&[
+        let expr = SequenceExpr::word_set(["miss"]).t_ws_h().then_word_set([
             "spell",
             "spelled",
             "spelling",
@@ -34,7 +34,7 @@ impl ExprLinter for Misspell {
         let span = matched_tokens.span()?;
         let misspell_variant = matched_tokens.last()?;
 
-        let variant_chars = misspell_variant.span.get_content(source);
+        let variant_chars = misspell_variant.get_ch(source);
         let variant_lower = variant_chars
             .iter()
             .map(|c| c.to_ascii_lowercase())
@@ -58,7 +58,7 @@ impl ExprLinter for Misspell {
             span,
             lint_kind: LintKind::BoundaryError,
             suggestions,
-            message: "Write `misspell` and its inflections as a single word.".to_string(),
+            message: "Write `misspell` and its inflections as a single word.".to_owned(),
             priority: 63,
         })
     }

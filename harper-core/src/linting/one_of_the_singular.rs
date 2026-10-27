@@ -24,10 +24,10 @@ impl SeqExprExt for SequenceExpr {
             (t.kind.is_non_possessive_noun() || t.kind.is_adjective())
                 && !t.kind.is_preposition() // "in" etc.
                 && !t.kind.is_pronoun() // "who" etc.
-                && !t
-                    .span
-                    .get_content(s)
-                    .eq_any_ignore_ascii_case_str(&["ah", "few", "first", "said", "uh"])
+                && !t.get_ch(s)
+                    .eq_any_ignore_ascii_case_str(&[
+                        "ah", "few", "first", "former", "latter", "said", "uh",
+                    ])
         })
     }
 }
@@ -41,7 +41,8 @@ impl<D: Dictionary + 'static> OneOfTheSingular<D> {
             .then_zero_or_more_spaced(SequenceExpr::default().then_my_noun_or_adjective());
 
         Self {
-            expr: SequenceExpr::fixed_phrase("one of the ")
+            expr: SequenceExpr::word_seq(&["one", "of", "the"])
+                .t_ws()
                 .then(SequenceExpr::optional(advs.t_ws()).then(adj_or_nouns)),
             dict,
         }
@@ -136,7 +137,7 @@ impl<D: Dictionary + 'static> ExprLinter for OneOfTheSingular<D> {
             span: nounspan,
             lint_kind: LintKind::Usage,
             suggestions,
-            message: "The construction `one of the ...` should use a plural noun.".to_string(),
+            message: "The construction `one of the ...` should use a plural noun.".to_owned(),
             ..Default::default()
         })
     }
@@ -290,6 +291,22 @@ mod tests {
     fn dont_flag_one_of_the_rabbits_gloves() {
         assert_no_lints(
             "As she said this she looked down at her hands, and was surprised to see that she had put on one of the Rabbit’s little white kid gloves while she was talking.",
+            OneOfTheSingular::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn dont_flag_one_of_the_latter() {
+        assert_no_lints(
+            "He asked a few friends and others asked him to come give talks. One of the latter was Jeanne Russell, who lives with her husband, Ron.",
+            OneOfTheSingular::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn dont_flag_one_of_the_former() {
+        assert_no_lints(
+            "One of the former has to stay behind to lock up, so let them go first.",
             OneOfTheSingular::new(FstDictionary::curated()),
         );
     }

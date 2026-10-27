@@ -48,11 +48,11 @@ impl ExprLinter for TooTo {
 
         Some(Lint {
             span,
-            lint_kind: LintKind::Typo,
+            lint_kind: LintKind::WordChoice,
             suggestions: vec![
                 Suggestion::replace_with_match_case("to".chars().collect(), text)
             ],
-            message: "Use the infinitive marker `to` here instead of the adverb `too`, which indicates excess degree.".to_string(),
+            message: "Use the infinitive marker `to` here instead of the adverb `too`, which indicates excess degree.".to_owned(),
             priority: 31,
         })
     }

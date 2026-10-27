@@ -3,58 +3,90 @@
 //! See the [`Linter`] trait and the [documentation for authoring a rule](https://writewithharper.com/docs/contributors/author-a-rule) for more information.
 
 mod a_part;
+mod a_some_time;
+mod a_ways_to_go;
 mod a_while;
+mod accuse_of;
 mod addicting;
 mod adjective_double_degree;
 mod adjective_of_a;
 mod after_later;
+mod ajar;
+mod akimbo;
 mod all_hell_break_loose;
 mod all_intents_and_purposes;
 mod allow_to;
 mod am_in_the_morning;
 mod amounts_for;
 mod an_a;
-mod and_in;
+mod analog_acoustic_bike;
 mod and_the_like;
 mod another_thing_coming;
 mod another_think_coming;
 mod apart_from;
+mod arrive_to;
+mod as_how;
+mod as_to_interrogative;
+mod asap;
 mod ask_no_preposition;
+mod aspire_to;
+mod avoid_contractions;
 mod avoid_curses;
 mod back_in_the_day;
+mod bare_bones;
+mod barely_un;
+mod be_adjective_confusions;
 mod be_allowed;
-mod be_worried;
 mod behind_the_scenes;
+mod bellow_below;
 mod best_of_all_time;
+mod better_off_served;
 mod boring_words;
 mod bought;
 mod brand_brandish;
 mod by_accident;
+mod by_extension;
+mod by_ones_own;
+mod by_the_book;
+mod call_it_quits;
 mod call_them;
 mod cant;
 mod capitalize_personal_pronouns;
+mod catch_22;
 mod cautionary_tale;
+mod cease_to;
 mod change_tack;
+mod chicken_and_egg;
 mod chock_full;
+mod claim_to_fame;
+mod close_tight_knit;
 mod closed_compounds;
+mod code_in_write_in;
+mod comfortable_with;
 mod comma_fixes;
+mod complain_as_noun;
 mod compound_nouns;
 mod compound_subject_i;
 mod confident;
+mod convenient_store;
 mod correct_number_suffix;
+mod crave_for;
 mod criteria_phenomena;
 mod cure_for;
 mod currency_placement;
 mod damages;
 mod dashes;
 mod day_and_age;
+mod deny_offer;
 mod despite_it_is;
 mod despite_of;
 mod determiner_without_noun;
 mod did_past;
 mod didnt;
+mod dig_under_the_hood;
 mod discourse_markers;
 mod disjoint_prefixes;
+mod dissemble_disassemble;
 mod do_mistake;
 mod dot_initialisms;
 mod double_click;
@@ -62,42 +94,71 @@ mod double_modal;
 mod ellipsis_length;
 mod else_possessive;
 mod ever_every;
+mod ever_pronoun_rel_pronoun;
 mod everyday;
+mod except_of;
+mod expand_favourite;
 mod expand_memory_shorthands;
+mod expand_people;
 mod expand_time_shorthands;
 mod expr_linter;
+mod fall_below;
 mod far_be_it;
 mod fascinated_by;
 mod fed_up_with;
 mod feel_fell;
+mod fellow_co_redundancy;
 mod few_units_of_time_ago;
 mod filler_words;
 mod find_fine;
 mod first_aid_kit;
+mod fish_nor_fowl;
 mod flesh_out_vs_full_fledged;
+mod foot_inch_minute_second_symbols;
+mod for_free_of_charge;
 mod for_noun;
+mod for_same_reason;
+mod for_the_nth_time;
 mod free_predicate;
 mod friend_of_me;
+mod full_to_the_brim;
+mod get_pass_go_pass;
+mod go_missing;
 mod go_so_far_as_to;
+mod go_to_sleep;
 mod go_to_war;
+mod gonna_gotta_wanna;
 mod good_at;
 mod handful;
+mod handful_of_more;
+mod have_a_hard_time;
 mod have_pronoun;
 mod have_take_a_look;
 mod hedging;
 mod hello_greeting;
+mod helped_past;
 mod hereby;
+mod high_low_standards;
 mod hop_hope;
 mod hope_youre;
+mod how_does_compared;
 mod how_to;
 mod hyphenate_number_day;
 mod i_am_agreement;
 mod if_wouldve;
+mod implement_in;
+mod in_demand_in_depth;
+mod in_favour_of_doing;
 mod in_on_the_cards;
+mod in_ones_defense;
+mod in_stock;
+mod in_time_from_now;
 mod inflected_verb_after_to;
+mod informal_laughter;
 mod initialism_linter;
 mod initialisms;
 mod interested_in;
+mod it_are_the_one;
 mod it_is;
 mod it_looks_like_that;
 mod it_would_be;
@@ -105,7 +166,9 @@ mod its_contraction;
 mod its_possessive;
 mod jealous_of;
 mod johns_hopkins;
+mod jump_the_gun;
 mod lead_rise_to;
+mod leaving_in_droves;
 mod left_right_hand;
 mod less_worse;
 mod let_to_do;
@@ -114,7 +177,9 @@ mod likewise;
 mod lint;
 mod lint_group;
 mod lint_kind;
+mod little_known;
 mod long_sentences;
+mod long_time_ago;
 mod look_down_ones_nose;
 mod looking_forward_to;
 mod map_phrase_linter;
@@ -138,37 +203,54 @@ mod most_number;
 mod most_of_the_times;
 mod multiple_frequency_adverbs;
 mod multiple_sequential_pronouns;
+mod nail_in_coffin;
 mod nail_on_the_head;
+mod naked_eye;
 mod need_to_noun;
 mod no_french_spaces;
+mod no_harm_no_foul;
 mod no_longer;
+mod no_longer_pronoun;
 mod no_match_for;
-mod no_oxford_comma;
+mod nobel_noble;
 mod nobody;
 mod nominal_wants;
 mod nor_modal_pronoun;
 mod not_only_inversion;
 mod noun_verb_confusion;
 mod number_suffix_capitalization;
+mod numeric_range_en_dash;
 mod obsess_preposition;
 mod of_course;
+mod off_limits;
 mod oldest_in_the_book;
 mod on_floor;
+mod on_the_fence;
 mod once_or_twice;
 mod one_and_the_same;
 mod one_of_the_singular;
+mod ones_own_accord;
 mod open_compounds;
 mod open_the_light;
 mod orthographic_consistency;
 mod ought_to_be;
+mod out_of_curiosity;
 mod out_of_date;
-mod oxford_comma;
+mod out_of_outside_the_box;
+mod out_of_the_window;
+mod over_plus;
+mod oxford_commas;
 mod oxymorons;
+mod pale_by_comparison;
+mod passionate_about;
+mod pay_for_price;
 mod phrasal_verb_as_compound_noun;
 mod phrase_set_corrections;
 mod pique_interest;
+mod pleaded_pled;
 mod plural_decades;
 mod plural_wrong_word_of_phrase;
+mod pooled_linter;
 mod possessive_noun;
 mod possessive_your;
 mod progressive_needs_be;
@@ -185,21 +267,29 @@ mod quote_spacing;
 mod reason_for_doing;
 mod redundant_acronyms;
 mod redundant_additive_adverbs;
+mod redundant_almost_nearly;
+mod redundant_firsts;
 mod redundant_progressive_comparative;
+mod redundant_self;
+mod regimen_regiment;
 mod regionalisms;
 mod regular_irregulars;
 mod repeated_words;
 mod respond;
 mod right_click;
 mod rise_the_ranks;
+mod rogue_rouge;
 mod roller_skated;
+mod run_into_problems_or_trouble;
 mod safe_to_save;
 mod save_to_safe;
 mod sentence_capitalization;
 mod shoot_oneself_in_the_foot;
+mod show_case;
 mod simple_past_to_past_participle;
 mod since_duration;
 mod single_be;
+mod sneaked_snuck;
 mod some_without_article;
 mod something_is;
 mod somewhat_something;
@@ -210,62 +300,99 @@ mod spell_check;
 mod spelled_numbers;
 mod split_words;
 mod subject_pronoun;
+mod such_shame;
 mod suggestion;
+mod summary_summery;
 mod take_a_look_to;
+mod take_care_of;
 mod take_medicine;
+mod take_pride_in;
 mod take_serious;
 mod that_than;
 mod that_which;
 mod the_how_why;
+mod the_last_days;
 mod the_my;
 mod the_point_for;
 mod the_proper_noun_possessive;
+mod the_the_to_that_the;
+mod themself;
 mod then_than;
+mod there_is_agreement;
+mod there_own;
+mod therein;
 mod theres;
 mod theses_these;
 mod theyre_confusions;
 mod thing_think;
 mod this_type_of_thing;
 mod though_thought;
+mod thrive_on;
 mod throw_away;
+mod throw_baby_with_bathwater;
 mod throw_rubbish;
+mod till_date;
 mod to_adverb;
+mod to_to;
 mod to_two_too;
+mod tote_tout;
 mod touristic;
 mod transposed_space;
 mod try_ones_hand_at;
+mod try_ones_luck;
 mod unclosed_quotes;
 mod update_place_names;
+mod use_ellipsis_character;
 mod use_title_case;
 mod verb_to_adjective;
+mod very_less;
 mod very_unique;
 mod vice_versa;
 mod vicious_loop;
+mod waist_waste;
 mod was_aloud;
 mod way_too_adjective;
+mod web_scraping;
 mod weir_rules;
 mod well_educated;
+mod went_ahead_and_agreement;
 mod were_where;
 mod whereas;
 mod whom_subject_of_verb;
 mod widely_accepted;
+mod will_non_lemma;
 mod win_prize;
 mod wish_could;
+mod with_open_arms;
 mod wordpress_dotcom;
 mod worth_to_do;
 mod would_never_have;
 mod wrong_apostrophe;
+mod wrong_negative;
 
-pub use expr_linter::{Chunk, ExprLinter};
+pub use expr_linter::{Chunk, ExprLinter, Sentence};
 pub use initialism_linter::InitialismLinter;
 pub use lint::Lint;
-pub use lint_group::{LintGroup, LintGroupConfig};
+pub use lint_group::{
+    FlatConfig, HumanReadableSetting, HumanReadableStructuredConfig, LintGroup, StructuredConfig,
+};
 pub use lint_kind::LintKind;
 pub use map_phrase_linter::MapPhraseLinter;
 pub use map_phrase_set_linter::MapPhraseSetLinter;
+#[cfg(test)]
+pub(crate) use pooled_linter::PooledLinter;
+#[cfg(test)]
+pub(crate) use pooled_linter::for_tests::create_test_pool;
 pub use suggestion::{Suggestion, SuggestionCollectionExt};
 
 use crate::{Document, LSend, render_markdown};
+
+/// Maximum number of sequential lint suggestions explored when searching for a
+/// transformation path (for example in Weir rule tests or linting test helpers).
+///
+/// This is a compile-time limit that prevents unbounded search when suggestion
+/// application cycles or deep multi-step fixes are involved.
+pub const MAX_SUGGESTION_TRANSFORMATION_DEPTH: usize = 100;
 
 /// A __stateless__ rule that searches documents for grammatical errors.
 ///
@@ -322,7 +449,7 @@ pub mod debug {
             tokens
                 .iter()
                 .filter(|t| !t.kind.is_unlintable())
-                .map(|t| t.span.get_content_string(src))
+                .map(|t| t.get_str(src))
                 .collect::<String>()
         };
 
@@ -390,10 +517,7 @@ pub mod tests {
                 // Check if word matches any of the patterns in the map
                 for (errors, fixes) in self.map {
                     // if any of the errors match, add all of the corrections
-                    if errors
-                        .iter()
-                        .any(|&e| word_chars.eq_ignore_ascii_case_str(e))
-                    {
+                    if errors.iter().any(|&e| word_chars.eq_str(e)) {
                         corr.push((wordspan, word_chars, fixes))
                     }
                 }
@@ -415,7 +539,7 @@ pub mod tests {
                         span: *ws,
                         lint_kind: LintKind::Spelling,
                         suggestions,
-                        message: "Test linter for 'linting assertion' tests".to_string(),
+                        message: "Test linter for 'linting assertion' tests".to_owned(),
                         ..Default::default()
                     }
                 })
@@ -476,8 +600,13 @@ pub mod tests {
         // dbg!(&lints);
         if lints.len() != count {
             panic!(
-                "Expected \"{text}\" to create {count} lints, but it created {}.",
-                lints.len()
+                "Expected \"{text}\" to create {count} lints, but it created {}.\n{}",
+                lints.len(),
+                lints
+                    .iter()
+                    .map(|l| l.message.clone())
+                    .collect::<Vec<_>>()
+                    .join("\n")
             );
         }
     }
@@ -557,7 +686,8 @@ pub mod tests {
     /// Applies suggestions iteratively until any combination produces the expected result.
     ///
     /// Explores all possible suggestion branches (depth-first search) until finding a path
-    /// that produces the expected result. Stops after 100 iterations to prevent infinite loops.
+    /// that produces the expected result. Stops after
+    /// [`MAX_SUGGESTION_TRANSFORMATION_DEPTH`] iterations to prevent infinite loops.
     ///
     /// Use this when you want to verify that *some* suggestion sequence produces the
     /// expected result, without caring which specific suggestions are used.
@@ -565,7 +695,14 @@ pub mod tests {
     /// See issue #950: https://github.com/Automattic/harper/issues/950
     #[track_caller]
     pub fn assert_suggestion_result(text: &str, mut linter: impl Linter, needle: &str) {
-        if search_for_suggestion(DocumentType::PlainEnglish, text, &mut linter, needle, 0) {
+        if search_for_suggestion(
+            DocumentType::PlainEnglish,
+            text,
+            &mut linter,
+            needle,
+            0,
+            SearchStrategy::AllSuggestions,
+        ) {
             return;
         }
 
@@ -575,12 +712,48 @@ pub mod tests {
         );
     }
 
+    /// Use this when you want to verify that the first suggestion is the most likely correct fix.
+    /// Handy for linters which offer multiple suggestions but prioritize their best guess.
+    #[track_caller]
+    pub fn assert_first_suggestion_result(text: &str, mut linter: impl Linter, needle: &str) {
+        if search_for_suggestion(
+            DocumentType::PlainEnglish,
+            text,
+            &mut linter,
+            needle,
+            0,
+            SearchStrategy::FirstSuggestionOnly,
+        ) {
+            return;
+        }
+
+        panic!(
+            "The primary suggestion sequence failed to produce the expected result.\n\
+            Expected: \"{needle}\""
+        );
+    }
+
     /// DFS implementation using markdown instead of plain English
     #[track_caller]
     pub fn assert_markdown_suggestion_result(text: &str, mut linter: impl Linter, needle: &str) {
-        if !search_for_suggestion(DocumentType::Markdown, text, &mut linter, needle, 0) {
+        if !search_for_suggestion(
+            DocumentType::Markdown,
+            text,
+            &mut linter,
+            needle,
+            0,
+            SearchStrategy::AllSuggestions,
+        ) {
             panic!("No suggestion sequence produced the expected result.\nExpected: {needle}");
         }
+    }
+
+    #[derive(Copy, Clone, PartialEq, Eq)]
+    enum SearchStrategy {
+        /// Explores all suggestion sequences (the current default behavioral standard).
+        AllSuggestions,
+        /// Only explores the very first suggestion path (for validating primary/best fixes).
+        FirstSuggestionOnly,
     }
 
     /// Recursively searches all suggestion combinations using depth-first search.
@@ -591,22 +764,34 @@ pub mod tests {
         linter: &mut impl Linter,
         needle: &str,
         depth: usize,
+        strategy: SearchStrategy,
     ) -> bool {
         // Prevent infinite recursion (e.g. cycles in suggestions)
-        if depth > 100 {
-            eprintln!("⚠️  Reached depth limit (100)");
+        if depth > super::MAX_SUGGESTION_TRANSFORMATION_DEPTH {
+            eprintln!(
+                "⚠️  Reached depth limit ({})",
+                super::MAX_SUGGESTION_TRANSFORMATION_DEPTH
+            );
             return false;
         }
 
         // Check if we've reached the expected result
         if text == needle {
+            // When tests are made via cut & paste it's easy to miss editing some of the corrections
+            // and the test will silently pass
+            if depth == 0 {
+                eprintln!("⚠️  Input and expected are both '{needle}' - is the test correct?");
+            }
             return true;
+        } else if cfg!(debug_assertions) {
+            eprintln!(" 🔎 Checking... \"{text}\"");
         }
 
         // Lint current text and try each suggestion branch
         let chars: Vec<char> = text.chars().collect();
         let document = create_document(&chars, doc_type);
-        let lints = linter.lint(&document);
+        let mut lints = linter.lint(&document);
+        lints.sort_by_key(|l| l.priority);
 
         if let Some(lint) = lints.first() {
             for sug in lint.suggestions.iter() {
@@ -615,8 +800,13 @@ pub mod tests {
                 let next: String = chars_copy.iter().collect();
 
                 // Recursively search this branch
-                if search_for_suggestion(doc_type, &next, linter, needle, depth + 1) {
+                if search_for_suggestion(doc_type, &next, linter, needle, depth + 1, strategy) {
                     return true;
+                }
+
+                // If we're only checking the first suggestion, stop after the first one
+                if strategy == SearchStrategy::FirstSuggestionOnly {
+                    break;
                 }
             }
         }
@@ -680,6 +870,7 @@ pub mod tests {
             &mut linter,
             bad_suggestion,
             0,
+            SearchStrategy::AllSuggestions,
         ) {
             return;
         }
@@ -751,6 +942,10 @@ pub mod tests {
                         "  ✅ Found good suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
                     );
                     unseen_good.remove(suggestion_text.as_str());
+                } else {
+                    eprintln!(
+                        "  ⚠️  Found unexpected suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
+                    );
                 }
             }
         }
@@ -759,7 +954,6 @@ pub mod tests {
         if !found_bad.is_empty() || !unseen_good.is_empty() {
             eprintln!("\n=== Test Summary ===");
 
-            // In the summary section, change these loops:
             if !found_bad.is_empty() {
                 eprintln!("\n❌ Found {} bad suggestions:", found_bad.len());
                 for (i, j, text) in &found_bad {
@@ -767,7 +961,6 @@ pub mod tests {
                 }
             }
 
-            // And for the good suggestions:
             if !unseen_good.is_empty() {
                 eprintln!(
                     "\n❌ Missing {} expected good suggestions:",
@@ -813,13 +1006,15 @@ pub mod tests {
         let lints = linter.lint(&test);
 
         // Just check the first lint for now - TODO
-        if let Some(lint) = lints.first()
-            && lint.message != expected_message
-        {
-            panic!(
-                "Expected lint message \"{expected_message}\", but got \"{}\"",
-                lint.message
-            );
+        match lints.first() {
+            Some(lint) => {
+                assert_eq!(
+                    lint.message, expected_message,
+                    "Expected lint message \"{expected_message}\", but got \"{}\"",
+                    lint.message
+                );
+            }
+            None => panic!("Expected lint message \"{expected_message}\", but no lints were found"),
         }
     }
 }

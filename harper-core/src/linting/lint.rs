@@ -47,6 +47,16 @@ impl Lint {
     pub fn message_html(&self) -> String {
         render_markdown(&self.message)
     }
+
+    /// Get the lint's span content as a slice of characters.
+    pub fn get_ch<'a>(&self, source: &'a [char]) -> &'a [char] {
+        self.span.get_content(source)
+    }
+
+    /// Get the lint's span content as a string.
+    pub fn get_str(&self, source: &[char]) -> String {
+        self.span.get_content_string(source)
+    }
 }
 
 impl Default for Lint {

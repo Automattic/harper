@@ -15,18 +15,18 @@ impl Default for General {
     fn default() -> Self {
         let positive = SequenceExpr::default().t_aco("its").then_whitespace().then(
             UPOSSet::new(&[UPOS::VERB, UPOS::AUX, UPOS::DET, UPOS::PRON])
-                .or(WordSet::new(&[
+                .or(WordSet::new([
                     "anywhere",
                     "everywhere",
                     "somewhere",
                     "nowhere",
                 ]))
-                .or(WordSet::new(&["because"])),
+                .or(WordSet::new(["because"])),
         );
 
         let exceptions = SequenceExpr::anything()
             .then_anything()
-            .then_word_set(&["own", "intended"]);
+            .then_word_set(["own", "intended"]);
 
         let inverted = SequenceExpr::unless(exceptions);
 
@@ -54,7 +54,11 @@ impl Linter for General {
                 self.expr
                     .iter_matches(chunk, source)
                     .filter_map(|match_span| {
-                        self.match_to_lint(&chunk[match_span.start..], source)
+                        let preceding_token = chunk[..match_span.start]
+                            .iter()
+                            .rev()
+                            .find(|tok| !tok.kind.is_whitespace());
+                        self.match_to_lint(&chunk[match_span.start..], preceding_token, source)
                     }),
             );
         }
@@ -68,12 +72,17 @@ impl Linter for General {
 }
 
 impl General {
-    fn match_to_lint(&self, toks: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(
+        &self,
+        toks: &[Token],
+        preceding_token: Option<&Token>,
+        source: &[char],
+    ) -> Option<Lint> {
         let offender = toks.first()?;
-        let offender_chars = offender.span.get_content(source);
+        let offender_chars = offender.get_ch(source);
 
         let modifier = toks.get(2)?;
-        let modifier_text = modifier.span.get_content_string(source);
+        let modifier_text = modifier.get_str(source);
         let modifier_lower = modifier_text.to_ascii_lowercase();
         let next_kind = toks.get(4).map(|tok| tok.kind.clone());
 
@@ -114,6 +123,15 @@ impl General {
         let strong_predicative_verbs = [
             "had", "been", "got", "called", "named", "known", "termed", "titled",
         ];
+
+        // A possessive `its` introduced by a preposition is part of a noun phrase, even
+        // when the next word is tagged as a verb: "in its reading", "of its making".
+        if modifier.kind.is_upos(UPOS::VERB)
+            && !strong_predicative_verbs.contains(&modifier_lower.as_str())
+            && preceding_token.is_some_and(|tok| tok.kind.is_preposition())
+        {
+            return None;
+        }
 
         let should_consider = if exact_contraction_words.contains(&modifier_lower.as_str())
             || determiner_like_words.contains(&modifier_lower.as_str())
@@ -190,7 +208,7 @@ impl General {
             return false;
         }
 
-        let modifier_text = modifier.span.get_content_string(source);
+        let modifier_text = modifier.get_str(source);
 
         !["had", "been", "got"]
             .iter()
@@ -198,7 +216,7 @@ impl General {
     }
 
     fn is_likely_predicative_participle(tok: &Token, source: &[char]) -> bool {
-        let text = tok.span.get_content_string(source);
+        let text = tok.get_str(source);
 
         ["called", "named", "known", "termed", "titled"]
             .iter()

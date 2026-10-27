@@ -12,13 +12,13 @@ pub struct VerbToAdjective {
 
 impl Default for VerbToAdjective {
     fn default() -> Self {
-        let expr = SequenceExpr::word_set(&["the", "a", "an"])
+        let expr = SequenceExpr::word_set(["the", "a", "an"])
             .t_ws()
             .then_kind_where(|kind| kind.is_degree_adverb())
             .t_ws()
             .then_kind_where(|kind| kind.is_noun() && kind.is_verb_progressive_form())
             .t_ws()
-            .then(WordSet::new(&["of"]));
+            .then(WordSet::new(["of"]));
 
         Self { expr }
     }
@@ -46,8 +46,8 @@ impl ExprLinter for VerbToAdjective {
             suggestions: vec![],
             message: format!(
                 "`{}` is an adverb. Before the noun `{}`, this phrase more likely needs an adjective.",
-                adverb.span.get_content_string(source),
-                noun.span.get_content_string(source),
+                adverb.get_str(source),
+                noun.get_str(source),
             ),
             priority: 31,
         })

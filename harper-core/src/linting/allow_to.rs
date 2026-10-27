@@ -12,7 +12,7 @@ impl Default for AllowTo {
     fn default() -> Self {
         Self {
             // Note: Does not include "allowed to", which is a legitimate usage in its own right.
-            exp: SequenceExpr::word_set(&["allow", "allowing", "allows"])
+            exp: SequenceExpr::word_set(["allow", "allowing", "allows"])
                 .t_ws()
                 .t_aco("to")
                 .then_optional(SequenceExpr::default().t_ws().then_adverb())
@@ -32,7 +32,7 @@ impl ExprLinter for AllowTo {
     fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
         let span = toks.span()?;
         let first = toks.first()?;
-        let allow = first.span.get_content_string(_src);
+        let allow = first.get_str(_src);
 
         let message = format!(
             "For correct usage, either add a subject between `{allow}` and `to` (e.g., `{allow} someone to do`) or use the present participle (e.g., `{allow} doing`)."

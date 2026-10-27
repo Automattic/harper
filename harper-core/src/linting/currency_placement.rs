@@ -52,7 +52,7 @@ fn generate_lint_for_tokens(a: &Token, b: &Token, document: &Document) -> Option
             span,
             lint_kind: LintKind::Formatting,
             suggestions: vec![Suggestion::ReplaceWith(correct)],
-            message: "The position of the currency symbol matters.".to_string(),
+            message: "The position of the currency symbol matters.".to_owned(),
             priority: 63,
         })
     } else {

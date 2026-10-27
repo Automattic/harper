@@ -21,6 +21,7 @@ impl Linter for CapitalizePersonalPronouns {
                         | ['i', '\'', 'l', 'l']
                         | ['i', '\'', 'm']
                         | ['i', '\'', 'v', 'e']
+                        | ['i', 'v', 'e']
                 ) {
                     let mut replacement = span_content.to_vec();
                     replacement[0] = 'I';
@@ -29,7 +30,7 @@ impl Linter for CapitalizePersonalPronouns {
                         lint_kind: LintKind::Capitalization,
                         suggestions: vec![Suggestion::ReplaceWith(replacement)],
                         message: "The first-person singular subject pronoun must be capitalized."
-                            .to_string(),
+                            .to_owned(),
                         priority: 31,
                     })
                 } else {

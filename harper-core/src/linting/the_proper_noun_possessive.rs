@@ -20,8 +20,7 @@ impl Default for TheProperNounPossessive {
                         && t.kind.is_titlecase()
                         && !t.kind.is_lowercase()
                         && !t
-                            .span
-                            .get_content(s)
+                            .get_ch(s)
                             .eq_any_ignore_ascii_case_str(&["internet's", "internet’s"])
                 }),
         }
@@ -42,7 +41,7 @@ impl ExprLinter for TheProperNounPossessive {
             suggestions: vec![Suggestion::Remove],
             message:
                 "The definite article `the` is redundant before a proper noun in the possessive."
-                    .to_string(),
+                    .to_owned(),
             ..Default::default()
         })
     }

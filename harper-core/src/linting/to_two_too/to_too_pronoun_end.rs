@@ -2,7 +2,6 @@ use crate::{
     Token, TokenKind,
     char_string::CharStringExt,
     expr::{AnchorEnd, AnchorStart, Expr, SequenceExpr},
-    patterns::WhitespacePattern,
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
@@ -25,18 +24,18 @@ impl Default for ToTooPronounEnd {
                         |_| false,
                         &["`", "\"", "'", "“", "”", "‘", "’"],
                     )
-                    .then_optional(WhitespacePattern),
+                    .then_optional_whitespace(),
             ),
         ])
         .then_pronoun()
         .t_ws()
         .t_aco("to")
-        .then_any_of(vec![
+        .then_any_of([
             Box::new(SequenceExpr::default().then_kind_is_but_is_not_except(
                 TokenKind::is_punctuation,
                 |_| false,
                 &["`", "\"", "'", "“", "”", "‘", "’"],
-            )),
+            )) as Box<dyn Expr>,
             Box::new(AnchorEnd),
         ]);
 
@@ -54,20 +53,18 @@ impl ExprLinter for ToTooPronounEnd {
     }
 
     fn match_to_lint(&self, tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let to_tok = tokens.iter().find(|t| {
-            t.span
-                .get_content(source)
-                .eq_ignore_ascii_case_chars(&['t', 'o'])
-        })?;
+        let to_tok = tokens
+            .iter()
+            .find(|t| t.get_ch(source).eq_ch(&['t', 'o']))?;
 
         Some(Lint {
             span: to_tok.span,
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "too",
-                to_tok.span.get_content(source),
+                to_tok.get_ch(source),
             )],
-            message: "Use `too` here to mean ‘also’ or an excessive degree.".to_string(),
+            message: "Use `too` here to mean ‘also’ or an excessive degree.".to_owned(),
             ..Default::default()
         })
     }

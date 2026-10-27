@@ -13,11 +13,11 @@ pub struct LetToDo {
 impl Default for LetToDo {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["let", "lets", "let's"])
+            expr: SequenceExpr::word_set(["let", "lets", "let's"])
                 .t_ws()
                 .then_any_of(vec![
                     Box::new(SequenceExpr::default().then_object_pronoun()),
-                    Box::new(SequenceExpr::word_set(&[
+                    Box::new(SequenceExpr::word_set([
                         // Elective existential indefinite pronouns
                         "anybody",
                         "anyone",
@@ -33,9 +33,9 @@ impl Default for LetToDo {
                         "someone",
                     ])),
                     Box::new(
-                        SequenceExpr::word_set(&["any", "every", "no", "some"])
+                        SequenceExpr::word_set(["any", "every", "no", "some"])
                             .t_ws()
-                            .then_word_set(&["body", "one"]),
+                            .then_word_set(["body", "one"]),
                     ),
                 ])
                 .t_ws()
@@ -56,7 +56,7 @@ impl ExprLinter for LetToDo {
             span: toks[toks.len() - 2..].span()?,
             lint_kind: LintKind::Usage,
             suggestions: vec![Suggestion::Remove],
-            message: "The word `to` should not be used with `let` in this way.".to_string(),
+            message: "The word `to` should not be used with `let` in this way.".to_owned(),
             ..Default::default()
         })
     }

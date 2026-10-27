@@ -14,7 +14,7 @@ impl DoubleClick {
         SequenceExpr::default()
             .t_aco("double")
             .t_ws()
-            .then_word_set(&["click", "clicked", "clicking", "clicks"])
+            .then_word_set(["click", "clicked", "clicking", "clicks"])
     }
 }
 
@@ -62,8 +62,8 @@ impl ExprLinter for DoubleClick {
         let span = matched_tokens.get(double_idx..=click_idx)?.span()?;
         let template = span.get_content(source);
 
-        let double_word = matched_tokens.get(double_idx)?.span.get_content(source);
-        let click_word = matched_tokens.get(click_idx)?.span.get_content(source);
+        let double_word = matched_tokens.get(double_idx)?.get_ch(source);
+        let click_word = matched_tokens.get(click_idx)?.get_ch(source);
 
         let replacement: Vec<char> = double_word
             .iter()

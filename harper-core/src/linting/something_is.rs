@@ -11,7 +11,7 @@ pub struct SomethingIs {
 
 impl Default for SomethingIs {
     fn default() -> Self {
-        let forms = WordSet::new(&["somethings", "anythings", "everythings", "nothings"]);
+        let forms = WordSet::new(["somethings", "anythings", "everythings", "nothings"]);
 
         let expr = SequenceExpr::with(forms)
             .t_ws()
@@ -31,7 +31,7 @@ impl ExprLinter for SomethingIs {
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let offender = matched_tokens.first()?;
-        let original = offender.span.get_content(source);
+        let original = offender.get_ch(source);
         let stem_len = original.len().checked_sub(1)?;
         let stem = original[..stem_len].to_vec();
 

@@ -1,0 +1,12 @@
+expr main (as much than)
+
+let message "This epxression requires `as` and not `than`."
+let description "Corrects `as much than` to `as much as`."
+let kind "Usage"
+let becomes "as much as"
+
+test "Ahhh when the slave violation is as much than 22%, likely it is timing related." "Ahhh when the slave violation is as much as 22%, likely it is timing related."
+test "Editing a small C project with VS studio drains by battery 2-3 times as much than editing it with Atom" "Editing a small C project with VS studio drains by battery 2-3 times as much as editing it with Atom"
+# test "Problem is float32 uses twice as much space than float16 and four times as much than float8." "Problem is float32 uses twice as much space as float16 and four times as much as float8."
+test "You'll lift heavier if your bodyweight is larger but if you weight 112 kg you'll not lift twice as much than the 56 kg record man." "You'll lift heavier if your bodyweight is larger but if you weight 112 kg you'll not lift twice as much as the 56 kg record man."
+test "This is nearly twice as much than what was spent in 2004 when political and issue-advocacy television advertising rang in at $1.7 billion." "This is nearly twice as much as what was spent in 2004 when political and issue-advocacy television advertising rang in at $1.7 billion."

@@ -42,13 +42,11 @@ impl ExprLinter for PluralDecades {
         src: &[char],
         ctx: Option<(&[Token], &[Token])>,
     ) -> Option<Lint> {
-        // eprintln!("📅 {}", crate::linting::debug::format_lint_match(toks, ctx, src));
         if toks.len() != 3 {
             return None;
         }
 
-        let (decade_chars, _s_chars) =
-            (toks[0].span.get_content(src), toks[2].span.get_content(src));
+        let (decade_chars, _s_chars) = (toks[0].get_ch(src), toks[2].get_ch(src));
 
         // TODO does not yet support two-digit decades like 80's
         // if decade_chars.len() != 4 || !decade_chars.ends_with(&['0']) {
@@ -56,8 +54,7 @@ impl ExprLinter for PluralDecades {
             return None;
         }
 
-        let (decade_chars, s_chars) =
-            (toks[0].span.get_content(src), toks[2].span.get_content(src));
+        let (decade_chars, s_chars) = (toks[0].get_ch(src), toks[2].get_ch(src));
 
         let (before_context, after_context): (Option<&[Token]>, Option<&[Token]>) = match ctx {
             Some((pw, nw)) => {

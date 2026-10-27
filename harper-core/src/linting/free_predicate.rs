@@ -2,7 +2,6 @@ use crate::Token;
 use crate::TokenKind;
 use crate::char_string::CharStringExt;
 use crate::expr::{Expr, ExprMap, SequenceExpr};
-use crate::patterns::WhitespacePattern;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::linting::expr_linter::Chunk;
@@ -18,7 +17,7 @@ impl Default for FreePredicate {
         let no_modifier = SequenceExpr::with(linking_like)
             .t_ws()
             .then(matches_fee)
-            .then_optional(WhitespacePattern)
+            .then_optional_whitespace()
             .then(follows_fee);
 
         map.insert(no_modifier, 2);
@@ -28,7 +27,7 @@ impl Default for FreePredicate {
             .then_adverb()
             .t_ws()
             .then(matches_fee)
-            .then_optional(WhitespacePattern)
+            .then_optional_whitespace()
             .then(follows_fee);
 
         map.insert(with_adverb, 4);
@@ -53,7 +52,7 @@ impl ExprLinter for FreePredicate {
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "free",
-                offending.span.get_content(source),
+                offending.get_ch(source),
             )],
             message: "Use `free` here to show that something costs nothing.".to_owned(),
             priority: 38,
@@ -71,7 +70,7 @@ fn matches_fee(token: &Token, source: &[char]) -> bool {
     }
 
     const FEE: [char; 3] = ['f', 'e', 'e'];
-    let content = token.span.get_content(source);
+    let content = token.get_ch(source);
 
     content.len() == FEE.len()
         && content
@@ -92,11 +91,9 @@ fn follows_fee(token: &Token, _source: &[char]) -> bool {
 
 fn linking_like(token: &Token, source: &[char]) -> bool {
     const BE_FORMS: [&str; 8] = ["be", "is", "am", "are", "was", "were", "being", "been"];
-    let content = token.span.get_content(source);
+    let content = token.get_ch(source);
 
-    BE_FORMS
-        .iter()
-        .any(|form| content.eq_ignore_ascii_case_str(form))
+    BE_FORMS.iter().any(|form| content.eq_str(form))
 }
 
 #[cfg(test)]

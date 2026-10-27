@@ -33,7 +33,7 @@ impl ExprLinter for LookingForwardTo {
 
     fn match_to_lint(&self, matched_tokens: &[Token], src: &[char]) -> Option<Lint> {
         let span = matched_tokens.last()?.span;
-        let verb = matched_tokens.last()?.span.get_content_string(src);
+        let verb = matched_tokens.last()?.get_str(src);
         if verb.ends_with("ing") {
             return None;
         }

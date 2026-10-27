@@ -66,10 +66,7 @@ fn replacement_for(
         base
     };
 
-    Suggestion::replace_with_match_case(
-        replacement.chars().collect(),
-        verb.span.get_content(source),
-    )
+    Suggestion::replace_with_match_case(replacement.chars().collect(), verb.get_ch(source))
 }
 
 impl ExprLinter for TakeMedicine {
@@ -101,7 +98,7 @@ impl ExprLinter for TakeMedicine {
             lint_kind: LintKind::Usage,
             suggestions,
             message: "Use a verb like `take` or `swallow` with medicine instead of `eat`."
-                .to_string(),
+                .to_owned(),
             priority: 63,
         })
     }

@@ -1,43 +1,46 @@
 #![doc = include_str!("../README.md")]
 
-use harper_core::spell::{Dictionary, FstDictionary, MutableDictionary, WordId};
-use hashbrown::HashMap;
-use std::collections::BTreeMap;
-use std::fs::File;
-use std::io::{self, BufReader};
-use std::path::PathBuf;
-// use std::sync::Arc;
-use std::{fs, process};
+use std::{
+    collections::BTreeMap,
+    fs::{self, File},
+    io::{self, BufReader},
+    path::PathBuf,
+    process,
+};
 
 use anyhow::anyhow;
 use ariadne::{Color, Label, Report, ReportKind, Source};
 use clap::{CommandFactory, Parser, ValueHint};
 use clap_complete::{Shell, generate};
 use dirs::{config_dir, data_local_dir};
-use harper_core::linting::LintGroup;
-use harper_core::parsers::{IsolateEnglish, MarkdownOptions};
-use harper_core::weir::WeirLinter;
-use harper_core::{
-    CharStringExt, Dialect, DictWordMetadata, OrthFlags, Span, TokenKind, TokenStringExt,
-};
-#[cfg(feature = "training")]
-use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
-
-use harper_stats::Stats;
+use hashbrown::HashMap;
 use serde::Serialize;
 use serde_json::Value;
 
+use harper_core::{
+    CharStringExt, Dialect, DictWordMetadata, OrthFlags, Span, TokenKind, TokenStringExt,
+    linting::LintGroup,
+    parsers::{IsolateEnglish, MarkdownOptions},
+    spell::{CanonicalWordId, Dictionary, FstDictionary, MutableDictionary},
+    weir::WeirLinter,
+};
+#[cfg(feature = "training")]
+use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
+use harper_stats::Stats;
+
+mod annotate;
 mod input;
+mod lint;
+mod lint_engine;
+mod lint_reporter;
+
+use crate::lint::{OutputFormat, lint};
+
+use annotate::AnnotationType;
 use input::{
     AnyInput, InputTrait,
     single_input::{SingleInput, SingleInputOptionExt, SingleInputTrait},
 };
-
-mod annotate;
-use annotate::AnnotationType;
-
-mod lint;
-use crate::lint::{OutputFormat, lint};
 use lint::LintOptions;
 
 /// A debugging tool for the Harper grammar checker.
@@ -89,6 +92,12 @@ enum Args {
         /// Output format for lint results.
         #[arg(long, value_enum, default_value_t = OutputFormat::Default)]
         format: OutputFormat,
+        /// Suppress informational status messages and only output actual lint errors.
+        #[arg(long)]
+        quiet: bool,
+        /// Suppress parallel processing of files (for issue #4513).
+        #[arg(long)]
+        no_parallel: bool,
     },
     /// Parse a provided document and print the detected symbols.
     Parse {
@@ -125,7 +134,10 @@ enum Args {
         brief: bool,
     },
     /// Get all the forms of a word using the affixes.
-    Forms { line: String },
+    Forms {
+        #[arg(num_args = 1..)]
+        lines: Vec<String>,
+    },
     /// Emit a decompressed, line-separated list of the words in Harper's dictionary.
     Words,
     /// Summarize a lint record
@@ -207,7 +219,7 @@ enum Args {
     /// As long as there's either an open or hyphenated spelling.
     Compounds,
     /// Emit a decompressed, line-separated list of the words in Harper's dictionary
-    /// which occur in more than one lettercase variant.    
+    /// which occur in more than one lettercase variant.
     CaseVariants,
     /// Emit a list of each noun phrase contained within the input
     NominalPhrases {
@@ -219,6 +231,11 @@ enum Args {
         /// The location of the Weir file to test
         #[arg(value_hint = ValueHint::FilePath)]
         input: PathBuf,
+    },
+    /// Get the correct capitalization of a word.
+    GetCorrectCapitalizationOf {
+        /// The word to get the correct capitalization for.
+        word: String,
     },
     /// Generate shell completions.
     #[command(hide = true)]
@@ -251,6 +268,8 @@ fn main() -> anyhow::Result<()> {
             file_dict_path,
             weirpacks,
             format,
+            quiet,
+            no_parallel,
         } => {
             let dialect = parse_dialect(&dialect_str)
                 .map_err(|e| anyhow!("Invalid dialect '{}': {}", dialect_str, e))?;
@@ -268,6 +287,8 @@ fn main() -> anyhow::Result<()> {
                     weirpack_inputs: weirpacks,
                     color,
                     format,
+                    quiet,
+                    no_parallel,
                 },
                 user_dict_path,
                 // TODO workspace_dict_path?
@@ -368,7 +389,7 @@ fn main() -> anyhow::Result<()> {
                         &[]
                     }),
                 )
-                .print((&*input_identifier, Source::from(source)))?;
+                .print((input_identifier.as_ref(), Source::from(source)))?;
 
             Ok(())
         }
@@ -431,65 +452,72 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::Forms { line } => {
-            let (word, annot) = line_to_parts(&line);
-
-            let curated_word_list = include_str!("../../harper-core/dictionary.dict");
-            let dict_lines = curated_word_list.split('\n');
-
-            let mut entry_in_dict = None;
-
-            // Check if the word is contained in the list.
-            for dict_line in dict_lines {
-                let (dict_word, dict_annot) = line_to_parts(dict_line);
-
-                if dict_word == word {
-                    entry_in_dict = Some((dict_word, dict_annot));
-                    break;
+        Args::Forms { lines } => {
+            for (i, line) in lines.iter().enumerate() {
+                if i > 0 {
+                    println!();
                 }
-            }
 
-            let summary = match &entry_in_dict {
-                Some((dict_word, dict_annot)) => {
-                    let mut status_summary = if dict_annot.is_empty() {
-                        format!("'{dict_word}' is already in the dictionary but not annotated.")
-                    } else {
-                        format!(
-                            "'{dict_word}' is already in the dictionary with annotation `{dict_annot}`."
-                        )
-                    };
+                let (word, annot) = line_to_parts(line);
 
-                    if !annot.is_empty() {
-                        if annot.as_str() != dict_annot.as_str() {
-                            status_summary
-                                .push_str("\n  Your annotations differ from the dictionary.\n");
-                        } else {
-                            status_summary
-                                .push_str("\n  Your annotations are the same as the dictionary.\n");
-                        }
+                let curated_word_list = include_str!("../../harper-core/dictionary.dict");
+                let dict_lines = curated_word_list.split('\n');
+
+                let mut entry_in_dict = None;
+
+                // Check if the word is contained in the list.
+                for dict_line in dict_lines {
+                    let (dict_word, dict_annot) = line_to_parts(dict_line);
+
+                    if dict_word == word {
+                        entry_in_dict = Some((dict_word, dict_annot));
+                        break;
                     }
-
-                    status_summary
                 }
-                None => format!("'{word}' is not in the dictionary yet."),
-            };
 
-            println!("{summary}");
+                let summary = match &entry_in_dict {
+                    Some((dict_word, dict_annot)) => {
+                        let mut status_summary = if dict_annot.is_empty() {
+                            format!("'{dict_word}' is already in the dictionary but not annotated.")
+                        } else {
+                            format!(
+                                "'{dict_word}' is already in the dictionary with annotation `{dict_annot}`."
+                            )
+                        };
 
-            if let Some((dict_word, dict_annot)) = &entry_in_dict {
-                println!("Old, from the dictionary:");
-                print_word_derivations(dict_word, dict_annot, &FstDictionary::curated());
-            };
+                        if !annot.is_empty() {
+                            if annot.as_str() != dict_annot.as_str() {
+                                status_summary
+                                    .push_str("\n  Your annotations differ from the dictionary.\n");
+                            } else {
+                                status_summary.push_str(
+                                    "\n  Your annotations are the same as the dictionary.\n",
+                                );
+                            }
+                        }
 
-            if !annot.is_empty() {
-                let rune_words = format!("1\n{line}");
-                let dict = MutableDictionary::from_rune_files(
-                    &rune_words,
-                    include_str!("../../harper-core/annotations.json"),
-                )?;
+                        status_summary
+                    }
+                    None => format!("'{word}' is not in the dictionary yet."),
+                };
 
-                println!("New, from you:");
-                print_word_derivations(&word, &annot, &dict);
+                println!("{summary}");
+
+                if let Some((dict_word, dict_annot)) = &entry_in_dict {
+                    println!("Old, from the dictionary:");
+                    print_word_derivations(dict_word, dict_annot, &FstDictionary::curated());
+                };
+
+                if !annot.is_empty() {
+                    let rune_words = format!("1\n{line}");
+                    let dict = MutableDictionary::from_rune_files(
+                        &rune_words,
+                        include_str!("../../harper-core/annotations.json"),
+                    )?;
+
+                    println!("New, from you:");
+                    print_word_derivations(&word, &annot, &dict);
+                }
             }
 
             Ok(())
@@ -694,7 +722,7 @@ fn main() -> anyhow::Result<()> {
 
             // Update affixes (text-based replacement with context awareness)
             let updated_affixes_string =
-                affixes_string.replace(&format!("\"{}\":", &old), &format!("\"{}\":", &new));
+                affixes_string.replace(&format!("\"{}\":", old), &format!("\"{}\":", new));
 
             // Verify that the updated affixes string is valid JSON
             serde_json::from_str::<Value>(&updated_affixes_string)
@@ -987,6 +1015,19 @@ fn main() -> anyhow::Result<()> {
                 process::exit(1);
             }
         }
+        Args::GetCorrectCapitalizationOf { word } => {
+            let word_chars: Vec<char> = word.chars().collect();
+            if let Some(correct_capitalization) =
+                curated_dictionary.get_correct_capitalization_of(&word_chars)
+            {
+                let correct_word: String = correct_capitalization.iter().collect();
+                println!("{correct_word}");
+            } else {
+                eprintln!("No correct capitalization found for '{word}'");
+                process::exit(1);
+            }
+            Ok(())
+        }
         Args::Completion { shell } => {
             generate(
                 shell,
@@ -1024,11 +1065,15 @@ fn line_to_parts(line: &str) -> (String, String) {
 fn print_word_derivations(word: &str, annot: &str, dictionary: &impl Dictionary) {
     println!("{word}/{annot}");
 
-    let id = WordId::from_word_str(word);
+    let id = CanonicalWordId::from_word_str(word);
 
-    let children = dictionary
-        .words_iter()
-        .filter(|e| dictionary.get_word_metadata(e).unwrap().derived_from == Some(id));
+    let children = dictionary.words_iter().filter(|word| {
+        dictionary
+            .get_word_metadata_exact(word)
+            .unwrap()
+            .derived_from
+            .contains(id)
+    });
 
     println!(" - {word}");
 

@@ -72,8 +72,12 @@ code {
 	@apply bg-primary-100 rounded p-1 dark:text-black;
 }
 
+a {
+	@apply underline;
+}
+
 #app {
-	@apply min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors duration-150;
+	@apply bg-white text-black dark:bg-black dark:text-white transition-colors duration-150;
 
 	font-family:
 		Atkinson Hyperlegible,

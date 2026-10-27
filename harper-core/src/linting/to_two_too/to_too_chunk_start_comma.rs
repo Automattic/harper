@@ -2,7 +2,6 @@ use crate::{
     Token,
     char_string::CharStringExt,
     expr::{AnchorStart, Expr, SequenceExpr},
-    patterns::WhitespacePattern,
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
@@ -16,7 +15,7 @@ impl Default for ToTooChunkStartComma {
     fn default() -> Self {
         let expr = SequenceExpr::with(AnchorStart)
             .t_aco("to")
-            .then_optional(WhitespacePattern)
+            .then_optional_whitespace()
             .then_comma();
 
         Self {
@@ -33,20 +32,18 @@ impl ExprLinter for ToTooChunkStartComma {
     }
 
     fn match_to_lint(&self, tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let to_tok = tokens.iter().find(|t| {
-            t.span
-                .get_content(source)
-                .eq_ignore_ascii_case_chars(&['t', 'o'])
-        })?;
+        let to_tok = tokens
+            .iter()
+            .find(|t| t.get_ch(source).eq_ch(&['t', 'o']))?;
 
         Some(Lint {
             span: to_tok.span,
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "too",
-                to_tok.span.get_content(source),
+                to_tok.get_ch(source),
             )],
-            message: "Use `too` here to mean ‘also’ or an excessive degree.".to_string(),
+            message: "Use `too` here to mean ‘also’ or an excessive degree.".to_owned(),
             ..Default::default()
         })
     }

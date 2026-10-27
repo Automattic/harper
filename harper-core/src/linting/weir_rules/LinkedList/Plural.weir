@@ -1,0 +1,10 @@
+expr main link lists
+
+let message "If you mean the low-level data structure, use `linked lists` instead of `link lists`."
+let description "Corrects `link lists` to `linked lists`."
+let kind "Usage"
+let becomes "linked lists"
+
+test "Tree data structure was used for the implementation of buddy system where as two separate doubly link lists have been used to keep the record of the holes and the memory allocated to the processes" "Tree data structure was used for the implementation of buddy system where as two separate doubly linked lists have been used to keep the record of the holes and the memory allocated to the processes"
+test "Link lists are self organizing to keep the nodes close to each other to benefit from cache locality." "Linked lists are self organizing to keep the nodes close to each other to benefit from cache locality."
+test "Link lists are composed of nodes. Each node contains a value and points to a single child node: Visualization of 4 nodes in a linked list." "Linked lists are composed of nodes. Each node contains a value and points to a single child node: Visualization of 4 nodes in a linked list."

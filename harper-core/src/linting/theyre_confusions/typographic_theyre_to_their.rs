@@ -31,7 +31,7 @@ impl ExprLinter for TypographicTheyreToTheir {
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let offender = matched_tokens.first()?;
-        let template = offender.span.get_content(source);
+        let template = offender.get_ch(source);
 
         Some(Lint {
             span: offender.span,

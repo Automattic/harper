@@ -1,0 +1,8 @@
+expr main incidence report
+
+let message "Did you mean `incident report`?"
+let description "Corrects `incidence report` to `incident report`."
+let kind "WordChoice"
+let becomes "incident report"
+
+test "Create rough draft of incidence report form." "Create rough draft of incident report form."

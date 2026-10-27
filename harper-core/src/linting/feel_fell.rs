@@ -11,26 +11,23 @@ pub struct FeelFell {
 
 impl Default for FeelFell {
     fn default() -> Self {
-        let with_word_before = SequenceExpr::word_set(&["didn't", "doesn't"])
+        let with_word_before = SequenceExpr::word_set(["didn't", "doesn't"])
             .t_ws()
             .t_aco("fell");
 
-        let with_word_after = SequenceExpr::default()
-            .t_aco("fell")
-            .t_ws()
-            .then_word_set(&[
-                "comfortable",
-                "free",
-                "good",
-                "I",
-                "I'm",
-                "it",
-                "it's",
-                "like",
-                "that",
-                "we",
-                "you",
-            ]);
+        let with_word_after = SequenceExpr::aco("fell").t_ws().t_set([
+            "comfortable",
+            "free",
+            "good",
+            "I",
+            "I'm",
+            "it",
+            "it's",
+            "like",
+            "that",
+            "we",
+            "you",
+        ]);
 
         Self {
             expr: SequenceExpr::any_of(vec![Box::new(with_word_before), Box::new(with_word_after)]),
@@ -47,9 +44,7 @@ impl ExprLinter for FeelFell {
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let fell_token = find_the_only_token_matching(toks, src, |tok, src| {
-            tok.span
-                .get_content(src)
-                .eq_ignore_ascii_case_chars(&['f', 'e', 'l', 'l'])
+            tok.get_ch(src).eq_ch(&['f', 'e', 'l', 'l'])
         })?;
 
         Some(Lint {
@@ -57,9 +52,9 @@ impl ExprLinter for FeelFell {
             lint_kind: LintKind::Typo,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "feel",
-                fell_token.span.get_content(src),
+                fell_token.get_ch(src),
             )],
-            message: "It looks like this is a typo, did you mean `feel`?".to_string(),
+            message: "It looks like this is a typo, did you mean `feel`?".to_owned(),
             ..Default::default()
         })
     }

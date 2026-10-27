@@ -1,4 +1,5 @@
-import { binaryInlined, type Lint, LocalLinter, type Suggestion } from 'harper.js';
+import { type Lint, LocalLinter, type Suggestion } from 'harper.js';
+import { binaryInlined } from 'harper.js/binaryInlined';
 import type { LintBox } from './Box';
 import DataBlock from './DataBlock';
 import { getRangeForTextSpan } from './domUtils';
@@ -29,6 +30,9 @@ export default class RichText {
 	}
 
 	public computeLintBox(lint: Lint): LintBox[] {
+		const container = DataBlock.getContainer();
+		if (container === null) return [];
+
 		const text = this.targetElement.textContent;
 		const span = lint.span();
 		const range = getRangeForTextSpan(this.targetElement, span);
@@ -41,7 +45,6 @@ export default class RichText {
 		}
 
 		const targetRects = range.getClientRects();
-		const container = DataBlock.getContainer();
 		const contRect = container.getBoundingClientRect();
 
 		const boxes: LintBox[] = [];

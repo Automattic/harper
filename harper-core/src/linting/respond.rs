@@ -20,7 +20,7 @@ impl Default for Respond {
                 return false;
             }
 
-            let lower = tok.span.get_content_string(src).to_lowercase();
+            let lower = tok.get_str(src).to_lowercase();
             matches!(
                 lower.as_str(),
                 "do" | "did" | "does" | "won't" | "don't" | "didn't" | "doesn't"
@@ -69,7 +69,7 @@ impl ExprLinter for Respond {
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "respond",
-                response_token.span.get_content(source),
+                response_token.get_ch(source),
             )],
             message: "Use the verb `respond` here.".to_owned(),
             priority: 40,

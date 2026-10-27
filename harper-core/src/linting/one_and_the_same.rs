@@ -18,7 +18,7 @@ impl Default for OneAndTheSame {
         Self {
             expr: LongestMatchOf::new(vec![
                 Box::new(
-                    SequenceExpr::word_set(&["are", "were"])
+                    SequenceExpr::word_set(["are", "were"])
                         .t_ws()
                         .then(one_in_the_same.clone()),
                 ),
@@ -44,7 +44,7 @@ impl ExprLinter for OneAndTheSame {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let phrase = if matched_tokens.last()?.span.get_content(source) == ['a', 's'] {
+        let phrase = if matched_tokens.last()?.get_ch(source) == ['a', 's'] {
             matched_tokens[0..matched_tokens.len() - 2].span()?
         } else {
             matched_tokens[2..].span()?

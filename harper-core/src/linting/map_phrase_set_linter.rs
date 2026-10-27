@@ -23,15 +23,12 @@ impl<'a> MapPhraseSetLinter<'a> {
         description: impl ToString,
         lint_kind: Option<LintKind>,
     ) -> Self {
-        let expr = LongestMatchOf::new(
-            wrong_forms_to_correct_forms
-                .iter()
-                .map(|(wrong_form, _correct_form)| {
-                    let expr: Box<dyn Expr> = Box::new(FixedPhrase::from_phrase(wrong_form));
-                    expr
-                })
-                .collect(),
-        );
+        let expr = LongestMatchOf::new(wrong_forms_to_correct_forms.iter().map(
+            |(wrong_form, _correct_form)| {
+                let expr: Box<dyn Expr> = Box::new(FixedPhrase::from_phrase(wrong_form));
+                expr
+            },
+        ));
 
         Self {
             description: description.to_string(),
@@ -49,7 +46,7 @@ impl<'a> MapPhraseSetLinter<'a> {
         description: impl ToString,
         lint_kind: Option<LintKind>,
     ) -> Self {
-        let mut lmo = LongestMatchOf::new(Vec::new());
+        let mut lmo = LongestMatchOf::new(Vec::<Box<dyn Expr>>::new());
         for (wrong_forms, _correct_forms) in multi_wrong_forms_to_multi_correct_forms {
             for wrong_form in wrong_forms.iter() {
                 lmo.add(FixedPhrase::from_phrase(wrong_form));
@@ -82,7 +79,7 @@ impl<'a> ExprLinter for MapPhraseSetLinter<'a> {
         let mut suggestions: Vec<_> = self
             .wrong_forms_to_correct_forms
             .iter()
-            .filter(|(wrong_form, _)| matched_text.eq_ignore_ascii_case_str(wrong_form))
+            .filter(|(wrong_form, _)| matched_text.eq_str(wrong_form))
             .map(|(_, correct_form)| {
                 Suggestion::replace_with_match_case(correct_form.chars().collect(), matched_text)
             })
@@ -94,7 +91,7 @@ impl<'a> ExprLinter for MapPhraseSetLinter<'a> {
             .flat_map(|(wrong_forms, correct_forms)| {
                 wrong_forms
                     .iter()
-                    .filter(move |&&wrong_form| matched_text.eq_ignore_ascii_case_str(wrong_form))
+                    .filter(move |&&wrong_form| matched_text.eq_str(wrong_form))
                     .flat_map(move |_| {
                         correct_forms.iter().map(move |correct_form| {
                             Suggestion::replace_with_match_case(
@@ -116,7 +113,7 @@ impl<'a> ExprLinter for MapPhraseSetLinter<'a> {
             span,
             lint_kind: self.lint_kind,
             suggestions,
-            message: self.message.to_string(),
+            message: self.message.to_owned(),
             priority: 31,
         })
     }

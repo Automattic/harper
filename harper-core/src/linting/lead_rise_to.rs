@@ -11,7 +11,7 @@ pub struct LeadRiseTo {
 impl Default for LeadRiseTo {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["lead", "led", "leads", "leading"])
+            expr: SequenceExpr::word_set(["lead", "led", "leads", "leading"])
                 .t_ws()
                 .t_aco("rise")
                 .t_ws()
@@ -62,7 +62,7 @@ impl ExprLinter for LeadRiseTo {
             span: lspan,
             lint_kind: LintKind::Usage,
             suggestions,
-            message: "The correct idiom is `give rise to`.".to_string(),
+            message: "The correct idiom is `give rise to`.".to_owned(),
             ..Default::default()
         })
     }

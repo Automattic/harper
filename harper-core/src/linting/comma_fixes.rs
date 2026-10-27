@@ -36,7 +36,7 @@ impl Linter for CommaFixes {
             let kinds = (
                 toks.0.map(|t| &t.kind),
                 toks.1.map(|t| &t.kind),
-                *toks.2.span.get_content(source).first().unwrap(),
+                *toks.2.get_ch(source).first().unwrap(),
                 toks.3.map(|t| &t.kind),
                 toks.4.map(|t| &t.kind),
             );

@@ -15,7 +15,7 @@ impl Default for RightClick {
         let mut map = ExprMap::default();
 
         map.insert(
-            SequenceExpr::word_set(&["right", "left", "middle"])
+            SequenceExpr::word_set(["right", "left", "middle"])
                 .t_ws()
                 .then(DerivedFrom::new_from_str("click")),
             0,
@@ -38,8 +38,8 @@ impl ExprLinter for RightClick {
         let span = matched_tokens.get(start_idx..=click_idx)?.span()?;
         let template = span.get_content(source);
 
-        let direction = matched_tokens.get(start_idx)?.span.get_content(source);
-        let click = matched_tokens.get(click_idx)?.span.get_content(source);
+        let direction = matched_tokens.get(start_idx)?.get_ch(source);
+        let click = matched_tokens.get(click_idx)?.get_ch(source);
 
         let replacement: Vec<char> = direction
             .iter()

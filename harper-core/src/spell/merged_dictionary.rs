@@ -5,8 +5,7 @@ use std::sync::Arc;
 use foldhash::quality::FixedState;
 use itertools::Itertools;
 
-use super::{FstDictionary, WordId};
-use super::{FuzzyMatchResult, dictionary::Dictionary};
+use super::{CanonicalWordId, FstDictionary, FuzzyMatchResult, dictionary::Dictionary};
 use crate::{CharString, DictWordMetadata};
 
 /// A simple wrapper over [`Dictionary`] that allows
@@ -129,12 +128,30 @@ impl Dictionary for MergedDictionary {
 
     fn contains_exact_word_str(&self, word: &str) -> bool {
         let chars: CharString = word.chars().collect();
-        self.contains_word(&chars)
+        self.contains_exact_word(&chars)
     }
 
     fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
         let chars: CharString = word.chars().collect();
         self.get_word_metadata(&chars)
+    }
+
+    fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata> {
+        self.children
+            .iter()
+            .find_map(|child| child.get_word_metadata_exact(word))
+    }
+
+    fn get_correct_capitalizations_of(
+        &self,
+        word: &[char],
+    ) -> Box<dyn Iterator<Item = &[char]> + Send + '_> {
+        let matches: Vec<_> = self
+            .children
+            .iter()
+            .map(|child| child.get_correct_capitalizations_of(word))
+            .collect();
+        Box::new(matches.into_iter().flatten())
     }
 
     fn fuzzy_match(
@@ -173,7 +190,7 @@ impl Dictionary for MergedDictionary {
         self.children.iter().map(|d| d.word_count()).sum()
     }
 
-    fn get_word_from_id(&self, id: &WordId) -> Option<&[char]> {
+    fn get_word_from_id(&self, id: &CanonicalWordId) -> Option<&[char]> {
         self.children
             .iter()
             .find_map(|dict| dict.get_word_from_id(id))
@@ -195,5 +212,31 @@ impl Dictionary for MergedDictionary {
             .sorted()
             .dedup()
             .collect()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use std::sync::Arc;
+
+    use crate::DictWordMetadata;
+    use crate::spell::{Dictionary, MergedDictionary, MutableDictionary};
+
+    #[test]
+    fn merged_contains_exact_word_str_is_case_sensitive() {
+        let mut user_dict = MutableDictionary::new();
+        user_dict.append_word_str("Foo", DictWordMetadata::default());
+
+        let mut merged = MergedDictionary::new();
+        merged.add_dictionary(Arc::new(user_dict));
+
+        assert!(merged.contains_word_str("Foo"));
+        assert!(merged.contains_word_str("foo"));
+
+        assert!(merged.contains_exact_word(&['F', 'o', 'o']));
+        assert!(!merged.contains_exact_word(&['f', 'o', 'o']));
+
+        assert!(merged.contains_exact_word_str("Foo"));
+        assert!(!merged.contains_exact_word_str("foo"));
     }
 }

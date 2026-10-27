@@ -247,6 +247,23 @@ let becomes "Google Workspace"
 let strategy "Exact"
 ```
 
+## Matching Scope
+
+By default, Weir rules run on chunks, which are usually clauses split by commas and sentence-ending punctuation.
+If a rule needs to match across a comma within the same sentence, set its scope to `Sentence`.
+
+```plaintext
+expr main one**two
+let message "Use three."
+let description "Replaces a phrase that can span a comma."
+let kind "Miscellaneous"
+let becomes "three"
+let scope "Sentence"
+```
+
+The supported values are `Chunk` and `Sentence`.
+The setting is optional; omitting it is the same as `let scope "Chunk"`.
+
 ## Adding Tests
 
 The Weir language supports the inclusion of tests directly in the file.

@@ -12,13 +12,13 @@ pub struct ToHop {
 
 impl Default for ToHop {
     fn default() -> Self {
-        let pattern = SequenceExpr::word_set(&["hoping", "hoped", "hope"])
+        let pattern = SequenceExpr::word_set(["hoping", "hoped", "hope"])
             .then_whitespace()
             .t_aco("on")
             .then_whitespace()
             .then_determiner()
             .then_whitespace()
-            .then_word_set(&["airplane", "plane", "bus", "call", "train"]);
+            .then_word_set(["airplane", "plane", "bus", "call", "train"]);
 
         Self {
             expr: Box::new(pattern),
@@ -46,7 +46,7 @@ impl ExprLinter for ToHop {
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let offending_word = &matched_tokens[0];
-        let word_chars = offending_word.span.get_content(source);
+        let word_chars = offending_word.get_ch(source);
         let word = word_chars.to_string();
         let correct = Self::to_correct(&word)?;
 

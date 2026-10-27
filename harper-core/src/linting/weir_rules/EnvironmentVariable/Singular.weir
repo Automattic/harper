@@ -1,0 +1,8 @@
+expr main (environmental variable)
+
+let message "Did you mean `environment variable`?"
+let description "Ensures `environment variable` is used correctly instead of `environmental variable`."
+let kind "Usage"
+let becomes "environment variable"
+
+test "Specifically, any Service I have injects an environmental variable like MYSERVICE_PORT=tcp://1.2.3.4:5." "Specifically, any Service I have injects an environment variable like MYSERVICE_PORT=tcp://1.2.3.4:5."

@@ -1,8 +1,10 @@
+use harper_brill::UPOS;
+
 use crate::{
     Token, TokenKind,
     char_string::CharStringExt,
     expr::{Expr, SequenceExpr},
-    patterns::{SingleTokenPattern, WhitespacePattern, prepositional_preceder},
+    patterns::{SingleTokenPattern, prepositional_preceder},
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
@@ -20,11 +22,11 @@ impl Default for ToTooAdjectiveEnd {
             .then_kind_is_but_is_not_except(
                 TokenKind::is_adjective,
                 TokenKind::is_verb,
-                &["standard"],
+                &["standard", "only"],
             )
-            .then_optional(WhitespacePattern)
+            .then_optional_whitespace()
             .then_optional(SequenceExpr::any_word())
-            .then_optional(WhitespacePattern)
+            .then_optional_whitespace()
             .then_optional(SequenceExpr::default().then_punctuation());
 
         Self {
@@ -42,11 +44,9 @@ impl ExprLinter for ToTooAdjectiveEnd {
 
     fn match_to_lint(&self, tokens: &[Token], source: &[char]) -> Option<Lint> {
         // Find the `to` token
-        let to_index = tokens.iter().position(|t| {
-            t.span
-                .get_content(source)
-                .eq_ignore_ascii_case_chars(&['t', 'o'])
-        })?;
+        let to_index = tokens
+            .iter()
+            .position(|t| t.get_ch(source).eq_ch(&['t', 'o']))?;
 
         // First non-whitespace after `to` should be the adjective
         let mut idx = to_index + 1;
@@ -56,6 +56,7 @@ impl ExprLinter for ToTooAdjectiveEnd {
         if idx >= tokens.len()
             || !tokens[idx].kind.is_adjective()
             || !tokens[idx].kind.is_positive_adjective()
+            || !tokens[idx].kind.is_upos(UPOS::ADJ)
         {
             return None;
         }
@@ -79,7 +80,7 @@ impl ExprLinter for ToTooAdjectiveEnd {
         let should_lint = if j >= tokens.len() {
             true
         } else if tokens[j].kind.is_punctuation() {
-            let punct: String = tokens[j].span.get_content(source).iter().collect();
+            let punct: String = tokens[j].get_ch(source).iter().collect();
             !matches!(
                 punct.as_str(),
                 "`" | "\"" | "'" | "“" | "”" | "‘" | "’" | "-" | "–" | "—"
@@ -99,9 +100,9 @@ impl ExprLinter for ToTooAdjectiveEnd {
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "too",
-                to_tok.span.get_content(source),
+                to_tok.get_ch(source),
             )],
-            message: "Use `too` here to mean ‘also’ or an excessive degree.".to_string(),
+            message: "Use `too` here to mean ‘also’ or an excessive degree.".to_owned(),
             ..Default::default()
         })
     }

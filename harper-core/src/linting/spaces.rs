@@ -57,7 +57,7 @@ impl Linter for Spaces {
                     span: space.span,
                     lint_kind: LintKind::Formatting,
                     suggestions: vec![Suggestion::Remove],
-                    message: "Unnecessary space at the end of the sentence.".to_string(),
+                    message: "Unnecessary space at the end of the sentence.".to_owned(),
                     priority: 63,
                 })
             }

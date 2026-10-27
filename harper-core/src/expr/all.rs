@@ -1,4 +1,7 @@
-use crate::{Span, Token, expr::Expr};
+use crate::{
+    Span, Token,
+    expr::{AsBoxedExpr, Expr},
+};
 
 /// An [`Expr`] that matches against tokens if and only if all of its children do.
 /// This can be useful for situations where you have multiple expressions that represent a grammatical
@@ -11,8 +14,10 @@ pub struct All {
 }
 
 impl All {
-    pub fn new(children: Vec<Box<dyn Expr>>) -> Self {
-        Self { children }
+    pub fn new(children: impl IntoIterator<Item = impl AsBoxedExpr>) -> Self {
+        Self {
+            children: children.into_iter().map(|e| e.into_boxed_expr()).collect(),
+        }
     }
 
     pub fn add(&mut self, e: impl Expr + 'static) {

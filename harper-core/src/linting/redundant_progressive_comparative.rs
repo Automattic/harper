@@ -14,7 +14,7 @@ impl Default for RedundantProgressiveComparative {
             expr: Box::new(
                 SequenceExpr::aco("increasingly")
                     .t_ws()
-                    .then_word_set(&["more", "less"])
+                    .then_word_set(["more", "less"])
                     .t_ws()
                     .then_kind_either(TokenKind::is_adjective, TokenKind::is_adverb),
             ),
@@ -33,20 +33,12 @@ impl ExprLinter for RedundantProgressiveComparative {
         let first = matched_tokens.first()?;
         let second = matched_tokens.get(2)?;
 
-        let (replacement, message) = if second
-            .span
-            .get_content(src)
-            .eq_ignore_ascii_case_str("more")
-        {
+        let (replacement, message) = if second.get_ch(src).eq_str("more") {
             (
                 "more and more",
                 "This phrasing is redundant; use a direct comparative like `more and more`.",
             )
-        } else if second
-            .span
-            .get_content(src)
-            .eq_ignore_ascii_case_str("less")
-        {
+        } else if second.get_ch(src).eq_str("less") {
             (
                 "less and less",
                 "This phrasing is redundant; use a direct comparative like `less and less`.",
@@ -64,7 +56,7 @@ impl ExprLinter for RedundantProgressiveComparative {
                 replacement,
                 span.get_content(src),
             )],
-            message: message.to_string(),
+            message: message.to_owned(),
             priority: 31,
         })
     }

@@ -28,7 +28,7 @@ impl Linter for SpelledNumbers {
                     suggestions: vec![Suggestion::ReplaceWith(
                         spell_out_number(value as u64).unwrap().chars().collect(),
                     )],
-                    message: "Try to spell out numbers less than ten.".to_string(),
+                    message: "Try to spell out numbers less than ten.".to_owned(),
                     priority: 63,
                 })
             }
@@ -52,51 +52,59 @@ fn spell_out_number(num: u64) -> Option<String> {
         return None;
     }
 
-    Some(match num {
-        0 => "zero".to_string(),
-        1 => "one".to_string(),
-        2 => "two".to_string(),
-        3 => "three".to_string(),
-        4 => "four".to_string(),
-        5 => "five".to_string(),
-        6 => "six".to_string(),
-        7 => "seven".to_string(),
-        8 => "eight".to_string(),
-        9 => "nine".to_string(),
-        10 => "ten".to_string(),
-        11 => "eleven".to_string(),
-        12 => "twelve".to_string(),
-        13 => "thirteen".to_string(),
-        14 => "fourteen".to_string(),
-        15 => "fifteen".to_string(),
-        16 => "sixteen".to_string(),
-        17 => "seventeen".to_string(),
-        18 => "eighteen".to_string(),
-        19 => "nineteen".to_string(),
-        20 => "twenty".to_string(),
-        30 => "thirty".to_string(),
-        40 => "forty".to_string(),
-        50 => "fifty".to_string(),
-        60 => "sixty".to_string(),
-        70 => "seventy".to_string(),
-        80 => "eighty".to_string(),
-        90 => "ninety".to_string(),
-        hundred if hundred % 100 == 0 => {
-            format!("{} hundred", spell_out_number(hundred / 100).unwrap())
-        }
-        _ => {
+    match num {
+        hundred if hundred % 100 == 0 && hundred > 0 => Some(format!(
+            "{} hundred",
+            spell_out_number(hundred / 100).unwrap()
+        )),
+        // Match numbers above 100 (like 110), OR two-digit numbers that don't end in 0 (like 21)
+        num if num > 100 || (num > 20 && num % 10 != 0) => {
             let n = 10u64.pow((num as f32).log10() as u32);
             let parent = (num / n) * n; // truncate
             let child = num % n;
 
-            format!(
+            Some(format!(
                 "{}{}{}",
                 spell_out_number(parent).unwrap(),
                 if num <= 99 { '-' } else { ' ' },
                 spell_out_number(child).unwrap()
-            )
+            ))
         }
-    })
+        base_num => Some(
+            match base_num {
+                0 => "zero",
+                1 => "one",
+                2 => "two",
+                3 => "three",
+                4 => "four",
+                5 => "five",
+                6 => "six",
+                7 => "seven",
+                8 => "eight",
+                9 => "nine",
+                10 => "ten",
+                11 => "eleven",
+                12 => "twelve",
+                13 => "thirteen",
+                14 => "fourteen",
+                15 => "fifteen",
+                16 => "sixteen",
+                17 => "seventeen",
+                18 => "eighteen",
+                19 => "nineteen",
+                20 => "twenty",
+                30 => "thirty",
+                40 => "forty",
+                50 => "fifty",
+                60 => "sixty",
+                70 => "seventy",
+                80 => "eighty",
+                90 => "ninety",
+                _ => return None,
+            }
+            .to_owned(),
+        ),
+    }
 }
 
 #[cfg(test)]
@@ -107,19 +115,19 @@ mod tests {
 
     #[test]
     fn produces_zero() {
-        assert_eq!(spell_out_number(0), Some("zero".to_string()))
+        assert_eq!(spell_out_number(0), Some("zero".to_owned()))
     }
 
     #[test]
     fn produces_eighty_two() {
-        assert_eq!(spell_out_number(82), Some("eighty-two".to_string()))
+        assert_eq!(spell_out_number(82), Some("eighty-two".to_owned()))
     }
 
     #[test]
     fn produces_nine_hundred_ninety_nine() {
         assert_eq!(
             spell_out_number(999),
-            Some("nine hundred ninety-nine".to_string())
+            Some("nine hundred ninety-nine".to_owned())
         )
     }
 

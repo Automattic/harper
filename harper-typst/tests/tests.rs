@@ -84,7 +84,7 @@ fn dict_parsing() {
 
     let charslice = source.chars().collect_vec();
     let tokens = document.tokens().collect_vec();
-    assert_eq!(tokens[2].span.get_content_string(&charslice), "Typst");
+    assert_eq!(tokens[2].get_str(&charslice), "Typst");
 
     assert!(matches!(
         token_kinds.as_slice(),
@@ -157,8 +157,8 @@ fn header_parsing() {
 
     let charslice = source.chars().collect_vec();
     let tokens = document.tokens().collect_vec();
-    assert_eq!(tokens[0].span.get_content_string(&charslice), "Header");
-    assert_eq!(tokens[2].span.get_content_string(&charslice), "Paragraph");
+    assert_eq!(tokens[0].get_str(&charslice), "Header");
+    assert_eq!(tokens[2].get_str(&charslice), "Paragraph");
 
     assert!(matches!(
         &token_kinds.as_slice(),
@@ -257,7 +257,7 @@ fn smart_apostrophe_newline() {
 
     let charslice = source.chars().collect_vec();
     let tokens = document.tokens().collect_vec();
-    assert_eq!(tokens[2].span.get_content_string(&charslice), "writing");
+    assert_eq!(tokens[2].get_str(&charslice), "writing");
 
     assert!(matches!(
         token_kinds.as_slice(),
@@ -331,6 +331,34 @@ fn parbreaks_in_list() {
             TokenKind::Word(_),
             TokenKind::ParagraphBreak,
             TokenKind::Word(_)
+        ]
+    ))
+}
+
+#[test]
+fn condensed_apostrophes() {
+    let source = "Though I've not, that's for sure.";
+
+    let document = Document::new_curated(source, &Typst);
+    let token_kinds = document.tokens().map(|t| t.kind.clone()).collect_vec();
+    dbg!(&token_kinds);
+
+    assert!(matches!(
+        &token_kinds.as_slice(),
+        &[
+            TokenKind::Word(_),        // Though
+            TokenKind::Space(_),       //
+            TokenKind::Word(_),        // I've
+            TokenKind::Space(_),       //
+            TokenKind::Word(_),        // not
+            TokenKind::Punctuation(_), // ,
+            TokenKind::Space(_),       //
+            TokenKind::Word(_),        // that's
+            TokenKind::Space(_),       //
+            TokenKind::Word(_),        // for
+            TokenKind::Space(_),       //
+            TokenKind::Word(_),        // sure
+            TokenKind::Punctuation(_), // .
         ]
     ))
 }

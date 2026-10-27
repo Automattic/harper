@@ -1,0 +1,27 @@
+expr relPronouns [which, that, who, whom, whose]
+expr main <((an in) ![-, with, (NOUN @relPronouns), (PROPN @relPronouns)]), an>
+
+let message "Did you mean `and in`?"
+let description "Fixes the typo `an in` when it stands in for the conjunction `and in`, while avoiding common `in-...` noun phrases and a few attested exceptions."
+let kind "Typo"
+let becomes "and"
+let strategy "MatchCase"
+
+test "This is an expensive operation, so try to only do it at startup an in tests." "This is an expensive operation, so try to only do it at startup and in tests."
+test "We compare the results locally an in CI." "We compare the results locally and in CI."
+test "The feature works in Chrome an in Firefox." "The feature works in Chrome and in Firefox."
+test "She was quiet at home an in public." "She was quiet at home and in public."
+test "The package is available on Linux an in macOS." "The package is available on Linux and in macOS."
+test "Please validate it in staging an in production." "Please validate it in staging and in production."
+test "They publish updates weekly an in emergencies." "They publish updates weekly and in emergencies."
+test "AN IN tests, this should still be fixed." "AND IN tests, this should still be fixed."
+
+allows "for several years as an in-house engine, used to ..."
+allows "including an in-memory real-time Vector Index,"
+allows "His words serve as an in-the-moment explanation for what had happened."
+allows "His parents got him an in with the company."
+allows "Fascism requires an in group which the law protects."
+allows "The article describes an in group that outsiders rarely notice."
+allows "They studied an in group who controlled admissions."
+allows "The reform strengthened an in group whose leaders shaped policy."
+allows "The board met and in doing so approved the budget."

@@ -29,7 +29,7 @@ impl ExprLinter for ThrowAway {
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let typo = matched_tokens.first()?;
-        let original = typo.span.get_content(source);
+        let original = typo.get_ch(source);
 
         Some(Lint {
             span: typo.span,
@@ -39,7 +39,7 @@ impl ExprLinter for ThrowAway {
                 Suggestion::replace_with_match_case_str("threw", original),
             ],
             message: "Use `throw away` or `threw away`, depending on the tense you need."
-                .to_string(),
+                .to_owned(),
             priority: 60,
         })
     }

@@ -13,8 +13,8 @@ pub struct WinPrize {
 
 impl Default for WinPrize {
     fn default() -> Self {
-        let verbs = Lrc::new(WordSet::new(&["win", "wins", "won", "winning"]));
-        let miss = Lrc::new(WordSet::new(&["price", "prices", "prise", "prises"]));
+        let verbs = Lrc::new(WordSet::new(["win", "wins", "won", "winning"]));
+        let miss = Lrc::new(WordSet::new(["price", "prices", "prise", "prises"]));
 
         let pattern = SequenceExpr::with(verbs.clone())
             .then_whitespace()
@@ -36,7 +36,7 @@ impl ExprLinter for WinPrize {
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let candidate = toks.last()?;
-        let raw = candidate.span.get_content_string(src).to_lowercase();
+        let raw = candidate.get_str(src).to_lowercase();
         let repl = match raw.as_str() {
             "price" | "prise" => "prize",
             "prices" | "prises" => "prizes",

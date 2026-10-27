@@ -84,7 +84,7 @@
 			"base_metadata": {}
 		},
 		"H": {
-			"#": "'-ieth' suffix",
+			"#": "'-(ie)th' suffix",
 			"kind": "suffix",
 			"cross_product": false,
 			"replacements": [
@@ -666,10 +666,22 @@
 		},
 		"x": {
 			"#": "swear word property",
-			"//": "'xxx' used to be a placeholder for swear words",
+			"//": "mnemonic: 'xxx' used to be a placeholder for swear words",
 			"propagate": true,
 			"metadata": {
 				"swear": true
+			}
+		},
+		"†": {
+			"#": "slang/informal/nonstandard (always) property",
+			"metadata": {
+				"slang": true
+			}
+		},
+		"‡": {
+			"#": "slang/informal/nonstandard (some senses only) property",
+			"metadata": {
+				"slang": true
 			}
 		},
 		"C": {
@@ -1032,6 +1044,20 @@
 				"noun": {
 					"is_abstract": true
 				}
+			}
+		},
+		"4": {
+			"#": "abbreviation property",
+			"//": "mnemonic: 4 looks like A",
+			"metadata": {
+				"abbreviation": true
+			}
+		},
+		"k": {
+			"#": "contraction property",
+			"//": "mnemonic: k sounds like C",
+			"metadata": {
+				"contraction": true
 			}
 		}
 	}

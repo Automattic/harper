@@ -35,7 +35,7 @@ impl ExprLinter for SaveToSafe {
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let save_tok = &toks.get(2)?;
         let verb_tok = &toks.get(4)?;
-        let verb = verb_tok.span.get_content_string(src).to_lowercase();
+        let verb = verb_tok.get_str(src).to_lowercase();
         Some(Lint {
             span: save_tok.span,
             lint_kind: LintKind::WordChoice,

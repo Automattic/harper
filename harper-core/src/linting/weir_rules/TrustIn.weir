@@ -1,0 +1,15 @@
+expr main <([have, had, has, having] [trust, ([much, no] trust)] for), for>
+
+let message "In idiomatic English, we have trust `in` people or things, not `for` them."
+let description "Detects the wrong preposition in `have trust for`."
+let kind "Usage"
+let becomes "in"
+
+test "It’s no wonder we have no trust for politicians and government departments." "It’s no wonder we have no trust in politicians and government departments."
+test "Having trust for your team doesn't mean they are no longer accountable for their actions." "Having trust in your team doesn't mean they are no longer accountable for their actions."
+test "people start to do bizarre things when they don't have trust for leadership" "people start to do bizarre things when they don't have trust in leadership"
+test "I can't say I have no trust for any institutions. But my trust depends on each institutions choices." "I can't say I have no trust in any institutions. But my trust depends on each institutions choices."
+test "Personally, I don't have much trust for PayPal or Stripe." "Personally, I don't have much trust in PayPal or Stripe."
+
+# Known false positives. We can think of how to handle these or if there are too many, we can remove this rule.
+# allows "You have to have trust for staff autonomy."

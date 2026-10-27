@@ -8,9 +8,12 @@
 	"files": {
 		"ignoreUnknown": true,
 		"includes": [
+			".buildkite/**/*.cjs",
 			"**/packages/**/*",
+			"**/harper-desktop/**/*",
 			"**/*.json",
 			"!**/test-results",
+			"!**/packages/chrome-plugin/tests/pages/**/*",
 			"!**/node_modules",
 			"!**/mariadb_data",
 			"!**/dist",

@@ -38,7 +38,7 @@ impl ExprLinter for Hedging {
             span,
             lint_kind: LintKind::Miscellaneous,
             suggestions: Vec::new(),
-            message: "You're hedging.".to_string(),
+            message: "You're hedging.".to_owned(),
             priority: 31,
         })
     }

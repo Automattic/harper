@@ -44,7 +44,7 @@ impl ExprLinter for JealousOf {
             lint_kind: LintKind::Usage,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "of",
-                from_token.span.get_content(source),
+                from_token.get_ch(source),
             )],
             message: "Use `of` after `jealous`.".to_owned(),
             ..Default::default()

@@ -1,0 +1,9 @@
+expr main (formidable years)
+
+let message "Did you mean `formative years`? Use `formative` to describe a period of growth or influence. `Formidable` is typically used for something intimidating."
+let description "Flags the misuse of `formidable years` when `formative years` is likely intended. This rule distinguishes between the shaping of character (`formative`) and the inspiring of fear or awe (`formidable`)."
+let kind "Malapropism"
+let becomes "formative years"
+
+test "Here's how I would approach it, a little earlier than my formidable years there was music I was \“Forced\” to listen to." "Here's how I would approach it, a little earlier than my formative years there was music I was \“Forced\” to listen to."
+test "The 60's were full of turmoil as a country but my most formidable years as a person." "The 60's were full of turmoil as a country but my most formative years as a person."

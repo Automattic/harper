@@ -1,3 +1,4 @@
+import { and, gte, lte } from 'drizzle-orm';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { db } from '..';
 import { problematicLintTable } from '../schema';
@@ -16,5 +17,25 @@ export default class ProblematicLints {
 
 	public static async create(rec: ProblematicLintSubmission) {
 		await db.insert(problematicLintTable).values(rec);
+	}
+
+	public static async getAll(): Promise<ProblematicLintRow[]> {
+		return await db.select().from(problematicLintTable);
+	}
+
+	public static async getAllSince(date: Date) {
+		return await db
+			.select()
+			.from(problematicLintTable)
+			.where(gte(problematicLintTable.timestamp, date));
+	}
+
+	public static async getAllBetween(start: Date, end: Date) {
+		return await db
+			.select()
+			.from(problematicLintTable)
+			.where(
+				and(gte(problematicLintTable.timestamp, start), lte(problematicLintTable.timestamp, end)),
+			);
 	}
 }

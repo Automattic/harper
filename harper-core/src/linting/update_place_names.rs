@@ -79,8 +79,7 @@ impl<'a> Default for UpdatePlaceNames<'a> {
             place_name_mappings
                 .iter()
                 .flat_map(|(_, old_names)| old_names.iter())
-                .map(|old_name| Box::new(FixedPhrase::from_phrase(old_name)) as Box<dyn Expr>)
-                .collect(),
+                .map(|old_name| Box::new(FixedPhrase::from_phrase(old_name)) as Box<dyn Expr>),
         );
 
         Self::new(expr, place_name_mappings)
