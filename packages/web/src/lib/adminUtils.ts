@@ -14,7 +14,7 @@ export function computeDurationFromSlug(slug: string): number | null {
 	}
 }
 
-/** Count the occurances of unique strings in an array. */
+/** Count the occurrences of unique strings in an array. */
 export function countOccurances(arr: string[]): Record<string, number> {
 	const counts: Record<string, number> = {};
 
