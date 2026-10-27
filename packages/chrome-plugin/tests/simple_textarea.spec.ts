@@ -53,7 +53,8 @@ test('Focuses suggestions when opening the popup with the activation key', async
 
 	const firstSuggestion = page.getByTitle('Click to replace "an" with "a"');
 	await firstSuggestion.waitFor({ state: 'visible' });
-	await assertLocatorIsFocused(page, firstSuggestion);
+	// The row lives in the popup's shadow root, so `:focus` also matches its host.
+	await expect(firstSuggestion).toBeFocused();
 
 	await page.keyboard.press('Escape');
 	await page.locator('.harper-container').waitFor({ state: 'hidden' });
@@ -63,7 +64,7 @@ test('Focuses suggestions when opening the popup with the activation key', async
 	await page.waitForTimeout(50);
 	await page.keyboard.press('Shift');
 	await firstSuggestion.waitFor({ state: 'visible' });
-	await assertLocatorIsFocused(page, firstSuggestion);
+	await expect(firstSuggestion).toBeFocused();
 
 	await page.keyboard.press('Enter');
 	await expect(editor).toHaveValue('This is a test.');
