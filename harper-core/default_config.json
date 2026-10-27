@@ -3139,6 +3139,13 @@
 						},
 						{
 							"Bool": {
+								"name": "DoublePossessiveNounPhrase",
+								"state": true,
+								"label": "Double Possessive Noun Phrase"
+							}
+						},
+						{
+							"Bool": {
 								"name": "EverPronounRelPronoun",
 								"state": true,
 								"label": "Ever Pronoun + Relative Pronoun"
@@ -5383,6 +5390,13 @@
 						},
 						{
 							"Bool": {
+								"name": "KidFriendly",
+								"state": true,
+								"label": "Kid-Friendly"
+							}
+						},
+						{
+							"Bool": {
 								"name": "LastButNotLeast",
 								"state": true,
 								"label": "Last But Not Least"
@@ -5816,6 +5830,13 @@
 							}
 						},
 						{
+							"Bool": {
+								"name": "PreferenceAsVerb",
+								"state": true,
+								"label": "Preference as Verb"
+							}
+						},
+						{
 							"OneOfMany": {
 								"names": ["PreferPleaded", "PreferPled"],
 								"name": "PreferPleaded",
@@ -6065,6 +6086,13 @@
 								"name": "TakePrideIn",
 								"state": true,
 								"label": "Take Pride in"
+							}
+						},
+						{
+							"Bool": {
+								"name": "TendTo",
+								"state": true,
+								"label": "Tend to"
 							}
 						},
 						{
