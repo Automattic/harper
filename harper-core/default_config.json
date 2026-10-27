@@ -375,6 +375,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ToBeFair",
+								"state": true,
+								"label": "To Be Fair"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ToBeHonest",
 								"state": true,
 								"label": "To Be Honest"
@@ -493,6 +500,13 @@
 								"name": "Furthermore",
 								"state": true,
 								"label": "Furthermore"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Guesswork",
+								"state": true,
+								"label": "Guesswork"
 							}
 						},
 						{
@@ -665,6 +679,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Oftentimes",
+								"state": true,
+								"label": "Oftentimes"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Overall",
 								"state": true,
 								"label": "Overall"
@@ -787,6 +808,13 @@
 								"name": "Therefore",
 								"state": true,
 								"label": "Therefore"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Therein",
+								"state": true,
+								"label": "Therein"
 							}
 						},
 						{
@@ -1434,6 +1462,13 @@
 								"name": "SeizeControlOf",
 								"state": true,
 								"label": "Seize Control of"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Skyrocket",
+								"state": true,
+								"label": "Skyrocket"
 							}
 						},
 						{
@@ -2513,6 +2548,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AirToErr",
+								"state": true,
+								"label": "‘Air’ to ‘Err’"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Albeit",
 								"state": true,
 								"label": "Albeit"
@@ -2597,6 +2639,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Dereference",
+								"state": true,
+								"label": "Dereference"
+							}
+						},
+						{
+							"Bool": {
 								"name": "DoNotWant",
 								"state": true,
 								"label": "Do Not Want"
@@ -2621,6 +2670,13 @@
 								"name": "ExitedExcitedContext",
 								"state": true,
 								"label": "Exited Excited Context"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExMachina",
+								"state": true,
+								"label": "Ex Machina"
 							}
 						},
 						{
@@ -2772,9 +2828,9 @@
 						},
 						{
 							"Bool": {
-								"name": "NobelPeacePrize",
+								"name": "NobelNoble",
 								"state": true,
-								"label": "Nobel Peace Prize"
+								"label": "Nobel / Noble"
 							}
 						},
 						{
@@ -3209,6 +3265,20 @@
 						},
 						{
 							"Bool": {
+								"name": "Gonna",
+								"state": true,
+								"label": "Gonna"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Gotta",
+								"state": true,
+								"label": "Gotta"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Hedging",
 								"state": true,
 								"label": "Hedging"
@@ -3370,6 +3440,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Wanna",
+								"state": true,
+								"label": "Wanna"
+							}
+						},
+						{
+							"Bool": {
 								"name": "WasComprisedOf",
 								"state": true,
 								"label": "Was Comprised Of"
@@ -3502,6 +3579,12 @@
 								"name": "AsToInterrogative",
 								"state": true,
 								"label": "As To Interrogative"
+							}
+						},
+						{
+							"Bool": {
+								"name": "BackwardEngineer",
+								"state": true
 							}
 						},
 						{
@@ -3695,9 +3778,23 @@
 						},
 						{
 							"Bool": {
+								"name": "InTheMoodFor",
+								"state": true,
+								"label": "In The Mood For"
+							}
+						},
+						{
+							"Bool": {
 								"name": "IsBeenAuxSequence",
 								"state": true,
 								"label": "Is Been Aux Sequence"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ItAreTheOne",
+								"state": true,
+								"label": "It are the One"
 							}
 						},
 						{
@@ -3933,6 +4030,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ResponsibleFor",
+								"state": true,
+								"label": "Responsible For"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ReverseEngineer",
 								"state": true
 							}
@@ -4149,6 +4253,13 @@
 						},
 						{
 							"Bool": {
+								"name": "WillGonna",
+								"state": true,
+								"label": "Will Gonna"
+							}
+						},
+						{
+							"Bool": {
 								"name": "WillNonLemma",
 								"state": true,
 								"label": "Will Non Lemma"
@@ -4239,6 +4350,13 @@
 								"name": "Alongside",
 								"state": true,
 								"label": "Alongside"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AltarAlter",
+								"state": true,
+								"label": "Altar / Alter"
 							}
 						},
 						{
@@ -4446,6 +4564,13 @@
 						},
 						{
 							"Bool": {
+								"name": "BareWithMe",
+								"state": true,
+								"label": "Bare With Me"
+							}
+						},
+						{
+							"Bool": {
 								"name": "BatedBreath",
 								"state": true,
 								"label": "Bated Breath"
@@ -4572,6 +4697,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ByExtension",
+								"state": true,
+								"label": "By Extension"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ByOnesOwn",
 								"state": true,
 								"label": "By One's Own"
@@ -4652,6 +4784,13 @@
 								"name": "ComfortableWith",
 								"state": true,
 								"label": "Comfortable With"
+							}
+						},
+						{
+							"Bool": {
+								"name": "CompeteWithEachOther",
+								"state": true,
+								"label": "Compete with each other"
 							}
 						},
 						{
@@ -4880,6 +5019,13 @@
 						},
 						{
 							"Bool": {
+								"name": "FibreOptic",
+								"state": true,
+								"label": "Fibre Optic"
+							}
+						},
+						{
+							"Bool": {
 								"name": "FinishingTouches",
 								"state": true,
 								"label": "Finishing Touches"
@@ -4950,6 +5096,13 @@
 						},
 						{
 							"Bool": {
+								"name": "FuzzyLogic",
+								"state": true,
+								"label": "Fuzzy Logic"
+							}
+						},
+						{
+							"Bool": {
 								"name": "GildedAge",
 								"state": true,
 								"label": "Gilded Age"
@@ -5016,6 +5169,13 @@
 								"name": "HiddenIn",
 								"state": true,
 								"label": "Hidden In"
+							}
+						},
+						{
+							"Bool": {
+								"name": "HighLowStandards",
+								"state": true,
+								"label": "High/Low Standards"
 							}
 						},
 						{
@@ -5125,6 +5285,13 @@
 						},
 						{
 							"Bool": {
+								"name": "InOnesDefense",
+								"state": true,
+								"label": "In Ones Defense"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Insensitive",
 								"state": true,
 								"label": "Insensitive"
@@ -5212,6 +5379,13 @@
 								"name": "JumpTheGun",
 								"state": true,
 								"label": "Jump The Gun"
+							}
+						},
+						{
+							"Bool": {
+								"name": "KidFriendly",
+								"state": true,
+								"label": "Kid-Friendly"
 							}
 						},
 						{
@@ -5561,14 +5735,28 @@
 							"Bool": {
 								"name": "OnTopOf",
 								"state": true,
-								"label": "On Top Of"
+								"label": "On Top of"
+							}
+						},
+						{
+							"Bool": {
+								"name": "OutOfCuriosity",
+								"state": true,
+								"label": "Out of Curiosity"
 							}
 						},
 						{
 							"Bool": {
 								"name": "OutOfDate",
 								"state": true,
-								"label": "Out Of Date"
+								"label": "Out of Date"
+							}
+						},
+						{
+							"Bool": {
+								"name": "OutOfOutsideTheBox",
+								"state": true,
+								"label": "Out of Outside the Box"
 							}
 						},
 						{
@@ -5583,6 +5771,13 @@
 								"name": "PaleByComparison",
 								"state": true,
 								"label": "Pale by Comparison"
+							}
+						},
+						{
+							"Bool": {
+								"name": "PassedPast",
+								"state": true,
+								"label": "Passed / Past"
 							}
 						},
 						{
@@ -5625,6 +5820,13 @@
 								"name": "PrayingMantis",
 								"state": true,
 								"label": "Praying Mantis"
+							}
+						},
+						{
+							"Bool": {
+								"name": "PreferenceAsVerb",
+								"state": true,
+								"label": "Preference as Verb"
 							}
 						},
 						{
@@ -5958,6 +6160,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ToNoAvail",
+								"state": true,
+								"label": "To No Avail"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ToteTout",
 								"state": true,
 								"label": "Tote/Tout"
@@ -5968,6 +6177,13 @@
 								"name": "ToTheMannerBorn",
 								"state": true,
 								"label": "To The Manner Born"
+							}
+						},
+						{
+							"Bool": {
+								"name": "TrustIn",
+								"state": true,
+								"label": "Trust In"
 							}
 						},
 						{

@@ -165,11 +165,13 @@ const defaultEnabledDomains = [
 	'openrouter.ai',
 	'claude.ai',
 	'docs.google.com',
+	'gemini.google.com',
 	'typst.app',
 	'steamcommunity.com',
 	'store.steampowered.com',
 	'steampowered.com',
 	'help.steampowered.com',
+	'assistant.kagi.com',
 ] as const;
 const defaultEnabledDomainSet = new Set<string>(defaultEnabledDomains);
 

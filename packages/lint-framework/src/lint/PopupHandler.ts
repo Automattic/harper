@@ -1,5 +1,6 @@
 import h from 'virtual-dom/h';
 import { closestBox, type IgnorableLintBox, isPointInBox } from './Box';
+import { nonEditableAncestor } from './domUtils';
 import { getCaretPosition } from './editorUtils';
 import type { UnpackedLint } from './unpackLint';
 
@@ -56,7 +57,7 @@ export default class PopupHandler {
 		this.currentLintBoxes = [];
 		this.currentHint = undefined;
 		this.currentHintFor = undefined;
-		this.renderBox = new RenderBox(() => document.body);
+		this.renderBox = new RenderBox(() => nonEditableAncestor(document.body));
 		this.renderBox.getShadowHost().popover = 'manual';
 		this.renderBox.getShadowHost().style.pointerEvents = 'none';
 		this.renderBox.getShadowHost().style.border = 'none';
@@ -218,13 +219,11 @@ export default class PopupHandler {
 				.slice(0, this.popupLint)
 				.filter(
 					(box) =>
-						box.lint.context_hash === previous.lint.context_hash &&
 						box.source === previous.source &&
 						box.lint.span.start === previous.lint.span.start &&
 						box.lint.span.end === previous.lint.span.end,
 				).length;
 			const matches = boxes.flatMap((box, index) =>
-				box.lint.context_hash === previous.lint.context_hash &&
 				box.source === previous.source &&
 				box.lint.span.start === previous.lint.span.start &&
 				box.lint.span.end === previous.lint.span.end &&

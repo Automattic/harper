@@ -49,16 +49,21 @@ let demoText =
 	title={steps[step].title}
 	lede={steps[step].lede}
 	slideProgress={step / (steps.length - 1)}
+	showAside={step === 1}
 	onBack={() => step--}
 	onNext={() => step++}
 >
-	{#if step === 1}
-		<div class="mt-[1.9rem] flex flex-wrap gap-[0.55rem] [&>span]:bg-[#fff]!">
-			{#each ['gmail', 'notion', 'github', 'slack', 'wordpress', 'reddit'] as id}
-				<AppLogoTile {id} size={32} />
-			{/each}
-		</div>
-	{:else if step === 2 || step === 3}
+	<svelte:fragment slot="aside">
+		{#if step === 1}
+			<div class="grid w-fit -rotate-6 grid-cols-3 gap-3 [&>span]:bg-[#fff]! [&>span]:size-14! sm:[&>span]:size-17!">
+				{#each ['gmail', 'github', 'reddit', 'wordpress', 'slack', 'notion', 'linear', 'discord', 'whatsapp'] as id}
+					<AppLogoTile {id} size={68} />
+				{/each}
+			</div>
+		{/if}
+	</svelte:fragment>
+
+	{#if step === 2 || step === 3}
 		<video
 			class="mt-6 block w-full rounded-[6px] border-[0.5px] border-[rgba(28,26,22,0.14)]"
 			autoplay

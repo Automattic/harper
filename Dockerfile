@@ -10,7 +10,7 @@ RUN apt-get update -y && apt-get install clang -y
 RUN mkdir -p /usr/build/
 WORKDIR /usr/build/
 
-RUN cargo install wasm-pack
+RUN cargo install wasm-pack --locked
 
 COPY . .
 

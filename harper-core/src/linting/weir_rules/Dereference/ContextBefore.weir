@@ -1,0 +1,7 @@
+expr main <([pointer] deference), deference>
+let message "Did you mean `dereference`?"
+let description "Corrects `deference` to `dereference`."
+let kind "Typo"
+let becomes "dereference"
+
+test "How about if the compiler translates a pointer deference into a read of that memory address?" "How about if the compiler translates a pointer dereference into a read of that memory address?"

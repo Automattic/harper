@@ -3446,9 +3446,12 @@ FOFL
 FORTRAN/Og
 FOSS/ONV            # free open source software
 FPO/N
+FPS/N               # frames per second; first-person shooter
 FSF/Og
 FSLIC/O
 FTC/O
+FTP/Ng              # file transfer protocol
+FTPS/Ng             # FTP over TLS
 FUD/NS
 FWD/N
 FWIW/
@@ -4787,11 +4790,11 @@ Hyperion/Og
 Hyundai/Ng
 Hz/g
 I/~Ia1s.4           # Iodone; I~pronoun a~personal 1~person .~singular s~subject
-I'd/~
-I'd've/
-I'll/~
-I'm/~
-I've/~
+I'd/~k
+I'd've/k
+I'll/~k
+I'm/~k
+I've/~k
 IA/ON4              # US state (Iowa)
 IBM/ONg
 IC/NgS              # integrated circuit
@@ -4831,7 +4834,7 @@ ISIS/O
 ISO/ONgSP           # standards organization, optical disk image format
 ISP/N
 ISS/NO
-IT/N                # removed `5`. nouns can qualify nouns. makes `it` an adjective which interferes with heuristics
+IT/Ng4              # removed `5`. nouns can qualify nouns. makes `it` an adjective which interferes with heuristics
 IUD/N
 IV/JNSg
 IVF/N
@@ -4997,7 +5000,7 @@ Issachar/Og
 Istanbul/Og
 Istanbulite/NgSJ
 Isuzu/ONg           # car brand
-It/ON               # abbreviation for Italy/Italian. "biological force", "Id", and "desirable quality" senses too marginal
+It/4                # abbreviation for Italy/Italian. "biological force", "Id", and "desirable quality" senses too marginal
 Itaipu/Og
 Ital/N
 Italian/JNwSg
@@ -6268,6 +6271,7 @@ MP/NOgJ             # military police; member of parliament
 MP3/NSg             # audio format
 MP4/NSg             # audio/video format
 MPEG/ON
+MPG/N               # miles per gallon
 MRI/NgV             # magnetic resonance imaging
 MS/NOg4             # US state (Mississippi)
 MSG/NOg             # flavour enhancer
@@ -8311,6 +8315,7 @@ PowerPoint/ONgV
 Powers/NOg
 Powhatan/NOg
 Poznan/Og
+Pr/                 # Praseodymium
 Prada/g
 Prado/Og
 Praetorian/Ng
@@ -8989,6 +8994,7 @@ SS/NOJ
 SSA/ONJ
 SSD/NSg             # solid-state drive
 SSE/NOgJ
+SSH/Ng              # secure shell
 SSS/ON
 SST/NO
 SSW/NgJ
@@ -13119,7 +13125,7 @@ arduousness/Ng
 are/~Vl             # 2nd person singular & plural / 1st & 3rd person plural present of 'be'
 area/~NwSg
 areal/J
-aren't/V
+aren't/Vk
 arena/~NgS
 argent/~NmgJ
 arginine/~N
@@ -14797,7 +14803,7 @@ biker/~Ng
 bikini/~NgS
 bilabial/JNgS
 bilateral/~JYNgS
-bilberry/NS
+bilberry/NSg
 bile/~NmgV
 bilge/NgSV
 bilingual/~JYNSg
@@ -15267,6 +15273,7 @@ boar/~NSg
 board/~NwgSVGd>Z
 boarder/Ng
 boarding/~V6Ng
+boarding school/NgS
 boardinghouse/NgS
 boardroom/NgS
 boardwalk/~NgSV
@@ -16650,6 +16657,7 @@ caption/~NSgVdG
 captious/JYp
 captiousness/Ng
 captivate/VdSGJn
+captivatingly/R
 captivation/Ng
 captivator/NSg
 captive/~NSgJV
@@ -17091,7 +17099,7 @@ centavo/NSg
 centenarian/NgSJ
 centenary/~JNSgV
 centennial/~JYNgS
-center/~NgJVdG<
+center/~NgJVdGe<
 centerboard/NSg<
 centerfold/NgS<
 centerpiece/~NgS<
@@ -17114,7 +17122,7 @@ centrality/Ng
 centralization/Nge
 centralize/VGdSe
 centralizer/NgS
-centre/NgSVGd!@_₹
+centre/NgSVGde!@_₹
 centre-left/NgS!@_₹
 centre-left/J!@_₹
 centre-right/NgS!@_₹
@@ -18264,6 +18272,7 @@ coexistent/JN
 coexists/Vh
 coextensive/J
 coffee/~NwSgJV
+coffee shop/NgS
 coffeecake/NwSg
 coffeehouse/~NgS
 coffeemaker/NSg
@@ -18732,7 +18741,7 @@ comportment/Nmg
 composability/Nmg
 compose/~VGSdrEeB
 composedly/Ry
-composer/~NgS
+composer/~NgSe
 composite/~JYNwgSVGdnX
 composition/~Nge
 compositional/~J
@@ -19623,9 +19632,9 @@ cougar/~NSg
 cough/~VdGN0g
 coughs/N9Vh
 could/~A
-could've/V
-couldn't/~VA
-couldn't've/VA†
+could've/Vk
+couldn't/~VAk
+couldn't've/VA†k
 coulee/NSg
 coulis/N
 coulomb/~NgS
@@ -22067,6 +22076,7 @@ documented/~VU
 dodder/VdGSNg
 doddery/J
 doddle/NV
+dodecahedron/NgS
 dodge/~Vd>GSNgJZ
 dodgem/NS
 dodger/~Ng
@@ -22743,8 +22753,8 @@ dz/NV
 e/NSId^W
 e-book/NgS
 e-commerce/Nmg
-e'en/
-e'er/
+e'en/k
+e'er/k
 e.g./4~
 eBay/OgV
 eMusic/g
@@ -23633,7 +23643,7 @@ enzymatic/~J
 enzyme/~NSg
 eolian/J
 eon/~NSg
-eosinophil/NSJ
+eosinophil/NSJg
 eosinophilic/J
 epaulet/NSg
 epaulette/NgS!@_₹
@@ -23950,7 +23960,7 @@ eutectic/~JN
 euthanasia/~Nmg
 euthanize/VdSG
 euthenics/Ng
-eutrophication/N
+eutrophy/Nmn
 evacuate/~VdSGXn
 evacuation/~NwgS
 evacuee/NgS
@@ -24382,7 +24392,7 @@ extortionate/JY
 extortioner/Ng
 extortionist/NgS
 extra/~JNSg(
-extracellular/~J
+extracellular/~JY
 extract/~NgSVdGv
 extraction/~NwSg
 extractor/NgS
@@ -25624,6 +25634,8 @@ follow/~Vd>GSNZz
 follower/~NgS
 following/~JPNwgSV
 followup/NgS
+follow-up/JNgS
+follow up/V/
 folly/~NSgV
 foment/VGdSN
 fomentation/Nmg
@@ -26150,6 +26162,7 @@ frolicsome/J
 from/~P
 frond/NSg
 front/~NSJVdGW
+front door/NgS
 front-line/J
 front man/N0g♂
 front matter/Nmg
@@ -27838,7 +27851,7 @@ hacky/J>^
 had/~VtT
 haddock/NwSg
 hadith/~N
-hadn't/Vt
+hadn't/Vtk
 hadron/NgS          # subatomic particle made of quarks
 hadst/V
 haem/N!@_₹
@@ -28169,7 +28182,7 @@ has/~Vh
 hash/~NgSVdGr
 hashish/Ng
 hashtag/NSgV
-hasn't/Vh
+hasn't/Vhk
 hasp/NgSV
 hassle/NSgVdGJ
 hassock/NSg
@@ -28217,7 +28230,7 @@ haunting/~VJYN
 hauteur/Ng
 have/~NgAG
 haven/~NSgV
-haven't/VA
+haven't/VAk
 haversack/NSg
 haves/N9
 havoc/~NmgV
@@ -28253,9 +28266,9 @@ hazmat/~N
 hazy/J>^pN
 hdqrs/N
 he/~Ia3s*           # I~pronoun a~personal 3~person .~singular s~subject *:3pers-sing-subj
-he'd/
-he'll/
-he's/~
+he'd/k
+he'll/k
+he's/~k
 head/~NgSJ>VdGZz
 head-scratcher/NgS
 head unit/NgS
@@ -28312,7 +28325,7 @@ headstone/~NSg
 headstrong/J
 headteacher/NS
 headwaiter/NSg
-headwaters/~Ng
+headwater/~NgS
 headway/~Nmg
 headwind/NSgV
 headword/NSg
@@ -28518,7 +28531,7 @@ hep/~NJV
 heparin/Ng
 hepatic/~JN
 hepatitis/~Ng
-hepatocyte/NS
+hepatocyte/NSg
 hepper/Jc
 heppest/Ju
 heptagon/NgS
@@ -28668,6 +28681,7 @@ high-quality/J
 high-ranking/J
 high-res/J
 high-rise/NgS
+high school/NgS
 high-speed/J
 high tech/Ng
 highball/NSgV
@@ -29186,8 +29200,8 @@ hoverboard/NgSV
 hovercraft/NgS09    # singular and plural, also has a plural in -s
 how/~CNSg
 how come/R
-how'd/
-how're/
+how'd/k
+how're/k
 howbeit/C
 howdah/Ng
 howdahs/N
@@ -29549,6 +29563,7 @@ iconoclasm/Ng
 iconoclast/~NSg
 iconoclastic/J
 iconography/~Nwg
+icosahedron/NgS
 ictus/Ng
 icy/~J^>p
 id/~NSgIY
@@ -31087,9 +31102,9 @@ issuer/~NgS
 isthmian/~JN
 isthmus/~NgS
 it/~Ia3so*          # I~pronoun a~personal 3~person .~singular s~subject o~object *~3pers-sing-subj
-it'd/
-it'll/
-it's/~
+it'd/k
+it'll/k
+it's/~k
 ital/~NJ
 italic/~JNSg
 italicisation/Ng!_₹
@@ -33278,7 +33293,7 @@ macroeconomic/~JS
 macroeconomics/Ng
 macrology/NS
 macron/~NgS
-macrophages/N
+macrophage/gNS
 macroscopic/~J
 mad/~JYpVSg
 madam/~NSgV
@@ -34401,6 +34416,7 @@ midcentury/J
 midday/~Ng
 midden/NgS
 middle/~NgSJVG
+middle school/NgS
 middle-sized/J
 middlebrow/JNSg
 middleman/NgV
@@ -34955,6 +34971,7 @@ moi/~I
 moiety/NSg
 moil/VdGSNg
 moire/NSg
+moissanite/Nmg
 moist/~J^Y>pNVXn
 moisten/Vd>GZ
 moistener/NgS
@@ -36990,6 +37007,7 @@ ochre/NwgSJV!@_₹
 ocker/NSVJ
 octagon/~NgS
 octagonal/~J
+octahedron/NgS
 octal/NJ
 octane/~NwgS
 octave/~NgSVJ
@@ -37238,6 +37256,7 @@ opaqueness/Nmg
 opcode/NSg
 ope/~JVSN
 open/~J^Y>pVGdSNgZzB
+open house/NgS
 open source/Ng
 open-source/JVSdG
 opencast/J
@@ -37458,9 +37477,9 @@ osculation/NgS
 osier/NgS
 osmium/Nmg
 osmosis/~Ng
-osmotic/J
+osmotic/JQ
 osprey/~NSg
-ossicles/N
+ossicle/NSg
 ossification/Ng
 ossify/VGdSn
 ostensible/J
@@ -39212,7 +39231,7 @@ phenomenal/~JY
 phenomenological/~JY
 phenomenology/~N
 phenomenon/~NgS
-phenotype/~NV
+phenotype/~NSgVGd
 phenytoin/N
 pheromone/~NgS
 phew/
@@ -39299,7 +39318,7 @@ phosphorescent/JYN
 phosphoric/J
 phosphorous/JN
 phosphorus/~Nmg
-phosphorylation/~Nmg
+phosphorylation/~Nmge
 photo/~NSgVGd
 photobomb/NgSVdG
 photocell/NgS
@@ -40026,8 +40045,9 @@ polygon/~NSg
 polygonal/~J
 polygraph/N0gVGd
 polygraphs/N9V
+polyhedra/N9
 polyhedral/~J
-polyhedron/~NSg
+polyhedron/~N0Sg
 polymath/~N0g
 polymaths/N9
 polymer/~NwSg
@@ -40037,9 +40057,11 @@ polymerisation/Nmg!_₹
 polymerise/VGdS!_₹
 polymerization/~Nmg
 polymerize/VGdS
+polymorph/N0g
 polymorphic/J
 polymorphism/NmgS
 polymorphous/J
+polymorphs/N9
 polynomial/~NgSJ
 polyp/NgS
 polyphonic/~J
@@ -40755,6 +40777,7 @@ primal/~JNV
 primality/J
 primarily/~R        # focusing/viewpoint/comment adverb
 primary/~JNSgVdG
+primary school/NgS
 primate/~NgS
 prime/~JNgSV
 primer/~NgJ
@@ -41266,6 +41289,7 @@ pubic/J
 pubis/Ng
 public/~JNmgVr
 public key/NgS
+public school/NgS
 publican/NgSr
 publication/~NwSgr
 publicise/VGdS!_₹
@@ -45021,9 +45045,9 @@ shaving/~NgV6
 shawl/~NgSV
 shay/~NgS
 she/~Ia3s*          # I~pronoun a:personal 3:person .~singular s~subject *:3rd pers. sing. subj.
-she'd/
-she'll/
-she's/
+she'd/k
+she'll/k
+she's/k
 sheaf/~NgV
 shear/~Vd>GSNgJZ
 shearer/~Ng
@@ -48041,7 +48065,7 @@ sultrily/Ry
 sultriness/Ng
 sultry/J>^p
 sum/~NSgV
-sumac/~NgV
+sumac/~NgVS
 summarily/~Ry
 summarise/VGdS!_₹
 summarization/NgS
@@ -48316,6 +48340,8 @@ surveil/VS
 surveilled/VtT
 surveilling/V6
 surveillance/~Ng
+surveilled/JVtT
+surveilling/V6N
 survey/~NSVdGr
 survey's
 surveying/~NgV
@@ -48346,7 +48372,7 @@ sussed out/V†
 susses out/V†
 sussing out/V†
 sustain/~VdGSNB
-sustainability/~Nmg
+sustainability/~NmgU
 sustainable/~JNU
 sustainably/Ry
 sustenance/Ng
@@ -49286,9 +49312,9 @@ thankless/JYp
 thanklessness/Nmg
 thanksgiving/~NSg
 that/~CIDM
-that'd/
-that'll/
-that's/
+that'd/k
+that'll/k
+that's/k
 thatch/NgSVd>GZ
 thatcher/~NgS
 thatching/NgV
@@ -49345,9 +49371,9 @@ therapeutics/~Nmg
 therapist/~NSg
 therapy/~NwSgV
 there/~R
-there'd/
-there'll/
-there's/~
+there'd/k
+there'll/k
+there's/~k
 thereabout/RS
 thereafter/~N
 thereat/
@@ -49386,10 +49412,10 @@ thespian/JNSg
 theta/~NSg
 thew/NgSV
 they/~Ia3s:         # I~pronoun a~personal 3~person :~plural s:~subject
-they'd/
-they'll/
-they're/
-they've/
+they'd/k
+they'll/k
+they're/k
+they've/k
 thiamine/Nmg
 thick/~JY^>pNgVnX
 thicken/Vd>GzZ
@@ -52768,10 +52794,10 @@ wayward/~JYp
 waywardness/Nmg
 wazoo/NSg
 we/~Ia1s:           # I~pronoun a~personal 1~person :~plural s~subject
-we'd/
-we'll/
-we're/~
-we've/
+we'd/k
+we'll/k
+we're/~k
+we've/k
 weak/~J>Y^pnX
 weaken/~Vd>GZ
 weakener/Ng
@@ -52960,8 +52986,8 @@ whammy/NSg
 wharf/~NgV
 wharves/~N
 what/~INS
-what'll/
-what's/
+what'll/k
+what's/k
 whataboutism/Ng
 whatchamacallit/NgS
 whatever/~IJNg
@@ -53104,11 +53130,11 @@ whizzed/VtT
 whizzes/NVh
 whizzing/V6NJ
 who/~I
-who'd/
-who'll/
-who're/
-who's/
-who've/
+who'd/k
+who'll/k
+who're/k
+who's/k
+who've/k
 whoa/V
 whodunit/NgS
 whoever/~I
@@ -53152,7 +53178,7 @@ whup/VS
 whupped/VtT
 whupping/V6N
 why/~NgV
-why'd/
+why'd/k
 whys/N
 wick/~NgSVd>JZ
 wicked/~J^Y>pV
@@ -53584,8 +53610,8 @@ wot/VI
 wotcha/
 would/~A            # removed `NS` noun and plural seem very marginal
 would-be/J
-would've/
-wouldn't/A
+would've/k
+wouldn't/Ak
 wouldst/V
 wound/~NSgVtTGd>
 wove/VtJr
@@ -53829,10 +53855,10 @@ yonder/~JN
 yonks/N
 yore/Ng
 you/~Ia2so.:        # I~pronoun a~personal 2~person :~plural s:~subject o~object
-you'd/
-you'll/
-you're/~
-you've/
+you'd/k
+you'll/k
+you're/~k
+you've/k
 young/~J^>NgV
 youngish/J
 youngster/~NgS
@@ -53918,7 +53944,8 @@ zipper/~NgSVdG
 zipping/V6U
 zippy/J^>
 zircon/NgS
-zirconium/~Ng
+zirconia/Nmg
+zirconium/~Nmg
 zit/NSg
 zither/NgSV
 zloty/NSg
@@ -54283,6 +54310,12 @@ Logotherapy/Sg
 Longreads/Og
 Lua/Og              # programming language
 LuaTeX/Og           # TeX-based typesetting engine
+M1                  # Apple Silicon
+M2                  # Apple Silicon
+M3                  # Apple Silicon
+M4                  # Apple Silicon
+M5                  # Apple Silicon
+M6                  # Apple Silicon
 MAGA/ONwgS
 MCP/Ng              # model context protocol
 MMO/NgS             # massively multiplayer online
@@ -54330,6 +54363,7 @@ NTP/N               # network time protocol
 NYTimes/Sg
 NYU/Og
 NaN/NgS
+Neo/ONSg            # Apple Mac
 Neo4J/ONg
 Neovim/g            # code editor
 NetBSD/Og           # operating system
@@ -54408,6 +54442,7 @@ RL/Nmg              # reinforcement learning
 RNN/NgS             # recurrent neural network
 RPC/ONSg            # remote procedure call
 RPG/NgS             # role-playing game
+RTOS/N              # real-time operating system
 RTX/NSg
 Raytheon/Og
 React Native/Og     # framework
@@ -54653,7 +54688,7 @@ gzipping/V6
 hardcode/VGdS       # dictionaries prefer: hard code
 hashmap/NgS         # data structure
 heapsort
-here're/
+here're/k
 hoster/NgS
 hostname/NSg
 hotwire/VGB         # dictionaries prefer: hot-wire
@@ -54751,7 +54786,7 @@ synchronic/JQ       # linguistics
 systemd/Og          # Linux software
 tagset/NgS
 terraform/VGdS
-there're/
+there're/k
 timespan/NgS
 tmux/Og             # terminal multiplexer, uncapitalized proper noun
 trie/NgS            # data structure
@@ -54837,3 +54872,167 @@ viscomital/J        # As above, alternative version
 WordCamp/Og
 worldbuild/V>G
 cutscene/gNS
+alderfly/gNS
+anoxia/gNS
+anoxic/JQ
+autotroph/gNS
+autotrophic/JQ
+autotrophy/gNS
+archaea/gN9
+archaeon/gN0
+barklice/gN9
+barklouse/gN0
+basophil/gNS
+basophilic/J
+benthic/JQ
+benthos/gNS
+bilayer/gNS
+biodegradation/gNS
+bittercress/gNS
+bolete/gNS
+booklice/gN9
+booklouse/gN0
+bristletail/gNS
+butterwort/gNS
+caddisfly/gNS
+carbonic/J
+carotenoid/gNS
+cephalopod/gNS
+chemoautotroph/gNS
+chemoautotrophic/JQ
+chemoautotrophy/gNS
+chemoheterotroph/gNS
+chemoheterotrophic/JQ
+chemoheterotrophy/gNS
+choria/gN9
+chorial/J
+chorion/gNS
+chorionic/J
+ciliate/gNSJ
+ciliated/J
+codominant/JYgNS
+codominance/gNm
+crabapple/gNS
+cytotoxic/JQ
+cytotoxicity/NSg
+cytotoxin/gNS
+datura/gNS
+deadnettle/gNS
+dendritic/JQ
+dicot/gNS
+dihybrid/gNSJ
+dinoflagellate/gNS
+dobsonfly/gNS
+earthball/gNS
+endosymbiont/gNS
+endosymbiosis/gN0
+endosymbioses/gN9
+epigenetic/JQ
+epigenetics/gNm
+epistasis/gN0
+epistases/gN9
+epistatic/JQ
+eutrophic/JQ
+feverfew/gNS
+fishfly/gNS
+fleabane/gNS
+genotype/gNSVGd
+genotypic/JQ
+gyral/JY
+gyre/gNS
+gyri/gN9
+gyrus/gNS
+haemolymph/gNS!_₹
+hemolymph/gNS
+heterotroph/gNS
+heterotrophic/JQ
+heterotrophy/gNS
+heterozygote/gNS
+heterozygous/J
+homozygote/gNS
+homozygous/J
+hoverfly/gNS
+hypha/gN0
+hyphae/gN9
+hypoxia/gNS
+hypoxic/JQ
+immunosuppressant/gNSJ
+immunosuppression/gNS
+immunosuppressive/gNSJ
+immunosuppressor/gNSJ
+intercellular/JY
+intracellular/JY
+knotweed/gNS
+leafhopper/gNS
+leucism/gNm
+leucistic/J
+lyses/gN9
+lytic/JQ
+lysis/gN0
+lysogenic/JQ
+mantid/gNS
+mantidfly/gNS
+melanism/Nmg
+melanistic/J
+mineralization/gNSer
+monocot/gNS
+moonflower/gNS
+mycelia/gN9
+mycelium/gN0
+myelin/gNS
+myelinate/VGed
+neutrophil/gNS
+neutrophilic/J
+nitrify/Vne>ZSdG
+norepinephrine/gNS
+notochord/gNS
+nudibranch/gN0
+nudibranchs/gN9
+nucleosome/gNS
+oarfish/N09gS      # singular and plural, also has a plural in -s
+oocyte/gNS
+orbweaver/gNS
+osmose/VGSd
+oxic/J
+phenotypic/JQ
+phospholipid/gNS
+phosphorylate/VGde
+photoautotroph/gNS
+photoautotrophic/JQ
+photoautotrophy/gNS
+photoheterotroph/gNS
+photoheterotrophic/JQ
+photoheterotrophy/gNS
+planktonic/JQ
+pleiotropic/JQ
+pleiotropism/gNS
+pleiotropy/gNS
+polypore/gNS
+purslane/gNS
+redbud/gNS
+ribosomal/JY
+ribosome/gNS
+rotifer/gNS
+saccharide/gNS
+scorpionfly/gNS
+sessile/J
+seston/gNS
+sestonic/J
+siphonophore/gNS
+snakefly/gNS
+spectrometry/gNS
+spittlebug/gNS
+springtail/gNS
+stonecrop/gNS
+stonefly/gNS
+sulcal/J
+sulci/gN9
+sulcus/gN0
+symbiont/gNS
+thrip/gNS
+treehopper/gNS
+tunicate/gNS
+upwelling/gNS
+woodsorrel/gNS
+zebrafish/N09gS      # singular and plural, also has a plural in -s
+zooid/gNSJ
