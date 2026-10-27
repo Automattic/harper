@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
 import copy from 'rollup-plugin-copy';
 import sveltePreprocess from 'svelte-preprocess';
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig, loadEnv, type PluginOption } from 'vite';
 import manifest from './src/manifest';
 
 export default defineConfig(({ mode }) => {
@@ -12,7 +12,7 @@ export default defineConfig(({ mode }) => {
 
 	const browser = env.TARGET_BROWSER ?? 'chrome';
 
-	if (!['chrome', 'firefox'].includes(browser)) {
+	if (browser !== 'chrome' && browser !== 'firefox') {
 		throw new Error('UNSUPPORTED BROWSER TYPE');
 	}
 
@@ -39,9 +39,9 @@ export default defineConfig(({ mode }) => {
 						dest: './public/wasm',
 					},
 				],
-			}),
+			}) as unknown as PluginOption,
 			tailwindcss(),
-			crx({ manifest, browser }),
+			crx({ manifest, browser }) as unknown as PluginOption,
 			svelte({
 				compilerOptions: {
 					dev: !production,

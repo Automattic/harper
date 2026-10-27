@@ -51,6 +51,8 @@ create_test!(clean.sol, 0);
 create_test!(clean.ps1, 0);
 create_test!(clean.gleam, 0);
 create_test!(dirty.gleam, 3);
+create_test!(clean.exs, 0);
+create_test!(dirty.exs, 4);
 create_test!(jsdoc.ts, 4);
 create_test!(issue_96.lua, 0);
 create_test!(merged_lines.ts, 1);
@@ -71,6 +73,7 @@ create_test!(complex_gradle_build.gradle, 1);
 create_test!(complex_groovy_strings_regex.groovy, 1);
 create_test!(issue_1097.lua, 0);
 create_test!(basic.clj, 12);
+create_test!(mean.r, 1);
 
 // Checks that some comments are masked out
 create_test!(ignore_comments.rs, 1);
@@ -80,7 +83,7 @@ create_test!(ignore_comments.ps1, 1);
 
 // Zig tests - covering //, ///, and //! comments
 create_test!(clean.zig, 0);
-create_test!(dirty.zig, 5);
+create_test!(dirty.zig, 4);
 
 // These are to make sure nothing crashes.
 create_test!(empty.js, 0);

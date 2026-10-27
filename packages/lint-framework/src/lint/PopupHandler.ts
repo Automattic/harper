@@ -1,5 +1,6 @@
 import h from 'virtual-dom/h';
 import { closestBox, type IgnorableLintBox, isPointInBox } from './Box';
+import { nonEditableAncestor } from './domUtils';
 import { getCaretPosition } from './editorUtils';
 import type { UnpackedLint } from './unpackLint';
 
@@ -31,7 +32,9 @@ function monitorActivationKey(
 export default class PopupHandler {
 	private currentLintBoxes: IgnorableLintBox[];
 	private popupLint: number | undefined;
-	private autofocusSuggestion: boolean;
+	private selectedSuggestion = 0;
+	/** Only a keyboard activation moves focus into the popup; a click leaves it in the editor. */
+	private autofocusSuggestion = false;
 	private currentHint: string | null | undefined;
 	private currentHintFor: number | undefined;
 	private renderBox: RenderBox;
@@ -54,10 +57,9 @@ export default class PopupHandler {
 	}) {
 		this.actions = actions;
 		this.currentLintBoxes = [];
-		this.autofocusSuggestion = false;
 		this.currentHint = undefined;
 		this.currentHintFor = undefined;
-		this.renderBox = new RenderBox(() => document.body);
+		this.renderBox = new RenderBox(() => nonEditableAncestor(document.body));
 		this.renderBox.getShadowHost().popover = 'manual';
 		this.renderBox.getShadowHost().style.pointerEvents = 'none';
 		this.renderBox.getShadowHost().style.border = 'none';
@@ -84,37 +86,65 @@ export default class PopupHandler {
 		}
 	}
 
-	/** Tries to get the current caret position.
-	 * If successful, opens the popup closes to it. */
+	/** Open and render the row nearest the editor caret immediately on activation. */
 	private openClosestToCaret() {
-		const caretPosition = getCaretPosition();
+		const host = this.renderBox.getShadowHost();
+		const popupFocused = document.activeElement === host;
+		const caretPosition = popupFocused ? null : getCaretPosition();
+		const closestIdx = caretPosition
+			? closestBox(caretPosition, this.currentLintBoxes)
+			: popupFocused
+				? this.popupLint
+				: undefined;
+		if (closestIdx == null || closestIdx < 0) return;
 
-		if (caretPosition != null) {
-			const closestIdx = closestBox(caretPosition, this.currentLintBoxes);
+		this.popupLint = closestIdx;
+		this.selectedSuggestion = 0;
+		this.autofocusSuggestion = true;
+		this.render();
+		if (popupFocused) this.focusSelectedSuggestion();
+	}
 
-			if (closestIdx >= 0) {
-				this.popupLint = closestIdx;
-				this.autofocusSuggestion = true;
-			}
-		}
+	/** Focus the active replacement without replacing the renderer's saved editor selection. */
+	private focusSelectedSuggestion() {
+		const row = this.renderBox
+			.getShadowHost()
+			.shadowRoot?.querySelector<HTMLElement>('.harper-selected');
+		row?.focus({ preventScroll: true });
+		row?.scrollIntoView({ block: 'nearest' });
 	}
 
 	private onPointerDown(e: PointerEvent) {
 		for (let i = 0; i < this.currentLintBoxes.length; i++) {
 			const box = this.currentLintBoxes[i];
 
-			if (isPointInBox([e.x, e.y], box)) {
+			if (e.composedPath().includes(box.source) && isPointInBox([e.x, e.y], box)) {
+				if (this.popupLint != null) this.close();
 				this.popupLint = i;
+				this.selectedSuggestion = 0;
 				this.autofocusSuggestion = false;
 				this.render();
 				return;
 			}
 		}
 
+		this.close();
+	}
+
+	private close = () => {
 		this.popupLint = undefined;
+		this.selectedSuggestion = 0;
 		this.autofocusSuggestion = false;
 		this.render();
-	}
+	};
+
+	private onOutsidePointerDown = (event: PointerEvent) => {
+		const path = event.composedPath();
+		if (path.includes(this.renderBox.getShadowHost())) return;
+		// Editor pointer-downs are handled by the existing source listeners.
+		if (this.currentLintBoxes.some((box) => path.includes(box.source))) return;
+		this.close();
+	};
 
 	private render() {
 		let tree = h('div', {}, []);
@@ -125,28 +155,31 @@ export default class PopupHandler {
 		if (this.popupLint != null && this.popupLint < this.currentLintBoxes.length) {
 			const box = this.currentLintBoxes[this.popupLint];
 
-			tree = SuggestionBox(
+			tree = SuggestionBox({
 				box,
-				this.actions,
-				this.currentHint ?? null,
-				this.autofocusSuggestion,
-				() => {
-					this.popupLint = undefined;
-					this.autofocusSuggestion = false;
-					this.updateHint();
+				selectedIndex: this.selectedSuggestion,
+				autofocus: this.autofocusSuggestion,
+				onSelect: (index) => {
+					if (index === this.selectedSuggestion) return;
+					this.selectedSuggestion = index;
 					this.render();
 				},
-			);
+				actions: this.actions,
+				hint: this.currentHint ?? null,
+				close: this.close,
+			});
 		}
 
 		this.renderBox.render(tree);
 
 		if (this.popupLint != null && this.popupLint < this.currentLintBoxes.length) {
+			document.addEventListener('pointerdown', this.onOutsidePointerDown, true);
 			host.style.setProperty('visibility', 'visible', 'important');
 			if (host.isConnected && !host.matches(':popover-open')) {
 				host.showPopover();
 			}
 		} else {
+			document.removeEventListener('pointerdown', this.onOutsidePointerDown, true);
 			host.style.setProperty('visibility', 'hidden', 'important');
 			if (host.isConnected && host.matches(':popover-open')) {
 				host.hidePopover();
@@ -175,15 +208,51 @@ export default class PopupHandler {
 		}
 	}
 
+	/** Preserve logical selection through geometry updates, but never retarget stale row indices. */
 	public updateLintBoxes(boxes: IgnorableLintBox[]) {
+		const host = this.renderBox.getShadowHost();
+		const popupFocused = document.activeElement === host;
 		this.currentLintBoxes.forEach((b) => {
 			b.source.removeEventListener('pointerdown', this.pointerDownCallback as EventListener);
 		});
 
-		if (boxes.length != this.currentLintBoxes.length) {
-			this.popupLint = undefined;
-			this.autofocusSuggestion = false;
+		const previous = this.popupLint == null ? undefined : this.currentLintBoxes[this.popupLint];
+		const previousSelection = previous?.lint.suggestions[this.selectedSuggestion];
+		if (previous) {
+			// Context hashes are location-agnostic; source and span identify the occurrence.
+			// Keep the clicked fragment of a wrapped lint, rather than jumping to its first line.
+			const fragment = this.currentLintBoxes
+				.slice(0, this.popupLint)
+				.filter(
+					(box) =>
+						box.source === previous.source &&
+						box.lint.span.start === previous.lint.span.start &&
+						box.lint.span.end === previous.lint.span.end,
+				).length;
+			const matches = boxes.flatMap((box, index) =>
+				box.source === previous.source &&
+				box.lint.span.start === previous.lint.span.start &&
+				box.lint.span.end === previous.lint.span.end &&
+				box.lint.source === previous.lint.source
+					? [index]
+					: [],
+			);
+			this.popupLint = matches[Math.min(fragment, matches.length - 1)];
 		}
+		const next = this.popupLint == null ? undefined : boxes[this.popupLint];
+		this.selectedSuggestion =
+			next && previousSelection
+				? Math.max(
+						0,
+						next.lint.suggestions.findIndex(
+							(suggestion) =>
+								suggestion.kind === previousSelection.kind &&
+								suggestion.replacement_text === previousSelection.replacement_text,
+						),
+					)
+				: 0;
+		// Index changes due to other fields or wrapped rectangles do not start a new hint session.
+		if (this.popupLint != null) this.currentHintFor = this.popupLint;
 
 		this.currentLintBoxes = boxes;
 		this.currentLintBoxes.forEach((b) => {
@@ -191,5 +260,8 @@ export default class PopupHandler {
 		});
 
 		this.render();
+		if (popupFocused && this.popupLint != null && !host.shadowRoot?.activeElement) {
+			this.focusSelectedSuggestion();
+		}
 	}
 }

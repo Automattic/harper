@@ -29,7 +29,7 @@ impl Default for ModalOf {
         // "will of" is a false positive if "will" is a noun
         // "The will of the many"
         let noun_will_of_naive = Lrc::new(
-            SequenceExpr::word_set(&["the", "a"])
+            SequenceExpr::word_set(["the", "a"])
                 .then_whitespace()
                 .t_aco("will")
                 .then_whitespace()

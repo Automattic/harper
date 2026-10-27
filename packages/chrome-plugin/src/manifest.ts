@@ -1,7 +1,6 @@
 import { defineManifest } from '@crxjs/vite-plugin';
 import packageData from '../package.json';
 
-//@ts-expect-error
 const isDev = process.env.NODE_ENV == 'development';
 
 /**
@@ -70,6 +69,8 @@ export default defineManifest({
 			matches: ['<all_urls>'],
 			all_frames: true,
 			match_about_blank: true,
+			// CRXJS's manifest types do not include this Chromium manifest option.
+			// @ts-expect-error Valid for Manifest V3 content scripts.
 			match_origin_as_fallback: true,
 			js: ['src/contentScript/index.ts'],
 			run_at: 'document_idle',

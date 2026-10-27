@@ -1,0 +1,12 @@
+expr main [(in the same vain), (in the same vane), (in the same veins), (in same vein), (in same vain)]
+
+let message "This idiom requires the definite article `the` and the correct word `vein`, meaning blood vessel."
+let description "Corrects wrong variants of `in the same vein`."
+let kind "Usage"
+let becomes "in the same vein"
+
+test "In the same vain as ESLint Warnings Are An Anti-Pattern, I think the default pylint.severity setting should be to make all issue types \"Error\"." "In the same vein as ESLint Warnings Are An Anti-Pattern, I think the default pylint.severity setting should be to make all issue types \"Error\"."
+test "And in the same vane, all other PodCommsSession functions that currently need to fail" "And in the same vein, all other PodCommsSession functions that currently need to fail"
+test "A-Frame is an open-source Web3D/WebVR framework in the same veins." "A-Frame is an open-source Web3D/WebVR framework in the same vein."
+test "(in same vein as the SDRAM settings)" "(in the same vein as the SDRAM settings)"
+test "it should work in same vain; you can override deserializer used for Integer.TYPE" "it should work in the same vein; you can override deserializer used for Integer.TYPE"

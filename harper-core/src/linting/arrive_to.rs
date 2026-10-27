@@ -11,7 +11,7 @@ pub struct ArriveTo {
 impl Default for ArriveTo {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["arrive", "arrived", "arrives", "arriving"])
+            expr: SequenceExpr::word_set(["arrive", "arrived", "arrives", "arriving"])
                 .t_ws()
                 .t_aco("to")
                 .but_not(
@@ -51,7 +51,7 @@ impl ExprLinter for ArriveTo {
     }
 
     fn description(&self) -> &str {
-        "A linter skeleton for contributors to copy into `harper_core/src/linting/` and rename."
+        "Corrects `arrive to` to `arrive at` or `arrive in`."
     }
 }
 

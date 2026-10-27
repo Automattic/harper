@@ -20,14 +20,14 @@ impl Default for NeedToNoun {
                     || tok.kind.is_unlintable()
                     || tok.kind.is_pronoun()
             }) as Box<dyn Expr>,
-            Box::new(WordSet::new(&["about", "into", "it"])),
+            Box::new(WordSet::new(["about", "into", "it"])),
         ]);
 
         let exceptions = SequenceExpr::anything()
             .t_any()
             .t_any()
             .t_any()
-            .then_word_set(&["be", "match"]);
+            .then_word_set(["be", "match"]);
 
         let a = SequenceExpr::default()
             .then_kind_where(|kind| kind.is_nominal() && !kind.is_likely_homograph())

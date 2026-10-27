@@ -102,6 +102,15 @@ mod tests {
     }
 
     #[test]
+    fn preserves_camel_case_proper_nouns_in_heading() {
+        assert_markdown_suggestion_result(
+            "### apple launched icloud",
+            UseTitleCase::new(FstDictionary::curated()),
+            "### Apple Launched iCloud",
+        );
+    }
+
+    #[test]
     fn does_not_capitalize_am_in_time_expression() {
         assert_no_lints(
             "# Meeting at 9:05am",
@@ -115,5 +124,18 @@ mod tests {
             "# Dinner at 7pm",
             UseTitleCase::new(FstDictionary::curated()),
         );
+    }
+
+    #[test]
+    fn does_not_capitalize_standalone_x_between_words() {
+        assert_no_lints(
+            "# Project 1 x Project 2",
+            UseTitleCase::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn capitalizes_standalone_x_when_last_word() {
+        assert_no_lints("# Project X", UseTitleCase::new(FstDictionary::curated()));
     }
 }

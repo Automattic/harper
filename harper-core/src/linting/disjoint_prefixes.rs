@@ -19,7 +19,7 @@ const UP_EXCEPTIONS: &[&str] = &["loading", "right", "state", "time", "trend"];
 impl<D: Dictionary> DisjointPrefixes<D> {
     pub fn new(dict: D) -> Self {
         Self {
-            expr: SequenceExpr::word_set(&[
+            expr: SequenceExpr::word_set([
                 // These prefixes rarely cause false positives
                 "anti", "auto", "bi", "counter", "de", "dis", "extra", "fore", "hyper", "il", "im",
                 "inter", "ir", "macro", "mal", "micro", "mid", "mini", "mis", "mono", "multi",
@@ -42,7 +42,7 @@ impl<D: Dictionary> DisjointPrefixes<D> {
                 // No trailing hyphen. Ex: Custom patterns take precedence over built-in patterns -> overbuilt
                 Box::new(SequenceExpr::anything().t_any().t_any().then_hyphen()),
                 // Don't merge "co op" whether separated by space or hyphen.
-                Box::new(SequenceExpr::aco("co").t_any().t_set(&["op", "ops"])),
+                Box::new(SequenceExpr::aco("co").t_any().t_set(["op", "ops"])),
                 // Merge these if they're separated by hyphen, but not space.
                 Box::new(SequenceExpr::aco("out").t_ws().t_set(OUT_EXCEPTIONS)),
                 Box::new(SequenceExpr::aco("over").t_ws().t_set(OVER_EXCEPTIONS)),
@@ -121,7 +121,8 @@ impl<D: Dictionary> ExprLinter for DisjointPrefixes<D> {
         let suggestions = suggestions
             .iter()
             .map(|s| {
-                Suggestion::replace_with_match_case(s.chars().collect(), toks_span.get_content(src))
+                // Copy casing from the prefix alone, so "Pre-Requisite" becomes "Prerequisite", not "PreRequisite"
+                Suggestion::replace_with_match_case(s.chars().collect(), toks[0].get_ch(src))
             })
             .collect();
 
@@ -204,6 +205,32 @@ mod tests {
             "My hobby is de extinction of the dinosaurs.",
             DisjointPrefixes::new(FstDictionary::curated()),
             "My hobby is de-extinction of the dinosaurs.",
+        );
+    }
+
+    #[test]
+    fn dont_join_hyphenated_re_execute_3954() {
+        assert_no_lints(
+            "I saw re-execute flagged with DisjointPrefixes.",
+            DisjointPrefixes::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn fix_title_case_hyphenated_to_joined_4381() {
+        assert_suggestion_result(
+            "Pre-Requisite",
+            DisjointPrefixes::new(FstDictionary::curated()),
+            "Prerequisite",
+        );
+    }
+
+    #[test]
+    fn fix_all_caps_hyphenated_to_joined() {
+        assert_suggestion_result(
+            "PRE-REQUISITE",
+            DisjointPrefixes::new(FstDictionary::curated()),
+            "PREREQUISITE",
         );
     }
 }

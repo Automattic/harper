@@ -17,21 +17,21 @@ impl Default for HowDoesCompared {
                     Box::new(
                         SequenceExpr::aco("do")
                             .t_ws()
-                            .t_set(&["these", "they", "those"]),
+                            .t_set(["these", "they", "those"]),
                     ) as Box<dyn Expr>,
                     Box::new(
                         SequenceExpr::aco("does")
                             .t_ws()
-                            .t_set(&["it", "that", "this"]),
+                            .t_set(["it", "that", "this"]),
                     ),
                     Box::new(
                         SequenceExpr::aco("did")
                             .t_ws()
-                            .t_set(&["it", "that", "these", "they", "this", "those"]),
+                            .t_set(["it", "that", "these", "they", "this", "those"]),
                     ),
                 ])
                 .t_ws()
-                .t_set(&["compared", "compares"]),
+                .t_set(["compared", "compares"]),
         }
     }
 }

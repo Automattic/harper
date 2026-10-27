@@ -290,6 +290,14 @@ mod lints {
         assert_no_lints("He likes this place. I sit under the AC.", test_linter());
     }
 
+    #[test]
+    fn issue_3925_dont_flag_simple_past_forms() {
+        assert_no_lints(
+            "He fought tenaciously. He wrought tenaciously.",
+            test_linter(),
+        );
+    }
+
     // Every pronoun systematically
 
     // Expected to get corrected
@@ -536,5 +544,10 @@ mod lints {
             "When I reiterated the conditions I'd previously set, she hung up on me.",
             test_linter(),
         );
+    }
+
+    #[test]
+    fn dont_flag_4388() {
+        assert_no_lints("We humans are naturally curious.", test_linter());
     }
 }

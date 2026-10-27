@@ -11,14 +11,14 @@ pub struct NoHarmNoFoul {
 impl Default for NoHarmNoFoul {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["no", "nor"])
+            expr: SequenceExpr::word_set(["no", "nor"])
                 .t_ws()
                 .t_aco("harm")
                 .then_optional_comma()
                 .t_ws()
-                .t_set(&["no", "nor"])
+                .t_set(["no", "nor"])
                 .t_ws()
-                .t_set(&["fowl", "foul"])
+                .t_set(["fowl", "foul"])
                 .but_not(
                     SequenceExpr::word_seq(&["no", "harm"])
                         .then_optional_comma()

@@ -282,6 +282,7 @@ These configs are under the `markdown` key:
 | C#                  |           `csharp`            |            ✅ |
 | DAML                |            `daml`             |            ✅ |
 | Dart                |            `dart`             |            ✅ |
+| Elixir              |            `elixir`           |            ✅ |
 | Git Commit          |   `git-commit`/`gitcommit`    |               |
 | Gleam               |            `gleam`            |            ✅ |
 | Go                  |             `go`              |            ✅ |
@@ -304,6 +305,7 @@ These configs are under the `markdown` key:
 | PowerShell          |         `powershell`          |            ✅ |
 | Plain Text          |      `plaintext`/`text`       |               |
 | Python              |           `python`            |            ✅ |
+| R                   |              `r`              |            ✅ |
 | Ruby                |            `ruby`             |            ✅ |
 | Rust                |            `rust`             |            ✅ |
 | Scala               |            `scala`            |            ✅ |

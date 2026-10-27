@@ -27,6 +27,7 @@ export default defineConfig({
 		dts({
 			rollupTypes: true,
 			tsconfigPath: './tsconfig.json',
+			include: ['src'],
 		}),
 	],
 });

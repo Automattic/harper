@@ -13,11 +13,11 @@ pub struct AskNoPreposition {
 
 impl Default for AskNoPreposition {
     fn default() -> Self {
-        let verbs = WordSet::new(&[
+        let verbs = WordSet::new([
             "ask", "asks", "asked", "asking", "tell", "tells", "told", "telling",
         ]);
 
-        let objs = WordSet::new(&["me", "you", "him", "her", "it", "us", "them", "one"]);
+        let objs = WordSet::new(["me", "you", "him", "her", "it", "us", "them", "one"]);
 
         let pattern = SequenceExpr::with(verbs)
             .then_whitespace()

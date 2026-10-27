@@ -192,6 +192,52 @@ mod tests {
     }
 
     #[test]
+    fn apple_ipod_lowercase() {
+        assert_suggestion_result("apple ipod", lint_group(), "Apple iPod");
+    }
+
+    #[test]
+    fn apple_ipod_allow_correct() {
+        assert_lint_count("Apple iPod", lint_group(), 0);
+    }
+
+    #[test]
+    fn apple_macbook_family_lowercase() {
+        assert_suggestion_result("macbook pro", lint_group(), "MacBook Pro");
+        assert_suggestion_result("macbook air", lint_group(), "MacBook Air");
+    }
+
+    #[test]
+    fn apple_macbook_family_allow_correct() {
+        assert_lint_count("MacBook Pro", lint_group(), 0);
+        assert_lint_count("MacBook Air", lint_group(), 0);
+    }
+
+    #[test]
+    fn apple_mac_family_lowercase() {
+        assert_suggestion_result("mac pro", lint_group(), "Mac Pro");
+        assert_suggestion_result("mac mini", lint_group(), "Mac Mini");
+    }
+
+    #[test]
+    fn apple_mac_family_allow_correct() {
+        assert_lint_count("Mac Pro", lint_group(), 0);
+        assert_lint_count("Mac Mini", lint_group(), 0);
+    }
+
+    #[test]
+    fn apple_airpods_family_lowercase() {
+        assert_suggestion_result("airpods pro", lint_group(), "AirPods Pro");
+        assert_suggestion_result("airpods max", lint_group(), "AirPods Max");
+    }
+
+    #[test]
+    fn apple_airpods_family_allow_correct() {
+        assert_lint_count("AirPods Pro", lint_group(), 0);
+        assert_lint_count("AirPods Max", lint_group(), 0);
+    }
+
+    #[test]
     fn test_atlantic_ocean_lowercase() {
         assert_suggestion_result("atlantic ocean", test_linter(), "Atlantic Ocean");
     }
@@ -371,5 +417,23 @@ mod tests {
     #[test]
     fn browser_extension_not_flagged() {
         assert_lint_count("browser extension", test_linter(), 0);
+    }
+
+    #[test]
+    fn fix_baton_rogue() {
+        assert_suggestion_result(
+            "The programs know you dont care about the bronx or baton rouge, you just want a spot",
+            test_linter(),
+            "The programs know you dont care about the bronx or Baton Rouge, you just want a spot",
+        );
+    }
+
+    #[test]
+    fn fix_khmer_rouge() {
+        assert_suggestion_result(
+            "I read that the khmer rouge still existed as a group after vietnam invaded cambodia and they still had a seat in the UN until 1993.",
+            test_linter(),
+            "I read that the Khmer Rouge still existed as a group after vietnam invaded cambodia and they still had a seat in the UN until 1993.",
+        );
     }
 }

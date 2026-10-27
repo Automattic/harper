@@ -14,14 +14,14 @@ impl Default for CraveFor {
         Self {
             expr: FirstMatchOf::new([
                 Box::new(
-                    SequenceExpr::word_set(&["crave", "craved", "craves"])
+                    SequenceExpr::word_set(["crave", "craved", "craves"])
                         .t_ws()
                         .t_aco("for"),
                 ) as Box<dyn Expr>,
                 Box::new(
                     SequenceExpr::any_of([
                         Box::new(InflectionOfBe::default()) as Box<dyn Expr>,
-                        Box::new(WordSet::new(&[
+                        Box::new(WordSet::new([
                             "i'm", "we're", "you're", "he's", "she's", "it's", "they're",
                         ])),
                     ])

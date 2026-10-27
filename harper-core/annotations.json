@@ -666,7 +666,7 @@
 		},
 		"x": {
 			"#": "swear word property",
-			"//": "'xxx' used to be a placeholder for swear words",
+			"//": "mnemonic: 'xxx' used to be a placeholder for swear words",
 			"propagate": true,
 			"metadata": {
 				"swear": true
@@ -1044,6 +1044,20 @@
 				"noun": {
 					"is_abstract": true
 				}
+			}
+		},
+		"4": {
+			"#": "abbreviation property",
+			"//": "mnemonic: 4 looks like A",
+			"metadata": {
+				"abbreviation": true
+			}
+		},
+		"k": {
+			"#": "contraction property",
+			"//": "mnemonic: k sounds like C",
+			"metadata": {
+				"contraction": true
 			}
 		}
 	}

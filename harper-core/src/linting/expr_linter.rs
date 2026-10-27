@@ -75,10 +75,10 @@ pub trait ExprLinter: LSend {
     fn description(&self) -> &str;
 }
 
-/// Helper function to find the only occurrence of a token matching a predicate
+/// Helper function to find the only occurrence of a token matching a predicate.
+/// Avoids edge cases when a second part of a pattern coicincidentally also matches a desired key word.
 ///
 /// Returns `Some(token)` if exactly one token matches the predicate, `None` otherwise.
-/// TODO: This can be used in the [`ThenThan`] linter when #1819 is merged.
 pub fn find_the_only_token_matching<'a, F>(
     tokens: &'a [Token],
     source: &[char],
@@ -200,6 +200,13 @@ pub fn at_start_of_sentence(context: Option<(&[Token], &[Token])>) -> bool {
     false
 }
 
+/// Check for sentence context immediately before a matched span.
+///
+/// Validates that the "before" context ends with a word token followed by whitespace,
+/// allowing flexible inspection of that word's properties (POS tags, etc.) via the predicate.
+/// The predicate can be used to confirm matches, suppress false positives, or apply conditional logic.
+///
+/// Returns `false` if context is `None`, missing tokens, or the structure is malformed.
 pub fn preceded_by_word(
     context: Option<(&[Token], &[Token])>,
     predicate: impl Fn(&Token) -> bool,
@@ -209,6 +216,29 @@ pub fn preceded_by_word(
         && ws.kind.is_whitespace()
     {
         return predicate(word);
+    }
+    false
+}
+
+/// Check for sentence context surrounding a matched span on both sides.
+///
+/// Validates that the "before" context ends with a word token followed by whitespace,
+/// and the "after" context starts with whitespace followed by a word token, allowing
+/// flexible inspection of both words' properties (POS tags, etc.) via the predicate.
+/// The predicate can be used to confirm matches, suppress false positives, or apply conditional logic.
+///
+/// Returns `false` if context is `None`, missing tokens, or the structure is malformed.
+pub fn surrounded_by_words(
+    context: Option<(&[Token], &[Token])>,
+    predicate: impl Fn(&Token, &Token) -> bool,
+) -> bool {
+    if let Some((before, after)) = context
+        && let [.., word_before, ws_before] = before
+        && let [ws_after, word_after, ..] = after
+        && ws_before.kind.is_whitespace()
+        && ws_after.kind.is_whitespace()
+    {
+        return predicate(word_before, word_after);
     }
     false
 }

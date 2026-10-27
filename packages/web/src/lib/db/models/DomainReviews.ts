@@ -1,3 +1,4 @@
+import { and, gte, lte } from 'drizzle-orm';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { db } from '..';
 import { domainReviewTable } from '../schema';
@@ -16,5 +17,16 @@ export default class DomainReviews {
 
 	public static async create(rec: DomainReviewSubmission) {
 		await db.insert(domainReviewTable).values(rec);
+	}
+
+	public static async getAllSince(date: Date) {
+		return await db.select().from(domainReviewTable).where(gte(domainReviewTable.timestamp, date));
+	}
+
+	public static async getAllBetween(start: Date, end: Date) {
+		return await db
+			.select()
+			.from(domainReviewTable)
+			.where(and(gte(domainReviewTable.timestamp, start), lte(domainReviewTable.timestamp, end)));
 	}
 }
