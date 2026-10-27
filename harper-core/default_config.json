@@ -5376,6 +5376,13 @@
 						},
 						{
 							"Bool": {
+								"name": "KidFriendly",
+								"state": true,
+								"label": "Kid-Friendly"
+							}
+						},
+						{
+							"Bool": {
 								"name": "LastButNotLeast",
 								"state": true,
 								"label": "Last But Not Least"
