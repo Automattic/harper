@@ -80,7 +80,7 @@ importers:
         version: 5.43.12
       svelte-check:
         specifier: ^4.0.0
-        version: 4.3.4(picomatch@4.0.2)(svelte@5.43.12)(typescript@5.6.3)
+        version: 4.3.4(picomatch@4.0.7)(svelte@5.43.12)(typescript@5.6.3)
       tailwindcss:
         specifier: ^4.2.2
         version: 4.2.4
@@ -207,7 +207,7 @@ importers:
         version: 10.6.3(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(storybook@10.6.3(@types/react@18.3.18)(react@18.3.1))
       '@storybook/addon-svelte-csf':
         specifier: latest
-        version: 5.1.5(@storybook/svelte@10.6.3(storybook@10.6.3(@types/react@18.3.18)(react@18.3.1))(svelte@5.43.12))(@sveltejs/vite-plugin-svelte@6.2.1(svelte@5.43.12)(vite@7.2.2(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.32.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0)))(babel-plugin-macros@3.1.0)(storybook@10.6.3(@types/react@18.3.18)(react@18.3.1))(svelte@5.43.12)(vite@7.2.2(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.32.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))
+        version: 5.1.6(@storybook/svelte@10.6.3(storybook@10.6.3(@types/react@18.3.18)(react@18.3.1))(svelte@5.43.12))(@sveltejs/vite-plugin-svelte@6.2.1(svelte@5.43.12)(vite@7.2.2(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.32.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0)))(babel-plugin-macros@3.1.0)(storybook@10.6.3(@types/react@18.3.18)(react@18.3.1))(svelte@5.43.12)(vite@7.2.2(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.32.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))
       '@storybook/addon-vitest':
         specifier: ^10.6.3
         version: 10.6.3(@vitest/browser-playwright@5.0.5)(@vitest/browser@5.0.5)(react@18.3.1)(storybook@10.6.3(@types/react@18.3.18)(react@18.3.1))(vitest@5.0.5)
@@ -238,6 +238,9 @@ importers:
       '@vitest/coverage-v8':
         specifier: latest
         version: 5.0.5(@vitest/browser@5.0.5)(vitest@5.0.5)
+      '@vueless/storybook-dark-mode':
+        specifier: ^10.0.8
+        version: 10.0.8(storybook@10.6.3(@types/react@18.3.18)(react@18.3.1))
       flowbite:
         specifier: ^3.1.2
         version: 3.1.2(rollup@4.53.3)
@@ -309,7 +312,7 @@ importers:
         version: 5.43.12
       svelte-check:
         specifier: ^4.3.3
-        version: 4.3.4(picomatch@4.0.3)(svelte@5.43.12)(typescript@5.9.3)
+        version: 4.3.4(picomatch@4.0.7)(svelte@5.43.12)(typescript@5.9.3)
       tailwindcss:
         specifier: ^4.1.14
         version: 4.2.4
@@ -324,7 +327,7 @@ importers:
     dependencies:
       fflate:
         specifier: ^0.8.2
-        version: 0.8.2
+        version: 0.8.3
     devDependencies:
       '@microsoft/api-documenter':
         specifier: ^7.28.1
@@ -1807,11 +1810,11 @@ packages:
 
   '@esbuild-kit/core-utils@3.3.2':
     resolution: {integrity: sha512-sPRAnw9CdSsRmEtnsl2WXWdyquogVpB3yZ3dgwJfe8zrOzTsV7cJvmwrKVa+0ma5BoiGJ+BoqkMvawbayKUsqQ==}
-    deprecated: 'Merged into tsx: https://tsx.is'
+    deprecated: 'Merged into tsx: https://tsx.hirok.io'
 
   '@esbuild-kit/esm-loader@2.6.5':
     resolution: {integrity: sha512-FxEMIkJKnodyA1OaCUoEvbYRkoZlLZ4d/eXFu9Fh8CbBBgP5EmZxrfTRyN0qpXZ4vOvqnE5YdRdcrmUUXuU+dA==}
-    deprecated: 'Merged into tsx: https://tsx.is'
+    deprecated: 'Merged into tsx: https://tsx.hirok.io'
 
   '@esbuild/aix-ppc64@0.21.5':
     resolution: {integrity: sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ==}
@@ -3939,8 +3942,8 @@ packages:
       '@types/react':
         optional: true
 
-  '@storybook/addon-svelte-csf@5.1.5':
-    resolution: {integrity: sha512-lYc9tyFIowXtd/hlapngtGhw6YUZMSU5KezHqJl84lRkahsNtmtqHl/mJjRRJG2ZQIWgw6xBUi4PvVvTxPwqzQ==}
+  '@storybook/addon-svelte-csf@5.1.6':
+    resolution: {integrity: sha512-Pzzfr9Lqx0p6a2IBVRlR3zIhA8usl46ADcSSHoe2cU1hICB2HqpDyukqXFSK1NFuTP53yDH99LBbl7drii9l4Q==}
     peerDependencies:
       '@storybook/svelte': ^0.0.0-0 || ^8.2.0 || ^9.0.0 || ^9.1.0-0 || ^10.0.0-0 || ^10.1.0-0 || ^10.2.0-0 || ^10.3.0-0 || ^10.4.0-0 || ^10.5.0-0 || ^10.6.0-0 || ^11.0.0-0
       '@sveltejs/vite-plugin-svelte': ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
@@ -5267,6 +5270,12 @@ packages:
   '@vue/shared@3.5.13':
     resolution: {integrity: sha512-/hnE/qP5ZoGpol0a5mDi45bOd7t3tjYJBjsgCsivow7D48cJeV5l05RD82lPqi7gRiphZM37rnhW1l6ZoCNNnQ==}
 
+  '@vueless/storybook-dark-mode@10.0.8':
+    resolution: {integrity: sha512-nhueFjEbyNGBzye4H+STC+pRIKthttiuPJRfcqCrDwqKnLS9AkVT3Ra+F5bvOeWbvZt3xc6xNJBNV5OrjRIoZQ==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      storybook: ^10.0.0
+
   '@webassemblyjs/ast@1.14.1':
     resolution: {integrity: sha512-nuBEDgQfm1ccRp/8bCQrx1frohyufl4JlbMMZ4P1wpeOfDhF6FQkxZJ1b/e+PLwr6X1Nhw6OLme5usuBWYBvuQ==}
 
@@ -5557,12 +5566,14 @@ packages:
   '@wordpress/jest-console@8.20.0':
     resolution: {integrity: sha512-FkW+OHYhfJ0gdjNNtVI7eqHYI1rnksrme0ZVOlxEc8FN+q+lnWiwpUHucRRvpgw6QXuujCXM5sJzoNrOmkOclA==}
     engines: {node: '>=18.12.0', npm: '>=8.19.2'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
     peerDependencies:
       jest: '>=29'
 
   '@wordpress/jest-preset-default@12.20.0':
     resolution: {integrity: sha512-otAwg72ymPVn91O0Q8VQWVhUrSIlT+zcg2fLG3lkSIPhEjRL8tnWD5nb4jqatIeqUXW+pYuEJowxTvJO7kv+1w==}
     engines: {node: '>=18.12.0', npm: '>=8.19.2'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
     peerDependencies:
       '@babel/core': '>=7'
       jest: '>=29'
@@ -7800,9 +7811,6 @@ packages:
   fflate@0.4.8:
     resolution: {integrity: sha512-FJqqoDBR00Mdj9ppamLa/Y7vxm+PRmNWA67N846RvsoYVMKB4q3y/de5PA7gUmRMYK/8CMz2GDZQmCRN1wBcWA==}
 
-  fflate@0.8.2:
-    resolution: {integrity: sha512-cPJU47OaAoCbg0pBvzsgpTPhmhqI5eJjh/JIu8tPj5q+T7iLvW/JAYUqmE7KOB4R1ZyEhzBaIQpQpardBF5z8A==}
-
   fflate@0.8.3:
     resolution: {integrity: sha512-tbZNuJrLwGUp3zshBtdy4W+ORxZuIh8a5ilyIEQDC5rY1f3U20JMry0Ll3WBzU58EZKsEuJFXhb5gwv8CsPvgA==}
 
@@ -9530,6 +9538,9 @@ packages:
 
   lodash-es@4.17.21:
     resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
+
+  lodash-es@4.18.1:
+    resolution: {integrity: sha512-J8xewKD/Gk22OZbhpOVSwcs60zhd95ESDwezOFuA3/099925PdHJ7OFHNTGtajL3AlZkykD32HykiMo+BIBI8A==}
 
   lodash.clonedeep@4.5.0:
     resolution: {integrity: sha512-H5ZhCF25riFd9uB5UCkVKo61m3S/xZk1x4wA6yp/L3RFP6Z/eHH1ymQcGLo7J3GMPfm0V/7m1tryHuGVxpqEBQ==}
@@ -16361,7 +16372,7 @@ snapshots:
   '@libsql/isomorphic-ws@0.1.5':
     dependencies:
       '@types/ws': 8.18.0
-      ws: 8.18.3
+      ws: 8.22.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -17368,7 +17379,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react-dom'
 
-  '@storybook/addon-svelte-csf@5.1.5(@storybook/svelte@10.6.3(storybook@10.6.3(@types/react@18.3.18)(react@18.3.1))(svelte@5.43.12))(@sveltejs/vite-plugin-svelte@6.2.1(svelte@5.43.12)(vite@7.2.2(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.32.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0)))(babel-plugin-macros@3.1.0)(storybook@10.6.3(@types/react@18.3.18)(react@18.3.1))(svelte@5.43.12)(vite@7.2.2(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.32.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))':
+  '@storybook/addon-svelte-csf@5.1.6(@storybook/svelte@10.6.3(storybook@10.6.3(@types/react@18.3.18)(react@18.3.1))(svelte@5.43.12))(@sveltejs/vite-plugin-svelte@6.2.1(svelte@5.43.12)(vite@7.2.2(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.32.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0)))(babel-plugin-macros@3.1.0)(storybook@10.6.3(@types/react@18.3.18)(react@18.3.1))(svelte@5.43.12)(vite@7.2.2(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.32.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))':
     dependencies:
       '@storybook/csf': 0.1.13
       '@storybook/svelte': 10.6.3(storybook@10.6.3(@types/react@18.3.18)(react@18.3.1))(svelte@5.43.12)
@@ -18892,7 +18903,7 @@ snapshots:
   '@vitest/ui@4.0.16(vitest@4.0.16)':
     dependencies:
       '@vitest/utils': 4.0.16
-      fflate: 0.8.2
+      fflate: 0.8.3
       flatted: 3.3.3
       pathe: 2.0.3
       sirv: 3.0.2
@@ -19051,6 +19062,12 @@ snapshots:
       typescript: 5.9.3
 
   '@vue/shared@3.5.13': {}
+
+  '@vueless/storybook-dark-mode@10.0.8(storybook@10.6.3(@types/react@18.3.18)(react@18.3.1))':
+    dependencies:
+      '@storybook/global': 5.0.0
+      lodash-es: 4.18.1
+      storybook: 10.6.3(@types/react@18.3.18)(react@18.3.1)
 
   '@webassemblyjs/ast@1.14.1':
     dependencies:
@@ -22694,10 +22711,6 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.2
 
-  fdir@6.4.4(picomatch@4.0.3):
-    optionalDependencies:
-      picomatch: 4.0.3
-
   fdir@6.4.4(picomatch@4.0.7):
     optionalDependencies:
       picomatch: 4.0.7
@@ -22717,8 +22730,6 @@ snapshots:
     optional: true
 
   fflate@0.4.8: {}
-
-  fflate@0.8.2: {}
 
   fflate@0.8.3: {}
 
@@ -24769,6 +24780,8 @@ snapshots:
       p-locate: 6.0.0
 
   lodash-es@4.17.21: {}
+
+  lodash-es@4.18.1: {}
 
   lodash.clonedeep@4.5.0: {}
 
@@ -27773,35 +27786,11 @@ snapshots:
       svelte: 5.43.12
       zimmerframe: 1.1.2
 
-  svelte-check@4.3.4(picomatch@4.0.2)(svelte@5.43.12)(typescript@5.6.3):
-    dependencies:
-      '@jridgewell/trace-mapping': 0.3.25
-      chokidar: 4.0.3
-      fdir: 6.4.4(picomatch@4.0.2)
-      picocolors: 1.1.1
-      sade: 1.8.1
-      svelte: 5.43.12
-      typescript: 5.6.3
-    transitivePeerDependencies:
-      - picomatch
-
   svelte-check@4.3.4(picomatch@4.0.2)(svelte@5.43.12)(typescript@5.9.3):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       chokidar: 4.0.3
       fdir: 6.4.4(picomatch@4.0.2)
-      picocolors: 1.1.1
-      sade: 1.8.1
-      svelte: 5.43.12
-      typescript: 5.9.3
-    transitivePeerDependencies:
-      - picomatch
-
-  svelte-check@4.3.4(picomatch@4.0.3)(svelte@5.43.12)(typescript@5.9.3):
-    dependencies:
-      '@jridgewell/trace-mapping': 0.3.25
-      chokidar: 4.0.3
-      fdir: 6.4.4(picomatch@4.0.3)
       picocolors: 1.1.1
       sade: 1.8.1
       svelte: 5.43.12
@@ -28615,7 +28604,7 @@ snapshots:
     dependencies:
       debug: 4.4.3
       pretty-bytes: 6.1.1
-      tinyglobby: 0.2.15
+      tinyglobby: 0.2.17
       vite: 6.3.5(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.32.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0)
       workbox-build: 7.3.0(@types/babel__core@7.20.5)
       workbox-window: 7.3.0
