@@ -2,6 +2,8 @@
 import { marketingLinks } from './data';
 import HarperMark from './HarperMark.svelte';
 
+export let chromeHref = marketingLinks.chrome;
+
 const currentYear = new Date().getFullYear();
 </script>
 
@@ -27,7 +29,7 @@ const currentYear = new Date().getFullYear();
 				Get Harper
 			</h2>
 			<a class="!text-black/70 no-underline hover:!text-black hover:no-underline dark:!text-white/70 dark:hover:!text-white" href="/desktop">Harper Desktop</a>
-			<a class="!text-black/70 no-underline hover:!text-black hover:no-underline dark:!text-white/70 dark:hover:!text-white" href={marketingLinks.chrome}>Chrome extension</a>
+			<a class="!text-black/70 no-underline hover:!text-black hover:no-underline dark:!text-white/70 dark:hover:!text-white" href={chromeHref}>Chrome extension</a>
 			<a class="!text-black/70 no-underline hover:!text-black hover:no-underline dark:!text-white/70 dark:hover:!text-white" href={marketingLinks.vscode}>VS Code</a>
 			<a class="!text-black/70 no-underline hover:!text-black hover:no-underline dark:!text-white/70 dark:hover:!text-white" href="/docs/integrations/obsidian">Obsidian plugin</a>
 			<a class="!text-black/70 no-underline hover:!text-black hover:no-underline dark:!text-white/70 dark:hover:!text-white" href="/get">All integrations</a>
