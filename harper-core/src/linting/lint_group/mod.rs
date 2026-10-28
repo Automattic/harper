@@ -63,6 +63,7 @@ use super::chicken_and_egg::ChickenAndEgg;
 use super::chock_full::ChockFull;
 use super::claim_to_fame::ClaimToFame;
 use super::close_tight_knit::CloseTightKnit;
+use super::cloud_ones_judgement::CloudOnesJudgement;
 use super::code_in_write_in::CodeInWriteIn;
 use super::comfortable_with::ComfortableWith;
 use super::comma_fixes::CommaFixes;
@@ -699,6 +700,7 @@ impl LintGroup {
         insert_expr_rule!(ChockFull);
         insert_expr_rule!(ClaimToFame);
         insert_expr_rule!(CloseTightKnit);
+        insert_expr_rule!(CloudOnesJudgement);
         insert_expr_rule!(CodeInWriteIn);
         insert_expr_rule!(ComfortableWith);
         insert_struct_rule!(CommaFixes);

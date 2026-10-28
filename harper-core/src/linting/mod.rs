@@ -61,6 +61,7 @@ mod chock_full;
 mod claim_to_fame;
 mod close_tight_knit;
 mod closed_compounds;
+mod cloud_ones_judgement;
 mod code_in_write_in;
 mod comfortable_with;
 mod comma_fixes;

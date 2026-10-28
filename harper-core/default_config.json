@@ -962,6 +962,13 @@
 						},
 						{
 							"Bool": {
+								"name": "CloudOnesJudgement",
+								"state": true,
+								"label": "Cloud One's Judgment/Judgement"
+							}
+						},
+						{
+							"Bool": {
 								"name": "CommitmentTo",
 								"state": true,
 								"label": "Commitment To"
