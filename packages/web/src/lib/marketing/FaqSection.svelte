@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Arrow } from 'components';
+import { Arrow, MinusIcon, PlusIcon } from 'components';
 
 type FaqItem = {
 	q: string;
@@ -56,12 +56,16 @@ $: innerClass =
 							<span>{item.q}</span>
 							<span
 								class="inline-flex size-6 items-center justify-center rounded-full bg-black/5 text-black/70 group-open:hidden dark:bg-white/10 dark:text-white/70"
-								aria-hidden="true">+</span
+								aria-hidden="true"
 							>
+								<PlusIcon className="size-4" />
+							</span>
 							<span
 								class="hidden size-6 items-center justify-center rounded-full bg-black text-primary-100 group-open:inline-flex dark:bg-white dark:text-black"
-								aria-hidden="true">-</span
+								aria-hidden="true"
 							>
+								<MinusIcon className="size-4" />
+							</span>
 						</summary>
 						<p class="!m-0 max-w-152 pb-5 text-base leading-relaxed text-black/70 dark:text-white/70">
 							{#if item.href}
