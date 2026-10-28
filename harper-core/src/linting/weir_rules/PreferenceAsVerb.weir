@@ -1,0 +1,22 @@
+expr subjPron [i, we, you, he, she, it, they]
+expr modal [cannot, could, may, might, must, shall, should, will, would, can't, couldn't, mightn't, mustn't, shan't, shouldn't, won't, wouldn't]
+expr toVerb [begin, began, begun, beginning, begins, have, had, has, having, like, liked, liking, likes, need, needed, needing, needs, start, started, starting, starts, try, tried, tries, trying, want, wanted, wanting, wants]
+
+expr main [<([@subjPron, @modal] preference), preference>, <(@toVerb to preference), preference>]
+
+let message "Did you mean `prefer`?"
+let description "Corrects `preference` to `prefer`."
+let kind "WordChoice"
+let becomes "prefer"
+
+test "Side note, but here in Australia smaller stores are starting to preference cash again due to high card fees that legally cannot be (directly) passed into the customer." "Side note, but here in Australia smaller stores are starting to prefer cash again due to high card fees that legally cannot be (directly) passed into the customer."
+test "if the same rule with a different value is provided two times, the latest has to preference and override the previous one" "if the same rule with a different value is provided two times, the latest has to prefer and override the previous one"
+test "I want to preference the ones that ARE up for connection attempts first." "I want to prefer the ones that ARE up for connection attempts first."
+test "I have an app that needs to preference Ethernet (at which point it needs to disable WIFI) but use WIFI if Ethernet isn't available (as a backup)" "I have an app that needs to prefer Ethernet (at which point it needs to disable WIFI) but use WIFI if Ethernet isn't available (as a backup)"
+test "but I try to preference those who claim ethical/sustainable practices" "but I try to prefer those who claim ethical/sustainable practices"
+test "The mere-exposure effect describes how people start to preference something as they become more familiar with it." "The mere-exposure effect describes how people start to prefer something as they become more familiar with it."
+test "We used an example of leadership research to highlight that it may preference good outcomes" "We used an example of leadership research to highlight that it may prefer good outcomes"
+test "Because you can't predict what other students will preference it is almost impossible to strategize" "Because you can't predict what other students will prefer it is almost impossible to strategize"
+
+# avoid false positives
+allows "Can preference for background music mediate the irrelevant sound effect?"

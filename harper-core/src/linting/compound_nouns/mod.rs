@@ -389,11 +389,33 @@ mod tests {
     }
 
     #[test]
+    fn allow_issue_3950() {
+        assert_no_lints("She is a high school teacher.", test_linter());
+    }
+
+    #[test]
+    fn allow_public_key_server() {
+        assert_no_lints(
+            "Alternatively, you can import them from a public key server.",
+            test_linter(),
+        );
+    }
+
+    #[test]
+    fn still_flags_after_unrelated_adjective() {
+        assert_suggestion_result(
+            "The device features a responsive touch screen.",
+            test_linter(),
+            "The device features a responsive touchscreen.",
+        );
+    }
+
+    #[test]
     fn fix_big_break_through() {
         assert_suggestion_result(
             "I think a big break through is needed for AGI so I haven’t been worried about it.",
             test_linter(),
             "I think a big breakthrough is needed for AGI so I haven’t been worried about it.",
-        )
+        );
     }
 }

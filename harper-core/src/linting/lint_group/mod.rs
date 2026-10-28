@@ -23,6 +23,7 @@ use super::allow_to::AllowTo;
 use super::am_in_the_morning::AmInTheMorning;
 use super::amounts_for::AmountsFor;
 use super::an_a::AnA;
+use super::an_arm_and_a_leg::AnArmAndALeg;
 use super::analog_acoustic_bike::AnalogAcousticBike;
 use super::and_the_like::AndTheLike;
 use super::another_thing_coming::AnotherThingComing;
@@ -91,6 +92,7 @@ use super::do_mistake::DoMistake;
 use super::dot_initialisms::DotInitialisms;
 use super::double_click::DoubleClick;
 use super::double_modal::DoubleModal;
+use super::double_possessive_noun_phrase::DoublePossessiveNounPhrase;
 use super::ellipsis_length::EllipsisLength;
 use super::else_possessive::ElsePossessive;
 use super::ever_every::EverEvery;
@@ -153,6 +155,7 @@ use super::in_stock::InStock;
 use super::in_time_from_now::InTimeFromNow;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
 use super::interested_in::InterestedIn;
+use super::it_are_the_one::ItAreTheOne;
 use super::it_looks_like_that::ItLooksLikeThat;
 use super::its_contraction::ItsContraction;
 use super::its_possessive::ItsPossessive;
@@ -219,6 +222,7 @@ use super::open_compounds::OpenCompounds;
 use super::open_the_light::OpenTheLight;
 use super::orthographic_consistency::OrthographicConsistency;
 use super::ought_to_be::OughtToBe;
+use super::out_of_curiosity::OutOfCuriosity;
 use super::out_of_date::OutOfDate;
 use super::out_of_outside_the_box::OutOfOutsideTheBox;
 use super::out_of_the_window::OutOfTheWindow;
@@ -660,6 +664,7 @@ impl LintGroup {
         insert_expr_rule!(AmountsFor);
         insert_struct_rule_with_dialect!(AnA);
         insert_expr_rule_with_dialect!(AnalogAcousticBike);
+        insert_expr_rule!(AnArmAndALeg);
         insert_expr_rule!(AndTheLike);
         insert_expr_rule!(AnotherThingComing);
         insert_expr_rule!(AnotherThinkComing);
@@ -724,6 +729,7 @@ impl LintGroup {
         insert_expr_rule!(DotInitialisms);
         insert_expr_rule!(DoubleClick);
         insert_expr_rule!(DoubleModal);
+        insert_expr_rule!(DoublePossessiveNounPhrase);
         insert_struct_rule!(EllipsisLength);
         insert_expr_rule!(ElsePossessive);
         insert_expr_rule!(EverEvery);
@@ -786,6 +792,7 @@ impl LintGroup {
         insert_expr_rule!(InTimeFromNow);
         insert_struct_rule_with_dict!(InflectedVerbAfterTo);
         insert_expr_rule!(InterestedIn);
+        insert_expr_rule!(ItAreTheOne);
         insert_expr_rule!(ItLooksLikeThat);
         insert_struct_rule!(ItsContraction);
         insert_expr_rule!(ItsPossessive);
@@ -998,6 +1005,9 @@ impl LintGroup {
 
         // Uses Sentence rather than Chunk
         out.add("NoHarmNoFoul", NoHarmNoFoul::default());
+
+        // Uses Sentence rather than Chunk
+        out.add("OutOfCuriosity", OutOfCuriosity::default());
 
         // Uses Sentence rather than Chunk
         out.add("PluralDecades", PluralDecades::default());
