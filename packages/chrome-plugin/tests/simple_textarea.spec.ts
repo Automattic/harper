@@ -36,10 +36,15 @@ test('Keeps the textarea typable after opening a suggestion with a click', async
 });
 
 test('Focuses suggestions when opening the popup with the activation key', async ({
+	browserName,
 	context,
 	page,
 }) => {
-	const background = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker'));
+	test.skip(
+		browserName === 'firefox',
+		'Firefox MV3 background context is not exposed reliably in playwright-webextext.',
+	);
+	const background = await getBackground(context);
 	await background.evaluate(() => chrome.storage.local.set({ activationKey: 'shift' }));
 	await page.goto(TEST_PAGE_URL);
 
