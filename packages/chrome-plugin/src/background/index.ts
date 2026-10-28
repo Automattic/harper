@@ -122,6 +122,7 @@ const defaultEnabledDomains = [
 	'chatgpt.com',
 	'www.perplexity.ai',
 	'textarea.online',
+	'onlinenotepad.org',
 	'webmail.porkbun.com',
 	'mail.google.com',
 	'trix-editor.org',
