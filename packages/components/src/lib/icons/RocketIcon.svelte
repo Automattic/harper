@@ -2,17 +2,10 @@
 export let className: string | undefined = undefined;
 </script>
 
-<svg
-	viewBox="0 0 16 16"
-	class={className}
-	fill="none"
-	stroke="currentColor"
-	stroke-width="1.5"
-	stroke-linecap="round"
-	stroke-linejoin="round"
-	aria-hidden="true"
->
-	<path d="M11 3c1.5 0 2 .5 2 2 0 3-3.5 6.5-6 8l-2-2c1.5-2.5 5-6 8-8z" />
-	<path d="M8.5 7.5 10 9" />
-	<path d="m5 11-2 2 1.5.5L4 15l1.5-.5.5 1.5 1.5-2" />
+<svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21" class={className} aria-hidden="true">
+	<g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(4 1)">
+		<path d="m6.5 18.5c3-2.5021966 4-5.5021966 4-9 0-3.49780342-1-6.49780342-4-9-3 2.50219658-4 5.50219658-4 9 0 3.4978034 1 6.4978034 4 9z" />
+		<path d="m10.0620355 13.3616971c.4244504.2452152.814833.5459803 1.1711478.9022951 1.1190122 1.1190122 1.6901459 2.5740294 1.7134011 4.3650515-2.5082701-.109848-3.88207621-.7645704-4.92553235-1.6471655m-5.11545113-3.6201811c-.42445038.2452152-.81483298.5459803-1.17114781.9022951-1.11901221 1.1190122-1.6901459 2.5740294-1.71340106 4.3650515 2.50827003-.109848 3.88207616-.7645704 4.9255323-1.6471655" />
+		<circle cx="6.5" cy="6.5" r="2" />
+	</g>
 </svg>

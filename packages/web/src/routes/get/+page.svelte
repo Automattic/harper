@@ -11,6 +11,9 @@ import MarketingFooter from '$lib/marketing/MarketingFooter.svelte';
 import MarketingHeader from '$lib/marketing/MarketingHeader.svelte';
 import { isUpToDate, liveVersions, loadLiveVersions } from '$lib/marketing/versions';
 
+const chromeHref =
+	'https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb?utm_source=harper-get&utm_medium=referral';
+
 let activeCategory = 'all';
 let query = '';
 
@@ -84,7 +87,7 @@ function clearFilters() {
 						{@const titleText = upToDate ? VERSION_UPTODATE : upToDate === false ? VERSION_BEHIND : null}
 						<a
 							class="grid grid-cols-[2.5rem_1fr_auto] items-center gap-[0.9rem] rounded-xl border-[0.5px] border-[rgba(28,26,22,0.1)] bg-white px-[1.1rem] py-[0.9rem] !text-[#1c1a16] no-underline transition-[transform,box-shadow,border-color] duration-150 hover:-translate-y-px hover:border-[#b06a1b] hover:shadow-[0_10px_24px_-16px_rgba(28,26,22,0.16)] hover:no-underline dark:border-white/10 dark:bg-white/5 dark:!text-white dark:hover:border-primary-300 max-[640px]:grid-cols-[2.5rem_1fr] [&_em]:max-[640px]:col-start-2"
-							href={integration.href}
+							href={integration.id === 'chrome' ? chromeHref : integration.href}
 						>
 							<IntegrationTile {integration} size={40} />
 							<span class="flex min-w-0 flex-col">
@@ -193,7 +196,7 @@ function clearFilters() {
 						{@const titleText = upToDate ? VERSION_UPTODATE : upToDate === false ? VERSION_BEHIND : null}
 						<a
 							class="grid grid-cols-[2.5rem_1fr_auto] items-center gap-[0.9rem] rounded-xl border-[0.5px] border-[rgba(28,26,22,0.1)] bg-white px-[1.1rem] py-[0.9rem] !text-[#1c1a16] no-underline transition-[transform,box-shadow,border-color] duration-150 hover:-translate-y-px hover:border-[#b06a1b] hover:shadow-[0_10px_24px_-16px_rgba(28,26,22,0.16)] hover:no-underline dark:border-white/10 dark:bg-white/5 dark:!text-white dark:hover:border-primary-300 max-[640px]:grid-cols-[2.5rem_1fr] [&_em]:max-[640px]:col-start-2"
-							href={integration.href}
+							href={integration.id === 'chrome' ? chromeHref : integration.href}
 						>
 						<IntegrationTile {integration} size={40} />
 						<span class="flex min-w-0 flex-col">
@@ -222,5 +225,5 @@ function clearFilters() {
 		</div>
 	</section>
 
-	<MarketingFooter />
+	<MarketingFooter {chromeHref} />
 </div>

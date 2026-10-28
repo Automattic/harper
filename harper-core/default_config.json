@@ -2975,6 +2975,13 @@
 						},
 						{
 							"Bool": {
+								"name": "TenantTenet",
+								"state": true,
+								"label": "Tenant / Tenet"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ThatThis",
 								"state": true,
 								"label": "That This"
@@ -3135,6 +3142,13 @@
 								"name": "DiscourseMarkers",
 								"state": true,
 								"label": "Discourse Markers"
+							}
+						},
+						{
+							"Bool": {
+								"name": "DoublePossessiveNounPhrase",
+								"state": true,
+								"label": "Double Possessive Noun Phrase"
 							}
 						},
 						{
@@ -3408,6 +3422,13 @@
 								"name": "Starving",
 								"state": true,
 								"label": "Starving"
+							}
+						},
+						{
+							"Bool": {
+								"name": "TheAllThe",
+								"state": true,
+								"label": "The All The"
 							}
 						},
 						{
@@ -5376,6 +5397,13 @@
 						},
 						{
 							"Bool": {
+								"name": "KidFriendly",
+								"state": true,
+								"label": "Kid-Friendly"
+							}
+						},
+						{
+							"Bool": {
 								"name": "LastButNotLeast",
 								"state": true,
 								"label": "Last But Not Least"
@@ -5809,6 +5837,13 @@
 							}
 						},
 						{
+							"Bool": {
+								"name": "PreferenceAsVerb",
+								"state": true,
+								"label": "Preference as Verb"
+							}
+						},
+						{
 							"OneOfMany": {
 								"names": ["PreferPleaded", "PreferPled"],
 								"name": "PreferPleaded",
@@ -6058,6 +6093,13 @@
 								"name": "TakePrideIn",
 								"state": true,
 								"label": "Take Pride in"
+							}
+						},
+						{
+							"Bool": {
+								"name": "TendTo",
+								"state": true,
+								"label": "Tend to"
 							}
 						},
 						{

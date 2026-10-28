@@ -429,7 +429,7 @@ async function removeWeirpack(id: string) {
               class="min-w-12rem flex-1 outline-none! focus:border-primary! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!"
             />
             <Button size="sm" class="cursor-pointer bg-primary! text-black! hover:bg-primary/85! outline-none! focus:outline-none! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!" on:click={() => { resetRulesToDefaults(); statusMessage = 'All rules reset to defaults.'; }}>Reset to Defaults</Button>
-            <Button size="sm" color="light" class="cursor-pointer outline-none! focus:outline-none! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!" on:click={toggleAllRules}>
+            <Button size="sm" color="white" class="cursor-pointer outline-none! focus:outline-none! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!" on:click={toggleAllRules}>
               {anyRulesEnabled ? 'Disable All Rules' : 'Enable All Rules'}
             </Button>
           </div>
@@ -707,7 +707,7 @@ async function removeWeirpack(id: string) {
                     </div>
                     <Button
                       size="sm"
-                      color="light"
+                      color="white"
                       class="cursor-pointer outline-none! focus:outline-none! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!"
                       disabled={weirpackBusy}
                       aria-label={`Remove ${weirpack.name}`}
