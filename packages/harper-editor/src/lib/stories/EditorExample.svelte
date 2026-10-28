@@ -4,6 +4,8 @@ import { onMount } from 'svelte';
 import Editor from '../Editor.svelte';
 
 export let content = 'Try teh Harper editor. It checks your writing as you type.';
+/** Wrap the editor in a `.dark` ancestor to show its dark palette. */
+export let dark = false;
 let linter: Linter | undefined;
 let error = '';
 
@@ -30,7 +32,7 @@ onMount(() => {
 });
 </script>
 
-<div style="width: min(900px, 90vw); height: 500px;">
+<div class:dark style="width: min(900px, 90vw); height: 500px;">
 	{#if linter}
 		<Editor {content} {linter} />
 	{:else if error}

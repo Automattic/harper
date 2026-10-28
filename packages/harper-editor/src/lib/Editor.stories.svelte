@@ -13,3 +13,4 @@ const { Story } = defineMeta({
 	await waitFor(() => expect(canvasElement.querySelector('.harper-editor-surface')).not.toBeNull(), { timeout: 30000 });
 }} />
 <Story name="Empty" args={{ content: '' }} />
+<Story name="Dark" args={{ dark: true }} />

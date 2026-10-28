@@ -4,6 +4,8 @@ import type { IgnorableLintBox } from '../types.js';
 import { exampleLint } from './fixtures.js';
 
 export let populated = true;
+/** Wrap the sidebar in a `.dark` ancestor to show its dark palette. */
+export let dark = false;
 
 const lintBox: IgnorableLintBox = {
 	x: 0,
@@ -18,6 +20,8 @@ const lintBox: IgnorableLintBox = {
 };
 </script>
 
-<div class="harper-editor" style="height: 450px; display: flex;">
-	<LintSidebar lintBoxes={populated ? [lintBox] : []} />
+<div class:dark>
+	<div class="harper-editor" style="height: 450px; display: flex;">
+		<LintSidebar lintBoxes={populated ? [lintBox] : []} />
+	</div>
 </div>

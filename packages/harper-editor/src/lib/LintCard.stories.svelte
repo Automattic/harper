@@ -20,3 +20,10 @@ const { Story } = defineMeta({
 <Story name="Closed" />
 <Story name="Open" args={{ open: true, active: true }} />
 <Story name="No suggestions" args={{ open: true, lint: { ...exampleLint, suggestions: [] } }} />
+<Story name="Dark open" args={{ open: true, active: true }}>
+	{#snippet template(args)}
+		<div class="dark rounded-xl bg-stone-950 p-4">
+			<LintCard {...args} />
+		</div>
+	{/snippet}
+</Story>

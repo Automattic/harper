@@ -10,3 +10,5 @@ const { Story } = defineMeta({
 
 <Story name="With problems" />
 <Story name="All clear" args={{ populated: false }} />
+<Story name="Dark with problems" args={{ dark: true }} />
+<Story name="Dark all clear" args={{ dark: true, populated: false }} />
