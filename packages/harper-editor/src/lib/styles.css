@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant dark (&:where([data-harper-theme="dark"], [data-harper-theme="dark"] *));
 
 @source "./**/*.{svelte,ts}";
 

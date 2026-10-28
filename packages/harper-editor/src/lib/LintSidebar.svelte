@@ -22,11 +22,11 @@ let menuOpen = false;
 let showIgnoreConfirm = false;
 
 const iconButtonClass =
-	'inline-flex h-7 w-7 items-center justify-center rounded-md border-0 bg-transparent text-stone-600 shadow-none transition-colors duration-150 hover:text-stone-950 disabled:opacity-50';
+	'inline-flex h-7 w-7 items-center justify-center rounded-md border-0 bg-transparent text-stone-600 dark:text-stone-400 shadow-none transition-colors duration-150 hover:text-stone-950 dark:hover:text-stone-100 disabled:opacity-50';
 const menuItemClass =
-	'm-0 flex h-8 w-full items-center border-0 bg-transparent px-3 text-left text-[13px] font-medium text-stone-700 shadow-none hover:bg-stone-100 disabled:text-stone-300 disabled:hover:bg-transparent';
+	'm-0 flex h-8 w-full items-center border-0 bg-transparent px-3 text-left text-[13px] font-medium text-stone-700 dark:text-stone-300 shadow-none hover:bg-stone-100 dark:hover:bg-stone-700/60 disabled:text-stone-300 dark:disabled:text-stone-600 disabled:hover:bg-transparent';
 const dangerMenuItemClass =
-	'm-0 flex h-8 w-full items-center border-0 bg-transparent px-3 text-left text-[13px] font-medium text-red-700 shadow-none hover:bg-red-50 disabled:text-stone-300 disabled:hover:bg-transparent';
+	'm-0 flex h-8 w-full items-center border-0 bg-transparent px-3 text-left text-[13px] font-medium text-red-700 dark:text-red-400 shadow-none hover:bg-red-50 dark:hover:bg-red-950/40 disabled:text-stone-300 dark:disabled:text-stone-600 disabled:hover:bg-transparent';
 
 $: allOpen = lintBoxes.length > 0 && openSet.size === lintBoxes.length;
 $: problemCountLabel = `${lintBoxes.length} ${lintBoxes.length === 1 ? 'problem' : 'problems'}`;
@@ -167,14 +167,14 @@ function createSnippetFor(lintBox: LintBox) {
 <svelte:window on:click={handleWindowClick} on:keydown={handleWindowKeydown} />
 
 <aside
-	class="flex min-h-0 w-[320px] flex-[0_0_320px] overflow-hidden border-l-[0.5px] border-[rgba(28,26,22,0.14)] bg-[#f4f0e7] @max-[760px]:w-full @max-[760px]:flex-[0_0_42%] @max-[760px]:border-t-[0.5px] @max-[760px]:border-l-0"
+	class="flex min-h-0 w-[320px] flex-[0_0_320px] overflow-hidden border-l-[0.5px] border-[rgba(28,26,22,0.14)] bg-[#f4f0e7] dark:border-[rgba(236,231,221,0.14)] dark:bg-[#241f18] @max-[760px]:w-full @max-[760px]:flex-[0_0_42%] @max-[760px]:border-t-[0.5px] @max-[760px]:border-l-0"
 	aria-label="Problems"
 	transition:fly={{ x: 320, duration: 250, easing: cubicOut }}
 >
 	<div class="flex min-h-0 flex-1 flex-col" transition:fade={{ duration: 250 }}>
 		<header class="flex items-center gap-1.5 px-3.5 pt-2.5 pb-2">
 			<h2
-				class="m-0! flex min-w-0 flex-1 items-center p-0! text-[15px]! leading-none! font-bold! text-stone-950 font-[inherit]!"
+				class="m-0! flex min-w-0 flex-1 items-center p-0! text-[15px]! leading-none! font-bold! text-stone-950 dark:text-stone-100 font-[inherit]!"
 			>
 				<button
 					type="button"
@@ -189,7 +189,7 @@ function createSnippetFor(lintBox: LintBox) {
 						{lintBoxes.length}
 					</span>
 					<span
-						class={`inline-flex shrink-0 text-stone-500 transition-transform duration-150 ${
+						class={`inline-flex shrink-0 text-stone-500 dark:text-stone-400 transition-transform duration-150 ${
 							showLintKindCounts ? 'rotate-180' : ''
 						}`}
 					>
@@ -242,7 +242,7 @@ function createSnippetFor(lintBox: LintBox) {
 					<div
 						id="problem-actions-menu"
 						role="menu"
-						class="absolute top-[calc(100%+6px)] right-0 z-30 w-36 overflow-hidden rounded-lg border-[0.5px] border-[rgba(28,26,22,0.16)] bg-white py-1 shadow-lg shadow-stone-950/10"
+						class="absolute top-[calc(100%+6px)] right-0 z-30 w-36 overflow-hidden rounded-lg border-[0.5px] border-[rgba(28,26,22,0.16)] bg-white dark:border-[rgba(236,231,221,0.16)] dark:bg-[#262119] py-1 shadow-lg shadow-stone-950/10"
 						transition:fade={{ duration: 100 }}
 					>
 						<button
@@ -263,7 +263,7 @@ function createSnippetFor(lintBox: LintBox) {
 						>
 							Close All
 						</button>
-						<div class="my-1 h-px bg-[rgba(28,26,22,0.09)]"></div>
+						<div class="my-1 h-px bg-[rgba(28,26,22,0.09)] dark:bg-[rgba(236,231,221,0.09)]"></div>
 						<button
 							type="button"
 							role="menuitem"
@@ -280,12 +280,12 @@ function createSnippetFor(lintBox: LintBox) {
 
 		{#if showLintKindCounts && visibleLintKindEntries.length > 0}
 			<div
-				class="grid grid-cols-3 gap-x-2 gap-y-[7px] overflow-hidden border-b-[0.5px] border-[rgba(28,26,22,0.09)] px-[18px] pb-3"
+				class="grid grid-cols-3 gap-x-2 gap-y-[7px] overflow-hidden border-b-[0.5px] border-[rgba(28,26,22,0.09)] dark:border-[rgba(236,231,221,0.09)] px-[18px] pb-3"
 				aria-label="Problem lint kinds"
 			>
 				{#each visibleLintKindEntries as [key, lintKindStyle]}
 					<div
-						class="grid min-w-0 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-1 whitespace-nowrap text-[10px] font-medium text-stone-500"
+						class="grid min-w-0 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-1 whitespace-nowrap text-[10px] font-medium text-stone-500 dark:text-stone-400"
 					>
 						<span
 							class={`inline-flex h-[9px] w-[9px] shrink-0 items-center justify-center rounded-full ${lintKindStyle.haloClass}`}
@@ -293,7 +293,7 @@ function createSnippetFor(lintBox: LintBox) {
 							<span class={`h-[7px] w-[7px] rounded-full ${lintKindStyle.dotClass}`}></span>
 						</span>
 						<span class="overflow-hidden text-ellipsis">{lintKindStyle.label}</span>
-						<strong class="font-medium text-stone-400 tabular-nums">{counts[key]}</strong>
+						<strong class="font-medium text-stone-400 dark:text-stone-500 tabular-nums">{counts[key]}</strong>
 					</div>
 				{/each}
 			</div>
@@ -302,7 +302,7 @@ function createSnippetFor(lintBox: LintBox) {
 		<div class="flex min-h-0 flex-1 flex-col gap-2 overflow-auto px-3.5 pt-3.5 pb-6" data-problems-scroller>
 			{#if lintBoxes.length === 0}
 				<div
-					class="m-auto max-w-[220px] px-3 py-7 text-center text-[12.5px] leading-[1.55] text-stone-500"
+					class="m-auto max-w-[220px] px-3 py-7 text-center text-[12.5px] leading-[1.55] text-stone-500 dark:text-stone-400"
 				>
 					<div
 						aria-hidden="true"
@@ -315,7 +315,7 @@ function createSnippetFor(lintBox: LintBox) {
 							<path d="M3.5 8.5 6.5 11.5 12.5 5" />
 						</svg>
 					</div>
-					<strong class="mb-0.5 block font-semibold text-stone-950">All clear</strong>
+					<strong class="mb-0.5 block font-semibold text-stone-950 dark:text-stone-100">All clear</strong>
 					<p class="m-0">Harper has no suggestions for this document.</p>
 				</div>
 			{:else}
