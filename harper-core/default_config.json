@@ -4788,6 +4788,13 @@
 						},
 						{
 							"Bool": {
+								"name": "CoolCalmCollected",
+								"state": true,
+								"label": "Cool, Calm, Collected"
+							}
+						},
+						{
+							"Bool": {
 								"name": "CoursingThroughVeins",
 								"state": true,
 								"label": "Coursing Through Veins"

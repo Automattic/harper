@@ -69,6 +69,7 @@ mod compound_nouns;
 mod compound_subject_i;
 mod confident;
 mod convenient_store;
+mod cool_calm_collected;
 mod correct_number_suffix;
 mod crave_for;
 mod criteria_phenomena;

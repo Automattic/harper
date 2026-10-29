@@ -71,6 +71,7 @@ use super::compound_nouns::CompoundNouns;
 use super::compound_subject_i::CompoundSubjectI;
 use super::confident::Confident;
 use super::convenient_store::ConvenientStore;
+use super::cool_calm_collected::CoolCalmCollected;
 use super::correct_number_suffix::CorrectNumberSuffix;
 use super::crave_for::CraveFor;
 use super::criteria_phenomena::CriteriaPhenomena;
@@ -981,6 +982,9 @@ impl LintGroup {
 
         // Uses Sentence rather than Chunk
         out.add("ConvenientStore", ConvenientStore::default());
+
+        // Uses Sentence rather than Chunk
+        out.add("CoolCalmCollected", CoolCalmCollected::default());
 
         // Uses Sentence rather than Chunk
         out.add("Damages", Damages::default());
