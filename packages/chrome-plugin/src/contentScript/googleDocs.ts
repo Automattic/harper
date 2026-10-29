@@ -31,6 +31,7 @@ type LayoutRefreshFramework = LintFramework & {
 
 type GoogleDocsRectSegment = {
 	rectNode: SVGRectElement;
+	page: Element | null;
 	text: string;
 	rect: GoogleDocsRectLayout;
 };
@@ -269,6 +270,7 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 
 			segments.push({
 				rectNode,
+				page: rectNode.closest('.kix-page-paginated'),
 				text,
 				rect: {
 					top,
@@ -431,14 +433,67 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 		};
 	}
 
+	function getPageBoundarySeparator(
+		previous: GoogleDocsRectSegment,
+		current: GoogleDocsRectSegment,
+		logicalText: string,
+	): string {
+		// A failed full-document alignment need not discard the logical gap here.
+		// Repeated text is safe only when every matching adjacent pair agrees.
+		const currentContent = current.text.trimStart();
+		const currentPrefix = current.text
+			.slice(0, current.text.length - currentContent.length)
+			.replace(/\u00a0/gu, ' ');
+		let separator: string | null = null;
+		let cursor = 0;
+		while (cursor < logicalText.length) {
+			const start = logicalText.indexOf(previous.text, cursor);
+			if (start < 0) break;
+			const end = start + previous.text.length;
+			const whitespace = /^\s*/u.exec(logicalText.slice(end))?.[0] ?? '';
+			if (logicalText.startsWith(currentContent, end + whitespace.length)) {
+				// The rectangle already owns its prefix, even if Docs used regular spaces.
+				const gap = whitespace.replace(/\u00a0/gu, ' ').endsWith(currentPrefix)
+					? whitespace.slice(0, whitespace.length - currentPrefix.length)
+					: whitespace;
+				const normalized = normalizeLogicalGap(
+					gap,
+					previous.text,
+					current.text,
+					false,
+					current.rect,
+					null,
+				);
+				if (separator != null && separator !== normalized) {
+					separator = null;
+					break;
+				}
+				separator = normalized;
+			}
+			cursor = start + 1;
+		}
+		if (separator != null) return separator;
+
+		// Page margins are layout, not paragraph semantics. Without a usable
+		// logical gap, join conservatively rather than inventing a paragraph.
+		if (/\s$/u.test(previous.text) || /^\s/u.test(current.text)) return '';
+		// Straight quotes and apostrophes are ambiguous, not evidence for a tight join.
+		if (/[([{“‘/_—–-]$/u.test(previous.text) || /^[,./:;!?%)\]}”’—–-]/u.test(current.text)) {
+			return '';
+		}
+		return ' ';
+	}
+
 	function buildRectSnapshot(
 		editor: HTMLElement,
 		segments: GoogleDocsRectSegment[],
+		logicalText: string,
 	): GoogleDocsCloneSnapshot {
 		const fragment = document.createDocumentFragment();
 		const parts: string[] = [];
 		let previousText = '';
 		let previousRect: GoogleDocsRectLayout | null = null;
+		let previousSegment: GoogleDocsRectSegment | null = null;
 		let currentLineBand: GoogleDocsLineBand | null = null;
 
 		for (const segment of segments) {
@@ -453,16 +508,23 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 					getGoogleDocsParagraphBreakThreshold(currentLineBand, segment.rect),
 					Math.min(currentLineBand.height, segment.rect.height) * GOOGLE_DOCS_PARAGRAPH_BREAK_RATIO,
 				);
-				const breakText = shouldInsertSoftWrapSpace(
-					previousText,
-					segment.text,
-					lineGap,
-					paragraphBreakThreshold,
-				)
-					? ' '
-					: lineGap >= paragraphBreakThreshold
-						? '\n\n'
-						: '\n';
+				const changesPage =
+					previousSegment?.page != null &&
+					segment.page != null &&
+					previousSegment.page !== segment.page;
+				const breakText =
+					changesPage && previousSegment != null
+						? getPageBoundarySeparator(previousSegment, segment, logicalText)
+						: shouldInsertSoftWrapSpace(
+									previousText,
+									segment.text,
+									lineGap,
+									paragraphBreakThreshold,
+								)
+							? ' '
+							: lineGap >= paragraphBreakThreshold
+								? '\n\n'
+								: '\n';
 				appendText(fragment, parts, breakText);
 			} else if (
 				previousRect != null &&
@@ -476,6 +538,7 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 			parts.push(segment.text);
 			previousText = segment.text;
 			previousRect = segment.rect;
+			previousSegment = segment;
 			currentLineBand =
 				currentLineBand == null || startsNewLine
 					? createGoogleDocsLineBand(segment.rect)
@@ -501,7 +564,8 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 				?.textContent?.replace(/\r\n?/gu, '\n') ?? '';
 
 		return (
-			buildLogicalSnapshot(editor, segments, logicalText) ?? buildRectSnapshot(editor, segments)
+			buildLogicalSnapshot(editor, segments, logicalText) ??
+			buildRectSnapshot(editor, segments, logicalText)
 		);
 	}
 
