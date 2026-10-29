@@ -6,7 +6,7 @@ export const POST = async ({ request }: RequestEvent) => {
 
 	await UninstallFeedback.validateAndCreate({
 		feedback: data.get('feedback'),
-    platform: data.get('platform')
+		platform: data.get('platform'),
 	});
 	throw redirect(303, '/');
 };

@@ -4,7 +4,7 @@ export const uninstallFeedbackTable = mysqlTable('uninstall_feedback', {
 	id: int().autoincrement().primaryKey(),
 	feedback: text().notNull(),
 	timestamp: timestamp().notNull().defaultNow(),
-  platform: text()
+	platform: text(),
 });
 
 export const problematicLintTable = mysqlTable('problematic_lint', {
