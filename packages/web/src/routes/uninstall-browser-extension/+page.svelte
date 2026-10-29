@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Button, Card, Input, Isolate, SendIcon } from 'components';
+import { Button, Card, Checkbox, Input, Isolate, SendIcon } from 'components';
 import { onMount } from 'svelte';
 import getBrowserType from '$lib/getBrowserType';
 
@@ -83,10 +83,9 @@ function handleFormData(e: FormDataEvent) {
 						{/if}
 					</fieldset>
 
-					<label class="flex cursor-pointer items-center gap-3 text-[0.9375rem]">
-						<input type="checkbox" name="platform" value={platform} checked class="size-[18px] accent-[#f1920e]" />
+					<Checkbox name="platform" value={platform} checked>
 						Include browser type
-					</label>
+					</Checkbox>
 
 					<div class="flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
 						<Button type="submit" size="lg" disabled={!selected}>
