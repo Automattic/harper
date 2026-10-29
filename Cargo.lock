@@ -2294,7 +2294,7 @@ dependencies = [
 
 [[package]]
 name = "fuzz"
-version = "2.13.0"
+version = "3.0.0"
 dependencies = [
  "harper-comments",
  "harper-core",
@@ -2622,7 +2622,7 @@ dependencies = [
 
 [[package]]
 name = "harper-asciidoc"
-version = "2.13.0"
+version = "3.0.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2633,7 +2633,7 @@ dependencies = [
 
 [[package]]
 name = "harper-brill"
-version = "2.13.0"
+version = "3.0.0"
 dependencies = [
  "harper-pos-utils",
  "serde_json",
@@ -2641,7 +2641,7 @@ dependencies = [
 
 [[package]]
 name = "harper-cli"
-version = "2.13.0"
+version = "3.0.0"
 dependencies = [
  "anyhow",
  "ariadne",
@@ -2671,7 +2671,7 @@ dependencies = [
 
 [[package]]
 name = "harper-comments"
-version = "2.13.0"
+version = "3.0.0"
 dependencies = [
  "harper-core",
  "harper-html",
@@ -2711,7 +2711,7 @@ dependencies = [
 
 [[package]]
 name = "harper-core"
-version = "2.13.0"
+version = "3.0.0"
 dependencies = [
  "ammonia",
  "bitflags 2.13.2",
@@ -2752,7 +2752,7 @@ dependencies = [
 
 [[package]]
 name = "harper-dictionary-wordlist"
-version = "2.13.0"
+version = "3.0.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -2761,7 +2761,7 @@ dependencies = [
 
 [[package]]
 name = "harper-git-commit"
-version = "2.13.0"
+version = "3.0.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2772,7 +2772,7 @@ dependencies = [
 
 [[package]]
 name = "harper-html"
-version = "2.13.0"
+version = "3.0.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2783,7 +2783,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ink"
-version = "2.13.0"
+version = "3.0.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2794,7 +2794,7 @@ dependencies = [
 
 [[package]]
 name = "harper-jjdescription"
-version = "2.13.0"
+version = "3.0.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2805,7 +2805,7 @@ dependencies = [
 
 [[package]]
 name = "harper-literate-haskell"
-version = "2.13.0"
+version = "3.0.0"
 dependencies = [
  "harper-comments",
  "harper-core",
@@ -2816,7 +2816,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ls"
-version = "2.13.0"
+version = "3.0.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -2848,7 +2848,7 @@ dependencies = [
 
 [[package]]
 name = "harper-pos-utils"
-version = "2.13.0"
+version = "3.0.0"
 dependencies = [
  "burn",
  "burn-ndarray",
@@ -2866,7 +2866,7 @@ dependencies = [
 
 [[package]]
 name = "harper-python"
-version = "2.13.0"
+version = "3.0.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2877,7 +2877,7 @@ dependencies = [
 
 [[package]]
 name = "harper-stats"
-version = "2.13.0"
+version = "3.0.0"
 dependencies = [
  "chrono",
  "harper-core",
@@ -2888,7 +2888,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tex"
-version = "2.13.0"
+version = "3.0.0"
 dependencies = [
  "harper-core",
  "paste",
@@ -2896,7 +2896,7 @@ dependencies = [
 
 [[package]]
 name = "harper-thesaurus"
-version = "2.13.0"
+version = "3.0.0"
 dependencies = [
  "hashbrown 0.16.1",
  "indexmap",
@@ -2907,7 +2907,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tree-sitter"
-version = "2.13.0"
+version = "3.0.0"
 dependencies = [
  "harper-core",
  "tree-sitter",
@@ -2926,7 +2926,7 @@ dependencies = [
 
 [[package]]
 name = "harper-typst"
-version = "2.13.0"
+version = "3.0.0"
 dependencies = [
  "harper-core",
  "itertools 0.15.0",
@@ -2937,7 +2937,7 @@ dependencies = [
 
 [[package]]
 name = "harper-wasm"
-version = "2.13.0"
+version = "3.0.0"
 dependencies = [
  "console_error_panic_hook",
  "getrandom 0.3.4",
@@ -5903,9 +5903,9 @@ dependencies = [
 
 [[package]]
 name = "tree-sitter-haskell"
-version = "0.23.1"
+version = "0.24.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "977c51e504548cba13fc27cb5a2edab2124cf6716a1934915d07ab99523b05a4"
+checksum = "781de30e0d1ec8e6db4ed799d36ce1cedaf4684374dada45ebe2a8ea44c3f814"
 dependencies = [
  "cc",
  "tree-sitter-language",

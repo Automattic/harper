@@ -23,6 +23,7 @@ use super::allow_to::AllowTo;
 use super::am_in_the_morning::AmInTheMorning;
 use super::amounts_for::AmountsFor;
 use super::an_a::AnA;
+use super::an_arm_and_a_leg::AnArmAndALeg;
 use super::analog_acoustic_bike::AnalogAcousticBike;
 use super::and_the_like::AndTheLike;
 use super::another_thing_coming::AnotherThingComing;
@@ -63,6 +64,7 @@ use super::chicken_and_egg::ChickenAndEgg;
 use super::chock_full::ChockFull;
 use super::claim_to_fame::ClaimToFame;
 use super::close_tight_knit::CloseTightKnit;
+use super::cloud_ones_judgement::CloudOnesJudgement;
 use super::code_in_write_in::CodeInWriteIn;
 use super::comfortable_with::ComfortableWith;
 use super::comma_fixes::CommaFixes;
@@ -92,6 +94,7 @@ use super::do_mistake::DoMistake;
 use super::dot_initialisms::DotInitialisms;
 use super::double_click::DoubleClick;
 use super::double_modal::DoubleModal;
+use super::double_possessive_noun_phrase::DoublePossessiveNounPhrase;
 use super::ellipsis_length::EllipsisLength;
 use super::else_possessive::ElsePossessive;
 use super::ever_every::EverEvery;
@@ -122,6 +125,7 @@ use super::for_the_nth_time::ForTheNthTime;
 use super::free_predicate::FreePredicate;
 use super::friend_of_me::FriendOfMe;
 use super::full_to_the_brim::FullToTheBrim;
+use super::get_access_at::GetAccessAt;
 use super::get_pass_go_pass::GetPassGoPass;
 use super::go_missing::GoMissing;
 use super::go_so_far_as_to::GoSoFarAsTo;
@@ -153,6 +157,7 @@ use super::in_stock::InStock;
 use super::in_time_from_now::InTimeFromNow;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
 use super::interested_in::InterestedIn;
+use super::it_are_the_one::ItAreTheOne;
 use super::it_looks_like_that::ItLooksLikeThat;
 use super::its_contraction::ItsContraction;
 use super::its_possessive::ItsPossessive;
@@ -219,6 +224,7 @@ use super::open_compounds::OpenCompounds;
 use super::open_the_light::OpenTheLight;
 use super::orthographic_consistency::OrthographicConsistency;
 use super::ought_to_be::OughtToBe;
+use super::out_of_curiosity::OutOfCuriosity;
 use super::out_of_date::OutOfDate;
 use super::out_of_outside_the_box::OutOfOutsideTheBox;
 use super::out_of_the_window::OutOfTheWindow;
@@ -660,6 +666,7 @@ impl LintGroup {
         insert_expr_rule!(AmountsFor);
         insert_struct_rule_with_dialect!(AnA);
         insert_expr_rule_with_dialect!(AnalogAcousticBike);
+        insert_expr_rule!(AnArmAndALeg);
         insert_expr_rule!(AndTheLike);
         insert_expr_rule!(AnotherThingComing);
         insert_expr_rule!(AnotherThinkComing);
@@ -698,6 +705,7 @@ impl LintGroup {
         insert_expr_rule!(ChockFull);
         insert_expr_rule!(ClaimToFame);
         insert_expr_rule!(CloseTightKnit);
+        insert_expr_rule!(CloudOnesJudgement);
         insert_expr_rule!(CodeInWriteIn);
         insert_expr_rule!(ComfortableWith);
         insert_struct_rule!(CommaFixes);
@@ -724,6 +732,7 @@ impl LintGroup {
         insert_expr_rule!(DotInitialisms);
         insert_expr_rule!(DoubleClick);
         insert_expr_rule!(DoubleModal);
+        insert_expr_rule!(DoublePossessiveNounPhrase);
         insert_struct_rule!(EllipsisLength);
         insert_expr_rule!(ElsePossessive);
         insert_expr_rule!(EverEvery);
@@ -753,6 +762,7 @@ impl LintGroup {
         insert_expr_rule!(ForTheNthTime);
         insert_expr_rule!(FreePredicate);
         insert_expr_rule!(FriendOfMe);
+        insert_expr_rule!(GetAccessAt);
         insert_expr_rule!(FullToTheBrim);
         insert_expr_rule!(GetPassGoPass);
         insert_expr_rule!(GoMissing);
@@ -785,6 +795,7 @@ impl LintGroup {
         insert_expr_rule!(InTimeFromNow);
         insert_struct_rule_with_dict!(InflectedVerbAfterTo);
         insert_expr_rule!(InterestedIn);
+        insert_expr_rule!(ItAreTheOne);
         insert_expr_rule!(ItLooksLikeThat);
         insert_struct_rule!(ItsContraction);
         insert_expr_rule!(ItsPossessive);
@@ -1000,6 +1011,9 @@ impl LintGroup {
 
         // Uses Sentence rather than Chunk
         out.add("NoHarmNoFoul", NoHarmNoFoul::default());
+
+        // Uses Sentence rather than Chunk
+        out.add("OutOfCuriosity", OutOfCuriosity::default());
 
         // Uses Sentence rather than Chunk
         out.add("PluralDecades", PluralDecades::default());

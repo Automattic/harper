@@ -49,16 +49,21 @@ let demoText =
 	title={steps[step].title}
 	lede={steps[step].lede}
 	slideProgress={step / (steps.length - 1)}
+	showAside={step === 1}
 	onBack={() => step--}
 	onNext={() => step++}
 >
-	{#if step === 1}
-		<div class="mt-[1.9rem] flex flex-wrap gap-[0.55rem] [&>span]:bg-[#fff]!">
-			{#each ['gmail', 'notion', 'github', 'slack', 'wordpress', 'reddit'] as id}
-				<AppLogoTile {id} size={32} />
-			{/each}
-		</div>
-	{:else if step === 2 || step === 3}
+	<svelte:fragment slot="aside">
+		{#if step === 1}
+			<div class="grid w-fit -rotate-6 grid-cols-3 gap-3 [&>span]:bg-[#fff]! [&>span]:size-14! sm:[&>span]:size-17!">
+				{#each ['gmail', 'github', 'reddit', 'wordpress', 'slack', 'notion', 'linear', 'discord', 'whatsapp'] as id}
+					<AppLogoTile {id} size={68} />
+				{/each}
+			</div>
+		{/if}
+	</svelte:fragment>
+
+	{#if step === 2 || step === 3}
 		<video
 			class="mt-6 block w-full rounded-[6px] border-[0.5px] border-[rgba(28,26,22,0.14)]"
 			autoplay
@@ -74,11 +79,11 @@ let demoText =
 		<Textarea
 			rows={7}
 			bind:value={demoText}
-			class="mt-[1.1rem] block box-border w-full resize-y rounded-[6px]! border-[0.5px]! border-[rgba(28,26,22,0.14)]! bg-[#fbfaf7]! px-4 py-[0.9rem] font-[family-name:Atkinson_Hyperlegible,sans-serif] text-[1.05rem] leading-[1.6] text-[var(--marketing-ink)]! [box-shadow:inset_0_1px_2px_rgba(28,26,22,0.05)]! focus:border-[#2a6bd8]! focus:outline-2! focus:outline-solid! focus:outline-[rgba(42,107,216,0.35)]! motion-reduce:transition-none"
+			class="mt-[1.1rem] block box-border w-full resize-y rounded-[6px]! border-[0.5px]! border-[rgba(28,26,22,0.14)]! bg-[#fbfaf7]! px-4 py-[0.9rem] font-[family-name:Atkinson_Hyperlegible,sans-serif] text-[1.05rem] leading-[1.6] text-[var(--marketing-ink)]! [box-shadow:inset_0_1px_2px_rgba(28,26,22,0.05)]! focus:border-[#2a6bd8]! focus:outline-2! focus:outline-solid! focus:outline-[rgba(42,107,216,0.35)]! motion-reduce:transition-none dark:border-white/15! dark:bg-stone-900! dark:text-stone-100!"
 			aria-label="Try Harper here"
 		/>
 
-		<div class="mt-[1.2rem] overflow-hidden rounded-[6px] border-[0.5px] border-[rgba(28,26,22,0.09)] bg-[#faf8f3]">
+		<div class="mt-[1.2rem] overflow-hidden rounded-[6px] border-[0.5px] border-[rgba(28,26,22,0.09)] bg-[#faf8f3] text-[var(--marketing-ink)] dark:border-white/15 dark:bg-stone-900 dark:text-stone-100">
 			<button
 				type="button"
 				id="troubleshooting-toggle"
@@ -88,7 +93,7 @@ let demoText =
 				on:click={() => (drawerOpen = !drawerOpen)}
 			>
 				<span class="whitespace-nowrap">Nothing is Happening?</span>
-				<span class="font-[family-name:JetBrains_Mono,monospace] text-[0.95rem] font-normal text-[var(--marketing-amber)]" aria-hidden="true">{drawerOpen ? '−' : '+'}</span>
+				<span class="font-[family-name:JetBrains_Mono,monospace] text-[0.95rem] font-normal text-[var(--marketing-amber)] dark:text-primary-300" aria-hidden="true">{drawerOpen ? '−' : '+'}</span>
 			</button>
 		</div>
 	{:else if step === 5}
@@ -99,7 +104,7 @@ let demoText =
 					target="_blank"
 					rel="noopener noreferrer"
 					aria-label={`${link.label} (opens in a new tab)`}
-					class="flex items-center gap-3 rounded-[6px] border-[0.5px] border-[rgba(28,26,22,0.09)] bg-[#faf8f3] px-4 py-3 text-base font-bold text-[var(--marketing-ink)]! transition-colors hover:bg-[#f1ede5] hover:no-underline! focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-solid focus-visible:outline-[#2a6bd8] motion-reduce:transition-none [&>span:first-child]:bg-[#fff]!"
+					class="flex items-center gap-3 rounded-[6px] border-[0.5px] border-[rgba(28,26,22,0.09)] bg-[#faf8f3] px-4 py-3 text-base font-bold text-[var(--marketing-ink)]! transition-colors hover:bg-[#f1ede5] hover:no-underline! focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-solid focus-visible:outline-[#2a6bd8] motion-reduce:transition-none [&>span:first-child]:bg-[#fff]! dark:border-white/15 dark:bg-stone-900 dark:text-stone-100! dark:hover:bg-stone-800"
 				>
 					<AppLogoTile id={link.id} size={36} />
 					<span>{link.label}</span>
@@ -116,19 +121,19 @@ let demoText =
 					<div
 						role="region"
 						aria-labelledby="troubleshooting-toggle"
-						class="grid items-start gap-5 rounded-[6px] border-[0.5px] border-[rgba(28,26,22,0.09)] bg-[#fff] p-[0.9rem] sm:grid-cols-[minmax(0,1fr)_minmax(10rem,13rem)]"
+						class="grid items-start gap-5 rounded-[6px] border-[0.5px] border-[rgba(28,26,22,0.09)] bg-[#fff] p-[0.9rem] sm:grid-cols-[minmax(0,1fr)_minmax(10rem,13rem)] dark:border-white/15 dark:bg-stone-900"
 					>
-						<p class="m-0! text-[0.9rem] leading-[1.6]! text-[var(--marketing-ink-2)]">
+						<p class="m-0! text-[0.9rem] leading-[1.6]! text-[var(--marketing-ink-2)] dark:text-stone-300">
 							Harper will only enable itself automatically on sites we've tested before.
 							<br /><br />
 							If you work somewhere that isn't on our list of supported sites, you can enable the extension anyway by opening the Harper extension popup and clicking the power button.
 							<br /><br />
-							Alternatively, <Link class="text-[var(--marketing-amber)]! hover:text-[var(--marketing-ink)]!" href="/request-browser-support">let us know</Link> which sites you want us to support and we'll add it as soon as we can.
+							Alternatively, <Link class="text-primary-700! hover:text-[var(--marketing-ink)]! dark:text-primary-300! dark:hover:text-primary-200!" href="/request-browser-support">let us know</Link> which sites you want us to support and we'll add it as soon as we can.
 						</p>
 						<img
 							src="/images/chrome_extension_popup.png"
 							alt="The Chrome extension's popup page"
-							class="h-auto w-full rounded-[6px] border-[0.5px] border-[rgba(28,26,22,0.14)] object-contain"
+							class="h-auto w-full rounded-[6px] border-[0.5px] border-[rgba(28,26,22,0.14)] object-contain dark:border-white/15"
 						/>
 					</div>
 				{/if}
