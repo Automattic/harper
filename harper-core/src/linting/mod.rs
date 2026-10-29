@@ -287,6 +287,7 @@ mod roller_skated;
 mod run_into_problems_or_trouble;
 mod safe_to_save;
 mod save_to_safe;
+mod seems_like_adjective;
 mod sentence_capitalization;
 mod shoot_oneself_in_the_foot;
 mod show_case;
