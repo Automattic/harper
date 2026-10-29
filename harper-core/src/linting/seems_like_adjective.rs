@@ -88,7 +88,7 @@ mod tests {
 
     #[test]
     fn seems() {
-        assert_suggestion_result("seems like bad", SeemsLikeAdjective::default(), "seems bad");
+        assert_suggestion_result("seems like shabby", SeemsLikeAdjective::default(), "seems shabby");
     }
 
     #[test]
