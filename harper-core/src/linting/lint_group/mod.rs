@@ -269,6 +269,7 @@ use super::roller_skated::RollerSkated;
 use super::run_into_problems_or_trouble::RunIntoProblemsOrTrouble;
 use super::safe_to_save::SafeToSave;
 use super::save_to_safe::SaveToSafe;
+use super::seems_like_adjective::SeemsLikeAdjective;
 use super::sentence_capitalization::SentenceCapitalization;
 use super::shoot_oneself_in_the_foot::ShootOneselfInTheFoot;
 use super::show_case::ShowCase;
@@ -907,6 +908,7 @@ impl LintGroup {
         insert_expr_rule!(RunIntoProblemsOrTrouble);
         insert_expr_rule!(SafeToSave);
         insert_expr_rule!(SaveToSafe);
+        insert_expr_rule!(SeemsLikeAdjective);
         insert_struct_rule_with_dict!(SentenceCapitalization);
         insert_expr_rule!(ShootOneselfInTheFoot);
         insert_expr_rule!(ShowCase);
