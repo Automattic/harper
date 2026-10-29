@@ -5528,15 +5528,6 @@ Suggest:
 
 
 
-Lint:    Style (31 priority)
-Message: |
-    4416 | he heard Mrs. Wilson’s voice, loud and scolding, down-stairs in the garage.
-         |                               ^~~~ An Oxford comma is necessary here.
-Suggest:
-  - Insert “,”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     4426 | the next bend. Mavromichaelis wasn’t even sure of its color—he told the first
