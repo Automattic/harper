@@ -8,9 +8,12 @@ type Props = {
 	prevPeriodData?: Record<string, number>;
 	title: string;
 	links: Record<string, string>;
+	/** If there is a page giving more information about a specific key. */
+	keyLinkGenerator?: (key: string) => string;
+	keyLabel: string;
 };
 
-let { data, prevPeriodData, title, links }: Props = $props();
+let { data, prevPeriodData, title, links, keyLabel, keyLinkGenerator }: Props = $props();
 
 let counts = $derived(data);
 let prevPeriodCounts = $derived(prevPeriodData);
@@ -45,14 +48,22 @@ let deltas = $derived(
     <table>
     	<thead>
     		<tr>
-    			<th>Lint ID</th>
+    			<th>{keyLabel}</th>
     			<th>Value</th>
     		</tr>
     	</thead>
     	<tbody>
         {#each entries as [key, value] }
     		  <tr>
-    		  	<th scope="row">{key}</th>
+    		  	<th scope="row">
+              {#if keyLinkGenerator != null}
+                <a href={keyLinkGenerator(key)}>
+                  {key}
+                </a>
+              {:else}
+                {key}
+              {/if}
+              </th>
     		  	<td>{value}</td>
     		  </tr>
         {/each}

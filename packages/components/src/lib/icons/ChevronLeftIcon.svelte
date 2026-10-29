@@ -2,6 +2,6 @@
 export let className: string | undefined = undefined;
 </script>
 
-<svg viewBox="0 0 20 20" class={className} fill="currentColor" aria-hidden="true">
-	<path d="M11.78 4.22a.75.75 0 0 1 0 1.06L8.06 9l3.72 3.72a.75.75 0 1 1-1.06 1.06L6.47 9.53a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0z" />
+<svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21" class={className} aria-hidden="true">
+	<path d="m4.5 8.5-4-4 4-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(7 6)" />
 </svg>

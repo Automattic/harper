@@ -11,4 +11,4 @@ let links = {
 };
 </script>
 
-<AnalyticsPage data={data.counts} prevPeriodData={data.prevCounts} title="Domains with the most reported problems." {links}/>
+<AnalyticsPage data={data.counts} prevPeriodData={data.prevCounts} title="Domains with the most reported problems." {links} keyLabel="Domain" keyLinkGenerator={(key) => `/admin/ext-site-problems/${data.timePeriod}/${encodeURIComponent(key)}`}/>

@@ -24,6 +24,8 @@ import { onMount } from 'svelte';
 import demoText from '../../../../demo.md?raw';
     import Loader from '$lib/components/Loader.svelte';
 
+const chromeHref =
+	'https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb?utm_source=harper-homepage&utm_medium=referral';
 const editorContent = demoText.trim();
 let linter: Linter | null = null;
 
@@ -250,7 +252,7 @@ onMount(() => {
 						{@const titleText = upToDate ? VERSION_UPTODATE : upToDate === false ? VERSION_BEHIND : null}
 						<a
 							class="flex items-center gap-3 rounded-[0.65rem] px-3 py-[0.65rem] !text-[#1c1a16] no-underline hover:bg-black/[0.04] hover:no-underline dark:!text-white dark:hover:bg-white/10"
-							href={integration.href}
+							href={integration.id === 'chrome' ? chromeHref : integration.href}
 						>
 							<IntegrationTile {integration} size={32} />
 							<span class="flex min-w-0 flex-col">
@@ -366,5 +368,5 @@ onMount(() => {
 		</div>
 	</section>
 
-	<MarketingFooter />
+	<MarketingFooter {chromeHref} />
 </div>
