@@ -3496,6 +3496,13 @@
 						},
 						{
 							"Bool": {
+								"name": "WayWithWhich",
+								"state": true,
+								"label": "Way with Which"
+							}
+						},
+						{
+							"Bool": {
 								"name": "WidelyAccepted",
 								"state": true,
 								"label": "Widely Accepted"
