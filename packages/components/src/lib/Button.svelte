@@ -1,30 +1,51 @@
 <script lang="ts">
-import { createEventDispatcher } from 'svelte';
-import type { HTMLAnchorAttributes, HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements';
+import { createEventDispatcher, type Snippet } from 'svelte';
+import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
 import CheckIcon from './icons/CheckIcon.svelte';
 
 type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
-type ButtonColor = 'primary' | 'light' | 'gray' | 'white' | 'dark';
+type ButtonColor = 'primary' | 'gray' | 'white' | 'dark';
 /** Mutually exclusive feedback states, controlled by the caller. */
 type ButtonState = 'idle' | 'loading' | 'success';
 
-export let size: ButtonSize = 'md';
-export let color: ButtonColor | string = 'primary';
-export let textColor: string | undefined = undefined;
-export let pill = false;
-export let href: HTMLAnchorAttributes['href'] = undefined;
-export let target: HTMLAnchorAttributes['target'] = undefined;
-export let rel: HTMLAnchorAttributes['rel'] = undefined;
-export let type: HTMLButtonAttributes['type'] = 'button';
-export let disabled: boolean | undefined = undefined;
-/** Loading blocks activation; success remains interactive. The caller controls transitions and resets. */
-export let state: ButtonState = 'idle';
-export let unstyled = false;
-// Alias for the `class` attribute since `class` is a reserved TS keyword
-export let className: string | undefined = undefined;
+/** Button or link attributes, snippet content, and guarded native activation callbacks. */
+interface ButtonProps
+	extends Omit<HTMLButtonAttributes & HTMLAnchorAttributes, 'color' | 'onclick' | 'ondblclick'> {
+	size?: ButtonSize;
+	color?: ButtonColor | string;
+	textColor?: string;
+	pill?: boolean;
+	/** Loading blocks activation; success remains interactive. The caller controls transitions and resets. */
+	state?: ButtonState;
+	unstyled?: boolean;
+	/** Alias for the native `class` attribute; both values are included. */
+	className?: string;
+	children?: Snippet;
+	onclick?: (event: MouseEvent) => void;
+	ondblclick?: (event: MouseEvent) => void;
+}
 
-let restClass: string | undefined;
-let restProps: HTMLAttributes<HTMLElement> = {};
+let {
+	size = 'md',
+	color = 'primary',
+	textColor,
+	pill = false,
+	href,
+	target,
+	rel,
+	type = 'button',
+	disabled,
+	state = 'idle',
+	unstyled = false,
+	className,
+	class: restClass,
+	children,
+	onclick,
+	ondblclick,
+	...restProps
+}: ButtonProps = $props();
+
+// Retain legacy component events while callers migrate to callback props.
 const dispatch = createEventDispatcher<{ click: Event; dblclick: Event }>();
 
 const sizeClasses: Record<ButtonSize, string> = {
@@ -37,8 +58,6 @@ const sizeClasses: Record<ButtonSize, string> = {
 const colorClasses: Record<ButtonColor, string> = {
 	primary:
 		'text-white bg-primary-600 hover:bg-primary-700 focus:ring-primary-300 dark:bg-primary-500 dark:hover:bg-primary-600 dark:focus:ring-primary-700',
-	light:
-		'text-gray-900 bg-white border border-gray-200 hover:bg-gray-100 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700',
 	gray: 'text-white bg-gray-800 hover:bg-gray-900 focus:ring-gray-300 dark:bg-gray-700 dark:hover:bg-gray-800 dark:focus:ring-gray-900',
 	white:
 		'text-gray-900 bg-white border border-gray-200 hover:bg-gray-100 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700',
@@ -47,26 +66,27 @@ const colorClasses: Record<ButtonColor, string> = {
 const baseClasses =
 	'cursor-pointer inline-flex items-center gap-2 justify-center font-medium text-center transition-colors focus:outline-none focus:ring-4 disabled:opacity-50 disabled:cursor-not-allowed';
 
-$: effectiveDisabled = disabled || state === 'loading';
-$: resolvedRel = target === '_blank' && !rel ? 'noreferrer noopener' : rel;
-$: toneClass = colorClasses[color as ButtonColor];
-$: ({ class: restClass, ...restProps } = $$restProps);
-$: classes = [
-	// Retain the Link component's styling for existing href callers.
-	href && 'hover:underline text-primary dark:text-white',
-	!unstyled && baseClasses,
-	!unstyled && (pill ? 'rounded-full' : 'rounded-lg'),
-	!unstyled && (sizeClasses[size] ?? sizeClasses.md),
-	!unstyled && (toneClass ?? colorClasses.primary),
-	!unstyled && href && effectiveDisabled && 'opacity-50 cursor-not-allowed',
-	restClass,
-	className,
-]
-	.filter(Boolean)
-	.join(' ');
+const effectiveDisabled = $derived(disabled || state === 'loading');
+const resolvedRel = $derived(target === '_blank' && !rel ? 'noreferrer noopener' : rel);
+const toneClass = $derived(colorClasses[color as ButtonColor]);
+const classes = $derived(
+	[
+		// Retain the Link component's styling for existing href callers.
+		href && 'hover:underline text-primary dark:text-white',
+		!unstyled && baseClasses,
+		!unstyled && (pill ? 'rounded-full' : 'rounded-lg'),
+		!unstyled && (sizeClasses[size] ?? sizeClasses.md),
+		!unstyled && (toneClass ?? colorClasses.primary),
+		!unstyled && href && effectiveDisabled && 'opacity-50 cursor-not-allowed',
+		restClass,
+		className,
+	]
+		.filter(Boolean)
+		.join(' '),
+);
 
-$: colorOverride = !unstyled && toneClass == null ? color : undefined;
-$: inlineStyle =
+const colorOverride = $derived(!unstyled && toneClass == null ? color : undefined);
+const inlineStyle = $derived(
 	colorOverride || textColor
 		? [
 				colorOverride ? `background-color: ${colorOverride} !important;` : null,
@@ -74,17 +94,24 @@ $: inlineStyle =
 			]
 				.filter(Boolean)
 				.join(' ')
-		: undefined;
+		: undefined,
+);
 
-/** Guard native button/link activation before forwarding the existing Svelte component events. */
-function handleActivation(event: Event) {
+/** Block disabled/loading activation before invoking callbacks and legacy component events. */
+function handleActivation(event: MouseEvent) {
 	if (effectiveDisabled) {
 		event.preventDefault();
 		event.stopPropagation();
 		return;
 	}
 
-	dispatch(event.type === 'dblclick' ? 'dblclick' : 'click', event);
+	if (event.type === 'dblclick') {
+		ondblclick?.(event);
+		dispatch('dblclick', event);
+	} else {
+		onclick?.(event);
+		dispatch('click', event);
+	}
 }
 </script>
 
@@ -102,8 +129,8 @@ function handleActivation(event: Event) {
 	aria-disabled={href && effectiveDisabled ? true : restProps['aria-disabled']}
 	role={href && effectiveDisabled ? 'link' : restProps.role}
 	tabindex={href && effectiveDisabled ? -1 : restProps.tabindex}
-	on:click={handleActivation}
-	on:dblclick={handleActivation}
+	onclick={handleActivation}
+	ondblclick={handleActivation}
 >
 	{#if state === 'loading'}
 		<svg class="size-4 shrink-0 animate-spin motion-reduce:animate-none" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -113,7 +140,7 @@ function handleActivation(event: Event) {
 	{:else if state === 'success'}
 		<CheckIcon className="size-4 shrink-0" />
 	{/if}
-	<slot />
+	{@render children?.()}
 </svelte:element>
 <!-- Outside the busy control so loading announcements are not deferred. -->
 <span class="sr-only" role="status">{state === 'loading' ? 'Loading' : state === 'success' ? 'Success' : ''}</span>

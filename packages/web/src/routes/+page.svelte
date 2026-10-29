@@ -24,6 +24,8 @@ import { onMount } from 'svelte';
 import demoText from '../../../../demo.md?raw';
     import Loader from '$lib/components/Loader.svelte';
 
+const chromeHref =
+	'https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb?utm_source=harper-homepage&utm_medium=referral';
 const editorContent = demoText.trim();
 let linter: Linter | null = null;
 
@@ -141,10 +143,6 @@ const faqs = [
 		q: "What Do I Do If My Question Isn’t Here?",
 		a: 'You can join our Discord and ask your questions there or you can start a discussion over at GitHub.',
 	},
-	{
-		q: "Why Isn’t Harper Working in Gmail?",
-		a: 'Harper will not run in Gmail unless the built-in grammar checker is disabled. If you wish to use Harper in Gmail, please disable the built-in grammar checker.',
-	},
 ];
 
 let liveFxVer = '';
@@ -254,7 +252,7 @@ onMount(() => {
 						{@const titleText = upToDate ? VERSION_UPTODATE : upToDate === false ? VERSION_BEHIND : null}
 						<a
 							class="flex items-center gap-3 rounded-[0.65rem] px-3 py-[0.65rem] !text-[#1c1a16] no-underline hover:bg-black/[0.04] hover:no-underline dark:!text-white dark:hover:bg-white/10"
-							href={integration.href}
+							href={integration.id === 'chrome' ? chromeHref : integration.href}
 						>
 							<IntegrationTile {integration} size={32} />
 							<span class="flex min-w-0 flex-col">
@@ -343,6 +341,7 @@ onMount(() => {
 	</section>
 
 	<FaqSection
+		id="faqs"
 		items={faqs}
 		title="Questions, answered."
 		intro="Don’t see yours?"
@@ -369,5 +368,5 @@ onMount(() => {
 		</div>
 	</section>
 
-	<MarketingFooter />
+	<MarketingFooter {chromeHref} />
 </div>
