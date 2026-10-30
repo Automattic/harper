@@ -1,3 +1,5 @@
+use harper_brill::UPOS;
+
 use crate::{
     CharStringExt, Span, Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
@@ -64,7 +66,8 @@ impl ExprLinter for NounCountability {
             || followed_by_word(ctx, |t| {
                 t.kind.is_noun() || t.kind.is_oov() || t.get_ch(src).eq_str("and")
             })
-            || (is_ing_word(&toks[2], src) && followed_by_nominal_head(ctx, src))
+            || ((is_ing_word(&toks[2], src) || toks[2].kind.is_upos(UPOS::ADJ))
+                && followed_by_nominal_head(ctx, src))
         {
             return None;
         }
@@ -270,6 +273,80 @@ fn follows_slash_separated_ing_modifiers_then_noun(tokens: &[Token], src: &[char
 mod tests {
     use super::NounCountability;
     use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
+
+    #[test]
+    fn dont_flag_public_modifier_chain_issue_2011() {
+        assert_no_lints(
+            "includes one public customizable status page with an SSL subdomain.",
+            NounCountability::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_public_adverb_modifier_chain_issue_2011() {
+        assert_no_lints(
+            "It includes one public highly customizable page.",
+            NounCountability::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_capitalized_public_modifier_chain_issue_2011() {
+        assert_no_lints(
+            "One Public Customizable Status Page",
+            NounCountability::default(),
+        );
+    }
+
+    #[test]
+    fn still_flag_mass_noun_without_adjective_sense_issue_2011() {
+        assert_lint_count(
+            "We bought one equipment for the office.",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn still_flag_public_without_nominal_head_issue_2011() {
+        assert_lint_count("It serves one public.", NounCountability::default(), 1);
+    }
+
+    #[test]
+    fn still_flag_public_before_preposition_issue_2011() {
+        assert_lint_count(
+            "It serves one public for the city.",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn still_flag_public_before_finite_verb_issue_2011() {
+        assert_lint_count("One public went home.", NounCountability::default(), 1);
+    }
+
+    #[test]
+    fn dont_flag_security_point_from_issue_2011_comment() {
+        assert_no_lints("from a security point of view", NounCountability::default());
+    }
+
+    #[test]
+    fn dont_flag_coordinate_adjectives_from_issue_2011_comment() {
+        assert_no_lints(
+            "they're both confusing and annoying.",
+            NounCountability::default(),
+        );
+    }
+
+    #[test]
+    fn still_flag_mass_noun_before_adverb_predicate_review_r2() {
+        assert_lint_count(
+            "One garbage often blocks access.",
+            NounCountability::default(),
+            1,
+        );
+    }
 
     #[test]
     fn corrects_a() {
