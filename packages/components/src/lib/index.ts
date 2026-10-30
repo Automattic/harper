@@ -42,6 +42,7 @@ export { default as QuillIcon } from './icons/QuillIcon.svelte';
 export { default as RocketIcon } from './icons/RocketIcon.svelte';
 export { default as SearchIcon } from './icons/SearchIcon.svelte';
 export { default as SendIcon } from './icons/SendIcon.svelte';
+export { default as StarIcon } from './icons/StarIcon.svelte';
 export { default as TrashIcon } from './icons/TrashIcon.svelte';
 export { default as UploadIcon } from './icons/UploadIcon.svelte';
 export { default as Link } from './Link.svelte';

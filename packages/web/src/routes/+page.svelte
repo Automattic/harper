@@ -6,7 +6,7 @@ export const frontmatter = {
 
 <script lang="ts">
 import { browser } from '$app/environment';
-import { Arrow } from 'components';
+import { Arrow, StarIcon } from 'components';
 import { TestimonialCollection } from 'components';
 import { createEditorLinter } from '$lib/createEditorLinter';
 import FaqSection from '$lib/marketing/FaqSection.svelte';
@@ -182,7 +182,10 @@ onMount(() => {
 			</p>
 			<div class="mt-7 flex flex-wrap gap-[0.65rem] max-[620px]:flex-col max-[620px]:items-stretch">
 				<PillButton href="/get" size="lg">Get Harper</PillButton>
-				<PillButton href={marketingLinks.github} kind="secondary" size="lg">Star on GitHub</PillButton>
+				<PillButton href={marketingLinks.github} kind="secondary" size="lg">
+					<StarIcon slot="icon" />
+					Star on GitHub
+				</PillButton>
 			</div>
 		</div>
 	</section>
@@ -361,7 +364,10 @@ onMount(() => {
 				and we’d love your help.
 			</p>
 			<div class="mt-7 flex flex-col flex-wrap items-center justify-center gap-[0.65rem]">
-				<PillButton href={marketingLinks.github} size="lg">Star on GitHub</PillButton>
+				<PillButton href={marketingLinks.github} size="lg">
+					<StarIcon slot="icon" />
+					Star on GitHub
+				</PillButton>
 				<PillButton href="/docs/contributors/introduction" size="lg">Contribute</PillButton>
 			</div>
 		</div>
