@@ -295,6 +295,38 @@ fn plural_toward() {
 // Copyright
 
 #[test]
+fn dont_flag_legitimate_copywriting_issue_3138() {
+    assert_no_lints(
+        "One price for finance, one price for cybersecurity, one price for copywriting.",
+        test_linter(),
+    );
+}
+
+#[test]
+fn dont_flag_capitalized_copywriting_issue_3138() {
+    assert_no_lints("Copywriting is her profession.", test_linter());
+}
+
+#[test]
+fn dont_flag_uppercase_copywriting_issue_3138() {
+    assert_no_lints("COPYWRITING", test_linter());
+}
+
+#[test]
+fn dont_flag_correct_copyrighting_issue_3138() {
+    assert_no_lints("Copyrighting the artwork protects it.", test_linter());
+}
+
+#[test]
+fn still_correct_copyright_error_near_copywriting_issue_3138() {
+    assert_suggestion_result(
+        "One price for copywriting, including copywrited artwork.",
+        test_linter(),
+        "One price for copywriting, including copyrighted artwork.",
+    );
+}
+
+#[test]
 fn copywritten() {
     assert_suggestion_result(
         "Including digital copies of copywritten artwork with the project isn't advised.",
