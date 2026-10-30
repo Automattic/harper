@@ -24,6 +24,8 @@ type GoogleDocsRequest =
 			expectedText?: string;
 			beforeContext?: string;
 			afterContext?: string;
+			rangeSource?: 'native-utf16-v1';
+			nativeSnapshot?: string;
 	  };
 
 type GoogleDocsGetRectsResponse = {
@@ -149,6 +151,7 @@ export default class GoogleDocsBridgeClient {
 		expectedText?: string,
 		beforeContext?: string,
 		afterContext?: string,
+		nativeRange?: { rangeSource: 'native-utf16-v1'; nativeSnapshot: string },
 	): Promise<boolean> {
 		const response = await this.request({
 			kind: 'replaceText',
@@ -158,6 +161,7 @@ export default class GoogleDocsBridgeClient {
 			expectedText,
 			beforeContext,
 			afterContext,
+			...nativeRange,
 		});
 
 		return response.kind === 'replaceText' ? response.applied : false;
