@@ -1,5 +1,6 @@
 ---
 title: Emacs
+description: Configure Emacs and Eglot to use the Harper language server for English grammar checking.
 ---
 
 Our Emacs integration is powered by [`harper-ls`](./language-server).

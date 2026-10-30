@@ -1,5 +1,6 @@
 ---
 title: Introduction to harper.js
+description: Install harper.js and add Harper grammar checking to JavaScript and TypeScript applications.
 ---
 
 ## The Mission

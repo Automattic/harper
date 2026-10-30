@@ -1,4 +1,12 @@
 <script module lang="ts">
+export const frontmatter = {
+	title: 'Rules',
+	description:
+		'Browse Harper grammar rules, their descriptions, and whether each rule is enabled by default.',
+};
+</script>
+
+<script lang="ts">
 import {
 	Table,
 	TableBody,
@@ -7,22 +15,28 @@ import {
 	TableHead,
 	TableHeadCell,
 } from 'components';
-import { type LintConfig, LocalLinter } from 'harper.js';
-import { slimBinary } from 'harper.js/slimBinary';
-
-export const frontmatter = {
-	title: 'Rules',
-};
+import type { LintConfig } from 'harper.js';
+import { onMount } from 'svelte';
 
 let descriptions: Record<string, string> = $state({});
 let default_config: LintConfig = $state({});
 
-let linter = new LocalLinter({ binary: slimBinary });
-linter.getLintDescriptionsHTML().then(async (v) => {
-	descriptions = v;
-});
-linter.getDefaultLintConfig().then(async (v) => {
-	default_config = v;
+onMount(() => {
+	void (async () => {
+		const [{ LocalLinter }, { slimBinary }] = await Promise.all([
+			import('harper.js'),
+			import('harper.js/slimBinary'),
+		]);
+		const linter = new LocalLinter({ binary: slimBinary });
+		try {
+			[descriptions, default_config] = await Promise.all([
+				linter.getLintDescriptionsHTML(),
+				linter.getDefaultLintConfig(),
+			]);
+		} finally {
+			await linter.dispose();
+		}
+	})();
 });
 </script>
 

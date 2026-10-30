@@ -1,5 +1,6 @@
 ---
 title: Using Harper in Node.js
+description: Run harper.js in Node.js with LocalLinter and the provided example code.
 ---
 
 Harper.js can run in Node.js.

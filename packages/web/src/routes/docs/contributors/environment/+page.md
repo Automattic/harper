@@ -1,5 +1,6 @@
 ---
 title: Set Up Your Environment
+description: Set up the Rust, Node.js, and optional Nix tools needed to build and develop Harper components.
 ---
 
 Depending on what you're wanting to work on within the Harper repo, you may not need to set up every aspect of the environment described on this page.

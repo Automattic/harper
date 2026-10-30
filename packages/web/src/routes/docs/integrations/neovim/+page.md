@@ -1,5 +1,6 @@
 ---
 title: Neovim
+description: Set up harper-ls in Neovim with nvim-lspconfig and customize grammar checking options.
 ---
 
 Our Neovim integration is powered by [`harper-ls`](./language-server).
