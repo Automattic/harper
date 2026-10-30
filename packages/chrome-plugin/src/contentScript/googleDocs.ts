@@ -598,12 +598,13 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 		// A paragraph's contiguous labels can uniquely anchor a repeated short word.
 		// Screen order is used only within this group, never between native cells.
 		// Multiple full matches are ambiguity, not permission to pick the nearest.
+		const continuations = new Map<number, Set<Element>>();
 		const groups = new Map<Element, GoogleDocsRectSegment[]>();
 		for (const segment of segments) {
 			const group = segment.rectNode.closest('g[role="paragraph"]');
 			if (group) groups.set(group, [...(groups.get(group) ?? []), segment]);
 		}
-		for (const groupSegments of groups.values()) {
+		for (const [group, groupSegments] of groups) {
 			const ordered = groupSegments.toSorted(compareSegments);
 			if (
 				ordered.length < 2 ||
@@ -640,8 +641,38 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 				cursor = first + 1;
 			}
 			for (const match of unique ?? []) matchesBySegment.set(match.segment, match);
+			// An aligned paragraph can identify LF as a wrap between its labels.
+			// Keep this evidence separate from highlight resolution, which can
+			// still reject overlapping boxes for the same native source range.
+			for (let index = 1; unique != null && index < unique.length; index += 1) {
+				const previous = unique[index - 1];
+				const gap = nativeSnapshot.slice(previous.end, unique[index].start);
+				const newline = gap.indexOf('\n');
+				if (newline >= 0 && gap.indexOf('\n', newline + 1) < 0) {
+					const offset = previous.end + newline;
+					const agreeing = continuations.get(offset) ?? new Set<Element>();
+					agreeing.add(group);
+					continuations.set(offset, agreeing);
+				}
+			}
 		}
 		const matches = Array.from(matchesBySegment.values());
+		const softLineBreaks = new Set<number>();
+		for (const [newline, agreeing] of continuations) {
+			// A separate anchored paragraph touching this LF contradicts a wrap.
+			// Do not let conflicting SVG groups override the native hard boundary.
+			const conflicting = matches.some(({ start, end, segment }) => {
+				const group = segment.rectNode.closest('g[role="paragraph"]');
+				if (group == null || agreeing.has(group)) return false;
+				return (
+					// biome-ignore lint/suspicious/noControlCharactersInRegex: Only non-line-breaking whitespace may touch this LF.
+					(end <= newline && /^[	\r ]*$/u.test(comparable.slice(end, newline))) ||
+					// biome-ignore lint/suspicious/noControlCharactersInRegex: Only non-line-breaking whitespace may touch this LF.
+					(start > newline && /^[	\r ]*$/u.test(comparable.slice(newline + 1, start)))
+				);
+			});
+			if (!conflicting) softLineBreaks.add(newline);
+		}
 		// Contradictory geometry is local ambiguity, never a reason to lint visual
 		// table prose. Both overlapping assignments remain non-geometric gaps.
 		const resolved = matches.filter(
@@ -652,39 +683,28 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 		);
 		resolved.sort((left, right) => left.start - right.start);
 		const paragraphBreaks = new Set<number>();
-		for (let index = 1; index < resolved.length; index += 1) {
-			const previous = resolved[index - 1];
-			const current = resolved[index];
-			const previousGroup = previous.segment.rectNode.closest('g[role="paragraph"]');
-			const currentGroup = current.segment.rectNode.closest('g[role="paragraph"]');
-			const gap = nativeSnapshot.slice(previous.end, current.start);
-			// A native LF between distinct, anchored paragraph groups is semantic.
-			// A wrapped line in the same group is not. Table-control gaps already
-			// contain their separators and must not be globally newline-normalized.
-			if (
-				previousGroup != null &&
-				currentGroup != null &&
-				previousGroup !== currentGroup &&
-				// biome-ignore lint/suspicious/noControlCharactersInRegex: Only native paragraph whitespace may separate anchored groups.
-				/^[	\r\n ]*$/u.test(gap) &&
-				gap.includes('\n') &&
-				!gap.includes('\n\n')
-			) {
-				paragraphBreaks.add(previous.end + gap.indexOf('\n') + 1);
-			}
-		}
-		// Native table markers also separate regions. Existing consecutive masked
-		// LF already form a paragraph break and stay unchanged.
-		// biome-ignore lint/suspicious/noControlCharactersInRegex: Only observed native table controls and adjacent whitespace define these boundaries.
+		// Native Enter is LF, even if either paragraph is repeated or unrendered.
+		// Its linguistic meaning must not depend on a unique highlight anchor.
+		// Keep positively identified same-paragraph wraps soft; page margins and
+		// missing geometry are not evidence for a continuation. VT stays native.
+		// biome-ignore lint/suspicious/noControlCharactersInRegex: Observed native paragraph/table boundaries plus adjacent whitespace.
 		for (const gap of nativeSnapshot.matchAll(/[	\r\n \u0010\u0011\u0012\u001c]+/gu)) {
 			const end = gap.index + gap[0].length;
 			if (
-				gap.index > 0 &&
-				end < nativeSnapshot.length &&
-				gap[0].search(GOOGLE_DOCS_TABLE_SEPARATORS) >= 0 &&
-				!gap[0].replace(GOOGLE_DOCS_TABLE_SEPARATORS, '\n').includes('\n\n')
+				gap.index === 0 ||
+				end === nativeSnapshot.length ||
+				gap[0].replace(GOOGLE_DOCS_TABLE_SEPARATORS, '\n').includes('\n\n')
 			)
-				paragraphBreaks.add(gap.index + gap[0].search(GOOGLE_DOCS_TABLE_SEPARATORS) + 1);
+				continue;
+			const tableBoundary = gap[0].search(GOOGLE_DOCS_TABLE_SEPARATORS);
+			const newline = gap[0].indexOf('\n');
+			const boundary =
+				tableBoundary >= 0
+					? tableBoundary
+					: newline >= 0 && !softLineBreaks.has(gap.index + newline)
+						? newline
+						: -1;
+			if (boundary >= 0) paragraphBreaks.add(gap.index + boundary + 1);
 		}
 		const breaks = Array.from(paragraphBreaks).sort((left, right) => left - right);
 		// Each run is [projection start, native start, UTF-16 length]. Inserted
