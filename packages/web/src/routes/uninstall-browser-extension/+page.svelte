@@ -83,9 +83,11 @@ function handleFormData(e: FormDataEvent) {
 						{/if}
 					</fieldset>
 
-					<Checkbox name="platform" value={platform} checked>
-						Include browser type
-					</Checkbox>
+					{#if platform}
+						<Checkbox name="platform" value={platform} checked>
+							Include browser type
+						</Checkbox>
+					{/if}
 
 					<div class="flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
 						<Button type="submit" size="lg" disabled={!selected}>
