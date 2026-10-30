@@ -70,11 +70,10 @@ const testimonials = [
 		source: 'https://obsidian.rocks/resource-harper/',
 	},
 	{
-		authorName: 'imbolc',
-		authorSubtitle: 'Chrome Extension Review',
-		testimonial: "I’ve been using Harper in Neovim for a long time and am glad to see it as an extension!",
-		source:
-			'https://chromewebstore.google.com/detail/private-grammar-checker-h/lodbfhdipoipcjmlebjbgmmgekckhpfb/reviews',
+		authorName: 'MordeStack',
+		authorSubtitle: '@MordeStack',
+		testimonial: 'Uninstalled LanguageTool and replaced with Harper. Huge upgrade.',
+		source: 'https://x.com/MordeStack',
 	},
 	{
 		authorName: 'Martijn Gribnau',

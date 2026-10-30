@@ -105,11 +105,13 @@ static TEMPORAL_NOUNS: &[&str] = &[
     "time", "times", "moment", "moments", "stage", "stages", "point", "points",
 ];
 
-pub struct GetAccessTo {
+/// Corrects "get access at <resource>" to "get access to <resource>", while avoiding
+/// false positives like "get access at all", "get access at least", URLs, or time expressions.
+pub struct GetAccessAt {
     expr: SequenceExpr,
 }
 
-impl Default for GetAccessTo {
+impl Default for GetAccessAt {
     fn default() -> Self {
         let access_verbs = SequenceExpr::word_set(ACCESS_VERBS);
 
@@ -127,7 +129,7 @@ impl Default for GetAccessTo {
     }
 }
 
-impl ExprLinter for GetAccessTo {
+impl ExprLinter for GetAccessAt {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
@@ -135,7 +137,7 @@ impl ExprLinter for GetAccessTo {
     }
 
     fn description(&self) -> &str {
-        "Corrects `get access at` to `get access to`."
+        "Flags `get access at` and suggests replacing `at` with `to`."
     }
 
     fn match_to_lint_with_context(
@@ -216,28 +218,85 @@ impl ExprLinter for GetAccessTo {
 
         Some(Lint {
             span: at_span,
-            lint_kind: LintKind::Usage,
+            lint_kind: LintKind::Grammar,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "to",
                 at_span.get_content(src),
             )],
-            message: "Use `to` instead of `at` with `access`.".to_owned(),
-            ..Default::default()
+            message: "Did you mean `to` instead of `at` when specifying what is being accessed?"
+                .to_owned(),
+            priority: 45,
         })
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::GetAccessTo;
-    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
+    use super::GetAccessAt;
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
-    fn test_get_access_at_cpu_time() {
+    fn test_get_access_at_cpu() {
         assert_suggestion_result(
-            "They really need to tabulate that spreadsheet and they need to get access at some CPU time.",
-            GetAccessTo::default(),
-            "They really need to tabulate that spreadsheet and they need to get access to some CPU time.",
+            "They really need to get access at some CPU time.",
+            GetAccessAt::default(),
+            "They really need to get access to some CPU time.",
+        );
+    }
+
+    #[test]
+    fn test_get_access_at_models() {
+        assert_suggestion_result(
+            "In order to get access at models, send a request.",
+            GetAccessAt::default(),
+            "In order to get access to models, send a request.",
+        );
+    }
+
+    #[test]
+    fn test_got_access_at_database() {
+        assert_suggestion_result(
+            "I got access at the server database.",
+            GetAccessAt::default(),
+            "I got access to the server database.",
+        );
+    }
+
+    // --- False Positive Tests ---
+
+    #[test]
+    fn ignore_access_at_all() {
+        assert_lint_count(
+            "I didn't manage to get access at all.",
+            GetAccessAt::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignore_access_at_least() {
+        assert_lint_count(
+            "Is it possible to get access at least to the file content?",
+            GetAccessAt::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignore_access_at_this_time() {
+        assert_lint_count(
+            "The quickest method to get access at this time is to submit a form.",
+            GetAccessAt::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignore_access_at_url() {
+        assert_lint_count(
+            "Get access at https://example.com/login",
+            GetAccessAt::default(),
+            0,
         );
     }
 
@@ -245,7 +304,7 @@ mod tests {
     fn test_get_access_at_the_original_request() {
         assert_suggestion_result(
             "To get access at the original request within the hooks, use http middleware.",
-            GetAccessTo::default(),
+            GetAccessAt::default(),
             "To get access to the original request within the hooks, use http middleware.",
         );
     }
@@ -254,26 +313,8 @@ mod tests {
     fn test_get_access_at_host_system() {
         assert_suggestion_result(
             "Succeeded to get access at host system with login command.",
-            GetAccessTo::default(),
+            GetAccessAt::default(),
             "Succeeded to get access to host system with login command.",
-        );
-    }
-
-    #[test]
-    fn test_get_access_at_models() {
-        assert_suggestion_result(
-            "In order to get access at models, you typically send information to some server.",
-            GetAccessTo::default(),
-            "In order to get access to models, you typically send information to some server.",
-        );
-    }
-
-    #[test]
-    fn test_got_access_at_server() {
-        assert_suggestion_result(
-            "I still got access at server without any Username or Password.",
-            GetAccessTo::default(),
-            "I still got access to server without any Username or Password.",
         );
     }
 
@@ -281,7 +322,7 @@ mod tests {
     fn test_gain_access_at() {
         assert_suggestion_result(
             "The attacker managed to gain access at the database.",
-            GetAccessTo::default(),
+            GetAccessAt::default(),
             "The attacker managed to gain access to the database.",
         );
     }
@@ -290,7 +331,7 @@ mod tests {
     fn test_have_access_at() {
         assert_suggestion_result(
             "Users have access at the internal network.",
-            GetAccessTo::default(),
+            GetAccessAt::default(),
             "Users have access to the internal network.",
         );
     }
@@ -299,7 +340,7 @@ mod tests {
     fn test_with_adjective() {
         assert_suggestion_result(
             "They need to get full access at the database.",
-            GetAccessTo::default(),
+            GetAccessAt::default(),
             "They need to get full access to the database.",
         );
     }
@@ -308,7 +349,7 @@ mod tests {
     fn test_with_possessive_determiner() {
         assert_suggestion_result(
             "They need to get their access at the database.",
-            GetAccessTo::default(),
+            GetAccessAt::default(),
             "They need to get their access to the database.",
         );
     }
@@ -317,48 +358,17 @@ mod tests {
     fn test_with_quantifier() {
         assert_suggestion_result(
             "They need to get some access at the database.",
-            GetAccessTo::default(),
+            GetAccessAt::default(),
             "They need to get some access to the database.",
         );
     }
 
     #[test]
-    fn test_ignore_get_access_at_all() {
-        assert_no_lints(
-            "I don't manage to get access at all, so I will try another way.",
-            GetAccessTo::default(),
-        );
-    }
-
-    #[test]
-    fn test_ignore_get_access_at_least() {
-        assert_no_lints(
-            "Is it possible to get access at least to file_content_type?",
-            GetAccessTo::default(),
-        );
-    }
-
-    #[test]
-    fn test_ignore_get_access_at_this_time() {
-        assert_no_lints(
-            "The quickest method to get access at this time would be to fill out this form.",
-            GetAccessTo::default(),
-        );
-    }
-
-    #[test]
-    fn test_ignore_get_access_at_url() {
-        assert_no_lints(
-            "Contact us to get access at https://example.com/contact",
-            GetAccessTo::default(),
-        );
-    }
-
-    #[test]
     fn test_ignore_get_access_at_the_level() {
-        assert_no_lints(
+        assert_lint_count(
             "Getting access at the disk level would not normally be called a mount.",
-            GetAccessTo::default(),
+            GetAccessAt::default(),
+            0,
         );
     }
 }

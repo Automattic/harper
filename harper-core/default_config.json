@@ -906,23 +906,30 @@
 						},
 						{
 							"Bool": {
+								"name": "AnArmAndALeg",
+								"state": true,
+								"label": "An Arm and a Leg"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ArgumentToBeMade",
 								"state": true,
-								"label": "Argument To Be Made"
+								"label": "Argument to be Made"
 							}
 						},
 						{
 							"Bool": {
 								"name": "AtAllCosts",
 								"state": true,
-								"label": "At All Costs"
+								"label": "At all Costs"
 							}
 						},
 						{
 							"Bool": {
 								"name": "AwaitFor",
 								"state": true,
-								"label": "Await For"
+								"label": "Await for"
 							}
 						},
 						{
@@ -958,6 +965,13 @@
 								"name": "ClientOrServerSide",
 								"state": true,
 								"label": "Client Or Server Side"
+							}
+						},
+						{
+							"Bool": {
+								"name": "CloudOnesJudgement",
+								"state": true,
+								"label": "Cloud One's Judgment/Judgement"
 							}
 						},
 						{
@@ -3405,6 +3419,13 @@
 						},
 						{
 							"Bool": {
+								"name": "SeemsLikeAdjective",
+								"state": true,
+								"label": "Seems Like Adjective"
+							}
+						},
+						{
+							"Bool": {
 								"name": "SendAnEmailTo",
 								"state": true,
 								"label": "Send An Email To"
@@ -3478,6 +3499,13 @@
 								"name": "WayTooAdjective",
 								"state": true,
 								"label": "Way Too Adjective"
+							}
+						},
+						{
+							"Bool": {
+								"name": "WayWithWhich",
+								"state": true,
+								"label": "Way with Which"
 							}
 						},
 						{
@@ -3704,13 +3732,6 @@
 								"name": "FullToTheBrim",
 								"state": true,
 								"label": "Full to the Brim"
-							}
-						},
-						{
-							"Bool": {
-								"name": "GetAccessTo",
-								"state": true,
-								"label": "Get Access To"
 							}
 						},
 						{
@@ -4844,6 +4865,13 @@
 						},
 						{
 							"Bool": {
+								"name": "CoolCalmCollected",
+								"state": true,
+								"label": "Cool, Calm, Collected"
+							}
+						},
+						{
+							"Bool": {
 								"name": "CoursingThroughVeins",
 								"state": true,
 								"label": "Coursing Through Veins"
@@ -5873,6 +5901,13 @@
 						},
 						{
 							"Bool": {
+								"name": "RackOnesBrain",
+								"state": true,
+								"label": "Rack One's Brain"
+							}
+						},
+						{
+							"Bool": {
 								"name": "RealTrouper",
 								"state": true,
 								"label": "Real Trouper"
@@ -6561,6 +6596,13 @@
 								"name": "FondOn",
 								"state": true,
 								"label": "Fond On"
+							}
+						},
+						{
+							"Bool": {
+								"name": "GetAccessAt",
+								"state": true,
+								"label": "Get Access At"
 							}
 						},
 						{
