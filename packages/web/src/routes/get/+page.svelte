@@ -1,5 +1,6 @@
 <script lang="ts">
 import { onMount } from 'svelte';
+import getBrowserType from '$lib/getBrowserType';
 import {
 	type Integration,
 	integrationCategories,
@@ -14,6 +15,8 @@ import { isUpToDate, liveVersions, loadLiveVersions } from '$lib/marketing/versi
 const chromeHref =
 	'https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb?utm_source=harper-get&utm_medium=referral';
 
+// Keep server rendering and initial hydration consistent before browser detection.
+let browserType: ReturnType<typeof getBrowserType> = 'chrome';
 let activeCategory = 'all';
 let query = '';
 
@@ -21,6 +24,7 @@ const VERSION_UPTODATE = 'Up-to-date';
 const VERSION_BEHIND = 'This version is slightly behind the core engine due to a delay';
 
 onMount(() => {
+	browserType = getBrowserType();
 	void loadLiveVersions();
 });
 
@@ -80,7 +84,7 @@ function clearFilters() {
 				Use Harper in your favorite apps and browsers. Good grammar goes where you are.
 			</p>
 			<div class="mx-auto grid max-w-[47.5rem] grid-cols-2 gap-[0.85rem] text-left max-[640px]:grid-cols-1">
-				{#each ['desktop', 'chrome'] as id}
+				{#each [browserType, 'desktop'] as id}
 					{@const integration = integrations.find((item) => item.id === id)}
 					{#if integration}
 						{@const upToDate = isUpToDate($liveVersions.harper, $liveVersions[integration.id])}
