@@ -47,6 +47,20 @@ impl Linter for AnA {
 
                 // Capital letter 'A' might be a test grade rather than an article
                 if chars_first == ['A'] {
+                    // A following capitalized name distinguishes coordinated labels
+                    // from nominal operators such as "A or gate".
+                    if matches!(chars_second, ['a', 'n', 'd'] | ['o', 'r'])
+                        && let Some([ws, name, ..]) = chunk.get(second_idx + 1..)
+                        && ws.kind.is_whitespace()
+                        && name.kind.is_word()
+                        && name
+                            .get_ch(document.get_source())
+                            .first()
+                            .is_some_and(|c| c.is_uppercase())
+                    {
+                        continue;
+                    }
+
                     // Check for range of test grades starting with "A-"
                     if second_idx == first_idx + 2
                         && chunk[first_idx + 1].kind.is_hyphen()
@@ -142,6 +156,71 @@ mod tests {
         Dialect,
         linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result},
     };
+
+    #[test]
+    fn dont_flag_dns_record_a_before_conjunction_issue_2014() {
+        assert_no_lints(
+            "For example, A and AAAA records can disclose IP addresses associated with a domain,",
+            AnA::new(Dialect::American),
+        );
+    }
+
+    #[test]
+    fn dont_flag_letter_a_before_or_issue_2014() {
+        assert_no_lints("Choose A or B.", AnA::new(Dialect::American));
+    }
+
+    #[test]
+    fn dont_flag_grade_a_before_and_issue_2014() {
+        assert_no_lints("Grades A and B are passing.", AnA::new(Dialect::American));
+    }
+
+    #[test]
+    fn still_correct_article_before_vowel_issue_2014() {
+        assert_lint_count(
+            "A unusual record was found.",
+            AnA::new(Dialect::American),
+            1,
+        );
+    }
+
+    #[test]
+    fn still_correct_article_before_initialism_issue_2014() {
+        assert_lint_count("A AAAA record was found.", AnA::new(Dialect::American), 1);
+    }
+
+    #[test]
+    fn still_correct_later_article_after_record_a_issue_2014() {
+        assert_suggestion_result(
+            "A and AAAA records describe a address.",
+            AnA::new(Dialect::American),
+            "A and AAAA records describe an address.",
+        );
+    }
+
+    #[test]
+    fn still_flag_article_before_logic_gate_issue_2014() {
+        assert_lint_count("A OR gate is sufficient.", AnA::new(Dialect::American), 1);
+    }
+
+    #[test]
+    fn still_flag_article_before_and_gate_issue_2014() {
+        assert_lint_count("A AND gate is sufficient.", AnA::new(Dialect::American), 1);
+    }
+
+    #[test]
+    fn still_flag_article_before_nominal_if_issue_2014() {
+        assert_lint_count(
+            "A if statement is sufficient.",
+            AnA::new(Dialect::American),
+            1,
+        );
+    }
+
+    #[test]
+    fn still_flag_article_before_lowercase_operator_review_r1() {
+        assert_lint_count("A or gate is sufficient.", AnA::new(Dialect::American), 1);
+    }
 
     #[test]
     fn detects_html_as_vowel() {
