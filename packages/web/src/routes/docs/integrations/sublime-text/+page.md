@@ -61,3 +61,33 @@ Open `Preferences > Package Settings > LSP > Settings` and add the `harper-ls` c
 ```
 
 For more information on what each of these configs do, you can head over to the [configuration section](./language-server#Configuration) of our `harper-ls` documentation.
+
+## Linting Git Commit Messages
+
+Commit messages need three extra pieces of configuration in Sublime Text.
+
+First, add the commit message scope to the `selector` in your `harper-ls` client configuration above, so LSP attaches to commit buffers at all:
+
+```json title=LSP.sublime-settings
+"selector": "source.markdown | text.html.markdown | text.plain | text.git.commit",
+```
+
+Second, tell Sublime which language ID to report for that scope. By default Sublime sends `git` for everything in its `text.git.*` family, and `harper-ls` routes commit messages by the `git-commit` language ID, so the buffer is not linted. Add the mapping to your user `language-ids.sublime-settings`, which LSP for Sublime Text reads to override the language ID it derives from a scope:
+
+```json title=language-ids.sublime-settings
+{
+  "text.git.commit": "git-commit"
+}
+```
+
+Third, stop LSP from discarding the results. Commit messages live under `.git/` (for example `.git/COMMIT_EDITMSG`), and LSP for Sublime Text ignores diagnostics for any file matching `folder_exclude_patterns`, which includes `.git` by default. Remove `.git` from that list for commit buffers only by creating `Packages/User/Git Commit.sublime-settings`:
+
+```json title=Git Commit.sublime-settings
+{
+  "folder_exclude_patterns": [".svn", ".hg", "CVS", ".Trash", ".Trash-*"]
+}
+```
+
+This is the default Sublime Text list without `.git`. As a syntax-specific setting, it only applies to views using the Git Commit syntax.
+
+With all three in place, `git commit` buffers opened in Sublime Text are checked with the same Git commit parser used by the other editor integrations.

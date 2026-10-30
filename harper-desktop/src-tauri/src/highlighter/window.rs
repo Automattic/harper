@@ -21,6 +21,10 @@ use super::render_state::RenderState;
 /// `Window` owns the native winit window plus egui/wgpu integration required to render into it. It
 /// deliberately does not own highlighter drawing decisions; those are supplied by `RenderState`
 /// during each redraw.
+///
+/// Each window owns its own egui context. A painter only receives the texture updates (such as
+/// font atlas changes) from passes run on its own window, so windows that share one context end
+/// up drawing with incomplete textures.
 pub struct Window {
     inner: Arc<WinitWindow>,
     egui_state: egui_winit::State,
@@ -29,11 +33,8 @@ pub struct Window {
 }
 
 impl Window {
-    pub async fn new(
-        event_loop: &ActiveEventLoop,
-        monitor: MonitorHandle,
-        context: egui::Context,
-    ) -> Result<Self, Error> {
+    pub async fn new(event_loop: &ActiveEventLoop, monitor: MonitorHandle) -> Result<Self, Error> {
+        let context = egui::Context::default();
         let position = monitor.position();
         let size = monitor.size();
         let attributes = WinitWindow::default_attributes()

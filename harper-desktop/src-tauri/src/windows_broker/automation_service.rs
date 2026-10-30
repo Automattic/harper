@@ -1,5 +1,5 @@
 use std::iter::once;
-use std::sync::mpsc::{Receiver, SyncSender, sync_channel};
+use std::sync::mpsc::{SyncSender, sync_channel};
 use std::time::Duration;
 
 use crate::rect::Rect;
@@ -24,8 +24,7 @@ use windows::Win32::UI::WindowsAndMessaging::{
 
 /// Information about a worker thread.
 struct WorkerData {
-    sender: SyncSender<(WorkerJob, Vec<JobArgument>)>,
-    receiver: Receiver<JobResult>,
+    sender: SyncSender<WorkerRequest>,
 }
 
 #[derive(Debug)]
@@ -62,6 +61,9 @@ struct WorkerContext {
 /// An actual function pointer to be run by the worker thread.
 type WorkerJob = fn(&mut WorkerContext, Vec<JobArgument>) -> JobResult;
 
+/// Each job has a separate reply channel so late results cannot reach a later caller.
+type WorkerRequest = (WorkerJob, Vec<JobArgument>, SyncSender<JobResult>);
+
 /// Runs and communicates with a worker thread to interact with the Win32 Automation API to query the accessibility tree.
 /// Necessary because the API has very specific thread setting requirements to work.
 pub struct AutomationService {
@@ -85,8 +87,7 @@ impl AutomationService {
     /// Starts the worker thread if it is not already running.
     /// Does nothing if the worker thread is already running.
     fn start_worker_thread(&mut self) {
-        let (job_sender, job_receiver) = sync_channel::<(WorkerJob, Vec<JobArgument>)>(1);
-        let (result_sender, result_receiver) = sync_channel(1);
+        let (job_sender, job_receiver) = sync_channel::<WorkerRequest>(1);
 
         std::thread::spawn(move || {
             let Ok(automation) = UIAutomation::new() else {
@@ -98,19 +99,16 @@ impl AutomationService {
                 cached_element: None,
             };
 
-            while let Ok((job, arguments)) = job_receiver.recv() {
+            while let Ok((job, arguments, result_sender)) = job_receiver.recv() {
                 let result = job(&mut context, arguments);
 
-                if result_sender.send(result).is_err() {
-                    break;
-                }
+                // A timed-out caller drops only this job's receiver. Keep processing other jobs.
+                // Delivery must not block the worker when the caller no longer waits for a result.
+                let _ = result_sender.try_send(result);
             }
         });
 
-        self.worker_data = Some(WorkerData {
-            receiver: result_receiver,
-            sender: job_sender,
-        });
+        self.worker_data = Some(WorkerData { sender: job_sender });
     }
 
     /// Stops the worker thread if it is running. This method does nothing if it is not running.
@@ -119,15 +117,15 @@ impl AutomationService {
         self.worker_data = None;
     }
 
-    /// Attempts to run a worker job on the worker thread. Returns `None` if the worker thread does not exist.
+    /// Returns `None` if the worker is unavailable, its queue is full, or the job times out.
     fn run_worker_job(&self, job: WorkerJob, arguments: Vec<JobArgument>) -> Option<JobResult> {
         let worker_data = self.worker_data.as_ref()?;
-        while worker_data.receiver.try_recv().is_ok() {}
-        worker_data.sender.try_send((job, arguments)).ok()?;
+        let (result_sender, result_receiver) = sync_channel(1);
         worker_data
-            .receiver
-            .recv_timeout(Duration::from_millis(80))
-            .ok()
+            .sender
+            .try_send((job, arguments, result_sender))
+            .ok()?;
+        result_receiver.recv_timeout(Duration::from_millis(80)).ok()
     }
 
     /// Clears any cached UIElement to ensure fresh resolution after window movements.

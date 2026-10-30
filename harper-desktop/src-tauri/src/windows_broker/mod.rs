@@ -40,14 +40,14 @@ struct WindowMovementState {
 
 pub struct WindowsBroker {
     service: Arc<Mutex<AutomationService>>,
-    is_integration_enabled: Box<dyn FnMut(&str) -> bool + Send>,
+    is_integration_enabled: Box<dyn FnMut(&str) -> bool + Send + Sync>,
     movement_state: Arc<Mutex<Option<WindowMovementState>>>,
 }
 
 impl WindowsBroker {
     /// Creates a broker with an app policy that may register newly encountered executable paths.
     /// The policy is called before reading the app's text and may change as settings are refreshed.
-    pub fn new(is_integration_enabled: impl FnMut(&str) -> bool + Send + 'static) -> Self {
+    pub fn new(is_integration_enabled: impl FnMut(&str) -> bool + Send + Sync + 'static) -> Self {
         Self {
             service: Arc::new(Mutex::new(AutomationService::create_and_start())),
             is_integration_enabled: Box::new(is_integration_enabled),
@@ -119,6 +119,19 @@ impl WindowsBroker {
 }
 
 impl OsBroker for WindowsBroker {
+    fn is_harper_desktop(app_id: &str) -> bool {
+        let Ok(executable) = std::env::current_exe()
+            .and_then(std::fs::canonicalize)
+            .inspect_err(|error| eprintln!("failed to identify Harper executable: {error}"))
+        else {
+            return false;
+        };
+        std::fs::canonicalize(app_id).is_ok_and(|path| {
+            path.to_string_lossy()
+                .eq_ignore_ascii_case(&executable.to_string_lossy())
+        })
+    }
+
     fn is_target_still_focused(&mut self) -> bool {
         self.should_lint_focused_window().unwrap_or(false)
     }
@@ -224,6 +237,7 @@ impl OsBroker for WindowsBroker {
     fn application_icon_png(&self, bundle_id: &str) -> Result<Vec<u8>, String> {
         let entry = look_up_application(bundle_id)
             .ok_or_else(|| "Unable to locate application.".to_string())?;
+
         entry
             .icon_png
             .ok_or_else(|| "Found application but it was missing an icon.".to_string())

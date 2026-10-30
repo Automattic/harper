@@ -137,6 +137,38 @@ mod tests {
     }
 
     #[test]
+    fn yen_allows_correct() {
+        assert_lint_count("It cost ¥380.", CurrencyPlacement::default(), 0);
+    }
+
+    #[test]
+    fn multiple_yen() {
+        assert_suggestion_result(
+            "They were either 380¥ 24¥ or 23¥.",
+            CurrencyPlacement::default(),
+            "They were either ¥380 ¥24 or ¥23.",
+        );
+    }
+
+    #[test]
+    fn yen_with_space() {
+        assert_suggestion_result(
+            "It cost ¥ 380.",
+            CurrencyPlacement::default(),
+            "It cost ¥380.",
+        );
+    }
+
+    #[test]
+    fn yen_after_with_space() {
+        assert_suggestion_result(
+            "It cost 380 ¥.",
+            CurrencyPlacement::default(),
+            "It cost ¥380.",
+        );
+    }
+
+    #[test]
     fn suffix() {
         assert_suggestion_result(
             "It was my 20th$.",

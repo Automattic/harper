@@ -58,6 +58,7 @@ export default class HarperPlugin extends Plugin {
 			return;
 		}
 		const leaf = this.app.workspace.getRightLeaf(false);
+		if (leaf == null) return;
 		await leaf.setViewState({
 			type: 'harper-sidebar-view',
 			active: true,
@@ -118,6 +119,9 @@ export default class HarperPlugin extends Plugin {
 	}
 
 	private setupStatusBar() {
+		const state = this.state;
+		if (state == null) return;
+
 		const statusBarItem: HTMLElement = this.addStatusBarItem();
 		statusBarItem.className += ' mod-clickable';
 
@@ -127,14 +131,14 @@ export default class HarperPlugin extends Plugin {
 
 		const logo = document.createElement('span');
 		logo.style.width = '24px';
-		logo.innerHTML = this.state.hasEditorLinter() ? logoSvg : logoSvgDisabled;
+		logo.innerHTML = state.hasEditorLinter() ? logoSvg : logoSvgDisabled;
 		this.logo = logo;
 		button.appendChild(logo);
 
 		const dialect = document.createElement('span');
 		this.dialectSpan = dialect;
 
-		this.state.getSettings().then((settings) => {
+		state.getSettings().then((settings) => {
 			const dialectNum = settings.dialect ?? Dialect.American;
 			this.updateStatusBar(dialectNum);
 			button.appendChild(dialect);
@@ -145,7 +149,7 @@ export default class HarperPlugin extends Plugin {
 
 			menu.addItem((item) =>
 				item
-					.setTitle(`${this.state.hasEditorLinter() ? 'Disable' : 'Enable'} automatic checking`)
+					.setTitle(`${state.hasEditorLinter() ? 'Disable' : 'Enable'} automatic checking`)
 					.setIcon('documents')
 					.onClick(() => {
 						this.toggleAutoLint();
@@ -169,7 +173,7 @@ export default class HarperPlugin extends Plugin {
 
 	/** Preferred over directly calling `this.state.toggleAutoLint()` */
 	private toggleAutoLint() {
-		this.state.toggleAutoLint();
+		this.state?.toggleAutoLint();
 		this.updateStatusBar();
 	}
 
@@ -181,7 +185,7 @@ export default class HarperPlugin extends Plugin {
 			});
 		} else {
 			await this.activateSidebarView();
-			await this.state.reinitialize();
+			await this.state?.reinitialize();
 		}
 	}
 
@@ -292,17 +296,20 @@ export default class HarperPlugin extends Plugin {
 
 	/** Trigger the flow for ignoring all files in a document, including a confirmation modal. */
 	public async doIgnoreAllFlow() {
+		const state = this.state;
+		if (state == null) return;
+
 		const file = this.app.workspace.getActiveFile();
 		if (file != null) {
 			const text = await this.app.vault.read(file);
 
-			const lints = await this.state.getLinter().lint(text);
+			const lints = await state.getLinter().lint(text);
 			const confirmation = confirm(
 				`Are you sure you want to ignore ${lints.length} errors from Harper?`,
 			);
 
 			if (confirmation) {
-				await this.state.ignoreLints(text, lints);
+				await state.ignoreLints(text, lints);
 			}
 		} else {
 			new Notice('No file currently open.');
@@ -310,7 +317,7 @@ export default class HarperPlugin extends Plugin {
 	}
 
 	public updateStatusBar(dialect?: Dialect) {
-		if (this.logo != null) {
+		if (this.logo != null && this.state != null) {
 			this.logo.innerHTML = this.state.hasEditorLinter() ? logoSvg : logoSvgDisabled;
 		}
 		if (typeof dialect !== 'undefined') {

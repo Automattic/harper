@@ -322,7 +322,7 @@ function toggleGroup(groupId: string) {
 <section>
         <div class="rules-heading">
           <div class="eyebrow">Rules</div>
-          <h1>{displayedRules.length} rules, grouped by topic</h1>
+          <h1>{displayedRules.length} Rules Available</h1>
           <p>{enabledRuleCount} enabled, {customizedRuleCount} customized.</p>
         </div>
 
