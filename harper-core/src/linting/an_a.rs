@@ -158,6 +158,36 @@ mod tests {
     };
 
     #[test]
+    fn published_cloudflare_dns_record_names() {
+        // Source: https://github.com/cloudflare/cloudflare-docs/blob/abb2df90da1a9d8544ec51f7638b10d007ba45b1/src/content/partials/dns/a-aaaa-definition.mdx
+        // Full sentence; link markup removed.
+        assert_no_lints(
+            "A and AAAA records map a domain name to one or multiple IPv4 or IPv6 address(es).",
+            AnA::new(Dialect::American),
+        );
+    }
+
+    #[test]
+    fn published_github_pages_dns_record_names() {
+        // Source: https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site
+        // Contiguous opening excerpt; inline code markup removed, no punctuation added.
+        assert_no_lints(
+            "To configure an apex domain, add all of the A and AAAA records from the table below",
+            AnA::new(Dialect::American),
+        );
+    }
+
+    #[test]
+    fn synthetic_article_control_before_logic_operator() {
+        // Synthetic control, not a quotation from either published source.
+        assert_suggestion_result(
+            "We wired a OR gate.",
+            AnA::new(Dialect::American),
+            "We wired an OR gate.",
+        );
+    }
+
+    #[test]
     fn dont_flag_dns_record_a_before_conjunction_issue_2014() {
         assert_no_lints(
             "For example, A and AAAA records can disclose IP addresses associated with a domain,",

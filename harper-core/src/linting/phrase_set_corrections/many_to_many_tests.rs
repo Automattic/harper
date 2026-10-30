@@ -295,6 +295,34 @@ fn plural_toward() {
 // Copyright
 
 #[test]
+fn published_mailchimp_marketing_copywriting() {
+    // Source: https://mailchimp.com/resources/what-is-copywriting/
+    assert_no_lints(
+        "Copywriting is the backbone of many content marketing campaigns.",
+        single_lint("Copyright"),
+    );
+}
+
+#[test]
+fn published_mailchimp_website_copywriting() {
+    // Source: https://mailchimp.com/resources/website-copywriting/
+    assert_no_lints(
+        "Effective website copywriting captivates readers, elicits emotions, and guides them seamlessly through your brand's story.",
+        single_lint("Copyright"),
+    );
+}
+
+#[test]
+fn synthetic_copyright_control_retains_past_tense_correction() {
+    // Synthetic control, not a quotation from either published source.
+    assert_suggestion_result(
+        "The brochure contains copywrited images.",
+        single_lint("Copyright"),
+        "The brochure contains copyrighted images.",
+    );
+}
+
+#[test]
 fn dont_flag_legitimate_copywriting_issue_3138() {
     assert_no_lints(
         "One price for finance, one price for cybersecurity, one price for copywriting.",

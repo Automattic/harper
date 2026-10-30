@@ -275,6 +275,36 @@ mod tests {
     use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
+    fn published_firebase_public_asynchronous_method() {
+        // Source: https://github.com/firebase/firebase-ios-sdk/blob/9f68d4f4f1457d96809311ce4813edaa5331e0b1/FirebaseAuth/Docs/threading.md
+        // Contiguous lead-in excerpt before a list; source line wrapping removed.
+        assert_no_lints(
+            "Unless it's a simple wrapper of another public asynchronous method, a public asynchronous method shall",
+            NounCountability::default(),
+        );
+    }
+
+    #[test]
+    fn published_spatial_public_virtual_method() {
+        // Source: https://blog.spatial.com/3d-software-development-kits/public-virtual-methods-bad-idea
+        // Contiguous opening excerpt; no punctuation added.
+        assert_no_lints(
+            "A public virtual method is trying to serve two masters who might have conflicting requirements",
+            NounCountability::default(),
+        );
+    }
+
+    #[test]
+    fn synthetic_countability_control_before_preposition() {
+        // Synthetic control, not a quotation from either published source.
+        assert_suggestion_result(
+            "We received one advice after the meeting.",
+            NounCountability::default(),
+            "We received one tip after the meeting.",
+        );
+    }
+
+    #[test]
     fn dont_flag_public_modifier_chain_issue_2011() {
         assert_no_lints(
             "includes one public customizable status page with an SSL subdomain.",
