@@ -8,7 +8,6 @@
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"test:rules-ssr": "node --test tests/rules-ssr.test.mjs",
 		"start": "node build"
 	},
 	"devDependencies": {

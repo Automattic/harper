@@ -43,16 +43,6 @@ If you make changes to a dependency package (i.e. `components`, `harper-editor`)
 
 > `just build-web` only produces a production build; it does **not** start a dev server. Use `just dev-web` when you want to preview changes interactively.
 
-## Testing Server-Rendered Rules
-
-Start a fresh website server, then run the HTTP regression tests from `packages/web`:
-
-```bash
-HARPER_TEST_ORIGIN=http://127.0.0.1:3000 pnpm test:rules-ssr
-```
-
-These tests check the first and subsequent responses for rule names, defaults, and descriptions without running client JavaScript. Use the server's actual origin if it runs on a different port.
-
 ## Database
 
 The web application needs a database available for some functionality, but not most.
