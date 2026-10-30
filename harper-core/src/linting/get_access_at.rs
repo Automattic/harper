@@ -262,6 +262,15 @@ mod tests {
         );
     }
 
+    #[test]
+    fn test_obtain_access_at_repository() {
+        assert_suggestion_result(
+            "You must obtain access at the repository before cloning it.",
+            GetAccessAt::default(),
+            "You must obtain access to the repository before cloning it.",
+        );
+    }
+
     // --- False Positive Tests ---
 
     #[test]
