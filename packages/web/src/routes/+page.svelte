@@ -10,6 +10,7 @@ import { Arrow, StarIcon } from 'components';
 import { TestimonialCollection } from 'components';
 import { createEditorLinter } from '$lib/createEditorLinter';
 import FaqSection from '$lib/marketing/FaqSection.svelte';
+import FeaturedIntegrations from '$lib/marketing/FeaturedIntegrations.svelte';
 import HarperMark from '$lib/marketing/HarperMark.svelte';
 import IntegrationTile from '$lib/marketing/IntegrationTile.svelte';
 import MarketingFooter from '$lib/marketing/MarketingFooter.svelte';
@@ -180,8 +181,11 @@ onMount(() => {
 				The <strong class="inline-block -rotate-1 bg-primary-100 p-1 text-black">Free</strong> Grammar Checker
 				That Respects Your Privacy
 			</p>
+			<div class="mt-7 w-full">
+				<FeaturedIntegrations campaign="harper-homepage" />
+			</div>
 			<div class="mt-7 flex flex-wrap gap-[0.65rem] max-[620px]:flex-col max-[620px]:items-stretch">
-				<PillButton href="/get" size="lg">Get Harper</PillButton>
+				<PillButton href="/get" size="lg">Explore more integrations</PillButton>
 				<PillButton href={marketingLinks.github} kind="secondary" size="lg">
 					<StarIcon slot="icon" />
 					Star on GitHub
