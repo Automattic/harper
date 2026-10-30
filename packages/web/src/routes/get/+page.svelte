@@ -1,4 +1,5 @@
 <script lang="ts">
+import { Arrow } from 'components';
 import { onMount } from 'svelte';
 import getBrowserType from '$lib/getBrowserType';
 import {
@@ -112,7 +113,7 @@ function clearFilters() {
 									{integration.desc}
 								</small>
 							</span>
-							<em class="whitespace-nowrap text-[0.78rem] font-extrabold text-[#b06a1b] not-italic dark:text-primary-300">{ctaLabel(integration)} →</em>
+							<em class="inline-flex items-center gap-1 whitespace-nowrap text-[0.78rem] font-extrabold text-[#b06a1b] not-italic dark:text-primary-300">{ctaLabel(integration)}<Arrow width="1rem" height="1rem" /></em>
 						</a>
 					{/if}
 				{/each}
@@ -221,7 +222,7 @@ function clearFilters() {
 								{integration.platform}
 							</small>
 						</span>
-						<em class="whitespace-nowrap text-[0.78rem] font-extrabold text-[#b06a1b] not-italic dark:text-primary-300">{ctaLabel(integration)} →</em>
+						<em class="inline-flex items-center gap-1 whitespace-nowrap text-[0.78rem] font-extrabold text-[#b06a1b] not-italic dark:text-primary-300">{ctaLabel(integration)}<Arrow width="1rem" height="1rem" /></em>
 						</a>
 					{/each}
 				{/if}
