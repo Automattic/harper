@@ -52,7 +52,11 @@ export default class LintFramework {
 	private renderRequested = false;
 	private lintDelayTimer: number | null = null;
 	private lastInputAt = 0;
-	private lastLints: { target: HTMLElement; lints: UnpackedLintGroups }[] = [];
+	private lastLints: {
+		target: HTMLElement;
+		lints: UnpackedLintGroups;
+		nativeSnapshot?: string | null;
+	}[] = [];
 	private lastBoxes: IgnorableLintBox[] = [];
 	private lastLintBoxes: IgnorableLintBox[] = [];
 
@@ -171,6 +175,13 @@ export default class LintFramework {
 					}
 
 					const { text, isCM, newLineIndices } = this.getTargetText(target);
+					// Capture before awaiting the provider. Equal lint projections can hide
+					// different native table controls; text equality alone is not identity.
+					const nativeSnapshot =
+						target instanceof HTMLElement &&
+						target.getAttribute('data-harper-gdocs-source') === 'native'
+							? target.getAttribute('data-harper-gdocs-native-snapshot')
+							: undefined;
 
 					if (!text || text.length > 120000) {
 						return { target: null as HTMLElement | null, lints: {} };
@@ -197,7 +208,7 @@ export default class LintFramework {
 						}
 					}
 
-					return { target: target as HTMLElement, lints: lintsBySource };
+					return { target: target as HTMLElement, lints: lintsBySource, nativeSnapshot };
 				}),
 			);
 
@@ -367,10 +378,20 @@ export default class LintFramework {
 		this.renderRequested = true;
 
 		requestAnimationFrame(() => {
-			const boxes = this.lastLints.flatMap(({ target, lints }) => {
+			const boxes = this.lastLints.flatMap(({ target, lints, nativeSnapshot }) => {
 				if (!target) {
 					return [];
 				}
+				const mapped =
+					isGoogleDocsTarget(target) &&
+					target.getAttribute('data-harper-gdocs-source') === 'native';
+				if (
+					(mapped || nativeSnapshot !== undefined) &&
+					(!mapped ||
+						nativeSnapshot == null ||
+						target.getAttribute('data-harper-gdocs-native-snapshot') !== nativeSnapshot)
+				)
+					return [];
 
 				const { text, isCM } = this.getTargetText(target);
 				if (text == null) {
@@ -379,11 +400,12 @@ export default class LintFramework {
 
 				return Object.entries(lints).flatMap(([ruleName, ls]) =>
 					ls.flatMap((lint) => {
-						const currentLint = isCM
-							? lint.source === text
-								? lint
-								: null
-							: remapLintToCurrentSource(lint, text);
+						const currentLint =
+							isCM || mapped
+								? lint.source === text
+									? lint
+									: null
+								: remapLintToCurrentSource(lint, text);
 						if (currentLint == null) {
 							return [];
 						}
