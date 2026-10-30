@@ -15,29 +15,9 @@ import {
 	TableHead,
 	TableHeadCell,
 } from 'components';
-import type { LintConfig } from 'harper.js';
-import { onMount } from 'svelte';
+import type { PageData } from './$types';
 
-let descriptions: Record<string, string> = $state({});
-let default_config: LintConfig = $state({});
-
-onMount(() => {
-	void (async () => {
-		const [{ LocalLinter }, { slimBinary }] = await Promise.all([
-			import('harper.js'),
-			import('harper.js/slimBinary'),
-		]);
-		const linter = new LocalLinter({ binary: slimBinary });
-		try {
-			[descriptions, default_config] = await Promise.all([
-				linter.getLintDescriptionsHTML(),
-				linter.getDefaultLintConfig(),
-			]);
-		} finally {
-			await linter.dispose();
-		}
-	})();
-});
+let { data }: { data: PageData } = $props();
 </script>
 
 <p>This page is an incomplete list of the various grammatical rules Harper checks for.</p>
@@ -49,10 +29,10 @@ onMount(() => {
 		<TableHeadCell>Description</TableHeadCell>
 	</TableHead>
 	<TableBody>
-		{#each Object.entries(descriptions) as [name, description]}
+		{#each Object.entries(data.descriptions) as [name, description]}
 			<TableBodyRow>
 				<TableBodyCell>{name}</TableBodyCell>
-				<TableBodyCell>{default_config[name] ? '✔️' : '❌'}</TableBodyCell>
+				<TableBodyCell>{data.defaultConfig[name] ? '✔️' : '❌'}</TableBodyCell>
 				<TableBodyCell tdClass="px-6 py-4 font-medium">{@html description.replaceAll('<p>', "").replaceAll('<p />', "")}</TableBodyCell>
 			</TableBodyRow>
 		{/each}
