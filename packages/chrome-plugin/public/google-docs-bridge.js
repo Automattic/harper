@@ -569,10 +569,7 @@ import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-han
 		}
 
 		if (hits.length === 0) {
-			return {
-				start: normalizedStart,
-				end: normalizedEnd,
-			};
+			return null;
 		}
 
 		hits.sort((left, right) => right.score - left.score);
@@ -661,14 +658,22 @@ import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-han
 		const replacementText = String(request.replacementText ?? '');
 		const rawText = annotated.getText?.() ?? '';
 		const currentText = normalizeGoogleDocsText(rawText);
+		const expectedText = String(request.expectedText ?? '');
 		const resolvedRange = resolveReplacementRange(
 			currentText,
 			Number(request.start),
 			Number(request.end),
-			String(request.expectedText ?? ''),
+			expectedText,
 			String(request.beforeContext ?? ''),
 			String(request.afterContext ?? ''),
 		);
+		if (
+			resolvedRange == null ||
+			currentText.slice(resolvedRange.start, resolvedRange.end) !== expectedText
+		) {
+			return { kind: 'replaceText', applied: false };
+		}
+
 		const rawStart = normalizedToRawOffset(rawText, resolvedRange.start);
 		const rawEnd = normalizedToRawOffset(rawText, resolvedRange.end);
 
