@@ -1,5 +1,6 @@
 ---
 title: Contributor's Guide to the Obsidian Plugin
+description: Build and develop the Harper Obsidian plugin and learn about its packaging and development constraints.
 ---
 
 This page will outline the most important bits of information needed to work on the Harper Obsidian plugin.

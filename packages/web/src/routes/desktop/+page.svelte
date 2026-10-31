@@ -1,3 +1,10 @@
+<script module lang="ts">
+export const frontmatter = {
+	title: 'Harper Desktop',
+	description: 'Harper Desktop brings private grammar checking to text fields across macOS.',
+};
+</script>
+
 <script lang="ts">
 import AppLogoTile from '$lib/marketing/AppLogoTile.svelte';
 import DesktopMockups from '$lib/marketing/DesktopMockups.svelte';
@@ -28,14 +35,6 @@ const faqs = [
 	},
 ];
 </script>
-
-<svelte:head>
-	<title>Harper Desktop</title>
-	<meta
-		name="description"
-		content="Harper Desktop brings private grammar checking to text fields across macOS."
-	/>
-</svelte:head>
 
 <div class="min-h-screen bg-[#f6efe2] text-[#1c1a16] dark:bg-black dark:text-white">
 	<MarketingHeader active="desktop" />

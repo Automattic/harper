@@ -1,5 +1,6 @@
 ---
 title: Updating the Curated Dictionary
+description: Add words and annotations to the Harper curated English dictionary and validate dictionary changes.
 ---
 
 The curated dictionary is the English dictionary Harper uses as reference internally when analyzing or modifying English text.

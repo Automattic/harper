@@ -1,6 +1,8 @@
-<script module>
+<script module lang="ts">
 export const frontmatter = {
 	home: false,
+	title: 'Harper: The Private Grammar Checker',
+	description: 'Harper is the free, private, open-source grammar checker that runs on your device.',
 };
 </script>
 
@@ -159,14 +161,6 @@ onMount(() => {
 });
 
 </script>
-
-<svelte:head>
-	<title>Harper: The Private Grammar Checker</title>
-	<meta
-		name="description"
-		content="Harper is the free, private, open-source grammar checker that runs on your device."
-	/>
-</svelte:head>
 
 <div class="min-h-screen bg-[#f6f1e6] text-[#1c1a16] dark:bg-black dark:text-white">
 	<MarketingHeader active="home" />

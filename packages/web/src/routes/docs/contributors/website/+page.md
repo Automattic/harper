@@ -1,5 +1,6 @@
 ---
 title: Website
+description: Develop the Harper website locally with SvelteKit and SveltePress, and find its source files and build commands.
 ---
 
 This page describes how to develop [writewithharper.com](https://writewithharper.com) locally.

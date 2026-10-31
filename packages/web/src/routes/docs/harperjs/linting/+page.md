@@ -1,5 +1,6 @@
 ---
 title: Linting With harper.js
+description: Check text with harper.js and learn when to use LocalLinter or WorkerLinter.
 ---
 
 [Linting](<https://en.wikipedia.org/wiki/Lint_(software)>) is the process of consuming, analyzing, and finding faults in text.

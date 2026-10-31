@@ -1,5 +1,6 @@
 ---
 title: Harper for WordPress
+description: Use the recommended Harper Chrome extension in WordPress and review the legacy plugin options.
 ---
 
 <script>

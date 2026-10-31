@@ -1,5 +1,6 @@
 ---
 title: Brill Tagging
+description: Learn how Harper uses Brill tagging to refine dictionary-based part-of-speech analysis.
 ---
 
 Harper uses Brill tagging as a refinement step to a dictionary-based [POS tagging](https://en.wikipedia.org/wiki/Part-of-speech_tagging) approach.

@@ -1,5 +1,6 @@
 ---
 title: Harper for Obsidian
+description: Install Harper in Obsidian to check English notes and learn about plugin setup and support.
 ---
 
 Put simply, [Harper](https://writewithharper.com/) is a grammar checking plugin that doesn't violate your privacy.

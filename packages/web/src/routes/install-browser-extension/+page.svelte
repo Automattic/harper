@@ -1,3 +1,11 @@
+<script module lang="ts">
+export const frontmatter = {
+	title: 'Thanks for Installing Harper!',
+	description:
+		'Learn how to check writing and review grammar suggestions with the Harper browser extension.',
+};
+</script>
+
 <script lang="ts">
 import { ChevronRightIcon, Link, SlideDeck, Textarea } from 'components';
 import AppLogoTile from '$lib/marketing/AppLogoTile.svelte';
@@ -40,10 +48,6 @@ let drawerOpen = false;
 let demoText =
 	'Ths is an text box you can type in.\n\nany other site on the web will work the the same!';
 </script>
-
-<svelte:head>
-	<title>Thanks for Installing Harper!</title>
-</svelte:head>
 
 <SlideDeck
 	title={steps[step].title}

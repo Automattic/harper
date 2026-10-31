@@ -1,4 +1,7 @@
-# The Weir Language
+---
+title: The Weir Language
+description: Define custom Harper grammar rules with Weir expressions, replacements, tests, and Weirpacks.
+---
 
 Most large organizations have a style guide.
 A document that decides which versions of a linguistic rule to use.

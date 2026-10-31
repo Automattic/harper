@@ -1,5 +1,6 @@
 ---
 title: The Harper Chrome Extension
+description: Install the Harper Chrome extension to check English grammar in emails, messages, and documents.
 ---
 
 Harper is free to use for the > 3.6 billion people out there using Chrome.

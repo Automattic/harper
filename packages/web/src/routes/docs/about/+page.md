@@ -1,33 +1,37 @@
 ---
 title: What Is Harper?
+description: Learn how Harper checks English grammar, how releases are versioned, and which projects use Harper.
 ---
 
 Harper is a grammar checker designed to run anywhere there is text (so really, anywhere).
 Most Harper users are catching their mistakes in [Neovim](./integrations/neovim), [Obsidian](./integrations/obsidian), or [Visual Studio Code](./integrations/visual-studio-code).
 
 <script>
-    import { Editor } from "harper-editor"
     import { onMount } from "svelte"
+    import { createEditorLinter } from "$lib/createEditorLinter"
 
     let linter = null
+    let Editor = null
 
     onMount(async () => {
-        const [{ WorkerLinter }, { slimBinary }] = await Promise.all([
-            import("harper.js"),
-            import("harper.js/slimBinary"),
+        const [editorModule, instance] = await Promise.all([
+            import("harper-editor"),
+            createEditorLinter(),
         ])
 
-        linter = new WorkerLinter({ binary: slimBinary })
-        await linter.setup()
+        Editor = editorModule.Editor
+        linter = instance
     })
 </script>
 
 <div class="h-96">
-    {#if linter}
-        <Editor
+    {#if Editor && linter}
+        <svelte:component this={Editor}
             content={`You can try out a editor that uses\nHarper under the hood here.\n\nIt is rnning in your browser right now. \n\nNo server required!`}
             {linter}
         />
+    {:else}
+        <p role="status">Loading Harper's grammar engine...</p>
     {/if}
 </div>
 
