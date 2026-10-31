@@ -142,6 +142,7 @@ use super::hello_greeting::HelloGreeting;
 use super::helped_past::HelpedPast;
 use super::hereby::Hereby;
 use super::high_low_standards::HighLowStandards;
+use super::his_contraction::HisContraction;
 use super::hop_hope::HopHope;
 use super::how_does_compared::HowDoesCompared;
 use super::how_to::HowTo;
@@ -801,6 +802,7 @@ impl LintGroup {
         insert_expr_rule!(ItLooksLikeThat);
         insert_struct_rule!(ItsContraction);
         insert_expr_rule!(ItsPossessive);
+        insert_expr_rule!(HisContraction);
         insert_expr_rule!(JealousOf);
         insert_expr_rule!(JohnsHopkins);
         insert_expr_rule!(JumpTheGun);
