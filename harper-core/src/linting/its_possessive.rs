@@ -23,7 +23,13 @@ impl Default for ItsPossessive {
             .t_ws()
             .then(UPOSSet::new(&[UPOS::ADJ]));
 
-        let mid_sentence = SequenceExpr::with(UPOSSet::new(&[UPOS::VERB, UPOS::ADP]))
+        // The Brill tagger labels possessive "has" and "had" as AUX rather than
+        // VERB, so they are not covered by the sets above. Other forms ("have",
+        // "hasn't", "hadn't") already tag as VERB and need no special handling.
+        let mid_sentence_lead =
+            UPOSSet::new(&[UPOS::VERB, UPOS::ADP]).or(SequenceExpr::word_set(&["has", "had"]));
+
+        let mid_sentence = SequenceExpr::with(mid_sentence_lead)
             .t_ws()
             .t_aco("it's")
             .then_optional(adj_term_mid_sentence)
@@ -180,6 +186,52 @@ mod tests {
     #[test]
     fn engine_lost_its_compression() {
         assert_lint_count("The engine lost it's compression.", test_linter(), 1);
+    }
+
+    #[test]
+    fn issue_3627_has_its_own_stack() {
+        assert_suggestion_result(
+            "The child process has it's own stack.",
+            test_linter(),
+            "The child process has its own stack.",
+        );
+    }
+
+    #[test]
+    fn company_has_its_own_rules() {
+        assert_suggestion_result(
+            "The company has it's own rules.",
+            test_linter(),
+            "The company has its own rules.",
+        );
+    }
+
+    #[test]
+    fn process_had_its_own_stack() {
+        assert_suggestion_result(
+            "The process had it's own stack.",
+            test_linter(),
+            "The process had its own stack.",
+        );
+    }
+
+    #[test]
+    fn company_has_its_new_rules() {
+        assert_suggestion_result(
+            "The company has it's new rules.",
+            test_linter(),
+            "The company has its new rules.",
+        );
+    }
+
+    #[test]
+    fn allows_problem_is_its_poor_design() {
+        assert_no_lints("The problem is it's poor design.", test_linter());
+    }
+
+    #[test]
+    fn allows_reason_is_its_bad_code() {
+        assert_no_lints("The reason is it's bad code.", test_linter());
     }
 
     #[test]
