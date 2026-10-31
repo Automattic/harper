@@ -44,13 +44,13 @@ impl<D: Dictionary> ExprLinter for WorthToDo<D> {
         let mut gerunds = Vec::new();
 
         let glom_ing = format!("{}ing", lemstr);
-        if self.dict.contains_word_str(&glom_ing) {
+        if self.dict.contains_folded_word_str(&glom_ing) {
             gerunds.push(glom_ing);
         }
 
         if lemchars.ends_with_ignore_ascii_case_chars(&['e']) {
             let replace_e_with_ing = format!("{}ing", &lemstr[..lemstr.len() - 1]);
-            if self.dict.contains_word_str(&replace_e_with_ing) {
+            if self.dict.contains_folded_word_str(&replace_e_with_ing) {
                 gerunds.push(replace_e_with_ing);
             }
         }
@@ -59,7 +59,7 @@ impl<D: Dictionary> ExprLinter for WorthToDo<D> {
             && !last_letter.is_vowel()
         {
             let double_consonant = format!("{}{}ing", lemstr, last_letter);
-            if self.dict.contains_word_str(&double_consonant) {
+            if self.dict.contains_folded_word_str(&double_consonant) {
                 gerunds.push(double_consonant);
             }
         }

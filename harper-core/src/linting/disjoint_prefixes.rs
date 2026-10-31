@@ -88,7 +88,7 @@ impl<D: Dictionary> ExprLinter for DisjointPrefixes<D> {
         );
 
         // If the original form is in the dictionary, return None
-        if self.dict.contains_word_str(&original) {
+        if self.dict.contains_folded_word_str(&original) {
             return None;
         }
 
@@ -101,10 +101,10 @@ impl<D: Dictionary> ExprLinter for DisjointPrefixes<D> {
         // Check if either joined or hyphenated form is in the dictionary
         let joined_valid = joined
             .as_ref()
-            .is_some_and(|j| self.dict.contains_word_str(j));
+            .is_some_and(|j| self.dict.contains_folded_word_str(j));
         let hyphenated_valid = hyphenated
             .as_ref()
-            .is_some_and(|h| self.dict.contains_word_str(h));
+            .is_some_and(|h| self.dict.contains_folded_word_str(h));
 
         if !joined_valid && !hyphenated_valid {
             return None;
