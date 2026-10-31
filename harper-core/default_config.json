@@ -497,6 +497,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Fanfare",
+								"state": true,
+								"label": "Fanfare"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Furthermore",
 								"state": true,
 								"label": "Furthermore"

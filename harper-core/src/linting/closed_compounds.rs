@@ -35,6 +35,7 @@ pub fn lint_group() -> LintGroup {
         "Everybody"       => (&["every body"][..], "everybody"),
         "Everyone"        => (&["every one"][..], "everyone"),
         "Everywhere"      => (&["every where"][..], "everywhere"),
+        "Fanfare"         => (&["fan fare", "fan-fare"][..], "fanfare"),
         "Furthermore"     => (&["further more"][..], "furthermore"),
         "Guesswork"       => (&["guess work"][..], "guesswork"),
         "Henceforth"      => (&["hence forth"][..], "henceforth"),
@@ -416,6 +417,24 @@ mod tests {
             "the rust compiler is fast, but often times it has to perform a lot of unnecessary checks because crates contain more stuff than needed",
             lint_group(),
             "the rust compiler is fast, but oftentimes it has to perform a lot of unnecessary checks because crates contain more stuff than needed",
+        );
+    }
+
+    #[test]
+    fn fan_space_fare() {
+        assert_suggestion_result(
+            "There was much fan fare over all the technology Bill Gates put into his house.",
+            lint_group(),
+            "There was much fanfare over all the technology Bill Gates put into his house.",
+        );
+    }
+
+    #[test]
+    fn fan_hyphen_fare() {
+        assert_suggestion_result(
+            "Indeed, most users will experience major version updates with absolutely zero fan-fare.",
+            lint_group(),
+            "Indeed, most users will experience major version updates with absolutely zero fanfare.",
         );
     }
 }
