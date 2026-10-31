@@ -1,0 +1,19 @@
+expr quantNum [bazillions, billions, dozens, gazillions, hundreds, millions, tens, trillions, zillions]
+expr quantDet [all, any, couple, few, many, much, several, some]
+
+expr main <([@quantNum, @quantDet] off [them, these, those]), off>
+
+let message "Is `off` here a typo for `of`?"
+let description "Looks for instances of `off` that might be typos for `of`."
+let kind "Typo"
+let becomes "of"
+
+# real-world examples
+
+test "All off them are more precise, reliable and even cheaper" "All of them are more precise, reliable and even cheaper"
+test "there are usually threshold of acceptable performance in all off those cases" "there are usually threshold of acceptable performance in all of those cases"
+test "Do all clients requests, some off them or none at all?" "Do all clients requests, some of them or none at all?"
+
+# real-word false positives
+
+allows "And, to top it all off, those ads were utterly ineffective"
