@@ -1,0 +1,20 @@
+expr main <((Apple Silicone) ![case, cover, iPhone]), (Apple Silicone)>
+#expr main <(Apple Silicone)> ![case, cover, iPhone]
+
+let message "If you're referring to the chip and not the phone cover, use `Silicon` not `Silicone`."
+let description "Corrects `Apple Silicone` to `Apple Silicon`."
+let kind "Spelling"
+let becomes "Apple Silicon"
+
+# basic test while debugging
+test "Apple Silicone" "Apple Silicon"
+
+# real-world examples - this first one is failing just like the basic test for now
+#test "I am testing it on Google Docs, Google Chrome, and Apple Silicone." "I am testing it on Google Docs, Google Chrome, and Apple Silicon."
+
+# real-world examples - these are passing
+allows "Apple Silicone case is honestly the worst case I've ever had on any phone."
+allows "It's The Case That Never Changes! - Apple Silicone iPhone 16 Case Review"
+
+# contrived - replace with real-world found example
+allows "The new MacBook is powered by an Apple Silicon chip."
