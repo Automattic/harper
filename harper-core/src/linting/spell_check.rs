@@ -237,6 +237,11 @@ mod tests {
     }
 
     #[test]
+    fn acknowledgement_is_us_too() {
+        assert_lint_count("Thanks for the acknowledgement.", test_linter(), 0);
+    }
+
+    #[test]
     fn mum_and_mummy_not_just_commonwealth() {
         assert_lint_count(
             "Mum's the word about that Egyptian mummy.",
@@ -362,8 +367,10 @@ mod tests {
     }
 
     #[test]
-    fn afterwards_not_us() {
-        assert_lint_count("afterwards", test_linter(), 1);
+    fn afterwards_is_us_too() {
+        // Both spellings are standard American English (Merriam-Webster lists "afterwards" as an
+        // equal variant); a preference for "afterward" is style, not spelling.
+        assert_lint_count("afterwards", test_linter(), 0);
     }
 
     #[test]
