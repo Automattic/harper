@@ -421,7 +421,7 @@ fn render_flyout(
             });
         });
 
-    if disable_rule_row(ui).clicked() {
+    if !is_spelling_kind(lint.lint_kind) && disable_rule_row(ui).clicked() {
         *action = Some(LintCardAction::DisableRule);
     }
 }

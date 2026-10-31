@@ -42,6 +42,11 @@ pub trait OsBroker {
     /// Grab the position of the user's cursor on the screen.
     fn cursor_position(&self) -> Option<egui::Pos2>;
 
+    /// Checks whether the target application is still focused, without doing a full accessibility scan.
+    fn is_target_still_focused(&mut self) -> bool {
+        true
+    }
+
     /// Check whether Harper has permission to access the OS' native accessibility API.
     fn accessibility_permission_status(&self) -> AccessibilityPermissionStatus;
 

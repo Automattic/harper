@@ -7,18 +7,34 @@ use crate::rect::Rect;
 
 /// Draws the always-visible lint marker without making the renderer responsible for popup state.
 pub fn draw_highlight(ui: &mut egui::Ui, rect: &Rect, lint: &Lint) {
+    let anim_id = egui::Id::new("lint-highlight-anim")
+        .with(rect.x.to_bits())
+        .with(rect.y.to_bits())
+        .with(rect.width.to_bits())
+        .with(rect.height.to_bits());
+    let anim_progress = ui.ctx().animate_bool_with_time(anim_id, true, 0.20);
+    let t = 1.0 - (1.0 - anim_progress).powi(2);
+
     let rect_bounds = rect_bounds(rect);
     let color = lint_color(lint);
     let [r, g, b, _] = color.to_array();
-    let fill_color = egui::Color32::from_rgba_unmultiplied(r, g, b, 24);
-    let underline_color = egui::Color32::from_rgba_unmultiplied(r, g, b, 255);
+    let fill_alpha = (24.0 * t) as u8;
+    let underline_alpha = (255.0 * t) as u8;
+    let fill_color = egui::Color32::from_rgba_unmultiplied(r, g, b, fill_alpha);
+    let underline_color = egui::Color32::from_rgba_unmultiplied(r, g, b, underline_alpha);
     let underline_height = rect_bounds.height().min(2.0);
 
-    ui.painter().rect_filled(rect_bounds, 0.0, fill_color);
+    let animated_right = rect_bounds.left() + rect_bounds.width() * t;
+    let animated_bounds = egui::Rect::from_min_max(
+        rect_bounds.left_top(),
+        egui::pos2(animated_right, rect_bounds.bottom()),
+    );
+
+    ui.painter().rect_filled(animated_bounds, 0.0, fill_color);
     ui.painter().rect_filled(
         egui::Rect::from_min_max(
             egui::pos2(rect_bounds.left(), rect_bounds.bottom() - underline_height),
-            rect_bounds.right_bottom(),
+            egui::pos2(animated_right, rect_bounds.bottom()),
         ),
         0.0,
         underline_color,
