@@ -1137,6 +1137,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ExpandIme",
+								"state": true,
+								"label": "Expand IME"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ExpandNotification",
 								"state": true,
 								"label": "Expand Notification"

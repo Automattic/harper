@@ -102,6 +102,7 @@ mod ever_pronoun_rel_pronoun;
 mod everyday;
 mod except_of;
 mod expand_favourite;
+mod expand_ime;
 mod expand_memory_shorthands;
 mod expand_people;
 mod expand_time_shorthands;
