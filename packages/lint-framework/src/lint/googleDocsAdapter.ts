@@ -11,6 +11,53 @@ import type { UnpackedLint, UnpackedSpan, UnpackedSuggestion } from './unpackLin
 
 const GOOGLE_DOCS_EDITOR_SELECTOR = '.kix-appview-editor';
 const GOOGLE_DOCS_SYNCING_ATTR = 'data-harper-gdocs-syncing';
+// biome-ignore lint/suspicious/noControlCharactersInRegex: Must match the content script's native table projection.
+const GOOGLE_DOCS_TABLE_SEPARATORS = /[\u0010\u0011\u0012\u001c]/gu;
+// biome-ignore lint/suspicious/noControlCharactersInRegex: Corrections must not cross native structural boundaries.
+const GOOGLE_DOCS_CONTROL_CHARACTERS = /[\u0000-\u001f]/u;
+
+function resolveNativeSpan(
+	target: HTMLElement,
+	source: string,
+	nativeSnapshot: string,
+	span: UnpackedSpan,
+): UnpackedSpan | null {
+	const runs: unknown = JSON.parse(target.getAttribute('data-harper-gdocs-native-runs') ?? 'null');
+	if (!Array.isArray(runs) || runs.length === 0) return null;
+	const masked = nativeSnapshot.replace(GOOGLE_DOCS_TABLE_SEPARATORS, '\n');
+	let projectionCursor = 0;
+	let nativeCursor = 0;
+	let resolved: UnpackedSpan | null = null;
+	for (const run of runs) {
+		if (!Array.isArray(run) || run.length !== 3 || !run.every(Number.isInteger)) return null;
+		const [projectionStart, nativeStart, length] = run;
+		if (nativeCursor > 0) {
+			// Only the extra LF of a paragraph boundary may be outside a run.
+			if (masked[nativeCursor - 1] !== '\n' || source[projectionCursor] !== '\n') return null;
+			projectionCursor += 1;
+		}
+		if (
+			projectionStart !== projectionCursor ||
+			nativeStart !== nativeCursor ||
+			length <= 0 ||
+			nativeStart + length > nativeSnapshot.length ||
+			source.slice(projectionStart, projectionStart + length) !==
+				masked.slice(nativeStart, nativeStart + length)
+		)
+			return null;
+		if (span.start >= projectionStart && span.end <= projectionStart + length) {
+			resolved = {
+				start: nativeStart + span.start - projectionStart,
+				end: nativeStart + span.end - projectionStart,
+			};
+		}
+		nativeCursor += length;
+		projectionCursor += length;
+	}
+	return nativeCursor === nativeSnapshot.length && projectionCursor === source.length
+		? resolved
+		: null;
+}
 
 /**
  * Returns Google Docs-specific lint boxes for the hidden bridge target.
@@ -31,13 +78,50 @@ export function maybeComputeGoogleDocsLintBoxes(
 	try {
 		const editor = document.querySelector(GOOGLE_DOCS_EDITOR_SELECTOR) as HTMLElement | null;
 		const source = target.textContent ?? '';
-		const resolvedSpan = resolveGoogleDocsSpan(source, lint);
+		const sourceMode = target.getAttribute('data-harper-gdocs-source');
+		const nativeSnapshot = target.getAttribute('data-harper-gdocs-native-snapshot');
+		const mapped =
+			sourceMode === 'native' ||
+			nativeSnapshot != null ||
+			target.hasAttribute('data-harper-gdocs-native-runs') ||
+			target.querySelector('[data-harper-gdocs-native-start]') != null;
+		// Capture provenance when the box is made, not when its action is clicked.
+		// An old lint must not inherit the current target's native snapshot.
+		const resolvedSpan = mapped
+			? nativeSnapshot != null
+				? resolveNativeSpan(target, source, nativeSnapshot, lint.span)
+				: null
+			: resolveGoogleDocsSpan(source, lint);
 
 		if (!editor || resolvedSpan == null) {
 			return [];
 		}
+		if (
+			mapped &&
+			(sourceMode !== 'native' ||
+				nativeSnapshot == null ||
+				lint.source !== source ||
+				!Number.isInteger(lint.span.start) ||
+				!Number.isInteger(lint.span.end) ||
+				lint.span.start < 0 ||
+				lint.span.end <= lint.span.start ||
+				!Number.isInteger(resolvedSpan.start) ||
+				!Number.isInteger(resolvedSpan.end) ||
+				resolvedSpan.start < 0 ||
+				resolvedSpan.end <= resolvedSpan.start ||
+				resolvedSpan.end > nativeSnapshot.length ||
+				GOOGLE_DOCS_CONTROL_CHARACTERS.test(
+					nativeSnapshot.slice(resolvedSpan.start, resolvedSpan.end),
+				) ||
+				nativeSnapshot.slice(resolvedSpan.start, resolvedSpan.end) !== lint.problem_text)
+		) {
+			return [];
+		}
 
-		const targetRects = getGoogleDocsHighlightRects(target, resolvedSpan as Span);
+		const targetRects = getGoogleDocsHighlightRects(
+			target,
+			(mapped ? lint.span : resolvedSpan) as Span,
+		);
 		const editorBox = domRectToBox(editor.getBoundingClientRect());
 		if (targetRects.length === 0) {
 			return [];
@@ -59,8 +143,20 @@ export function maybeComputeGoogleDocsLintBoxes(
 				source: editor,
 				rule,
 				applySuggestion: async (suggestion: UnpackedSuggestion) => {
-					const replacementText = suggestionToReplacementText(suggestion, resolvedSpan, source);
-					await replaceGoogleDocsValue(resolvedSpan, replacementText, source);
+					const replacementSource = nativeSnapshot ?? source;
+					const replacementText = suggestionToReplacementText(
+						suggestion,
+						resolvedSpan,
+						replacementSource,
+					);
+					await replaceGoogleDocsValue(
+						resolvedSpan,
+						replacementText,
+						replacementSource,
+						mapped
+							? { rangeSource: 'native-utf16-v1', nativeSnapshot: nativeSnapshot! }
+							: undefined,
+					);
 				},
 				ignoreLint: opts.ignoreLint ? () => opts.ignoreLint!(lint.context_hash) : undefined,
 			});
