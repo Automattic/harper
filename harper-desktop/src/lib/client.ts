@@ -47,6 +47,15 @@ export interface AppSearchResult {
 
 export type AccessibilityPermissionStatus = 'Granted' | 'NotGranted' | 'Unsupported';
 
+/** Serializable Rust updater outcome; an installed update may still require a restart. */
+export interface UpdateResult {
+	status: 'up-to-date' | 'updated' | 'error';
+	currentVersion: string | null;
+	latestVersion: string | null;
+	message: string;
+	error: string | null;
+}
+
 /** Provides an easy-to-use interface for interacting with the main Rust Tauri process.
  * Relevant because that is where the canonical state is stored. */
 export class Client {
@@ -84,20 +93,26 @@ export class Client {
 		await invoke('set_debounce_ms', { debounceMs });
 	}
 
+	/** Check if the app is configured to auto update. */
 	static async getAutoUpdate(): Promise<boolean> {
 		return await invoke<boolean>('get_auto_update');
 	}
 
+	/** Configure the app to auto update. */
 	static async setAutoUpdate(autoUpdate: boolean): Promise<void> {
 		await invoke('set_auto_update', { autoUpdate });
 	}
 
-	static async getLastUpdateCheck(): Promise<number | null> {
-		return await invoke<number | null>('get_last_update_check');
+	static async getCurrentVersion(): Promise<string> {
+		return await invoke<string>('get_current_version');
 	}
 
-	static async setLastUpdateCheck(lastUpdateCheck: number | null): Promise<void> {
-		await invoke('set_last_update_check', { lastUpdateCheck });
+	static async getLatestVersion(): Promise<string> {
+		return await invoke<string>('get_latest_version');
+	}
+
+	static async updateToLatest(): Promise<UpdateResult> {
+		return await invoke<UpdateResult>('update_to_latest');
 	}
 
 	static async getOnboardingCompleted(): Promise<boolean> {

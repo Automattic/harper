@@ -19,6 +19,7 @@ mod allow_to;
 mod am_in_the_morning;
 mod amounts_for;
 mod an_a;
+mod an_arm_and_a_leg;
 mod analog_acoustic_bike;
 mod and_the_like;
 mod another_thing_coming;
@@ -27,6 +28,7 @@ mod apart_from;
 mod arrive_to;
 mod as_how;
 mod as_to_interrogative;
+mod asap;
 mod ask_no_preposition;
 mod aspire_to;
 mod avoid_contractions;
@@ -37,12 +39,14 @@ mod barely_un;
 mod be_adjective_confusions;
 mod be_allowed;
 mod behind_the_scenes;
+mod bellow_below;
 mod best_of_all_time;
 mod better_off_served;
 mod boring_words;
 mod bought;
 mod brand_brandish;
 mod by_accident;
+mod by_extension;
 mod by_ones_own;
 mod by_the_book;
 mod call_it_quits;
@@ -58,13 +62,16 @@ mod chock_full;
 mod claim_to_fame;
 mod close_tight_knit;
 mod closed_compounds;
+mod cloud_ones_judgement;
 mod code_in_write_in;
+mod comfortable_with;
 mod comma_fixes;
 mod complain_as_noun;
 mod compound_nouns;
 mod compound_subject_i;
 mod confident;
 mod convenient_store;
+mod cool_calm_collected;
 mod correct_number_suffix;
 mod crave_for;
 mod criteria_phenomena;
@@ -87,6 +94,7 @@ mod do_mistake;
 mod dot_initialisms;
 mod double_click;
 mod double_modal;
+mod double_possessive_noun_phrase;
 mod ellipsis_length;
 mod else_possessive;
 mod ever_every;
@@ -118,11 +126,13 @@ mod for_the_nth_time;
 mod free_predicate;
 mod friend_of_me;
 mod full_to_the_brim;
+mod get_access_at;
 mod get_pass_go_pass;
 mod go_missing;
 mod go_so_far_as_to;
 mod go_to_sleep;
 mod go_to_war;
+mod gonna_gotta_wanna;
 mod good_at;
 mod handful;
 mod handful_of_more;
@@ -133,6 +143,7 @@ mod hedging;
 mod hello_greeting;
 mod helped_past;
 mod hereby;
+mod high_low_standards;
 mod hop_hope;
 mod hope_youre;
 mod how_does_compared;
@@ -144,6 +155,7 @@ mod implement_in;
 mod in_demand_in_depth;
 mod in_favour_of_doing;
 mod in_on_the_cards;
+mod in_ones_defense;
 mod in_stock;
 mod in_time_from_now;
 mod inflected_verb_after_to;
@@ -151,6 +163,7 @@ mod informal_laughter;
 mod initialism_linter;
 mod initialisms;
 mod interested_in;
+mod it_are_the_one;
 mod it_is;
 mod it_looks_like_that;
 mod it_would_be;
@@ -204,6 +217,7 @@ mod no_harm_no_foul;
 mod no_longer;
 mod no_longer_pronoun;
 mod no_match_for;
+mod nobel_noble;
 mod nobody;
 mod nominal_wants;
 mod nor_modal_pronoun;
@@ -225,7 +239,9 @@ mod open_compounds;
 mod open_the_light;
 mod orthographic_consistency;
 mod ought_to_be;
+mod out_of_curiosity;
 mod out_of_date;
+mod out_of_outside_the_box;
 mod out_of_the_window;
 mod over_plus;
 mod oxford_commas;
@@ -253,6 +269,7 @@ mod quantifier_needs_of;
 mod quantifier_numeral_conflict;
 mod quite_quiet;
 mod quote_spacing;
+mod rack_ones_brain;
 mod reason_for_doing;
 mod redundant_acronyms;
 mod redundant_additive_adverbs;
@@ -272,6 +289,7 @@ mod roller_skated;
 mod run_into_problems_or_trouble;
 mod safe_to_save;
 mod save_to_safe;
+mod seems_like_adjective;
 mod sentence_capitalization;
 mod shoot_oneself_in_the_foot;
 mod show_case;
@@ -305,9 +323,11 @@ mod the_my;
 mod the_point_for;
 mod the_proper_noun_possessive;
 mod the_the_to_that_the;
+mod themself;
 mod then_than;
 mod there_is_agreement;
 mod there_own;
+mod therein;
 mod theres;
 mod theses_these;
 mod theyre_confusions;
@@ -587,8 +607,13 @@ pub mod tests {
         // dbg!(&lints);
         if lints.len() != count {
             panic!(
-                "Expected \"{text}\" to create {count} lints, but it created {}.",
-                lints.len()
+                "Expected \"{text}\" to create {count} lints, but it created {}.\n{}",
+                lints.len(),
+                lints
+                    .iter()
+                    .map(|l| l.message.clone())
+                    .collect::<Vec<_>>()
+                    .join("\n")
             );
         }
     }
@@ -765,6 +790,8 @@ pub mod tests {
                 eprintln!("⚠️  Input and expected are both '{needle}' - is the test correct?");
             }
             return true;
+        } else if cfg!(debug_assertions) {
+            eprintln!(" 🔎 Checking... \"{text}\"");
         }
 
         // Lint current text and try each suggestion branch

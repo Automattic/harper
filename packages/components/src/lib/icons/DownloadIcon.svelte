@@ -2,7 +2,10 @@
 export let className: string | undefined = undefined;
 </script>
 
-<svg viewBox="0 0 20 20" class={className} fill="currentColor" aria-hidden="true">
-	<path d="M10 3.5a.75.75 0 0 1 .75.75v6.19l2.22-2.22a.75.75 0 1 1 1.06 1.06l-3.5 3.5a.75.75 0 0 1-1.06 0l-3.5-3.5a.75.75 0 1 1 1.06-1.06l2.22 2.22V4.25A.75.75 0 0 1 10 3.5z" />
-	<path d="M4 13.75a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 .75.75v1.5A2.75 2.75 0 0 1 13.25 18h-6.5A2.75 2.75 0 0 1 4 15.25v-1.5z" />
+<svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21" class={className} aria-hidden="true">
+	<g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(4 3)">
+		<path d="m2.5 7.5 4 4.232 4-4.191" />
+		<path d="m6.5.5v11" />
+		<path d="m.5 14.5h12" />
+	</g>
 </svg>

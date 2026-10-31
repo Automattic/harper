@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 /// Canonical client-to-server protocol message sent by the highlighter process.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum Request {
+    OpenSettings,
     GetLintConfig,
     GetDictionary,
     GetDialect,

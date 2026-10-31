@@ -1,0 +1,9 @@
+expr main (sufficient enough)
+
+let message "Use `sufficient` or `enough` alone instead of redundant `sufficient enough`."
+let description "Corrects redundant `sufficient enough` to either `sufficient` or `enough`."
+let kind "Redundancy"
+let becomes ["sufficient", "enough"]
+
+test "Padium and Pone Sauce, got off with a small fine in time served, meaning the time they spent in jail awaiting trial was deemed sufficient enough by the judge." "Padium and Pone Sauce, got off with a small fine in time served, meaning the time they spent in jail awaiting trial was deemed sufficient by the judge."
+test "Cannot locate handler error message is not sufficient enough" "Cannot locate handler error message is not enough"

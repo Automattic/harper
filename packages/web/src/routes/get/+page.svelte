@@ -1,4 +1,5 @@
 <script lang="ts">
+import { Arrow } from 'components';
 import { onMount } from 'svelte';
 import {
 	type Integration,
@@ -6,10 +7,14 @@ import {
 	integrations,
 	marketingLinks,
 } from '$lib/marketing/data';
+import FeaturedIntegrations from '$lib/marketing/FeaturedIntegrations.svelte';
 import IntegrationTile from '$lib/marketing/IntegrationTile.svelte';
 import MarketingFooter from '$lib/marketing/MarketingFooter.svelte';
 import MarketingHeader from '$lib/marketing/MarketingHeader.svelte';
 import { isUpToDate, liveVersions, loadLiveVersions } from '$lib/marketing/versions';
+
+const chromeHref =
+	'https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb?utm_source=harper-get&utm_medium=referral';
 
 let activeCategory = 'all';
 let query = '';
@@ -76,40 +81,7 @@ function clearFilters() {
 			<p class="mx-auto !mt-3 !mb-[2.2rem] max-w-[35rem] !font-serif text-[1.2rem] leading-[1.45] text-[#4a463e] dark:text-white/70">
 				Use Harper in your favorite apps and browsers. Good grammar goes where you are.
 			</p>
-			<div class="mx-auto grid max-w-[47.5rem] grid-cols-2 gap-[0.85rem] text-left max-[640px]:grid-cols-1">
-				{#each ['desktop', 'chrome'] as id}
-					{@const integration = integrations.find((item) => item.id === id)}
-					{#if integration}
-						{@const upToDate = isUpToDate($liveVersions.harper, $liveVersions[integration.id])}
-						{@const titleText = upToDate ? VERSION_UPTODATE : upToDate === false ? VERSION_BEHIND : null}
-						<a
-							class="grid grid-cols-[2.5rem_1fr_auto] items-center gap-[0.9rem] rounded-xl border-[0.5px] border-[rgba(28,26,22,0.1)] bg-white px-[1.1rem] py-[0.9rem] !text-[#1c1a16] no-underline transition-[transform,box-shadow,border-color] duration-150 hover:-translate-y-px hover:border-[#b06a1b] hover:shadow-[0_10px_24px_-16px_rgba(28,26,22,0.16)] hover:no-underline dark:border-white/10 dark:bg-white/5 dark:!text-white dark:hover:border-primary-300 max-[640px]:grid-cols-[2.5rem_1fr] [&_em]:max-[640px]:col-start-2"
-							href={integration.href}
-						>
-							<IntegrationTile {integration} size={40} />
-							<span class="flex min-w-0 flex-col">
-								<div class="flex items-center gap-1.5">
-									<strong class="text-[0.94rem] leading-[1.25]">{integration.name}</strong>
-									{#if $liveVersions[integration.id]}
-		                				{#if upToDate != null}
-										<span
-										    class="inline-flex items-center rounded-full bg-[#f4f1ea] dark:bg-white/10 px-1.5 py-0.5 text-[0.68rem] font-mono font-medium text-[#6b6455] dark:text-white/80 border border-[#e4dfd3] dark:border-white/10 select-none"
-										    title={titleText}
-										>
-											{$liveVersions[integration.id]}
-										</span>
-										{/if}
-									{/if}
-								</div>
-								<small class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.8rem] leading-[1.4] text-[#807a6e] dark:text-white/55">
-									{integration.desc}
-								</small>
-							</span>
-							<em class="whitespace-nowrap text-[0.78rem] font-extrabold text-[#b06a1b] not-italic dark:text-primary-300">{ctaLabel(integration)} →</em>
-						</a>
-					{/if}
-				{/each}
-			</div>
+			<FeaturedIntegrations campaign="harper-get" />
 			<div class="mt-[1.1rem] text-[0.82rem] text-[#807a6e] dark:text-white/55">Or browse {integrations.length - 2} other integrations ↓</div>
 		</div>
 	</section>
@@ -193,7 +165,7 @@ function clearFilters() {
 						{@const titleText = upToDate ? VERSION_UPTODATE : upToDate === false ? VERSION_BEHIND : null}
 						<a
 							class="grid grid-cols-[2.5rem_1fr_auto] items-center gap-[0.9rem] rounded-xl border-[0.5px] border-[rgba(28,26,22,0.1)] bg-white px-[1.1rem] py-[0.9rem] !text-[#1c1a16] no-underline transition-[transform,box-shadow,border-color] duration-150 hover:-translate-y-px hover:border-[#b06a1b] hover:shadow-[0_10px_24px_-16px_rgba(28,26,22,0.16)] hover:no-underline dark:border-white/10 dark:bg-white/5 dark:!text-white dark:hover:border-primary-300 max-[640px]:grid-cols-[2.5rem_1fr] [&_em]:max-[640px]:col-start-2"
-							href={integration.href}
+							href={integration.id === 'chrome' ? chromeHref : integration.href}
 						>
 						<IntegrationTile {integration} size={40} />
 						<span class="flex min-w-0 flex-col">
@@ -214,7 +186,7 @@ function clearFilters() {
 								{integration.platform}
 							</small>
 						</span>
-						<em class="whitespace-nowrap text-[0.78rem] font-extrabold text-[#b06a1b] not-italic dark:text-primary-300">{ctaLabel(integration)} →</em>
+						<em class="inline-flex items-center gap-1 whitespace-nowrap text-[0.78rem] font-extrabold text-[#b06a1b] not-italic dark:text-primary-300">{ctaLabel(integration)}<Arrow width="1rem" height="1rem" /></em>
 						</a>
 					{/each}
 				{/if}
@@ -222,5 +194,5 @@ function clearFilters() {
 		</div>
 	</section>
 
-	<MarketingFooter />
+	<MarketingFooter {chromeHref} />
 </div>

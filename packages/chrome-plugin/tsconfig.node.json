@@ -5,7 +5,9 @@
 		"moduleResolution": "bundler",
 		"allowSyntheticDefaultImports": true,
 		"resolveJsonModule": true,
-		"skipLibCheck": true
+		"skipLibCheck": true,
+		"strict": true,
+		"types": ["node", "chrome"]
 	},
-	"include": ["vite.config.ts", "src/manifest.ts"]
+	"include": ["vite.config.ts", "playwright.config.ts", "src/manifest.ts", "tests/**/*.ts"]
 }

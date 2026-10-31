@@ -32,9 +32,17 @@ pub trait CharStringExt: private::Sealed {
     /// Only normalizes the left side to lowercase and avoids allocations.
     fn eq_ch(&self, other: &[char]) -> bool;
 
+    /// Case-insensitive comparison with a character slice, not requiring the right-hand side to be lowercase.
+    /// Normalizes both sides to lowercase and avoids allocations.
+    fn eq_ch_lenient(&self, other: &[char]) -> bool;
+
     /// Case-insensitive comparison with a string slice, assuming the right-hand side is lowercase ASCII.
     /// Only normalizes the left side to lowercase and avoids allocations.
     fn eq_str(&self, other: &str) -> bool;
+
+    /// Case-insensitive comparison with a string slice, not requiring the right-hand side to be lowercase.
+    /// Normalizes both sides to lowercase and avoids allocations.
+    fn eq_str_lenient(&self, other: &str) -> bool;
 
     /// Case-insensitive comparison with any of a list of string slices, assuming the right-hand side is lowercase ASCII.
     /// Only normalizes the left side to lowercase and avoids allocations.
@@ -131,6 +139,24 @@ impl CharStringExt for [char] {
         }
     }
 
+    fn eq_str_lenient(&self, other: &str) -> bool {
+        let mut chit = self.iter();
+        let mut strit = other.chars();
+
+        loop {
+            let (c, s) = (chit.next(), strit.next());
+            match (c, s) {
+                (Some(c), Some(s)) => {
+                    if !c.eq_ignore_ascii_case(&s) {
+                        return false;
+                    }
+                }
+                (None, None) => return true,
+                _ => return false,
+            }
+        }
+    }
+
     fn eq_ch(&self, other: &[char]) -> bool {
         // Assert that the right-hand side is all-lowercase as required
         debug_assert!(
@@ -146,6 +172,14 @@ impl CharStringExt for [char] {
                 .iter()
                 .zip(other.iter())
                 .all(|(a, b)| a.to_ascii_lowercase() == *b)
+    }
+
+    fn eq_ch_lenient(&self, other: &[char]) -> bool {
+        self.len() == other.len()
+            && self
+                .iter()
+                .zip(other.iter())
+                .all(|(a, b)| a.eq_ignore_ascii_case(b))
     }
 
     fn eq_any_ignore_ascii_case_str(&self, others: &[&str]) -> bool {
@@ -296,5 +330,25 @@ mod tests {
     #[should_panic]
     fn right_side_must_be_all_lowercase_ch() {
         assert!(['c'].eq_ch(&['C']))
+    }
+
+    #[test]
+    fn lenient_right_side_can_be_all_lowercase_str() {
+        assert!(['H', 'e', 'l', 'l', 'o'].eq_str_lenient("hello"));
+    }
+
+    #[test]
+    fn lenient_right_side_can_be_mixed_case_str() {
+        assert!(['H', 'e', 'l', 'l', 'o'].eq_str_lenient("HeLlO"));
+    }
+
+    #[test]
+    fn lenient_right_side_can_be_all_lowercase_ch() {
+        assert!(['H', 'e', 'l', 'l', 'o'].eq_ch_lenient(&['h', 'e', 'l', 'l', 'o']));
+    }
+
+    #[test]
+    fn lenient_right_side_can_be_mixed_case_ch() {
+        assert!(['H', 'e', 'l', 'l', 'o'].eq_ch_lenient(&['H', 'E', 'L', 'L', 'O']));
     }
 }
