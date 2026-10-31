@@ -78,6 +78,15 @@ impl<D: Dictionary> ExprLinter for DisjointPrefixes<D> {
             return None;
         }
 
+        // An all-caps prefix before a word that isn't all caps is an acronym: "the RE process"
+        let is_all_caps = |t: &Token| {
+            let ch = t.get_ch(src);
+            ch.len() > 1 && ch.iter().all(|c| c.is_uppercase())
+        };
+        if is_all_caps(&toks[0]) && !is_all_caps(&toks[2]) {
+            return None;
+        }
+
         // Avoid including text from unlintable sections between tokens
         // that could result from naively using toks.span()?.get_content_string(src)
         let original = format!(
@@ -213,6 +222,23 @@ mod tests {
         assert_no_lints(
             "I saw re-execute flagged with DisjointPrefixes.",
             DisjointPrefixes::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn dont_join_acronym_re_issue_4580() {
+        assert_no_lints(
+            "The RE process was slow.",
+            DisjointPrefixes::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn still_join_re_process_in_all_caps() {
+        assert_suggestion_result(
+            "WE NEED TO RE PROCESS THE DATA.",
+            DisjointPrefixes::new(FstDictionary::curated()),
+            "WE NEED TO REPROCESS THE DATA.",
         );
     }
 
