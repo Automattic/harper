@@ -1,4 +1,8 @@
-expr main [<(as is evident by), evident>, <(as evident by), evident>, <(is evident by), evident>]
+expr main [
+    <(as is evident by), evident>,
+    <(as evident by), evident>,
+    <(is evident by), evident>
+]
 
 let message "Did you mean `evidenced`? The correct phrase uses the past participle of the verb `evidence`."
 let description "Corrects `evident by` to `evidenced by` in passive constructions where `evidence` is used as a verb."

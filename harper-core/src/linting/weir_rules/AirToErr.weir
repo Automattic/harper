@@ -1,4 +1,7 @@
-expr main [<(to air is human), air>, <(air on the side of), air>]
+expr main [
+    <(to air is human), air>,
+    <(air on the side of), air>
+]
 
 let message "Did you mean `err`? The correct phrase uses the verb `err`."
 let description "Corrects `air` to `err` in common idioms."

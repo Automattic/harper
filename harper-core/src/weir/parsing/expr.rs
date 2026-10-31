@@ -47,6 +47,7 @@ fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstE
 
     match tok.kind {
         TokenKind::Space(_) => Ok(FoundNode::new(AstExprNode::Whitespace, 1)),
+        TokenKind::Newline(_) => Ok(FoundNode::new(AstExprNode::Whitespace, 1)),
         // The expr ref notation
         TokenKind::Punctuation(Punctuation::At) => {
             let name_tok = tokens.get(1).ok_or(Error::EndOfInput)?;
@@ -499,6 +500,46 @@ mod tests {
                 AstExprNode::Anything,
                 AstExprNode::Whitespace,
                 AstExprNode::Anything,
+            ])
+        )
+    }
+
+    #[test]
+    fn parses_array_with_newlines() {
+        assert_eq!(
+            parse_expr_str("[\na,\nb,\nc\n]", true).unwrap(),
+            AstExprNode::Arr(vec![
+                AstExprNode::Word(char_string!("a")),
+                AstExprNode::Word(char_string!("b")),
+                AstExprNode::Word(char_string!("c"))
+            ])
+        )
+    }
+
+    #[test]
+    fn parses_filter_with_newlines() {
+        assert_eq!(
+            parse_expr_str("<\na,\nb,\nc\n>", true).unwrap(),
+            AstExprNode::Filter(vec![
+                AstExprNode::Word(char_string!("a")),
+                AstExprNode::Word(char_string!("b")),
+                AstExprNode::Word(char_string!("c")),
+            ])
+        )
+    }
+
+    #[test]
+    fn parses_seq_with_newlines() {
+        assert_eq!(
+            parse_expr_str("(\na\nb\nc\n)", true).unwrap(),
+            AstExprNode::Seq(vec![
+                AstExprNode::Whitespace,
+                AstExprNode::Word(char_string!("a")),
+                AstExprNode::Whitespace,
+                AstExprNode::Word(char_string!("b")),
+                AstExprNode::Whitespace,
+                AstExprNode::Word(char_string!("c")),
+                AstExprNode::Whitespace,
             ])
         )
     }
