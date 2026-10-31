@@ -123,11 +123,34 @@ impl Window {
         }
     }
 
-    pub fn render(&mut self, render_state: &mut RenderState) {
+    /// The window's bounds in the screen coordinates that lints and the cursor use.
+    ///
+    /// On platforms that cannot report where the window is, this assumes the window is at the
+    /// screen's origin.
+    pub fn screen_rect(&self) -> egui::Rect {
+        let pixels_per_point =
+            egui_winit::pixels_per_point(self.egui_state.egui_ctx(), &self.inner);
+
+        egui_winit::inner_rect_in_points(&self.inner, pixels_per_point).unwrap_or_else(|| {
+            let size = self.inner.inner_size();
+            egui::Rect::from_min_size(
+                egui::Pos2::ZERO,
+                egui::vec2(size.width as f32, size.height as f32) / pixels_per_point,
+            )
+        })
+    }
+
+    /// Draws `render_state` into this window, which is `screen_rects[index]`.
+    pub fn render(
+        &mut self,
+        render_state: &mut RenderState,
+        screen_rects: &[egui::Rect],
+        index: usize,
+    ) {
         let context = self.egui_state.egui_ctx().clone();
         let input = self.egui_state.take_egui_input(&self.inner);
         let output = context.run_ui(input, |ui| {
-            render_state.render(ui);
+            render_state.render(ui, screen_rects, index);
         });
 
         self.egui_state

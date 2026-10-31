@@ -260,16 +260,22 @@ impl ApplicationHandler for WindowManagerApp {
             }
         );
         let should_render = matches!(&event, WindowEvent::RedrawRequested);
+        let screen_rects = if should_render {
+            self.windows.iter().map(Window::screen_rect).collect()
+        } else {
+            Vec::new()
+        };
 
-        if let Some(window) = self
+        if let Some((index, window)) = self
             .windows
             .iter_mut()
-            .find(|window| window.id() == window_id)
+            .enumerate()
+            .find(|(_, window)| window.id() == window_id)
         {
             window.handle_event(&event);
 
             if should_render {
-                window.render(&mut self.render_state);
+                window.render(&mut self.render_state, &screen_rects, index);
             }
         }
 
