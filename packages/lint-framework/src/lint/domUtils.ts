@@ -95,6 +95,7 @@ export function leafNodes(node: Node): Node[] {
 /**
  * Given an element and a Span of text inside it, compute the Range that represents the region of the DOM represented.
  * Accounts for `<br>` elements which `innerText` converts to newlines.
+ * CodeMirror spans already exclude line breaks, so its placeholder `<br>` elements count as zero.
  * @param target
  * @param span
  */
@@ -110,7 +111,7 @@ export function getRangeForTextSpan(target: Element, span: Span): Range | null {
 		const child = children[i] as HTMLElement;
 
 		if (child.nodeName === 'BR') {
-			traversed += 1;
+			traversed += child.closest('.cm-line') ? 0 : 1;
 			continue;
 		}
 
