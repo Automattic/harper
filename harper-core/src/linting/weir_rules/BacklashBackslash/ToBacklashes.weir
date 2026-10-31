@@ -1,0 +1,11 @@
+expr main <[(backslashes against), ([conservative, political, public] backslashes)], backslashes>
+
+let message "Did you mean `backlashes`?"
+let description "Corrects `backslashes` to `backlashes` when it looks like a typo."
+let kind "Typo"
+let becomes "backlashes"
+
+test "The recent backslashes against the numerisation project" "The recent backlashes against the numerisation project"
+test "the easiest job you can do without receiving public backslashes is to market a generally loved 'item'" "the easiest job you can do without receiving public backlashes is to market a generally loved 'item'"
+test "there were political backslashes, with energy cost a factor" "there were political backlashes, with energy cost a factor"
+test "but faced various conservative backslashes in the form of right-wing national policies" "but faced various conservative backlashes in the form of right-wing national policies"
