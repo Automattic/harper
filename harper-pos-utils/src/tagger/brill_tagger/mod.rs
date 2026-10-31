@@ -131,8 +131,7 @@ impl BrillTagger<FreqDict> {
     /// How many to select is given by the `candidate_selection_chance`. A higher chance means a
     /// longer training time.
     fn epoch(&mut self, training_files: &[impl AsRef<Path>], candidate_selection_chance: f32) {
-        use crate::conllu_utils::iter_sentences_in_conllu;
-        use rs_conllu::Sentence;
+        use crate::conllu_utils::extract_pairs_from_files;
         use std::time::Instant;
 
         assert!((0.0..=1.0).contains(&candidate_selection_chance));
@@ -140,33 +139,9 @@ impl BrillTagger<FreqDict> {
         let mut total_tokens = 0;
         let mut error_counter = ErrorCounter::new();
 
-        let sentences: Vec<Sentence> = training_files
-            .iter()
-            .flat_map(iter_sentences_in_conllu)
-            .collect();
-        let mut sentences_tagged: Vec<(Vec<String>, Vec<Option<UPOS>>)> = Vec::new();
-
-        for sent in &sentences {
-            let mut toks: Vec<String> = Vec::new();
-            let mut tags = Vec::new();
-
-            for token in &sent.tokens {
-                let form = token.form.clone();
-                if let Some(last) = toks.last_mut() {
-                    match form.as_str() {
-                        "sn't" | "n't" | "'ll" | "'ve" | "'re" | "'d" | "'m" | "'s" => {
-                            last.push_str(&form);
-                            continue;
-                        }
-                        _ => {}
-                    }
-                }
-                toks.push(form);
-                tags.push(token.upos.and_then(UPOS::from_conllu));
-            }
-
-            sentences_tagged.push((toks, tags));
-        }
+        // CoNLL-U → (merged surface tokens, tags) per sentence — multiword-token
+        // and contraction aware (see `conllu_utils::sentence_to_training_pair`).
+        let sentences_tagged = extract_pairs_from_files(training_files);
 
         for (tok_buf, tag_buf) in &sentences_tagged {
             total_tokens += tok_buf.len();
