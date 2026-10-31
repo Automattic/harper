@@ -257,6 +257,7 @@ mod plural_decades;
 mod plural_wrong_word_of_phrase;
 mod pooled_linter;
 mod possessive_noun;
+mod possessive_plural_time;
 mod possessive_your;
 mod progressive_needs_be;
 mod pronoun_are;
