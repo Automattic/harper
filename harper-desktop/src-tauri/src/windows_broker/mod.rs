@@ -1,6 +1,5 @@
 use crate::windows_broker::automation_service::AutomationService;
 use crate::{
-    config::Integration,
     os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker},
     rect::ActionableLint,
 };
@@ -32,24 +31,26 @@ mod automation_service;
 
 pub struct WindowsBroker {
     service: Arc<Mutex<AutomationService>>,
-    integrations: Arc<Mutex<Vec<Integration>>>,
+    is_integration_enabled: Box<dyn FnMut(&str) -> bool + Send + Sync>,
 }
 
 impl WindowsBroker {
-    pub fn new(integrations: Arc<Mutex<Vec<Integration>>>) -> Self {
+    /// Creates a broker with an app policy that may register newly encountered executable paths.
+    /// The policy is called before reading the app's text and may change as settings are refreshed.
+    pub fn new(is_integration_enabled: impl FnMut(&str) -> bool + Send + Sync + 'static) -> Self {
         Self {
             service: Arc::new(Mutex::new(AutomationService::create_and_start())),
-            integrations,
+            is_integration_enabled: Box::new(is_integration_enabled),
         }
     }
 
-    pub fn should_lint_focused_window(&self) -> Option<bool> {
+    pub fn should_lint_focused_window(&mut self) -> Option<bool> {
         let mut service = self.service.lock().ok()?;
         let focused_window = service.resolve_focused_window()?;
         let path = get_window_path(focused_window).ok()?;
-        let integrations = self.integrations.lock().ok()?;
+        drop(service);
 
-        if !Integration::is_integration_enabled_in(&integrations, &path.to_string_lossy()) {
+        if !(self.is_integration_enabled)(&path.to_string_lossy()) {
             return Some(false);
         }
 
@@ -66,6 +67,19 @@ impl WindowsBroker {
 }
 
 impl OsBroker for WindowsBroker {
+    fn is_harper_desktop(app_id: &str) -> bool {
+        let Ok(executable) = std::env::current_exe()
+            .and_then(std::fs::canonicalize)
+            .inspect_err(|error| eprintln!("failed to identify Harper executable: {error}"))
+        else {
+            return false;
+        };
+        std::fs::canonicalize(app_id).is_ok_and(|path| {
+            path.to_string_lossy()
+                .eq_ignore_ascii_case(&executable.to_string_lossy())
+        })
+    }
+
     fn get_boxes(
         &mut self,
         lint_text: &mut dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>>,
@@ -163,15 +177,12 @@ impl OsBroker for WindowsBroker {
     }
 
     fn application_icon_png(&self, bundle_id: &str) -> Result<Vec<u8>, String> {
-        if let Some(entry) = look_up_application(bundle_id) {
-            if let Some(png) = entry.icon_png {
-                return Ok(png);
-            } else {
-                return Err("Found application but it was missing an icon.".to_string());
-            }
-        } else {
-            return Err("Unable to locate application.".to_string());
-        }
+        let entry = look_up_application(bundle_id)
+            .ok_or_else(|| "Unable to locate application.".to_string())?;
+
+        entry
+            .icon_png
+            .ok_or_else(|| "Found application but it was missing an icon.".to_string())
     }
 
     fn launch_app_bundle(&self, bundle_id: &str) -> Result<(), String> {
@@ -209,7 +220,6 @@ impl OsBroker for WindowsBroker {
                         .to_lowercase()
                         .contains(&lower_query)
             })
-            .cloned()
             .map(|entry| entry.to_search_result())
             .collect())
     }
@@ -246,8 +256,7 @@ fn get_focused_monitor_scale() -> f64 {
 
         let _ = GetDpiForMonitor(monitor, MDT_EFFECTIVE_DPI, &mut x, &mut y);
 
-        let effective_scale = x as f64 / 96.;
-        effective_scale
+        x as f64 / 96.
     }
 }
 
@@ -263,7 +272,7 @@ impl ApplicationListEntry {
     fn to_search_result(&self) -> AppSearchResult {
         AppSearchResult {
             name: self.display_name.clone(),
-            bundle_id: self.path.to_string_lossy().to_owned().to_string(),
+            bundle_id: self.path.to_string_lossy().into_owned(),
         }
     }
 }
@@ -271,34 +280,27 @@ impl ApplicationListEntry {
 fn look_up_application(bundle_id: &str) -> Option<ApplicationListEntry> {
     // In Windows, the application path is the bundle ID.
     let list = installed_applications_list();
-    if let Some(entry) = list
-        .iter()
+    list.iter()
         .find(|entry| entry.path.to_string_lossy() == bundle_id)
-    {
-        Some(entry.clone())
-    } else {
-        None
-    }
+        .cloned()
 }
 
 #[cached]
 fn installed_applications_list() -> Arc<Vec<ApplicationListEntry>> {
     let mut list = Vec::new();
 
-    for res in gatherer().scan() {
-        if let Ok(app) = res {
-            let icon = if let Ok(icon) = app.entry.icon() {
-                icon.extract_icon_as_png_at(IconSize::Jumbo)
-            } else {
-                None
-            };
+    for app in gatherer().scan().flatten() {
+        let icon = if let Ok(icon) = app.entry.icon() {
+            icon.extract_icon_as_png_at(IconSize::Jumbo)
+        } else {
+            None
+        };
 
-            list.push(ApplicationListEntry {
-                path: app.entry.path().to_owned(),
-                icon_png: icon,
-                display_name: app.entry.display_name(),
-            })
-        }
+        list.push(ApplicationListEntry {
+            path: app.entry.path().to_owned(),
+            icon_png: icon,
+            display_name: app.entry.display_name(),
+        })
     }
 
     Arc::new(list)

@@ -13,7 +13,7 @@ impl Default for ForTheNthTime {
         Self {
             expr: SequenceExpr::aco("for")
                 .t_ws()
-                .t_set(&[
+                .t_set([
                     "first",
                     "second",
                     "third",
@@ -59,7 +59,7 @@ impl Default for ForTheNthTime {
                 // .then(AnchorEnd),
                 .then_any_of([
                     Box::new(AnchorEnd) as Box<dyn Expr>,
-                    Box::new(SequenceExpr::whitespace().t_set(&["and", "but"])),
+                    Box::new(SequenceExpr::whitespace().t_set(["and", "but"])),
                 ]),
         }
     }

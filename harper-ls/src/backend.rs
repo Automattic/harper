@@ -3,6 +3,7 @@ use std::fs::OpenOptions;
 use std::io::{BufWriter, Write};
 use std::path::PathBuf;
 use std::sync::Arc;
+use std::time::Duration;
 
 use crate::config::Config;
 use crate::document_state::DocumentState;
@@ -50,22 +51,25 @@ pub fn ls_version() -> &'static str {
     env!("CARGO_PKG_VERSION")
 }
 
+#[derive(Clone)]
 pub struct Backend {
     client: Client,
-    root: RwLock<PathBuf>,
-    config: RwLock<Config>,
-    stats: RwLock<Stats>,
-    doc_state: Mutex<HashMap<Uri, DocumentState>>,
+    root: Arc<RwLock<PathBuf>>,
+    config: Arc<RwLock<Config>>,
+    stats: Arc<RwLock<Stats>>,
+    doc_state: Arc<Mutex<HashMap<Uri, DocumentState>>>,
+    pending_diagnostic_tasks: Arc<Mutex<HashMap<Uri, tokio::task::JoinHandle<()>>>>,
 }
 
 impl Backend {
     pub fn new(client: Client, config: Config) -> Self {
         Self {
             client,
-            root: RwLock::new(".".into()),
-            stats: RwLock::new(Stats::new()),
-            config: RwLock::new(config),
-            doc_state: Mutex::new(HashMap::new()),
+            root: Arc::new(RwLock::new(".".into())),
+            stats: Arc::new(RwLock::new(Stats::new())),
+            config: Arc::new(RwLock::new(config)),
+            doc_state: Arc::new(Mutex::new(HashMap::new())),
+            pending_diagnostic_tasks: Arc::new(Mutex::new(HashMap::new())),
         }
     }
 
@@ -148,7 +152,7 @@ impl Backend {
     async fn load_user_dictionary(&self) -> MutableDictionary {
         let config = self.config.read().await;
 
-        load_dict(&config.user_dict_path, self.config.read().await.dialect)
+        load_dict(&config.user_dict_path, config.dialect)
             .await
             .map_err(|err| info!("{err}"))
             .unwrap_or(MutableDictionary::new())
@@ -164,13 +168,10 @@ impl Backend {
 
     async fn load_workspace_dictionary(&self) -> MutableDictionary {
         let config = self.config.read().await;
-        load_dict(
-            &config.workspace_dict_path,
-            self.config.read().await.dialect,
-        )
-        .await
-        .map_err(|err| info!("{err}"))
-        .unwrap_or(MutableDictionary::new())
+        load_dict(&config.workspace_dict_path, config.dialect)
+            .await
+            .map_err(|err| info!("{err}"))
+            .unwrap_or(MutableDictionary::new())
     }
 
     async fn save_workspace_dictionary(&self, dict: impl Dictionary) -> Result<()> {
@@ -393,7 +394,9 @@ impl Backend {
                 }
             }
             "mail" => Some(Box::new(PlainEnglish)),
-            "markdown" | "quarto" => Some(Box::new(Markdown::new(markdown_options))),
+            "markdown" | "quarto" | "rmarkdown" | "rmd" => {
+                Some(Box::new(Markdown::new(markdown_options)))
+            }
             "org" => Some(Box::new(OrgMode)),
             "plaintext" | "text" => Some(Box::new(PlainEnglish)),
             "python" => Some(Box::new(PythonParser::default())),
@@ -431,12 +434,17 @@ impl Backend {
         uri: &Uri,
         range: Range,
     ) -> JsonResult<Vec<CodeActionOrCommand>> {
-        let (config, mut doc_states) = tokio::join!(self.config.read(), self.doc_state.lock());
+        // Copy necessary configuration to avoid holding lock.
+        // `update_document` takes `doc_state` before `config`, so holding a `config` read guard
+        // while waiting for `doc_state` deadlocks once a `config` writer is queued.
+        let code_action_config = self.config.read().await.code_action_config.clone();
+
+        let mut doc_states = self.doc_state.lock().await;
         let Some(doc_state) = doc_states.get_mut(uri) else {
             return Ok(Vec::new());
         };
 
-        Ok(doc_state.generate_code_actions(range, &config.code_action_config))
+        Ok(doc_state.generate_code_actions(range, &code_action_config))
     }
 
     async fn generate_diagnostics(&self, uri: &Uri) -> Vec<Diagnostic> {
@@ -468,6 +476,13 @@ impl Backend {
             .await;
     }
 
+    /// The async pending diagnostics are discarded and diagnostics are created
+    /// and published immediately.
+    async fn publish_diagnostics_immediately(&self, uri: &Uri) {
+        self.abort_pending_diagnostics(uri).await;
+        self.publish_diagnostics(uri).await;
+    }
+
     /// Update the configuration of the server and publish document updates that
     /// match it.
     async fn update_config_from_obj(&self, json_obj: Value) {
@@ -492,6 +507,32 @@ impl Backend {
         if let Some(first) = new_config.pop() {
             self.update_config_from_obj(first).await;
         }
+    }
+
+    /// Aborts a pending diagnostic run, e.g. because the document was changed.
+    async fn abort_pending_diagnostics(&self, uri: &Uri) {
+        let mut tasks = self.pending_diagnostic_tasks.lock().await;
+        if let Some(task) = tasks.remove(uri) {
+            task.abort();
+        }
+    }
+
+    /// Schedule diagnostics in `delay_ms` milliseconds
+    /// Configure this with the `diagnosticDelayMs` option.
+    /// ```toml
+    /// [language-server.harper-ls.config.harper-ls]
+    /// diagnosticDelayMs = 1000
+    /// ```
+    pub async fn schedule_diagnostics(&self, uri: &Uri, delay_ms: u64) {
+        let task_uri = uri.clone();
+        let backend = self.clone();
+        let handle = tokio::spawn(async move {
+            tokio::time::sleep(Duration::from_millis(delay_ms)).await;
+            backend.publish_diagnostics(&task_uri).await;
+        });
+
+        let mut tasks = self.pending_diagnostic_tasks.lock().await;
+        tasks.insert(uri.clone(), handle);
     }
 }
 
@@ -590,7 +631,8 @@ impl LanguageServer for Backend {
         .map_err(|err| error!("{err}"))
         .err();
 
-        self.publish_diagnostics(&params.text_document.uri).await;
+        self.publish_diagnostics_immediately(&params.text_document.uri)
+            .await;
     }
 
     async fn did_change(&self, params: DidChangeTextDocumentParams) {
@@ -605,14 +647,24 @@ impl LanguageServer for Backend {
             error!("{err}")
         }
 
-        self.publish_diagnostics(&params.text_document.uri).await;
+        let delay_ms = self.config.read().await.diagnostic_delay_ms;
+        if delay_ms > 0 {
+            // Diagnostics delay is configured, abort pending diagnostic task
+            // and schedule a new diagnostic run in delay_ms milliseconds.
+            self.abort_pending_diagnostics(&params.text_document.uri)
+                .await;
+            self.schedule_diagnostics(&params.text_document.uri, delay_ms)
+                .await;
+        } else {
+            self.publish_diagnostics(&params.text_document.uri).await;
+        }
     }
 
     async fn did_close(&self, _params: DidCloseTextDocumentParams) {
         let uri = _params.text_document.uri;
         let mut doc_lock = self.doc_state.lock().await;
         doc_lock.remove(&uri);
-
+        self.abort_pending_diagnostics(&uri).await;
         self.client
             .send_notification::<PublishDiagnostics>(PublishDiagnosticsParams {
                 uri: uri.clone(),
@@ -644,6 +696,7 @@ impl LanguageServer for Backend {
         }
 
         for uri in &uris_to_clear {
+            self.abort_pending_diagnostics(uri).await;
             self.client
                 .send_notification::<PublishDiagnostics>(PublishDiagnosticsParams {
                     uri: uri.clone(),
@@ -697,7 +750,7 @@ impl LanguageServer for Backend {
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
-                self.publish_diagnostics(&file_uri).await;
+                self.publish_diagnostics_immediately(&file_uri).await;
             }
             "HarperAddToWSDict" => {
                 let word = &first.chars().collect::<Vec<_>>();
@@ -718,7 +771,7 @@ impl LanguageServer for Backend {
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
-                self.publish_diagnostics(&file_uri).await;
+                self.publish_diagnostics_immediately(&file_uri).await;
             }
             "HarperAddToFileDict" => {
                 let word = &first.chars().collect::<Vec<_>>();
@@ -749,7 +802,7 @@ impl LanguageServer for Backend {
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
-                self.publish_diagnostics(&file_uri).await;
+                self.publish_diagnostics_immediately(&file_uri).await;
             }
             "HarperOpen" => match open::that(&first) {
                 Ok(()) => {
@@ -799,7 +852,7 @@ impl LanguageServer for Backend {
 
                 drop(doc_lock);
 
-                self.publish_diagnostics(&uri).await;
+                self.publish_diagnostics_immediately(&uri).await;
             }
             _ => (),
         }
@@ -828,7 +881,7 @@ impl LanguageServer for Backend {
                 .await
                 .map_err(|err| error!("{err}"))
                 .err();
-            self.publish_diagnostics(&uri).await;
+            self.publish_diagnostics_immediately(&uri).await;
         }
     }
 
@@ -848,6 +901,7 @@ impl LanguageServer for Backend {
 
         // Clears the diagnostics for open buffers.
         for uri in doc_states.keys() {
+            self.abort_pending_diagnostics(uri).await;
             let result = PublishDiagnosticsParams {
                 uri: uri.clone(),
                 diagnostics: vec![],

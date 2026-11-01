@@ -14,7 +14,7 @@ pub struct ExpandTimeShorthands {
 
 impl ExpandTimeShorthands {
     pub fn new() -> Self {
-        let hotwords = Arc::new(WordSet::new(&[
+        let hotwords = Arc::new(WordSet::new([
             "hr", "hrs", "min", "mins", "sec", "secs", "ms", "msec", "msecs",
         ]));
 

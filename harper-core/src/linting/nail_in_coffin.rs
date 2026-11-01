@@ -15,15 +15,15 @@ pub struct NailInCoffin {
 impl Default for NailInCoffin {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["final", "last"])
+            expr: SequenceExpr::word_set(["final", "last"])
                 .t_ws()
-                .t_set(&["nail", "nails"])
+                .t_set(["nail", "nails"])
                 .t_ws()
                 .t_aco("on")
                 .t_ws()
                 .then_determiner()
                 .t_ws()
-                .t_set(&["coffin", "coffins"]),
+                .t_set(["coffin", "coffins"]),
         }
     }
 }

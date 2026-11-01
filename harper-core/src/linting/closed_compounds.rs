@@ -35,7 +35,9 @@ pub fn lint_group() -> LintGroup {
         "Everybody"       => (&["every body"][..], "everybody"),
         "Everyone"        => (&["every one"][..], "everyone"),
         "Everywhere"      => (&["every where"][..], "everywhere"),
+        "Fanfare"         => (&["fan fare", "fan-fare"][..], "fanfare"),
         "Furthermore"     => (&["further more"][..], "furthermore"),
+        "Guesswork"       => (&["guess work"][..], "guesswork"),
         "Henceforth"      => (&["hence forth"][..], "henceforth"),
         "However"         => (&["how ever"][..], "however"),
         "Insofar"         => (&["in so far"][..], "insofar"),
@@ -45,6 +47,7 @@ pub fn lint_group() -> LintGroup {
         "Keystroke"       => (&["key stoke", "key stroke"][..], "keystroke"),
         "Keystrokes"      => (&["key stokes", "key strokes"][..], "keystrokes"),
         "Laptop"          => (&["lap top"][..], "laptop"),
+        "Lifetime"        => (&["life time"][..], "lifetime"),
         "Middleware"      => (&["middle ware"][..], "middleware"),
         "Meanwhile"       => (&["mean while"][..], "meanwhile"),
         "Misunderstand"   => (&["miss understand"][..], "misunderstand"),
@@ -59,6 +62,7 @@ pub fn lint_group() -> LintGroup {
         "Nothing"         => (&["no thing"][..], "nothing"),
         "Notwithstanding" => (&["not with standing"][..], "notwithstanding"),
         "Nowhere"         => (&["no where"][..], "nowhere"),
+        "Oftentimes"      => (&["often times"][..], "oftentimes"),
         "Overall"         => (&["over all"][..], "overall"),
         "Overclocking"    => (&["over clocking"][..], "overclocking"),
         "Overload"        => (&["over load"][..], "overload"),
@@ -72,10 +76,12 @@ pub fn lint_group() -> LintGroup {
         "Somehow"         => (&["some how"][..], "somehow"),
         "Someone"         => (&["some one"][..], "someone"),
         "Somewhere"       => (&["some where"][..], "somewhere"),
+        "Straightforward" => (&["straight forward"][..], "straightforward"),
         "Tenfold"         => (&["ten fold"][..], "tenfold"),
         "There"           => (&["the re"][..], "there"),
         "Therefore"       => (&["there fore"][..], "therefore"),
         "Thereupon"       => (&["there upon"][..], "thereupon"),
+        "Tradeoff"        => (&["trade off"][..], "tradeoff"),
         "Underclock"      => (&["under clock"][..], "underclock"),
         "Upset"           => (&["up set"][..], "upset"),
         "Upward"          => (&["up ward"][..], "upward"),
@@ -367,5 +373,68 @@ mod tests {
             lint_group(),
             "Tools to visualize large codebases in different ways.",
         )
+    }
+
+    #[test]
+    fn straightforward() {
+        assert_suggestion_result(
+            "This new vulnerability has a somewhat straight forward path to exploitation and prints funds out of thin air.",
+            lint_group(),
+            "This new vulnerability has a somewhat straightforward path to exploitation and prints funds out of thin air.",
+        )
+    }
+
+    #[test]
+    fn lifetime() {
+        assert_suggestion_result(
+            "In a life time it's gone up by more than 10 fold.",
+            lint_group(),
+            "In a lifetime it's gone up by more than 10 fold.",
+        );
+    }
+
+    #[test]
+    fn tradeoff() {
+        assert_suggestion_result(
+            "But the trade off was that specific details about the invention, how it worked and how it's made were entered openly for anyone to look up.",
+            lint_group(),
+            "But the tradeoff was that specific details about the invention, how it worked and how it's made were entered openly for anyone to look up.",
+        );
+    }
+
+    #[test]
+    fn guesswork() {
+        assert_suggestion_result(
+            "Yes this is guess work and we need more evidence of the dangers but at the same time we need evidence of safety.",
+            lint_group(),
+            "Yes this is guesswork and we need more evidence of the dangers but at the same time we need evidence of safety.",
+        );
+    }
+
+    #[test]
+    fn oftentimes() {
+        assert_suggestion_result(
+            "the rust compiler is fast, but often times it has to perform a lot of unnecessary checks because crates contain more stuff than needed",
+            lint_group(),
+            "the rust compiler is fast, but oftentimes it has to perform a lot of unnecessary checks because crates contain more stuff than needed",
+        );
+    }
+
+    #[test]
+    fn fan_space_fare() {
+        assert_suggestion_result(
+            "There was much fan fare over all the technology Bill Gates put into his house.",
+            lint_group(),
+            "There was much fanfare over all the technology Bill Gates put into his house.",
+        );
+    }
+
+    #[test]
+    fn fan_hyphen_fare() {
+        assert_suggestion_result(
+            "Indeed, most users will experience major version updates with absolutely zero fan-fare.",
+            lint_group(),
+            "Indeed, most users will experience major version updates with absolutely zero fanfare.",
+        );
     }
 }

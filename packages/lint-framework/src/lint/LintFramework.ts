@@ -1,5 +1,6 @@
 import type { LintOptions } from 'harper.js';
 import { closestBox, type IgnorableLintBox } from './Box';
+import { isGoogleDocsTarget } from './computeLintBoxes/googleDocsUtilities';
 import computeLintBoxes from './computeLintBoxes/index';
 import { isHeading, isVisible } from './domUtils';
 import { getCaretPosition, getCMRoot } from './editorUtils';
@@ -335,6 +336,10 @@ export default class LintFramework {
 			const lineElements = (target as HTMLElement).querySelectorAll<HTMLElement>('.cm-line');
 			const lines = Array.from(lineElements).map((el) => el.textContent);
 			text = lines.reduce((acc: string, x: string | null) => `${acc}${x ?? ''}\n`, '');
+		} else if (target instanceof HTMLElement && isGoogleDocsTarget(target)) {
+			// The mirror already contains logical whitespace. innerText inserts line breaks
+			// between its positioned spans, splitting sentences at formatting boundaries.
+			text = target.textContent;
 		} else {
 			text =
 				target instanceof HTMLTextAreaElement || target instanceof HTMLInputElement

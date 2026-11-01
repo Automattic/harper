@@ -4,14 +4,30 @@ import BarChart from './BarChart.svelte';
 
 type Props = {
 	data: Record<string, number>;
+	/** The data from the previous period, used to show deltas. */
+	prevPeriodData?: Record<string, number>;
 	title: string;
 	links: Record<string, string>;
+	/** If there is a page giving more information about a specific key. */
+	keyLinkGenerator?: (key: string) => string;
+	keyLabel: string;
 };
 
-let { data, title, links }: Props = $props();
+let { data, prevPeriodData, title, links, keyLabel, keyLinkGenerator }: Props = $props();
 
 let counts = $derived(data);
+let prevPeriodCounts = $derived(prevPeriodData);
+
 let entries = $derived(Object.entries(counts).toSorted(([_a, a], [_b, b]) => b - a));
+
+let deltas = $derived(
+	Object.fromEntries(
+		entries.map(([key, val]) => {
+			let prevVal = prevPeriodCounts ? (prevPeriodCounts[key] ?? 0) : 0;
+			return [key, val - prevVal];
+		}),
+	),
+);
 </script>
 
 <Isolate>
@@ -25,18 +41,29 @@ let entries = $derived(Object.entries(counts).toSorted(([_a, a], [_b, b]) => b -
 
   <GutterCenter >
     <BarChart data={counts} title={title}/>
+    {#if prevPeriodCounts != null}
+      <BarChart data={deltas} title="Change" />
+    {/if}
     
     <table>
     	<thead>
     		<tr>
-    			<th>Lint ID</th>
+    			<th>{keyLabel}</th>
     			<th>Value</th>
     		</tr>
     	</thead>
     	<tbody>
         {#each entries as [key, value] }
     		  <tr>
-    		  	<th scope="row">{key}</th>
+    		  	<th scope="row">
+              {#if keyLinkGenerator != null}
+                <a href={keyLinkGenerator(key)}>
+                  {key}
+                </a>
+              {:else}
+                {key}
+              {/if}
+              </th>
     		  	<td>{value}</td>
     		  </tr>
         {/each}

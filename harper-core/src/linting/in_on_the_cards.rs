@@ -23,7 +23,7 @@ impl InOnTheCards {
 
         let pre_context = FirstMatchOf::new([
             Box::new(InflectionOfBe::new()) as Box<dyn Expr>,
-            Box::new(WordSet::new(&[
+            Box::new(WordSet::new([
                 "isn't", "it's", "wasn't", "weren't", "not", "isnt", "its", "wasnt", "werent",
             ])),
         ]);

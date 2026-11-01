@@ -45,7 +45,7 @@ impl Default for NominalWants {
             }
         }
 
-        let miss = WordSet::new(&["wont", "wonts", "want", "wants"]);
+        let miss = WordSet::new(["wont", "wonts", "want", "wants"]);
         let pattern = SequenceExpr::with(is_applicable_pronoun)
             .then_whitespace()
             .then(miss);

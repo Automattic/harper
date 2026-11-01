@@ -13,8 +13,8 @@ pub struct WinPrize {
 
 impl Default for WinPrize {
     fn default() -> Self {
-        let verbs = Lrc::new(WordSet::new(&["win", "wins", "won", "winning"]));
-        let miss = Lrc::new(WordSet::new(&["price", "prices", "prise", "prises"]));
+        let verbs = Lrc::new(WordSet::new(["win", "wins", "won", "winning"]));
+        let miss = Lrc::new(WordSet::new(["price", "prices", "prise", "prises"]));
 
         let pattern = SequenceExpr::with(verbs.clone())
             .then_whitespace()

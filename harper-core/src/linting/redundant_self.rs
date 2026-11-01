@@ -16,7 +16,7 @@ impl Default for RedundantSelf {
         let reflexive_verb = Box::new(
             SequenceExpr::aco("self")
                 .t_ws_h()
-                .t_set(&[
+                .t_set([
                     "censor",
                     "censored",
                     "censors",
@@ -98,9 +98,9 @@ impl Default for RedundantSelf {
         let transitive_verb = Box::new(
             SequenceExpr::aco("self")
                 .t_ws_h()
-                .t_set(&["host", "hosted", "hosting", "hosts"])
+                .t_set(["host", "hosted", "hosting", "hosts"])
                 .t_ws()
-                .t_set(&["it", "them", "one"])
+                .t_set(["it", "them", "one"])
                 .t_ws()
                 .then(ReflexivePronoun::with_common_errors()),
         );

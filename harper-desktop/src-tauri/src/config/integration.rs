@@ -16,6 +16,7 @@ impl Integration {
             "com.apple.Notes",
             "com.tinyspeck.slackmacgap",
             "com.hnc.Discord",
+            "com.bloombuilt.dayone-mac",
         ];
 
         #[cfg(target_os = "windows")]
@@ -31,10 +32,5 @@ impl Integration {
                 enabled: true,
             })
             .collect()
-    }
-    pub fn is_integration_enabled_in(integrations: &[Self], bundle_id: &str) -> bool {
-        integrations
-            .iter()
-            .any(|integration| integration.bundle_id == bundle_id && integration.enabled)
     }
 }

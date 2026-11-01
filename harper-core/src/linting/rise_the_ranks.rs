@@ -11,7 +11,7 @@ pub struct RiseTheRanks {
 impl Default for RiseTheRanks {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&[
+            expr: SequenceExpr::word_set([
                 // legit forms of the legit verb "rise"
                 "rise", "risen", "rising", "rose",
                 // wrong forms of the legit verb "rise"

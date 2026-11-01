@@ -1,9 +1,12 @@
-use super::{ExprLinter, Lint, LintKind};
-use crate::expr::{All, Expr, FirstMatchOf, FixedPhrase, SequenceExpr};
-use crate::linting::Suggestion;
-use crate::linting::expr_linter::Chunk;
-use crate::patterns::{Invert, Word, WordSet};
-use crate::{CharStringExt, Token, TokenKind};
+use crate::{
+    CharStringExt, Token, TokenKind,
+    expr::{All, Expr, FirstMatchOf, FixedPhrase, SequenceExpr},
+    linting::{
+        ExprLinter, Lint, LintKind, Suggestion,
+        expr_linter::{Chunk, find_the_only_token_matching},
+    },
+    patterns::{Invert, Word, WordSet},
+};
 
 /// Corrects the misuse of `then` to `than`.
 pub struct ThenThan {
@@ -12,7 +15,7 @@ pub struct ThenThan {
 
 impl ThenThan {
     pub fn new() -> Self {
-        let comparison = All::new(vec![
+        let comparison = All::new([
             Box::new(FirstMatchOf::new([
                 // Comparative form of adjective
                 Box::new(
@@ -26,7 +29,7 @@ impl ThenThan {
                 ),
                 // Positive form of adjective following "more" or "less"
                 Box::new(
-                    SequenceExpr::word_set(&["more", "less"])
+                    SequenceExpr::word_set(["more", "less"])
                         .t_ws()
                         .then_kind_either(TokenKind::is_adjective, TokenKind::is_adverb)
                         .t_ws()
@@ -36,7 +39,7 @@ impl ThenThan {
                 ),
             ])) as Box<dyn Expr>,
             // Exceptions to the rule.
-            Box::new(Invert::new(WordSet::new(&["back", "this", "so", "but"]))),
+            Box::new(Invert::new(WordSet::new(["back", "this", "so", "but"]))),
         ]);
 
         Self {
@@ -74,16 +77,11 @@ impl ExprLinter for ThenThan {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let mut thans_and_thens = matched_tokens.iter().filter(|tok| {
-            tok.get_ch(source)
-                .eq_any_ignore_ascii_case_chars(&[&['t', 'h', 'a', 'n'], &['t', 'h', 'e', 'n']])
-        });
-
-        // Get the first match and ensure there's exactly one
-        let span = match (thans_and_thens.next(), thans_and_thens.next()) {
-            (Some(token), None) => token.span,
-            _ => return None,
-        };
+        let span = find_the_only_token_matching(matched_tokens, source, |t, s| {
+            t.get_ch(s)
+                .eq_any_ignore_ascii_case_chars(&[&['t', 'h', 'e', 'n'], &['t', 'h', 'a', 'n']])
+        })?
+        .span;
 
         let offending_text = span.get_content(source);
 

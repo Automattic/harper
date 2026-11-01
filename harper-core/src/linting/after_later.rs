@@ -14,7 +14,7 @@ impl Default for AfterLater {
             expr: SequenceExpr::aco("after")
                 .t_ws()
                 .then_optional(
-                    SequenceExpr::word_set(&[
+                    SequenceExpr::word_set([
                         "about",
                         "almost",
                         "approximately",

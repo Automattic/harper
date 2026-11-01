@@ -625,26 +625,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-     320 | she began again: “Où est ma chatte?” which was the first sentence in her French
-         |                      ^~~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “EST”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     320 | she began again: “Où est ma chatte?” which was the first sentence in her French
-         |                      ^~~ Did you mean to spell `est` this way?
-Suggest:
-  - Replace with: “east”
-  - Replace with: “eat”
-  - Replace with: “esp”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      320 | she began again: “Où est ma chatte?” which was the first sentence in her French
@@ -1070,15 +1050,6 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
-Message: |
-     668 | “Sure, it’s an arm, yer honour!” (He pronounced it “arrum.”)
-         |                                                     ^~~~~ `arrum` should probably be written as `arr um`.
-Suggest:
-  - Replace with: “arr um”
-
-
-
 Lint:    Regionalism (127 priority)
 Message: |
      681 | thought Alice. “I wonder what they’ll do next! As for pulling me out of the
@@ -1114,16 +1085,6 @@ Message: |
      691 | rope—Will the roof bear?—Mind that loose slate—Oh, it’s coming down! Heads
 Suggest:
   - Replace with: “Catch”
-
-
-
-Lint:    Capitalization (31 priority)
-Message: |
-     692 | below!” (a loud crash)—“Now, who did that?—It was Bill, I fancy—Who’s to go down
-         |                                                                 ^~~~~ The canonical dictionary spelling is `who's`.
-     693 | the chimney?—Nay, I shan’t! You do it!—That I won’t, then!—Bill’s to go
-Suggest:
-  - Replace with: “who's”
 
 
 
@@ -1464,15 +1425,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    1059 | ## CHAPTER VI: Pig and Pepper
-         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
-Suggest:
-  - Replace with: “## CHAPTER Vi: Pig and Pepper”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     1061 | For a minute or two she stood looking at the house, and wondering what to do
@@ -1791,15 +1743,6 @@ Suggest:
   - Replace with: “Till's”
   - Replace with: “Tile”
   - Replace with: “Till”
-
-
-
-Lint:    Capitalization (31 priority)
-Message: |
-    1582 | “Who’s making personal remarks now?” the Hatter asked triumphantly.
-         |  ^~~~~ The canonical dictionary spelling is `who's`.
-Suggest:
-  - Replace with: “who's”
 
 
 
@@ -3209,16 +3152,6 @@ Suggest:
   - Replace with: “beauty”
   - Replace with: “beaut”
   - Replace with: “beauts”
-
-
-
-Lint:    Typo (31 priority)
-Message: |
-    2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
-    2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
-         |                           ^~~~~~ `beauti` should probably be written as `beau ti`.
-Suggest:
-  - Replace with: “beau ti”
 
 
 

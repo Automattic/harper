@@ -13,14 +13,9 @@ pub struct ThingThink {
 
 impl Default for ThingThink {
     fn default() -> Self {
-        let subject_pronouns = WordSet::new(&["I", "you", "we", "they"]);
+        let subject_pronouns = WordSet::new(["I", "you", "we", "they"]);
         let indefinite_pronouns = FirstMatchOf::new([
-            Box::new(WordSet::new(&[
-                "anybody",
-                "anyone",
-                "everybody",
-                "everyone",
-            ])) as Box<dyn Expr>,
+            Box::new(WordSet::new(["anybody", "anyone", "everybody", "everyone"])) as Box<dyn Expr>,
             // "Any one thing", "every one thing", "any body thing" cause false positives.
             Box::new(FixedPhrase::from_phrase("every body")),
         ]);
@@ -29,14 +24,14 @@ impl Default for ThingThink {
             Box::new(indefinite_pronouns),
         ]);
 
-        let verb_to = SequenceExpr::word_set(&[
+        let verb_to = SequenceExpr::word_set([
             "have", "had", "has", "having", "need", "needed", "needs", "needing", "want", "wanted",
             "wants", "wanting", "try", "tried", "tries", "trying",
         ])
         .t_ws()
         .t_aco("to");
 
-        let modal = WordSet::new(&[
+        let modal = WordSet::new([
             "can",
             "cannot",
             "can't",
@@ -56,7 +51,7 @@ impl Default for ThingThink {
         ]);
 
         let adverb_of_frequency =
-            WordSet::new(&["always", "sometimes", "often", "usually", "never"]);
+            WordSet::new(["always", "sometimes", "often", "usually", "never"]);
 
         let pre_context = FirstMatchOf::new([
             Box::new(pronoun) as Box<dyn Expr>,

@@ -38,7 +38,7 @@ export default defineConfig({
 	projects: [
 		{
 			name: 'chromium',
-			workers: process.env.CI ? 1 : '50%',
+			workers: process.env.CI ? 2 : '50%',
 			use: {
 				...devices['Desktop Chrome'],
 				launchOptions: {
@@ -56,7 +56,7 @@ export default defineConfig({
 		},
 		{
 			name: 'firefox',
-			workers: process.env.CI ? 1 : '50%',
+			workers: process.env.CI ? 2 : '50%',
 			use: { ...devices['Desktop Firefox'] },
 		},
 	],

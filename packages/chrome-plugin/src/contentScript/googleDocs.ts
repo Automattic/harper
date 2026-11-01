@@ -55,7 +55,6 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 	let bridgeAttached = false;
 	let syncInFlight = false;
 	let syncPending = false;
-	let syncingClearTimer: number | null = null;
 	let lastCloneSignature = '';
 	let injectedMainWorldBridge = false;
 
@@ -193,6 +192,13 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 		const fontCss = segment.rectNode.getAttribute('data-font-css');
 		if (fontCss) {
 			span.style.font = fontCss;
+			// Docs zooms the SVG, but data-font-css remains in unscaled SVG units.
+			// The mirror uses screen-space geometry, so its font must use the same scale.
+			const svgWidth = segment.rectNode.width.baseVal.value;
+			const fontSize = Number.parseFloat(span.style.fontSize);
+			if (svgWidth > 0 && Number.isFinite(fontSize)) {
+				span.style.fontSize = `${fontSize * (segment.rect.width / svgWidth)}px`;
+			}
 		}
 
 		return span;
@@ -535,10 +541,6 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 			}
 
 			const target = ensureTarget(editor);
-			if (syncingClearTimer != null) {
-				window.clearTimeout(syncingClearTimer);
-				syncingClearTimer = null;
-			}
 			editor.setAttribute(GOOGLE_DOCS_SYNCING_ATTR, 'true');
 
 			const changed = applySnapshot(target, buildSnapshot(editor));
@@ -555,10 +557,9 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 		} finally {
 			const editor = document.querySelector(GOOGLE_DOCS_EDITOR_SELECTOR);
 			if (editor instanceof HTMLElement) {
-				syncingClearTimer = window.setTimeout(() => {
-					editor.removeAttribute(GOOGLE_DOCS_SYNCING_ATTR);
-					syncingClearTimer = null;
-				}, 150);
+				// Snapshot replacement is complete before the queued animation-frame render.
+				// Keeping this flag set delays that render until an unrelated later update.
+				editor.removeAttribute(GOOGLE_DOCS_SYNCING_ATTR);
 			}
 
 			syncInFlight = false;

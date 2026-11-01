@@ -1,6 +1,7 @@
 import type { VNode } from 'virtual-dom';
 import h from 'virtual-dom/h';
 import type { LintBox } from './Box';
+import { nonEditableAncestor } from './domUtils';
 import {
 	getCMRoot,
 	getDraftRoot,
@@ -24,7 +25,7 @@ import {
 	isGoogleDocsSourceSyncing,
 } from './googleDocsAdapter';
 import { type LintKind, lintKindColor } from './lintKindColor';
-import RenderBox from './RenderBox';
+import RenderBox, { FIXED_FRAME_MARKER_ID, type FixedFrame } from './RenderBox';
 import type SourceElement from './SourceElement';
 import type { UnpackedLint } from './unpackLint';
 
@@ -32,6 +33,8 @@ import type { UnpackedLint } from './unpackLint';
 export default class Highlights {
 	renderBoxes: Map<SourceElement, RenderBox>;
 	highlights: Map<LintKind, Highlight> | null;
+	/** The `<style>` elements this instance inserted for each highlight, by element id. */
+	private highlightStyles: Map<string, HTMLStyleElement> = new Map();
 
 	constructor() {
 		this.renderBoxes = new Map();
@@ -45,7 +48,10 @@ export default class Highlights {
 		const backgroundColor = `${color}22`;
 
 		const styleId = `harper-highlight-style-${lint.lint_kind}`;
-		if (document.getElementById(styleId)) return;
+		// Check for our own element rather than the id: edited content can carry an element with the
+		// same id (e.g. a reply quoting a message that was sent with Harper's markup), which would
+		// otherwise leave the highlight without any style.
+		if (this.highlightStyles.get(styleId)?.isConnected) return;
 
 		const style = document.createElement('style');
 		style.id = styleId;
@@ -56,6 +62,7 @@ export default class Highlights {
       }
     `;
 		document.head.appendChild(style);
+		this.highlightStyles.set(styleId, style);
 	}
 
 	public renderLintBoxes(boxes: LintBox[]) {
@@ -74,6 +81,7 @@ export default class Highlights {
 				let highlight = this.highlights.get(box.lint.lint_kind);
 
 				if (highlight != null) {
+					this.insertHighlightStyle(`harper-${box.lint.lint_kind}`, box.lint);
 					highlight.add(box.range);
 				} else {
 					highlight = new Highlight();
@@ -149,7 +157,21 @@ export default class Highlights {
 				googleDocsRenderOffset ?? (isGoogleDocs || cpa == null ? null : { x: cpa.x, y: cpa.y });
 			const boxPosition: 'absolute' | 'fixed' = isGoogleDocs ? 'absolute' : 'fixed';
 
-			renderBox.render(this.renderTree(boxes, offset, boxPosition));
+			// Lint boxes are measured in viewport pixels, but the render box lives inside the
+			// source's subtree, where ancestors with `zoom`, `transform` or `scale` can move and
+			// scale fixed-position content. Map the boxes through the frame we actually get.
+			if (isGoogleDocs) {
+				renderBox.render(this.renderTree(boxes, offset, boxPosition));
+			} else {
+				// The frame is measured from a marker in the previous render, so render once more
+				// when it was missing or has moved since.
+				const before = renderBox.measureFixedFrame();
+				renderBox.render(this.renderTree(boxes, before, boxPosition));
+				const after = renderBox.measureFixedFrame();
+				if (after != null && !framesEqual(before, after)) {
+					renderBox.render(this.renderTree(boxes, after, boxPosition));
+				}
+			}
 			updated.add(source);
 		}
 
@@ -177,16 +199,38 @@ export default class Highlights {
 
 	private renderTree(
 		boxes: LintBox[],
-		offset: { x: number; y: number } | null,
+		frame: { x: number; y: number; scaleX?: number; scaleY?: number } | null,
 		boxPosition: 'absolute' | 'fixed',
 	): VNode {
 		const elements = [];
-		const offsetX = offset?.x ?? 0;
-		const offsetY = offset?.y ?? 0;
+		const offsetX = frame?.x ?? 0;
+		const offsetY = frame?.y ?? 0;
+		const scale = { x: frame?.scaleX ?? 1, y: frame?.scaleY ?? 1 };
+
+		if (boxPosition === 'fixed') {
+			elements.push(
+				h(
+					'div',
+					{
+						id: FIXED_FRAME_MARKER_ID,
+						style: {
+							position: 'fixed',
+							left: '0px',
+							top: '0px',
+							width: '100px',
+							height: '100px',
+							visibility: 'hidden',
+							pointerEvents: 'none',
+						},
+					},
+					[],
+				),
+			);
+		}
 
 		for (const box of boxes) {
-			const x = box.x - offsetX;
-			const y = box.y - offsetY;
+			const x = (box.x - offsetX) / scale.x;
+			const y = (box.y - offsetY) / scale.y;
 			const positionStyle =
 				boxPosition === 'fixed'
 					? {
@@ -206,13 +250,16 @@ export default class Highlights {
 				{
 					style: {
 						...positionStyle,
-						width: `${box.width}px`,
-						height: `${box.height}px`,
+						width: `${box.width / scale.x}px`,
+						height: `${box.height / scale.y}px`,
 						pointerEvents: 'none',
 						borderBottom: `2px solid ${lintKindColor(box.lint.lint_kind)}`,
 						backgroundColor: `${lintKindColor(box.lint.lint_kind)}22`,
 					},
 					id: 'harper-highlight',
+					attributes: {
+						'data-problem-text': box.lint.problem_text,
+					},
 				},
 				[],
 			);
@@ -258,8 +305,18 @@ export default class Highlights {
 			}
 		}
 
-		return el.parentElement!;
+		return nonEditableAncestor(el.parentElement!);
 	}
+}
+
+function framesEqual(a: FixedFrame | null, b: FixedFrame): boolean {
+	return (
+		a != null &&
+		Math.abs(a.x - b.x) < 0.5 &&
+		Math.abs(a.y - b.y) < 0.5 &&
+		Math.abs(a.scaleX - b.scaleX) < 0.001 &&
+		Math.abs(a.scaleY - b.scaleY) < 0.001
+	);
 }
 
 function getInitialContainingRect(el: HTMLElement): DOMRect | null {

@@ -1,0 +1,30 @@
+expr main (kids-friendly)
+
+let message "Change `kids-friendly` to `kid-friendly`."
+let description "In English, when a noun acts as an adjective in a compound modifier, it remains in its singular form (e.g., `kid-friendly`, not `kids-friendly`)."
+let kind "Usage"
+let becomes "kid-friendly"
+
+# Contrived example
+
+test "Zus Coffee has a kids-friendly menu" "Zus Coffee has a kid-friendly menu"
+
+# Real-world examples
+
+test "Besides Jonker street, there are many places in Melaka that are kids-friendly." "Besides Jonker street, there are many places in Melaka that are kid-friendly."
+test "With MCQ assessments and a vibrant, kids-friendly UI, it transforms education into an exciting adventure" "With MCQ assessments and a vibrant, kid-friendly UI, it transforms education into an exciting adventure"
+test "we will suggest 10 easy-to-make kids-friendly science projects" "we will suggest 10 easy-to-make kid-friendly science projects"
+
+# Currently fails due to #3741 replace_with_match_case causes problems due to working by single character index at a time
+#test "The Kids-Friendly Retro Gaming Console." "The Kid-Friendly Retro Gaming Console."
+
+# We don't tackle non-hyphenated variants here since they're ambiguous without more context/analysis
+
+# Wrong, but we know we can't fix it yet
+allows "Kids Friendly Web App."
+
+# Legit use (very hard to find!)
+allows "A leading preschool shares top 6 ways to make kids friendly & social"
+
+# Ambiguous, probably wrong but no way to mechanically determine
+allows "Ability to make this more kids friendly"

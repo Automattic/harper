@@ -27,8 +27,11 @@ pub fn set_up_tray_menu(app: &AppHandle) -> tauri::Result<()> {
     let highlighter_service: State<HighlighterService> = app.state();
     let async_runtime: State<AsyncRuntime> = app.state();
 
+    let initial_is_running = highlighter_service.is_running();
+
     let tray_icon = TrayIconBuilder::new()
-        .icon(menu_bar_icon(highlighter_service.is_running())?)
+        .icon(menu_bar_icon(initial_is_running)?)
+        .icon_as_template(cfg!(target_os = "macos"))
         .menu(&tray_menu(app)?)
         .on_menu_event(move |app, event| {
             let event_id = event.id().0.as_str();
@@ -58,21 +61,35 @@ pub fn set_up_tray_menu(app: &AppHandle) -> tauri::Result<()> {
 
     let app = app.clone();
     async_runtime.spawn(async move {
+        let mut shown_is_running = initial_is_running;
+
         loop {
             sleep(Duration::from_millis(250)).await;
 
-            {
+            let is_running = {
                 let highlighter_service: State<HighlighterService> = app.state();
-                let is_running = highlighter_service.is_running();
+                highlighter_service.is_running()
+            };
 
-                let Ok(new_icon) = menu_bar_icon(is_running) else {
-                    error!("Unable to generate new menu bar icon.");
-                    continue;
-                };
+            // Only touch the tray when the service state actually changes.
+            // Re-decoding the icon and calling set_icon four times a second
+            // regardless is pure waste, and on Windows it eventually starts
+            // failing: after several days the shell began rejecting every
+            // update with ERROR_TIMEOUT, filling the log and leaving the tray
+            // icon unresponsive.
+            if is_running == shown_is_running {
+                continue;
+            }
 
-                let _ = tray_icon
-                    .set_icon(Some(new_icon))
-                    .inspect_err(|err| error!("Unable to set new icon: {err}"));
+            let Ok(new_icon) = menu_bar_icon(is_running) else {
+                error!("Unable to generate new menu bar icon.");
+                continue;
+            };
+
+            match tray_icon.set_icon_with_as_template(Some(new_icon), cfg!(target_os = "macos")) {
+                Ok(()) => shown_is_running = is_running,
+                // Leave the remembered state alone so the next tick retries.
+                Err(err) => error!("Unable to set new icon: {err}"),
             }
         }
     });
@@ -80,32 +97,42 @@ pub fn set_up_tray_menu(app: &AppHandle) -> tauri::Result<()> {
     Ok(())
 }
 
-fn service_status_color(is_running: bool) -> [u8; 4] {
-    match is_running {
-        true => [34, 197, 94, 255],
-        false => [239, 68, 68, 255],
-    }
-}
-
+/// Builds the logo with a dot beneath it only while the service is running.
+/// On macOS the alpha channel serves as a template mask; other platforms show white.
+/// Both states retain the asset's original dimensions and logo placement.
 pub fn menu_bar_icon(is_running: bool) -> tauri::Result<Image<'static>> {
     let icon = Image::from_bytes(include_bytes!("../icons/menu-bar-icon.png"))?;
     let width = icon.width();
     let height = icon.height();
     let mut rgba = icon.rgba().to_vec();
 
-    draw_status_line(&mut rgba, width, height, service_status_color(is_running));
+    if is_running {
+        draw_status_dot(&mut rgba, width, height);
+    }
 
     Ok(Image::new_owned(rgba, width, height))
 }
 
-fn draw_status_line(rgba: &mut [u8], width: u32, height: u32, color: [u8; 4]) {
-    let line_height = (height.min(width) / 14).max(3);
-    let start_y = height.saturating_sub(line_height);
+/// Draws a white, antialiased status dot in the transparent space below the logo.
+/// Pixel coverage controls alpha so macOS can tint the dot with the template image.
+fn draw_status_dot(rgba: &mut [u8], width: u32, height: u32) {
+    let radius = width.min(height) as f32 / 20.0;
+    let center_x = width as f32 / 2.0;
+    let center_y = height as f32 - radius * 2.0;
 
-    for y in start_y..height {
+    for y in 0..height {
         for x in 0..width {
-            let index = ((y * width + x) * 4) as usize;
-            rgba[index..index + 4].copy_from_slice(&color);
+            let distance = (x as f32 + 0.5 - center_x).hypot(y as f32 + 0.5 - center_y);
+            let coverage = (radius + 0.5 - distance).clamp(0.0, 1.0);
+            if coverage > 0.0 {
+                let index = ((y * width + x) * 4) as usize;
+                rgba[index..index + 4].copy_from_slice(&[
+                    255,
+                    255,
+                    255,
+                    (coverage * 255.0).round() as u8,
+                ]);
+            }
         }
     }
 }

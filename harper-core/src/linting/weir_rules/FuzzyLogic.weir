@@ -1,0 +1,9 @@
+expr main (fussy logic)
+
+let message "Unless this is intentional humorous wordplay, use 'fuzzy logic' instead of 'fussy logic'."
+let description "Corrects `fussy logic` to `fuzzy logic`."
+let kind "Eggcorn"
+let becomes "fuzzy logic"
+
+test "Implementation of Motor Speed Control by Using Fussy Logic." "Implementation of Motor Speed Control by Using Fuzzy Logic."
+test "A ROS Tutorial to control a virtual V-REP Hexacopter using Fussy logic" "A ROS Tutorial to control a virtual V-REP Hexacopter using Fuzzy logic"

@@ -16,7 +16,7 @@ pub struct PrepositionalPrecederPattern {
 impl Default for PrepositionalPrecederPattern {
     fn default() -> Self {
         Self {
-            word_set: WordSet::new(&[
+            word_set: WordSet::new([
                 "accustomed",
                 "addicted",
                 "adjacent",

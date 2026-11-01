@@ -13,12 +13,12 @@ pub struct RunIntoProblemsOrTrouble {
 impl Default for RunIntoProblemsOrTrouble {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["run", "ran", "running", "runs"])
+            expr: SequenceExpr::word_set(["run", "ran", "running", "runs"])
                 .t_ws()
                 .t_aco("into")
                 .t_ws()
                 .then_any_of([
-                    Box::new(WordSet::new(&["problem", "troubles"])) as Box<dyn Expr>,
+                    Box::new(WordSet::new(["problem", "troubles"])) as Box<dyn Expr>,
                     Box::new(SequenceExpr::word_seq(&["a", "trouble"])),
                     Box::new(SequenceExpr::word_seq(&["further", "troubles"])),
                 ]),

@@ -13,10 +13,10 @@ pub struct ItWouldBe {
 impl Default for ItWouldBe {
     fn default() -> Self {
         /* ─────────────── helpers ─────────────── */
-        let head_verbs = WordSet::new(&["believe", "doubt", "think", "assume", "guess"]);
-        let modals = WordSet::new(&["might", "would", "will"]);
-        let adjectives = WordSet::new(&["good", "bad", "wonderful", "real"]);
-        let tail_nouns = WordSet::new(&[
+        let head_verbs = WordSet::new(["believe", "doubt", "think", "assume", "guess"]);
+        let modals = WordSet::new(["might", "would", "will"]);
+        let adjectives = WordSet::new(["good", "bad", "wonderful", "real"]);
+        let tail_nouns = WordSet::new([
             "bummer",
             "pity",
             "shame",

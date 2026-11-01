@@ -15,7 +15,7 @@ impl Default for WidelyAccepted {
         let expr = SequenceExpr::default()
             .t_aco("wide")
             .then_whitespace()
-            .then_word_set(&["accepted", "acceptable", "used"]);
+            .then_word_set(["accepted", "acceptable", "used"]);
 
         Self { expr }
     }

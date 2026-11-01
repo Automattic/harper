@@ -16,7 +16,7 @@ impl Default for PaleByComparison {
                 .t_ws()
                 .t_aco("pale")
                 .t_ws()
-                .t_set(&["by", "in"])
+                .t_set(["by", "in"])
                 .t_ws()
                 .t_aco("comparison"),
         }
@@ -68,7 +68,7 @@ impl ExprLinter for PaleByComparison {
     }
 
     fn description(&self) -> &str {
-        "A linter skeleton for contributors to copy into `harper_core/src/linting/` and rename."
+        "Corrects variants of the idiom \"pale by/in comparison\" where pale is incorrectly used as an adjective instead of a verb."
     }
 }
 
