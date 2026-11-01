@@ -3541,6 +3541,13 @@
 					"settings": [
 						{
 							"Bool": {
+								"name": "ABitOfPlural",
+								"state": true,
+								"label": "A Bit of Plural"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AdjectiveDoubleDegree",
 								"state": true,
 								"label": "Adjective Double Degree"
