@@ -140,6 +140,7 @@ use super::have_take_a_look::HaveTakeALook;
 use super::hedging::Hedging;
 use super::hello_greeting::HelloGreeting;
 use super::helped_past::HelpedPast;
+use super::here_are_a_collection::HereAreACollection;
 use super::hereby::Hereby;
 use super::high_low_standards::HighLowStandards;
 use super::hop_hope::HopHope;
@@ -667,8 +668,8 @@ impl LintGroup {
         insert_expr_rule!(AmInTheMorning);
         insert_expr_rule!(AmountsFor);
         insert_struct_rule_with_dialect!(AnA);
-        insert_expr_rule_with_dialect!(AnalogAcousticBike);
         insert_expr_rule!(AnArmAndALeg);
+        insert_expr_rule_with_dialect!(AnalogAcousticBike);
         insert_expr_rule!(AndTheLike);
         insert_expr_rule!(AnotherThingComing);
         insert_expr_rule!(AnotherThinkComing);
@@ -764,8 +765,8 @@ impl LintGroup {
         insert_expr_rule!(ForTheNthTime);
         insert_expr_rule!(FreePredicate);
         insert_expr_rule!(FriendOfMe);
-        insert_expr_rule!(GetAccessAt);
         insert_expr_rule!(FullToTheBrim);
+        insert_expr_rule!(GetAccessAt);
         insert_expr_rule!(GetPassGoPass);
         insert_expr_rule!(GoMissing);
         insert_expr_rule!(GoSoFarAsTo);
@@ -780,6 +781,7 @@ impl LintGroup {
         insert_expr_rule!(Hedging);
         insert_expr_rule!(HelloGreeting);
         insert_expr_rule_with_dict!(HelpedPast);
+        insert_expr_rule!(HereAreACollection);
         insert_expr_rule!(Hereby);
         insert_expr_rule!(HighLowStandards);
         insert_struct_rule!(HopHope);
@@ -944,8 +946,8 @@ impl LintGroup {
         insert_expr_rule!(Themself);
         insert_expr_rule!(ThenThan);
         insert_expr_rule!(ThereOwn);
-        insert_expr_rule!(Theres);
         insert_expr_rule!(Therein);
+        insert_expr_rule!(Theres);
         insert_expr_rule!(ThesesThese);
         insert_struct_rule!(TheyreConfusions);
         insert_expr_rule!(ThingThink);
