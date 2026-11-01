@@ -3,7 +3,6 @@ use crate::{
     expr::{Expr, FirstMatchOf, OwnedExprExt, SequenceExpr},
     linting::{
         ExprLinter, LintKind, Suggestion,
-        debug::format_lint_match,
         expr_linter::{Chunk, following_word},
     },
     patterns::WordSet,
@@ -17,11 +16,11 @@ impl Default for CommandLine {
     fn default() -> Self {
         Self {
             expr: FirstMatchOf::new([
-                Box::new(WordSet::new(&["commandsline", "commandlines"])) as Box<dyn Expr>,
+                Box::new(WordSet::new(["commandsline", "commandlines"])) as Box<dyn Expr>,
                 Box::new(
-                    SequenceExpr::word_set(&["command", "commands"])
+                    SequenceExpr::word_set(["command", "commands"])
                         .t_ws_h()
-                        .t_set(&["line", "lines"])
+                        .t_set(["line", "lines"])
                         .but_not(SequenceExpr::aco("command").t_ws_h().t_aco("line")),
                 ),
             ]),
@@ -38,7 +37,6 @@ impl ExprLinter for CommandLine {
         src: &[char],
         ctx: Option<(&[Token], &[Token])>,
     ) -> Option<Lint> {
-        eprintln!("🚨 {}", format_lint_match(toks, ctx, src));
         let span = toks.span()?;
 
         let is_closed_compound = match toks.len() {
@@ -67,14 +65,6 @@ impl ExprLinter for CommandLine {
 
         let maybe_next_word = following_word(ctx).map(|t| t.get_ch(src));
 
-        eprintln!(
-            "🍑{}🍎{}🍐{}{}",
-            command.to_string(),
-            sep.to_string(),
-            line.to_string(),
-            maybe_next_word.map_or(String::new(), |w| format!(" 〖{}〗", w.to_string()))
-        );
-
         let (pl_cmd, pl_line) = (
             command.ends_with_ignore_ascii_case_chars(&['s']),
             line.ends_with_ignore_ascii_case_chars(&['s']),
@@ -84,7 +74,7 @@ impl ExprLinter for CommandLine {
         if !pl_cmd && pl_line && maybe_next_word.is_some_and(|c| c.eq_ch(&['a', 't'])) {
             return None;
         }
-        // about for 'commands line by line'
+        // abort for 'commands line by line'
         if pl_cmd && !pl_line && maybe_next_word.is_some_and(|c| c.eq_ch(&['b', 'y'])) {
             return None;
         }
@@ -96,7 +86,7 @@ impl ExprLinter for CommandLine {
             (&command[0..7], &line[0..4])
         };
 
-        let message = "Fix this erorr".to_owned();
+        let message = "The modifier noun in a compound should not be plural.".to_owned();
 
         Some(Lint {
             span,
@@ -112,7 +102,7 @@ impl ExprLinter for CommandLine {
     }
 
     fn description(&self) -> &str {
-        "Corrects wrong variants of `command line`."
+        "Corrects plural modifiers used with `command line`."
     }
 }
 
