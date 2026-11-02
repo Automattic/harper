@@ -1,5 +1,6 @@
 ---
 title: Harper's Architecture
+description: Explore the Harper architecture and find the components that parse text, check grammar, and support integrations.
 ---
 
 This document seeks to solve one simple problem:

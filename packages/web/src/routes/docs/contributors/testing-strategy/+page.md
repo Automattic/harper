@@ -1,5 +1,6 @@
 ---
 title: Harper's Testing Strategy
+description: Understand the Harper testing strategy, software quality goals, and role of automated checks and production feedback.
 ---
 
 Harper is a complex project. We deliver many artifacts to many users, and the automated processes we use to do so can seem intimidating.

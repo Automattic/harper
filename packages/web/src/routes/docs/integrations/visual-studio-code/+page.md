@@ -1,5 +1,6 @@
 ---
 title: Visual Studio Code
+description: Install the Harper Visual Studio Code extension and configure grammar checking through its language server settings.
 ---
 
 For our Visual Studio Code integration, we provide an extension powered by [`harper-ls`](./language-server), which also works for VS Code forks like VSCodium and Windsurf. It's available in the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=elijah-potter.harper) as well as the [Open VSX Registry](https://open-vsx.org/extension/elijah-potter/harper).
