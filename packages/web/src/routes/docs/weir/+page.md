@@ -1,3 +1,7 @@
+---
+title: The Weir Language
+---
+
 # The Weir Language
 
 Most large organizations have a style guide.
