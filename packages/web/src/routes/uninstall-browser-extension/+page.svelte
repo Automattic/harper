@@ -10,6 +10,7 @@ const reasons = {
 	'false-positive': 'It incorrectly flagged my text as an error',
 	'false-negative': "It didn't identify enough errors in my text",
 	'no-positives': "It didn't identify any errors in my text",
+	'malfunction-on-important-site': "Harper didn't work on a site I use regularly.",
 	other: 'Other',
 };
 
