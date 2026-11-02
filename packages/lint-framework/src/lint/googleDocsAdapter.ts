@@ -13,6 +13,8 @@ const GOOGLE_DOCS_EDITOR_SELECTOR = '.kix-appview-editor';
 const GOOGLE_DOCS_SYNCING_ATTR = 'data-harper-gdocs-syncing';
 // biome-ignore lint/suspicious/noControlCharactersInRegex: Must match the content script's native table projection.
 const GOOGLE_DOCS_TABLE_SEPARATORS = /[\u0010\u0011\u0012\u001c]/gu;
+// biome-ignore lint/suspicious/noControlCharactersInRegex: Match extraction's one-unit lint projection of native Shift+Enter.
+const GOOGLE_DOCS_SOFT_BREAKS = /\u000b/gu;
 // biome-ignore lint/suspicious/noControlCharactersInRegex: Corrections must not cross native structural boundaries.
 const GOOGLE_DOCS_CONTROL_CHARACTERS = /[\u0000-\u001f]/u;
 
@@ -24,7 +26,9 @@ function resolveNativeSpan(
 ): UnpackedSpan | null {
 	const runs: unknown = JSON.parse(target.getAttribute('data-harper-gdocs-native-runs') ?? 'null');
 	if (!Array.isArray(runs) || runs.length === 0) return null;
-	const masked = nativeSnapshot.replace(GOOGLE_DOCS_TABLE_SEPARATORS, '\n');
+	const masked = nativeSnapshot
+		.replace(GOOGLE_DOCS_TABLE_SEPARATORS, '\n')
+		.replace(GOOGLE_DOCS_SOFT_BREAKS, ' ');
 	let projectionCursor = 0;
 	let nativeCursor = 0;
 	let resolved: UnpackedSpan | null = null;

@@ -26,6 +26,8 @@ const GOOGLE_DOCS_MIN_PARAGRAPH_BREAK_GAP_PX = 6;
 const GOOGLE_DOCS_PARAGRAPH_BREAK_RATIO = 0.5;
 // biome-ignore lint/suspicious/noControlCharactersInRegex: Observed native Google Docs table separators, masked one code unit at a time.
 const GOOGLE_DOCS_TABLE_SEPARATORS = /[\u0010\u0011\u0012\u001c]/gu;
+// biome-ignore lint/suspicious/noControlCharactersInRegex: Native Shift+Enter becomes one space only in the lint projection.
+const GOOGLE_DOCS_SOFT_BREAKS = /\u000b/gu;
 // biome-ignore lint/suspicious/noControlCharactersInRegex: Native control characters cannot own visible source geometry.
 const GOOGLE_DOCS_CONTROL_CHARACTERS = /[\u0000-\u001f]/u;
 
@@ -570,7 +572,9 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 		// Mask the observed controls without changing source characters. Confirmed
 		// paragraph boundaries below can add LF, so lint offsets need explicit runs.
 		// This is not a parser for the complete Google Docs control grammar.
-		const masked = nativeSnapshot.replace(GOOGLE_DOCS_TABLE_SEPARATORS, '\n');
+		const masked = nativeSnapshot
+			.replace(GOOGLE_DOCS_TABLE_SEPARATORS, '\n')
+			.replace(GOOGLE_DOCS_SOFT_BREAKS, ' ');
 		const comparable = nativeSnapshot.replace(/\u00a0/gu, ' ');
 		const matchesBySegment = new Map<
 			GoogleDocsRectSegment,
