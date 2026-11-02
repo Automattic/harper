@@ -111,6 +111,16 @@ mod tests {
     }
 
     #[test]
+    fn no_it_self_before_hyphenated_compound() {
+        assert_no_lints("it self-levels itself", lint_group());
+    }
+
+    #[test]
+    fn no_my_self_before_hyphenated_compound() {
+        assert_no_lints("I worked on my self-esteem.", lint_group());
+    }
+
+    #[test]
     fn my_self() {
         let test_sentence = "He treated my self with respect.";
         let expected = "He treated myself with respect.";

@@ -4,7 +4,7 @@ use crate::expr::FixedPhrase;
 use crate::expr::LongestMatchOf;
 use crate::expr::SimilarToPhrase;
 use crate::linting::Suggestion;
-use crate::linting::expr_linter::Chunk;
+use crate::linting::expr_linter::{Chunk, followed_by_hyphen};
 use crate::weir::weir_expr_to_expr;
 use crate::{Token, TokenStringExt};
 
@@ -14,6 +14,9 @@ pub struct MapPhraseLinter {
     correct_forms: Vec<String>,
     message: String,
     lint_kind: LintKind,
+    /// Skip a match whose last word starts a hyphenated compound, as in
+    /// "it self-levels", where joining the words would be wrong.
+    skip_before_hyphen: bool,
 }
 
 impl MapPhraseLinter {
@@ -30,6 +33,7 @@ impl MapPhraseLinter {
             correct_forms: correct_forms.into_iter().map(|f| f.to_string()).collect(),
             message: message.to_string(),
             lint_kind: lint_kind.unwrap_or(LintKind::Miscellaneous),
+            skip_before_hyphen: false,
         }
     }
 
@@ -94,13 +98,16 @@ impl MapPhraseLinter {
             correct_form.to_string()
         );
 
-        Self::new_fixed_phrases(
-            phrases,
-            [correct_form],
-            message,
-            description,
-            Some(LintKind::Miscellaneous),
-        )
+        Self {
+            skip_before_hyphen: true,
+            ..Self::new_fixed_phrases(
+                phrases,
+                [correct_form],
+                message,
+                description,
+                Some(LintKind::Miscellaneous),
+            )
+        }
     }
 }
 
@@ -111,7 +118,16 @@ impl ExprLinter for MapPhraseLinter {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint_with_context(
+        &self,
+        matched_tokens: &[Token],
+        source: &[char],
+        context: Option<(&[Token], &[Token])>,
+    ) -> Option<Lint> {
+        if self.skip_before_hyphen && followed_by_hyphen(context) {
+            return None;
+        }
+
         let span = matched_tokens.span()?;
         let matched_text = span.get_content(source);
 
