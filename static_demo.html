@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Harper Español - Corrector de Texto e Interfaz Profesional</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    body { background-color: #0f172a; color: #f8fafc; padding: 2rem; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+    .container { max-width: 900px; width: 100%; background: #1e293b; border-radius: 16px; padding: 2.5rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5); border: 1px solid #334155; position: relative; }
+    h1 { font-size: 2rem; font-weight: 700; color: #38bdf8; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.75rem; }
+    p.subtitle { color: #94a3b8; font-size: 0.95rem; margin-bottom: 2rem; }
+    
+    .demo-buttons { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .btn-sample { background: #334155; color: #e2e8f0; border: 1px solid #475569; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 500; transition: all 0.2s; }
+    .btn-sample:hover { background: #38bdf8; color: #0f172a; border-color: #38bdf8; }
+
+    /* Editor de doble capa estilo Grammarly: Cero saltos de cursor */
+    .editor-box { position: relative; width: 100%; height: 260px; background: #0f172a; border: 2px solid #334155; border-radius: 12px; overflow: hidden; }
+    .editor-box:focus-within { border-color: #38bdf8; box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2); }
+
+    .backdrop, textarea {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      padding: 1.25rem; font-size: 1.15rem; line-height: 1.8;
+      white-space: pre-wrap; word-break: break-word; overflow-y: auto;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .backdrop { color: transparent; pointer-events: none; z-index: 1; }
+    textarea { background: transparent; color: #f8fafc; border: none; outline: none; resize: none; caret-color: #38bdf8; z-index: 2; }
+
+    /* Estilos de subrayado dentro del backdrop */
+    mark.lint-mark {
+      color: transparent;
+      text-decoration: underline wavy #f43f5e;
+      text-underline-offset: 5px;
+      text-decoration-thickness: 2px;
+      background: rgba(244, 63, 94, 0.2);
+      border-radius: 3px;
+    }
+    mark.lint-mark.grammar {
+      text-decoration-color: #f59e0b;
+      background: rgba(245, 158, 11, 0.2);
+    }
+    mark.lint-mark.punctuation {
+      text-decoration-color: #a855f7;
+      background: rgba(168, 85, 247, 0.2);
+    }
+
+    /* Panel de tarjetas de observación e interacción abajo */
+    .results-panel { margin-top: 1.5rem; }
+    .results-header { font-size: 1rem; font-weight: 600; color: #cbd5e1; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; }
+    .lint-card { background: #0f172a; border-left: 4px solid #f43f5e; border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 0.75rem; display: flex; flex-direction: column; gap: 0.5rem; }
+    .lint-card.grammar { border-left-color: #f59e0b; }
+    .lint-card.punctuation { border-left-color: #a855f7; }
+    .lint-message { font-size: 0.95rem; font-weight: 500; color: #f1f5f9; }
+    .lint-suggestions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.25rem; }
+    .sug-pill { background: #0284c7; color: #ffffff; padding: 0.35rem 0.75rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: background 0.15s; }
+    .sug-pill:hover { background: #38bdf8; color: #0f172a; }
+
+    .badge-ok { background: #10b981; color: #064e3b; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
+    .badge-error { background: #ef4444; color: #7f1d1d; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🇪🇸 Harper Español - Corrector Profesional</h1>
+    <p class="subtitle">Corrige ortografía, signos de puntuación (comas, puntos y comas), concordancia de género y dequeísmo en tiempo real.</p>
+
+    <div class="demo-buttons">
+      <button class="btn-sample" onclick="setSample('Tengo la problema con la foto y el mano en el mapa.')">📌 Concordancia de Género</button>
+      <button class="btn-sample" onclick="setSample('El profesor dijo de que los niños juega en el parque y estoy seguro que ganarán.')">📌 Dequeísmo y Sujeto-Verbo</button>
+      <button class="btn-sample" onclick="setSample('Hola , mundo ; esto es una prueba,,con faltas de ortografia.')">📌 Puntuación (, ; ,,)</button>
+      <button class="btn-sample" onclick="setSample('El parce me dijo que la biblioteca Hyphen admite codificaciones UTF-8.')">📌 Regionalismos y Técnico</button>
+    </div>
+
+    <div class="editor-box">
+      <div id="backdrop" class="backdrop"></div>
+      <textarea id="textarea" placeholder="Escribe o pega aquí cualquier texto en español..." oninput="onInput()" onscroll="syncScroll()"></textarea>
+    </div>
+
+    <div class="results-panel">
+      <div class="results-header">
+        <span>Observaciones Detectadas</span>
+        <span id="status-badge" class="badge-ok">✅ Sin errores</span>
+      </div>
+      <div id="lints-list"></div>
+    </div>
+  </div>
+
+  <script>
+    const textarea = document.getElementById('textarea');
+    const backdrop = document.getElementById('backdrop');
+    const lintsList = document.getElementById('lints-list');
+    const statusBadge = document.getElementById('status-badge');
+
+    let timer = null;
+    let currentLints = [];
+
+    function syncScroll() {
+      backdrop.scrollTop = textarea.scrollTop;
+      backdrop.scrollLeft = textarea.scrollLeft;
+    }
+
+    function setSample(text) {
+      textarea.value = text;
+      onInput();
+    }
+
+    function onInput() {
+      syncScroll();
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        runCheck();
+      }, 150);
+    }
+
+    async function runCheck() {
+      const text = textarea.value;
+      if (!text.trim()) {
+        backdrop.innerHTML = '';
+        lintsList.innerHTML = '';
+        statusBadge.className = 'badge-ok';
+        statusBadge.textContent = '✅ Sin errores';
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/check', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text })
+        });
+        currentLints = await res.json();
+        renderBackdropAndList(text, currentLints);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function renderBackdropAndList(text, lints) {
+      // 1. Renderizar marcas transparentes en el Backdrop
+      lints.sort((a, b) => a.start - b.start);
+      let backdropHtml = '';
+      let lastIdx = 0;
+
+      lints.forEach(lint => {
+        if (lint.start >= lastIdx) {
+          backdropHtml += escapeHtml(text.slice(lastIdx, lint.start));
+          const errText = escapeHtml(text.slice(lint.start, lint.end));
+          
+          let typeClass = 'spelling';
+          if (lint.message.includes('puntuación') || lint.message.includes('espacio') || lint.message.includes('duplicada')) {
+            typeClass = 'punctuation';
+          } else if (lint.message.includes('español') || lint.message.includes('Dequeísmo') || lint.message.includes('Queísmo') || lint.message.includes('plural')) {
+            typeClass = 'grammar';
+          }
+
+          backdropHtml += `<mark class="lint-mark ${typeClass}">${errText}</mark>`;
+          lastIdx = lint.end;
+        }
+      });
+      backdropHtml += escapeHtml(text.slice(lastIdx));
+      backdrop.innerHTML = backdropHtml;
+
+      // 2. Renderizar lista de tarjetas con sugerencias abajo
+      lintsList.innerHTML = '';
+      if (lints.length === 0) {
+        statusBadge.className = 'badge-ok';
+        statusBadge.textContent = '✅ Sin errores';
+        return;
+      }
+
+      statusBadge.className = 'badge-error';
+      statusBadge.textContent = `⚠️ ${lints.length} observación(es)`;
+
+      lints.forEach((lint, idx) => {
+        const word = text.slice(lint.start, lint.end);
+        const card = document.createElement('div');
+        
+        let typeClass = 'spelling';
+        if (lint.message.includes('puntuación') || lint.message.includes('espacio') || lint.message.includes('duplicada')) {
+          typeClass = 'punctuation';
+        } else if (lint.message.includes('español') || lint.message.includes('Dequeísmo') || lint.message.includes('Queísmo') || lint.message.includes('plural')) {
+          typeClass = 'grammar';
+        }
+
+        card.className = `lint-card ${typeClass}`;
+
+        let html = `<div class="lint-message"><strong>'${word}'</strong>: ${lint.message}</div>`;
+        if (lint.suggestions && lint.suggestions.length > 0) {
+          html += `<div class="lint-suggestions">`;
+          lint.suggestions.forEach(sug => {
+            html += `<span class="sug-pill" onclick="applyFix(${lint.start}, ${lint.end}, '${escapeQuote(sug)}')">Sugerencia: "${sug}"</span>`;
+          });
+          html += `</div>`;
+        }
+        card.innerHTML = html;
+        lintsList.appendChild(card);
+      });
+    }
+
+    function applyFix(start, end, suggestion) {
+      const val = textarea.value;
+      textarea.value = val.slice(0, start) + suggestion + val.slice(end);
+      onInput();
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function escapeQuote(str) {
+      return str.replace(/'/g, "\\'");
+    }
+
+    // Inicializar muestra al cargar
+    setSample('Hola , mundo ; esto es una prueba,,con faltas de ortografia.');
+  </script>
+</body>
+</html>
