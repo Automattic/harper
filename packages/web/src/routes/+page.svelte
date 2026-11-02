@@ -1,7 +1,7 @@
 <script module lang="ts">
 export const frontmatter = {
 	home: false,
-	title: 'Harper: The Private Grammar Checker',
+	title: 'Free Grammar & Spell Checker — Private, No AI',
 	description: 'Harper is the free, private, open-source grammar checker that runs on your device.',
 };
 </script>
@@ -176,7 +176,7 @@ onMount(() => {
 				That Respects Your Privacy
 			</p>
 			<div class="mt-7 w-full">
-				<FeaturedIntegrations campaign="harper-homepage" />
+				<FeaturedIntegrations source="harper-homepage" />
 			</div>
 			<div class="mt-7 flex flex-wrap gap-[0.65rem] max-[620px]:flex-col max-[620px]:items-stretch">
 				<PillButton href="/get" size="lg">Explore more integrations</PillButton>
@@ -371,5 +371,5 @@ onMount(() => {
 		</div>
 	</section>
 
-	<MarketingFooter {chromeHref} />
+	<MarketingFooter />
 </div>

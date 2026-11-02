@@ -5,7 +5,7 @@ import { page } from '$app/stores';
 import PageMetadata from '$lib/PageMetadata.svelte';
 import { resolvePageMetadata } from '$lib/seo';
 
-const { fm, children, heroImage, ...rest } = $props();
+const { fm, children, heroImage, titleAction, ...rest } = $props();
 
 const marketingRoutes = new Set(['/', '/get', '/desktop', '/install-browser-extension']);
 const isMarketingRoute = $derived(
@@ -21,7 +21,7 @@ const metadata = $derived(
 {#if isMarketingRoute}
 	{@render children?.()}
 {:else}
-	<DefaultPageLayout {fm} {heroImage} {...rest}>
+	<DefaultPageLayout {fm} {heroImage} {titleAction} {...rest}>
 		{@render children?.()}
 	</DefaultPageLayout>
 {/if}

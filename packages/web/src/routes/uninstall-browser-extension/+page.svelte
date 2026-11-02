@@ -10,6 +10,7 @@ const reasons = {
 	'false-positive': 'It incorrectly flagged my text as an error',
 	'false-negative': "It didn't identify enough errors in my text",
 	'no-positives': "It didn't identify any errors in my text",
+	'malfunction-on-important-site': "Harper didn't work on a site I use regularly.",
 	other: 'Other',
 };
 
@@ -83,9 +84,11 @@ function handleFormData(e: FormDataEvent) {
 						{/if}
 					</fieldset>
 
-					<Checkbox name="platform" value={platform} checked>
-						Include browser type
-					</Checkbox>
+					{#if platform}
+						<Checkbox name="platform" value={platform} checked>
+							Include browser type
+						</Checkbox>
+					{/if}
 
 					<div class="flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
 						<Button type="submit" size="lg" disabled={!selected}>

@@ -200,7 +200,8 @@ expr main DET ![break, braking]
 ### Wildcards
 
 If you need to allow a token between two others, or otherwise want to include an unknown and unrestricted token in the expression, you can use a wildcard.
-Although they look like the single-character wildcard from regex (Weir borrows the `*` syntax), Weir wildcards match over entire tokens, including words, punctuation, and whitespace.
+Weir wildcards are written `*`, but unlike `*` in regex or file globs, they always match exactly one whole token, whether that is a word, punctuation, or whitespace.
+That makes them closer to `.` in regex, which matches exactly one character.
 
 Example:
 
