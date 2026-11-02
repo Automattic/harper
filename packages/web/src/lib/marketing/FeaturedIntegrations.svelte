@@ -2,7 +2,7 @@
 @component
 Shows the current browser extension before Harper Desktop. Chrome is the fallback
 for server rendering and unsupported browsers; detection runs after mounting.
-Pass campaign to set utm_campaign on each browser extension's store URL, preserving
+Pass source to set utm_source on each browser extension's store URL, preserving
 other query parameters. Non-browser links are unchanged. The parent must call
 loadLiveVersions(); this component reads the shared store without fetching again.
 -->
@@ -14,7 +14,7 @@ import { type Integration, integrations } from './data';
 import IntegrationTile from './IntegrationTile.svelte';
 import { isUpToDate, liveVersions } from './versions';
 
-export let campaign: string;
+export let source: string;
 
 let browserType: ReturnType<typeof getBrowserType> = 'chrome';
 
@@ -25,14 +25,14 @@ onMount(() => {
 	browserType = getBrowserType();
 });
 
-/** Sets the browser store campaign, preserving other parameters and non-browser links. */
-function integrationHref(integration: Integration, campaign: string): string {
+/** Sets the browser store source, preserving other parameters and non-browser links. */
+function integrationHref(integration: Integration, source: string): string {
 	if (integration.category !== 'browsers') {
 		return integration.href;
 	}
 
 	const url = new URL(integration.href);
-	url.searchParams.set('utm_campaign', campaign);
+	url.searchParams.set('utm_source', source);
 	return url.toString();
 }
 </script>
@@ -45,7 +45,7 @@ function integrationHref(integration: Integration, campaign: string): string {
 			{@const titleText = upToDate ? VERSION_UPTODATE : upToDate === false ? VERSION_BEHIND : null}
 			<a
 				class="grid grid-cols-[2.5rem_1fr_auto] items-center gap-[0.9rem] rounded-xl border-[0.5px] border-[rgba(28,26,22,0.1)] bg-white px-[1.1rem] py-[0.9rem] !text-[#1c1a16] no-underline transition-[transform,box-shadow,border-color] duration-150 hover:-translate-y-px hover:border-[#b06a1b] hover:shadow-[0_10px_24px_-16px_rgba(28,26,22,0.16)] hover:no-underline dark:border-white/10 dark:bg-white/5 dark:!text-white dark:hover:border-primary-300 max-[640px]:grid-cols-[2.5rem_1fr] [&_em]:max-[640px]:col-start-2"
-				href={integrationHref(integration, campaign)}
+				href={integrationHref(integration, source)}
 			>
 				<IntegrationTile {integration} size={40} />
 				<span class="flex min-w-0 flex-col">
