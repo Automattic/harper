@@ -81,7 +81,7 @@ function clearFilters() {
 			<p class="mx-auto !mt-3 !mb-[2.2rem] max-w-[35rem] !font-serif text-[1.2rem] leading-[1.45] text-[#4a463e] dark:text-white/70">
 				Use Harper in your favorite apps and browsers. Good grammar goes where you are.
 			</p>
-			<FeaturedIntegrations campaign="harper-get" />
+			<FeaturedIntegrations source="harper-get" />
 			<div class="mt-[1.1rem] text-[0.82rem] text-[#807a6e] dark:text-white/55">Or browse {integrations.length - 2} other integrations ↓</div>
 		</div>
 	</section>
@@ -194,5 +194,5 @@ function clearFilters() {
 		</div>
 	</section>
 
-	<MarketingFooter {chromeHref} />
+	<MarketingFooter />
 </div>

@@ -182,7 +182,7 @@ onMount(() => {
 				That Respects Your Privacy
 			</p>
 			<div class="mt-7 w-full">
-				<FeaturedIntegrations campaign="harper-homepage" />
+				<FeaturedIntegrations source="harper-homepage" />
 			</div>
 			<div class="mt-7 flex flex-wrap gap-[0.65rem] max-[620px]:flex-col max-[620px]:items-stretch">
 				<PillButton href="/get" size="lg">Explore more integrations</PillButton>
@@ -377,5 +377,5 @@ onMount(() => {
 		</div>
 	</section>
 
-	<MarketingFooter {chromeHref} />
+	<MarketingFooter />
 </div>

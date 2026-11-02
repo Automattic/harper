@@ -2,7 +2,9 @@
 import { marketingLinks } from './data';
 import HarperMark from './HarperMark.svelte';
 
-export let chromeHref = marketingLinks.chrome;
+const chromeUrl = new URL(marketingLinks.chrome);
+chromeUrl.searchParams.set('utm_source', 'harper-footer');
+const chromeHref = chromeUrl.toString();
 
 const currentYear = new Date().getFullYear();
 </script>
