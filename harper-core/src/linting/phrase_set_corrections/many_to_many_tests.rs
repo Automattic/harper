@@ -71,6 +71,71 @@ fn correct_awaited_for() {
     );
 }
 
+// BackwardEngineer
+
+#[test]
+fn backward_space_engineer() {
+    assert_suggestion_result(
+        "The idea would be to backward engineer such \"creation process\" to the extent given by tools and abilities.",
+        test_linter(),
+        "The idea would be to reverse engineer such \"creation process\" to the extent given by tools and abilities.",
+    );
+}
+
+#[test]
+fn backward_hyphen_engineer() {
+    assert_suggestion_result(
+        "Use Assignment 5 screenshots and R Manual to backward-engineer Motor Trend Car Road Tests data",
+        test_linter(),
+        "Use Assignment 5 screenshots and R Manual to reverse-engineer Motor Trend Car Road Tests data",
+    );
+}
+
+#[test]
+fn backward_hyphen_engineering() {
+    assert_suggestion_result(
+        "For the backward-engineering to work, I realize that the power spectra we have saved were done using these super high-accuracy settings",
+        test_linter(),
+        "For the reverse-engineering to work, I realize that the power spectra we have saved were done using these super high-accuracy settings",
+    );
+}
+
+#[test]
+fn backward_space_engineering() {
+    assert_suggestion_result(
+        "Note though, that CS is \"forward\" engineering, while Brain Science is backward engineering.",
+        test_linter(),
+        "Note though, that CS is \"forward\" engineering, while Brain Science is reverse engineering.",
+    );
+}
+
+#[test]
+fn backwards_hyphen_engineer() {
+    assert_suggestion_result(
+        "After leaving this talk, you'll be able to backwards-engineer these 'internal' APIs and replicate any trivial flow",
+        test_linter(),
+        "After leaving this talk, you'll be able to reverse-engineer these 'internal' APIs and replicate any trivial flow",
+    );
+}
+
+#[test]
+fn backwards_space_engineer() {
+    assert_suggestion_result(
+        "do this and you can backwards engineer what you should be getting",
+        test_linter(),
+        "do this and you can reverse engineer what you should be getting",
+    );
+}
+
+#[test]
+fn backwards_space_engineering() {
+    assert_suggestion_result(
+        "This chapter gives an overview the first assessment, the backwards engineering report along with the files you will need and some helpful hints.",
+        test_linter(),
+        "This chapter gives an overview the first assessment, the reverse engineering report along with the files you will need and some helpful hints.",
+    );
+}
+
 // BackhandedCompliment
 
 #[test]

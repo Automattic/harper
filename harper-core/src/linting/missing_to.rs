@@ -384,6 +384,12 @@ impl ExprLinter for MissingTo {
         let controller_text = controller.get_str(source).to_lowercase();
         let controller_text = controller_text.as_str();
 
+        if controller.kind.is_noun()
+            && preceded_by_word(context, |tok| tok.kind.is_possessive_nominal())
+        {
+            return None;
+        }
+
         if controller.kind.is_verb()
             && controller.kind.is_adjective()
             && preceded_by_word(context, |tok| tok.kind.is_nominal())
@@ -501,6 +507,10 @@ impl ExprLinter for MissingTo {
                 | "mean"
                 | "means"
                 | "meant"
+                | "tried"
+                | "tries"
+                | "try"
+                | "trying"
                 | "want"
                 | "wanted"
                 | "wanting"
@@ -653,6 +663,14 @@ mod tests {
             "She resolved solve the case.",
             test_linter(),
             "She resolved to solve the case.",
+        );
+    }
+
+    #[test]
+    fn issue_3951_possessive_noun() {
+        assert_no_lints(
+            "This Article's aims are both theoretical and historical.",
+            test_linter(),
         );
     }
 
@@ -880,6 +898,19 @@ mod tests {
             "He found the thing and attempted solve it.",
             test_linter(),
             "He found the thing and attempted to solve it.",
+        );
+    }
+
+    #[test]
+    fn allows_trying_stuff_issue_4579() {
+        assert_no_lints("I was just trying stuff out.", test_linter());
+    }
+
+    #[test]
+    fn allows_try_with_a_noun_object() {
+        assert_no_lints(
+            "After trying stuff for hours, we tried things the docs suggested.",
+            test_linter(),
         );
     }
 }

@@ -1081,6 +1081,24 @@ fn correct_to_an_extend() {
     );
 }
 
+#[test]
+fn correct_lesser_extend() {
+    assert_suggestion_result(
+        "Unlike the US (and to a lesser extend, Europe), Chinese do not have a majority of their wealth invested in stocks.",
+        test_linter(),
+        "Unlike the US (and to a lesser extent, Europe), Chinese do not have a majority of their wealth invested in stocks.",
+    );
+}
+
+#[test]
+fn correct_greater_extend() {
+    assert_suggestion_result(
+        "which seems to lead to columns being loaded to a greater extend than necessary",
+        test_linter(),
+        "which seems to lead to columns being loaded to a greater extent than necessary",
+    );
+}
+
 // FlauntForFlout
 
 #[test]
@@ -2210,6 +2228,26 @@ fn fix_sets_up_a_bad_example() {
         test_linter(),
         "This sets a bad example that will make it into a trend. As long as AI is not deterministic, you should review the code.",
     )
+}
+
+// Skyrocket
+
+#[test]
+fn sky_rockeeted() {
+    assert_suggestion_result(
+        "i can hear the audio but the firefox disk usage sky rocketed after that",
+        test_linter(),
+        "i can hear the audio but the firefox disk usage skyrocketed after that",
+    );
+}
+
+#[test]
+fn sky_rocketing() {
+    assert_suggestion_result(
+        "With the rising abilities of agents, expectations are sky rocketing in terms of productivity.",
+        test_linter(),
+        "With the rising abilities of agents, expectations are skyrocketing in terms of productivity.",
+    );
 }
 
 // SubjectAndObjectPronoun

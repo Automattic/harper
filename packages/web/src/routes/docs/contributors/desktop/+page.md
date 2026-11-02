@@ -2,10 +2,8 @@
 title: Harper Desktop
 ---
 
-Harper Desktop aims to (eventually) serve the needs of users on a variety of platforms.
-One day, we hope for it to include support for macOS, Windows, and Linux.
-Right now, it just supports macOS.
-Because we hope to add new platforms, there are structures in the code that would not make sense for an app specifically designed with only one operating system in mind.
+Harper Desktop supports macOS and Windows, and we hope to add Linux support in the future.
+The code separates platform-specific behavior from the parts shared across operating systems to make adding new platforms easier.
 
 This document will serve to give a tour of how the code for the Desktop app is structured and, more importantly, why it is structured that way.
 
@@ -54,7 +52,7 @@ When the user changes a setting via a Tauri window, that setting is propagated f
 The latter step happens in the `communication` module.
 
 The communication with the operating system happens inside of a `Broker`, which is an interface that exposes any and all platform-specific functions Harper needs.
-Right now, there is only one implementation of `Broker`: `MacBroker`.
+The platform implementations are `MacBroker` and `WindowsBroker`.
 
 Finally, the communication with the user happens via a `winit` window, to which we render [`egui`](https://github.com/emilk/egui) elements.
 The exact structure of the relevant modules for this is likely subject to change and may vary by platform, so I will forgo including additional information here to avoid misleading you.
@@ -66,3 +64,34 @@ I want to emphasize this point: the highlighter process does not store any canon
 Harper Desktop resides in the Harper monorepo, but is not included in the `cargo` workspace. Why? It is because the Desktop app includes (through Tauri) far too many dependencies.
 Small changes in unrelated crates would often cause large rebuilds and rechecks.
 To solve it, we simply removed it from the dependency graph.
+
+## Windows Builds and Signing
+
+Buildkite builds and signs the Windows x64 installer with Automattic's certificate.
+The build fails if signing or signature verification fails.
+GitHub Actions also builds an unsigned installer to check changes, including fork pull requests.
+
+Run `just test-desktop-release` to check the signing and upload scripts.
+
+### Releases
+
+Release tags must use `v<version>`, where `<version>` matches the version in `harper-desktop/src-tauri/tauri.conf.json`.
+Buildkite attaches the signed installer to an existing draft release, which a maintainer publishes manually.
+If there are multiple drafts for the tag, exactly one must contain the macOS `.dmg` for the upload to proceed.
+
+If an upload fails, resolve the error and retry only the Windows upload step.
+A retry replaces the Windows installer without changing release notes or other assets.
+Avoid rebuilding the entire tag, which can create another draft.
+
+Before publishing, check that the draft includes the signed Windows installer, the macOS build, and all other expected assets.
+Copy any missing assets and release notes from other drafts before deleting those drafts.
+Confirm that the Windows installer's SHA256 matches the Buildkite artifact.
+
+### Testing on Windows
+
+Before publishing a release, or after changing the signing setup, download the installer from Buildkite and test it on Windows:
+
+1. Check the installer's signature with `Get-AuthenticodeSignature`. Expect `Status: Valid` and an Automattic signer.
+2. Install and launch Harper, open its settings, and check that the highlighter starts.
+3. Check the signatures of `harper-desktop.exe` and `uninstall.exe` in the installation directory the same way.
+4. Quit Harper from the tray menu, uninstall it, and confirm that the installation directory is gone.

@@ -1,13 +1,18 @@
+import type { Page } from '@playwright/test';
 import { expect, test } from './fixtures';
 import { getStoredLintConfig, openExtensionPage } from './testUtils';
 
 const STYLE_CATEGORY = 'Style and Redundancy';
 const STYLE_DESCRIPTION =
 	'Highlights wordy, repetitive, or overly weak phrasing that can usually be tightened up.';
-const STYLE_BUTTON_TITLE = `Expand the ${STYLE_CATEGORY} category`;
-const STYLE_BUTTON_COLLAPSE_TITLE = `Collapse the ${STYLE_CATEGORY} category`;
 const STYLE_DROPDOWN_TITLE = `Set all rules in the ${STYLE_CATEGORY} category to their default, on, or off state.`;
 const REPEATED_WORDS_TITLE = 'Set Repeated Words to its default, on, or off state.';
+
+/** The category disclosure button (name comes from the category label; state from aria-expanded). */
+const styleToggle = (page: Page, expanded: boolean) =>
+	page.getByRole('button', { name: STYLE_CATEGORY, exact: true, expanded });
+
+const searchBox = (page: Page) => page.getByLabel('Search rules', { exact: true });
 
 test.describe('structured rule settings', () => {
 	test.describe.configure({ mode: 'serial' });
@@ -23,9 +28,8 @@ test.describe('structured rule settings', () => {
 	}) => {
 		await openExtensionPage(context, page, 'options.html');
 
-		await expect(page.getByTitle(STYLE_BUTTON_TITLE)).toBeVisible({ timeout: 15000 });
+		await expect(styleToggle(page, false)).toBeVisible({ timeout: 15000 });
 		await expect(page.getByTitle(STYLE_DROPDOWN_TITLE)).toBeVisible({ timeout: 15000 });
-		await expect(page.locator('h3', { hasText: STYLE_CATEGORY })).toBeVisible({ timeout: 15000 });
 		await expect(page.getByText(STYLE_DESCRIPTION)).toBeVisible({ timeout: 15000 });
 		await expect(page.locator('h3', { hasText: 'Repeated Words' })).toHaveCount(0);
 	});
@@ -33,19 +37,33 @@ test.describe('structured rule settings', () => {
 	test('expands categories and indents nested rules', async ({ context, page }) => {
 		await openExtensionPage(context, page, 'options.html');
 
-		await page.getByTitle(STYLE_BUTTON_TITLE).click();
+		await styleToggle(page, false).click();
+
+		await expect(styleToggle(page, true)).toBeVisible();
 		await expect(page.locator('[style*="padding-left: 1.5rem"]').first()).toBeVisible();
+
+		await styleToggle(page, true).click();
+		await expect(styleToggle(page, false)).toBeVisible();
 	});
 
 	test('search expands matching categories and reveals nested rules', async ({ context, page }) => {
 		await openExtensionPage(context, page, 'options.html');
 		await expect(page.getByTitle(STYLE_DROPDOWN_TITLE)).toBeVisible({ timeout: 15000 });
 
-		await page.getByPlaceholder('Search for a rule…').fill('wordy');
+		await searchBox(page).fill('wordy');
 
-		await expect(page.locator('h3', { hasText: STYLE_CATEGORY })).toBeVisible();
+		await expect(styleToggle(page, true)).toBeVisible();
 		await expect(page.getByText(STYLE_DESCRIPTION)).toBeVisible();
 		await expect(page.getByTitle(REPEATED_WORDS_TITLE)).toBeVisible({ timeout: 15000 });
+	});
+
+	test('search with no matches shows an empty state', async ({ context, page }) => {
+		await openExtensionPage(context, page, 'options.html');
+		await expect(page.getByTitle(STYLE_DROPDOWN_TITLE)).toBeVisible({ timeout: 15000 });
+
+		await searchBox(page).fill('zzzz-no-such-rule');
+
+		await expect(page.getByText('No rules match your search.')).toBeVisible();
 	});
 
 	test('category dropdown bulk updates constituent flat rules', async ({ context, page }) => {
@@ -90,7 +108,7 @@ test.describe('structured rule settings', () => {
 		await openExtensionPage(context, page, 'options.html');
 		await expect(page.getByTitle(STYLE_DROPDOWN_TITLE)).toBeVisible({ timeout: 15000 });
 
-		await page.getByPlaceholder('Search for a rule…').fill('Repeated Words');
+		await searchBox(page).fill('Repeated Words');
 		await expect(page.getByTitle(REPEATED_WORDS_TITLE)).toBeVisible({ timeout: 15000 });
 		await page.getByTitle(REPEATED_WORDS_TITLE).selectOption('disable');
 

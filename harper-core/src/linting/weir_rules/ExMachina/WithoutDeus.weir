@@ -1,0 +1,13 @@
+expr main <(ex machine), machine>
+
+let message "Did you mean the Latin phrase `ex machina`?"
+let description "Checks if the user intended the Latin phrase `ex machina`."
+let kind "Spelling"
+let becomes "machina"
+
+test "While I really enjoyed Ex Machine, its not of the \"2001: A Space Odyssey\" level." "While I really enjoyed Ex Machina, its not of the \"2001: A Space Odyssey\" level."
+
+# examples of where it's not a spelling mistake
+
+# The result is that every Cray EX machine needs a hand-written config file
+# Ex Machine Learning Engineer at ACI Limited
