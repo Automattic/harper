@@ -161,7 +161,7 @@ onMount(() => {
 </script>
 
 <svelte:head>
-	<title>Harper: The Private Grammar Checker</title>
+	<title>Free Grammar & Spell Checker — Private, No AI</title>
 	<meta
 		name="description"
 		content="Harper is the free, private, open-source grammar checker that runs on your device."
