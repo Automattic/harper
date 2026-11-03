@@ -1,5 +1,6 @@
 ---
 title: Chrome Extension
+description: Explore the Harper browser extension architecture, including its content script, options page, and popup.
 ---
 
 Harper's Chrome extension is still in its infancy.

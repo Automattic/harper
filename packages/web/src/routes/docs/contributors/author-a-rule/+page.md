@@ -1,5 +1,6 @@
 ---
 title: Author a Rule
+description: Follow the contributor guide to implement a Harper grammar rule and test its suggestions.
 ---
 
 [Harper's grammatical rules are many](../rules), but most are relatively easy to understand.

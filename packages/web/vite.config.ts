@@ -1,7 +1,5 @@
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
-import topLevelAwait from 'vite-plugin-top-level-await';
-import wasm from 'vite-plugin-wasm';
 
 const prod = process.env.APP_ENV === 'production';
 
@@ -265,8 +263,6 @@ export default defineConfig(async () => {
 					pageLayout: '$lib/marketing/SveltePressPageLayout.svelte',
 				},
 			}),
-			wasm(),
-			topLevelAwait(),
 			tailwindcss(),
 		],
 	};

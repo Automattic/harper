@@ -1,5 +1,6 @@
 ---
 title: Committing
+description: Prepare Harper contributions with conventional commits, formatting checks, and the required review process.
 ---
 
 Harper follows [conventional commit practices](https://www.conventionalcommits.org/en/v1.0.0/).

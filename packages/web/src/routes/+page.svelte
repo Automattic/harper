@@ -1,6 +1,8 @@
-<script module>
+<script module lang="ts">
 export const frontmatter = {
 	home: false,
+	title: 'Free Grammar & Spell Checker — Private, No AI',
+	description: 'Harper is the free, private, open-source grammar checker that runs on your device.',
 };
 </script>
 
@@ -160,14 +162,6 @@ onMount(() => {
 
 </script>
 
-<svelte:head>
-	<title>Harper: The Private Grammar Checker</title>
-	<meta
-		name="description"
-		content="Harper is the free, private, open-source grammar checker that runs on your device."
-	/>
-</svelte:head>
-
 <div class="min-h-screen bg-[#f6f1e6] text-[#1c1a16] dark:bg-black dark:text-white">
 	<MarketingHeader active="home" />
 
@@ -182,7 +176,7 @@ onMount(() => {
 				That Respects Your Privacy
 			</p>
 			<div class="mt-7 w-full">
-				<FeaturedIntegrations campaign="harper-homepage" />
+				<FeaturedIntegrations source="harper-homepage" />
 			</div>
 			<div class="mt-7 flex flex-wrap gap-[0.65rem] max-[620px]:flex-col max-[620px]:items-stretch">
 				<PillButton href="/get" size="lg">Explore more integrations</PillButton>
@@ -377,5 +371,5 @@ onMount(() => {
 		</div>
 	</section>
 
-	<MarketingFooter {chromeHref} />
+	<MarketingFooter />
 </div>
