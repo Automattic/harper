@@ -70,6 +70,7 @@ pub fn lint_group() -> LintGroup {
         "Postpone"        => (&["post pone"][..], "postpone"),
         "Proofread"       => (&["proof read"][..], "proofread"),
         "Regardless"      => (&["regard less"][..], "regardless"),
+        "Roundabout"      => (&["round about"][..], "roundabout"),
         "Shortcoming"     => (&["short coming"][..], "shortcoming"),
         "Shortcomings"    => (&["short comings"][..], "shortcomings"),
         "Somebody"        => (&["some body"][..], "somebody"),
@@ -435,6 +436,15 @@ mod tests {
             "Indeed, most users will experience major version updates with absolutely zero fan-fare.",
             lint_group(),
             "Indeed, most users will experience major version updates with absolutely zero fanfare.",
+        );
+    }
+
+    #[test]
+    fn round_about() {
+        assert_suggestion_result(
+            "This might be a very round about way to sort right to repair.",
+            lint_group(),
+            "This might be a very roundabout way to sort right to repair.",
         );
     }
 }
