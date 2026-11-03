@@ -1,5 +1,6 @@
 ---
 title: Frequently Asked Questions
+description: Find answers to Harper contributor questions, including the difference between Linter and PatternLinter.
 ---
 
 This page will be composed of frequently asked questions for contributors.
