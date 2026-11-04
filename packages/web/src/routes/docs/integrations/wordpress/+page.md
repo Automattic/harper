@@ -3,6 +3,8 @@ title: Harper for WordPress
 description: Use the recommended Harper Chrome extension in WordPress and review the legacy plugin options.
 ---
 
+# Harper for WordPress
+
 <script>
     import {Button} from "components"
 </script>
@@ -17,11 +19,15 @@ sync across the sites where you write.
 
 ![A screenshot of the Harper WordPress Demo](/images/harper_wp_playground_screenshot.png)
 
-<Button href='https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb' target="_blank">Install the Chrome Extension</Button>
+<div data-docs-embed>
+    <Button href='https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb' target="_blank">Install the Chrome Extension</Button>
+</div>
 
 Want to explore the classic workflow? Visit our online demo that runs inside the WordPress Playground.
 
-<Button href='/wpdemo' target="_blank">Go to the Demo</Button>
+<div data-docs-embed>
+    <Button href='/wpdemo' target="_blank">Go to the Demo</Button>
+</div>
 
 ## Still using the plugin?
 

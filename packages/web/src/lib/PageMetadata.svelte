@@ -1,19 +1,26 @@
 <script lang="ts">
-import type { ResolvedPageMetadata } from './seo';
+import { page } from '$app/state';
+import { siteConfig } from './docs/config';
+import { type MetadataInput, resolvePageMetadata } from './seo';
 
-/** SveltePress owns document titles/descriptions on docs pages; this component owns the other tags. */
-interface Props extends ResolvedPageMetadata {
-	includeDocumentMetadata?: boolean;
+/** Own document and social metadata; marketing pages omit the site-title suffix. */
+interface Props {
+	metadata: MetadataInput;
+	standaloneTitle?: boolean;
 }
 
-let { title, description, canonical, includeDocumentMetadata = true }: Props = $props();
+let { metadata, standaloneTitle = false }: Props = $props();
+const resolved = $derived(
+	resolvePageMetadata(page.url.pathname, metadata, siteConfig, standaloneTitle),
+);
+const title = $derived(resolved.title);
+const description = $derived(resolved.description);
+const canonical = $derived(resolved.canonical);
 </script>
 
 <svelte:head>
-	{#if includeDocumentMetadata}
-		<title>{title}</title>
-		<meta name="description" content={description} />
-	{/if}
+	<title>{title}</title>
+	<meta name="description" content={description} />
 	<link rel="canonical" href={canonical} />
 	<meta property="og:url" content={canonical} />
 	<meta property="og:title" content={title} />

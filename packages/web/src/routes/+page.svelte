@@ -6,7 +6,10 @@ export const frontmatter = {
 };
 </script>
 
+<PageMetadata metadata={frontmatter} standaloneTitle />
+
 <script lang="ts">
+import PageMetadata from '$lib/PageMetadata.svelte';
 import { browser } from '$app/environment';
 import { Arrow, StarIcon } from 'components';
 import { TestimonialCollection } from 'components';

@@ -3,6 +3,8 @@ title: Contributor's Guide to the Obsidian Plugin
 description: Build and develop the Harper Obsidian plugin and learn about its packaging and development constraints.
 ---
 
+# Contributor's Guide to the Obsidian Plugin
+
 This page will outline the most important bits of information needed to work on the Harper Obsidian plugin.
 In addition to that outlined in [environment set up page](./environment), you'll also need a working [Obsidian installation](https://obsidian.md/) and vault prepared.
 

@@ -5,7 +5,10 @@ export const frontmatter = {
 };
 </script>
 
+<PageMetadata metadata={frontmatter} standaloneTitle />
+
 <script lang="ts">
+import PageMetadata from '$lib/PageMetadata.svelte';
 import AppLogoTile from '$lib/marketing/AppLogoTile.svelte';
 import DesktopMockups from '$lib/marketing/DesktopMockups.svelte';
 import { compatibilityApps } from '$lib/marketing/data';

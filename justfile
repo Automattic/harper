@@ -22,7 +22,7 @@ soft-clean:
   rm -rf "{{justfile_directory()}}"/packages/lint-framework/{dist}
   rm -rf "{{justfile_directory()}}"/packages/obsidian-plugin/{harper-obsidian-plugin.zip,main.js}
   rm -rf "{{justfile_directory()}}"/packages/vscode-plugin/{.vscode-test,bin,build}
-  rm -rf "{{justfile_directory()}}"/packages/web/{.svelte-kit,.sveltepress,build}
+  rm -rf "{{justfile_directory()}}"/packages/web/{.svelte-kit,build}
   rm -rf "{{justfile_directory()}}"/packages/wordpress-plugin/{build,harper.zip}
   rm -rf "{{justfile_directory()}}"/harper-desktop/{.svelte-kit,build,package}
   rm -rf "{{justfile_directory()}}"/harper-wasm/pkg

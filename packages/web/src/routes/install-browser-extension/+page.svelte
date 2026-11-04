@@ -6,7 +6,10 @@ export const frontmatter = {
 };
 </script>
 
+<PageMetadata metadata={frontmatter} standaloneTitle />
+
 <script lang="ts">
+import PageMetadata from '$lib/PageMetadata.svelte';
 import { ChevronRightIcon, Link, SlideDeck, Textarea } from 'components';
 import AppLogoTile from '$lib/marketing/AppLogoTile.svelte';
 import { marketingLinks } from '$lib/marketing/data';

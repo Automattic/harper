@@ -3,6 +3,12 @@ title: Linting With harper.js
 description: Check text with harper.js and learn when to use LocalLinter or WorkerLinter.
 ---
 
+<script lang="ts">
+import linterSource from '../../../../../../harper.js/src/Linter.ts?raw';
+</script>
+
+# Linting With harper.js
+
 [Linting](<https://en.wikipedia.org/wiki/Lint_(software)>) is the process of consuming, analyzing, and finding faults in text.
 This is the principle task Harper tries to do.
 When possible, Harper also tries to automatically generate fixes for any issues it finds.
@@ -14,7 +20,7 @@ In `harper.js`, there's just one interface you need to worry about: the `Linter`
 The `Linter` type is relatively straightforward and has two implementations: the `LocalLinter` and the `WorkerLinter`.
 Notice how every method returns a `Promise<...>`.
 
-@code(../../../../../../harper.js/src/Linter.ts)
+<pre><code>{linterSource}</code></pre>
 
 A `LocalLinter` will instantiate and prepare Harper's WebAssembly module asynchronously, but **in the same event loop**.
 This can result in high [LCP](https://developer.mozilla.org/en-US/docs/Glossary/Largest_contentful_paint), so this implementation is only recommended in situations where the event loop will not be doing other latency-sensitive things.

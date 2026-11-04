@@ -3,6 +3,12 @@ title: Harper's Testing Strategy
 description: Understand the Harper testing strategy, software quality goals, and role of automated checks and production feedback.
 ---
 
+<script lang="ts">
+import cargoToml from '../../../../../../../Cargo.toml?raw';
+</script>
+
+# Harper's Testing Strategy
+
 Harper is a complex project. We deliver many artifacts to many users, and the automated processes we use to do so can seem intimidating.
 While the hope is that contributors become familiar with our processes over time, it is only strictly necessary to understand their fundamental goal: __to assist in the production of extremely high-quality software__.
 
@@ -117,7 +123,7 @@ Harper provides support for specific types of grammatical errors through individ
 The exact structure of these linters matters very little.
 All one needs to know is that there are individual non-overlapping linters.
 For example, there's one that detects improper use of Oxford Commas, one that detects misspelled words, and one that differentiates between "there", "their", and "they're".
-Each one of these linters has a linter ID, which is a short (< 10 character) string that ties a suggestion to the piece of code that produced it.
+Each one of these linters has a linter ID, which is a short (`< 10` character) string that ties a suggestion to the piece of code that produced it.
 
 When a user reviews a suggestion (via the Chrome Extension or otherwise), they are given the option to report it if they believe it was made in error.
 If they do so, a POST request is made to `https://writewithharper.com` and it is tallied up.
@@ -180,7 +186,7 @@ In the interest of maintaining fast iteration cycles, we run our tests with `opt
 These optimizations are known to cause issues with debuggers.
 If you plan to use one, you may want to comment them out.
 
-@code(../../../../../../../Cargo.toml)
+<pre><code>{cargoToml}</code></pre>
 
 ### Filtering Tests
 
@@ -202,4 +208,3 @@ This repeatedly runs the rule's focused tests while skipping tests from other wo
 - [Integration Testing Thousands of Websites with Playwright](https://elijahpotter.dev/articles/integration-testing-thousands-of-sites-with-playwright)
 - [3 Traits of Good Test Suites](https://elijahpotter.dev/articles/3-traits-of-good-test-suites)
 - [LLM Assisted Fuzzing](https://elijahpotter.dev/articles/LLM-assisted-fuzzing)
-

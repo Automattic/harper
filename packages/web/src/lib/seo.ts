@@ -6,7 +6,7 @@ export interface MetadataInput {
 	description?: string;
 }
 
-/** Final metadata shared by the page head and SveltePress layout. */
+/** Resolved document, canonical, and social metadata for a route. */
 export interface ResolvedPageMetadata {
 	title: string;
 	description: string;
@@ -20,7 +20,7 @@ export function canonicalUrl(pathname: string): string {
 	return url.href;
 }
 
-/** Match SveltePress title/description defaults; marketing pages use their titles without a suffix. */
+/** Use site metadata as fallback; marketing pages use their titles without a suffix. */
 export function resolvePageMetadata(
 	pathname: string,
 	frontmatter: MetadataInput,

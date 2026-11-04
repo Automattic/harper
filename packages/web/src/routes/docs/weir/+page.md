@@ -3,6 +3,8 @@ title: The Weir Language
 description: Define custom Harper grammar rules with Weir expressions, replacements, tests, and Weirpacks.
 ---
 
+# The Weir Language
+
 Most large organizations have a style guide.
 A document that decides which versions of a linguistic rule to use.
 That could be whether to use the Oxford comma, or if contractions are allowed.

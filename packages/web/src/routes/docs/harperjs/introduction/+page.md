@@ -3,6 +3,8 @@ title: Introduction to harper.js
 description: Install harper.js and add Harper grammar checking to JavaScript and TypeScript applications.
 ---
 
+# Introduction to harper.js
+
 ## The Mission
 
 If you're a developer, odds are that you are using JavaScript or TypeScript on a daily basis.

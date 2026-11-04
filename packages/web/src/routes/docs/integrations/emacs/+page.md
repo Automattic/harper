@@ -3,6 +3,8 @@ title: Emacs
 description: Configure Emacs and Eglot to use the Harper language server for English grammar checking.
 ---
 
+# Emacs
+
 Our Emacs integration is powered by [`harper-ls`](./language-server).
 
 ## Required Setup
@@ -25,17 +27,15 @@ where `text-mode` can be set to any, some, or all major modes that correspond to
                '(markdown-mode . ("harper-ls" "--stdio"))))
 ```
 
-:::note
-
-A possible gotcha you may be encountering if you don't see any diagnostics is when Eglot automatically deduces the language ID being sent to `harper-ls` based on the major mode you used. In which case, you can set the language ID to one that is supported:
-
-```elisp title=init.el
-(with-eval-after-load 'eglot
-  (add-to-list 'eglot-server-programs
-               '((english-prose-mode :language-id "plaintext") . ("harper-ls" "--stdio"))
-```
-
-:::
+> **Note**
+>
+> A possible gotcha you may be encountering if you don't see any diagnostics is when Eglot automatically deduces the language ID being sent to `harper-ls` based on the major mode you used. In which case, you can set the language ID to one that is supported:
+>
+> ```elisp title=init.el
+> (with-eval-after-load 'eglot
+>   (add-to-list 'eglot-server-programs
+>                '((english-prose-mode :language-id "plaintext") . ("harper-ls" "--stdio"))
+> ```
 
 ## Optional Configuration
 
@@ -67,9 +67,9 @@ Additionally, you can also configure things like which linters to use or how you
                             :excludePatterns [])))
 ```
 
-:::note
-This example only contains some of the available linters, check out our [rules page](../rules) to view the full list.
-:::
+> **Note**
+>
+> This example only contains some of the available linters, check out our [rules page](../rules) to view the full list.
 
 For more information on what each of these configs do, you can head over to the [configuration section](./language-server#Configuration) of our `harper-ls` documentation.
 

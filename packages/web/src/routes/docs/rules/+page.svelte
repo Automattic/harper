@@ -6,7 +6,12 @@ export const frontmatter = {
 };
 </script>
 
+<PageMetadata metadata={frontmatter} />
+<h1 class="mt-0 mb-5 text-[32px]! leading-[1.3]! font-bold! tracking-[-0.02em]! text-(--docs-heading)!">{frontmatter.title}</h1>
+
 <script lang="ts">
+import PageMetadata from '$lib/PageMetadata.svelte';
+import EditPage from '$lib/docs/EditPage.svelte';
 import {
 	Table,
 	TableBody,
@@ -22,6 +27,7 @@ let { data }: { data: PageData } = $props();
 
 <p>This page is an incomplete list of the various grammatical rules Harper checks for.</p>
 
+<div class="w-full overflow-x-auto" role="region" aria-label="Grammar rules" tabindex="0">
 <Table>
 	<TableHead>
 		<TableHeadCell>Name</TableHeadCell>
@@ -38,3 +44,5 @@ let { data }: { data: PageData } = $props();
 		{/each}
 	</TableBody>
 </Table>
+</div>
+<EditPage sourcePath="docs/rules/+page.svelte" />
