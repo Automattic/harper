@@ -1,5 +1,6 @@
 ---
 title: Visual Studio Code
+description: Run, debug, test, and package the Harper Visual Studio Code extension in a local development environment.
 ---
 
 This document details how to develop the Visual Studio Code extension locally. If you're interested in how it's packaged and distributed, you can check out the [Release VS Code Plugin](https://github.com/Automattic/harper/blob/master/.github/workflows/release_vscode_plugin.yml) workflow.

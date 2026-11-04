@@ -1,5 +1,7 @@
 <script lang="ts">
-import { Button, Card, Input, Isolate, SendIcon } from 'components';
+import { Button, Card, Checkbox, Input, Isolate, SendIcon } from 'components';
+import { onMount } from 'svelte';
+import getBrowserType from '$lib/getBrowserType';
 
 const reasons = {
 	confused: 'I was confused by how it worked',
@@ -8,11 +10,17 @@ const reasons = {
 	'false-positive': 'It incorrectly flagged my text as an error',
 	'false-negative': "It didn't identify enough errors in my text",
 	'no-positives': "It didn't identify any errors in my text",
+	'malfunction-on-important-site': "Harper didn't work on a site I use regularly.",
 	other: 'Other',
 };
 
 let selected: string | undefined;
 let otherText = '';
+let platform = '';
+
+onMount(() => {
+	platform = getBrowserType();
+});
 
 /** Replace the Other reason with its trimmed answer when nonempty; keep the reason otherwise. */
 function handleFormData(e: FormDataEvent) {
@@ -75,6 +83,12 @@ function handleFormData(e: FormDataEvent) {
 							<Input id="other-answer" name="other" bind:value={otherText} placeholder="Your answer" class="block w-full dark:!bg-gray-900 dark:!text-white" />
 						{/if}
 					</fieldset>
+
+					{#if platform}
+						<Checkbox name="platform" value={platform} checked>
+							Include browser type
+						</Checkbox>
+					{/if}
 
 					<div class="flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
 						<Button type="submit" size="lg" disabled={!selected}>

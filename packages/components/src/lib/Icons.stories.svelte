@@ -19,6 +19,7 @@ import PlusIcon from './icons/PlusIcon.svelte';
 import QuillIcon from './icons/QuillIcon.svelte';
 import RocketIcon from './icons/RocketIcon.svelte';
 import SearchIcon from './icons/SearchIcon.svelte';
+import StarIcon from './icons/StarIcon.svelte';
 import TrashIcon from './icons/TrashIcon.svelte';
 import UploadIcon from './icons/UploadIcon.svelte';
 
@@ -50,6 +51,7 @@ const icons = [
 	{ name: 'Quill', component: QuillIcon },
 	{ name: 'Rocket', component: RocketIcon },
 	{ name: 'Search', component: SearchIcon },
+	{ name: 'Star', component: StarIcon },
 	{ name: 'Trash', component: TrashIcon },
 	{ name: 'Upload', component: UploadIcon },
 ];

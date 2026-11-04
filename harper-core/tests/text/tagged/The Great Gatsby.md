@@ -707,7 +707,7 @@
 > dresses and  their impersonal eyes    in        the absence of all          desire   . They were here ,
 # NPl/V3+ VB/C D$+   NSg/J      NPl/V3+ NPr/J/R/P D   N🅪Sg    P  NSg/I/J/C/Dq N🅪Sg/VB+ . IPl+ VLPt R    .
 > and  they accepted Tom     and  me       , making  only  a   polite pleasant effort   to entertain
-# VB/C IPl+ VP/J     NPr/VB+ VB/C NPr/ISg+ . Nᴹ/Vg/J J/R/C D/P VB/J   NSg/J    N🅪Sg/VB+ P  NSg/VB
+# VB/C IPl+ VP/J     NPr/VB+ VB/C NPr/ISg+ . Nᴹ/Vg/J J/R/C D/P VB/J   J        N🅪Sg/VB+ P  NSg/VB
 > or    to be       entertained . They knew that     presently dinner   would be       over    and  a   little
 # NPr/C P  NSg/VLXB VP/J        . IPl+ VPt  I/C/Ddem R         N🅪Sg/VB+ VXB   NSg/VLXB NSg/J/P VB/C D/P NPr/I/J/Dq
 > later the evening    too would be       over    and  casually put     away . It       was  sharply
@@ -835,7 +835,7 @@
 > faded , each light      deserting her     with lingering regret   , like         children leaving a
 # J     . Dq   N🅪Sg/VB/J+ Nᴹ/Vg/J   ISg/D$+ P    Nᴹ/Vg/J   N🅪Sg/VB+ . NSg/VB/J/C/P NPl+     Nᴹ/Vg/J D/P
 > pleasant street    at    dusk     .
-# NSg/J    NSg/VB/J+ NSg/P Nᴹ/VB/J+ .
+# J        NSg/VB/J+ NSg/P Nᴹ/VB/J+ .
 >
 #
 > The butler came      back     and  murmured something close    to Tom’s ear       , whereupon Tom
@@ -1115,7 +1115,7 @@
 > Asheville and  Hot      Springs and  Palm    Beach   . I       had heard some     story  of her     too , a
 # NPr       VB/C NSg/VB/J NPl/V3  VB/C NSg/VB+ NPr/VB+ . ISg/#r+ VP  VP/J  I/J/R/Dq NSg/VB P  ISg/D$+ R   . D/P
 > critical , unpleasant story   , but     what   it       was  I       had forgotten long     ago .
-# NSg/J    . NSg/J+     NSg/VB+ . NSg/C/P NSg/I+ NSg/ISg+ VLPt ISg/#r+ VP  NSg/VPp/J NPr/VB/J J/P .
+# NSg/J    . J+         NSg/VB+ . NSg/C/P NSg/I+ NSg/ISg+ VLPt ISg/#r+ VP  NSg/VPp/J NPr/VB/J J/P .
 >
 #
 > “ Good      night    , ” she  said softly . “ Wake   me       at    eight , won’t you    . ”
@@ -1258,8 +1258,8 @@
 # NSg/R/C NSg/J N🅪Sg/J ?        NSg/VP NSg/VB/J/R/P NPr/J/R/P NPl/V3 P  N🅪Sg/VB/J+ . VB/C NSg/I/C ISg/#r+ VP/J    D$+ NSg/VB/J+
 > at    West      Egg      I       ran the car  under   its     shed    and  sat    for   a   while       on  an  abandoned
 # NSg/P NPr/VB/J+ N🅪Sg/VB+ ISg/#r+ VPt D   NSg+ NSg/J/P ISg/D$+ NSg/VP+ VB/C NSg/VP R/C/P D/P NSg/VB/C/P+ J/P D/P VP/J
-> grass      roller in        the yard    . The wind     had blown off        , leaving a   loud  , bright   night    ,
-# NPr🅪Sg/VB+ NSg/VB NPr/J/R/P D   NSg/VB+ . D+  N🅪Sg/VB+ VP  VPp/J NSg/VB/J/P . Nᴹ/Vg/J D/P NSg/J . NPr/VB/J N🅪Sg/VB+ .
+> grass      roller in        the yard    . The wind     had blown off        , leaving a   loud , bright   night    ,
+# NPr🅪Sg/VB+ NSg/VB NPr/J/R/P D   NSg/VB+ . D+  N🅪Sg/VB+ VP  VPp/J NSg/VB/J/P . Nᴹ/Vg/J D/P J    . NPr/VB/J N🅪Sg/VB+ .
 > with wings   beating in        the trees   and  a   persistent organ  sound      as    the full     bellows
 # P    NPl/V3+ Nᴹ/Vg/J NPr/J/R/P D+  NPl/V3+ VB/C D/P J          NSg/VB N🅪Sg/VB/J+ R/C/P D   NSg/VB/J NPl/V3
 > of the earth      blew      the frogs  full     of life     . The silhouette of a    moving  cat       wavered
@@ -2502,8 +2502,8 @@
 # VXB    NSg/VB P  NSg/VB  NSg/J   NPl/V3+ P  D   NPl     . P  .
 >
 #
-> “ Hello  ! ” I       roared , advancing toward her     . My  voice   seemed unnaturally loud  across
-# . NSg/VB . . ISg/#r+ VP/J   . Nᴹ/Vg/J   J/P    ISg/D$+ . D$+ NSg/VB+ VP/J   R           NSg/J NSg/P
+> “ Hello  ! ” I       roared , advancing toward her     . My  voice   seemed unnaturally loud across
+# . NSg/VB . . ISg/#r+ VP/J   . Nᴹ/Vg/J   J/P    ISg/D$+ . D$+ NSg/VB+ VP/J   R           J    NSg/P
 > the garden    .
 # D   NSg/VB/J+ .
 >
@@ -3269,7 +3269,7 @@
 >
 #
 > “ Good      night    . ” He       smiled — and  suddenly there seemed to be       a    pleasant significance
-# . NPr/VB/J+ N🅪Sg/VB+ . . NPr/ISg+ VP/J   . VB/C R        R+    VP/J   P  NSg/VLXB D/P+ NSg/J+   NSg+
+# . NPr/VB/J+ N🅪Sg/VB+ . . NPr/ISg+ VP/J   . VB/C R        R+    VP/J   P  NSg/VLXB D/P+ J+       NSg+
 > in        having  been   among the last      to go       , as    if    he       had desired it       all           the time       . “ Good
 # NPr/J/R/P Nᴹ/Vg/J VLPp/B P     D+  NSg/VB/J+ P  NSg/VB/J . R/C/P NSg/C NPr/ISg+ VP  VP/J    NSg/ISg+ NSg/I/J/C/Dq+ D+  N🅪Sg/VB/J+ . . NPr/VB/J
 > night    , old    sport   . . . . Good      night    . ”
@@ -3301,7 +3301,7 @@
 > of the road    , looking from the car  to the tire    and  from the tire    to the observers
 # P  D   N🅪Sg/J+ . Nᴹ/Vg/J P    D   NSg+ P  D   NSg/VB+ VB/C P    D   NSg/VB+ P  D   NPl+
 > in        a   pleasant , puzzled way    .
-# NPr/J/R/P D/P NSg/J    . VP/J    NSg/J+ .
+# NPr/J/R/P D/P J        . VP/J    NSg/J+ .
 >
 #
 > “ See    ! ” he       explained . “ It       went in        the ditch   . ”
@@ -5316,8 +5316,8 @@
 # P    ISg/D$+ NPl/V3+ NSg/VB/J/R NPr/J/R/P ISg/D$+ NSg/VB+ NPl/V3+ NPr/ISg+ VP/J    P  NPr/ISg+ P    D+  NPr+ . VP/J
 > sharply as    if    he       were on  a    wire     , and  disappeared into the living     - room     . It       wasn’t
 # R       R/C/P NSg/C NPr/ISg+ VLPt J/P D/P+ N🅪Sg/VB+ . VB/C VP/J        P    D+  N🅪Sg/Vg/J+ . N🅪Sg/VB+ . NSg/ISg+ VPt
-> a   bit      funny . Aware of the loud  beating of my  own       heart    I       pulled the door    to
-# D/P NSg/VPt+ NSg/J . VB/J  P  D   NSg/J Nᴹ/Vg/J P  D$+ NSg/VB/J+ N🅪Sg/VB+ ISg/#r+ VP/J   D+  NSg/VB+ P
+> a   bit      funny . Aware of the loud beating of my  own       heart    I       pulled the door    to
+# D/P NSg/VPt+ NSg/J . VB/J  P  D   J    Nᴹ/Vg/J P  D$+ NSg/VB/J+ N🅪Sg/VB+ ISg/#r+ VP/J   D+  NSg/VB+ P
 > against the increasing rain     .
 # C/P     D+  Nᴹ/Vg/J    N🅪Sg/VB+ .
 >
@@ -5454,8 +5454,8 @@
 # . J/R  R/C/P NSg/I/J/R/Dq R/C/P ISgPl+ VLB . .
 >
 #
-> “ Don’t talk    so          loud  . ”
-# . VXB   N🅪Sg/VB NSg/I/J/R/C NSg/J . .
+> “ Don’t talk    so          loud . ”
+# . VXB   N🅪Sg/VB NSg/I/J/R/C J    . .
 >
 #
 > “ You're acting  like         a    little      boy     , ” I       broke     out          impatiently . “ Not     only  that      , but
@@ -5946,8 +5946,8 @@
 # . NPr/J/R/P D+  N🅪Sg/Vg/J+ . NPr/J/R/P D+  N🅪Sg/Vg/J+ . VXB   IPl+ VP  Nᴹ/VB/J . . . .
 >
 #
-> Outside   the wind     was  loud  and  there was  a   faint    flow   of thunder along the Sound      .
-# Nᴹ/VB/J/P D+  N🅪Sg/VB+ VLPt NSg/J VB/C R+    VLPt D/P NSg/VB/J NSg/VB P  NSg/VB+ P     D+  N🅪Sg/VB/J+ .
+> Outside   the wind     was  loud and  there was  a   faint    flow   of thunder along the Sound      .
+# Nᴹ/VB/J/P D+  N🅪Sg/VB+ VLPt J    VB/C R+    VLPt D/P NSg/VB/J NSg/VB P  NSg/VB+ P     D+  N🅪Sg/VB/J+ .
 > All           the lights  were going   on  in        West      Egg      now       ; the electric trains , men  - carrying ,
 # NSg/I/J/C/Dq+ D+  NPl/V3+ VLPt Nᴹ/Vg/J J/P NPr/J/R/P NPr/VB/J+ N🅪Sg/VB+ NSg/J/R/C . D   NSg/J    NPl/V3 . NPl+ . Nᴹ/Vg/J  .
 > were plunging home      through the rain     from New   York . It       was  the hour of a    profound
@@ -8828,8 +8828,8 @@
 # NSg/VB/J JC    . NSg/C/P NPr/ISg+ VXPt   . NPr/ISg+ VP/J     NPr/ISg+ VPt    P  . K      NSg/I/J/C/Dq . NSg/I/C NPr/ISg+ NSg/VPt/P
 > outside   again , a   little     after seven , he       was  reminded of the conversation because
 # Nᴹ/VB/J/P R     . D/P NPr/I/J/Dq P     NSg   . NPr/ISg+ VLPt VP/J     P  D+  N🅪Sg/VB+     C/P
-> he       heard Mrs  . Wilson’s voice   , loud  and  scolding , down        - stairs in        the garage  .
-# NPr/ISg+ VP/J  NPl+ . NPr$     NSg/VB+ . NSg/J VB/C Nᴹ/Vg/J  . N🅪Sg/VB/J/P . NPl+   NPr/J/R/P D   NSg/VB+ .
+> he       heard Mrs  . Wilson’s voice   , loud and  scolding , down        - stairs in        the garage  .
+# NPr/ISg+ VP/J  NPl+ . NPr$     NSg/VB+ . J    VB/C Nᴹ/Vg/J  . N🅪Sg/VB/J/P . NPl+   NPr/J/R/P D   NSg/VB+ .
 >
 #
 > “ Beat      me       ! ” he       heard her     cry    . “ Throw  me       down        and  beat      me       , you    dirty little
@@ -9693,7 +9693,7 @@
 > For   Daisy was  young    and  her     artificial world   was  redolent of orchids and
 # R/C/P NPr+  VLPt NPr/VB/J VB/C ISg/D$+ J+         NSg/VB+ VLPt J        P  NPl     VB/C
 > pleasant , cheerful snobbery and  orchestras which set       the rhythm  of the year ,
-# NSg/J    . J        Nᴹ       VB/C NPl+       I/C+  NPr/VBP/J D   N🅪Sg/VB P  D   NSg+ .
+# J        . J        Nᴹ       VB/C NPl+       I/C+  NPr/VBP/J D   N🅪Sg/VB P  D   NSg+ .
 > summing up         the sadness and  suggestiveness of life     in        new   tunes  . All           night    the
 # NSg/Vg  NSg/VB/J/P D   Nᴹ+     VB/C NSg            P  N🅪Sg/VB+ NPr/J/R/P NSg/J NPl/V3 . NSg/I/J/C/Dq+ N🅪Sg/VB+ D
 > saxophones wailed the hopeless comment of the “ Beale Street    Blues   ” while      a
@@ -9741,7 +9741,7 @@
 > of a    tree    fell      abruptly across the dew      and  ghostly birds   began to sing     among the
 # P  D/P+ NSg/VB+ NSg/VPt/J R        NSg/P  D   N🅪Sg/VB+ VB/C J/R+    NPl/V3+ VPt   P  NSg/VB/J P     D+
 > blue       leaves  . There was  a   slow     , pleasant movement in        the air      , scarcely a    wind     ,
-# N🅪Sg/VB/J+ NPl/V3+ . R+    VLPt D/P NSg/VB/J . NSg/J    N🅪Sg     NPr/J/R/P D+  N🅪Sg/VB+ . R        D/P+ N🅪Sg/VB+ .
+# N🅪Sg/VB/J+ NPl/V3+ . R+    VLPt D/P NSg/VB/J . J        N🅪Sg     NPr/J/R/P D+  N🅪Sg/VB+ . R        D/P+ N🅪Sg/VB+ .
 > promising a   cool     , lovely day     .
 # Nᴹ/Vg/J   D/P NSg/VB/J . NSg/J  NPr🅪Sg+ .
 >
@@ -11405,7 +11405,7 @@
 >
 #
 > There was  one     thing to be       done      before I       left     , an  awkward , unpleasant thing that
-# R+    VLPt NSg/I/J NSg+  P  NSg/VLXB NSg/VPp/J C/P    ISg/#r+ NPr/VP/J . D/P NSg/J   . NSg/J+     NSg+  I/C/Ddem+
+# R+    VLPt NSg/I/J NSg+  P  NSg/VLXB NSg/VPp/J C/P    ISg/#r+ NPr/VP/J . D/P NSg/J   . J+         NSg+  I/C/Ddem+
 > perhaps had better     have    been   let     alone . But     I       wanted to leave  things in        order
 # NSg/R   VP  NSg/VXB/JC NSg/VXB VLPp/B NSg/VBP J     . NSg/C/P ISg/#r+ VP/J   P  NSg/VB NPl+   NPr/J/R/P N🅪Sg/VB+
 > and  not     just trust     that     obliging and  indifferent sea  to sweep  my  refuse away . I

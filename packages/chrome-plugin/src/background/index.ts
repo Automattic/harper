@@ -173,6 +173,9 @@ const defaultEnabledDomains = [
 	'steampowered.com',
 	'help.steampowered.com',
 	'assistant.kagi.com',
+	'spicychat.ai',
+	'studio.novlr.org',
+	'app.dabblewriter.com',
 ] as const;
 const defaultEnabledDomainSet = new Set<string>(defaultEnabledDomains);
 

@@ -497,6 +497,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Fanfare",
+								"state": true,
+								"label": "Fanfare"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Furthermore",
 								"state": true,
 								"label": "Furthermore"
@@ -735,6 +742,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Roundabout",
+								"state": true,
+								"label": "Roundabout"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Shortcoming",
 								"state": true,
 								"label": "Shortcoming"
@@ -850,6 +864,13 @@
 								"name": "Upward",
 								"state": true,
 								"label": "Upward"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Whatsoever",
+								"state": true,
+								"label": "Whatsoever"
 							}
 						},
 						{
@@ -3419,6 +3440,13 @@
 						},
 						{
 							"Bool": {
+								"name": "SeemsLikeAdjective",
+								"state": true,
+								"label": "Seems Like Adjective"
+							}
+						},
+						{
+							"Bool": {
 								"name": "SendAnEmailTo",
 								"state": true,
 								"label": "Send An Email To"
@@ -3436,6 +3464,13 @@
 								"name": "Starving",
 								"state": true,
 								"label": "Starving"
+							}
+						},
+						{
+							"Bool": {
+								"name": "SufficientEnough",
+								"state": true,
+								"label": "Sufficient Enough"
 							}
 						},
 						{
@@ -3496,6 +3531,13 @@
 						},
 						{
 							"Bool": {
+								"name": "WayWithWhich",
+								"state": true,
+								"label": "Way with Which"
+							}
+						},
+						{
+							"Bool": {
 								"name": "WidelyAccepted",
 								"state": true,
 								"label": "Widely Accepted"
@@ -3511,6 +3553,13 @@
 				"description": "Catches grammar issues involving agreement, articles, prepositions, verb forms, and sentence structure.",
 				"child": {
 					"settings": [
+						{
+							"Bool": {
+								"name": "ABitOfPlural",
+								"state": true,
+								"label": "A Bit of Plural"
+							}
+						},
 						{
 							"Bool": {
 								"name": "AdjectiveDoubleDegree",
@@ -3551,6 +3600,13 @@
 								"name": "AllReady",
 								"state": true,
 								"label": "All Ready"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AllThatsAre",
+								"state": true,
+								"label": "All That's Are"
 							}
 						},
 						{
@@ -4274,6 +4330,13 @@
 						},
 						{
 							"Bool": {
+								"name": "WeSeeUs",
+								"state": true,
+								"label": "We See Us"
+							}
+						},
+						{
+							"Bool": {
 								"name": "WillContain",
 								"state": true,
 								"label": "Will Contain"
@@ -4553,6 +4616,13 @@
 								"name": "AWholeOther",
 								"state": true,
 								"label": "A Whole Other"
+							}
+						},
+						{
+							"Bool": {
+								"name": "BacklashBackslash",
+								"state": true,
+								"label": "Backlash / Backslash"
 							}
 						},
 						{
@@ -4847,6 +4917,13 @@
 								"name": "ConvenientStore",
 								"state": true,
 								"label": "Convenient Store"
+							}
+						},
+						{
+							"Bool": {
+								"name": "CoolCalmCollected",
+								"state": true,
+								"label": "Cool, Calm, Collected"
 							}
 						},
 						{
@@ -5876,6 +5953,13 @@
 								"name": "QuiteMany",
 								"state": true,
 								"label": "Quite Many"
+							}
+						},
+						{
+							"Bool": {
+								"name": "RackOnesBrain",
+								"state": true,
+								"label": "Rack One's Brain"
 							}
 						},
 						{

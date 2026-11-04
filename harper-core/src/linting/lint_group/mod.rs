@@ -6,6 +6,7 @@ use std::{collections::BTreeMap, hash::BuildHasher, num::NonZero, sync::Arc};
 use {foldhash::quality::RandomState, hashbrown::HashMap, lru::LruCache};
 
 // Individual Linters
+use super::a_bit_of_plural::ABitOfPlural;
 use super::a_part::APart;
 use super::a_some_time::ASomeTime;
 use super::a_ways_to_go::AWaysToGo;
@@ -19,6 +20,7 @@ use super::ajar::Ajar;
 use super::akimbo::Akimbo;
 use super::all_hell_break_loose::AllHellBreakLoose;
 use super::all_intents_and_purposes::AllIntentsAndPurposes;
+use super::all_thats_are::AllThatsAre;
 use super::allow_to::AllowTo;
 use super::am_in_the_morning::AmInTheMorning;
 use super::amounts_for::AmountsFor;
@@ -73,6 +75,7 @@ use super::compound_nouns::CompoundNouns;
 use super::compound_subject_i::CompoundSubjectI;
 use super::confident::Confident;
 use super::convenient_store::ConvenientStore;
+use super::cool_calm_collected::CoolCalmCollected;
 use super::correct_number_suffix::CorrectNumberSuffix;
 use super::crave_for::CraveFor;
 use super::criteria_phenomena::CriteriaPhenomena;
@@ -250,6 +253,7 @@ use super::quantifier_needs_of::QuantifierNeedsOf;
 use super::quantifier_numeral_conflict::QuantifierNumeralConflict;
 use super::quite_quiet::QuiteQuiet;
 use super::quote_spacing::QuoteSpacing;
+use super::rack_ones_brain::RackOnesBrain;
 use super::reason_for_doing::ReasonForDoing;
 use super::redundant_acronyms::RedundantAcronyms;
 use super::redundant_additive_adverbs::RedundantAdditiveAdverbs;
@@ -269,6 +273,7 @@ use super::roller_skated::RollerSkated;
 use super::run_into_problems_or_trouble::RunIntoProblemsOrTrouble;
 use super::safe_to_save::SafeToSave;
 use super::save_to_safe::SaveToSafe;
+use super::seems_like_adjective::SeemsLikeAdjective;
 use super::sentence_capitalization::SentenceCapitalization;
 use super::shoot_oneself_in_the_foot::ShootOneselfInTheFoot;
 use super::show_case::ShowCase;
@@ -336,6 +341,7 @@ use super::vicious_loop::{ViciousCircle, ViciousCircleOrCycle, ViciousCycle};
 use super::waist_waste::WaistWaste;
 use super::was_aloud::WasAloud;
 use super::way_too_adjective::WayTooAdjective;
+use super::we_see_us::WeSeeUs;
 use super::web_scraping::WebScraping;
 use super::well_educated::WellEducated;
 use super::went_ahead_and_agreement::WentAheadAndAgreement;
@@ -647,6 +653,7 @@ impl LintGroup {
         // Add all the more complex rules to the group.
         // Please maintain alphabetical order.
         // On *nix you can maintain sort order with `sort -t'(' -k2`
+        insert_expr_rule!(ABitOfPlural);
         insert_expr_rule!(APart);
         insert_expr_rule!(ASomeTime);
         insert_expr_rule!(AWaysToGo);
@@ -661,6 +668,7 @@ impl LintGroup {
         insert_expr_rule!(AllHellBreakLoose);
         insert_expr_rule!(AllIntentsAndPurposes);
         insert_expr_rule!(AllowTo);
+        insert_expr_rule!(AllThatsAre);
         insert_expr_rule!(AmInTheMorning);
         insert_expr_rule!(AmountsFor);
         insert_struct_rule_with_dialect!(AnA);
@@ -888,6 +896,7 @@ impl LintGroup {
         insert_expr_rule!(QuantifierNumeralConflict);
         insert_expr_rule!(QuiteQuiet);
         insert_struct_rule!(QuoteSpacing);
+        insert_expr_rule!(RackOnesBrain);
         insert_expr_rule!(ReasonForDoing);
         insert_expr_rule!(RedundantAcronyms);
         insert_expr_rule!(RedundantAdditiveAdverbs);
@@ -907,6 +916,7 @@ impl LintGroup {
         insert_expr_rule!(RunIntoProblemsOrTrouble);
         insert_expr_rule!(SafeToSave);
         insert_expr_rule!(SaveToSafe);
+        insert_expr_rule!(SeemsLikeAdjective);
         insert_struct_rule_with_dict!(SentenceCapitalization);
         insert_expr_rule!(ShootOneselfInTheFoot);
         insert_expr_rule!(ShowCase);
@@ -973,6 +983,7 @@ impl LintGroup {
         insert_expr_rule!(WaistWaste);
         insert_expr_rule!(WasAloud);
         insert_expr_rule!(WayTooAdjective);
+        insert_expr_rule!(WeSeeUs);
         insert_expr_rule!(WellEducated);
         insert_expr_rule_with_dict!(WentAheadAndAgreement);
         insert_expr_rule!(Whereas);
@@ -992,6 +1003,9 @@ impl LintGroup {
 
         // Uses Sentence rather than Chunk
         out.add("ConvenientStore", ConvenientStore::default());
+
+        // Uses Sentence rather than Chunk
+        out.add("CoolCalmCollected", CoolCalmCollected::default());
 
         // Uses Sentence rather than Chunk
         out.add("Damages", Damages::default());

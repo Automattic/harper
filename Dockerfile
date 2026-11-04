@@ -22,7 +22,7 @@ RUN cargo clean
 FROM node:${NODE_VERSION} AS node-build
 
 RUN apt-get update && apt-get install git parallel -y
-RUN corepack enable
+RUN npm install --global corepack@0.36.0 && corepack enable
 
 RUN mkdir -p /usr/build/
 WORKDIR /usr/build/

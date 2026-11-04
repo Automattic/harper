@@ -1,5 +1,6 @@
 ---
 title: Reviewing Pull Requests
+description: Download Harper build artifacts and test proposed changes locally when reviewing pull requests.
 ---
 
 There are a lot of individual components and artifacts that make up Harper.

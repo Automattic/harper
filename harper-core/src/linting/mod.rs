@@ -2,6 +2,7 @@
 //!
 //! See the [`Linter`] trait and the [documentation for authoring a rule](https://writewithharper.com/docs/contributors/author-a-rule) for more information.
 
+mod a_bit_of_plural;
 mod a_part;
 mod a_some_time;
 mod a_ways_to_go;
@@ -15,6 +16,7 @@ mod ajar;
 mod akimbo;
 mod all_hell_break_loose;
 mod all_intents_and_purposes;
+mod all_thats_are;
 mod allow_to;
 mod am_in_the_morning;
 mod amounts_for;
@@ -71,6 +73,7 @@ mod compound_nouns;
 mod compound_subject_i;
 mod confident;
 mod convenient_store;
+mod cool_calm_collected;
 mod correct_number_suffix;
 mod crave_for;
 mod criteria_phenomena;
@@ -268,6 +271,7 @@ mod quantifier_needs_of;
 mod quantifier_numeral_conflict;
 mod quite_quiet;
 mod quote_spacing;
+mod rack_ones_brain;
 mod reason_for_doing;
 mod redundant_acronyms;
 mod redundant_additive_adverbs;
@@ -287,6 +291,7 @@ mod roller_skated;
 mod run_into_problems_or_trouble;
 mod safe_to_save;
 mod save_to_safe;
+mod seems_like_adjective;
 mod sentence_capitalization;
 mod shoot_oneself_in_the_foot;
 mod show_case;
@@ -356,6 +361,7 @@ mod vicious_loop;
 mod waist_waste;
 mod was_aloud;
 mod way_too_adjective;
+mod we_see_us;
 mod web_scraping;
 mod weir_rules;
 mod well_educated;
