@@ -3,6 +3,10 @@ title: Using Harper in Node.js
 description: Run harper.js in Node.js with LocalLinter and the provided example code.
 ---
 
+<script lang="ts">
+import example from '../../../../../../harper.js/examples/commonjs-simple/index.js?raw';
+</script>
+
 # Using Harper in Node.js
 
 Harper.js can run in Node.js.
@@ -15,4 +19,4 @@ Additionally, since `harper.js` is an ECMAScript module, it must be imported in 
 
 The example below can be found in [the Harper monorepo.](https://github.com/Automattic/harper/tree/master/packages/harper.js/examples/commonjs-simple)
 
-@code(../../../../../../harper.js/examples/commonjs-simple/index.js)
+<pre><code>{example}</code></pre>

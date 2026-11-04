@@ -3,6 +3,10 @@ title: Harper's Testing Strategy
 description: Understand the Harper testing strategy, software quality goals, and role of automated checks and production feedback.
 ---
 
+<script lang="ts">
+import cargoToml from '../../../../../../../Cargo.toml?raw';
+</script>
+
 # Harper's Testing Strategy
 
 Harper is a complex project. We deliver many artifacts to many users, and the automated processes we use to do so can seem intimidating.
@@ -182,7 +186,7 @@ In the interest of maintaining fast iteration cycles, we run our tests with `opt
 These optimizations are known to cause issues with debuggers.
 If you plan to use one, you may want to comment them out.
 
-@code(../../../../../../../Cargo.toml)
+<pre><code>{cargoToml}</code></pre>
 
 ### Filtering Tests
 
@@ -204,4 +208,3 @@ This repeatedly runs the rule's focused tests while skipping tests from other wo
 - [Integration Testing Thousands of Websites with Playwright](https://elijahpotter.dev/articles/integration-testing-thousands-of-sites-with-playwright)
 - [3 Traits of Good Test Suites](https://elijahpotter.dev/articles/3-traits-of-good-test-suites)
 - [LLM Assisted Fuzzing](https://elijahpotter.dev/articles/LLM-assisted-fuzzing)
-

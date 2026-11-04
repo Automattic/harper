@@ -54,7 +54,7 @@ function toggleTheme() {
 >
 	<a class="fixed -top-[100px] left-4 z-[1100] bg-(--docs-bg) px-4 py-2 focus:top-2" href="#docs-main">Skip to content</a>
 	<header class="fixed inset-x-0 top-0 z-100 border-b border-(--docs-border) bg-(--docs-header-bg)">
-		<div class={`mx-auto flex h-14 max-w-[1440px] items-center gap-3 px-3 min-[950px]:h-[73px] min-[950px]:px-6! ${entries.length ? 'min-[950px]:pl-[calc(min(25vw,288px)+16px)]! min-[1440px]:pl-[min(25vw,288px)]!'  : ''}`}>
+		<div class={`mx-auto flex h-14 max-w-[1440px] items-center gap-3 px-3 min-[950px]:h-[73px] min-[950px]:px-6! ${entries.length ? 'min-[950px]:pl-[calc(min(25vw,288px)+32px)]! min-[1440px]:pl-[calc(min(25vw,288px)+32px)]!'  : ''}`}>
 			<button class="block h-10 w-8 text-[22px] min-[1440px]:hidden!" type="button" aria-label="Open navigation" aria-haspopup="dialog" aria-expanded={menuOpen} aria-controls="docs-mobile-menu" onclick={() => { mobileMenu.showModal(); menuOpen = true; }}>☰</button>
 			<a class={`flex items-center gap-2 text-sm font-semibold leading-[1.4] ${entries.length ? 'min-[950px]:hidden!' : ''}`} href="/" aria-label={siteConfig.title}>
 				<img class="flex-[0_0_32px]" src={siteConfig.logo} alt="" width="32" height="32" /><span class="max-[949px]:hidden!">{siteConfig.title}</span>
