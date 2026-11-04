@@ -417,6 +417,12 @@ importers:
         specifier: 4.1.12
         version: 4.1.12(@types/node@22.13.10)(@vitest/browser-playwright@4.1.12)(@vitest/coverage-v8@4.1.12)(@vitest/ui@4.1.12)(jsdom@20.0.3)(msw@2.7.3(@types/node@22.13.10)(typescript@5.9.3))(vite@8.3.5(@types/node@22.13.10)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.85.1)(terser@5.51.2)(tsx@4.20.6)(yaml@2.9.1))
 
+  packages/harper.js/examples/chrome-extension-simple:
+    dependencies:
+      harper.js:
+        specifier: workspace:*
+        version: link:../..
+
   packages/harper.js/examples/commonjs-simple:
     dependencies:
       harper.js:

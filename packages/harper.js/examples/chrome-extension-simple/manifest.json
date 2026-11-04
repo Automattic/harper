@@ -1,0 +1,10 @@
+{
+	"manifest_version": 3,
+	"name": "harper.js Chrome Extension Example",
+	"description": "Minimal demo: load harper.js in a Chrome extension popup and show the package version.",
+	"version": "0.0.1",
+	"action": {
+		"default_popup": "popup.html",
+		"default_title": "harper.js example"
+	}
+}
