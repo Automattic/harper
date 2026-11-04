@@ -53,7 +53,7 @@ onMount(() => {
 		</a>
 
 		<nav
-			class="flex items-center gap-3 justify-self-center transition-[gap] duration-200 motion-reduce:transition-none max-[900px]:hidden"
+			class="flex items-center gap-3 justify-self-center transition-[gap] duration-200 motion-reduce:transition-none max-[900px]:hidden!"
 			aria-label="Marketing navigation"
 		>
 			<a
@@ -85,14 +85,14 @@ onMount(() => {
 			}`}
 		>
 			<a
-				class="inline-flex size-8 items-center justify-center rounded-full !text-black/70 no-underline transition-[background,color,width,height] duration-200 hover:bg-black/5 hover:!text-black hover:no-underline motion-reduce:transition-none dark:!text-white/70 dark:hover:bg-white/10 dark:hover:!text-white max-[900px]:hidden [&_svg]:size-4 [&_svg]:fill-current [&_svg]:transition-[width,height] [&_svg]:duration-200"
+				class="inline-flex size-8 items-center justify-center rounded-full !text-black/70 no-underline transition-[background,color,width,height] duration-200 hover:bg-black/5 hover:!text-black hover:no-underline motion-reduce:transition-none dark:!text-white/70 dark:hover:bg-white/10 dark:hover:!text-white max-[900px]:hidden! [&_svg]:size-4 [&_svg]:fill-current [&_svg]:transition-[width,height] [&_svg]:duration-200"
 				href={marketingLinks.github}
 				aria-label="GitHub"
 			>
 				<GitHubLogo />
 			</a>
 			<a
-				class="inline-flex size-8 items-center justify-center rounded-full !text-black/70 no-underline transition-[background,color,width,height] duration-200 hover:bg-black/5 hover:!text-black hover:no-underline motion-reduce:transition-none dark:!text-white/70 dark:hover:bg-white/10 dark:hover:!text-white max-[900px]:hidden [&_svg]:size-4 [&_svg]:fill-current [&_svg]:transition-[width,height] [&_svg]:duration-200"
+				class="inline-flex size-8 items-center justify-center rounded-full !text-black/70 no-underline transition-[background,color,width,height] duration-200 hover:bg-black/5 hover:!text-black hover:no-underline motion-reduce:transition-none dark:!text-white/70 dark:hover:bg-white/10 dark:hover:!text-white max-[900px]:hidden! [&_svg]:size-4 [&_svg]:fill-current [&_svg]:transition-[width,height] [&_svg]:duration-200"
 				href={marketingLinks.discord}
 				aria-label="Discord"
 			>
@@ -100,7 +100,7 @@ onMount(() => {
 			</a>
 			<DocSearch variant="marketing" />
 			<button
-				class="hidden size-8 flex-col items-center justify-center gap-1 rounded-full border-0 bg-transparent text-black transition-[width,height,gap] duration-200 motion-reduce:transition-none dark:text-white max-[900px]:inline-flex [&_span]:h-[1.5px] [&_span]:w-4 [&_span]:rounded-full [&_span]:bg-current [&_span]:transition-[width,height] [&_span]:duration-200"
+				class="hidden size-8 flex-col items-center justify-center gap-1 rounded-full border-0 bg-transparent text-black transition-[width,height,gap] duration-200 motion-reduce:transition-none dark:text-white max-[900px]:inline-flex! [&_span]:h-[1.5px] [&_span]:w-4 [&_span]:rounded-full [&_span]:bg-current [&_span]:transition-[width,height] [&_span]:duration-200"
 				type="button"
 				aria-label="Toggle navigation"
 				aria-expanded={mobileOpen}
@@ -113,7 +113,7 @@ onMount(() => {
 	</div>
 
 	{#if mobileOpen}
-		<div class="hidden gap-1 px-4 pb-4 max-[900px]:grid">
+		<div class="hidden gap-1 px-4 pb-4 max-[900px]:grid!">
 			<a
 				class="rounded-xl bg-white/65 px-4 py-3 font-bold !text-black no-underline hover:no-underline dark:bg-white/10 dark:!text-white"
 				href="/docs/about"

@@ -27,6 +27,7 @@ let { data }: { data: PageData } = $props();
 
 <p>This page is an incomplete list of the various grammatical rules Harper checks for.</p>
 
+<div class="w-full overflow-x-auto" role="region" aria-label="Grammar rules" tabindex="0">
 <Table>
 	<TableHead>
 		<TableHeadCell>Name</TableHeadCell>
@@ -43,4 +44,5 @@ let { data }: { data: PageData } = $props();
 		{/each}
 	</TableBody>
 </Table>
+</div>
 <EditPage sourcePath="docs/rules/+page.svelte" />
