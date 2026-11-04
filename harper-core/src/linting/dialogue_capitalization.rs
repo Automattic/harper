@@ -375,8 +375,6 @@ mod tests {
     use crate::linting::Linter;
     use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
-    // Failing examples from `dev-examples.txt`.
-
     #[test]
     fn capitalizes_dialogue_after_interrupting_attribution() {
         assert_lint_count(
@@ -471,8 +469,6 @@ mod tests {
             1,
         );
     }
-
-    // Allowed examples from `dev-examples.txt`.
 
     #[test]
     fn allows_lowercase_dialogue_after_interrupting_attribution() {
