@@ -1,11 +1,13 @@
 <script lang="ts">
 import { DiscordLogo, GitHubLogo } from 'components';
-import { onMount, type Snippet } from 'svelte';
+import { getContext, onMount, type Snippet } from 'svelte';
 import { afterNavigate } from '$app/navigation';
 import { page } from '$app/state';
 import { navbar, sidebar, siteConfig, themeColor } from './config';
 import DocSearch from './DocSearch.svelte';
 import Sidebar from './Sidebar.svelte';
+import type ThemeController from './ThemeController';
+import { THEME_CONTEXT } from './ThemeController';
 
 /** Shared site navigation around non-marketing content. */
 interface Props {
@@ -15,7 +17,8 @@ interface Props {
 let { children }: Props = $props();
 let mobileMenu: HTMLDialogElement;
 let menuOpen = $state(false);
-let dark = $state(false);
+const theme = getContext<ThemeController>(THEME_CONTEXT);
+const dark = $derived($theme === 'dark');
 const entries = $derived(
 	Object.entries(sidebar)
 		.sort(([a], [b]) => b.length - a.length)
@@ -23,7 +26,6 @@ const entries = $derived(
 );
 
 onMount(() => {
-	dark = document.documentElement.classList.contains('dark');
 	const media = window.matchMedia('(min-width: 1440px)');
 	const closeOnDesktop = () => {
 		if (media.matches) mobileMenu.close();
@@ -34,15 +36,9 @@ onMount(() => {
 
 afterNavigate(() => mobileMenu?.close());
 
-/** Keep the saved theme preference compatible with the existing startup script. */
+/** Store an explicit choice through the root-owned theme controller. */
 function toggleTheme() {
-	dark = !dark;
-	document.documentElement.classList.toggle('dark', dark);
-	try {
-		localStorage.setItem('SVELTEPRESS_DARK_MODE', dark ? 'on' : 'off');
-	} catch {
-		// The theme still works when browser storage is unavailable.
-	}
+	theme.setTheme(dark ? 'light' : 'dark');
 }
 </script>
 

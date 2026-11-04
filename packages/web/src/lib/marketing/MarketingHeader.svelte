@@ -1,9 +1,9 @@
 <script lang="ts">
 import { Arrow, DiscordLogo, GitHubLogo } from 'components';
 import { onMount } from 'svelte';
+import DocSearch from '$lib/docs/DocSearch.svelte';
 import { marketingLinks } from './data';
 import HarperMark from './HarperMark.svelte';
-import MarketingDocSearch from './MarketingDocSearch.svelte';
 
 export let active: 'home' | 'get' | 'desktop' | 'docs' | '' = '';
 
@@ -98,7 +98,7 @@ onMount(() => {
 			>
 				<DiscordLogo />
 			</a>
-			<MarketingDocSearch />
+			<DocSearch variant="marketing" />
 			<button
 				class="hidden size-8 flex-col items-center justify-center gap-1 rounded-full border-0 bg-transparent text-black transition-[width,height,gap] duration-200 motion-reduce:transition-none dark:text-white max-[900px]:inline-flex [&_span]:h-[1.5px] [&_span]:w-4 [&_span]:rounded-full [&_span]:bg-current [&_span]:transition-[width,height] [&_span]:duration-200"
 				type="button"

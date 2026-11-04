@@ -3,13 +3,17 @@ import '../app.css';
 
 import { AutomatticLogo, GutterCenter, Link } from 'components';
 import posthog from 'posthog-js';
-import { onMount, type Snippet } from 'svelte';
+import { onMount, type Snippet, setContext } from 'svelte';
 import { browser } from '$app/environment';
 import { page } from '$app/state';
+import DocLayout from '$lib/docs/DocLayout.svelte';
 import PageLayout from '$lib/docs/PageLayout.svelte';
-import SiteLayout from '$lib/docs/SiteLayout.svelte';
+import ThemeController, { THEME_CONTEXT } from '$lib/docs/ThemeController';
 
 let { children }: { children: Snippet } = $props();
+
+const theme = setContext(THEME_CONTEXT, new ThemeController());
+onMount(() => theme.start());
 
 onMount(() => {
 	if (browser) {
@@ -34,7 +38,7 @@ const isMarketingRoute = $derived(
 {#if isMarketingRoute}
 	{@render children()}
 {:else}
-	<SiteLayout>
+	<DocLayout>
 	<div class="flex flex-col h-full">
 		<div class="flex-1">
 			<GutterCenter>
@@ -52,5 +56,5 @@ const isMarketingRoute = $derived(
 			</Link>
 		</div>
 	</div>
-	</SiteLayout>
+	</DocLayout>
 {/if}
