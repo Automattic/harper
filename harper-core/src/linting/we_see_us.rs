@@ -56,7 +56,7 @@ impl ExprLinter for WeSeeUs {
         // "us" and "Us" look like the pronoun, but "US" looks like the country
         let us_tok = matched_tokens.last()?;
         let us_ch = us_tok.get_ch(source);
-        if us_ch == &['U', 'S'] {
+        if us_ch == ['U', 'S'] {
             return None;
         }
         let span = us_tok.span;
