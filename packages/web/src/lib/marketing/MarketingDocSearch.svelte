@@ -2,7 +2,7 @@
 import '@docsearch/css/dist/style.css';
 import docsearch from '@docsearch/js';
 import { onMount } from 'svelte';
-import { docSearchConfig } from './data';
+import { docSearchConfig } from '$lib/docs/config';
 
 let container: HTMLDivElement;
 
