@@ -4330,6 +4330,13 @@
 						},
 						{
 							"Bool": {
+								"name": "WeSeeUs",
+								"state": true,
+								"label": "We See Us"
+							}
+						},
+						{
+							"Bool": {
 								"name": "WillContain",
 								"state": true,
 								"label": "Will Contain"
