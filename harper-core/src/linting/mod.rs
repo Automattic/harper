@@ -361,6 +361,7 @@ mod vicious_loop;
 mod waist_waste;
 mod was_aloud;
 mod way_too_adjective;
+mod we_see_us;
 mod web_scraping;
 mod weir_rules;
 mod well_educated;

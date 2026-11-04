@@ -341,6 +341,7 @@ use super::vicious_loop::{ViciousCircle, ViciousCircleOrCycle, ViciousCycle};
 use super::waist_waste::WaistWaste;
 use super::was_aloud::WasAloud;
 use super::way_too_adjective::WayTooAdjective;
+use super::we_see_us::WeSeeUs;
 use super::web_scraping::WebScraping;
 use super::well_educated::WellEducated;
 use super::went_ahead_and_agreement::WentAheadAndAgreement;
@@ -982,6 +983,7 @@ impl LintGroup {
         insert_expr_rule!(WaistWaste);
         insert_expr_rule!(WasAloud);
         insert_expr_rule!(WayTooAdjective);
+        insert_expr_rule!(WeSeeUs);
         insert_expr_rule!(WellEducated);
         insert_expr_rule_with_dict!(WentAheadAndAgreement);
         insert_expr_rule!(Whereas);
