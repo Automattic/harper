@@ -3597,6 +3597,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AllThatsAre",
+								"state": true,
+								"label": "All That's Are"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AnotherOnes",
 								"state": true,
 								"label": "Another Ones"
