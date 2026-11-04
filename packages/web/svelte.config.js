@@ -1,18 +1,12 @@
-import { fileURLToPath } from 'node:url';
 import adapter from '@sveltejs/adapter-node';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { mdsvex } from 'mdsvex';
+import mdsvexConfig from './mdsvex.config.js';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	extensions: ['.svelte', '.md'],
-	preprocess: [
-		vitePreprocess(),
-		mdsvex({
-			extensions: ['.md'],
-			layout: fileURLToPath(new URL('./src/lib/docs/MarkdownLayout.svelte', import.meta.url)),
-		}),
-	],
+	preprocess: [vitePreprocess(), mdsvex(mdsvexConfig)],
 	kit: {
 		csrf: {
 			trustedOrigins: [

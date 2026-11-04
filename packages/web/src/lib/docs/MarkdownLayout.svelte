@@ -1,13 +1,17 @@
 <script lang="ts">
 import type { Snippet } from 'svelte';
+import PageMetadata from '$lib/PageMetadata.svelte';
+import type { MetadataInput } from '$lib/seo';
 
 /** Markdown content. Embedded UI must use a data-docs-embed boundary to retain its own styles. */
-interface Props {
+interface Props extends MetadataInput {
 	children: Snippet;
 }
 
-let { children }: Props = $props();
+let { children, title, description }: Props = $props();
 </script>
+
+<PageMetadata metadata={{ title, description }} />
 
 <div
 	data-docs-content
@@ -24,7 +28,14 @@ let { children }: Props = $props();
 		[&_pre_code]:docs-prose:block [&_pre_code]:docs-prose:bg-transparent! [&_pre_code]:docs-prose:p-0 [&_pre_code]:docs-prose:text-[1em]
 		[&_blockquote]:docs-prose:my-5! [&_blockquote]:docs-prose:border-l-[3px]! [&_blockquote]:docs-prose:border-(--docs-border)! [&_blockquote]:docs-prose:px-4 [&_blockquote]:docs-prose:py-1 [&_blockquote]:docs-prose:text-(--docs-muted) [&_blockquote_p]:docs-prose:m-0!
 		[&_table]:docs-prose:my-6 [&_table]:docs-prose:w-full [&_table]:docs-prose:border-collapse [&_th]:docs-prose:border-b-2 [&_th]:docs-prose:border-(--docs-border) [&_th]:docs-prose:text-left! [&_th]:docs-prose:font-semibold [&_th]:docs-prose:px-3 [&_th]:docs-prose:py-2 [&_td]:docs-prose:px-3 [&_td]:docs-prose:py-2 [&_tbody_tr]:docs-prose:border-t [&_tbody_tr]:docs-prose:border-(--docs-border) [&_tbody_tr:hover]:docs-prose:bg-(--docs-border)
-		max-[479px]:[&_table]:docs-prose:block max-[479px]:[&_table]:docs-prose:overflow-x-auto"
+		max-[479px]:[&_table]:docs-prose:block max-[479px]:[&_table]:docs-prose:overflow-x-auto
+		[&_pre_:is(.hljs-comment,.hljs-quote)]:docs-prose:text-[#6a737d] dark:[&_pre_:is(.hljs-comment,.hljs-quote)]:docs-prose:text-[#8b949e]
+		[&_pre_:is(.hljs-keyword,.hljs-selector-tag,.hljs-literal)]:docs-prose:text-[#a626a4] dark:[&_pre_:is(.hljs-keyword,.hljs-selector-tag,.hljs-literal)]:docs-prose:text-[#c678dd]
+		[&_pre_:is(.hljs-string,.hljs-regexp,.hljs-addition)]:docs-prose:text-[#22863a] dark:[&_pre_:is(.hljs-string,.hljs-regexp,.hljs-addition)]:docs-prose:text-[#98c379]
+		[&_pre_:is(.hljs-number,.hljs-symbol,.hljs-attr,.hljs-built_in)]:docs-prose:text-[#986801] dark:[&_pre_:is(.hljs-number,.hljs-symbol,.hljs-attr,.hljs-built_in)]:docs-prose:text-[#d19a66]
+		[&_pre_:is(.hljs-title,.hljs-section)]:docs-prose:text-[#0366d6] dark:[&_pre_:is(.hljs-title,.hljs-section)]:docs-prose:text-[#61afef]
+		[&_pre_:is(.hljs-tag,.hljs-name,.hljs-deletion)]:docs-prose:text-[#b31d28] dark:[&_pre_:is(.hljs-tag,.hljs-name,.hljs-deletion)]:docs-prose:text-[#e06c75]
+		[&_pre_.hljs-emphasis]:docs-prose:italic [&_pre_.hljs-strong]:docs-prose:font-bold"
 >
 	{@render children()}
 </div>

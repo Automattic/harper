@@ -119,7 +119,7 @@ Harper provides support for specific types of grammatical errors through individ
 The exact structure of these linters matters very little.
 All one needs to know is that there are individual non-overlapping linters.
 For example, there's one that detects improper use of Oxford Commas, one that detects misspelled words, and one that differentiates between "there", "their", and "they're".
-Each one of these linters has a linter ID, which is a short (< 10 character) string that ties a suggestion to the piece of code that produced it.
+Each one of these linters has a linter ID, which is a short (`< 10` character) string that ties a suggestion to the piece of code that produced it.
 
 When a user reviews a suggestion (via the Chrome Extension or otherwise), they are given the option to report it if they believe it was made in error.
 If they do so, a POST request is made to `https://writewithharper.com` and it is tallied up.

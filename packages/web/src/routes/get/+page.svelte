@@ -5,7 +5,10 @@ export const frontmatter = {
 };
 </script>
 
+<PageMetadata metadata={frontmatter} standaloneTitle />
+
 <script lang="ts">
+import PageMetadata from '$lib/PageMetadata.svelte';
 import { Arrow } from 'components';
 import { onMount } from 'svelte';
 import {
