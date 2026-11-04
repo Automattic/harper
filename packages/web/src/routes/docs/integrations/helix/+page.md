@@ -1,5 +1,6 @@
 ---
 title: Helix
+description: Connect Helix to harper-ls and configure English grammar diagnostics and rule settings.
 ---
 
 Our Helix integration is powered by [`harper-ls`](./language-server).

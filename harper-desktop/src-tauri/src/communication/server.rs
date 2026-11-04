@@ -43,6 +43,7 @@ where
 
     async fn handle_request(&self, request: &Request) -> Response {
         match request {
+            Request::OpenSettings => Response::Ack,
             Request::GetLintConfig => Response::GetLintConfig {
                 config: self.config.lock().await.lint_config.clone(),
             },
@@ -68,6 +69,22 @@ where
             Request::GetIntegrations => Response::GetIntegrations {
                 integrations: self.config.lock().await.integrations.clone(),
             },
+            Request::GetAutoEnableNewApps => Response::GetAutoEnableNewApps {
+                enabled: self.config.lock().await.auto_enable_new_apps,
+            },
+            Request::ResolveIntegration { bundle_id } => {
+                let mut config = self.config.lock().await;
+                let previous_len = config.integrations.len();
+                let enabled = config.resolve_integration(bundle_id);
+                if config.integrations.len() != previous_len
+                    && let Err(error) = config.save_to_system().await
+                {
+                    config.remove_integration(bundle_id.trim());
+                    eprintln!("failed to save discovered integration: {error}");
+                    return Response::ResolveIntegration { enabled: false };
+                }
+                Response::ResolveIntegration { enabled }
+            }
             Request::SetLintConfig { config } => {
                 let mut stored_config = self.config.lock().await;
                 stored_config.lint_config = config.clone();

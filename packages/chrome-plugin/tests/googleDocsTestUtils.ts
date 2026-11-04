@@ -45,7 +45,7 @@ export async function openLiveGoogleDoc(page: Page) {
 					try {
 						const annotated = await window._docs_annotate_getAnnotatedText();
 						return Boolean(
-							annotated?.getText &&
+							typeof annotated?.getText === 'function' &&
 								document.querySelector('#harper-google-docs-target') &&
 								document.querySelector('#harper-google-docs-main-world-bridge'),
 						);
@@ -93,7 +93,8 @@ export async function moveGoogleDocsCursorToEnd(page: Page) {
 
 async function getGoogleDocsRenderedState(page: Page): Promise<GoogleDocsRenderedState> {
 	return await page.evaluate(async () => {
-		const annotated = await window._docs_annotate_getAnnotatedText();
+		const annotated = await window._docs_annotate_getAnnotatedText?.();
+		if (!annotated) throw new Error('Google Docs annotated-text API is unavailable');
 		const rects = Array.from(
 			document.querySelectorAll<SVGRectElement>('.kix-appview-editor rect[aria-label]'),
 		);
@@ -322,7 +323,8 @@ export async function replaceGoogleDocsDocumentText(page: Page, text: string) {
 async function selectGoogleDocsRange(page: Page, start: number, end: number) {
 	await page.evaluate(
 		async ({ selectionStart, selectionEnd }) => {
-			const annotated = await window._docs_annotate_getAnnotatedText();
+			const annotated = await window._docs_annotate_getAnnotatedText?.();
+			if (!annotated) throw new Error('Google Docs annotated-text API is unavailable');
 			annotated.setSelection(selectionStart, selectionEnd);
 		},
 		{
@@ -336,7 +338,8 @@ async function selectGoogleDocsRange(page: Page, start: number, end: number) {
 export async function selectGoogleDocsText(page: Page, text: string, occurrence = 0) {
 	const selection = await page.evaluate(
 		async ({ needle, targetOccurrence }) => {
-			const annotated = await window._docs_annotate_getAnnotatedText();
+			const annotated = await window._docs_annotate_getAnnotatedText?.();
+			if (!annotated) throw new Error('Google Docs annotated-text API is unavailable');
 			const source = annotated.getText();
 			let start = -1;
 			let fromIndex = 0;
@@ -366,7 +369,8 @@ export async function selectGoogleDocsText(page: Page, text: string, occurrence 
 
 export async function selectGoogleDocsFromTextToEnd(page: Page, text: string) {
 	const selection = await page.evaluate(async (needle) => {
-		const annotated = await window._docs_annotate_getAnnotatedText();
+		const annotated = await window._docs_annotate_getAnnotatedText?.();
+		if (!annotated) throw new Error('Google Docs annotated-text API is unavailable');
 		const source = annotated.getText();
 		const start = source.indexOf(needle);
 		if (start < 0) {

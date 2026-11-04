@@ -6,7 +6,7 @@ use trie_rs::iter::{Keys, PrefixIter, SearchIter};
 
 use crate::DictWordMetadata;
 
-use super::{Dictionary, FstDictionary, FuzzyMatchResult, WordId};
+use super::{CanonicalWordId, Dictionary, FstDictionary, FuzzyMatchResult};
 
 /// A [`Dictionary`] optimized for pre- and postfix search.
 /// Wraps another dictionary to implement other operations.
@@ -89,8 +89,19 @@ impl<D: Dictionary> Dictionary for TrieDictionary<D> {
         self.inner.word_count()
     }
 
-    fn get_word_from_id(&self, id: &WordId) -> Option<&[char]> {
+    fn get_word_from_id(&self, id: &CanonicalWordId) -> Option<&[char]> {
         self.inner.get_word_from_id(id)
+    }
+
+    fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata> {
+        self.inner.get_word_metadata_exact(word)
+    }
+
+    fn get_correct_capitalizations_of(
+        &self,
+        word: &[char],
+    ) -> Box<dyn Iterator<Item = &[char]> + Send + '_> {
+        self.inner.get_correct_capitalizations_of(word)
     }
 
     fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {

@@ -1,5 +1,6 @@
 ---
 title: Spans
+description: Use harper.js lint spans to locate grammar suggestions and map their start and end positions to source text.
 ---
 
 When you lint a document using `harper.js`, you'll get back a series of `Lint` objects, each with a `span` method available.

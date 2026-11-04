@@ -54,7 +54,11 @@ impl Linter for General {
                 self.expr
                     .iter_matches(chunk, source)
                     .filter_map(|match_span| {
-                        self.match_to_lint(&chunk[match_span.start..], source)
+                        let preceding_token = chunk[..match_span.start]
+                            .iter()
+                            .rev()
+                            .find(|tok| !tok.kind.is_whitespace());
+                        self.match_to_lint(&chunk[match_span.start..], preceding_token, source)
                     }),
             );
         }
@@ -68,7 +72,12 @@ impl Linter for General {
 }
 
 impl General {
-    fn match_to_lint(&self, toks: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(
+        &self,
+        toks: &[Token],
+        preceding_token: Option<&Token>,
+        source: &[char],
+    ) -> Option<Lint> {
         let offender = toks.first()?;
         let offender_chars = offender.get_ch(source);
 
@@ -114,6 +123,15 @@ impl General {
         let strong_predicative_verbs = [
             "had", "been", "got", "called", "named", "known", "termed", "titled",
         ];
+
+        // A possessive `its` introduced by a preposition is part of a noun phrase, even
+        // when the next word is tagged as a verb: "in its reading", "of its making".
+        if modifier.kind.is_upos(UPOS::VERB)
+            && !strong_predicative_verbs.contains(&modifier_lower.as_str())
+            && preceding_token.is_some_and(|tok| tok.kind.is_preposition())
+        {
+            return None;
+        }
 
         let should_consider = if exact_contraction_words.contains(&modifier_lower.as_str())
             || determiner_like_words.contains(&modifier_lower.as_str())

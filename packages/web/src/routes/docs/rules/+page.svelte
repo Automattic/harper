@@ -1,4 +1,12 @@
 <script module lang="ts">
+export const frontmatter = {
+	title: 'Rules',
+	description:
+		'Browse Harper grammar rules, their descriptions, and whether each rule is enabled by default.',
+};
+</script>
+
+<script lang="ts">
 import {
 	Table,
 	TableBody,
@@ -7,23 +15,9 @@ import {
 	TableHead,
 	TableHeadCell,
 } from 'components';
-import { type LintConfig, LocalLinter } from 'harper.js';
-import { slimBinary } from 'harper.js/slimBinary';
+import type { PageData } from './$types';
 
-export const frontmatter = {
-	title: 'Rules',
-};
-
-let descriptions: Record<string, string> = $state({});
-let default_config: LintConfig = $state({});
-
-let linter = new LocalLinter({ binary: slimBinary });
-linter.getLintDescriptionsHTML().then(async (v) => {
-	descriptions = v;
-});
-linter.getDefaultLintConfig().then(async (v) => {
-	default_config = v;
-});
+let { data }: { data: PageData } = $props();
 </script>
 
 <p>This page is an incomplete list of the various grammatical rules Harper checks for.</p>
@@ -35,10 +29,10 @@ linter.getDefaultLintConfig().then(async (v) => {
 		<TableHeadCell>Description</TableHeadCell>
 	</TableHead>
 	<TableBody>
-		{#each Object.entries(descriptions) as [name, description]}
+		{#each Object.entries(data.descriptions) as [name, description]}
 			<TableBodyRow>
 				<TableBodyCell>{name}</TableBodyCell>
-				<TableBodyCell>{default_config[name] ? '✔️' : '❌'}</TableBodyCell>
+				<TableBodyCell>{data.defaultConfig[name] ? '✔️' : '❌'}</TableBodyCell>
 				<TableBodyCell tdClass="px-6 py-4 font-medium">{@html description.replaceAll('<p>', "").replaceAll('<p />', "")}</TableBodyCell>
 			</TableBodyRow>
 		{/each}

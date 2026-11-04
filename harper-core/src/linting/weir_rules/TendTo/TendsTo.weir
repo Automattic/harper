@@ -1,0 +1,16 @@
+expr main <(that tents to), tents>
+
+let message "Did you mean `tends to`?"
+let description "Flags `tents to` when it's likely a mistake for `tends to`."
+let kind "Spelling"
+let becomes "tends"
+
+# real-world examples
+
+test "MinHash is a hashing scheme that tents to produce similar signatures" "MinHash is a hashing scheme that tends to produce similar signatures"
+
+# contrived examples
+
+allows "Pack up the tents to get a move on."
+allows "There were many tents to see at the camping show."
+allows "we got out of our tents to have a walk around the camp"

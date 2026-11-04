@@ -222,6 +222,19 @@ build-desktop-windows: build-harperjs build-lint-framework build-components buil
   pnpm install
   pnpm tauri build --runner cargo-xwin --target x86_64-pc-windows-msvc -b nsis --config '{"bundle":{"createUpdaterArtifacts":false}}'
 
+# Build native Windows bundles using a CI-generated Azure signing config.
+build-desktop-windows-signed signing_config: build-harperjs build-lint-framework build-components build-harper-editor
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/harper-desktop"
+  pnpm install
+  pnpm tauri build --target x86_64-pc-windows-msvc -b nsis --config {{quote(signing_config)}}
+
+# Test desktop signing and release scripts without CI credentials.
+test-desktop-release:
+  node --test .buildkite/commands/*.test.cjs
+
 # Build Harper Desktop for Apple Silicon only — faster than the universal recipe below.
 build-desktop-macos-arm64: build-harperjs build-lint-framework build-components build-harper-editor
   #!/usr/bin/env bash
@@ -475,7 +488,21 @@ check-js: build-harperjs build-lint-framework build-components build-harper-edit
   pnpm install
   pnpm check
 
-  # Needed because Svelte has special linters
+  cd "{{justfile_directory()}}/packages/chrome-plugin"
+  pnpm check
+
+  cd "{{justfile_directory()}}/packages/obsidian-plugin"
+  pnpm check
+
+  cd "{{justfile_directory()}}/packages/wordpress-plugin"
+  pnpm check
+
+  cd "{{justfile_directory()}}/packages/components"
+  pnpm check
+
+  cd "{{justfile_directory()}}/packages/harper-editor"
+  pnpm check
+
   cd "{{justfile_directory()}}/packages/web"
   ENABLE_ADMIN_ROUTES=false pnpm check
 

@@ -8,12 +8,10 @@ import {
 	KeyIcon,
 	PackageIcon,
 	QuillIcon,
-	RocketIcon,
 } from 'components';
 import { FOOTER_NAV_ITEMS, MAIN_NAV_ITEMS, type SectionId } from './settings-data';
 
-const SECTION_ICONS: Record<SectionId, typeof RocketIcon> = {
-	'getting-started': RocketIcon,
+const SECTION_ICONS: Record<SectionId, typeof GearIcon> = {
 	general: GearIcon,
 	writing: QuillIcon,
 	dictionary: BookIcon,
@@ -25,7 +23,6 @@ const SECTION_ICONS: Record<SectionId, typeof RocketIcon> = {
 };
 
 export let active: SectionId;
-export let hasSetupAlert = false;
 </script>
 
 <nav class="sidebar" aria-label="Settings sections">
@@ -41,9 +38,6 @@ export let hasSetupAlert = false;
           <svelte:component this={SECTION_ICONS[item.id]} className="settings-icon" />
         </span>
         <span class="label">{item.label}</span>
-        {#if item.id === "getting-started" && hasSetupAlert}
-          <span class="alert" aria-label="Action needed"></span>
-        {/if}
       </button>
     {/each}
   </div>
@@ -140,19 +134,5 @@ export let hasSetupAlert = false;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-  }
-
-  .alert {
-    width: 7px;
-    height: 7px;
-    flex: 0 0 7px;
-    border-radius: 999px;
-    background: #d93920;
-    box-shadow: 0 0 0 2px rgba(217, 57, 32, 0.18);
-  }
-
-  .selected .alert {
-    background: #fff;
-    box-shadow: none;
   }
 </style>

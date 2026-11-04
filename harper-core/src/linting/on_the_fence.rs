@@ -74,7 +74,7 @@ impl ExprLinter for OnTheFence {
     }
 
     fn description(&self) -> &str {
-        "A linter skeleton for contributors to copy into `harper_core/src/linting/` and rename."
+        "Corrects `on a fence` to `on the fence` for the idiom meaning 'undecided'."
     }
 }
 

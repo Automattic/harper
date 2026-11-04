@@ -122,6 +122,7 @@ const defaultEnabledDomains = [
 	'chatgpt.com',
 	'www.perplexity.ai',
 	'textarea.online',
+	'onlinenotepad.org',
 	'webmail.porkbun.com',
 	'mail.google.com',
 	'trix-editor.org',
@@ -163,7 +164,9 @@ const defaultEnabledDomains = [
 	'ckeditor.com',
 	'app.slack.com',
 	'openrouter.ai',
+	'claude.ai',
 	'docs.google.com',
+	'gemini.google.com',
 	'typst.app',
 	'overleaf.com',
 	'www.overleaf.com',
@@ -171,6 +174,10 @@ const defaultEnabledDomains = [
 	'store.steampowered.com',
 	'steampowered.com',
 	'help.steampowered.com',
+	'assistant.kagi.com',
+	'spicychat.ai',
+	'studio.novlr.org',
+	'app.dabblewriter.com',
 ] as const;
 const defaultEnabledDomainSet = new Set<string>(defaultEnabledDomains);
 
@@ -435,7 +442,7 @@ async function handleGetDefaultStatus(): Promise<GetDefaultStatusResponse> {
 }
 
 async function handleGetEnabledDomains(): Promise<GetEnabledDomainsResponse> {
-	const all = await chrome.storage.local.get(null as any);
+	const all = await chrome.storage.local.get(null);
 	const prefix = formatDomainKey(''); // yields 'domainStatus '
 	const domains = Object.entries(all)
 		.filter(([k, v]) => typeof v === 'boolean' && v === true && k.startsWith(prefix))
@@ -526,6 +533,8 @@ async function handleSetHotkey(req: SetHotkeyRequest): Promise<UnitResponse> {
 		key: req.hotkey.key,
 	};
 	await setHotkey(hotkey);
+
+	return createUnitResponse();
 }
 
 async function handleOpenReportError(
@@ -789,7 +798,7 @@ async function getStoredDomainStatus(domain: string): Promise<boolean | undefine
 }
 
 /** Check if Harper has been enabled for a given domain. */
-async function enabledForDomain(domain: string): Promise<boolean | null> {
+async function enabledForDomain(domain: string): Promise<boolean> {
 	const stored = await getStoredDomainStatus(domain);
 	if (stored !== undefined) {
 		return stored;

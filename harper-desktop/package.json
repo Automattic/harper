@@ -1,6 +1,6 @@
 {
 	"name": "harper-desktop",
-	"version": "2.10.0",
+	"version": "3.0.0",
 	"description": "",
 	"type": "module",
 	"scripts": {
@@ -16,7 +16,7 @@
 		"@tauri-apps/api": "^2",
 		"@tauri-apps/plugin-autostart": "^2.5.1",
 		"@tauri-apps/plugin-opener": "^2",
-		"@tauri-apps/plugin-updater": "^2.10.1",
+		"@tauri-apps/plugin-os": "~2.3.2",
 		"components": "workspace:*",
 		"harper-editor": "workspace:*",
 		"harper.js": "workspace:*"
@@ -27,7 +27,7 @@
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
 		"@tailwindcss/vite": "^4.2.2",
 		"@tauri-apps/cli": "^2",
-		"svelte": "^5.0.0",
+		"svelte": "^5.57.3",
 		"svelte-check": "^4.0.0",
 		"tailwindcss": "^4.2.2",
 		"typescript": "~5.6.2",

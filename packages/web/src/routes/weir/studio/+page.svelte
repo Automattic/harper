@@ -1,3 +1,11 @@
+<script module lang="ts">
+export const frontmatter = {
+	title: 'Weir Studio',
+	description:
+		'Write and test custom Harper grammar rules in the browser, then package them as Weirpacks.',
+};
+</script>
+
 <script lang="ts">
 import { Isolate } from 'components';
 import { packWeirpackFiles, unpackWeirpackBytes } from 'harper.js';

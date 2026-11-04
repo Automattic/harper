@@ -1,3 +1,11 @@
+@font-face {
+	font-family: Domine;
+	src: url("/fonts/domine/Domine.ttf") format("truetype");
+	font-style: normal;
+	font-weight: 400 700;
+	font-display: swap;
+}
+
 body.settings-view {
 	background: #fbfaf7;
 }
@@ -24,8 +32,7 @@ body.settings-view {
 	overflow: hidden;
 	background: var(--settings-bg-window);
 	color: var(--settings-ink);
-	font-family:
-		Inter, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+	font-family: Domine, serif;
 	font-size: 13px;
 	-webkit-font-smoothing: antialiased;
 }
@@ -71,6 +78,46 @@ select {
 
 button {
 	cursor: default;
+}
+
+.onboarding-shell {
+	--marketing-amber: #b06a1b;
+	--marketing-amber-soft: #d98b3a;
+	--marketing-ink: #1c1a16;
+	--marketing-ink-2: #4a463e;
+	font-family: Domine, serif;
+	overflow-wrap: anywhere;
+}
+
+.onboarding-shell main {
+	place-items: safe center;
+}
+
+.onboarding-shell main > div {
+	width: 100%;
+}
+
+.onboarding-shell p {
+	white-space: pre-line;
+	color: var(--marketing-ink-2);
+}
+
+.onboarding-actions {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 12px;
+	margin-top: 24px;
+}
+
+.onboarding-actions [role="alert"] {
+	color: #b42318;
+}
+
+.onboarding-app {
+	display: flex;
+	align-items: center;
+	gap: 12px;
 }
 
 .grow {
@@ -387,6 +434,7 @@ button {
 .add-row {
 	display: flex;
 	gap: 8px;
+	padding: 8px 0px;
 }
 
 .add-row .text-field {
@@ -770,19 +818,10 @@ em,
 }
 
 .about-mark {
-	width: 84px;
-	height: 84px;
-	display: grid;
-	place-items: center;
+	width: 142px;
+	max-width: 100%;
+	aspect-ratio: 695 / 411;
 	margin: 0 auto 20px;
-	border-radius: 20px;
-	background: linear-gradient(180deg, #d98b3a 0%, #b06a1b 100%);
-	color: #fff;
-	font-size: 40px;
-	font-weight: 800;
-	box-shadow:
-		0 8px 24px rgba(176, 106, 27, 0.35),
-		inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
 .about > p {

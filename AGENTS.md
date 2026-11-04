@@ -262,3 +262,6 @@ Write a Weir rule to a new file with a name of your choosing, including `expr ma
 ## Tips
 
 Before finishing your turn, run `just format` or `cargo fmt` if you have made any changes. This can help diffs if a human decides to make a commit.
+
+Try to write in a functional style. Minimize adding state whenever it is possible while also respecting the user's query. If additional state is necessary, please centralize it to increase visibility.
+

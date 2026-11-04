@@ -1,7 +1,5 @@
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
-import topLevelAwait from 'vite-plugin-top-level-await';
-import wasm from 'vite-plugin-wasm';
 
 const prod = process.env.APP_ENV === 'production';
 
@@ -23,6 +21,8 @@ export default defineConfig(async () => {
 		},
 		plugins: [
 			sveltepress({
+				// Search uses Algolia DocSearch; no local Pagefind index is needed.
+				pagefind: false,
 				siteConfig: {
 					title: 'Harper: The Private Grammar Checker',
 					description: 'The Free Grammar Checker That Respects Your Privacy',
@@ -265,8 +265,6 @@ export default defineConfig(async () => {
 					pageLayout: '$lib/marketing/SveltePressPageLayout.svelte',
 				},
 			}),
-			wasm(),
-			topLevelAwait(),
 			tailwindcss(),
 		],
 	};

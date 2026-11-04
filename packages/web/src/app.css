@@ -84,7 +84,6 @@
 	--marketing-underline: #c96442;
 	--marketing-grass: #2f8a5b;
 
-	--docsearch-primary-color: var(--marketing-amber);
 	--docsearch-text-color: var(--marketing-ink);
 	--docsearch-muted-color: var(--marketing-ink-3);
 	--docsearch-searchbox-background: #fff;
@@ -93,6 +92,12 @@
 	--docsearch-footer-background: #fbfaf6;
 	--docsearch-hit-background: #fff;
 	--docsearch-hit-color: var(--marketing-ink);
+}
+
+/* Outrank SveltePress's :root:root and :root:root.dark brand defaults only.
+   Keep its dark-mode text and surface colors intact. */
+html:root:root:root {
+	--docsearch-primary-color: var(--marketing-amber);
 	--docsearch-highlight-color: var(--marketing-amber);
 }
 
@@ -118,17 +123,17 @@ ol {
 }
 
 h1 {
-	@apply text-4xl font-extrabold tracking-tight lg:text-5xl py-4;
+	@apply text-4xl font-extrabold tracking-tight lg:text-5xl;
 	font-family: Domine, serif;
 }
 
 h2 {
-	@apply text-3xl font-semibold tracking-tight py-4;
+	@apply text-3xl font-semibold tracking-tight;
 	font-family: Domine, serif;
 }
 
 h3 {
-	@apply text-2xl font-semibold tracking-tight py-4;
+	@apply text-2xl font-semibold tracking-tight;
 	font-family: Domine, serif;
 }
 
@@ -139,6 +144,15 @@ h4 {
 
 p {
 	@apply leading-[130%] [&:not(:first-child)]:mt-6;
+}
+
+.theme-default--page-layout .content > h2 {
+	margin-top: 2rem;
+	padding-top: 1rem;
+}
+
+.theme-default--page-layout .content p + .svp-code-block-wrapper {
+	margin-top: 1rem;
 }
 
 a {
@@ -200,10 +214,6 @@ textarea {
 		transform: none;
 		animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
 	}
-}
-
-.header {
-	padding-top: 6px;
 }
 
 th[align="center"] {

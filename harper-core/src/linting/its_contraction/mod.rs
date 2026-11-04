@@ -259,6 +259,14 @@ mod tests {
     }
 
     #[test]
+    fn issue_2609() {
+        assert_no_lints(
+            "One such aspect is how the standard library takes great care to make working with its built-in collections as efficient as possible.",
+            ItsContraction::default(),
+        );
+    }
+
+    #[test]
     fn ignore_past_participle_noun_phrase() {
         assert_no_lints(
             "using the foo feature and its abetted parameter",
@@ -461,5 +469,29 @@ mod tests {
     #[test]
     fn allows_its_starting_level() {
         assert_no_lints("Reduce the tracker to its starting level.", test_linter());
+    }
+
+    #[test]
+    fn issue_4435() {
+        assert_no_lints(
+            "I spent more effort in its reading than he did in its creation.",
+            test_linter(),
+        );
+    }
+
+    #[test]
+    fn allows_its_gerund_after_preposition() {
+        assert_no_lints(
+            "The value comes from its measuring of the output.",
+            test_linter(),
+        );
+    }
+
+    #[test]
+    fn allows_its_gerund_after_unlisted_preposition() {
+        assert_no_lints(
+            "I spent more effort during its reading than he did during its creation.",
+            test_linter(),
+        );
     }
 }
