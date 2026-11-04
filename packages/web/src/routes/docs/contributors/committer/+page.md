@@ -3,6 +3,8 @@ title: What is a Harper Committer
 description: Learn about Harper committer responsibilities, patch reviews, and permissions in the project community.
 ---
 
+# What is a Harper Committer
+
 As Harper continues to grow, it’s important to build a team of people capable of making changes within the project. This shares responsibility and avoids bottlenecking progress on a single person. For this purpose, the project has Harper Committers, who are entrusted with elevated privileges within the project and community.
 
 ## What a Harper Committer can do

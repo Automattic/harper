@@ -3,6 +3,8 @@ title: Configure Rules
 description: Read and update harper.js lint configuration to enable, disable, or reset individual grammar rules.
 ---
 
+# Configure Rules
+
 We add new [rules](/docs/rules) to Harper on a daily basis.
 As such, it is not recommended for consumers of `harper.js` to rely on any rule to exist.
 Further, consumers should allow space (in their UI, database, etc.) for additional rules to be added whenever a new version of `harper.js` is published.

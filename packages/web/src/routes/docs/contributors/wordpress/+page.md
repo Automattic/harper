@@ -3,6 +3,8 @@ title: WordPress Plugin
 description: Build and develop the legacy Harper WordPress plugin locally with the repository development tools.
 ---
 
+# WordPress Plugin
+
 This page will describe most of what you need to know to build and develop the WordPress plugin locally.
 You do NOT need to have a WordPress installation on your machine (or hosted on a server, for that matter) to work on the Harper plugin.
 

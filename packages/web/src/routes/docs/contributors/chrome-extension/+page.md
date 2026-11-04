@@ -3,6 +3,8 @@ title: Chrome Extension
 description: Explore the Harper browser extension architecture, including its content script, options page, and popup.
 ---
 
+# Chrome Extension
+
 Harper's Chrome extension is still in its infancy.
 At a high level, there are just three components: the content script, the options page and the popup "page".
 

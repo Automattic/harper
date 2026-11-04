@@ -3,9 +3,13 @@ import '../app.css';
 
 import { AutomatticLogo, GutterCenter, Link } from 'components';
 import posthog from 'posthog-js';
-import { onMount } from 'svelte';
+import { onMount, type Snippet } from 'svelte';
 import { browser } from '$app/environment';
-import { page } from '$app/stores';
+import { page } from '$app/state';
+import PageLayout from '$lib/docs/PageLayout.svelte';
+import SiteLayout from '$lib/docs/SiteLayout.svelte';
+
+let { children }: { children: Snippet } = $props();
 
 onMount(() => {
 	if (browser) {
@@ -20,18 +24,21 @@ onMount(() => {
 let names = ['Grammar Guru', 'Grammar Checker', 'Grammar Savior'];
 let displayName = names[Math.floor(Math.random() * names.length)];
 
-$: isMarketingRoute = ['/', '/get', '/desktop', '/install-browser-extension'].includes(
-	$page.url.pathname.replace(/\/$/, '') || '/',
+const isMarketingRoute = $derived(
+	['/', '/get', '/desktop', '/install-browser-extension'].includes(
+		page.url.pathname.replace(/\/$/, '') || '/',
+	),
 );
 </script>
 
 {#if isMarketingRoute}
-	<slot />
+	{@render children()}
 {:else}
+	<SiteLayout>
 	<div class="flex flex-col h-full">
 		<div class="flex-1">
 			<GutterCenter>
-				<slot />
+				<PageLayout>{@render children()}</PageLayout>
 			</GutterCenter>
 		</div>
 
@@ -45,4 +52,5 @@ $: isMarketingRoute = ['/', '/get', '/desktop', '/install-browser-extension'].in
 			</Link>
 		</div>
 	</div>
+	</SiteLayout>
 {/if}

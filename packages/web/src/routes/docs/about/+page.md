@@ -3,6 +3,8 @@ title: What Is Harper?
 description: Learn how Harper checks English grammar, how releases are versioned, and which projects use Harper.
 ---
 
+# What Is Harper?
+
 Harper is a grammar checker designed to run anywhere there is text (so really, anywhere).
 Most Harper users are catching their mistakes in [Neovim](./integrations/neovim), [Obsidian](./integrations/obsidian), or [Visual Studio Code](./integrations/visual-studio-code).
 
@@ -24,7 +26,7 @@ Most Harper users are catching their mistakes in [Neovim](./integrations/neovim)
     })
 </script>
 
-<div class="h-96">
+<div class="h-96" data-docs-embed>
     {#if Editor && linter}
         <svelte:component this={Editor}
             content={`You can try out a editor that uses\nHarper under the hood here.\n\nIt is rnning in your browser right now. \n\nNo server required!`}

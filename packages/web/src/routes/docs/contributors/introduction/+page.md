@@ -3,6 +3,8 @@ title: Introduction to Contributing
 description: Start contributing to Harper with links to environment setup, contribution guidelines, and project support.
 ---
 
+# Introduction to Contributing
+
 Harper is completely open to outside contributions of any kind.
 
 If you have a feature request or bug to report, please [create an issue](https://github.com/automattic/harper/issues) or ask us [a question on Discord](https://discord.gg/JBqcAaKrzQ) and we will get back to you as soon as we can.

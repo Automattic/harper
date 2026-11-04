@@ -3,6 +3,8 @@ title: Harper's Architecture
 description: Explore the Harper architecture and find the components that parse text, check grammar, and support integrations.
 ---
 
+# Harper's Architecture
+
 This document seeks to solve one simple problem:
 
 > "Roughly, it takes 2x more time to write a patch if you are unfamiliar with the project, but it takes 10x more time to figure out **where** you should change the code." - [Alex Kladov](https://matklad.github.io/2021/02/06/ARCHITECTURE.md.html)

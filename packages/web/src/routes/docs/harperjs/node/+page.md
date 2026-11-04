@@ -3,6 +3,8 @@ title: Using Harper in Node.js
 description: Run harper.js in Node.js with LocalLinter and the provided example code.
 ---
 
+# Using Harper in Node.js
+
 Harper.js can run in Node.js.
 There is just one consideration: as described in [more detailed here](./linting), we cannot use the `WorkerLinter`.
 That means we must use the `LocalLinter`.

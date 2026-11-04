@@ -3,6 +3,8 @@ title: Author a Rule
 description: Follow the contributor guide to implement a Harper grammar rule and test its suggestions.
 ---
 
+# Author a Rule
+
 [Harper's grammatical rules are many](../rules), but most are relatively easy to understand.
 Before we get into how to write a rule, it is important that we get some of the language cleared up.
 

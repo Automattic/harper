@@ -4,6 +4,9 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Apply after the element selector; exclude embedded UI and all of its descendants. */
+@custom-variant docs-prose (&:not(:where([data-docs-embed], [data-docs-embed] *)));
+
 @theme {
 	--font-serif: Domine, serif;
 
@@ -94,9 +97,8 @@
 	--docsearch-hit-color: var(--marketing-ink);
 }
 
-/* Outrank SveltePress's :root:root and :root:root.dark brand defaults only.
-   Keep its dark-mode text and surface colors intact. */
-html:root:root:root {
+/* Shared search brand colors for documentation and marketing pages. */
+:root {
 	--docsearch-primary-color: var(--marketing-amber);
 	--docsearch-highlight-color: var(--marketing-amber);
 }
@@ -144,15 +146,6 @@ h4 {
 
 p {
 	@apply leading-[130%] [&:not(:first-child)]:mt-6;
-}
-
-.theme-default--page-layout .content > h2 {
-	margin-top: 2rem;
-	padding-top: 1rem;
-}
-
-.theme-default--page-layout .content p + .svp-code-block-wrapper {
-	margin-top: 1rem;
 }
 
 a {

@@ -3,6 +3,8 @@ title: The Harper Firefox Extension
 description: Install the Harper Firefox extension for local English grammar checking in the browser.
 ---
 
+# The Harper Firefox Extension
+
 Harper is available for the millions who rely on Firefox for fast, private, and independent browsing.
 Unlike most grammar tools, Harper's Firefox extension performs all analysis locally—never sending your text to the cloud.
 Emails, chat messages, blog posts, and comments benefit from real-time grammar improvements, with your privacy intact.
