@@ -21,6 +21,8 @@ export default defineConfig(async () => {
 		},
 		plugins: [
 			sveltepress({
+				// Search uses Algolia DocSearch; no local Pagefind index is needed.
+				pagefind: false,
 				siteConfig: {
 					title: 'Harper: The Private Grammar Checker',
 					description: 'The Free Grammar Checker That Respects Your Privacy',
