@@ -1286,6 +1286,25 @@ Message: |
 
 
 
+Lint:    Capitalization (31 priority)
+Message: |
+     872 | > “You are old, Father William,” the young man said, “And your hair has become
+         |                                                       ^~~ This continues the interrupted sentence, so it should be lowercase.
+     873 | > very white; And yet you incessantly stand on your head— Do you think, at your
+Suggest:
+  - Replace with: “and”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     900 | > “I have answered three questions, and that is enough,” Said his father; “don’t
+         |                                                          ^~~~ This continues the interrupted sentence, so it should be lowercase.
+Suggest:
+  - Replace with: “said”
+
+
+
 Lint:    Enhancement (31 priority)
 Message: |
      929 | “It is a very good height indeed!” said the Caterpillar angrily, rearing itself
@@ -2342,6 +2361,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (31 priority)
+Message: |
+    2183 | “I couldn’t afford to learn it.” said the Mock Turtle with a sigh. “I only took
+         |                                  ^~~~ This starts a sentence, so it should be capitalized.
+Suggest:
+  - Replace with: “Said”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2194 | The Gryphon lifted up both its paws in surprise. “What! Never heard of
@@ -3337,6 +3365,15 @@ Message: |
 
 
 
+Lint:    Capitalization (31 priority)
+Message: |
+    2618 | “I wish you wouldn’t squeeze so.” said the Dormouse, who was sitting next to
+         |                                   ^~~~ This starts a sentence, so it should be capitalized.
+Suggest:
+  - Replace with: “Said”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     2631 | All this time the Queen had never left off staring at the Hatter, and, just as
@@ -3446,6 +3483,15 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2773 | gazing up into the roof of the court.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 68 words long.
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+    2791 | “important—unimportant—unimportant—important—” as if he were trying which word
+         |  ^~~~~~~~~ This starts a sentence, so it should be capitalized.
+Suggest:
+  - Replace with: “Important”
 
 
 

@@ -2986,6 +2986,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (31 priority)
+Message: |
+    2011 | “Major Jay Gatsby,” I read, “For Valour Extraordinary.”
+         |                              ^~~ This continues the interrupted sentence, so it should be lowercase.
+Suggest:
+  - Replace with: “for”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2011 | “Major Jay Gatsby,” I read, “For Valour Extraordinary.”
@@ -3116,6 +3125,16 @@ Suggest:
 
 
 
+Lint:    Capitalization (31 priority)
+Message: |
+    2097 | “So I took one look at him,” said Mr. Wolfshiem, shaking my hand earnestly, “and
+         |                                                                              ^~~ This starts a sentence, so it should be capitalized.
+    2098 | what do you think I did?”
+Suggest:
+  - Replace with: “And”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2105 | “I handed the money to Katspaugh and I sid: ‘All right, Katspaugh, don’t pay him
@@ -3208,6 +3227,15 @@ Message: |
          |                               ^~~~~~~~~ Did you mean `Bolshie`?
 Suggest:
   - Replace with: “Bolshie”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+    2120 | “Hot and small—yes,” said Mr. Wolfshiem, “but full of memories.”
+         |                                           ^~~ This starts a sentence, so it should be capitalized.
+Suggest:
+  - Replace with: “But”
 
 
 
@@ -5363,6 +5391,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (31 priority)
+Message: |
+    4304 | “You can suit yourself about that, old sport.” said Gatsby steadily.
+         |                                                ^~~~ This starts a sentence, so it should be capitalized.
+Suggest:
+  - Replace with: “Said”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4307 | “He and this Wolfshiem bought up a lot of side-street drug-stores here and in
@@ -5794,6 +5831,24 @@ Suggest:
   - Replace with: “of”
   - Replace with: “oh”
   - Replace with: “oi”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+    4492 | “g———”
+         |  ^ This starts a sentence, so it should be capitalized.
+Suggest:
+  - Replace with: “G”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+    4494 | “g—” He looked up as Tom’s broad hand fell sharply on his shoulder. “What you
+         |  ^ This starts a sentence, so it should be capitalized.
+Suggest:
+  - Replace with: “G”
 
 
 
