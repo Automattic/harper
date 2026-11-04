@@ -168,6 +168,17 @@ impl ExprLinter for GetAccessAt {
                     return None;
                 }
 
+                // The lexer only produces `Hostname` for common TLDs, so `example.dev` arrives
+                // as `example`, `.`, `dev`, and the chunk ends at that period. Read the source:
+                // a period followed by whitespace ended a sentence, one followed by a letter
+                // is part of a domain.
+                if let [Some('.'), Some(next)] =
+                    [src.get(first_tok.span.end), src.get(first_tok.span.end + 1)]
+                    && next.is_alphanumeric()
+                {
+                    return None;
+                }
+
                 let first_chars = first_tok.span.get_content(src);
 
                 // Check if followed by known false positive words (like "all", "least", etc.)
@@ -193,22 +204,6 @@ impl ExprLinter for GetAccessAt {
                             return None;
                         }
                     }
-                }
-
-                let next_str = first_tok.span.get_content_string(src);
-                if next_str.starts_with("http://")
-                    || next_str.starts_with("https://")
-                    || next_str.starts_with("www.")
-                    || next_str.contains(".com")
-                    || next_str.contains(".org")
-                    || next_str.contains(".io")
-                    || next_str.contains(".net")
-                    || next_str.contains(".edu")
-                    || next_str.contains(".gov")
-                    || next_str.contains(".dev")
-                    || next_str.contains(".app")
-                {
-                    return None;
                 }
             }
         }
@@ -306,6 +301,44 @@ mod tests {
             "Get access at https://example.com/login",
             GetAccessAt::default(),
             0,
+        );
+    }
+
+    #[test]
+    fn ignore_access_at_bare_hostname() {
+        assert_lint_count("Get access at example.com today", GetAccessAt::default(), 0);
+    }
+
+    #[test]
+    fn ignore_access_at_www_hostname() {
+        assert_lint_count("Get access at www.example.com", GetAccessAt::default(), 0);
+    }
+
+    #[test]
+    fn ignore_access_at_hostname_with_path() {
+        assert_lint_count(
+            "Get access at github.com/org/repo",
+            GetAccessAt::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignore_access_at_hostname_with_uncommon_tld() {
+        assert_lint_count("Get access at example.ai", GetAccessAt::default(), 0);
+    }
+
+    #[test]
+    fn ignore_access_at_subdomain_with_uncommon_tld() {
+        assert_lint_count("Get access at docs.example.dev", GetAccessAt::default(), 0);
+    }
+
+    #[test]
+    fn flags_access_at_word_ending_a_sentence() {
+        assert_lint_count(
+            "You get access at docs. Then log in.",
+            GetAccessAt::default(),
+            1,
         );
     }
 
