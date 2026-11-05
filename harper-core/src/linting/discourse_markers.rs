@@ -18,14 +18,18 @@ impl DiscourseMarkers {
             "additionally",
             "also",
             "alternatively",
+            "by the way",
             "consequently",
             "conversely",
+            "even so",
             "for example",
             "frankly",
             "furthermore",
             "hence",
             "honestly",
             "however",
+            "in addition",
+            "in other words",
             "incidentally",
             "indeed",
             "instead",
@@ -39,6 +43,7 @@ impl DiscourseMarkers {
             "on the other hand",
             "otherwise",
             "subsequently",
+            "that said",
             "therefore",
             "thus",
         ];
@@ -425,6 +430,83 @@ mod tests {
             "Actually I don't know. Also I forgot.",
             DiscourseMarkers::default(),
             "Actually, I don't know. Also, I forgot.",
+        );
+    }
+
+    #[test]
+    fn corrects_in_addition() {
+        assert_suggestion_result(
+            "In addition we need to test this.",
+            DiscourseMarkers::default(),
+            "In addition, we need to test this.",
+        );
+    }
+
+    #[test]
+    fn allows_in_addition_to() {
+        assert_no_lints(
+            "In addition to that we need to test this.",
+            DiscourseMarkers::default(),
+        );
+    }
+
+    #[test]
+    fn corrects_even_so() {
+        assert_suggestion_result(
+            "Even so the plan failed.",
+            DiscourseMarkers::default(),
+            "Even so, the plan failed.",
+        );
+    }
+
+    #[test]
+    fn allows_even_so_much_as() {
+        assert_no_lints(
+            "Even so much as a whisper would wake him.",
+            DiscourseMarkers::default(),
+        );
+    }
+
+    #[test]
+    fn corrects_that_said() {
+        assert_suggestion_result(
+            "That said we should wait.",
+            DiscourseMarkers::default(),
+            "That said, we should wait.",
+        );
+    }
+
+    #[test]
+    fn corrects_in_other_words() {
+        assert_suggestion_result(
+            "In other words we should go.",
+            DiscourseMarkers::default(),
+            "In other words, we should go.",
+        );
+    }
+
+    #[test]
+    fn allows_in_other_words_and_phrases() {
+        assert_no_lints(
+            "In other words and phrases, keep it short.",
+            DiscourseMarkers::default(),
+        );
+    }
+
+    #[test]
+    fn corrects_by_the_way() {
+        assert_suggestion_result(
+            "By the way I saw him yesterday.",
+            DiscourseMarkers::default(),
+            "By the way, I saw him yesterday.",
+        );
+    }
+
+    #[test]
+    fn allows_by_way_of() {
+        assert_no_lints(
+            "By way of introduction he waved.",
+            DiscourseMarkers::default(),
         );
     }
 }
