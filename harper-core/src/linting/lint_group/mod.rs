@@ -6,6 +6,7 @@ use std::{collections::BTreeMap, hash::BuildHasher, num::NonZero, sync::Arc};
 use {foldhash::quality::RandomState, hashbrown::HashMap, lru::LruCache};
 
 // Individual Linters
+use super::a_bit_of_plural::ABitOfPlural;
 use super::a_part::APart;
 use super::a_some_time::ASomeTime;
 use super::a_ways_to_go::AWaysToGo;
@@ -19,6 +20,7 @@ use super::ajar::Ajar;
 use super::akimbo::Akimbo;
 use super::all_hell_break_loose::AllHellBreakLoose;
 use super::all_intents_and_purposes::AllIntentsAndPurposes;
+use super::all_thats_are::AllThatsAre;
 use super::allow_to::AllowTo;
 use super::am_in_the_morning::AmInTheMorning;
 use super::amounts_for::AmountsFor;
@@ -339,6 +341,7 @@ use super::vicious_loop::{ViciousCircle, ViciousCircleOrCycle, ViciousCycle};
 use super::waist_waste::WaistWaste;
 use super::was_aloud::WasAloud;
 use super::way_too_adjective::WayTooAdjective;
+use super::we_see_us::WeSeeUs;
 use super::web_scraping::WebScraping;
 use super::well_educated::WellEducated;
 use super::went_ahead_and_agreement::WentAheadAndAgreement;
@@ -650,6 +653,7 @@ impl LintGroup {
         // Add all the more complex rules to the group.
         // Please maintain alphabetical order.
         // On *nix you can maintain sort order with `sort -t'(' -k2`
+        insert_expr_rule!(ABitOfPlural);
         insert_expr_rule!(APart);
         insert_expr_rule!(ASomeTime);
         insert_expr_rule!(AWaysToGo);
@@ -664,6 +668,7 @@ impl LintGroup {
         insert_expr_rule!(AllHellBreakLoose);
         insert_expr_rule!(AllIntentsAndPurposes);
         insert_expr_rule!(AllowTo);
+        insert_expr_rule!(AllThatsAre);
         insert_expr_rule!(AmInTheMorning);
         insert_expr_rule!(AmountsFor);
         insert_struct_rule_with_dialect!(AnA);
@@ -978,6 +983,7 @@ impl LintGroup {
         insert_expr_rule!(WaistWaste);
         insert_expr_rule!(WasAloud);
         insert_expr_rule!(WayTooAdjective);
+        insert_expr_rule!(WeSeeUs);
         insert_expr_rule!(WellEducated);
         insert_expr_rule_with_dict!(WentAheadAndAgreement);
         insert_expr_rule!(Whereas);

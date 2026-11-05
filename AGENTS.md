@@ -1,9 +1,10 @@
 # Harper Docs Map for Agents
 
-This repository’s documentation site is powered by Vite + SvelteKit + SveltePress.
+This repository’s documentation site uses Vite, SvelteKit, mdsvex, and rehype-highlight.
 
-Use `packages/web/vite.config.ts` as the source of truth for documentation scope:
-- Sidebar and important doc routes are defined in `packages/web/vite.config.ts`.
+Use `packages/web/src/lib/docs/config.ts` as the source of truth for documentation scope:
+- Sidebar, navigation, site metadata, and search settings are defined in `packages/web/src/lib/docs/config.ts`.
+- `packages/web/vite.config.ts` contains build configuration, not the documentation sidebar.
 - Route `/docs/...` maps to `packages/web/src/routes/docs/...`.
 - Most docs are in `+page.md`; some are `+page.svelte` or route helpers.
 
@@ -17,7 +18,7 @@ Agents should remind humans of this when possible.
 
 ## Read First
 
-1. `packages/web/vite.config.ts`: Sidebar source of truth and canonical map of important docs routes.
+1. `packages/web/src/lib/docs/config.ts`: Sidebar source of truth and canonical map of important docs routes. For website architecture, Markdown authoring, theme/search behavior, and validation, read `packages/web/src/routes/docs/contributors/website/+page.md`.
 2. `packages/web/src/routes/docs/about/+page.md`: High-level product overview, privacy model, versioning policy, and ecosystem context.
 3. `packages/web/src/routes/docs/weir/+page.md`: Weir rule language reference with syntax, expression types, and examples.
 4. `packages/web/src/routes/docs/rules/+page.svelte`: Live/generated rule catalog (rule names, defaults, and descriptions).
@@ -74,7 +75,7 @@ Agents should remind humans of this when possible.
 - `packages/web/src/routes/docs/contributors/visual-studio-code/+page.md`: How to run, debug, test, and package the VS Code extension locally.
 - `packages/web/src/routes/docs/contributors/chrome-extension/+page.md`: Internal architecture and local development notes for the browser extensions.
 - `packages/web/src/routes/docs/contributors/desktop/+page.md`: Placeholder for Harper Desktop contributor documentation.
-- `packages/web/src/routes/docs/contributors/website/+page.md`: Local development, preview, and validation for writewithharper.com (SvelteKit/SveltePress).
+- `packages/web/src/routes/docs/contributors/website/+page.md`: Local development, preview, and validation for writewithharper.com (SvelteKit/mdsvex).
 - `packages/web/src/routes/docs/contributors/wordpress/+page.md`: How to build and run the WordPress plugin locally.
 - `packages/web/src/routes/docs/contributors/obsidian/+page.md`: Obsidian-plugin contributor workflow and plugin-specific constraints.
 - `packages/web/src/routes/docs/contributors/review/+page.md`: PR reviewer playbook, including ways to fetch artifacts and test patches locally.
@@ -84,7 +85,8 @@ Agents should remind humans of this when possible.
 
 ## Documentation Route Helpers (Non-`+page.md`)
 
-- `packages/web/src/routes/docs/about/+page.ts`: Route behavior helper (`ssr = false`) for the About page.
+- `packages/web/src/routes/docs/rules/+page.ts`: Disables SSR for the browser-rendered rule catalog.
+- `packages/web/src/routes/docs/rules/+page.server.ts`: Loads rule descriptions and defaults with the inlined Harper WASM binary.
 - `packages/web/src/routes/docs/harperjs/CDN/example/+server.ts`: Serves the HTML example used by the `harper.js` CDN documentation page.
 
 ## External Sidebar Targets (No Local Source File)

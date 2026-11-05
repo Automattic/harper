@@ -20,7 +20,7 @@ export let id: string;
 export let size = 40;
 
 const tileClasses =
-	'inline-flex shrink-0 items-center justify-center bg-white shadow-[0_0_0_0.5px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.04)] dark:bg-white [&_svg]:block [&_svg]:h-[68%] [&_svg]:w-[68%]';
+	'inline-flex shrink-0 items-center justify-center bg-white shadow-[0_0_0_0.5px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.04)] text-black dark:bg-white [&_svg]:block [&_svg]:h-[68%] [&_svg]:w-[68%]';
 
 $: tileStyle = `width: ${size}px; height: ${size}px; border-radius: ${Math.round(size * 0.235)}px;`;
 </script>
