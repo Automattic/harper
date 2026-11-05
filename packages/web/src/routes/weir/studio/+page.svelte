@@ -1,4 +1,17 @@
+<script module lang="ts">
+export const frontmatter = {
+	title: 'Weir Studio',
+	description:
+		'Write and test custom Harper grammar rules in the browser, then package them as Weirpacks.',
+};
+</script>
+
+<PageMetadata metadata={frontmatter} />
+<h1 class="mt-0 mb-5 text-[32px]! leading-[1.3]! font-bold! tracking-[-0.02em]! text-(--docs-heading)!">{frontmatter.title}</h1>
+
 <script lang="ts">
+import PageMetadata from '$lib/PageMetadata.svelte';
+import EditPage from '$lib/docs/EditPage.svelte';
 import { Isolate } from 'components';
 import { packWeirpackFiles, unpackWeirpackBytes } from 'harper.js';
 import type { ComponentType } from 'svelte';
@@ -441,3 +454,4 @@ setInterval(saveWeirpackToStorage, 5000);
 		{/if}
 	</div>
 </Isolate>
+<EditPage sourcePath="weir/studio/+page.svelte" />

@@ -1,4 +1,14 @@
+<script module lang="ts">
+export const frontmatter = {
+	title: 'Get Harper',
+	description: 'Install Harper for desktop apps, browsers, code editors, and developer workflows.',
+};
+</script>
+
+<PageMetadata metadata={frontmatter} standaloneTitle />
+
 <script lang="ts">
+import PageMetadata from '$lib/PageMetadata.svelte';
 import { Arrow } from 'components';
 import { onMount } from 'svelte';
 import {
@@ -62,14 +72,6 @@ function clearFilters() {
 }
 </script>
 
-<svelte:head>
-	<title>Get Harper</title>
-	<meta
-		name="description"
-		content="Install Harper for desktop apps, browsers, code editors, and developer workflows."
-	/>
-</svelte:head>
-
 <div class="min-h-screen bg-[#f6f1e6] text-[#1c1a16] dark:bg-black dark:text-white">
 	<MarketingHeader active="get" />
 
@@ -81,7 +83,7 @@ function clearFilters() {
 			<p class="mx-auto !mt-3 !mb-[2.2rem] max-w-[35rem] !font-serif text-[1.2rem] leading-[1.45] text-[#4a463e] dark:text-white/70">
 				Use Harper in your favorite apps and browsers. Good grammar goes where you are.
 			</p>
-			<FeaturedIntegrations campaign="harper-get" />
+			<FeaturedIntegrations source="harper-get" />
 			<div class="mt-[1.1rem] text-[0.82rem] text-[#807a6e] dark:text-white/55">Or browse {integrations.length - 2} other integrations ↓</div>
 		</div>
 	</section>
@@ -194,5 +196,5 @@ function clearFilters() {
 		</div>
 	</section>
 
-	<MarketingFooter {chromeHref} />
+	<MarketingFooter />
 </div>
