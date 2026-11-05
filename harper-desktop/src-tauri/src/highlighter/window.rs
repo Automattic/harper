@@ -4,7 +4,7 @@ use std::sync::Arc;
 use egui_wgpu::wgpu::PresentMode;
 use egui_wgpu::winit::Painter;
 use egui_wgpu::{RendererOptions, WgpuConfiguration, WgpuSetup};
-use winit::dpi::{PhysicalPosition, PhysicalSize};
+use winit::dpi::{PhysicalPosition, PhysicalSize, Position, Size};
 use winit::event::WindowEvent;
 use winit::event_loop::ActiveEventLoop;
 use winit::monitor::MonitorHandle;
@@ -27,13 +27,56 @@ pub struct Window {
     egui_state: egui_winit::State,
     painter: Painter,
     viewport_id: egui::ViewportId,
+    /// The monitor this window covers, in the global screen space of lint rectangles.
+    bounds: egui::Rect,
+}
+
+/// Computes a monitor's bounds in the global screen space of lint rectangles and cursor positions.
+///
+/// Those coordinates are in logical points, and each monitor's origin is scaled by that monitor's
+/// own factor.
+fn monitor_bounds(
+    position: PhysicalPosition<i32>,
+    size: PhysicalSize<u32>,
+    scale_factor: f64,
+) -> egui::Rect {
+    let position = position.to_logical::<f32>(scale_factor);
+    let size = size.to_logical::<f32>(scale_factor);
+
+    egui::Rect::from_min_size(
+        egui::pos2(position.x, position.y),
+        egui::vec2(size.width, size.height),
+    )
+}
+
+/// Selects the units for placing an overlay window on `monitor`.
+///
+/// On macOS, winit converts physical values with the scale of the main screen or of the window's
+/// current screen, not of the target monitor. With monitors of different scales, physical values can
+/// misplace the window, so macOS uses logical values, which are not converted.
+///
+/// On Windows, physical values are exact, and logical values would have the same problem.
+fn overlay_geometry(monitor: &MonitorHandle) -> (Position, Size) {
+    let position = monitor.position();
+    let size = monitor.size();
+
+    if cfg!(target_os = "macos") {
+        let scale_factor = monitor.scale_factor();
+
+        (
+            position.to_logical::<f64>(scale_factor).into(),
+            size.to_logical::<f64>(scale_factor).into(),
+        )
+    } else {
+        (position.into(), size.into())
+    }
 }
 
 impl Window {
     pub async fn new(event_loop: &ActiveEventLoop, monitor: MonitorHandle) -> Result<Self, Error> {
         let context = egui::Context::default();
-        let position = monitor.position();
-        let size = monitor.size();
+        let bounds = monitor_bounds(monitor.position(), monitor.size(), monitor.scale_factor());
+        let (position, size) = overlay_geometry(&monitor);
         let window = Arc::new(
             event_loop.create_window(
                 WinitWindow::default_attributes()
@@ -49,8 +92,8 @@ impl Window {
             )?,
         );
 
-        window.set_outer_position(PhysicalPosition::new(position.x, position.y));
-        let _ = window.request_inner_size(PhysicalSize::new(size.width, size.height));
+        window.set_outer_position(position);
+        let _ = window.request_inner_size(size);
         window.set_cursor_hittest(false)?;
         let viewport_id = egui::ViewportId::from_hash_of(window.id());
 
@@ -84,11 +127,16 @@ impl Window {
             egui_state,
             painter,
             viewport_id,
+            bounds,
         })
     }
 
     pub fn id(&self) -> WindowId {
         self.inner.id()
+    }
+
+    pub fn bounds(&self) -> egui::Rect {
+        self.bounds
     }
 
     pub fn request_redraw(&self) {
@@ -127,7 +175,7 @@ impl Window {
         let context = self.egui_state.egui_ctx().clone();
         let input = self.egui_state.take_egui_input(&self.inner);
         let output = context.run_ui(input, |ui| {
-            render_state.render(ui);
+            render_state.render(ui, self.bounds);
         });
 
         self.egui_state
@@ -141,6 +189,34 @@ impl Window {
             &clipped_primitives,
             &output.textures_delta,
             Vec::new(),
+        );
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn monitor_bounds_use_each_monitors_own_scale() {
+        let retina = monitor_bounds(
+            PhysicalPosition::new(0, 0),
+            PhysicalSize::new(3456, 2234),
+            2.0,
+        );
+        let external = monitor_bounds(
+            PhysicalPosition::new(1728, -200),
+            PhysicalSize::new(1920, 1080),
+            1.0,
+        );
+
+        assert_eq!(
+            retina,
+            egui::Rect::from_min_size(egui::Pos2::ZERO, egui::vec2(1728.0, 1117.0))
+        );
+        assert_eq!(
+            external,
+            egui::Rect::from_min_size(egui::pos2(1728.0, -200.0), egui::vec2(1920.0, 1080.0))
         );
     }
 }

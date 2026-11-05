@@ -216,7 +216,6 @@ Read the [Desktop contributor documentation](packages/web/src/routes/docs/contri
 
 ### Known Review Findings
 
-- Secondary-monitor highlighter coordinates may be wrong. Accessibility rectangles appear to be global screen coordinates, while each overlay window's egui origin is local to that monitor/window. Translate by monitor/window origin or render through one virtual-desktop-sized overlay.
 - macOS text range lookup may be wrong after emoji or other non-BMP characters. Harper spans are char-based, while macOS accessibility ranges are NSString/UTF-16 based. Convert spans before calling `AXBoundsForRangeParameterizedAttribute`.
 
 ## On Writing New Rules

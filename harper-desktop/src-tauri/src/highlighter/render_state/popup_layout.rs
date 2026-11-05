@@ -14,8 +14,7 @@ pub const ANCHOR_GAP: f32 = 3.0;
 
 /// A viewport with no edges, so the cards are never clamped, flipped, or stacked.
 ///
-/// The highlighter does not yet know which monitor a popup is on. Until it does, both drawing and
-/// hit-testing use this value, so the later change only has to replace it in one place.
+/// [`viewport_for_anchor`] returns this value when no monitors are known.
 pub const UNBOUNDED_VIEWPORT: egui::Rect = egui::Rect::EVERYTHING;
 
 /// The time constant, in seconds, of the sidebar's movement toward its target.
@@ -45,6 +44,35 @@ impl PopupLayout {
     pub fn contains(&self, pos: egui::Pos2) -> bool {
         self.list.contains(pos) || self.flyout.contains(pos)
     }
+
+    /// Moves both cards by `delta`, such as from screen space into a window's space.
+    pub fn translate(self, delta: egui::Vec2) -> Self {
+        Self {
+            list: self.list.translate(delta),
+            flyout: self.flyout.translate(delta),
+        }
+    }
+}
+
+/// Selects the monitor that owns a popup: the monitor that contains the center of `anchor`, or the
+/// nearest monitor when the anchor is off screen.
+///
+/// Using one monitor for each popup keeps the popup in one overlay window. An anchor that crosses
+/// two monitors does not split its popup between them.
+pub fn viewport_for_anchor(monitors: &[egui::Rect], anchor: &Rect) -> egui::Rect {
+    let center = egui::pos2(
+        (anchor.x + anchor.width / 2.0) as f32,
+        (anchor.y + anchor.height / 2.0) as f32,
+    );
+
+    monitors
+        .iter()
+        .copied()
+        .min_by(|a, b| {
+            a.distance_sq_to_pos(center)
+                .total_cmp(&b.distance_sq_to_pos(center))
+        })
+        .unwrap_or(UNBOUNDED_VIEWPORT)
 }
 
 /// Computes the card positions with the algorithm from `popupPosition` in the Chrome extension's
@@ -259,6 +287,79 @@ mod tests {
             layout.list.min,
             egui::pos2(VIEWPORT_MARGIN, VIEWPORT_MARGIN)
         );
+    }
+
+    /// A primary monitor with one monitor on its right and one on its left.
+    fn monitors() -> [egui::Rect; 3] {
+        [
+            egui::Rect::from_min_size(egui::Pos2::ZERO, egui::vec2(1728.0, 1117.0)),
+            egui::Rect::from_min_size(egui::pos2(1728.0, -200.0), egui::vec2(1920.0, 1080.0)),
+            egui::Rect::from_min_size(egui::pos2(-1440.0, 0.0), egui::vec2(1440.0, 900.0)),
+        ]
+    }
+
+    #[test]
+    fn viewport_is_monitor_that_contains_anchor() {
+        let monitors = monitors();
+
+        for (anchor, expected) in [
+            (Rect::new(100.0, 100.0, 30.0, 12.0), monitors[0]),
+            (Rect::new(2000.0, -100.0, 30.0, 12.0), monitors[1]),
+            (Rect::new(-500.0, 100.0, 30.0, 12.0), monitors[2]),
+        ] {
+            assert_eq!(viewport_for_anchor(&monitors, &anchor), expected);
+        }
+    }
+
+    #[test]
+    fn viewport_uses_center_of_anchor_that_crosses_monitors() {
+        let monitors = monitors();
+        let anchor = Rect::new(1720.0, 100.0, 30.0, 12.0);
+
+        assert_eq!(viewport_for_anchor(&monitors, &anchor), monitors[1]);
+    }
+
+    #[test]
+    fn viewport_is_nearest_monitor_for_off_screen_anchor() {
+        let monitors = monitors();
+        let anchor = Rect::new(5000.0, 100.0, 30.0, 12.0);
+
+        assert_eq!(viewport_for_anchor(&monitors, &anchor), monitors[1]);
+    }
+
+    #[test]
+    fn viewport_is_unbounded_without_monitors() {
+        assert_eq!(viewport_for_anchor(&[], &anchor()), UNBOUNDED_VIEWPORT);
+    }
+
+    #[test]
+    fn popup_stays_on_monitor_with_non_zero_origin() {
+        let monitors = monitors();
+
+        for anchor in [
+            Rect::new(1730.0, -195.0, 30.0, 12.0),
+            Rect::new(3600.0, 860.0, 30.0, 12.0),
+            Rect::new(-1435.0, 880.0, 30.0, 12.0),
+        ] {
+            let viewport = viewport_for_anchor(&monitors, &anchor);
+            let layout = popup_layout(&anchor, viewport, LIST, FLYOUT, 30.0);
+
+            assert!(viewport.contains_rect(layout.list), "{anchor:?}");
+            assert!(viewport.contains_rect(layout.flyout), "{anchor:?}");
+        }
+    }
+
+    #[test]
+    fn popup_in_window_space_is_inside_that_window() {
+        let viewport = monitors()[1];
+        let anchor = Rect::new(2000.0, -100.0, 30.0, 12.0);
+        let local =
+            popup_layout(&anchor, viewport, LIST, FLYOUT, 0.0).translate(-viewport.min.to_vec2());
+        let window = egui::Rect::from_min_size(egui::Pos2::ZERO, viewport.size());
+
+        assert_eq!(local.list.left(), 2000.0 - viewport.left());
+        assert!(window.contains_rect(local.list));
+        assert!(window.contains_rect(local.flyout));
     }
 
     #[test]

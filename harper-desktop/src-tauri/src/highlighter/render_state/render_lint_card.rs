@@ -6,7 +6,7 @@ use egui_commonmark::{CommonMarkCache, CommonMarkViewer};
 use harper_core::linting::{Lint, LintKind, Suggestion};
 
 use super::lint_kind_color32;
-use super::popup_layout::{PopupLayout, UNBOUNDED_VIEWPORT, popup_layout};
+use super::popup_layout::{PopupLayout, popup_layout};
 use crate::rect::Rect;
 
 const LIST_WIDTH: f32 = 210.0;
@@ -79,18 +79,16 @@ enum ButtonContent<'a> {
 /// explanation are two separate floating cards. [`popup_layout_for_lint`] places them, so
 /// hit-testing and drawing agree without measuring the popup.
 ///
-/// `sidebar_position` is the flyout card's current offset from the list card's top. The caller
-/// animates it toward [`sidebar_target`]. `shown_suggestion` only selects the highlighted row.
+/// `layout` is relative to the window that `ui` draws into. `shown_suggestion` only selects the
+/// highlighted row.
 pub fn render_lint_card(
     ui: &mut egui::Ui,
-    rect: &Rect,
+    layout: PopupLayout,
     lint: &Lint,
     source_text: &str,
     shown_suggestion: Option<usize>,
-    sidebar_position: f32,
     markdown_cache: &mut CommonMarkCache,
 ) -> Option<LintCardAction> {
-    let layout = popup_layout_for_lint(rect, lint, sidebar_position);
     let problem_text = problem_text(lint, source_text);
     let span = (lint.span.start, lint.span.end);
 
@@ -751,10 +749,17 @@ fn problem_text(lint: &Lint, source_text: &str) -> String {
 ///
 /// `sidebar_position` is the flyout card's current offset from the list card's top, not its target,
 /// so hit-testing follows the card while it moves.
-pub fn popup_layout_for_lint(rect: &Rect, lint: &Lint, sidebar_position: f32) -> PopupLayout {
+///
+/// `rect` and `viewport` must be in the same coordinate space. The result is in that space too.
+pub fn popup_layout_for_lint(
+    rect: &Rect,
+    lint: &Lint,
+    sidebar_position: f32,
+    viewport: egui::Rect,
+) -> PopupLayout {
     popup_layout(
         rect,
-        UNBOUNDED_VIEWPORT,
+        viewport,
         egui::vec2(LIST_CARD_WIDTH, list_card_height(row_count(lint))),
         egui::vec2(FLYOUT_CARD_WIDTH, CARD_HEIGHT),
         sidebar_position,

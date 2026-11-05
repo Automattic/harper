@@ -243,6 +243,9 @@ impl ApplicationHandler for WindowManagerApp {
                 }
             }
         }
+
+        self.render_state
+            .set_monitor_bounds(self.windows.iter().map(Window::bounds).collect());
     }
 
     fn window_event(

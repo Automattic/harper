@@ -9,7 +9,7 @@ use harper_core::{Document, linting::LintKind};
 
 use self::{
     draw_highlight::draw_highlight,
-    popup_layout::{PopupLayout, approach},
+    popup_layout::{PopupLayout, approach, viewport_for_anchor},
     render_lint_card::{
         FIRST_ROW_OFFSET, LintCardAction, popup_layout_for_lint, render_lint_card, row_count,
         sidebar_target,
@@ -37,6 +37,9 @@ pub enum HitTarget {
 pub struct RenderState {
     /// Last successful accessibility read, retained when a later read fails.
     last_lints: Option<Vec<ActionableLint>>,
+
+    /// The bounds of each monitor, in the same global screen space as lint rectangles.
+    monitor_bounds: Vec<egui::Rect>,
 
     /// Index of the lint whose suggestion popup is currently visible.
     highlighted_lint: Option<usize>,
@@ -78,6 +81,7 @@ impl RenderState {
     ) -> Self {
         let mut state = Self {
             last_lints: None,
+            monitor_bounds: Vec::new(),
             highlighted_lint: None,
             shown_suggestion: None,
             current_sidebar_position: FIRST_ROW_OFFSET,
@@ -117,6 +121,11 @@ impl RenderState {
 
     fn lints(&self) -> &[ActionableLint] {
         self.last_lints.as_deref().unwrap_or_default()
+    }
+
+    /// Tells the popup layout where the monitors are, so that a popup stays on one monitor.
+    pub fn set_monitor_bounds(&mut self, monitor_bounds: Vec<egui::Rect>) {
+        self.monitor_bounds = monitor_bounds;
     }
 
     /// Updates which lint owns the suggestion popup without exposing render-state internals.
@@ -166,6 +175,7 @@ impl RenderState {
                     &positioned_lint.rect,
                     &positioned_lint.lint,
                     self.current_sidebar_position,
+                    viewport_for_anchor(&self.monitor_bounds, &positioned_lint.rect),
                 )
             })
     }
@@ -173,8 +183,13 @@ impl RenderState {
     /// Draws highlights and the active popup from the same state used by hit-testing so visible
     /// regions and clickable regions do not drift apart.
     ///
+    /// `window_bounds` is the area of the global screen space that `ui` covers. Lint geometry is
+    /// global, but egui's origin is the window's corner, so everything is translated before it is
+    /// drawn. Only the window on the monitor that owns the popup draws it, because egui would
+    /// otherwise pull the off-screen cards back on to every other monitor.
+    ///
     /// Each call also moves the sidebar toward its target by the time since the previous call.
-    pub fn render(&mut self, ui: &mut egui::Ui) {
+    pub fn render(&mut self, ui: &mut egui::Ui, window_bounds: egui::Rect) {
         let now = Instant::now();
         let time_since_last_render = self
             .last_render
@@ -193,24 +208,36 @@ impl RenderState {
             );
         }
 
+        let to_window = -window_bounds.min.to_vec2();
+
         for positioned_lint in self.lints() {
-            draw_highlight(ui, &positioned_lint.rect, &positioned_lint.lint);
+            draw_highlight(
+                ui,
+                rect_bounds(&positioned_lint.rect).translate(to_window),
+                &positioned_lint.lint,
+            );
         }
 
         if let Some(index) = self.highlighted_lint
             && let Some(positioned_lint) = self.lints().get(index)
+            && viewport_for_anchor(&self.monitor_bounds, &positioned_lint.rect) == window_bounds
         {
-            let rect = positioned_lint.rect;
+            let layout = popup_layout_for_lint(
+                &positioned_lint.rect,
+                &positioned_lint.lint,
+                self.current_sidebar_position,
+                window_bounds,
+            )
+            .translate(to_window);
             let lint = positioned_lint.lint.clone();
             let source_text = positioned_lint.source_text.clone();
 
             match render_lint_card(
                 ui,
-                &rect,
+                layout,
                 &lint,
                 &source_text,
                 self.shown_suggestion,
-                self.current_sidebar_position,
                 &mut self.markdown_cache,
             ) {
                 Some(LintCardAction::Close) => self.close_popup(),

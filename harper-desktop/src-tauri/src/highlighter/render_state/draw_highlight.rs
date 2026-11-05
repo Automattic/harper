@@ -2,12 +2,12 @@
 
 use harper_core::linting::Lint;
 
-use super::{lint_kind_color32, rect_bounds};
-use crate::rect::Rect;
+use super::lint_kind_color32;
 
 /// Draws the always-visible lint marker without making the renderer responsible for popup state.
-pub fn draw_highlight(ui: &mut egui::Ui, rect: &Rect, lint: &Lint) {
-    let rect_bounds = rect_bounds(rect);
+///
+/// `rect_bounds` is relative to the window that `ui` draws into.
+pub fn draw_highlight(ui: &mut egui::Ui, rect_bounds: egui::Rect, lint: &Lint) {
     let color = lint_color(lint);
     let [r, g, b, _] = color.to_array();
     let fill_color = egui::Color32::from_rgba_unmultiplied(r, g, b, 24);
