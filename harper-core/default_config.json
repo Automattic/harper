@@ -4984,6 +4984,13 @@
 						},
 						{
 							"Bool": {
+								"name": "DependOf",
+								"state": true,
+								"label": "Depend Of"
+							}
+						},
+						{
+							"Bool": {
 								"name": "DigUnderTheHood",
 								"state": true,
 								"label": "Dig Under The Hood"
