@@ -14,7 +14,9 @@ impl DiscourseMarkers {
     pub fn new() -> Self {
         let phrases = &[
             "accordingly",
+            "actually",
             "additionally",
+            "also",
             "alternatively",
             "consequently",
             "conversely",
@@ -48,6 +50,7 @@ impl DiscourseMarkers {
         );
 
         Self {
+            // Skip markers followed by a modifier or a verb
             expr: SequenceExpr::with(phrases_expr)
                 .t_ws()
                 .then_unless(UPOSSet::new(&[
@@ -55,6 +58,7 @@ impl DiscourseMarkers {
                     UPOS::ADV,
                     UPOS::ADP,
                     UPOS::CCONJ,
+                    UPOS::VERB,
                 ])),
         }
     }
@@ -346,6 +350,81 @@ mod tests {
         assert_no_lints(
             "Now a days, movie recommendation systems are well developed and are user focused.",
             DiscourseMarkers::default(),
+        );
+    }
+
+    #[test]
+    fn corrects_also() {
+        assert_suggestion_result(
+            "Also I think we should go.",
+            DiscourseMarkers::default(),
+            "Also, I think we should go.",
+        );
+    }
+
+    #[test]
+    fn no_suggestion_if_comma_after_also() {
+        assert_no_lints("Also, I think we should go.", DiscourseMarkers::default());
+    }
+
+    #[test]
+    fn no_lint_for_mid_sentence_also() {
+        assert_no_lints("She also said hi.", DiscourseMarkers::default());
+    }
+
+    #[test]
+    fn allows_also_known_as() {
+        assert_no_lints("Also known as the big one.", DiscourseMarkers::default());
+    }
+
+    #[test]
+    fn allows_also_called() {
+        assert_no_lints("Also called the big one.", DiscourseMarkers::default());
+    }
+
+    #[test]
+    fn allows_also_see() {
+        assert_no_lints("Also see chapter two.", DiscourseMarkers::default());
+    }
+
+    #[test]
+    fn allows_also_available() {
+        assert_no_lints("Also available in blue.", DiscourseMarkers::default());
+    }
+
+    #[test]
+    fn corrects_actually() {
+        assert_suggestion_result(
+            "Actually I don't know.",
+            DiscourseMarkers::default(),
+            "Actually, I don't know.",
+        );
+    }
+
+    #[test]
+    fn no_suggestion_if_comma_after_actually() {
+        assert_no_lints("Actually, I don't know.", DiscourseMarkers::default());
+    }
+
+    #[test]
+    fn no_lint_for_mid_sentence_actually() {
+        assert_no_lints("She is actually right.", DiscourseMarkers::default());
+    }
+
+    #[test]
+    fn allows_actually_existing() {
+        assert_no_lints(
+            "Actually existing socialism was a term.",
+            DiscourseMarkers::default(),
+        );
+    }
+
+    #[test]
+    fn corrects_also_and_actually_in_one_document() {
+        assert_suggestion_result(
+            "Actually I don't know. Also I forgot.",
+            DiscourseMarkers::default(),
+            "Actually, I don't know. Also, I forgot.",
         );
     }
 }
