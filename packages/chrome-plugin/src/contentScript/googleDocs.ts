@@ -447,19 +447,29 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 		logicalText: string,
 	): string {
 		// A failed full-document alignment need not discard the logical gap here.
-		// Repeated text is safe only when every matching adjacent pair agrees.
+		// Repeated text is safe only when all occurrences are adjacent and agree.
 		const currentContent = current.text.trimStart();
 		const currentPrefix = current.text
 			.slice(0, current.text.length - currentContent.length)
 			.replace(/\u00a0/gu, ' ');
 		let separator: string | null = null;
+		let conflictingSeparators = false;
+		let previousOccurrences = 0;
+		let adjacentPairs = 0;
+		let omittedProse = false;
 		let cursor = 0;
 		while (cursor < logicalText.length) {
 			const start = logicalText.indexOf(previous.text, cursor);
 			if (start < 0) break;
+			previousOccurrences += 1;
 			const end = start + previous.text.length;
+			const nextStart = logicalText.indexOf(currentContent, end);
+			if (nextStart >= 0 && !canIgnoreLogicalGap(logicalText.slice(end, nextStart))) {
+				omittedProse = true;
+			}
 			const whitespace = /^\s*/u.exec(logicalText.slice(end))?.[0] ?? '';
 			if (logicalText.startsWith(currentContent, end + whitespace.length)) {
+				adjacentPairs += 1;
 				// The rectangle already owns its prefix, even if Docs used regular spaces.
 				const gap = whitespace.replace(/\u00a0/gu, ' ').endsWith(currentPrefix)
 					? whitespace.slice(0, whitespace.length - currentPrefix.length)
@@ -473,14 +483,31 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 					null,
 				);
 				if (separator != null && separator !== normalized) {
-					separator = null;
-					break;
+					conflictingSeparators = true;
 				}
 				separator = normalized;
 			}
 			cursor = start + 1;
 		}
-		if (separator != null) return separator;
+		let currentOccurrences = 0;
+		cursor = 0;
+		while (currentContent.length > 0 && cursor < logicalText.length) {
+			const start = logicalText.indexOf(currentContent, cursor);
+			if (start < 0) break;
+			currentOccurrences += 1;
+			cursor = start + 1;
+		}
+		// Known missing prose is not an unknown gap. Isolate the visible regions
+		// instead of manufacturing grammatical adjacency or choosing a repeated match.
+		if (
+			omittedProse ||
+			(adjacentPairs > 0 &&
+				currentContent.length > 0 &&
+				(adjacentPairs !== previousOccurrences || adjacentPairs !== currentOccurrences))
+		) {
+			return '\n\n';
+		}
+		if (separator != null && !conflictingSeparators) return separator;
 
 		// Page margins are layout, not paragraph semantics. Without a usable
 		// logical gap, join conservatively rather than inventing a paragraph.
@@ -773,10 +800,21 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 		if (nativeText.search(GOOGLE_DOCS_TABLE_SEPARATORS) >= 0) {
 			return buildNativeTableSnapshot(editor, segments, nativeText);
 		}
+		// Display normalization is lossy: it can turn a raw label into an exact
+		// match for a different native paragraph, or hide known omitted prose.
+		// Keep raw source labels throughout ordinary native matching/projection.
+		// Without native text, retain the legacy display-only normalization.
+		const ordinarySegments =
+			nativeText.length > 0
+				? segments.map((segment) => ({
+						...segment,
+						text: segment.rectNode.getAttribute('aria-label')!,
+					}))
+				: segments;
 		const logicalText = nativeText.replace(/\r\n?/gu, '\n');
 		return (
-			buildLogicalSnapshot(editor, segments, logicalText) ??
-			buildRectSnapshot(editor, segments, logicalText)
+			buildLogicalSnapshot(editor, ordinarySegments, logicalText) ??
+			buildRectSnapshot(editor, ordinarySegments, logicalText)
 		);
 	}
 
