@@ -4093,6 +4093,13 @@
 						},
 						{
 							"Bool": {
+								"name": "QuestionVerbAgreement",
+								"state": true,
+								"label": "Question Verb Agreement"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ReadsAndWrites",
 								"state": true,
 								"label": "Reads and Writes"
