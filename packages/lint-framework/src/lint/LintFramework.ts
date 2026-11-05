@@ -52,6 +52,8 @@ export default class LintFramework {
 	private renderRequested = false;
 	private lintDelayTimer: number | null = null;
 	private lastInputAt = 0;
+	/** Text and position of the on-screen targets at the last periodic check. */
+	private lastTickSignature = '';
 	private lastLints: { target: HTMLElement; lints: UnpackedLintGroups }[] = [];
 	private lastBoxes: IgnorableLintBox[] = [];
 	private lastLintBoxes: IgnorableLintBox[] = [];
@@ -95,15 +97,41 @@ export default class LintFramework {
 			this.update();
 		};
 
-		// Catches edge cases where editors do not correctly emit events.
+		// Catches edge cases where editors do not correctly emit events. Only updates when the
+		// targets' text or position changed, so an idle page costs nothing (re-rendering forces
+		// layout and repaint, which is expensive in large documents).
 		const timeoutCallback = () => {
-			this.update();
+			const signature = this.tickSignature();
+			// requestLintUpdate() drops a non-immediate request while a lint is running and the
+			// debounce timer can run into the same, so only record the signature when the update
+			// can actually lint. Otherwise keep the old one and try again on the next tick.
+			if (
+				signature !== this.lastTickSignature &&
+				this.lintRequest == null &&
+				this.lintDelayTimer == null
+			) {
+				this.lastTickSignature = signature;
+				this.update();
+			}
 
 			setTimeout(timeoutCallback, 1000);
 		};
 		timeoutCallback();
 
 		this.attachWindowListeners();
+	}
+
+	/** What the periodic check compares: the page scroll and, for each on-screen target, its
+	 * position, inner scroll (e.g. a textarea scrolled to the caret) and text. */
+	private tickSignature(): string {
+		const targets = this.onScreenTargets().map((target) => {
+			const el = target instanceof Element ? target : target.parentElement;
+			const rect = el?.getBoundingClientRect();
+			const { text } = this.getTargetText(target);
+			return `${rect?.x},${rect?.y},${rect?.width},${rect?.height},${el?.scrollLeft},${el?.scrollTop}:${text}`;
+		});
+
+		return [`${window.scrollX},${window.scrollY}`, ...targets].join('\u0000');
 	}
 
 	/** Returns the currents targets that are visible on-screen. */
