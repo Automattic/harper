@@ -1,0 +1,30 @@
+expr main (I'm agree)
+
+let message "`agree` is a verb, so it doesn't need `am`: `I agree`."
+let description "Corrects `I'm agree` to `I agree`."
+let kind "Grammar"
+let becomes "I agree"
+let strategy "MatchCase"
+
+# real sentences from Hacker News and GitHub issues
+test "C++ templates are ugly, I'm agree, but they are useful and heavily used." "C++ templates are ugly, I agree, but they are useful and heavily used."
+test "As CS teacher I'm agree with others that JS is terrible choice as first language." "As CS teacher I agree with others that JS is terrible choice as first language."
+# made-up sentences
+test "I'm agree with you." "I agree with you."
+test "Yes, I'm agree." "Yes, I agree."
+test "I'm agree with the plan, but not the timeline." "I agree with the plan, but not the timeline."
+test "Honestly, I'm agree on this one." "Honestly, I agree on this one."
+test "I'M AGREE." "I AGREE."
+test "So I'm agree that we should wait." "So I agree that we should wait."
+
+# correct text
+allows "I agree with you."
+allows "I'm in agreement with you."
+allows "I'm sure you agree."
+allows "I agreed with the plan."
+# look-alikes that must not be flagged
+allows "I'm agreeable to that."
+allows "I'm, agree or not, staying."
+allows "What I'm agreeing to is the scope."
+allows "I'm not sure I agree."
+allows "The terms I'm asked to agree to are long."
