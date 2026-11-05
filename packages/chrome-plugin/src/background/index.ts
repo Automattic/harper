@@ -865,7 +865,8 @@ async function addToDictionary(words: string[]): Promise<void> {
 /** Grab the user dictionary from persistent storage. */
 async function getUserDictionary(): Promise<string[]> {
 	const resp = await chrome.storage.local.get({ userDictionary: [] });
-	return resp.userDictionary;
+	// `resetDictionary` stores null, which the default above does not replace.
+	return resp.userDictionary ?? [];
 }
 
 /** Record the date the extension was installed, if it's missing. */
