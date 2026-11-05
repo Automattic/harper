@@ -14,6 +14,30 @@ import { ActivationKey } from '../protocol';
 import StructuredRuleSettings from './StructuredRuleSettings.svelte';
 
 let loaded = $state(false);
+let clearingIgnoredSuggestions = $state(false);
+let ignoredSuggestionsStatus = $state('');
+
+/** Confirm a global reset and report completion or failure without changing other settings. */
+async function clearIgnoredSuggestions(): Promise<void> {
+	if (
+		!window.confirm(
+			'Clear ignored suggestions across all websites? Custom dictionary words and disabled rules will not change.',
+		)
+	) {
+		return;
+	}
+	clearingIgnoredSuggestions = true;
+	ignoredSuggestionsStatus = '';
+	try {
+		await ProtocolClient.clearIgnoredLints();
+		ignoredSuggestionsStatus =
+			'Ignored suggestions cleared. Reload open pages to show suggestions again.';
+	} catch {
+		ignoredSuggestionsStatus = 'Could not clear ignored suggestions. Please try again.';
+	} finally {
+		clearingIgnoredSuggestions = false;
+	}
+}
 
 let lintConfig: LintConfig = $state({});
 let structuredLintConfig: StructuredLintConfig = $state({ settings: [] });
@@ -636,6 +660,22 @@ async function removeWeirpack(id: string) {
                     {isCapturingHotkey ? 'Cancel' : 'Modify'}
                   </Button>
                 </div>
+              </div>
+
+              <div class="flex flex-col gap-2 py-3.5">
+                <h3 class="text-base font-semibold">Ignored suggestions</h3>
+                <p id="ignored-suggestions-desc" class="text-xs text-gray-600 dark:text-[#d1d5db]!">
+                  Clear ignored suggestions across all websites. Custom dictionary words and disabled rules will not change.
+                </p>
+                <Button
+                  size="sm"
+                  disabled={clearingIgnoredSuggestions}
+                  aria-describedby="ignored-suggestions-desc"
+                  on:click={clearIgnoredSuggestions}
+                >
+                  {clearingIgnoredSuggestions ? 'Clearing…' : 'Clear ignored suggestions'}
+                </Button>
+                <p role="status" class="text-xs">{ignoredSuggestionsStatus}</p>
               </div>
 
               <!-- User Dictionary -->
