@@ -103,15 +103,19 @@ function scan() {
 		maybeAddTextareaTarget(element, true);
 	});
 
-	document
-		.querySelectorAll<HTMLInputElement>('input[type="text"][spellcheck="true"]')
-		.forEach((element) => {
-			if (element.disabled || element.readOnly) {
-				return;
-			}
+	// `spellcheck` reflects the effective state: an explicit attribute, an inherited one, or
+	// the browser default for single-line fields (e.g. Firefox's `layout.spellcheckDefault`).
+	document.querySelectorAll<HTMLInputElement>('input').forEach((element) => {
+		if (element.type !== 'text' || !element.spellcheck) {
+			return;
+		}
 
-			fw.addTarget(element);
-		});
+		if (element.disabled || element.readOnly) {
+			return;
+		}
+
+		fw.addTarget(element);
+	});
 
 	document
 		.querySelectorAll('[data-testid="gutenberg-editor"], .block-editor-iframe__body')
