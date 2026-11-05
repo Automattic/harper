@@ -78,6 +78,16 @@ export default class ProtocolClient {
 		await chrome.runtime.sendMessage({ kind: 'setIsolateEnglish', isolateEnglish });
 	}
 
+	/** Read whether pointer hover should open suggestion popups. */
+	public static async getOpenSuggestionsOnHover(): Promise<boolean> {
+		return (await chrome.runtime.sendMessage({ kind: 'getOpenSuggestionsOnHover' })).enabled;
+	}
+
+	/** Persist the optional hover behavior for all extension tabs. */
+	public static async setOpenSuggestionsOnHover(enabled: boolean): Promise<void> {
+		await chrome.runtime.sendMessage({ kind: 'setOpenSuggestionsOnHover', enabled });
+	}
+
 	public static async getDelay(): Promise<number> {
 		return (await chrome.runtime.sendMessage({ kind: 'getDelay' })).delay;
 	}

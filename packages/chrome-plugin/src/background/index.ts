@@ -242,6 +242,15 @@ function handleRequest(message: Request, sender?: chrome.runtime.MessageSender):
 			return handleGetIsolateEnglish();
 		case 'setIsolateEnglish':
 			return handleSetIsolateEnglish(message);
+		case 'getOpenSuggestionsOnHover':
+			return chrome.storage.local.get({ openSuggestionsOnHover: false }).then((stored) => ({
+				kind: 'getOpenSuggestionsOnHover',
+				enabled: stored.openSuggestionsOnHover === true,
+			}));
+		case 'setOpenSuggestionsOnHover':
+			return chrome.storage.local
+				.set({ openSuggestionsOnHover: message.enabled === true })
+				.then(createUnitResponse);
 		case 'getDelay':
 			return handleGetDelay(message);
 		case 'setDelay':
