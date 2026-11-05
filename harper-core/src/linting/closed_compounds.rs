@@ -101,7 +101,7 @@ pub fn lint_group() -> LintGroup {
             Box::new(
                 SequenceExpr::default()
                     .then_fixed_phrase("every one")
-                    .then(Not::new(SequenceExpr::default().t_ws().t_aco("of"))),
+                    .then(Not::new(SequenceExpr::whitespace().t_aco("of"))),
             ),
             "everyone",
         )),
