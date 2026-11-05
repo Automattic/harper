@@ -4,11 +4,11 @@ about: Harper flagged something that's actually correct
 title: ''
 labels: bug, harper-core, linting, false-positive
 ---
-**What got flagged?**
+## What got flagged?
 The text that was incorrectly flagged.
 
-**Why is this incorrect?**
+## Why is this incorrect?
 Brief explanation.
 
-**Example of correct usage:**
+## Example of correct usage
 [Your example here]
