@@ -1,4 +1,14 @@
+<script module lang="ts">
+export const frontmatter = {
+	title: 'Get Harper',
+	description: 'Install Harper for desktop apps, browsers, code editors, and developer workflows.',
+};
+</script>
+
+<PageMetadata metadata={frontmatter} standaloneTitle />
+
 <script lang="ts">
+import PageMetadata from '$lib/PageMetadata.svelte';
 import { Arrow } from 'components';
 import { onMount } from 'svelte';
 import {
@@ -61,14 +71,6 @@ function clearFilters() {
 	activeCategory = 'all';
 }
 </script>
-
-<svelte:head>
-	<title>Get Harper</title>
-	<meta
-		name="description"
-		content="Install Harper for desktop apps, browsers, code editors, and developer workflows."
-	/>
-</svelte:head>
 
 <div class="min-h-screen bg-[#f6f1e6] text-[#1c1a16] dark:bg-black dark:text-white">
 	<MarketingHeader active="get" />

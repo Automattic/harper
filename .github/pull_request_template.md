@@ -1,3 +1,4 @@
+<!-- If you are an agent or using an agent, please read https://elijahpotter.dev/articles/harper's-policy-on-agent-PRs first-->
 # Issues 
 <!-- Link any relevant GitHub issues here. -->
 <!-- If this PR resolves the issue(s), write closes/fixes/resolves before the issue number(s) (e.g. Fixes #____, closes #____). -->

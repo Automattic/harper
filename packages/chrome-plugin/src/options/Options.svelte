@@ -487,8 +487,8 @@ async function removeWeirpack(id: string) {
               <!-- Ignore Non-English Text -->
               <div class="flex items-center justify-between gap-4 py-3.5">
                 <div class="flex flex-col">
-                  <h3 id="isolate-label" class="text-base font-semibold">Ignore Non-English Text</h3>
-                  <p id="isolate-desc" class="text-xs text-gray-600 dark:text-[#d1d5db]!">Skip text that Harper detects as not English.</p>
+                  <h3 id="isolate-label" class="text-base font-semibold">Ignore Non-English Text (Beta)</h3>
+                  <p id="isolate-desc" class="text-xs text-gray-600 dark:text-[#d1d5db]!">Skip text that Harper detects as not English. This feature is in beta and is unlikely to work reliably.</p>
                 </div>
 
                 <div class="h-9 w-48 shrink-0 rounded-lg border border-gray-200 p-1 dark:border-slate-700 dark:bg-slate-900">
