@@ -6,6 +6,8 @@ use crate::{Document, Token, TokenStringExt};
 
 use super::{Lint, LintKind, Linter, Suggestion};
 
+const ALSO_PREPOSITIONS: &[&str] = &["besides", "notwithstanding"];
+
 pub struct DiscourseMarkers {
     expr: SequenceExpr,
 }
@@ -18,6 +20,7 @@ impl DiscourseMarkers {
             "additionally",
             "also",
             "alternatively",
+            "besides",
             "by the way",
             "consequently",
             "conversely",
@@ -70,18 +73,37 @@ impl DiscourseMarkers {
 
     fn lint_sentence(&self, sent: &[Token], source: &[char]) -> Option<Lint> {
         let first_word_idx = sent.iter_word_indices().next()?;
+        let matched_phrase = self.expr.run(first_word_idx, sent, source)?;
 
-        if let Some(matched_phrase) = self.expr.run(first_word_idx, sent, source) {
-            Some(Lint {
-                span: sent[matched_phrase.start..matched_phrase.end - 2].span()?,
-                lint_kind: LintKind::Punctuation,
-                suggestions: vec![Suggestion::InsertAfter(vec![','])],
-                message: "Discourse markers at the beginning of a sentence should be followed by a comma.".into(),
-                priority: 31,
-            })
-        } else {
-            None
+        let marker_end = matched_phrase.end - 2;
+        let marker = &sent[matched_phrase.start..marker_end];
+
+        if self.is_prepositional(marker, &sent[marker_end..], source) {
+            return None;
         }
+
+        Some(Lint {
+            span: marker.span()?,
+            lint_kind: LintKind::Punctuation,
+            suggestions: vec![Suggestion::InsertAfter(vec![','])],
+            message:
+                "Discourse markers at the beginning of a sentence should be followed by a comma."
+                    .into(),
+            priority: 31,
+        })
+    }
+
+    fn is_prepositional(&self, marker: &[Token], rest: &[Token], source: &[char]) -> bool {
+        let (Some(span), Some(next)) = (marker.span(), rest.first_non_whitespace()) else {
+            return false;
+        };
+
+        ALSO_PREPOSITIONS.contains(&span.get_content_string(source).to_lowercase().as_str())
+            && (next.kind.is_upos(UPOS::DET)
+                || !rest
+                    .iter()
+                    .take_while(|token| !token.kind.is_comma())
+                    .any(|token| token.kind.is_upos(UPOS::VERB)))
     }
 }
 
@@ -507,6 +529,58 @@ mod tests {
         assert_no_lints(
             "By way of introduction he waved.",
             DiscourseMarkers::default(),
+        );
+    }
+
+    #[test]
+    fn corrects_besides() {
+        assert_suggestion_result(
+            "Besides we have no time.",
+            DiscourseMarkers::default(),
+            "Besides, we have no time.",
+        );
+    }
+
+    #[test]
+    fn corrects_besides_before_list() {
+        assert_suggestion_result(
+            "Besides we need milk, eggs, and bread.",
+            DiscourseMarkers::default(),
+            "Besides, we need milk, eggs, and bread.",
+        );
+    }
+
+    #[test]
+    fn allows_besides_as_preposition() {
+        assert_no_lints(
+            "Besides me, nobody knew the answer.",
+            DiscourseMarkers::default(),
+        );
+    }
+
+    #[test]
+    fn corrects_notwithstanding() {
+        assert_suggestion_result(
+            "Notwithstanding they still went out.",
+            DiscourseMarkers::default(),
+            "Notwithstanding, they still went out.",
+        );
+    }
+
+    #[test]
+    fn allows_notwithstanding_as_preposition() {
+        assert_no_lints(
+            "Notwithstanding the rain, we went out.",
+            DiscourseMarkers::default(),
+        );
+    }
+
+    #[test]
+    fn corrects_other_markers_before_determiner() {
+        assert_suggestion_result(
+            "However the rain held off.",
+            DiscourseMarkers::default(),
+            "However, the rain held off.",
         );
     }
 }
