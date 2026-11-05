@@ -10,6 +10,8 @@ import hintsData from '../assets/hints.json';
 import RenderBox from './RenderBox';
 import SuggestionBox from './SuggestionBox';
 
+const HOVER_ACTIVATION_DELAY_MS = 200;
+
 type ActivationHandler = () => void;
 
 function monitorActivationKey(
@@ -33,6 +35,15 @@ export default class PopupHandler {
 	private currentLintBoxes: IgnorableLintBox[];
 	private popupLint: number | undefined;
 	private selectedSuggestion = 0;
+	private openSuggestionsOnHover = false;
+	/** One pending dwell, identified by source, lint span, and the latest pointer position. */
+	private pendingHover:
+		| {
+				box: IgnorableLintBox;
+				point: [number, number];
+				timer: ReturnType<typeof setTimeout>;
+		  }
+		| undefined;
 	/** Only a keyboard activation moves focus into the popup; a click leaves it in the editor. */
 	private autofocusSuggestion = false;
 	private currentHint: string | null | undefined;
@@ -88,6 +99,7 @@ export default class PopupHandler {
 
 	/** Open and render the row nearest the editor caret immediately on activation. */
 	private openClosestToCaret() {
+		this.cancelPendingHover();
 		const host = this.renderBox.getShadowHost();
 		const popupFocused = document.activeElement === host;
 		const caretPosition = popupFocused ? null : getCaretPosition();
@@ -114,7 +126,86 @@ export default class PopupHandler {
 		row?.scrollIntoView({ block: 'nearest' });
 	}
 
+	/** Update source listeners immediately; hover is off by default for all hosts. */
+	public setOpenSuggestionsOnHover(enabled: boolean): void {
+		if (this.openSuggestionsOnHover === enabled) return;
+		this.openSuggestionsOnHover = enabled;
+		this.cancelPendingHover();
+		for (const { source } of this.currentLintBoxes) {
+			if (enabled) {
+				source.addEventListener('pointermove', this.onPointerMove as EventListener);
+				source.addEventListener('pointerleave', this.cancelPendingHover);
+			} else {
+				source.removeEventListener('pointermove', this.onPointerMove as EventListener);
+				source.removeEventListener('pointerleave', this.cancelPendingHover);
+			}
+		}
+	}
+
+	/** Cancel a pending dwell and remove its temporary interruption listeners. */
+	private cancelPendingHover = (): void => {
+		if (!this.pendingHover) return;
+		clearTimeout(this.pendingHover.timer);
+		this.pendingHover = undefined;
+		document.removeEventListener('pointerdown', this.cancelPendingHover, true);
+		window.removeEventListener('blur', this.cancelPendingHover);
+		window.removeEventListener('scroll', this.cancelPendingHover, true);
+	};
+
+	/** Resolve the pending lint against fresh boxes instead of retaining a stale row index. */
+	private pendingHoverIndex(): number {
+		const pending = this.pendingHover;
+		if (!pending) return -1;
+		return this.currentLintBoxes.findIndex(
+			(box) =>
+				box.source === pending.box.source &&
+				box.lint.span.start === pending.box.lint.span.start &&
+				box.lint.span.end === pending.box.lint.span.end &&
+				box.lint.source === pending.box.lint.source &&
+				isPointInBox(pending.point, box),
+		);
+	}
+
+	/** Require a 200 ms dwell on one error without moving focus or interrupting dragging. */
+	private onPointerMove = (event: PointerEvent): void => {
+		if (!this.openSuggestionsOnHover || event.buttons !== 0 || event.pointerType === 'touch') {
+			this.cancelPendingHover();
+			return;
+		}
+		const path = event.composedPath();
+		if (path.includes(this.renderBox.getShadowHost())) {
+			this.cancelPendingHover();
+			return;
+		}
+		const point: [number, number] = [event.x, event.y];
+		const index = this.currentLintBoxes.findIndex(
+			(box) => path.includes(box.source) && isPointInBox(point, box),
+		);
+		if (this.pendingHover) this.pendingHover.point = point;
+		if (index >= 0 && index !== this.popupLint && index === this.pendingHoverIndex()) return;
+		this.cancelPendingHover();
+		// Leaving the underline cancels activation, but does not close an open popup.
+		if (index < 0 || index === this.popupLint) return;
+		this.pendingHover = {
+			box: this.currentLintBoxes[index],
+			point,
+			timer: setTimeout(() => {
+				const nextIndex = this.pendingHoverIndex();
+				this.cancelPendingHover();
+				if (!this.openSuggestionsOnHover || nextIndex < 0) return;
+				this.popupLint = nextIndex;
+				this.selectedSuggestion = 0;
+				this.autofocusSuggestion = false;
+				this.render();
+			}, HOVER_ACTIVATION_DELAY_MS),
+		};
+		document.addEventListener('pointerdown', this.cancelPendingHover, true);
+		window.addEventListener('blur', this.cancelPendingHover);
+		window.addEventListener('scroll', this.cancelPendingHover, true);
+	};
+
 	private onPointerDown(e: PointerEvent) {
+		this.cancelPendingHover();
 		for (let i = 0; i < this.currentLintBoxes.length; i++) {
 			const box = this.currentLintBoxes[i];
 
@@ -132,6 +223,7 @@ export default class PopupHandler {
 	}
 
 	private close = () => {
+		this.cancelPendingHover();
 		this.popupLint = undefined;
 		this.selectedSuggestion = 0;
 		this.autofocusSuggestion = false;
@@ -214,6 +306,8 @@ export default class PopupHandler {
 		const popupFocused = document.activeElement === host;
 		this.currentLintBoxes.forEach((b) => {
 			b.source.removeEventListener('pointerdown', this.pointerDownCallback as EventListener);
+			b.source.removeEventListener('pointermove', this.onPointerMove as EventListener);
+			b.source.removeEventListener('pointerleave', this.cancelPendingHover);
 		});
 
 		const previous = this.popupLint == null ? undefined : this.currentLintBoxes[this.popupLint];
@@ -255,8 +349,13 @@ export default class PopupHandler {
 		if (this.popupLint != null) this.currentHintFor = this.popupLint;
 
 		this.currentLintBoxes = boxes;
+		if (this.pendingHoverIndex() < 0) this.cancelPendingHover();
 		this.currentLintBoxes.forEach((b) => {
 			b.source.addEventListener('pointerdown', this.pointerDownCallback as EventListener);
+			if (this.openSuggestionsOnHover) {
+				b.source.addEventListener('pointermove', this.onPointerMove as EventListener);
+				b.source.addEventListener('pointerleave', this.cancelPendingHover);
+			}
 		});
 
 		this.render();

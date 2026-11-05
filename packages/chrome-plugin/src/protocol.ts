@@ -11,6 +11,8 @@ export type Request =
 	| GetDialectRequest
 	| GetIsolateEnglishRequest
 	| SetIsolateEnglishRequest
+	| GetOpenSuggestionsOnHoverRequest
+	| SetOpenSuggestionsOnHoverRequest
 	| GetDelayRequest
 	| SetDelayRequest
 	| SetDomainStatusRequest
@@ -46,6 +48,7 @@ export type Response =
 	| GetLintDescriptionsResponse
 	| GetDialectResponse
 	| GetIsolateEnglishResponse
+	| GetOpenSuggestionsOnHoverResponse
 	| GetDelayResponse
 	| GetDomainStatusResponse
 	| GetDefaultStatusResponse
@@ -96,6 +99,20 @@ export type SetConfigRequest = {
 export type SetDialectRequest = {
 	kind: 'setDialect';
 	dialect: Dialect;
+};
+
+export type GetOpenSuggestionsOnHoverRequest = {
+	kind: 'getOpenSuggestionsOnHover';
+};
+
+export type SetOpenSuggestionsOnHoverRequest = {
+	kind: 'setOpenSuggestionsOnHover';
+	enabled: boolean;
+};
+
+export type GetOpenSuggestionsOnHoverResponse = {
+	kind: 'getOpenSuggestionsOnHover';
+	enabled: boolean;
 };
 
 export type GetDelayRequest = {

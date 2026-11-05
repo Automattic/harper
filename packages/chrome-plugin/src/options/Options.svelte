@@ -47,6 +47,7 @@ let searchQueryLower = $derived(searchQuery.toLowerCase());
 let expandedGroups: Record<string, boolean> = $state({});
 let dialect = $state(Dialect.American);
 let isolateEnglish = $state(false);
+let openSuggestionsOnHover = $state(false);
 let delay = $state(0);
 let delayLoaded = $state(false);
 let defaultEnabled = $state(false);
@@ -96,6 +97,11 @@ $effect(() => {
 	ProtocolClient.setUserDictionary(stringToDict(userDict));
 });
 
+$effect(() => {
+	if (!loaded) return;
+	ProtocolClient.setOpenSuggestionsOnHover(openSuggestionsOnHover);
+});
+
 // Load all initial state before displaying settings to prevent flash of defaults
 Promise.all([
 	ProtocolClient.getLintConfig(),
@@ -104,6 +110,7 @@ Promise.all([
 	ProtocolClient.getDialect(),
 	ProtocolClient.getIsolateEnglish(),
 	ProtocolClient.getDelay(),
+	ProtocolClient.getOpenSuggestionsOnHover(),
 	ProtocolClient.getDefaultEnabled(),
 	ProtocolClient.getActivationKey(),
 	ProtocolClient.getHotkey(),
@@ -117,6 +124,7 @@ Promise.all([
 		nextDialect,
 		nextIsolateEnglish,
 		nextDelay,
+		nextOpenSuggestionsOnHover,
 		nextDefaultEnabled,
 		nextActivationKey,
 		nextHotkey,
@@ -129,6 +137,7 @@ Promise.all([
 		dialect = nextDialect;
 		isolateEnglish = nextIsolateEnglish;
 		delay = nextDelay;
+		openSuggestionsOnHover = nextOpenSuggestionsOnHover;
 		delayLoaded = true;
 		defaultEnabled = nextDefaultEnabled;
 		activationKey = nextActivationKey;
@@ -621,6 +630,46 @@ async function removeWeirpack(id: string) {
                   <p id="export-desc" class="text-xs text-gray-600 dark:text-[#d1d5db]!">Downloads a JSON list of domains explicitly enabled.</p>
                 </div>
                 <Button size="sm" class="h-9 w-48 shrink-0 cursor-pointer text-xs font-semibold bg-primary! text-black! hover:bg-primary/85! outline-none! focus:outline-none! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!" aria-describedby="export-desc" on:click={exportEnabledDomainsCSV}>Export JSON</Button>
+              </div>
+
+              <!-- Suggestion Hover Activation -->
+              <div class="flex items-center justify-between gap-4 py-3.5">
+                <div class="flex flex-col">
+                  <h3 id="hover-label" class="text-base font-semibold">Open suggestions on hover</h3>
+                  <p id="hover-desc" class="text-xs text-gray-600 dark:text-[#d1d5db]!">Open suggestions after hovering over an underlined error for 200 ms. Reload open pages after changing this setting. Click and keyboard activation remain available.</p>
+                </div>
+
+                <div class="h-9 w-48 shrink-0 rounded-lg border border-gray-200 p-1 dark:border-slate-700 dark:bg-slate-900">
+                  <div class="relative flex h-full w-full" role="radiogroup" aria-labelledby="hover-label" aria-describedby="hover-desc">
+                    <div
+                      class="absolute inset-y-0 left-0 w-1/2 rounded-md bg-primary transition-transform duration-300 ease-out motion-reduce:transition-none"
+                      class:translate-x-0={openSuggestionsOnHover}
+                      class:translate-x-full={!openSuggestionsOnHover}
+                    ></div>
+                    <button
+                      type="button"
+                      role="radio"
+                      aria-checked={openSuggestionsOnHover}
+                      tabindex={openSuggestionsOnHover ? 0 : -1}
+                      onkeydown={(e) => handleRadioKeydown(e, (v) => (openSuggestionsOnHover = v))}
+                      class="relative z-10 flex-1 cursor-pointer rounded-md py-1 text-center text-xs font-semibold transition-colors duration-200 motion-reduce:transition-none {openSuggestionsOnHover ? 'text-black' : 'text-gray-500 hover:text-gray-900 dark:text-[#d1d5db]! dark:hover:text-white!'}"
+                      onclick={() => (openSuggestionsOnHover = true)}
+                    >
+                      On
+                    </button>
+                    <button
+                      type="button"
+                      role="radio"
+                      aria-checked={!openSuggestionsOnHover}
+                      tabindex={!openSuggestionsOnHover ? 0 : -1}
+                      onkeydown={(e) => handleRadioKeydown(e, (v) => (openSuggestionsOnHover = v))}
+                      class="relative z-10 flex-1 cursor-pointer rounded-md py-1 text-center text-xs font-semibold transition-colors duration-200 motion-reduce:transition-none {!openSuggestionsOnHover ? 'text-black' : 'text-gray-500 hover:text-gray-900 dark:text-[#d1d5db]! dark:hover:text-white!'}"
+                      onclick={() => (openSuggestionsOnHover = false)}
+                    >
+                      Off
+                    </button>
+                  </div>
+                </div>
               </div>
 
               <!-- Activation Key -->
