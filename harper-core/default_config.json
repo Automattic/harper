@@ -3792,6 +3792,13 @@
 						},
 						{
 							"Bool": {
+								"name": "HaveBareVerb",
+								"state": true,
+								"label": "Have Bare Verb"
+							}
+						},
+						{
+							"Bool": {
 								"name": "HaveNegNoAny",
 								"state": true,
 								"label": "Have Neg No Any"
