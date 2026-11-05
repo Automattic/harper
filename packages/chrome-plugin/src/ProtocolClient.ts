@@ -168,6 +168,14 @@ export default class ProtocolClient {
 		await chrome.runtime.sendMessage({ kind: 'setReviewed', reviewed });
 	}
 
+	/** Clear and persist ignored suggestions for all websites. Open pages may need a reload. */
+	public static async clearIgnoredLints(): Promise<void> {
+		const response = await chrome.runtime.sendMessage({ kind: 'clearIgnoredLints' });
+		if (response?.kind !== 'clearIgnoredLints' || !response.success) {
+			throw new Error('Could not clear ignored suggestions. Please try again.');
+		}
+	}
+
 	public static async ignoreHash(hash: string): Promise<void> {
 		await chrome.runtime.sendMessage({ kind: 'ignoreLint', contextHash: hash });
 		this.lintCache.clear();

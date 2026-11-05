@@ -21,6 +21,7 @@ export type Request =
 	| AddToUserDictionaryRequest
 	| SetUserDictionaryRequest
 	| IgnoreLintRequest
+	| ClearIgnoredLintsRequest
 	| GetUserDictionaryRequest
 	| GetActivationKeyRequest
 	| SetActivationKeyRequest
@@ -41,6 +42,7 @@ export type Response =
 	| GetConfigResponse
 	| GetStructuredConfigResponse
 	| UnitResponse
+	| ClearIgnoredLintsResponse
 	| GetLintDescriptionsResponse
 	| GetDialectResponse
 	| GetIsolateEnglishResponse
@@ -224,6 +226,16 @@ export type GetReviewedResponse = {
 export type SetReviewedRequest = {
 	kind: 'setReviewed';
 	reviewed: boolean;
+};
+
+/** Clear ignored suggestions across all websites without changing other settings. */
+export type ClearIgnoredLintsRequest = {
+	kind: 'clearIgnoredLints';
+};
+
+export type ClearIgnoredLintsResponse = {
+	kind: 'clearIgnoredLints';
+	success: boolean;
 };
 
 export type IgnoreLintRequest = {
