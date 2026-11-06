@@ -18,6 +18,9 @@
 	"bundle": {
 		"active": true,
 		"targets": "all",
+		"resources": {
+			"../static/fonts/atkinson/OFL.txt": "licenses/AtkinsonHyperlegible-OFL.txt"
+		},
 		"icon": [
 			"icons/32x32.png",
 			"icons/128x128.png",
