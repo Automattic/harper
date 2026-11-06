@@ -24,6 +24,12 @@ const GOOGLE_DOCS_SYNCING_ATTR = 'data-harper-gdocs-syncing';
 const GOOGLE_DOCS_IGNORED_LAYOUT_REASONS = new Set(['scroll', 'wheel', 'key-scroll']);
 const GOOGLE_DOCS_MIN_PARAGRAPH_BREAK_GAP_PX = 6;
 const GOOGLE_DOCS_PARAGRAPH_BREAK_RATIO = 0.5;
+// biome-ignore lint/suspicious/noControlCharactersInRegex: Observed native Google Docs table separators, masked one code unit at a time.
+const GOOGLE_DOCS_TABLE_SEPARATORS = /[\u0010\u0011\u0012\u001c]/gu;
+// biome-ignore lint/suspicious/noControlCharactersInRegex: Native Shift+Enter becomes one space only in the lint projection.
+const GOOGLE_DOCS_SOFT_BREAKS = /\u000b/gu;
+// biome-ignore lint/suspicious/noControlCharactersInRegex: Native control characters cannot own visible source geometry.
+const GOOGLE_DOCS_CONTROL_CHARACTERS = /[\u0000-\u001f]/u;
 
 type LayoutRefreshFramework = LintFramework & {
 	refreshLayout?: () => void;
@@ -39,7 +45,9 @@ type GoogleDocsRectSegment = {
 type GoogleDocsCloneSnapshot = {
 	fragment: DocumentFragment;
 	text: string;
-	source: 'logical' | 'rects';
+	source: 'logical' | 'rects' | 'native';
+	nativeSnapshot?: string;
+	nativeRuns?: Array<[number, number, number]>;
 	segmentCount: number;
 	signature: string;
 };
@@ -583,24 +591,227 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 		};
 	}
 
+	function buildNativeTableSnapshot(
+		editor: HTMLElement,
+		segments: GoogleDocsRectSegment[],
+		nativeSnapshot: string,
+	): GoogleDocsCloneSnapshot {
+		// Mask the observed controls without changing source characters. Confirmed
+		// paragraph boundaries below can add LF, so lint offsets need explicit runs.
+		// This is not a parser for the complete Google Docs control grammar.
+		const masked = nativeSnapshot
+			.replace(GOOGLE_DOCS_TABLE_SEPARATORS, '\n')
+			.replace(GOOGLE_DOCS_SOFT_BREAKS, ' ');
+		const comparable = nativeSnapshot.replace(/\u00a0/gu, ' ');
+		const matchesBySegment = new Map<
+			GoogleDocsRectSegment,
+			{ start: number; end: number; segment: GoogleDocsRectSegment }
+		>();
+		const labels = new Map(
+			segments.map((segment) => [
+				segment,
+				(segment.rectNode.getAttribute('aria-label') ?? '').replace(/\u00a0/gu, ' '),
+			]),
+		);
+		for (const segment of segments) {
+			// Preserve source characters. Only an equal-length space alias is used.
+			const label = labels.get(segment)!;
+			const start = comparable.indexOf(label);
+			if (
+				!label.trim() ||
+				GOOGLE_DOCS_CONTROL_CHARACTERS.test(label) ||
+				start < 0 ||
+				comparable.indexOf(label, start + 1) >= 0
+			)
+				continue;
+			matchesBySegment.set(segment, { start, end: start + label.length, segment });
+		}
+		// A paragraph's contiguous labels can uniquely anchor a repeated short word.
+		// Screen order is used only within this group, never between native cells.
+		// Multiple full matches are ambiguity, not permission to pick the nearest.
+		const continuations = new Map<number, Set<Element>>();
+		const groups = new Map<Element, GoogleDocsRectSegment[]>();
+		for (const segment of segments) {
+			const group = segment.rectNode.closest('g[role="paragraph"]');
+			if (group) groups.set(group, [...(groups.get(group) ?? []), segment]);
+		}
+		for (const [group, groupSegments] of groups) {
+			const ordered = groupSegments.toSorted(compareSegments);
+			if (
+				ordered.length < 2 ||
+				ordered.some(
+					(segment) =>
+						!labels.get(segment)!.trim() ||
+						GOOGLE_DOCS_CONTROL_CHARACTERS.test(labels.get(segment)!),
+				)
+			)
+				continue;
+			const firstLabel = labels.get(ordered[0])!;
+			let cursor = 0;
+			let unique: Array<{ start: number; end: number; segment: GoogleDocsRectSegment }> | null =
+				null;
+			while (cursor < comparable.length) {
+				const first = comparable.indexOf(firstLabel, cursor);
+				if (first < 0) break;
+				const sequence = [{ start: first, end: first + firstLabel.length, segment: ordered[0] }];
+				for (const segment of ordered.slice(1)) {
+					const previousEnd = sequence[sequence.length - 1].end;
+					const label = labels.get(segment)!;
+					const start = comparable.indexOf(label, previousEnd);
+					// biome-ignore lint/suspicious/noControlCharactersInRegex: Only ordinary whitespace may separate labels inside one native region.
+					if (start < 0 || !/^[	\r\n ]*$/u.test(comparable.slice(previousEnd, start))) break;
+					sequence.push({ start, end: start + label.length, segment });
+				}
+				if (sequence.length === ordered.length) {
+					if (unique != null) {
+						unique = null;
+						break;
+					}
+					unique = sequence;
+				}
+				cursor = first + 1;
+			}
+			for (const match of unique ?? []) matchesBySegment.set(match.segment, match);
+			// An aligned paragraph can identify LF as a wrap between its labels.
+			// Keep this evidence separate from highlight resolution, which can
+			// still reject overlapping boxes for the same native source range.
+			for (let index = 1; unique != null && index < unique.length; index += 1) {
+				const previous = unique[index - 1];
+				const gap = nativeSnapshot.slice(previous.end, unique[index].start);
+				const newline = gap.indexOf('\n');
+				if (newline >= 0 && gap.indexOf('\n', newline + 1) < 0) {
+					const offset = previous.end + newline;
+					const agreeing = continuations.get(offset) ?? new Set<Element>();
+					agreeing.add(group);
+					continuations.set(offset, agreeing);
+				}
+			}
+		}
+		const matches = Array.from(matchesBySegment.values());
+		const softLineBreaks = new Set<number>();
+		for (const [newline, agreeing] of continuations) {
+			// A separate anchored paragraph touching this LF contradicts a wrap.
+			// Do not let conflicting SVG groups override the native hard boundary.
+			const conflicting = matches.some(({ start, end, segment }) => {
+				const group = segment.rectNode.closest('g[role="paragraph"]');
+				if (group == null || agreeing.has(group)) return false;
+				return (
+					// biome-ignore lint/suspicious/noControlCharactersInRegex: Only non-line-breaking whitespace may touch this LF.
+					(end <= newline && /^[	\r ]*$/u.test(comparable.slice(end, newline))) ||
+					// biome-ignore lint/suspicious/noControlCharactersInRegex: Only non-line-breaking whitespace may touch this LF.
+					(start > newline && /^[	\r ]*$/u.test(comparable.slice(newline + 1, start)))
+				);
+			});
+			if (!conflicting) softLineBreaks.add(newline);
+		}
+		// Contradictory geometry is local ambiguity, never a reason to lint visual
+		// table prose. Both overlapping assignments remain non-geometric gaps.
+		const resolved = matches.filter(
+			(match) =>
+				!matches.some(
+					(other) => other !== match && other.start < match.end && other.end > match.start,
+				),
+		);
+		resolved.sort((left, right) => left.start - right.start);
+		const paragraphBreaks = new Set<number>();
+		// Native Enter is LF, even if either paragraph is repeated or unrendered.
+		// Its linguistic meaning must not depend on a unique highlight anchor.
+		// Keep positively identified same-paragraph wraps soft; page margins and
+		// missing geometry are not evidence for a continuation. VT stays native.
+		// biome-ignore lint/suspicious/noControlCharactersInRegex: Observed native paragraph/table boundaries plus adjacent whitespace.
+		for (const gap of nativeSnapshot.matchAll(/[	\r\n \u0010\u0011\u0012\u001c]+/gu)) {
+			const end = gap.index + gap[0].length;
+			if (
+				gap.index === 0 ||
+				end === nativeSnapshot.length ||
+				gap[0].replace(GOOGLE_DOCS_TABLE_SEPARATORS, '\n').includes('\n\n')
+			)
+				continue;
+			const tableBoundary = gap[0].search(GOOGLE_DOCS_TABLE_SEPARATORS);
+			const newline = gap[0].indexOf('\n');
+			const boundary =
+				tableBoundary >= 0
+					? tableBoundary
+					: newline >= 0 && !softLineBreaks.has(gap.index + newline)
+						? newline
+						: -1;
+			if (boundary >= 0) paragraphBreaks.add(gap.index + boundary + 1);
+		}
+		const breaks = Array.from(paragraphBreaks).sort((left, right) => left - right);
+		// Each run is [projection start, native start, UTF-16 length]. Inserted
+		// separators are deliberately outside runs and cannot own an edit range.
+		const nativeRuns: Array<[number, number, number]> = [];
+		const parts: string[] = [];
+		let nativeCursor = 0;
+		let projectionCursor = 0;
+		for (const end of [...breaks, nativeSnapshot.length]) {
+			const slice = masked.slice(nativeCursor, end);
+			nativeRuns.push([projectionCursor, nativeCursor, slice.length]);
+			parts.push(slice);
+			projectionCursor += slice.length;
+			if (end < nativeSnapshot.length) {
+				parts.push('\n');
+				projectionCursor += 1;
+			}
+			nativeCursor = end;
+		}
+		const text = parts.join('');
+		const projectOffset = (offset: number) => offset + breaks.filter((end) => end <= offset).length;
+		const fragment = document.createDocumentFragment();
+		let cursor = 0;
+		for (const { start, end, segment } of resolved) {
+			const projectedStart = projectOffset(start);
+			const projectedEnd = projectOffset(end);
+			fragment.appendChild(document.createTextNode(text.slice(cursor, projectedStart)));
+			const span = createCloneSpan(segment, text.slice(projectedStart, projectedEnd));
+			span.setAttribute('data-harper-gdocs-native-start', String(start));
+			fragment.appendChild(span);
+			cursor = projectedEnd;
+		}
+		fragment.appendChild(document.createTextNode(text.slice(cursor)));
+		return {
+			fragment,
+			text,
+			source: 'native',
+			nativeSnapshot,
+			nativeRuns,
+			segmentCount: resolved.length,
+			// Mapping identity includes exact ranges, geometry, and font. Legacy
+			// normalized labels can stay equal when native matching changes.
+			signature: JSON.stringify([
+				editor.scrollTop,
+				editor.scrollLeft,
+				nativeRuns,
+				resolved.map(({ start, end, segment }) => [
+					start,
+					end,
+					segment.rect,
+					segment.rectNode.getAttribute('data-font-css'),
+				]),
+			]),
+		};
+	}
+
 	function buildSnapshot(editor: HTMLElement): GoogleDocsCloneSnapshot {
 		const segments = collectRectSegments(editor);
-		const logicalText =
-			document
-				.getElementById(GOOGLE_DOCS_MAIN_WORLD_BRIDGE_ID)
-				?.textContent?.replace(/\r\n?/gu, '\n') ?? '';
-
+		// The bridge removes only its leading sentinel and final newline. Keep the
+		// exact remaining code units for mapped requests; CRLF conversion shifts them.
+		const nativeText = document.getElementById(GOOGLE_DOCS_MAIN_WORLD_BRIDGE_ID)?.textContent ?? '';
+		if (nativeText.search(GOOGLE_DOCS_TABLE_SEPARATORS) >= 0) {
+			return buildNativeTableSnapshot(editor, segments, nativeText);
+		}
 		// Display normalization is lossy: it can turn a raw label into an exact
 		// match for a different native paragraph, or hide known omitted prose.
 		// Keep raw source labels throughout ordinary native matching/projection.
 		// Without native text, retain the legacy display-only normalization.
 		const ordinarySegments =
-			logicalText.length > 0
+			nativeText.length > 0
 				? segments.map((segment) => ({
 						...segment,
 						text: segment.rectNode.getAttribute('aria-label')!,
 					}))
 				: segments;
+		const logicalText = nativeText.replace(/\r\n?/gu, '\n');
 		return (
 			buildLogicalSnapshot(editor, ordinarySegments, logicalText) ??
 			buildRectSnapshot(editor, ordinarySegments, logicalText)
@@ -608,11 +819,23 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 	}
 
 	function applySnapshot(target: HTMLElement, snapshot: GoogleDocsCloneSnapshot): boolean {
-		if (snapshot.signature === lastCloneSignature && target.textContent === snapshot.text) {
+		const previousNative = target.getAttribute('data-harper-gdocs-native-snapshot');
+		if (
+			snapshot.signature === lastCloneSignature &&
+			target.textContent === snapshot.text &&
+			previousNative === (snapshot.nativeSnapshot ?? null)
+		) {
 			return false;
 		}
 
 		target.replaceChildren(snapshot.fragment);
+		if (snapshot.nativeSnapshot != null) {
+			target.setAttribute('data-harper-gdocs-native-snapshot', snapshot.nativeSnapshot);
+			target.setAttribute('data-harper-gdocs-native-runs', JSON.stringify(snapshot.nativeRuns));
+		} else {
+			target.removeAttribute('data-harper-gdocs-native-snapshot');
+			target.removeAttribute('data-harper-gdocs-native-runs');
+		}
 		target.setAttribute('data-harper-gdocs-source', snapshot.source);
 		target.setAttribute('data-harper-gdocs-segments', String(snapshot.segmentCount));
 		lastCloneSignature = snapshot.signature;

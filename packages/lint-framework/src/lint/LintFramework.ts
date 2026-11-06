@@ -4,6 +4,7 @@ import { isGoogleDocsTarget } from './computeLintBoxes/googleDocsUtilities';
 import computeLintBoxes from './computeLintBoxes/index';
 import { isHeading, isVisible } from './domUtils';
 import { getCaretPosition, getCMRoot } from './editorUtils';
+import { getGoogleDocsLintWindows, MAX_LINT_TEXT_LENGTH } from './googleDocsLintWindows';
 import Highlights from './Highlights';
 import PopupHandler from './PopupHandler';
 import { remapLintToCurrentSource } from './spanMapping';
@@ -177,11 +178,40 @@ export default class LintFramework {
 
 					const { text, isCM, newLineIndices } = this.getTargetText(target);
 
-					if (!text || text.length > 120000) {
+					if (!text) {
 						return { target: null as HTMLElement | null, lints: {} };
 					}
 
 					const language = getTargetLanguage(target);
+					if (text.length > MAX_LINT_TEXT_LENGTH) {
+						const windows =
+							target instanceof HTMLElement ? getGoogleDocsLintWindows(target, text) : [];
+						if (windows.length === 0) {
+							return { target: null as HTMLElement | null, lints: {} };
+						}
+						const lintsBySource: UnpackedLintGroups = {};
+						for (const span of windows) {
+							const windowText = text.slice(span.start, span.end);
+							// Providers can cache their objects. Keep their window-local spans/source
+							// intact, and bind our copy to the full projection captured before await.
+							const groups = window.structuredClone(
+								await this.lintProvider(windowText, window.location.hostname, {
+									forceAllHeadings: isHeading(target),
+									language,
+								}),
+							);
+							for (const [rule, lints] of Object.entries(groups)) {
+								for (const lint of lints) {
+									lint.span.start += span.start;
+									lint.span.end += span.start;
+									lint.source = text;
+								}
+								lintsBySource[rule] ??= [];
+								lintsBySource[rule].push(...lints);
+							}
+						}
+						return { target: target as HTMLElement, lints: lintsBySource };
+					}
 					let lintsBySource = await this.lintProvider(text, window.location.hostname, {
 						forceAllHeadings: isHeading(target),
 						language,
@@ -376,6 +406,9 @@ export default class LintFramework {
 				if (!target) {
 					return [];
 				}
+				const mapped =
+					isGoogleDocsTarget(target) &&
+					target.getAttribute('data-harper-gdocs-source') === 'native';
 
 				const { text, isCM } = this.getTargetText(target);
 				if (text == null) {
@@ -384,11 +417,12 @@ export default class LintFramework {
 
 				return Object.entries(lints).flatMap(([ruleName, ls]) =>
 					ls.flatMap((lint) => {
-						const currentLint = isCM
-							? lint.source === text
-								? lint
-								: null
-							: remapLintToCurrentSource(lint, text);
+						const currentLint =
+							isCM || mapped
+								? lint.source === text
+									? lint
+									: null
+								: remapLintToCurrentSource(lint, text);
 						if (currentLint == null) {
 							return [];
 						}
