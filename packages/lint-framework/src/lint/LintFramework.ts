@@ -107,6 +107,11 @@ export default class LintFramework {
 		this.attachWindowListeners();
 	}
 
+	/** Enable optional hover activation without changing click or keyboard activation. */
+	public setOpenSuggestionsOnHover(enabled: boolean): void {
+		this.popupHandler.setOpenSuggestionsOnHover(enabled);
+	}
+
 	/** Returns the currents targets that are visible on-screen. */
 	onScreenTargets(): Node[] {
 		const onScreen = [] as Node[];

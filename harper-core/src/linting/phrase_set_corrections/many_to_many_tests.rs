@@ -2168,6 +2168,16 @@ fn detect_at_worst_atomic() {
     );
 }
 
+// -the worst thing-
+#[test]
+fn detect_the_worse_thing() {
+    assert_suggestion_result(
+        "A 16-32 decoder is pretty simple, a 16-32-48 isn't the worse thing in the world",
+        test_linter(),
+        "A 16-32 decoder is pretty simple, a 16-32-48 isn't the worst thing in the world",
+    );
+}
+
 // -worst case scenario-
 #[test]
 fn correct_worse_case_space() {

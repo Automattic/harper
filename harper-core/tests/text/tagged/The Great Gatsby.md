@@ -2463,7 +2463,7 @@
 > know — though here and  there was  a   face    I       had noticed on  the commuting train   . I
 # VB   . C      R    VB/C R+    VLPt D/P NSg/VB+ ISg/#r+ VP  VP/J    J/P D   Nᴹ/Vg/J   NSg/VB+ . ISg/#r+
 > was  immediately struck by the number      of young    Englishmen dotted about ; all          well
-# VLPt R           VB     P  D   N🅪Sg/VB/JC+ P  NPr/VB/J NPl        VP/J   J/P   . NSg/I/J/C/Dq NSg/VB/J/R
+# VLPt R           VP     P  D   N🅪Sg/VB/JC+ P  NPr/VB/J NPl        VP/J   J/P   . NSg/I/J/C/Dq NSg/VB/J/R
 > dressed , all          looking a   little     hungry , and  all          talking  in        low        , earnest   voices  to
 # VP/J    . NSg/I/J/C/Dq Nᴹ/Vg/J D/P NPr/I/J/Dq J      . VB/C NSg/I/J/C/Dq Nᴹ/Vg/J+ NPr/J/R/P NSg/VB/J/R . NPr/VB/J+ NPl/V3+ P
 > solid and  prosperous Americans . I       was  sure that     they were selling something :
@@ -6961,7 +6961,7 @@
 > her     perishable breath     , his     mind    would never romp   again like         the mind   of God     . So
 # ISg/D$+ NSg/J      N🅪Sg/VB/J+ . ISg/D$+ NSg/VB+ VXB   R     NSg/VB R     NSg/VB/J/C/P D   NSg/VB P  NPr/VB+ . NSg/I/J/R/C
 > he       waited , listening for   a    moment longer to the tuning   - fork    that      had been   struck
-# NPr/ISg+ VP/J   . Nᴹ/Vg/J   R/C/P D/P+ NSg+   NSg/JC P  D+  Nᴹ/Vg/J+ . NSg/VB+ I/C/Ddem+ VP  VLPp/B VB
+# NPr/ISg+ VP/J   . Nᴹ/Vg/J   R/C/P D/P+ NSg+   NSg/JC P  D+  Nᴹ/Vg/J+ . NSg/VB+ I/C/Ddem+ VP  VLPp/B VP
 > upon a    star    . Then      he       kissed her     . At    his     lips    ’ touch   she  blossomed for   him  like         a
 # P    D/P+ NSg/VB+ . NSg/J/R/C NPr/ISg+ VP/J   ISg/D$+ . NSg/P ISg/D$+ NPl/V3+ . N🅪Sg/VB ISg+ VP/J      R/C/P ISg+ NSg/VB/J/C/P D/P
 > flower  and  the incarnation was  complete .
