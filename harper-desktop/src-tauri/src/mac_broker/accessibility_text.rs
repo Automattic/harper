@@ -20,6 +20,7 @@ use std::{
 use crate::rect::{ActionableLint, Rect};
 
 use super::LintCallback;
+use super::visible_region::{clip_to_visible_region, element_visible_region};
 
 /// Outcome of asking macOS for the bounds of a text range.
 pub enum TextRangeBoundsProbe {
@@ -137,6 +138,8 @@ fn rect_has_usable_text_metrics(rect: Rect) -> bool {
 pub struct RectCollector<'a> {
     rects: RefCell<Vec<ActionableLint>>,
     expected_rect_count: Cell<usize>,
+    /// Lints that were located but lie entirely outside the visible part of their element.
+    hidden_rect_count: Cell<usize>,
     read_failed: Cell<bool>,
     lint_text: RefCell<&'a mut LintCallback<'a>>,
 }
@@ -156,6 +159,12 @@ impl TreeVisitor for RectCollector<'_> {
             unsafe { CFString::wrap_under_get_rule(value.as_CFTypeRef() as _).to_string() };
         let mut rects = self.rects.borrow_mut();
         let organized_lints = (self.lint_text.borrow_mut())(&string);
+        // Walking ancestors costs several AX round trips, so skip it when there is nothing to draw.
+        let visible_region = organized_lints
+            .values()
+            .any(|lints| !lints.is_empty())
+            .then(|| element_visible_region(element))
+            .flatten();
 
         for (rule_name, lints) in organized_lints {
             for lint in lints {
@@ -168,6 +177,11 @@ impl TreeVisitor for RectCollector<'_> {
                     lint.span.start,
                     lint.span.len(),
                 ) {
+                    let Some(rect) = clip_to_visible_region(rect, visible_region) else {
+                        self.hidden_rect_count.set(self.hidden_rect_count.get() + 1);
+                        continue;
+                    };
+
                     let element = element.clone();
                     let source_text = string.clone();
                     let suggestion_source_text = string.clone();
@@ -201,6 +215,7 @@ impl<'a> RectCollector<'a> {
         Self {
             rects: RefCell::new(Vec::new()),
             expected_rect_count: Cell::new(0),
+            hidden_rect_count: Cell::new(0),
             read_failed: Cell::new(false),
             lint_text: RefCell::new(lint_text),
         }
@@ -209,7 +224,12 @@ impl<'a> RectCollector<'a> {
     pub fn unwrap_rects(self) -> Option<Vec<ActionableLint>> {
         let rects = self.rects.into_inner();
 
-        if rects.is_empty() && (self.expected_rect_count.get() > 0 || self.read_failed.get()) {
+        // Hidden lints were located successfully, so an empty result is accurate rather than a
+        // failed read that should keep the previous highlights on screen.
+        if rects.is_empty()
+            && self.hidden_rect_count.get() == 0
+            && (self.expected_rect_count.get() > 0 || self.read_failed.get())
+        {
             None
         } else {
             Some(rects)
