@@ -3680,6 +3680,13 @@
 						},
 						{
 							"Bool": {
+								"name": "BeAgree",
+								"state": true,
+								"label": "Be Agree"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Beforehand",
 								"state": true,
 								"label": "Beforehand"
