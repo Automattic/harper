@@ -1,9 +1,9 @@
-expr main <((by hands)!-), (by hands)>
+expr main <(by hands!-), hands>
 
 let message "Use `by hand` instead of `by hands` when referring to manual construction."
 let description "Corrects `by hands` to `by hand`, as `by hand` is the standard phrase for manual construction."
 let kind "Usage"
-let becomes "by hand"
+let becomes "hand"
 
 # Typical use
 
