@@ -406,9 +406,7 @@ export default class LintFramework {
 				if (!target) {
 					return [];
 				}
-				const mapped =
-					isGoogleDocsTarget(target) &&
-					target.getAttribute('data-harper-gdocs-source') === 'native';
+				const mapped = isGoogleDocsTarget(target);
 
 				const { text, isCM } = this.getTargetText(target);
 				if (text == null) {

@@ -42,12 +42,22 @@ type GoogleDocsRectSegment = {
 	rect: GoogleDocsRectLayout;
 };
 
+type OrdinaryPiece = ['copy' | 'gap', number, number, number, number];
+type OrdinaryMap = {
+	format: 'ordinary-utf16-v1';
+	source: 'logical' | 'rects';
+	window: [number, number];
+	pieces: OrdinaryPiece[];
+	// Independent exact paragraphs when visual order cannot prove one window.
+	regions?: Array<[number, number, number, number]>;
+};
+
 type GoogleDocsCloneSnapshot = {
 	fragment: DocumentFragment;
 	text: string;
 	source: 'logical' | 'rects' | 'native';
 	nativeSnapshot?: string;
-	nativeRuns?: Array<[number, number, number]>;
+	nativeRuns?: Array<[number, number, number]> | OrdinaryMap;
 	segmentCount: number;
 	signature: string;
 };
@@ -136,14 +146,6 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 		bridgeClient?.dispose();
 		bridgeClient = null;
 		delete window.__harperGoogleDocsBridgeClient;
-	}
-
-	function addSignatureToken(hash: number, token: string): number {
-		let nextHash = hash;
-		for (let index = 0; index < token.length; index += 1) {
-			nextHash = (nextHash * 33 + token.charCodeAt(index)) >>> 0;
-		}
-		return nextHash;
 	}
 
 	function normalizeGoogleDocsRectLabel(label: string): string {
@@ -357,25 +359,40 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 		segments: GoogleDocsRectSegment[],
 		editor: HTMLElement,
 	): string {
-		let hash = 5381;
-		hash = addSignatureToken(hash, source);
-		hash = addSignatureToken(hash, text);
-		hash = addSignatureToken(hash, `${editor.scrollTop}:${editor.scrollLeft}:${segments.length}`);
+		const pages = Array.from(editor.querySelectorAll('.kix-page-paginated'));
+		const paragraphs = Array.from(editor.querySelectorAll('g[role="paragraph"]'));
+		return JSON.stringify([
+			source,
+			text,
+			editor.scrollTop,
+			editor.scrollLeft,
+			segments.map((segment) => [
+				segment.rect,
+				segment.text,
+				segment.rectNode.getAttribute('aria-label'),
+				segment.rectNode.getAttribute('data-font-css'),
+				pages.indexOf(segment.page!),
+				paragraphs.indexOf(segment.rectNode.closest('g[role="paragraph"]')!),
+			]),
+		]);
+	}
 
-		for (const segment of segments) {
-			hash = addSignatureToken(
-				hash,
-				`${Math.round(segment.rect.top)}:${Math.round(segment.rect.left)}:${Math.round(segment.rect.width)}:${Math.round(segment.rect.height)}:${segment.text}`,
-			);
+	function nativeOrdinaryBoundaries(native: string): number[] {
+		// Trace UTF-16 boundaries through the existing CR conversion. Do not count
+		// code points or recover offsets by looking for the diagnostic text later.
+		const boundaries = [0];
+		for (let offset = 0; offset < native.length; offset += 1) {
+			if (native[offset] === '\r' && native[offset + 1] === '\n') offset += 1;
+			boundaries.push(offset + 1);
 		}
-
-		return String(hash);
+		return boundaries;
 	}
 
 	function buildLogicalSnapshot(
 		editor: HTMLElement,
 		segments: GoogleDocsRectSegment[],
 		logicalText: string,
+		nativeSnapshot: string,
 	): GoogleDocsCloneSnapshot | null {
 		if (logicalText.length === 0 || segments.length === 0) {
 			return null;
@@ -383,6 +400,9 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 
 		const fragment = document.createDocumentFragment();
 		const parts: string[] = [];
+		const pieces: OrdinaryPiece[] = [];
+		const nativeBoundaries = nativeOrdinaryBoundaries(nativeSnapshot);
+		let projectionCursor = 0;
 		let cursor = 0;
 		let previousText = '';
 		let currentLineBand: GoogleDocsLineBand | null = null;
@@ -404,17 +424,37 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 
 			const sharesVisualLine: boolean =
 				currentLineBand != null && rectSharesGoogleDocsLineBand(segment.rect, currentLineBand);
-			const normalizedGap = normalizeLogicalGap(
-				skippedText,
-				previousText,
-				segment.text,
-				sharesVisualLine,
-				segment.rect,
-				segments[index + 1]?.rect ?? null,
-			);
+			const normalizedGap = /\n[^\S\n]*\n/u.test(skippedText)
+				? skippedText
+				: normalizeLogicalGap(
+						skippedText,
+						previousText,
+						segment.text,
+						sharesVisualLine,
+						segment.rect,
+						segments[index + 1]?.rect ?? null,
+					);
 			appendText(fragment, parts, normalizedGap);
+			pieces.push([
+				'gap',
+				projectionCursor,
+				projectionCursor + normalizedGap.length,
+				nativeBoundaries[cursor],
+				nativeBoundaries[startAtCursor],
+			]);
+			projectionCursor += normalizedGap.length;
 
-			fragment.appendChild(createCloneSpan(segment, segment.text));
+			const span = createCloneSpan(segment, segment.text);
+			span.setAttribute('data-harper-gdocs-native-start', String(nativeBoundaries[startAtCursor]));
+			fragment.appendChild(span);
+			pieces.push([
+				'copy',
+				projectionCursor,
+				projectionCursor + segment.text.length,
+				nativeBoundaries[startAtCursor],
+				nativeBoundaries[startAtCursor + segment.text.length],
+			]);
+			projectionCursor += segment.text.length;
 			parts.push(segment.text);
 			cursor = startAtCursor + segment.text.length;
 			previousText = segment.text;
@@ -430,12 +470,26 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 		}
 
 		appendText(fragment, parts, trailingText);
+		pieces.push([
+			'gap',
+			projectionCursor,
+			projectionCursor + trailingText.length,
+			nativeBoundaries[cursor],
+			nativeSnapshot.length,
+		]);
 		const text = parts.join('');
 
 		return {
 			fragment,
 			text,
 			source: 'logical',
+			nativeSnapshot,
+			nativeRuns: {
+				format: 'ordinary-utf16-v1',
+				source: 'logical',
+				window: [0, nativeSnapshot.length],
+				pieces,
+			},
 			segmentCount: segments.length,
 			signature: computeSignature('logical', text, segments, editor),
 		};
@@ -519,13 +573,49 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 		return ' ';
 	}
 
+	function findUniqueRectWindow(
+		logicalText: string,
+		segments: GoogleDocsRectSegment[],
+	): number[] | null {
+		let unique: number[] | null = null;
+		let search = 0;
+		while (segments.length > 0 && search < logicalText.length) {
+			const first = logicalText.indexOf(segments[0].text, search);
+			if (first < 0) break;
+			search = first + 1;
+			const starts = [first];
+			let end = first + segments[0].text.length;
+			for (const segment of segments.slice(1)) {
+				const start = logicalText.indexOf(segment.text, end);
+				if (start < 0 || !canIgnoreLogicalGap(logicalText.slice(end, start))) break;
+				starts.push(start);
+				end = start + segment.text.length;
+			}
+			if (starts.length !== segments.length) continue;
+			// Count embedded and overlapping matches before paragraph boundaries.
+			// Synthesized spacing cannot distinguish two matching label sequences.
+			if (unique != null) return null;
+			unique = starts;
+		}
+		if (unique == null) return null;
+		const first = unique[0];
+		const end = unique[unique.length - 1] + segments[segments.length - 1].text.length;
+		return (first === 0 || logicalText[first - 1] === '\n') &&
+			(end === logicalText.length || logicalText[end] === '\n')
+			? unique
+			: null;
+	}
+
 	function buildRectSnapshot(
 		editor: HTMLElement,
 		segments: GoogleDocsRectSegment[],
 		logicalText: string,
+		nativeSnapshot: string,
 	): GoogleDocsCloneSnapshot {
 		const fragment = document.createDocumentFragment();
 		const parts: string[] = [];
+		const emitted: Array<{ start: number; end: number; span: HTMLSpanElement }> = [];
+		let projectionCursor = 0;
 		let previousText = '';
 		let previousRect: GoogleDocsRectLayout | null = null;
 		let previousSegment: GoogleDocsRectSegment | null = null;
@@ -561,15 +651,20 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 								? '\n\n'
 								: '\n';
 				appendText(fragment, parts, breakText);
+				projectionCursor += breakText.length;
 			} else if (
 				previousRect != null &&
 				(isStandaloneListMarker(previousText) ||
 					shouldInsertGoogleDocsSpace(previousRect, segment.rect, previousText, segment.text))
 			) {
 				appendText(fragment, parts, ' ');
+				projectionCursor += 1;
 			}
 
-			fragment.appendChild(createCloneSpan(segment, segment.text));
+			const span = createCloneSpan(segment, segment.text);
+			fragment.appendChild(span);
+			emitted.push({ start: projectionCursor, end: projectionCursor + segment.text.length, span });
+			projectionCursor += segment.text.length;
 			parts.push(segment.text);
 			previousText = segment.text;
 			previousRect = segment.rect;
@@ -580,12 +675,104 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 					: extendGoogleDocsLineBand(currentLineBand, segment.rect);
 		}
 
-		const text = parts.join('');
+		let text = parts.join('');
+		// A fallback may omit whole offscreen paragraphs, never text inside its
+		// declared window. Prove occurrence identity with the actual labels/gaps.
+		const starts = findUniqueRectWindow(logicalText, segments);
+		const nativeRuns: OrdinaryMap = {
+			format: 'ordinary-utf16-v1',
+			source: 'rects',
+			window: [0, 0],
+			pieces: [],
+		};
+		if (starts != null) {
+			const boundaries = nativeOrdinaryBoundaries(nativeSnapshot);
+			let p = 0;
+			let n = boundaries[starts[0]];
+			nativeRuns.window[0] = n;
+			for (let index = 0; index < emitted.length; index += 1) {
+				const { start, end, span } = emitted[index];
+				const nativeStart = boundaries[starts[index]];
+				const nativeEnd = boundaries[starts[index] + segments[index].text.length];
+				nativeRuns.pieces.push(['gap', p, start, n, nativeStart]);
+				nativeRuns.pieces.push(['copy', start, end, nativeStart, nativeEnd]);
+				span.setAttribute('data-harper-gdocs-native-start', String(nativeStart));
+				p = end;
+				n = nativeEnd;
+			}
+			nativeRuns.window[1] = n;
+		} else {
+			const boundaries = nativeOrdinaryBoundaries(nativeSnapshot);
+			nativeRuns.regions = [];
+			for (let index = 0; index < segments.length; index += 1) {
+				// Retain the full-window label/gap contract here. Exact synthesized
+				// paragraph text can hide another candidate with different whitespace.
+				const first = index;
+				const group = segments[index].rectNode.closest('g[role="paragraph"]');
+				if (group != null) {
+					while (
+						index + 1 < segments.length &&
+						segments[index + 1].rectNode.closest('g[role="paragraph"]') === group
+					)
+						index += 1;
+				}
+				const p0 = emitted[first].start;
+				const p1 = emitted[index].end;
+				const label = text.slice(p0, p1);
+				const matches = findUniqueRectWindow(logicalText, segments.slice(first, index + 1));
+				if (matches == null) continue;
+				const match = matches[0];
+				const matchEnd = matches[matches.length - 1] + segments[index].text.length;
+				const start = boundaries[match];
+				const end = boundaries[matchEnd];
+				if (nativeSnapshot.slice(start, end) !== label) continue;
+				nativeRuns.regions.push([p0, p1, start, end]);
+				for (let part = first; part <= index; part += 1) {
+					emitted[part].span.setAttribute(
+						'data-harper-gdocs-native-start',
+						String(start + emitted[part].start - p0),
+					);
+				}
+			}
+			// Only independently proven complete native paragraphs establish these
+			// breaks. Do not infer them from physical line/page spacing or change
+			// the existing projection of unproven text between other labels.
+			const regionSpans = nativeRuns.regions.map((region) => ({
+				region,
+				first: emitted.find((part) => part.start === region[0])!.span,
+				last: emitted.find((part) => part.end === region[1])!.span,
+			}));
+			for (const { first, last } of regionSpans) {
+				let prefix = '';
+				let suffix = '';
+				for (let node = first.previousSibling; node != null; node = node.previousSibling)
+					prefix = (node.textContent ?? '') + prefix;
+				for (let node = last.nextSibling; node != null; node = node.nextSibling)
+					suffix += node.textContent ?? '';
+				if (prefix.length > 0 && !/\n[^\S\n]*\n\s*$/u.test(prefix))
+					fragment.insertBefore(document.createTextNode('\n\n'), first);
+				if (suffix.length > 0 && !/^\s*\n[^\S\n]*\n/u.test(suffix))
+					fragment.insertBefore(document.createTextNode('\n\n'), last.nextSibling);
+			}
+			const offsets = new Map<Node, number>();
+			let offset = 0;
+			for (const node of Array.from(fragment.childNodes)) {
+				offsets.set(node, offset);
+				offset += node.textContent?.length ?? 0;
+			}
+			for (const { region, first, last } of regionSpans) {
+				region[0] = offsets.get(first)!;
+				region[1] = offsets.get(last)! + last.textContent!.length;
+			}
+			text = fragment.textContent ?? '';
+		}
 
 		return {
 			fragment,
 			text,
 			source: 'rects',
+			nativeSnapshot,
+			nativeRuns,
 			segmentCount: segments.length,
 			signature: computeSignature('rects', text, segments, editor),
 		};
@@ -813,16 +1000,20 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 				: segments;
 		const logicalText = nativeText.replace(/\r\n?/gu, '\n');
 		return (
-			buildLogicalSnapshot(editor, ordinarySegments, logicalText) ??
-			buildRectSnapshot(editor, ordinarySegments, logicalText)
+			buildLogicalSnapshot(editor, ordinarySegments, logicalText, nativeText) ??
+			buildRectSnapshot(editor, ordinarySegments, logicalText, nativeText)
 		);
 	}
 
 	function applySnapshot(target: HTMLElement, snapshot: GoogleDocsCloneSnapshot): boolean {
 		const previousNative = target.getAttribute('data-harper-gdocs-native-snapshot');
+		const serializedRuns =
+			snapshot.nativeSnapshot != null ? JSON.stringify(snapshot.nativeRuns) : null;
 		if (
 			snapshot.signature === lastCloneSignature &&
 			target.textContent === snapshot.text &&
+			target.getAttribute('data-harper-gdocs-source') === snapshot.source &&
+			target.getAttribute('data-harper-gdocs-native-runs') === serializedRuns &&
 			previousNative === (snapshot.nativeSnapshot ?? null)
 		) {
 			return false;
@@ -831,7 +1022,7 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 		target.replaceChildren(snapshot.fragment);
 		if (snapshot.nativeSnapshot != null) {
 			target.setAttribute('data-harper-gdocs-native-snapshot', snapshot.nativeSnapshot);
-			target.setAttribute('data-harper-gdocs-native-runs', JSON.stringify(snapshot.nativeRuns));
+			target.setAttribute('data-harper-gdocs-native-runs', serializedRuns!);
 		} else {
 			target.removeAttribute('data-harper-gdocs-native-snapshot');
 			target.removeAttribute('data-harper-gdocs-native-runs');

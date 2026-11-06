@@ -260,7 +260,9 @@ export function getGoogleDocsHighlightRects(target: HTMLElement, span: Span): DO
 		// Native gaps have text but no geometry. DOM Range on the hidden mirror
 		// would otherwise manufacture a box near the editor origin.
 		if (
-			target.getAttribute('data-harper-gdocs-source') === 'native' &&
+			(target.getAttribute('data-harper-gdocs-source') === 'native' ||
+				target.hasAttribute('data-harper-gdocs-native-snapshot') ||
+				target.hasAttribute('data-harper-gdocs-native-runs')) &&
 			!positionedHost?.hasAttribute('data-harper-gdocs-native-start')
 		)
 			continue;
