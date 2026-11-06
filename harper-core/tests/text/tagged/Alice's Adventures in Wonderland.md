@@ -413,7 +413,7 @@
 >
 #
 > Just then      her     head      struck against the roof   of the hall : in        fact she  was  now       more
-# J/R  NSg/J/R/C ISg/D$+ NPr/VB/J+ VB     C/P     D   NSg/VB P  D+  NPr+ . NPr/J/R/P NSg+ ISg+ VLPt NSg/J/R/C NPr/I/J/R/Dq
+# J/R  NSg/J/R/C ISg/D$+ NPr/VB/J+ VP     C/P     D   NSg/VB P  D+  NPr+ . NPr/J/R/P NSg+ ISg+ VLPt NSg/J/R/C NPr/I/J/R/Dq
 > than nine feet high       , and  she  at    once  took up         the little     golden   key      and  hurried
 # C/P  NSg+ NPl+ NSg/VB/J/R . VB/C ISg+ NSg/P NSg/C VPt  NSg/VB/J/P D   NPr/I/J/Dq NPr/VB/J NPr/VB/J VB/C VP/J
 > off        to the garden    door    .
@@ -1911,7 +1911,7 @@
 > right    - hand    bit      to try      the effect  : the next    moment she  felt      a   violent  blow
 # NPr/VB/J . NSg/VB+ NSg/VPt+ P  NSg/VB/J D   NSg/VB+ . D   NSg/J/P NSg+   ISg+ N🅪Sg/VP/J D/P NSg/VB/J NSg/VB/J+
 > underneath her     chin    : it       had struck her     foot    !
-# NSg/J/P    ISg/D$+ NPr/VB+ . NSg/ISg+ VP  VB     ISg/D$+ NSg/VB+ .
+# NSg/J/P    ISg/D$+ NPr/VB+ . NSg/ISg+ VP  VP     ISg/D$+ NSg/VB+ .
 >
 #
 > She  was  a   good     deal     frightened by this   very sudden change  , but     she  felt      that
