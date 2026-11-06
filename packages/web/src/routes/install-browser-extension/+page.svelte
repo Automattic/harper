@@ -39,6 +39,10 @@ const steps = [
 		title: 'Join Us',
 		lede: 'Harper is a community effort. If you encounter a bug or want to request a feature, you can do so by opening an issue on GitHub or joining our Discord server.',
 	},
+	{
+		title: 'All Set!',
+		lede: 'You should be good to go. Feel free to close this tab and continue your normal work. Harper will check it as you go.',
+	},
 ];
 
 const communityLinks = [

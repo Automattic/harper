@@ -1,0 +1,40 @@
+expr wh [what, where, when, why, how, who, which]
+expr subj [we, they, you]
+# "How was you experience?" is a typo for "your", so a noun after the subject doesn't count.
+expr after ![NOUN, PROPN, and, or]
+expr time [yesterday, today, tonight, tomorrow, now, then, there, here, last]
+expr main <[(@wh was [we, they, you] @time), (@wh was @subj @after), (@wh was @subj?), (@wh was @subj.), (was @subj PROG)], was>
+
+let message "The verb should agree with the subject: `were`."
+let description "Corrects `was` before `we`, `they` or `you` in questions, like `Where was you?`"
+let kind "Agreement"
+let scope "Sentence"
+let becomes "were"
+let strategy "MatchCase"
+
+# real sentences from Hacker News, GitHub and Stack Overflow
+test "Where was you reading this?" "Where were you reading this?"
+test "what was you investigated for?" "what were you investigated for?"
+test "What was you showing during the waiting time?" "What were you showing during the waiting time?"
+test "What was they fired for?" "What were they fired for?"
+test "How was you able to get this code to run in floydhub?" "How were you able to get this code to run in floydhub?"
+# made-up sentences
+test "Where was you yesterday?" "Where were you yesterday?"
+test "Was you sleeping?" "Were you sleeping?"
+test "Why was we not told?" "Why were we not told?"
+# harder cases that must still be caught
+test "WHERE WAS YOU?" "WHERE WERE YOU?"
+test "And how was you feeling, after that?" "And how were you feeling, after that?"
+
+# correct text
+allows "Where were you yesterday?"
+allows "What was it you said?"
+allows "How was it?"
+# real look-alikes that must not be flagged (Hacker News)
+allows "How was you experience?"
+allows "What was they keyboard layout?"
+# made-up look-alikes
+allows "The reason was they forgot."
+allows "The plan was we would ship Friday."
+allows "My guess was you were busy."
+allows "That was what we needed."

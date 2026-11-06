@@ -632,9 +632,6 @@ importers:
       posthog-js:
         specifier: ^1.245.1
         version: 1.245.1
-      reveal.js:
-        specifier: ^5.1.0
-        version: 5.1.0
       svelte-ace:
         specifier: ^1.0.21
         version: 1.0.21
@@ -660,9 +657,6 @@ importers:
       '@tailwindcss/vite':
         specifier: ^4.3.3
         version: 4.3.3(vite@8.3.5(@types/node@22.13.10)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.85.1)(terser@5.51.2)(tsx@4.20.6)(yaml@2.9.1))
-      '@types/reveal.js':
-        specifier: ^5.0.3
-        version: 5.0.5
       autoprefixer:
         specifier: ^10.4.21
         version: 10.4.21(postcss@8.5.32)
@@ -4812,9 +4806,6 @@ packages:
 
   '@types/retry@0.12.0':
     resolution: {integrity: sha512-wWKOClTTiizcZhXnPY4wikVAwmdYHp8q6DmC+EJUzAMsycb7HB32Kh9RN4+0gExjmPmZSAQjgURXIGATPegAvA==}
-
-  '@types/reveal.js@5.0.5':
-    resolution: {integrity: sha512-+8OFb1RlB69dZT1laNDq+xDSGrPY/VYARSSTxSC/rMl8s9X+W4dr7gHmoKRR9yu20JU8gvp18g9SVxvouk7SiQ==}
 
   '@types/rollup-plugin-peer-deps-external@2.2.6':
     resolution: {integrity: sha512-rR0p2+VZ5+RTyTA+MemzE7RQs3vkGNsYsEZIl+RahwrJOtEDEg+a5RCnigSwPkBtu4H7dyVHXyUZfiZU2dwjdw==}
@@ -10923,10 +10914,6 @@ packages:
     resolution: {integrity: sha512-g6QUff04oZpHs0eG5p83rFLhHeV00ug/Yf9nZM6fLeUrPguBTkTQOdpAWWspMh55TZfVQDPaN3NQJfbVRAxdIw==}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
 
-  reveal.js@5.1.0:
-    resolution: {integrity: sha512-KDt7m0+xwKV6nAZt4CNPVFBf42sTKRQapg0bGGKB5PKO5XvChnMfwlZkybydHiQJ7p5+6LbHKRGrhXODdoNIaA==}
-    engines: {node: '>=18.0.0'}
-
   rimraf@2.7.1:
     resolution: {integrity: sha512-uWjbaKIK3T1OSVptzX7Nl6PvQ3qAGtKEtVRjRuazjfL3Bx5eI409VZSqgND+4UNnmzLVdPj9FqFJNPqBZFve4w==}
     deprecated: Rimraf versions prior to v4 are no longer supported
@@ -16959,8 +16946,6 @@ snapshots:
   '@types/resolve@1.20.2': {}
 
   '@types/retry@0.12.0': {}
-
-  '@types/reveal.js@5.0.5': {}
 
   '@types/rollup-plugin-peer-deps-external@2.2.6(rollup@4.35.0)':
     dependencies:
@@ -24733,8 +24718,6 @@ snapshots:
   retry@0.13.1: {}
 
   reusify@1.1.0: {}
-
-  reveal.js@5.1.0: {}
 
   rimraf@2.7.1:
     dependencies:
