@@ -1,11 +1,15 @@
 expr main (a lots)
 
-let message "Are you confusing `lot's` and `lots`? The contraction of `lot is` and `lot has` is `lot's`."
-let description "Corrects `a lots` to `a lot's`."
-let kind "Punctuation"
-let becomes "a lot's"
+let message "Did you mean `a lot's`, `a lot`, or `lots`? Ensure you aren't confusing the contraction of `lot is`/`lot has` with standard plural usage."
+let description "Corrects `a lots` to the contraction `a lot's`, the phrase `a lot`, or the plural `lots` depending on context."
+let kind "WordChoice"
+let becomes ["a lot's", "a lot", "lots"]
 
 # a lot has ...
 test "a lots changed overtime, add latest depends support" "a lot's changed overtime, add latest depends support"
 # a lot is ...
 test "A lots changing around here!" "A lot's changing around here!"
+# a lot (singular adverb/noun phrase)
+test "Thanks a lots for your support" "Thanks a lot for your support"
+# lots (plural noun phrase)
+test "Thanks a lots for your support" "Thanks lots for your support"
