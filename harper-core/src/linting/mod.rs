@@ -144,6 +144,7 @@ mod have_take_a_look;
 mod hedging;
 mod hello_greeting;
 mod helped_past;
+mod here_are_a_collection;
 mod hereby;
 mod high_low_standards;
 mod hop_hope;

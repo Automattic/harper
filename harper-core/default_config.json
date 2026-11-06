@@ -3813,6 +3813,13 @@
 						},
 						{
 							"Bool": {
+								"name": "HereAreACollection",
+								"state": true,
+								"label": "Here Are A Collection"
+							}
+						},
+						{
+							"Bool": {
 								"name": "HowTo",
 								"state": true,
 								"label": "How To"
