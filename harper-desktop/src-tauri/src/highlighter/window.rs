@@ -31,7 +31,7 @@ pub struct Window {
 
 impl Window {
     pub async fn new(event_loop: &ActiveEventLoop, monitor: MonitorHandle) -> Result<Self, Error> {
-        let context = egui::Context::default();
+        let context = super::fonts::context();
         let position = monitor.position();
         let size = monitor.size();
         let window = Arc::new(
