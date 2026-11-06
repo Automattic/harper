@@ -53,8 +53,9 @@ impl Linter for MergeWords {
             merged_word.extend_from_slice(a_chars);
             merged_word.extend_from_slice(b_chars);
 
-            if self.dict.contains_word(&merged_word)
-                && (!self.dict.contains_word(a_chars) || !self.dict.contains_word(b_chars))
+            if self.dict.contains_folded_word(&merged_word)
+                && (!self.dict.contains_folded_word(a_chars)
+                    || !self.dict.contains_folded_word(b_chars))
             {
                 lints.push(Lint {
                     span: Span::new(a.span.start, b.span.end),
@@ -70,8 +71,9 @@ impl Linter for MergeWords {
             merged_word.push('\'');
             merged_word.extend_from_slice(b_chars);
 
-            if self.dict.contains_word(&merged_word)
-                && (!self.dict.contains_word(a_chars) || !self.dict.contains_word(b_chars))
+            if self.dict.contains_folded_word(&merged_word)
+                && (!self.dict.contains_folded_word(a_chars)
+                    || !self.dict.contains_folded_word(b_chars))
             {
                 lints.push(Lint {
                     span: Span::new(a.span.start, b.span.end),

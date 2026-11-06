@@ -7,7 +7,7 @@ pub fn get_plurals(dict: &impl Dictionary, singular: &[char]) -> Vec<Vec<char>> 
     get_plural_candidates(singular)
         .into_iter()
         .filter(|candidate| {
-            dict.get_word_metadata(candidate)
+            dict.get_word_metadata_folded(candidate)
                 .is_some_and(|md| md.is_plural_noun())
         })
         .collect()
@@ -20,7 +20,7 @@ pub fn get_singulars(dict: &impl Dictionary, plural: &[char]) -> Vec<Vec<char>> 
     get_singular_candidates(plural)
         .into_iter()
         .filter(|candidate| {
-            dict.get_word_metadata(candidate)
+            dict.get_word_metadata_folded(candidate)
                 .is_some_and(|md| md.is_singular_noun())
         })
         .collect()

@@ -14,9 +14,9 @@ pub static ANNOTATIONS_STR: &str = include_str!("../../annotations.json");
 #[blanket(derive(Arc, Ref))]
 pub trait Dictionary: Send + Sync {
     /// Check if the dictionary contains any capitalization of a given word.
-    fn contains_word(&self, word: &[char]) -> bool;
+    fn contains_folded_word(&self, word: &[char]) -> bool;
     /// Check if the dictionary contains any capitalization of a given word.
-    fn contains_word_str(&self, word: &str) -> bool;
+    fn contains_folded_word_str(&self, word: &str) -> bool;
     /// Check if the dictionary contains the exact capitalization of a given word.
     fn contains_exact_word(&self, word: &[char]) -> bool;
     /// Check if the dictionary contains the exact capitalization of a given word.
@@ -43,13 +43,15 @@ pub trait Dictionary: Send + Sync {
         word: &[char],
     ) -> Box<dyn Iterator<Item = &[char]> + Send + '_>;
     /// Get the associated [`DictWordMetadata`] for any capitalization of a given word.
-    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>>;
+    fn get_word_metadata_folded(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>>;
     /// Get the associated [`DictWordMetadata`] for any capitalization of a given word.
     /// If the word isn't in the dictionary, the resulting metadata will be
     /// empty.
-    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>>;
+    fn get_word_metadata_folded_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>>;
 
     fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata>;
+
+    fn get_word_metadata_exact_str(&self, word: &str) -> Option<&DictWordMetadata>;
 
     /// Iterate over the words in the dictionary.
     fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_>;

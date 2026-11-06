@@ -46,7 +46,10 @@ impl Parser for CollapseIdentifiers {
             let end_tok = &tokens[tok_span.end - 1];
             let char_span = Span::new(start_tok.span.start, end_tok.span.end);
 
-            if self.dict.contains_word(char_span.get_content(source)) {
+            if self
+                .dict
+                .contains_folded_word(char_span.get_content(source))
+            {
                 tokens[tok_span.start] = Token::new(char_span, TokenKind::blank_word());
                 to_remove.extend(tok_span.start + 1..tok_span.end);
             }
