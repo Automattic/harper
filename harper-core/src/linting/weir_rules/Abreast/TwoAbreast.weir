@@ -1,0 +1,33 @@
+expr main [(two a breast), (too abreast)]
+
+let message "Did you mean `two abreast`?"
+let description "Corrects wrong variants of `two abreast`."
+let kind "Spelling"
+let becomes "two abreast"
+
+test "When they're two a breast it often makes it unsafe to pass when it would have been safe one a breast." "When they're two abreast it often makes it unsafe to pass when it would have been safe one a breast."
+test "Otherwise it's too abreast with one-handed weapons and one person with a two-handed swinging weapon." "Otherwise it's two abreast with one-handed weapons and one person with a two-handed swinging weapon."
+test "Two a breast should only be done on quiet roads, or at off peak hours." "Two abreast should only be done on quiet roads, or at off peak hours."
+test "They ride two a breast because they've been led to believe it's perfectly fine and the thing to do" "They ride two abreast because they've been led to believe it's perfectly fine and the thing to do"
+test "They are still too abreast. There's a potential for them to stay side by side all lap you know but it's not going to happen." "They are still two abreast. There's a potential for them to stay side by side all lap you know but it's not going to happen."
+test "Cyclists move fast and likely unaware of the driveways and possibly are riding too abreast." "Cyclists move fast and likely unaware of the driveways and possibly are riding two abreast."
+
+# False positives / edge cases not yet handled
+
+# Also, I feel OP needs to abreast himself / herself of the difference between innocent poke and taunt.
+# I'm not too abreast on all Linux commands and following a pretty thorough tutorial on setting up WP on my ubuntu 20.04.
+# I connected to their WhatsApp group to abreast of their events and such.
+# but they do not neeccessary know anything about the meds for they have not done the due diligence and kept up to abreast.
+# my doctor found it and has referred me too a breast clinic
+# the need to replace it with another law to abreast of developments at local and global levels
+# external auditors must take part in training and development activities in order to abreast of these requirements
+# ... were taken through series of presentations to abreast themselves with the mandate
+# such as Stroke evidence base practice with the University of Sheffield to abreast herself
+# the essence of the visit was to abreast the SGF of his one year scorecard
+# This article may act as tool to abreast with the Phytochemical, Antioxidant, Antidiabetic test for dried bean powder
+# helps to abreast of the latest developments and advancements in the fields of Atomic, Molecular and Optical Physics
+# provide more professional development, workshops, and training to abreast the technological advancement of Phet in chemistry learning
+# ECOWAS invited the Political Parties to abreast them with the Roadmap on the full implementation of the Supreme Court’s Mandate
+# I am a functional founder and am not too abreast to optimizing technical infrastructure relative to cast.
+# I'm not too abreast of the plug-ins… so good to learn!
+# some babies prefer that to abreast
