@@ -335,7 +335,7 @@
 >
 #
 > These   findings were surprisingly disruptive to the field  of natural language
-# I/Ddem+ NSg+     VLPt R            J          P  D   NSg/VB P  NSg/J+  N🅪Sg+
+# I/Ddem+ NPl/V3+  VLPt R            J          P  D   NSg/VB P  NSg/J+  N🅪Sg+
 > processing . The accuracy reported was  higher than the typical accuracy of very
 # Nᴹ/Vg/J+   . D+  N🅪Sg+    VP/J     VLPt NSg/JC C/P  D   NSg/J   N🅪Sg     P  J/R
 > sophisticated algorithms that      integrated part     of speech   choice  with many       higher
