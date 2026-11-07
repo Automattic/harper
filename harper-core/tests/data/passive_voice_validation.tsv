@@ -1,0 +1,48 @@
+# AI-authored synthetic cases. Columns: category, text, expected lint spans (| separated, or -).
+coordination	The memo was drafted by Kim and approved by Lee.	was drafted|approved
+coordination	The page was drafted by Ana, translated by Bo, and posted by Cy.	was drafted|translated|posted
+coordination	The account was opened by staff but closed by the manager.	was opened|closed
+# "closed" can also be intransitive here; retain the unambiguous first warning only.
+coordination	The account was opened by staff but closed the next day.	was opened
+coordination	The application was examined but the clerk rejected it.	was examined
+coordination	The applicant was examined but rejected the offer.	was examined
+coordination	The applicant was examined but offered a position.	was examined but offered
+coordination	The recipe was tested, adjusted, and finally published.	was tested, adjusted, and finally published
+coordination	The doors were locked, but not sealed.	were locked, but not sealed
+coordination	The case was heard but never decided.	was heard but never decided
+auxiliary	The permit may or may not be granted.	may or may not be granted
+auxiliary	The work must be done before noon.	must be done
+auxiliary	The form needs to be signed.	to be signed
+auxiliary	The shipment was going to be delayed.	was going to be delayed
+auxiliary	The parcel should not have been opened.	should not have been opened
+auxiliary	The study is being conducted by researchers.	is being conducted
+auxiliary	The task will be done tomorrow.	will be done
+auxiliary	I want to be done by noon.	-
+auxiliary	He was just done with the task.	-
+auxiliary	They are done for the day.	-
+question	Have the editors written the summary?	-
+question	Has the summary been written?	Has the summary been written
+question	Was the invoice approved by finance?	Was the invoice approved
+question	Why was the invoice refused?	was the invoice refused
+question	Did the workers get paid?	Did the workers get paid
+question	Was she worried about the decision?	-
+reduced	The email sent yesterday arrived late.	-
+reduced	The report published today cites new data.	-
+reduced	The gate opened yesterday remains closed.	-
+reduced	The window closed yesterday remains locked.	-
+reduced	The painting found yesterday was returned.	was returned
+reduced	The file reviewed by Ana was approved.	was approved
+reduced	The actor seen by witnesses left town.	-
+state	The room was filled with music.	-
+state	The room was filled by volunteers.	was filled
+state	The announcement was made by noon.	was made
+state	The announcement was made by the mayor.	was made
+state	The baby was born by cesarean section.	-
+state	The baby was born in April.	-
+state	The participants were worried by the news.	were worried
+state	The participants were worried all week.	-
+active	The board approved the proposal by a wide margin.	-
+active	She had reviewed the invoice by noon.	-
+active	They have written the manual.	-
+active	The vessel sailed by the island.	-
+active	He got a signed letter.	-
