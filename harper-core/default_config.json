@@ -3771,6 +3771,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ExplainMe",
+								"state": true,
+								"label": "Explain Me"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ForNoun",
 								"state": true,
 								"label": "For Noun"
