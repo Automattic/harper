@@ -1,0 +1,28 @@
+# For house styles that quote "no" when it names an answer or a button ("Click "No" to
+# cancel"). Off by default: many guides leave it unquoted, and some bold button labels instead.
+# Weir can't see formatting, so a bold label ("Click **No**") is flagged too.
+expr verbs [click, clicked, clicking, press, pressed, tap, tapped, tapping, select, selected, selecting, reply, replied, replying, respond, responded, responding, answer, answered, answering, vote, voted, voting, text, texted, texting, type, typed, typing]
+expr main <(@verbs no), (no)>
+
+let message "Quote `no` when it names an answer or a button."
+let description "Suggests quotation marks around `no` after a verb like click, answer, reply or vote."
+let kind "Style"
+let becomes ["\"no\"", "'no'", "\“no\”", "‘no’"]
+let strategy "MatchCase"
+
+test "Click No to cancel." "Click \"No\" to cancel."
+test "Press No to keep your changes." "Press \"No\" to keep your changes."
+test "Tap No to stay signed in." "Tap \"No\" to stay signed in."
+test "Select No and continue." "Select \"No\" and continue."
+test "Reply NO to stop these messages." "Reply \"NO\" to stop these messages."
+test "Respond no to cancel." "Respond \"no\" to cancel."
+test "I answered no to both questions." "I answered \"no\" to both questions."
+test "They voted no on the bill." "They voted \"no\" on the bill."
+test "Text NO to opt out." "Text \"NO\" to opt out."
+test "Type no to cancel." "Type \"no\" to cancel."
+
+allows "Click \"No\" to cancel."
+allows "Click \“No\” to cancel."
+allows "There is no way to cancel."
+allows "Click the No button to cancel."
+allows "I said no to the offer."
