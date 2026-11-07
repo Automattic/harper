@@ -1,3 +1,4 @@
+use crate::expr::{Not, SequenceExpr};
 use crate::linting::LintGroup;
 
 use super::MapPhraseLinter;
@@ -33,7 +34,6 @@ pub fn lint_group() -> LintGroup {
         "Desktop"         => (&["desk top"][..], "desktop"),
         "Devops"          => (&["dev ops"][..], "devops"),
         "Everybody"       => (&["every body"][..], "everybody"),
-        "Everyone"        => (&["every one"][..], "everyone"),
         "Everywhere"      => (&["every where"][..], "everywhere"),
         "Fanfare"         => (&["fan fare", "fan-fare"][..], "fanfare"),
         "Furthermore"     => (&["further more"][..], "furthermore"),
@@ -93,6 +93,19 @@ pub fn lint_group() -> LintGroup {
         "Worldwide"       => (&["world wide"][..], "worldwide"),
         "Worthwhile"      => (&["worth while", "worth-while"][..], "worthwhile"),
     });
+
+    // `every one` is correct before `of`, as in "every one of those".
+    group.add(
+        "Everyone",
+        Box::new(MapPhraseLinter::new_closed_compound_expr(
+            Box::new(
+                SequenceExpr::default()
+                    .then_fixed_phrase("every one")
+                    .then(Not::new(SequenceExpr::whitespace().t_aco("of"))),
+            ),
+            "everyone",
+        )),
+    );
 
     group.set_all_rules_to(Some(true));
 
@@ -500,6 +513,46 @@ mod tests {
             "Also I get no errors whatso-ever which makes this even more confusing.",
             lint_group(),
             "Also I get no errors whatsoever which makes this even more confusing.",
+        );
+    }
+
+    #[test]
+    fn every_one() {
+        assert_suggestion_result(
+            "Every one was surprised.",
+            lint_group(),
+            "Everyone was surprised.",
+        );
+    }
+
+    #[test]
+    fn every_one_of_those() {
+        assert_no_lints(
+            "But leaving this safe place was worse than every one of those.",
+            lint_group(),
+        );
+    }
+
+    #[test]
+    fn every_one_of_us() {
+        assert_no_lints("Every one of us knew the answer.", lint_group());
+    }
+
+    #[test]
+    fn every_one_of_the_doors() {
+        assert_no_lints("every one of the doors was locked.", lint_group());
+    }
+
+    #[test]
+    fn each_and_every_one_of_them() {
+        assert_no_lints("I checked each and every one of them.", lint_group());
+    }
+
+    #[test]
+    fn every_one_of_on_a_new_line() {
+        assert_no_lints(
+            "I looked at them all, and then at\nevery one of the others.",
+            lint_group(),
         );
     }
 }
