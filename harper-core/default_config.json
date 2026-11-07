@@ -1644,6 +1644,13 @@
 						},
 						{
 							"Bool": {
+								"name": "WhetherOrNot",
+								"state": true,
+								"label": "Whether Or Not"
+							}
+						},
+						{
+							"Bool": {
 								"name": "WordPressDotcom",
 								"state": true,
 								"label": "WordPress Dotcom"
