@@ -4823,6 +4823,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ByHand",
+								"state": true,
+								"label": "By Hand"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ByOnesOwn",
 								"state": true,
 								"label": "By One's Own"
