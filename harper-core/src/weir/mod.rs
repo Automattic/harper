@@ -407,6 +407,7 @@ fn resolve_exprs(ast: &Ast) -> Result<HashMap<String, Lrc<Box<dyn Expr>>>, Error
 pub mod tests {
     use quickcheck_macros::quickcheck;
 
+    use crate::linting::tests::assert_suggestion_result;
     use crate::weir::Error;
 
     use super::{TestResult, WeirLinter};
@@ -659,6 +660,133 @@ pub mod tests {
         let mut linter = WeirLinter::new(source).unwrap();
 
         assert_eq!(linter.run_tests().len(), 1)
+    }
+
+    #[test]
+    fn start_matches_only_at_the_start_of_the_chunk() {
+        let source = r#"
+            expr main <(START no to mention), (no to)>
+            let message "Did you mean `not to`?"
+            let description "d"
+            let kind "Typo"
+            let becomes "not to"
+
+            test "No to mention the cost." "Not to mention the cost."
+            test "It was slow, no to mention buggy." "It was slow, not to mention buggy."
+            allows "They said no to mention of the layoffs."
+            "#;
+
+        let mut linter = WeirLinter::new(source).unwrap();
+        assert_passes_all(&mut linter);
+        assert_eq!(3, linter.count_tests());
+    }
+
+    #[test]
+    fn start_follows_the_scope() {
+        let source = r#"
+            expr main <(START no to mention), (no to)>
+            let message "Did you mean `not to`?"
+            let description "d"
+            let kind "Typo"
+            let becomes "not to"
+            let scope "Sentence"
+
+            test "No to mention the cost." "Not to mention the cost."
+            allows "It was slow, no to mention buggy."
+            "#;
+
+        let mut linter = WeirLinter::new(source).unwrap();
+        assert_passes_all(&mut linter);
+        assert_eq!(2, linter.count_tests());
+    }
+
+    #[test]
+    fn end_matches_only_at_the_end() {
+        let source = r#"
+            expr main <(no to END), (no to)>
+            let message "Did you mean `not to`?"
+            let description "d"
+            let kind "Typo"
+            let becomes "not to"
+
+            test "I prefer no to." "I prefer not to."
+            test "I prefer no to" "I prefer not to"
+            test "I prefer no to!" "I prefer not to!"
+            test "(I prefer no to.)" "(I prefer not to.)"
+            allows "Learn to say no to people."
+            allows "I prefer no to-do lists."
+            # One token may follow `END`, but not two.
+            allows "(I prefer no to)."
+            "#;
+
+        let mut linter = WeirLinter::new(source).unwrap();
+        assert_passes_all(&mut linter);
+        assert_eq!(7, linter.count_tests());
+    }
+
+    #[test]
+    fn start_looks_past_opening_punctuation() {
+        let source = r#"
+            expr main <(START no to mention), (no to)>
+            let message "Did you mean `not to`?"
+            let description "d"
+            let kind "Typo"
+            let becomes "not to"
+            let scope "Sentence"
+            "#;
+
+        for (text, expected) in [
+            ("(No to mention the cost.)", "(Not to mention the cost.)"),
+            (
+                "“No to mention it,” she said.",
+                "“Not to mention it,” she said.",
+            ),
+            (
+                "It was slow. No to mention buggy.",
+                "It was slow. Not to mention buggy.",
+            ),
+        ] {
+            assert_suggestion_result(text, WeirLinter::new(source).unwrap(), expected);
+        }
+    }
+
+    #[test]
+    fn anchors_in_a_later_filter_step_mark_the_first_match() {
+        let source = r#"
+            expr main <(no to mention), (START no to)>
+            let message "Did you mean `not to`?"
+            let description "d"
+            let kind "Typo"
+            let becomes "not to"
+            let scope "Sentence"
+
+            test "It was slow, no to mention buggy." "It was slow, not to mention buggy."
+            "#;
+
+        let mut linter = WeirLinter::new(source).unwrap();
+        assert_passes_all(&mut linter);
+        assert_eq!(1, linter.count_tests());
+    }
+
+    #[test]
+    fn anchors_work_inside_alternatives() {
+        let source = r#"
+            expr main <[(START long time ago), (!a long time ago)], (long time ago)>
+            let message "Did you mean `a long time ago`?"
+            let description "d"
+            let kind "Usage"
+            let becomes "a long time ago"
+            let scope "Sentence"
+
+            test "Long time ago, we met." "A long time ago, we met."
+            test "It was long time ago." "It was a long time ago."
+            allows "A long time ago, we met."
+            allows "It was a long time ago."
+            "#;
+
+        let mut linter = WeirLinter::new(source).unwrap();
+        assert_passes_all(&mut linter);
+        assert_eq!(4, linter.count_tests());
     }
 
     #[test]
