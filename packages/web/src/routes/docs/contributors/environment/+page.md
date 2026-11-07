@@ -1,6 +1,9 @@
 ---
 title: Set Up Your Environment
+description: Set up the Rust, Node.js, and optional Nix tools needed to build and develop Harper components.
 ---
+
+# Set Up Your Environment
 
 Depending on what you're wanting to work on within the Harper repo, you may not need to set up every aspect of the environment described on this page.
 For example, if you only intend to work on the core grammar engine, `harper-ls`, or `harper-cli`, you only need `cargo` installed.

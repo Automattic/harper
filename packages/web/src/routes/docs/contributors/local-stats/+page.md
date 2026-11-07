@@ -1,6 +1,9 @@
 ---
 title: Local Statistics
+description: Understand Harper local writing statistics, their storage, and the stats.txt format used by integrations.
 ---
+
+# Local Statistics
 
 Harper keeps track of certain aspects of your writing.
 Things like:

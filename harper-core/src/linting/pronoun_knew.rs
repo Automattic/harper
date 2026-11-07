@@ -20,20 +20,14 @@ trait PronounKnewExt {
 impl Default for PronounKnew {
     fn default() -> Self {
         // The pronoun that would occur before a verb would be a subject pronoun.
-        // But "its" commonly occurs before "new" and is a possessive pronoun. (Much more commonly a determiner)
-        // Since "his" and "her" are possessive and object pronouns respectively, we ignore them too.
-        let pronoun_pattern = |tok: &Token, source: &[char]| {
+        // Indefinite pronouns commonly appear in noun phrases like "anyone new",
+        // so only subject personal pronouns should match this rule.
+        let pronoun_pattern = |tok: &Token, _source: &[char]| {
             if !tok.kind.is_upos(UPOS::PRON) {
                 return false;
             }
 
-            if tok.kind.is_possessive_determiner() || !tok.kind.is_pronoun() {
-                return false;
-            }
-
-            let pronorm = tok.get_str(source).to_lowercase();
-            let excluded = ["every", "something", "nothing"];
-            !excluded.contains(&&*pronorm)
+            tok.kind.is_personal_pronoun() && tok.kind.is_subject_pronoun()
         };
 
         let pronoun_then_new = SequenceExpr::with(pronoun_pattern)
@@ -141,6 +135,25 @@ mod tests {
     #[test]
     fn does_not_flag_with_nothing_1298() {
         assert_lint_count("This is nothing new.", PronounKnew::default(), 0);
+    }
+
+    #[test]
+    fn does_not_flag_with_anyone_new_3257() {
+        assert_lint_count("before inviting anyone new in.", PronounKnew::default(), 0);
+    }
+
+    #[test]
+    fn does_not_flag_with_indefinite_pronouns_before_new() {
+        assert_lint_count(
+            "We need someone new for the role.",
+            PronounKnew::default(),
+            0,
+        );
+        assert_lint_count(
+            "Everyone new should read the guide.",
+            PronounKnew::default(),
+            0,
+        );
     }
 
     #[test]

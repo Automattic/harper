@@ -12,4 +12,4 @@ let links = {
 </script>
 
 
-<AnalyticsPage data={data.counts} prevPeriodData={data.prevCounts} title="Most Reported Erroring Lint IDs" {links}/>
+<AnalyticsPage data={data.counts} prevPeriodData={data.prevCounts} title="Most Reported Erroring Lint IDs" {links} keyLabel="Lint ID" keyLinkGenerator={(key) => `/admin/problematic-lints/${data.timePeriod}/${key}`}/>

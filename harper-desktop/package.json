@@ -1,6 +1,6 @@
 {
 	"name": "harper-desktop",
-	"version": "2.13.0",
+	"version": "3.1.0",
 	"description": "",
 	"type": "module",
 	"scripts": {
@@ -27,7 +27,7 @@
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
 		"@tailwindcss/vite": "^4.2.2",
 		"@tauri-apps/cli": "^2",
-		"svelte": "^5.0.0",
+		"svelte": "^5.57.3",
 		"svelte-check": "^4.0.0",
 		"tailwindcss": "^4.2.2",
 		"typescript": "~5.6.2",

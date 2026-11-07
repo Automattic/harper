@@ -1,6 +1,9 @@
 ---
 title: Introduction to Contributing
+description: Start contributing to Harper with links to environment setup, contribution guidelines, and project support.
 ---
+
+# Introduction to Contributing
 
 Harper is completely open to outside contributions of any kind.
 

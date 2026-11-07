@@ -18,14 +18,6 @@ let version = `v${chrome.runtime.getManifest().version}`;
 let latestVersion: string | null = $state(null);
 let versionMismatch = $state(false);
 
-let hoveredFooterIndex = $state<number | null>(null);
-let activeFooterIndex = $state<number>(0);
-
-function handleMouseEnter(index: number) {
-	activeFooterIndex = index;
-	hoveredFooterIndex = index;
-}
-
 onMount(async () => {
 	try {
 		const response = await fetch('https://writewithharper.com/latestversion');
@@ -85,8 +77,6 @@ $effect(() => {
 		el.style.overflow = 'hidden';
 	}
 });
-
-const footerLink = 'text-xs text-gray-500 dark:text-slate-400 no-underline!';
 </script>
 
 <div
@@ -173,58 +163,10 @@ const footerLink = 'text-xs text-gray-500 dark:text-slate-400 no-underline!';
         {/if}
     </div>
 
-    <footer
-        class="border-t border-gray-100 bg-white/60 p-1.5 dark:border-slate-800 dark:bg-slate-900/70"
-        onmouseleave={() => (hoveredFooterIndex = null)}
-    >
-        <div class="relative flex w-full items-center">
-            <!-- Gliding Orange Hover Pill -->
-            <div
-                class="absolute inset-y-0 left-0 w-1/4 rounded-md bg-primary transition-all duration-300 ease-out"
-                style="transform: translateX(calc({activeFooterIndex} * 100%)); opacity: {hoveredFooterIndex === null ? 0 : 1};"
-            ></div>
-
-            <Link 
-                href="https://github.com/Automattic/harper" 
-                target="_blank" 
-                rel="noopener" 
-                class="relative z-10 flex-1 rounded-md py-1 text-center font-medium no-underline! transition-colors duration-200 {footerLink} {hoveredFooterIndex === 0 ? 'text-black! font-semibold' : ''}"
-                style="text-decoration: none;"
-                onmouseenter={() => handleMouseEnter(0)}
-            >
-                GitHub
-            </Link>
-            
-            <Link 
-                href="https://discord.com/invite/JBqcAaKrzQ" 
-                target="_blank" 
-                rel="noopener" 
-                class="relative z-10 flex-1 rounded-md py-1 text-center font-medium no-underline! transition-colors duration-200 {footerLink} {hoveredFooterIndex === 1 ? 'text-black! font-semibold' : ''}"
-                style="text-decoration: none;"
-                onmouseenter={() => handleMouseEnter(1)}
-            >
-                Discord
-            </Link>
-            
-            <Link 
-                href="https://writewithharper.com" 
-                target="_blank" 
-                rel="noopener" 
-                class="relative z-10 flex-1 rounded-md py-1 text-center font-medium no-underline! transition-colors duration-200 {footerLink} {hoveredFooterIndex === 2 ? 'text-black! font-semibold' : ''}"
-                style="text-decoration: none;"
-                onmouseenter={() => handleMouseEnter(2)}
-            >
-                Discover
-            </Link>
-            
-            <button
-                type="button"
-                onclick={openSettings}
-                class="relative z-10 flex-1 cursor-pointer rounded-md bg-transparent py-1 text-center font-medium transition-colors duration-200 text-xs no-underline! {hoveredFooterIndex === 3 ? 'text-black! font-semibold' : 'text-primary dark:text-white'}"
-                onmouseenter={() => handleMouseEnter(3)}
-            >
-                Settings
-            </button>
-        </div>
+    <footer class="flex items-center justify-center gap-6 px-3 py-2 text-sm border-t border-gray-100 rounded-b-lg bg-white/60 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-100">
+        <Link href="https://github.com/Automattic/harper" target="_blank" rel="noopener" class="text-primary">GitHub</Link>
+        <Link href="https://discord.com/invite/JBqcAaKrzQ" target="_blank" rel="noopener" class="text-primary">Discord</Link>
+        <Link href="https://writewithharper.com" target="_blank" rel="noopener" class="text-primary">Discover</Link>
+        <Link on:click={openSettings}>Settings</Link>
     </footer>
 </div>

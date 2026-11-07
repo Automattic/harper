@@ -3,8 +3,28 @@ import { createEventDispatcher } from 'svelte';
 import type { HTMLInputAttributes } from 'svelte/elements';
 
 type InputSize = 'sm' | 'md' | 'lg';
+type InputType =
+	| 'color'
+	| 'date'
+	| 'datetime-local'
+	| 'email'
+	| 'file'
+	| 'hidden'
+	| 'image'
+	| 'month'
+	| 'number'
+	| 'password'
+	| 'radio'
+	| 'reset'
+	| 'search'
+	| 'submit'
+	| 'tel'
+	| 'text'
+	| 'time'
+	| 'url'
+	| 'week';
 
-export let type: HTMLInputAttributes['type'] = 'text';
+export let type: InputType | null | undefined = 'text';
 export let value: HTMLInputAttributes['value'] = undefined;
 export let placeholder: HTMLInputAttributes['placeholder'] = undefined;
 export let className: string | undefined = undefined;

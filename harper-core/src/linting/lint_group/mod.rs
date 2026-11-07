@@ -6,6 +6,7 @@ use std::{collections::BTreeMap, hash::BuildHasher, num::NonZero, sync::Arc};
 use {foldhash::quality::RandomState, hashbrown::HashMap, lru::LruCache};
 
 // Individual Linters
+use super::a_bit_of_plural::ABitOfPlural;
 use super::a_part::APart;
 use super::a_some_time::ASomeTime;
 use super::a_ways_to_go::AWaysToGo;
@@ -19,10 +20,12 @@ use super::ajar::Ajar;
 use super::akimbo::Akimbo;
 use super::all_hell_break_loose::AllHellBreakLoose;
 use super::all_intents_and_purposes::AllIntentsAndPurposes;
+use super::all_thats_are::AllThatsAre;
 use super::allow_to::AllowTo;
 use super::am_in_the_morning::AmInTheMorning;
 use super::amounts_for::AmountsFor;
 use super::an_a::AnA;
+use super::an_arm_and_a_leg::AnArmAndALeg;
 use super::analog_acoustic_bike::AnalogAcousticBike;
 use super::and_the_like::AndTheLike;
 use super::another_thing_coming::AnotherThingComing;
@@ -63,6 +66,7 @@ use super::chicken_and_egg::ChickenAndEgg;
 use super::chock_full::ChockFull;
 use super::claim_to_fame::ClaimToFame;
 use super::close_tight_knit::CloseTightKnit;
+use super::cloud_ones_judgement::CloudOnesJudgement;
 use super::code_in_write_in::CodeInWriteIn;
 use super::comfortable_with::ComfortableWith;
 use super::comma_fixes::CommaFixes;
@@ -71,6 +75,7 @@ use super::compound_nouns::CompoundNouns;
 use super::compound_subject_i::CompoundSubjectI;
 use super::confident::Confident;
 use super::convenient_store::ConvenientStore;
+use super::cool_calm_collected::CoolCalmCollected;
 use super::correct_number_suffix::CorrectNumberSuffix;
 use super::crave_for::CraveFor;
 use super::criteria_phenomena::CriteriaPhenomena;
@@ -91,6 +96,7 @@ use super::do_mistake::DoMistake;
 use super::dot_initialisms::DotInitialisms;
 use super::double_click::DoubleClick;
 use super::double_modal::DoubleModal;
+use super::double_possessive_noun_phrase::DoublePossessiveNounPhrase;
 use super::ellipsis_length::EllipsisLength;
 use super::else_possessive::ElsePossessive;
 use super::ever_every::EverEvery;
@@ -121,6 +127,7 @@ use super::for_the_nth_time::ForTheNthTime;
 use super::free_predicate::FreePredicate;
 use super::friend_of_me::FriendOfMe;
 use super::full_to_the_brim::FullToTheBrim;
+use super::get_access_at::GetAccessAt;
 use super::get_pass_go_pass::GetPassGoPass;
 use super::go_missing::GoMissing;
 use super::go_so_far_as_to::GoSoFarAsTo;
@@ -167,6 +174,7 @@ use super::let_to_do::LetToDo;
 use super::lets_confusion::LetsConfusion;
 use super::likewise::Likewise;
 use super::little_known::LittleKnown;
+use super::little_to_no::LittleToNo;
 use super::long_sentences::LongSentences;
 use super::long_time_ago::LongTimeAgo;
 use super::look_down_ones_nose::LookDownOnesNose;
@@ -246,6 +254,7 @@ use super::quantifier_needs_of::QuantifierNeedsOf;
 use super::quantifier_numeral_conflict::QuantifierNumeralConflict;
 use super::quite_quiet::QuiteQuiet;
 use super::quote_spacing::QuoteSpacing;
+use super::rack_ones_brain::RackOnesBrain;
 use super::reason_for_doing::ReasonForDoing;
 use super::redundant_acronyms::RedundantAcronyms;
 use super::redundant_additive_adverbs::RedundantAdditiveAdverbs;
@@ -265,6 +274,7 @@ use super::roller_skated::RollerSkated;
 use super::run_into_problems_or_trouble::RunIntoProblemsOrTrouble;
 use super::safe_to_save::SafeToSave;
 use super::save_to_safe::SaveToSafe;
+use super::seems_like_adjective::SeemsLikeAdjective;
 use super::sentence_capitalization::SentenceCapitalization;
 use super::shoot_oneself_in_the_foot::ShootOneselfInTheFoot;
 use super::show_case::ShowCase;
@@ -332,6 +342,7 @@ use super::vicious_loop::{ViciousCircle, ViciousCircleOrCycle, ViciousCycle};
 use super::waist_waste::WaistWaste;
 use super::was_aloud::WasAloud;
 use super::way_too_adjective::WayTooAdjective;
+use super::we_see_us::WeSeeUs;
 use super::web_scraping::WebScraping;
 use super::well_educated::WellEducated;
 use super::went_ahead_and_agreement::WentAheadAndAgreement;
@@ -643,6 +654,7 @@ impl LintGroup {
         // Add all the more complex rules to the group.
         // Please maintain alphabetical order.
         // On *nix you can maintain sort order with `sort -t'(' -k2`
+        insert_expr_rule!(ABitOfPlural);
         insert_expr_rule!(APart);
         insert_expr_rule!(ASomeTime);
         insert_expr_rule!(AWaysToGo);
@@ -657,10 +669,12 @@ impl LintGroup {
         insert_expr_rule!(AllHellBreakLoose);
         insert_expr_rule!(AllIntentsAndPurposes);
         insert_expr_rule!(AllowTo);
+        insert_expr_rule!(AllThatsAre);
         insert_expr_rule!(AmInTheMorning);
         insert_expr_rule!(AmountsFor);
         insert_struct_rule_with_dialect!(AnA);
         insert_expr_rule_with_dialect!(AnalogAcousticBike);
+        insert_expr_rule!(AnArmAndALeg);
         insert_expr_rule!(AndTheLike);
         insert_expr_rule!(AnotherThingComing);
         insert_expr_rule!(AnotherThinkComing);
@@ -699,6 +713,7 @@ impl LintGroup {
         insert_expr_rule!(ChockFull);
         insert_expr_rule!(ClaimToFame);
         insert_expr_rule!(CloseTightKnit);
+        insert_expr_rule!(CloudOnesJudgement);
         insert_expr_rule!(CodeInWriteIn);
         insert_expr_rule!(ComfortableWith);
         insert_struct_rule!(CommaFixes);
@@ -725,6 +740,7 @@ impl LintGroup {
         insert_expr_rule!(DotInitialisms);
         insert_expr_rule!(DoubleClick);
         insert_expr_rule!(DoubleModal);
+        insert_expr_rule!(DoublePossessiveNounPhrase);
         insert_struct_rule!(EllipsisLength);
         insert_expr_rule!(ElsePossessive);
         insert_expr_rule!(EverEvery);
@@ -754,6 +770,7 @@ impl LintGroup {
         insert_expr_rule!(ForTheNthTime);
         insert_expr_rule!(FreePredicate);
         insert_expr_rule!(FriendOfMe);
+        insert_expr_rule!(GetAccessAt);
         insert_expr_rule!(FullToTheBrim);
         insert_expr_rule!(GetPassGoPass);
         insert_expr_rule!(GoMissing);
@@ -801,6 +818,7 @@ impl LintGroup {
         insert_struct_rule!(LetsConfusion);
         insert_expr_rule!(Likewise);
         insert_struct_rule!(LittleKnown);
+        insert_struct_rule!(LittleToNo);
         insert_struct_rule!(LongSentences);
         insert_expr_rule!(LongTimeAgo);
         insert_expr_rule!(LookDownOnesNose);
@@ -880,6 +898,7 @@ impl LintGroup {
         insert_expr_rule!(QuantifierNumeralConflict);
         insert_expr_rule!(QuiteQuiet);
         insert_struct_rule!(QuoteSpacing);
+        insert_expr_rule!(RackOnesBrain);
         insert_expr_rule!(ReasonForDoing);
         insert_expr_rule!(RedundantAcronyms);
         insert_expr_rule!(RedundantAdditiveAdverbs);
@@ -899,6 +918,7 @@ impl LintGroup {
         insert_expr_rule!(RunIntoProblemsOrTrouble);
         insert_expr_rule!(SafeToSave);
         insert_expr_rule!(SaveToSafe);
+        insert_expr_rule!(SeemsLikeAdjective);
         insert_struct_rule_with_dict!(SentenceCapitalization);
         insert_expr_rule!(ShootOneselfInTheFoot);
         insert_expr_rule!(ShowCase);
@@ -965,6 +985,7 @@ impl LintGroup {
         insert_expr_rule!(WaistWaste);
         insert_expr_rule!(WasAloud);
         insert_expr_rule!(WayTooAdjective);
+        insert_expr_rule!(WeSeeUs);
         insert_expr_rule!(WellEducated);
         insert_expr_rule_with_dict!(WentAheadAndAgreement);
         insert_expr_rule!(Whereas);
@@ -984,6 +1005,9 @@ impl LintGroup {
 
         // Uses Sentence rather than Chunk
         out.add("ConvenientStore", ConvenientStore::default());
+
+        // Uses Sentence rather than Chunk
+        out.add("CoolCalmCollected", CoolCalmCollected::default());
 
         // Uses Sentence rather than Chunk
         out.add("Damages", Damages::default());

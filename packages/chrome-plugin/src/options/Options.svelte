@@ -14,6 +14,30 @@ import { ActivationKey } from '../protocol';
 import StructuredRuleSettings from './StructuredRuleSettings.svelte';
 
 let loaded = $state(false);
+let clearingIgnoredSuggestions = $state(false);
+let ignoredSuggestionsStatus = $state('');
+
+/** Confirm a global reset and report completion or failure without changing other settings. */
+async function clearIgnoredSuggestions(): Promise<void> {
+	if (
+		!window.confirm(
+			'Clear ignored suggestions across all websites? Custom dictionary words and disabled rules will not change.',
+		)
+	) {
+		return;
+	}
+	clearingIgnoredSuggestions = true;
+	ignoredSuggestionsStatus = '';
+	try {
+		await ProtocolClient.clearIgnoredLints();
+		ignoredSuggestionsStatus =
+			'Ignored suggestions cleared. Reload open pages to show suggestions again.';
+	} catch {
+		ignoredSuggestionsStatus = 'Could not clear ignored suggestions. Please try again.';
+	} finally {
+		clearingIgnoredSuggestions = false;
+	}
+}
 
 let lintConfig: LintConfig = $state({});
 let structuredLintConfig: StructuredLintConfig = $state({ settings: [] });
@@ -23,6 +47,7 @@ let searchQueryLower = $derived(searchQuery.toLowerCase());
 let expandedGroups: Record<string, boolean> = $state({});
 let dialect = $state(Dialect.American);
 let isolateEnglish = $state(false);
+let openSuggestionsOnHover = $state(false);
 let delay = $state(0);
 let delayLoaded = $state(false);
 let defaultEnabled = $state(false);
@@ -72,6 +97,11 @@ $effect(() => {
 	ProtocolClient.setUserDictionary(stringToDict(userDict));
 });
 
+$effect(() => {
+	if (!loaded) return;
+	ProtocolClient.setOpenSuggestionsOnHover(openSuggestionsOnHover);
+});
+
 // Load all initial state before displaying settings to prevent flash of defaults
 Promise.all([
 	ProtocolClient.getLintConfig(),
@@ -80,6 +110,7 @@ Promise.all([
 	ProtocolClient.getDialect(),
 	ProtocolClient.getIsolateEnglish(),
 	ProtocolClient.getDelay(),
+	ProtocolClient.getOpenSuggestionsOnHover(),
 	ProtocolClient.getDefaultEnabled(),
 	ProtocolClient.getActivationKey(),
 	ProtocolClient.getHotkey(),
@@ -93,6 +124,7 @@ Promise.all([
 		nextDialect,
 		nextIsolateEnglish,
 		nextDelay,
+		nextOpenSuggestionsOnHover,
 		nextDefaultEnabled,
 		nextActivationKey,
 		nextHotkey,
@@ -105,6 +137,7 @@ Promise.all([
 		dialect = nextDialect;
 		isolateEnglish = nextIsolateEnglish;
 		delay = nextDelay;
+		openSuggestionsOnHover = nextOpenSuggestionsOnHover;
 		delayLoaded = true;
 		defaultEnabled = nextDefaultEnabled;
 		activationKey = nextActivationKey;
@@ -429,7 +462,7 @@ async function removeWeirpack(id: string) {
               class="min-w-12rem flex-1 outline-none! focus:border-primary! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!"
             />
             <Button size="sm" class="cursor-pointer bg-primary! text-black! hover:bg-primary/85! outline-none! focus:outline-none! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!" on:click={() => { resetRulesToDefaults(); statusMessage = 'All rules reset to defaults.'; }}>Reset to Defaults</Button>
-            <Button size="sm" color="light" class="cursor-pointer outline-none! focus:outline-none! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!" on:click={toggleAllRules}>
+            <Button size="sm" color="white" class="cursor-pointer outline-none! focus:outline-none! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!" on:click={toggleAllRules}>
               {anyRulesEnabled ? 'Disable All Rules' : 'Enable All Rules'}
             </Button>
           </div>
@@ -487,8 +520,8 @@ async function removeWeirpack(id: string) {
               <!-- Ignore Non-English Text -->
               <div class="flex items-center justify-between gap-4 py-3.5">
                 <div class="flex flex-col">
-                  <h3 id="isolate-label" class="text-base font-semibold">Ignore Non-English Text</h3>
-                  <p id="isolate-desc" class="text-xs text-gray-600 dark:text-[#d1d5db]!">Skip text that Harper detects as not English.</p>
+                  <h3 id="isolate-label" class="text-base font-semibold">Ignore Non-English Text (Beta)</h3>
+                  <p id="isolate-desc" class="text-xs text-gray-600 dark:text-[#d1d5db]!">Skip text that Harper detects as not English. This feature is in beta and is unlikely to work reliably.</p>
                 </div>
 
                 <div class="h-9 w-48 shrink-0 rounded-lg border border-gray-200 p-1 dark:border-slate-700 dark:bg-slate-900">
@@ -599,6 +632,46 @@ async function removeWeirpack(id: string) {
                 <Button size="sm" class="h-9 w-48 shrink-0 cursor-pointer text-xs font-semibold bg-primary! text-black! hover:bg-primary/85! outline-none! focus:outline-none! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!" aria-describedby="export-desc" on:click={exportEnabledDomainsCSV}>Export JSON</Button>
               </div>
 
+              <!-- Suggestion Hover Activation -->
+              <div class="flex items-center justify-between gap-4 py-3.5">
+                <div class="flex flex-col">
+                  <h3 id="hover-label" class="text-base font-semibold">Open suggestions on hover</h3>
+                  <p id="hover-desc" class="text-xs text-gray-600 dark:text-[#d1d5db]!">Open suggestions after hovering over an underlined error for 200 ms. Reload open pages after changing this setting. Click and keyboard activation remain available.</p>
+                </div>
+
+                <div class="h-9 w-48 shrink-0 rounded-lg border border-gray-200 p-1 dark:border-slate-700 dark:bg-slate-900">
+                  <div class="relative flex h-full w-full" role="radiogroup" aria-labelledby="hover-label" aria-describedby="hover-desc">
+                    <div
+                      class="absolute inset-y-0 left-0 w-1/2 rounded-md bg-primary transition-transform duration-300 ease-out motion-reduce:transition-none"
+                      class:translate-x-0={openSuggestionsOnHover}
+                      class:translate-x-full={!openSuggestionsOnHover}
+                    ></div>
+                    <button
+                      type="button"
+                      role="radio"
+                      aria-checked={openSuggestionsOnHover}
+                      tabindex={openSuggestionsOnHover ? 0 : -1}
+                      onkeydown={(e) => handleRadioKeydown(e, (v) => (openSuggestionsOnHover = v))}
+                      class="relative z-10 flex-1 cursor-pointer rounded-md py-1 text-center text-xs font-semibold transition-colors duration-200 motion-reduce:transition-none {openSuggestionsOnHover ? 'text-black' : 'text-gray-500 hover:text-gray-900 dark:text-[#d1d5db]! dark:hover:text-white!'}"
+                      onclick={() => (openSuggestionsOnHover = true)}
+                    >
+                      On
+                    </button>
+                    <button
+                      type="button"
+                      role="radio"
+                      aria-checked={!openSuggestionsOnHover}
+                      tabindex={!openSuggestionsOnHover ? 0 : -1}
+                      onkeydown={(e) => handleRadioKeydown(e, (v) => (openSuggestionsOnHover = v))}
+                      class="relative z-10 flex-1 cursor-pointer rounded-md py-1 text-center text-xs font-semibold transition-colors duration-200 motion-reduce:transition-none {!openSuggestionsOnHover ? 'text-black' : 'text-gray-500 hover:text-gray-900 dark:text-[#d1d5db]! dark:hover:text-white!'}"
+                      onclick={() => (openSuggestionsOnHover = false)}
+                    >
+                      Off
+                    </button>
+                  </div>
+                </div>
+              </div>
+
               <!-- Activation Key -->
               <div class="flex items-center justify-between gap-4 py-3.5">
                 <div class="flex flex-col">
@@ -636,6 +709,22 @@ async function removeWeirpack(id: string) {
                     {isCapturingHotkey ? 'Cancel' : 'Modify'}
                   </Button>
                 </div>
+              </div>
+
+              <div class="flex flex-col gap-2 py-3.5">
+                <h3 class="text-base font-semibold">Ignored suggestions</h3>
+                <p id="ignored-suggestions-desc" class="text-xs text-gray-600 dark:text-[#d1d5db]!">
+                  Clear ignored suggestions across all websites. Custom dictionary words and disabled rules will not change.
+                </p>
+                <Button
+                  size="sm"
+                  disabled={clearingIgnoredSuggestions}
+                  aria-describedby="ignored-suggestions-desc"
+                  on:click={clearIgnoredSuggestions}
+                >
+                  {clearingIgnoredSuggestions ? 'Clearing…' : 'Clear ignored suggestions'}
+                </Button>
+                <p role="status" class="text-xs">{ignoredSuggestionsStatus}</p>
               </div>
 
               <!-- User Dictionary -->
@@ -707,7 +796,7 @@ async function removeWeirpack(id: string) {
                     </div>
                     <Button
                       size="sm"
-                      color="light"
+                      color="white"
                       class="cursor-pointer outline-none! focus:outline-none! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!"
                       disabled={weirpackBusy}
                       aria-label={`Remove ${weirpack.name}`}

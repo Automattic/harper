@@ -1,0 +1,1 @@
+ALTER TABLE `uninstall_feedback` ADD `platform` text;

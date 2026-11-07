@@ -95,9 +95,6 @@ function daysSince(date: Date): number {
     {#if loaded}
         <section
             class="flex flex-1 flex-col items-center justify-center px-5 py-6 transition-colors"
-            style={enabled
-                ? 'background-image: radial-gradient(circle at 25% 50%, color-mix(in srgb, var(--color-primary) 12%, transparent), transparent 75%)'
-                : ''}
         >
             <!-- Row Layout: power button left, greeting + status right -->
             <div class="flex w-full flex-row items-center gap-5">
