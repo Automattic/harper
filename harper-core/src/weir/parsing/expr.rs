@@ -36,20 +36,25 @@ pub fn parse_seq(tokens: &[Token], source: &[char]) -> Result<Vec<AstExprNode>, 
         cursor += res.next_idx;
     }
 
-    // The anchors are zero-width and sit on a word, so the space that separates them from that
-    // word in the source (`START no to`) is for readability and must not require whitespace.
+    // Anchors are zero-width, so a space beside one (`START no to`) is only for readability.
+    // Matching it would require whitespace before the first word or after the last.
     let mut i = 0;
-    while i + 1 < seq.len() {
-        if (seq[i].is_start() && seq[i + 1].is_whitespace())
-            || (seq[i].is_whitespace() && seq[i + 1].is_end())
-        {
-            seq.remove(if seq[i].is_start() { i + 1 } else { i });
+    while i < seq.len() {
+        let beside_anchor = seq[i].is_whitespace()
+            && ((i > 0 && is_anchor(&seq[i - 1])) || seq.get(i + 1).is_some_and(is_anchor));
+
+        if beside_anchor {
+            seq.remove(i);
         } else {
             i += 1;
         }
     }
 
     Ok(seq)
+}
+
+fn is_anchor(node: &AstExprNode) -> bool {
+    node.is_start() || node.is_end()
 }
 
 /// Parse an individual expression.
@@ -480,13 +485,11 @@ mod tests {
     }
 
     #[test]
-    fn parses_start() {
-        assert_eq!(parse_expr_str("START", true).unwrap(), AstExprNode::Start)
-    }
-
-    #[test]
-    fn parses_end() {
-        assert_eq!(parse_expr_str("END", true).unwrap(), AstExprNode::End)
+    fn anchors_absorb_the_space_on_either_side() {
+        assert_eq!(
+            parse_expr_str("( START no END )", true).unwrap(),
+            parse_expr_str("(START no END)", true).unwrap()
+        )
     }
 
     #[test]

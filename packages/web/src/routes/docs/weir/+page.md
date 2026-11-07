@@ -186,14 +186,27 @@ expr main PROG
 ### Anchors
 
 The keyword START matches the start of the text a rule runs on, and END matches its end.
-That text is a chunk by default, or a sentence when the rule's [scope](#matching-scope) is `Sentence`.
-Anchors take up no space, so the space between an anchor and its neighbor is only for readability.
+That text is a chunk by default (see Matching Scope), so START also matches after a comma, a semicolon, a colon or a quotation mark.
+To match only the start or end of a sentence, set the rule's scope to `Sentence`.
+START matches at the first word, after any opening punctuation such as a quotation mark or a bracket.
+END allows one token after it, such as a closing period.
+
 For example, to match "no to mention" only when it opens a sentence:
 
 ```plaintext
 expr main <(START no to mention), (no to)>
 let scope "Sentence"
 ```
+
+Anchors take up no space, so the space between an anchor and its neighbor is only for readability.
+Put START at the start of a sequence and END at its end.
+To anchor one alternative, put the anchor inside it:
+
+```plaintext
+expr main <[(START long time ago), (!a long time ago)], (long time ago)>
+```
+
+In the later steps of a filter, anchors mark the start and end of what the first step matched.
 
 ### Exceptions
 

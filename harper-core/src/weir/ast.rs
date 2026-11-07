@@ -87,7 +87,7 @@ pub enum AstExprNode {
     Progressive,
     /// The start of the matched scope (the chunk or the sentence): its first word.
     Start,
-    /// The end of the matched scope: its last token that isn't whitespace.
+    /// The end of the matched scope. One token, such as a closing period, may follow it.
     End,
     UPOSSet(Vec<UPOS>),
     Word(CharString),
