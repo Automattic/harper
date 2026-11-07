@@ -1,0 +1,35 @@
+expr aux [have, has, had]
+expr main <[(@aux make ![NOUN, PROG, -]), (@aux make.), (@aux make?), (@aux make,)], make>
+
+let message "Add `to` before `make`, or use `made`."
+let description "Catches `have make` where `have to make` or `have made` was meant."
+let kind "Grammar"
+let scope "Sentence"
+let becomes ["to make", "made"]
+let strategy "MatchCase"
+
+# real sentences from Hacker News
+test "Why do I have make an entire operating system in this class?" "Why do I have to make an entire operating system in this class?"
+test "Meanwhile, we have make the best of what we know right now." "Meanwhile, we have to make the best of what we know right now."
+test "And it's not just enough to explore mars; we have make it a backup for all civilization." "And it's not just enough to explore mars; we have to make it a backup for all civilization."
+# made-up sentences
+test "I have make a decision today." "I have to make a decision today."
+test "She has make the call." "She has to make the call."
+test "We had make it work ourselves." "We had to make it work ourselves."
+test "I HAVE MAKE IT WORK." "I HAVE TO MAKE IT WORK."
+test "That is the choice I have make." "That is the choice I have to make."
+test "Sorry, we have make it quick." "Sorry, we have to make it quick."
+
+# correct text
+allows "I have to make a decision today."
+allows "I have made a decision."
+allows "Do we have to make changes?"
+allows "She had made the call."
+# look-alikes that must not be flagged
+# a noun right after `make` is skipped, to protect developer phrases like "make targets"
+allows "We have make changes queued."
+allows "We have make-up classes on Friday."
+allows "They have making music in common."
+allows "What we have, make the most of it."
+allows "the kinds of tools that we have make designing things like this largely impossible"
+allows "We have make targets for building and testing."
