@@ -330,11 +330,16 @@ fn lex_punctuation(source: &[char]) -> Option<FoundToken> {
     })
 }
 
+/// Whether a character is a double quote: ASCII or smart/typographic.
+pub(crate) fn is_double_quote(c: char) -> bool {
+    matches!(c, '"' | '“' | '”')
+}
+
 /// Specifically deals only with double quotes: ASCII and smart/typographic
 fn lex_quote(source: &[char]) -> Option<FoundToken> {
     let c = *source.first()?;
 
-    if c == '\"' || c == '“' || c == '”' {
+    if is_double_quote(c) {
         Some(FoundToken {
             next_index: 1,
             token: TokenKind::Punctuation(Punctuation::Quote(Quote { twin_loc: None })),

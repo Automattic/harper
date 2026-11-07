@@ -5,6 +5,7 @@ use lru::LruCache;
 
 use super::ast::AstVariable;
 use super::inc_by_spaces;
+use crate::lexing::is_double_quote;
 use crate::{CharStringExt, Punctuation, Token, TokenKind, TokenStringExt};
 
 use super::expr::parse_seq;
@@ -260,7 +261,7 @@ fn parse_quoted_string(tokens: &[Token], source: &[char]) -> Result<FoundNode<St
 }
 
 /// Remove the backslash from an escaped double quote or backslash, so `"say \"no\""` holds
-/// `say "no"`. A double quote, straight or curly, ends a string, so each needs escaping inside one.
+/// `say "no"`. A double quote ([`is_double_quote`]) ends a string, so each needs escaping inside one.
 fn unescape(raw: &str) -> String {
     let mut out = String::with_capacity(raw.len());
     let mut chars = raw.chars().peekable();
@@ -268,7 +269,7 @@ fn unescape(raw: &str) -> String {
     while let Some(c) = chars.next() {
         if c == '\\'
             && let Some(&next) = chars.peek()
-            && matches!(next, '\\' | '"' | '“' | '”')
+            && (next == '\\' || is_double_quote(next))
         {
             out.push(next);
             chars.next();
@@ -297,6 +298,20 @@ mod tests {
             vec![AstStmtNode::create_declare_variable(
                 "test",
                 AstVariable::create_string("say \"no\" or “no” or \\")
+            ),]
+        )
+    }
+
+    #[test]
+    fn odd_backslashes_before_a_quote_escape_it() {
+        // `\\` is a backslash and `\"` a quote, so the string doesn't end there.
+        let ast = parse_str(r#"let test "a\\\"b""#, true).unwrap();
+
+        assert_eq!(
+            ast.stmts,
+            vec![AstStmtNode::create_declare_variable(
+                "test",
+                AstVariable::create_string("a\\\"b")
             ),]
         )
     }

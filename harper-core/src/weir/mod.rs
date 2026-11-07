@@ -679,6 +679,8 @@ pub mod tests {
         let mut linter = WeirLinter::new(source).unwrap();
         assert_passes_all(&mut linter);
 
+        // The `test` line passes even if the backslash is kept, since both sides would keep it,
+        // so check the suggestions themselves.
         let document = Document::new_markdown_default_curated("Click No to cancel.");
         let lints = linter.lint(&document);
         let suggestions: Vec<String> = lints[0]
