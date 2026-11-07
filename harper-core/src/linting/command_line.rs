@@ -28,6 +28,13 @@ impl Default for CommandLine {
     }
 }
 
+#[derive(PartialEq)]
+enum Num {
+    Sg,
+    Pl,
+}
+use Num::*;
+
 impl ExprLinter for CommandLine {
     type Unit = Chunk;
 
@@ -63,23 +70,49 @@ impl ExprLinter for CommandLine {
             ),
         };
 
-        let maybe_next_word = following_word(ctx).map(|t| t.get_ch(src));
+        let next_word_tok = following_word(ctx);
 
-        let (pl_cmd, pl_line) = (
-            command.ends_with_ignore_ascii_case_chars(&['s']),
-            line.ends_with_ignore_ascii_case_chars(&['s']),
-        );
+        let to_num = |s: &[char]| {
+            if s.ends_with_ignore_ascii_case_chars(&['s']) {
+                Pl
+            } else {
+                Sg
+            }
+        };
 
-        // abort for 'command lines at once'
-        if !pl_cmd && pl_line && maybe_next_word.is_some_and(|c| c.eq_ch(&['a', 't'])) {
+        let (cmd, ln) = (to_num(command), to_num(line));
+
+        // exceptions for 'commands line' -> 'commands line by line'
+        if cmd == Pl && ln == Sg && next_word_tok.is_some_and(|t| t.get_ch(src).eq_ch(&['b', 'y']))
+        {
             return None;
         }
-        // abort for 'commands line by line'
-        if pl_cmd && !pl_line && maybe_next_word.is_some_and(|c| c.eq_ch(&['b', 'y'])) {
-            return None;
+
+        // 'command lines' has various cases
+        if cmd == Sg && ln == Pl {
+            next_word_tok?;
+
+            if let Some(t) = next_word_tok {
+                if !t.kind.is_noun() {
+                    return None;
+                }
+                // Some nouns are exceptions, "at" means "at sign" as a noun
+                if t.get_ch(src).eq_ch(&['a', 't']) {
+                    return None;
+                }
+                // Some nouns are also verb lemmas (present tense), in which case it gets tricky:
+                //  "command lines work" -> verb: legit
+                //  "command lines interface/input/output" -> noun: bad
+                if t.kind.is_verb_lemma() {
+                    // legit:mistake ratio is 1:3 so let's special case on "work" for now
+                    if t.get_ch(src).eq_ch(&['w', 'o', 'r', 'k']) {
+                        return None;
+                    }
+                }
+            }
         }
 
-        let (command, line) = if pl_cmd && pl_line && maybe_next_word.is_none() {
+        let (command, line) = if cmd == Pl && ln == Pl && next_word_tok.is_none() {
             // there's commands lines -> there's command lines
             (&command[0..7], line)
         } else {
@@ -206,6 +239,42 @@ mod tests {
             "there's also certain commands lines, tool offsets,spindle speeds, feed rates",
             CommandLine::default(),
             "there's also certain command lines, tool offsets,spindle speeds, feed rates",
+        );
+    }
+
+    // Elijah's findings from first PR round
+
+    #[test]
+    fn fix_run_these_command_lines() {
+        assert_no_lints("Run these command lines.", CommandLine::default());
+    }
+
+    #[test]
+    fn fix_the_manual_contains_three_command_lines() {
+        assert_no_lints(
+            "The manual contains three command lines.",
+            CommandLine::default(),
+        );
+    }
+
+    #[test]
+    fn fix_copy_the_command_lines_into_the_terminal() {
+        assert_no_lints(
+            "Copy the command lines into the terminal.",
+            CommandLine::default(),
+        );
+    }
+
+    #[test]
+    fn fix_the_command_lines_are_shown_below() {
+        assert_no_lints("The command lines are shown below.", CommandLine::default());
+    }
+
+    #[test]
+    fn fix_these_command_lines_work_correctly() {
+        assert_no_lints(
+            "These command lines work correctly.",
+            CommandLine::default(),
         );
     }
 }
