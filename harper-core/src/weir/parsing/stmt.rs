@@ -259,8 +259,8 @@ fn parse_quoted_string(tokens: &[Token], source: &[char]) -> Result<FoundNode<St
     })
 }
 
-/// Remove the backslash from an escaped quote or backslash, so `"say \"no\""` holds `say "no"`.
-/// Any quote mark, straight or curly, ends a string, so each needs escaping inside one.
+/// Remove the backslash from an escaped double quote or backslash, so `"say \"no\""` holds
+/// `say "no"`. A double quote, straight or curly, ends a string, so each needs escaping inside one.
 fn unescape(raw: &str) -> String {
     let mut out = String::with_capacity(raw.len());
     let mut chars = raw.chars().peekable();
@@ -268,7 +268,7 @@ fn unescape(raw: &str) -> String {
     while let Some(c) = chars.next() {
         if c == '\\'
             && let Some(&next) = chars.peek()
-            && matches!(next, '\\' | '"' | '\'' | '“' | '”' | '‘' | '’')
+            && matches!(next, '\\' | '"' | '“' | '”')
         {
             out.push(next);
             chars.next();
@@ -303,13 +303,14 @@ mod tests {
 
     #[test]
     fn keeps_a_backslash_before_anything_else() {
-        let ast = parse_str(r#"let test "a\b""#, true).unwrap();
+        // Single quotes don't end a string, so they need no escape and keep their backslash.
+        let ast = parse_str(r#"let test "a\b \' \’""#, true).unwrap();
 
         assert_eq!(
             ast.stmts,
             vec![AstStmtNode::create_declare_variable(
                 "test",
-                AstVariable::create_string("a\\b")
+                AstVariable::create_string("a\\b \\' \\’")
             ),]
         )
     }

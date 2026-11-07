@@ -292,6 +292,14 @@ You can also assert that the rule _will not_ change anything.
 allows "A"
 ```
 
+A double quote, straight or curly, ends a string, so put a backslash before any that belong to the text, and write `\\` for a backslash.
+This works in every string, including `message` and `becomes`.
+
+```plaintext
+# The text is: He said "no" twice.
+allows "He said \"no\" twice."
+```
+
 In the future, expect new types of tests to become available.
 
 If you have `harper-cli` available, you can run the tests in a given Weir file by running `harper-cli test <path to the Weir file>`.
