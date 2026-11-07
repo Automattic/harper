@@ -1,0 +1,10 @@
+expr beforeWields [also, book, Gandhi, he, now, she, still, who, whoever, woman]
+ 
+expr main <(@beforeWields yields), yields>
+
+let message "Are you confusing ‘wield’ and ‘yield’?"
+let description "Looks for ‘weild’ used where ‘yield’ is intended, or vice versa."
+let kind "Eggcorn"
+let becomes "wields"
+
+test "looks like the shotgun he yields" "looks like the shotgun he wields"

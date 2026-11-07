@@ -1,0 +1,10 @@
+expr beforeYield [average, crop, dividend, grain, high, in, on, sustained, the, water]
+
+expr main <(@beforeYield wield), wield>
+
+let message "Are you confusing ‘wield’ and ‘yield’?"
+let description "Looks for ‘weild’ used where ‘yield’ is intended, or vice versa."
+let kind "Eggcorn"
+let becomes "yield"
+
+test "we had an above-average wield this year" "we had an above-average yield this year"

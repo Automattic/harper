@@ -1,0 +1,12 @@
+expr beforeYielded [a, also, analysis, boughs, data, information, it, not, of, results, tar, that, the, which]
+expr beforeYieldedWith [had, has, have, it, throne]
+
+expr afterYielded [an, and, information, more, no, only, results, significant, so, some, their, them, to, up, zone]
+expr afterYieldedWith [all, coy, full, good, no, poignant, reluctance, respect]
+
+expr main <[(@beforeYielded wielded), (@beforeYieldedWith wielded with), (wielded @afterYielded), (wielded with @afterYieldedWith)], wielded>
+
+let message "Are you confusing ‘wield’ and ‘yield’?"
+let description "Looks for ‘weild’ used where ‘yield’ is intended, or vice versa."
+let kind "Eggcorn"
+let becomes "yielded"
