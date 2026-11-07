@@ -514,6 +514,16 @@ Suggest:
 
 
 
+Lint:    Capitalization (31 priority)
+Message: |
+     142 | computers than astronomy is about telescopes."[note 3] The design and deployment
+         |                                                ^~~~ This starts a sentence, so it should be capitalized.
+     143 | of computers and computer systems is generally considered the province of
+Suggest:
+  - Replace with: “Note”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      154 | computing is a mathematical science. Early computer science was strongly
