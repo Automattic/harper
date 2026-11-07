@@ -407,6 +407,8 @@ fn resolve_exprs(ast: &Ast) -> Result<HashMap<String, Lrc<Box<dyn Expr>>>, Error
 pub mod tests {
     use quickcheck_macros::quickcheck;
 
+    use crate::Document;
+    use crate::linting::{Linter, Suggestion};
     use crate::weir::Error;
 
     use super::{TestResult, WeirLinter};
@@ -659,6 +661,35 @@ pub mod tests {
         let mut linter = WeirLinter::new(source).unwrap();
 
         assert_eq!(linter.run_tests().len(), 1)
+    }
+
+    #[test]
+    fn suggestions_hold_unescaped_quotes() {
+        let source = r#"
+            expr main <(click no), (no)>
+            let message "Quote it."
+            let description "d"
+            let kind "Style"
+            let becomes ["\"no\"", "\“no\”"]
+            let strategy "MatchCase"
+
+            test "Click No to cancel." "Click \"No\" to cancel."
+            "#;
+
+        let mut linter = WeirLinter::new(source).unwrap();
+        assert_passes_all(&mut linter);
+
+        let document = Document::new_markdown_default_curated("Click No to cancel.");
+        let lints = linter.lint(&document);
+        let suggestions: Vec<String> = lints[0]
+            .suggestions
+            .iter()
+            .map(|s| match s {
+                Suggestion::ReplaceWith(chars) => chars.iter().collect(),
+                other => panic!("unexpected suggestion {other:?}"),
+            })
+            .collect();
+        assert_eq!(suggestions, vec!["\"No\"".to_string(), "“No”".to_string()]);
     }
 
     #[test]

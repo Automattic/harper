@@ -248,13 +248,36 @@ fn parse_quoted_string(tokens: &[Token], source: &[char]) -> Result<FoundNode<St
 
     let end = end.ok_or(Error::EndOfInput)?;
 
+    let raw = tokens[cursor + 1..end]
+        .span()
+        .unwrap_or_default()
+        .get_content_string(source);
+
     Ok(FoundNode {
-        node: tokens[cursor + 1..end]
-            .span()
-            .unwrap_or_default()
-            .get_content_string(source),
+        node: unescape(&raw),
         next_idx: end + 1,
     })
+}
+
+/// Remove the backslash from an escaped quote or backslash, so `"say \"no\""` holds `say "no"`.
+/// Any quote mark, straight or curly, ends a string, so each needs escaping inside one.
+fn unescape(raw: &str) -> String {
+    let mut out = String::with_capacity(raw.len());
+    let mut chars = raw.chars().peekable();
+
+    while let Some(c) = chars.next() {
+        if c == '\\'
+            && let Some(&next) = chars.peek()
+            && matches!(next, '\\' | '"' | '\'' | '“' | '”' | '‘' | '’')
+        {
+            out.push(next);
+            chars.next();
+        } else {
+            out.push(c);
+        }
+    }
+
+    out
 }
 
 #[cfg(test)]
@@ -264,6 +287,32 @@ mod tests {
     use crate::char_string::char_string;
 
     use super::{AstExprNode, AstStmtNode, AstVariable, parse_str};
+
+    #[test]
+    fn unescapes_quotes_in_strings() {
+        let ast = parse_str(r#"let test "say \"no\" or \“no\” or \\""#, true).unwrap();
+
+        assert_eq!(
+            ast.stmts,
+            vec![AstStmtNode::create_declare_variable(
+                "test",
+                AstVariable::create_string("say \"no\" or “no” or \\")
+            ),]
+        )
+    }
+
+    #[test]
+    fn keeps_a_backslash_before_anything_else() {
+        let ast = parse_str(r#"let test "a\b""#, true).unwrap();
+
+        assert_eq!(
+            ast.stmts,
+            vec![AstStmtNode::create_declare_variable(
+                "test",
+                AstVariable::create_string("a\\b")
+            ),]
+        )
+    }
 
     #[test]
     fn parses_single_var_stmt() {
