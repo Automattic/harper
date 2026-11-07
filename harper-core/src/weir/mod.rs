@@ -662,6 +662,62 @@ pub mod tests {
     }
 
     #[test]
+    fn start_matches_only_at_the_start_of_the_chunk() {
+        let source = r#"
+            expr main <(START no to mention), (no to)>
+            let message "Did you mean `not to`?"
+            let description "d"
+            let kind "Typo"
+            let becomes "not to"
+
+            test "No to mention the cost." "Not to mention the cost."
+            test "It was slow, no to mention buggy." "It was slow, not to mention buggy."
+            allows "They said no to mention of the layoffs."
+            "#;
+
+        let mut linter = WeirLinter::new(source).unwrap();
+        assert_passes_all(&mut linter);
+        assert_eq!(3, linter.count_tests());
+    }
+
+    #[test]
+    fn start_follows_the_scope() {
+        let source = r#"
+            expr main <(START no to mention), (no to)>
+            let message "Did you mean `not to`?"
+            let description "d"
+            let kind "Typo"
+            let becomes "not to"
+            let scope "Sentence"
+
+            test "No to mention the cost." "Not to mention the cost."
+            allows "It was slow, no to mention buggy."
+            "#;
+
+        let mut linter = WeirLinter::new(source).unwrap();
+        assert_passes_all(&mut linter);
+        assert_eq!(2, linter.count_tests());
+    }
+
+    #[test]
+    fn end_matches_only_at_the_end() {
+        let source = r#"
+            expr main <(no to END), (no to)>
+            let message "Did you mean `not to`?"
+            let description "d"
+            let kind "Typo"
+            let becomes "not to"
+
+            test "I prefer no to." "I prefer not to."
+            allows "Learn to say no to people."
+            "#;
+
+        let mut linter = WeirLinter::new(source).unwrap();
+        assert_passes_all(&mut linter);
+        assert_eq!(2, linter.count_tests());
+    }
+
+    #[test]
     fn errors_properly_with_missing_expr() {
         let source = "expr main";
         let res = WeirLinter::new(source);

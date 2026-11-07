@@ -3,7 +3,7 @@ use hashbrown::HashMap;
 use is_macro::Is;
 use itertools::Itertools;
 
-use crate::expr::{Expr, Filter, LongestMatchOf, SequenceExpr, UnlessStep};
+use crate::expr::{AnchorEnd, AnchorStart, Expr, Filter, LongestMatchOf, SequenceExpr, UnlessStep};
 use crate::patterns::{AnyPattern, DerivedFrom, UPOSSet, WhitespacePattern, Word};
 use crate::{CharString, CharStringExt, Lrc, Punctuation, Token};
 
@@ -85,6 +85,10 @@ pub enum AstExprNode {
     Whitespace,
     /// A progressive verb.
     Progressive,
+    /// The start of the matched scope (the chunk or the sentence): its first word.
+    Start,
+    /// The end of the matched scope: its last token that isn't whitespace.
+    End,
     UPOSSet(Vec<UPOS>),
     Word(CharString),
     DerivativeOf(CharString),
@@ -110,6 +114,8 @@ impl AstExprNode {
             AstExprNode::Progressive => Ok(Box::new(|tok: &Token, _: &[char]| {
                 tok.kind.is_verb_progressive_form()
             })),
+            AstExprNode::Start => Ok(Box::new(AnchorStart)),
+            AstExprNode::End => Ok(Box::new(AnchorEnd)),
             AstExprNode::UPOSSet(upos) => Ok(Box::new(UPOSSet::new(upos))),
             AstExprNode::Whitespace => Ok(Box::new(WhitespacePattern)),
             AstExprNode::Word(word) => Ok(Box::new(Word::from_chars(word))),

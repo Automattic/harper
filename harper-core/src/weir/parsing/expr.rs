@@ -36,6 +36,19 @@ pub fn parse_seq(tokens: &[Token], source: &[char]) -> Result<Vec<AstExprNode>, 
         cursor += res.next_idx;
     }
 
+    // The anchors are zero-width and sit on a word, so the space that separates them from that
+    // word in the source (`START no to`) is for readability and must not require whitespace.
+    let mut i = 0;
+    while i + 1 < seq.len() {
+        if (seq[i].is_start() && seq[i + 1].is_whitespace())
+            || (seq[i].is_whitespace() && seq[i + 1].is_end())
+        {
+            seq.remove(if seq[i].is_start() { i + 1 } else { i });
+        } else {
+            i += 1;
+        }
+    }
+
     Ok(seq)
 }
 
@@ -74,6 +87,8 @@ fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstE
             }else{
                 let node = match text.as_str() {
                     "PROG" => AstExprNode::Progressive,
+                    "START" => AstExprNode::Start,
+                    "END" => AstExprNode::End,
                     _ => AstExprNode::Word(text.chars().collect()),
                 };
 
@@ -461,6 +476,42 @@ mod tests {
         assert_eq!(
             parse_expr_str("PROG", true).unwrap(),
             AstExprNode::Progressive
+        )
+    }
+
+    #[test]
+    fn parses_start() {
+        assert_eq!(parse_expr_str("START", true).unwrap(), AstExprNode::Start)
+    }
+
+    #[test]
+    fn parses_end() {
+        assert_eq!(parse_expr_str("END", true).unwrap(), AstExprNode::End)
+    }
+
+    #[test]
+    fn start_absorbs_the_following_space() {
+        assert_eq!(
+            parse_expr_str("START no to", true).unwrap(),
+            AstExprNode::Seq(vec![
+                AstExprNode::Start,
+                AstExprNode::Word(char_string!("no")),
+                AstExprNode::Whitespace,
+                AstExprNode::Word(char_string!("to")),
+            ])
+        )
+    }
+
+    #[test]
+    fn end_absorbs_the_preceding_space() {
+        assert_eq!(
+            parse_expr_str("no to END", true).unwrap(),
+            AstExprNode::Seq(vec![
+                AstExprNode::Word(char_string!("no")),
+                AstExprNode::Whitespace,
+                AstExprNode::Word(char_string!("to")),
+                AstExprNode::End,
+            ])
         )
     }
 

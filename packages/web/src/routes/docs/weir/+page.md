@@ -183,6 +183,18 @@ For example:
 expr main PROG
 ```
 
+### Anchors
+
+The keyword START matches the start of the text a rule runs on, and END matches its end.
+That text is a chunk by default, or a sentence when the rule's [scope](#matching-scope) is `Sentence`.
+Anchors take up no space, so the space between an anchor and its neighbor is only for readability.
+For example, to match "no to mention" only when it opens a sentence:
+
+```plaintext
+expr main <(START no to mention), (no to)>
+let scope "Sentence"
+```
+
 ### Exceptions
 
 You can add exceptions to expressions by throwing an exclamation mark in front of any other expression.
