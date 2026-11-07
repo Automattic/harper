@@ -3932,6 +3932,13 @@
 						},
 						{
 							"Bool": {
+								"name": "MakeUseOf",
+								"state": true,
+								"label": "Make Use Of"
+							}
+						},
+						{
+							"Bool": {
 								"name": "MassNouns",
 								"state": true,
 								"label": "Mass Nouns"
