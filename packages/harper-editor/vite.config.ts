@@ -1,7 +1,6 @@
 /// <reference types="vitest/config" />
 
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { resolve } from 'node:path';
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import tailwindcss from '@tailwindcss/vite';
@@ -16,7 +15,7 @@ export default defineConfig({
 				extends: true,
 				plugins: [
 					storybookTest({
-						configDir: resolve(dirname(fileURLToPath(import.meta.url)), '.storybook'),
+						configDir: resolve(import.meta.dirname, '.storybook'),
 					}),
 				],
 				test: {
@@ -33,20 +32,21 @@ export default defineConfig({
 	},
 	build: {
 		lib: {
-			entry: resolve(__dirname, 'src/lib/bundle.ts'),
+			entry: { index: resolve(import.meta.dirname, 'src/lib/bundle.ts') },
 			formats: ['es'],
 			fileName: () => 'index',
 			cssFileName: 'harper-editor',
 		},
-		rollupOptions: {
+		rolldownOptions: {
 			external: ['svelte', /^svelte\//, /^harper\.js(\/.*)?$/],
 			output: {
+				preserveModules: true,
 				assetFileNames: (assetInfo) =>
-					assetInfo.name === 'harper-editor.css'
+					assetInfo.names.includes('harper-editor.css')
 						? 'harper-editor.css'
 						: 'assets/[name]-[hash][extname]',
 				chunkFileNames: 'chunks/[name]-[hash].js',
-				entryFileNames: () => 'index.js',
+				entryFileNames: '[name].js',
 			},
 		},
 	},

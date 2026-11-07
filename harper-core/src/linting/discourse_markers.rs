@@ -6,6 +6,8 @@ use crate::{Document, Token, TokenStringExt};
 
 use super::{Lint, LintKind, Linter, Suggestion};
 
+const ALSO_PREPOSITIONS: &[&str] = &["besides", "notwithstanding"];
+
 pub struct DiscourseMarkers {
     expr: SequenceExpr,
 }
@@ -14,16 +16,23 @@ impl DiscourseMarkers {
     pub fn new() -> Self {
         let phrases = &[
             "accordingly",
+            "actually",
             "additionally",
+            "also",
             "alternatively",
+            "besides",
+            "by the way",
             "consequently",
             "conversely",
+            "even so",
             "for example",
             "frankly",
             "furthermore",
             "hence",
             "honestly",
             "however",
+            "in addition",
+            "in other words",
             "incidentally",
             "indeed",
             "instead",
@@ -37,6 +46,7 @@ impl DiscourseMarkers {
             "on the other hand",
             "otherwise",
             "subsequently",
+            "that said",
             "therefore",
             "thus",
         ];
@@ -48,6 +58,7 @@ impl DiscourseMarkers {
         );
 
         Self {
+            // Skip markers followed by a modifier or a verb
             expr: SequenceExpr::with(phrases_expr)
                 .t_ws()
                 .then_unless(UPOSSet::new(&[
@@ -55,24 +66,44 @@ impl DiscourseMarkers {
                     UPOS::ADV,
                     UPOS::ADP,
                     UPOS::CCONJ,
+                    UPOS::VERB,
                 ])),
         }
     }
 
     fn lint_sentence(&self, sent: &[Token], source: &[char]) -> Option<Lint> {
         let first_word_idx = sent.iter_word_indices().next()?;
+        let matched_phrase = self.expr.run(first_word_idx, sent, source)?;
 
-        if let Some(matched_phrase) = self.expr.run(first_word_idx, sent, source) {
-            Some(Lint {
-                span: sent[matched_phrase.start..matched_phrase.end - 2].span()?,
-                lint_kind: LintKind::Punctuation,
-                suggestions: vec![Suggestion::InsertAfter(vec![','])],
-                message: "Discourse markers at the beginning of a sentence should be followed by a comma.".into(),
-                priority: 31,
-            })
-        } else {
-            None
+        let marker_end = matched_phrase.end - 2;
+        let marker = &sent[matched_phrase.start..marker_end];
+
+        if self.is_prepositional(marker, &sent[marker_end..], source) {
+            return None;
         }
+
+        Some(Lint {
+            span: marker.span()?,
+            lint_kind: LintKind::Punctuation,
+            suggestions: vec![Suggestion::InsertAfter(vec![','])],
+            message:
+                "Discourse markers at the beginning of a sentence should be followed by a comma."
+                    .into(),
+            priority: 31,
+        })
+    }
+
+    fn is_prepositional(&self, marker: &[Token], rest: &[Token], source: &[char]) -> bool {
+        let (Some(span), Some(next)) = (marker.span(), rest.first_non_whitespace()) else {
+            return false;
+        };
+
+        ALSO_PREPOSITIONS.contains(&span.get_content_string(source).to_lowercase().as_str())
+            && (next.kind.is_upos(UPOS::DET)
+                || !rest
+                    .iter()
+                    .take_while(|token| !token.kind.is_comma())
+                    .any(|token| token.kind.is_upos(UPOS::VERB)))
     }
 }
 
@@ -346,6 +377,210 @@ mod tests {
         assert_no_lints(
             "Now a days, movie recommendation systems are well developed and are user focused.",
             DiscourseMarkers::default(),
+        );
+    }
+
+    #[test]
+    fn corrects_also() {
+        assert_suggestion_result(
+            "Also I think we should go.",
+            DiscourseMarkers::default(),
+            "Also, I think we should go.",
+        );
+    }
+
+    #[test]
+    fn no_suggestion_if_comma_after_also() {
+        assert_no_lints("Also, I think we should go.", DiscourseMarkers::default());
+    }
+
+    #[test]
+    fn no_lint_for_mid_sentence_also() {
+        assert_no_lints("She also said hi.", DiscourseMarkers::default());
+    }
+
+    #[test]
+    fn allows_also_known_as() {
+        assert_no_lints("Also known as the big one.", DiscourseMarkers::default());
+    }
+
+    #[test]
+    fn allows_also_called() {
+        assert_no_lints("Also called the big one.", DiscourseMarkers::default());
+    }
+
+    #[test]
+    fn allows_also_see() {
+        assert_no_lints("Also see chapter two.", DiscourseMarkers::default());
+    }
+
+    #[test]
+    fn allows_also_available() {
+        assert_no_lints("Also available in blue.", DiscourseMarkers::default());
+    }
+
+    #[test]
+    fn corrects_actually() {
+        assert_suggestion_result(
+            "Actually I don't know.",
+            DiscourseMarkers::default(),
+            "Actually, I don't know.",
+        );
+    }
+
+    #[test]
+    fn no_suggestion_if_comma_after_actually() {
+        assert_no_lints("Actually, I don't know.", DiscourseMarkers::default());
+    }
+
+    #[test]
+    fn no_lint_for_mid_sentence_actually() {
+        assert_no_lints("She is actually right.", DiscourseMarkers::default());
+    }
+
+    #[test]
+    fn allows_actually_existing() {
+        assert_no_lints(
+            "Actually existing socialism was a term.",
+            DiscourseMarkers::default(),
+        );
+    }
+
+    #[test]
+    fn corrects_also_and_actually_in_one_document() {
+        assert_suggestion_result(
+            "Actually I don't know. Also I forgot.",
+            DiscourseMarkers::default(),
+            "Actually, I don't know. Also, I forgot.",
+        );
+    }
+
+    #[test]
+    fn corrects_in_addition() {
+        assert_suggestion_result(
+            "In addition we need to test this.",
+            DiscourseMarkers::default(),
+            "In addition, we need to test this.",
+        );
+    }
+
+    #[test]
+    fn allows_in_addition_to() {
+        assert_no_lints(
+            "In addition to that we need to test this.",
+            DiscourseMarkers::default(),
+        );
+    }
+
+    #[test]
+    fn corrects_even_so() {
+        assert_suggestion_result(
+            "Even so the plan failed.",
+            DiscourseMarkers::default(),
+            "Even so, the plan failed.",
+        );
+    }
+
+    #[test]
+    fn allows_even_so_much_as() {
+        assert_no_lints(
+            "Even so much as a whisper would wake him.",
+            DiscourseMarkers::default(),
+        );
+    }
+
+    #[test]
+    fn corrects_that_said() {
+        assert_suggestion_result(
+            "That said we should wait.",
+            DiscourseMarkers::default(),
+            "That said, we should wait.",
+        );
+    }
+
+    #[test]
+    fn corrects_in_other_words() {
+        assert_suggestion_result(
+            "In other words we should go.",
+            DiscourseMarkers::default(),
+            "In other words, we should go.",
+        );
+    }
+
+    #[test]
+    fn allows_in_other_words_and_phrases() {
+        assert_no_lints(
+            "In other words and phrases, keep it short.",
+            DiscourseMarkers::default(),
+        );
+    }
+
+    #[test]
+    fn corrects_by_the_way() {
+        assert_suggestion_result(
+            "By the way I saw him yesterday.",
+            DiscourseMarkers::default(),
+            "By the way, I saw him yesterday.",
+        );
+    }
+
+    #[test]
+    fn allows_by_way_of() {
+        assert_no_lints(
+            "By way of introduction he waved.",
+            DiscourseMarkers::default(),
+        );
+    }
+
+    #[test]
+    fn corrects_besides() {
+        assert_suggestion_result(
+            "Besides we have no time.",
+            DiscourseMarkers::default(),
+            "Besides, we have no time.",
+        );
+    }
+
+    #[test]
+    fn corrects_besides_before_list() {
+        assert_suggestion_result(
+            "Besides we need milk, eggs, and bread.",
+            DiscourseMarkers::default(),
+            "Besides, we need milk, eggs, and bread.",
+        );
+    }
+
+    #[test]
+    fn allows_besides_as_preposition() {
+        assert_no_lints(
+            "Besides me, nobody knew the answer.",
+            DiscourseMarkers::default(),
+        );
+    }
+
+    #[test]
+    fn corrects_notwithstanding() {
+        assert_suggestion_result(
+            "Notwithstanding they still went out.",
+            DiscourseMarkers::default(),
+            "Notwithstanding, they still went out.",
+        );
+    }
+
+    #[test]
+    fn allows_notwithstanding_as_preposition() {
+        assert_no_lints(
+            "Notwithstanding the rain, we went out.",
+            DiscourseMarkers::default(),
+        );
+    }
+
+    #[test]
+    fn corrects_other_markers_before_determiner() {
+        assert_suggestion_result(
+            "However the rain held off.",
+            DiscourseMarkers::default(),
+            "However, the rain held off.",
         );
     }
 }
