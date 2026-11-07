@@ -1,6 +1,6 @@
 #![doc = include_str!("../README.md")]
 
-use std::io::stderr;
+use std::io::{self, Write, stderr};
 
 use config::Config;
 use tokio::net::TcpListener;
@@ -21,6 +21,23 @@ use tracing_subscriber::FmtSubscriber;
 
 static DEFAULT_ADDRESS: &str = "127.0.0.1:4000";
 
+/// A writer that discards write errors.
+///
+/// When a write fails, `tracing-subscriber` reports it with `eprintln!`, which panics if
+/// stderr is a closed pipe. That happens during shutdown if the client has gone away.
+struct Quiet<W>(W);
+
+impl<W: Write> Write for Quiet<W> {
+    fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
+        Ok(self.0.write(buf).unwrap_or(buf.len()))
+    }
+
+    fn flush(&mut self) -> io::Result<()> {
+        let _ = self.0.flush();
+        Ok(())
+    }
+}
+
 /// Start a language server to provide grammar checking inside of developer
 /// environments.
 ///
@@ -38,7 +55,7 @@ struct Args {
 #[tokio::main(worker_threads = 1)]
 async fn main() -> anyhow::Result<()> {
     let subscriber = FmtSubscriber::builder()
-        .map_writer(move |_| stderr)
+        .map_writer(move |_| || Quiet(stderr()))
         .with_ansi(false)
         .with_max_level(Level::WARN)
         .finish();
@@ -63,4 +80,28 @@ async fn main() -> anyhow::Result<()> {
     }
 
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    struct Broken;
+
+    impl Write for Broken {
+        fn write(&mut self, _: &[u8]) -> io::Result<usize> {
+            Err(io::ErrorKind::BrokenPipe.into())
+        }
+
+        fn flush(&mut self) -> io::Result<()> {
+            Err(io::ErrorKind::BrokenPipe.into())
+        }
+    }
+
+    #[test]
+    fn quiet_writer_swallows_broken_pipe() {
+        let mut w = Quiet(Broken);
+        assert_eq!(w.write(b"hello").unwrap(), 5);
+        assert!(w.flush().is_ok());
+    }
 }
