@@ -5,7 +5,8 @@ use harper_brill::UPOS;
 use crate::{CharString, Currency, Punctuation, Token, TokenKind};
 
 use super::{
-    AstExprNode, Error, FoundNode, lex, locate_matching_brace, optimize_expr, parse_collection,
+    AstExprNode, Error, FoundNode, inc_by_spaces, lex, locate_matching_brace, optimize_expr,
+    parse_collection,
 };
 
 /// Parse a raw expression string.
@@ -32,29 +33,20 @@ pub fn parse_seq(tokens: &[Token], source: &[char]) -> Result<Vec<AstExprNode>, 
         && !remainder.is_empty()
     {
         let res = parse_single_expr(remainder, source)?;
-        seq.push(res.node);
         cursor += res.next_idx;
-    }
 
-    // Anchors are zero-width, so a space beside one (`START no to`) is only for readability.
-    // Matching it would require whitespace before the first word or after the last.
-    let mut i = 0;
-    while i < seq.len() {
-        let beside_anchor = seq[i].is_whitespace()
-            && ((i > 0 && is_anchor(&seq[i - 1])) || seq.get(i + 1).is_some_and(is_anchor));
-
-        if beside_anchor {
-            seq.remove(i);
-        } else {
-            i += 1;
+        // Anchors are zero-width, so the spaces beside one (`START no to`) are only for readability.
+        if matches!(res.node, AstExprNode::Start | AstExprNode::End) {
+            if seq.last().is_some_and(AstExprNode::is_whitespace) {
+                seq.pop();
+            }
+            inc_by_spaces(&mut cursor, tokens);
         }
+
+        seq.push(res.node);
     }
 
     Ok(seq)
-}
-
-fn is_anchor(node: &AstExprNode) -> bool {
-    node.is_start() || node.is_end()
 }
 
 /// Parse an individual expression.
