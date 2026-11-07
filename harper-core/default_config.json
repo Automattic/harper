@@ -2674,6 +2674,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ComeAcross",
+								"state": true,
+								"label": "Come Across"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Dereference",
 								"state": true,
 								"label": "Dereference"
