@@ -366,6 +366,24 @@ impl OsBroker for MacBroker {
         Some(egui::pos2(location.x as f32, location.y as f32))
     }
 
+    fn is_target_still_focused(&mut self) -> bool {
+        let Ok(focused_pid) = focused_window_pid::focused_window_pid() else {
+            return false;
+        };
+        let Some(target) = self.resolve_target(focused_pid, |pid| {
+            ax_element_attribute(&AXUIElement::application(pid), kAXFocusedUIElementAttribute).ok()
+        }) else {
+            return false;
+        };
+        let Ok(Some(bundle_identifier)) = bundle_identifier_for_pid(target.pid) else {
+            return false;
+        };
+        if !(self.is_integration_enabled)(&bundle_identifier) {
+            return false;
+        }
+        !self.window_is_moving(target.pid)
+    }
+
     fn accessibility_permission_status(&self) -> AccessibilityPermissionStatus {
         if unsafe { AXIsProcessTrusted() } {
             AccessibilityPermissionStatus::Granted

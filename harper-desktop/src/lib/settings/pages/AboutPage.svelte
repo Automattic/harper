@@ -3,6 +3,7 @@ import { openUrl } from '@tauri-apps/plugin-opener';
 import { Button, Logo } from 'components';
 import { onMount } from 'svelte';
 import { Client } from '$lib/client';
+import { isWindows } from '$lib/platform';
 
 const SOURCE_URL = 'https://github.com/Automattic/harper';
 const ISSUE_URL = 'https://github.com/Automattic/harper/issues/new/choose';
@@ -23,26 +24,30 @@ async function loadCurrentVersion() {
 </script>
 
 <section class="about">
-        <div class="about-mark" aria-hidden="true"><Logo /></div>
-        <h1>Harper for Mac</h1>
-        <p class="muted">Version {currentVersion || 'unknown'}</p>
-        <p>
-          An open-source grammar checker that runs entirely on your device. No accounts, no
-          telemetry, no cloud.
-        </p>
-        <div class="actions-row center">
-          <Button
-            unstyled
-            class="button"
-            type="button"
-            on:click={() => void openUrl('https://github.com/Automattic/harper/releases/latest')}
-          >Release notes</Button>
-          <Button unstyled class="button" type="button" on:click={() => void openUrl(SOURCE_URL)}>Source on GitHub</Button>
-          <Button unstyled class="button" type="button" on:click={() => void openUrl(ISSUE_URL)}>Report an issue</Button>
-        </div>
-        <div class="about-footer">
-          Harper is free software released under the Apache 2.0 license.
-          <br />
-          Copyright 2026 The Harper Contributors.
-        </div>
-      </section>
+	<div class="about-mark" aria-hidden="true"><Logo /></div>
+	{#if isWindows}
+		<h1>Harper now on Windows!</h1>
+	{:else}
+		<h1>Harper for Mac</h1>
+	{/if}
+	<p class="muted">Version {currentVersion || 'unknown'}</p>
+	<p>
+		An open-source grammar checker that runs entirely on your device. No accounts, no
+		telemetry, no cloud.
+	</p>
+	<div class="actions-row center">
+		<Button
+			unstyled
+			class="button"
+			type="button"
+			on:click={() => void openUrl('https://github.com/Automattic/harper/releases/latest')}
+		>Release notes</Button>
+		<Button unstyled class="button" type="button" on:click={() => void openUrl(SOURCE_URL)}>Source on GitHub</Button>
+		<Button unstyled class="button" type="button" on:click={() => void openUrl(ISSUE_URL)}>Report an issue</Button>
+	</div>
+	<div class="about-footer">
+		Harper is free software released under the Apache 2.0 license.
+		<br />
+		Copyright 2026 The Harper Contributors.
+	</div>
+</section>

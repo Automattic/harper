@@ -9,12 +9,13 @@ use harper_core::linting::Lint;
 use std::ffi::{OsString, c_void};
 use std::os::windows::ffi::OsStringExt;
 use std::process::Command;
+use std::time::{Duration, Instant};
 use std::{
     collections::BTreeMap,
     path::PathBuf,
     sync::{Arc, Mutex},
 };
-use windows::Win32::Foundation::{CloseHandle, HWND, POINT};
+use windows::Win32::Foundation::{CloseHandle, HWND, POINT, RECT};
 use windows::Win32::Graphics::Gdi::{MONITOR_DEFAULTTONEAREST, MonitorFromWindow};
 use windows::Win32::System::Threading::{
     OpenProcess, PROCESS_NAME_WIN32, PROCESS_QUERY_LIMITED_INFORMATION, QueryFullProcessImageNameW,
@@ -22,16 +23,25 @@ use windows::Win32::System::Threading::{
 use windows::Win32::UI::HiDpi::{GetDpiForMonitor, MDT_EFFECTIVE_DPI};
 use windows::Win32::UI::WindowsAndMessaging::{
     GUI_INMOVESIZE, GUITHREADINFO, GetCursorPos, GetForegroundWindow, GetGUIThreadInfo,
-    GetWindowThreadProcessId,
+    GetWindowRect, GetWindowThreadProcessId,
 };
 use windows::core::{PWSTR, Result as WindowsResult};
 use wintheon::file::{IconSize, Priority};
 use wintheon::gather::Gatherer;
 mod automation_service;
 
+pub const WINDOW_MOVEMENT_SETTLE_DURATION: Duration = Duration::from_millis(150);
+
+struct WindowMovementState {
+    hwnd: isize,
+    rect: RECT,
+    last_changed_at: Instant,
+}
+
 pub struct WindowsBroker {
     service: Arc<Mutex<AutomationService>>,
     is_integration_enabled: Box<dyn FnMut(&str) -> bool + Send + Sync>,
+    movement_state: Arc<Mutex<Option<WindowMovementState>>>,
 }
 
 impl WindowsBroker {
@@ -41,6 +51,7 @@ impl WindowsBroker {
         Self {
             service: Arc::new(Mutex::new(AutomationService::create_and_start())),
             is_integration_enabled: Box::new(is_integration_enabled),
+            movement_state: Arc::new(Mutex::new(None)),
         }
     }
 
@@ -54,15 +65,56 @@ impl WindowsBroker {
             return Some(false);
         }
 
-        match window_is_moving(HWND(focused_window as *mut c_void)) {
-            Ok(is_moving) => Some(!is_moving),
+        let hwnd = HWND(focused_window as *mut c_void);
+        let mut is_moving = false;
+        match window_is_moving(hwnd) {
+            Ok(true) => is_moving = true,
+            Ok(false) => {}
             Err(error) => {
                 eprintln!(
                     "Unable to determine whether the focused Windows window is moving: {error}"
                 );
-                None
             }
         }
+
+        let mut current_rect = RECT::default();
+        let got_rect = unsafe { GetWindowRect(hwnd, &mut current_rect) }.is_ok();
+
+        if let Ok(mut movement_state) = self.movement_state.lock() {
+            let now = Instant::now();
+            match movement_state.as_mut() {
+                Some(state) if state.hwnd == focused_window => {
+                    if is_moving || (got_rect && state.rect != current_rect) {
+                        if got_rect {
+                            state.rect = current_rect;
+                        }
+                        state.last_changed_at = now;
+                        let _ = self.service.lock().map(|mut s| s.clear_cache());
+                        return Some(false);
+                    }
+
+                    if now.duration_since(state.last_changed_at) < WINDOW_MOVEMENT_SETTLE_DURATION {
+                        return Some(false);
+                    }
+                }
+                _ => {
+                    *movement_state = Some(WindowMovementState {
+                        hwnd: focused_window,
+                        rect: current_rect,
+                        last_changed_at: now
+                            .checked_sub(WINDOW_MOVEMENT_SETTLE_DURATION)
+                            .unwrap_or(now),
+                    });
+                    if is_moving {
+                        return Some(false);
+                    }
+                }
+            }
+        } else if is_moving {
+            return Some(false);
+        }
+
+        Some(true)
     }
 }
 
@@ -78,6 +130,10 @@ impl OsBroker for WindowsBroker {
             path.to_string_lossy()
                 .eq_ignore_ascii_case(&executable.to_string_lossy())
         })
+    }
+
+    fn is_target_still_focused(&mut self) -> bool {
+        self.should_lint_focused_window().unwrap_or(false)
     }
 
     fn get_boxes(
@@ -139,7 +195,9 @@ impl OsBroker for WindowsBroker {
         let mut point = POINT::default();
 
         unsafe {
-            GetCursorPos(&mut point).unwrap();
+            if GetCursorPos(&mut point).is_err() {
+                return None;
+            }
         }
 
         let monitor_scale = get_focused_monitor_scale();
@@ -300,7 +358,7 @@ fn installed_applications_list() -> Arc<Vec<ApplicationListEntry>> {
             path: app.entry.path().to_owned(),
             icon_png: icon,
             display_name: app.entry.display_name(),
-        })
+        });
     }
 
     Arc::new(list)
