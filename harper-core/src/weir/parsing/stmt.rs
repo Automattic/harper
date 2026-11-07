@@ -252,33 +252,26 @@ fn parse_quoted_string(tokens: &[Token], source: &[char]) -> Result<FoundNode<St
     let raw = tokens[cursor + 1..end]
         .span()
         .unwrap_or_default()
-        .get_content_string(source);
+        .get_content(source);
 
     Ok(FoundNode {
-        node: unescape(&raw),
+        node: unescape(raw),
         next_idx: end + 1,
     })
 }
 
-/// Remove the backslash from an escaped double quote or backslash, so `"say \"no\""` holds
-/// `say "no"`. A double quote ([`is_double_quote`]) ends a string, so each needs escaping inside one.
-fn unescape(raw: &str) -> String {
-    let mut out = String::with_capacity(raw.len());
-    let mut chars = raw.chars().peekable();
+/// Drop the backslash before an escaped backslash or double quote ([`is_double_quote`]), so
+/// `"say \"no\""` holds `say "no"`. Any other backslash is kept.
+fn unescape(raw: &[char]) -> String {
+    let mut chars = raw.iter().copied().peekable();
 
-    while let Some(c) = chars.next() {
-        if c == '\\'
-            && let Some(&next) = chars.peek()
-            && (next == '\\' || is_double_quote(next))
-        {
-            out.push(next);
-            chars.next();
-        } else {
-            out.push(c);
-        }
-    }
-
-    out
+    std::iter::from_fn(|| match chars.next()? {
+        '\\' => chars
+            .next_if(|&c| c == '\\' || is_double_quote(c))
+            .or(Some('\\')),
+        c => Some(c),
+    })
+    .collect()
 }
 
 #[cfg(test)]

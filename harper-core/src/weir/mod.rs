@@ -407,8 +407,7 @@ fn resolve_exprs(ast: &Ast) -> Result<HashMap<String, Lrc<Box<dyn Expr>>>, Error
 pub mod tests {
     use quickcheck_macros::quickcheck;
 
-    use crate::Document;
-    use crate::linting::{Linter, Suggestion};
+    use crate::linting::tests::assert_good_and_bad_suggestions;
     use crate::weir::Error;
 
     use super::{TestResult, WeirLinter};
@@ -667,31 +666,20 @@ pub mod tests {
     fn suggestions_hold_unescaped_quotes() {
         let source = r#"
             expr main <(click no), (no)>
-            let message "Quote it."
-            let description "d"
+            let message ""
+            let description ""
             let kind "Style"
             let becomes ["\"no\"", "\“no\”"]
             let strategy "MatchCase"
-
-            test "Click No to cancel." "Click \"No\" to cancel."
             "#;
 
-        let mut linter = WeirLinter::new(source).unwrap();
-        assert_passes_all(&mut linter);
-
-        // The `test` line passes even if the backslash is kept, since both sides would keep it,
-        // so check the suggestions themselves.
-        let document = Document::new_markdown_default_curated("Click No to cancel.");
-        let lints = linter.lint(&document);
-        let suggestions: Vec<String> = lints[0]
-            .suggestions
-            .iter()
-            .map(|s| match s {
-                Suggestion::ReplaceWith(chars) => chars.iter().collect(),
-                other => panic!("unexpected suggestion {other:?}"),
-            })
-            .collect();
-        assert_eq!(suggestions, vec!["\"No\"".to_string(), "“No”".to_string()]);
+        // A Weir `test` line can't catch a kept backslash, since both of its sides would keep it.
+        assert_good_and_bad_suggestions(
+            "Click No to cancel.",
+            WeirLinter::new(source).unwrap(),
+            &["Click \"No\" to cancel.", "Click “No” to cancel."],
+            &[r#"Click \"No\" to cancel."#],
+        );
     }
 
     #[test]
