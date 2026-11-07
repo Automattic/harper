@@ -5621,6 +5621,13 @@
 						},
 						{
 							"Bool": {
+								"name": "LittleToNo",
+								"state": true,
+								"label": "Little to No"
+							}
+						},
+						{
+							"Bool": {
 								"name": "LongTimeAgo",
 								"state": true,
 								"label": "Long Time Ago"
