@@ -63,7 +63,13 @@ fn parse_stmt_list(tokens: &[Token], source: &[char]) -> Result<Vec<AstStmtNode>
     while let Some(remainder) = tokens.get(cursor..)
         && !remainder.is_empty()
     {
-        let res = parse_stmt(remainder, source)?;
+        let res = parse_stmt(remainder, source).map_err(|err| {
+            let stmt_start = remainder
+                .iter()
+                .find(|t| !t.kind.is_whitespace())
+                .unwrap_or(&remainder[0]);
+            err.located(stmt_start.span.start, source)
+        })?;
         if let Some(node) = res.node {
             list.push(node);
         }
@@ -263,7 +269,7 @@ mod tests {
 
     use crate::char_string::char_string;
 
-    use super::{AstExprNode, AstStmtNode, AstVariable, parse_str};
+    use super::{AstExprNode, AstStmtNode, AstVariable, Error, parse_str};
 
     #[test]
     fn parses_single_var_stmt() {
@@ -478,6 +484,30 @@ mod tests {
     #[should_panic]
     fn catches_non_whitespace_after_allows() {
         parse_str("allows+\"\"", false).unwrap();
+    }
+
+    #[test]
+    fn locates_missing_comma() {
+        assert_eq!(
+            parse_str("expr a [b]\nexpr main [@a_b, c]", false).unwrap_err(),
+            Error::Located {
+                line: 2,
+                column: 14,
+                error: Box::new(Error::ExpectedComma)
+            }
+        );
+    }
+
+    #[test]
+    fn locates_statement_of_other_errors() {
+        assert_eq!(
+            parse_str("let a \"x\"\nlet b [\"x\"", false).unwrap_err(),
+            Error::Located {
+                line: 2,
+                column: 1,
+                error: Box::new(Error::UnmatchedBrace)
+            }
+        );
     }
 
     #[quickcheck]
