@@ -14,6 +14,7 @@ pub struct MapPhraseLinter {
     correct_forms: Vec<String>,
     message: String,
     lint_kind: LintKind,
+    skip_inner_acronyms: bool,
 }
 
 impl MapPhraseLinter {
@@ -30,6 +31,7 @@ impl MapPhraseLinter {
             correct_forms: correct_forms.into_iter().map(|f| f.to_string()).collect(),
             message: message.to_string(),
             lint_kind: lint_kind.unwrap_or(LintKind::Miscellaneous),
+            skip_inner_acronyms: false,
         }
     }
 
@@ -94,14 +96,36 @@ impl MapPhraseLinter {
             correct_form.to_string()
         );
 
-        Self::new_fixed_phrases(
-            phrases,
-            [correct_form],
-            message,
-            description,
-            Some(LintKind::Miscellaneous),
-        )
+        Self {
+            // An all-caps word after a lowercase one is usually an acronym, as in "the RE process".
+            skip_inner_acronyms: true,
+            ..Self::new_fixed_phrases(
+                phrases,
+                [correct_form],
+                message,
+                description,
+                Some(LintKind::Miscellaneous),
+            )
+        }
     }
+}
+
+fn is_all_caps(word: &[char]) -> bool {
+    word.len() > 1 && word.iter().all(|c| c.is_uppercase())
+}
+
+/// Whether a later word is in all caps while the first word is not.
+fn has_inner_acronym(matched_tokens: &[Token], source: &[char]) -> bool {
+    let mut words = matched_tokens
+        .iter()
+        .filter(|t| t.kind.is_word())
+        .map(|t| t.get_ch(source));
+
+    let Some(first) = words.next() else {
+        return false;
+    };
+
+    !is_all_caps(first) && words.any(is_all_caps)
 }
 
 impl ExprLinter for MapPhraseLinter {
@@ -112,6 +136,10 @@ impl ExprLinter for MapPhraseLinter {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+        if self.skip_inner_acronyms && has_inner_acronym(matched_tokens, source) {
+            return None;
+        }
+
         let span = matched_tokens.span()?;
         let matched_text = span.get_content(source);
 
