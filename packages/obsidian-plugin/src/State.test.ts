@@ -275,3 +275,18 @@ test('can overwrite dictionary words in settings', async () => {
 
 	expect(settings.userDictionary).toStrictEqual([]);
 });
+
+test('Settings are only saved when asked to.', async () => {
+	let saves = 0;
+	const state = new State(
+		(_) => {
+			saves++;
+			return Promise.resolve();
+		},
+		() => {},
+	);
+	await state.initializeFromSettings(null, false);
+	expect(saves).toBe(0);
+	await state.initializeFromSettings(null);
+	expect(saves).toBe(1);
+});

@@ -55,7 +55,8 @@ export default class State {
 		this.editorInfoField = _editorInfoField;
 	}
 
-	public async initializeFromSettings(settings: Settings | null) {
+	/** @param save whether to write the settings back to disk. Pass `false` when the settings were just read from disk, to avoid a save loop. */
+	public async initializeFromSettings(settings: Settings | null, save = true) {
 		if (settings == null) {
 			settings = {
 				useWebWorker: true,
@@ -114,7 +115,9 @@ export default class State {
 			this.enableEditorLinter(false);
 		}
 
-		await this.saveData(settings);
+		if (save) {
+			await this.saveData(settings);
+		}
 	}
 
 	/** Construct the linter plugin that actually shows the errors. */
