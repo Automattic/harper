@@ -1,0 +1,10 @@
+expr odd_before_weaners [cocktail, leaner, meat, roasting, skinless]
+
+expr main [<(@odd_before_weaners weaners), weaners>]
+
+let message "If you mean the sausage, use `wiener`. `Weaner` refers to a recently-weaned animal."
+let description "Flags confusion between `weaner` (recently weaned animal) and `wiener` (sausage)."
+let kind "WordChoice"
+let becomes "wieners"
+
+#test
