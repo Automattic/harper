@@ -24,14 +24,15 @@ impl ExprLinter for LittleToNo {
     type Unit = Chunk;
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
-        let correction: Vec<char> = [
-            toks.last()?.get_ch(src),
-            toks.get(1)?.get_ch(src),
-            toks.get(2)?.get_ch(src),
-            toks.get(3)?.get_ch(src),
-            toks.first()?.get_ch(src),
-        ]
-        .concat();
+        if toks.len() < 5 {
+            return None;
+        }
+
+        let correction: Vec<char> =
+            [4, 1, 2, 3, 0].iter().try_fold(Vec::new(), |mut acc, &i| {
+                acc.extend_from_slice(toks.get(i)?.get_ch(src));
+                Some(acc)
+            })?;
 
         let span = toks.span()?;
 
