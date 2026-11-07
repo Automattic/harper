@@ -68,6 +68,7 @@ mod cloud_ones_judgement;
 mod code_in_write_in;
 mod comfortable_with;
 mod comma_fixes;
+mod command_line;
 mod complain_as_noun;
 mod compound_nouns;
 mod compound_subject_i;
