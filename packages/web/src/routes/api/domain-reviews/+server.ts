@@ -1,8 +1,9 @@
 import { error, type RequestEvent, redirect } from '@sveltejs/kit';
 import DomainReviews from '$lib/db/models/DomainReviews';
+import { parseRequestBody } from '$lib/requestBody';
 
 export const POST = async ({ request }: RequestEvent) => {
-	const data = await request.formData();
+	const data = await parseRequestBody(request);
 
 	const worksText = data.get('works');
 	let works = null;
@@ -17,7 +18,7 @@ export const POST = async ({ request }: RequestEvent) => {
 	}
 
 	if (works === null) {
-		error(400, '`works` must be either yes or no.');
+		throw error(400, '`works` must be either yes or no.');
 	}
 
 	await DomainReviews.validateAndCreate({
