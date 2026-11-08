@@ -6181,9 +6181,16 @@
 						},
 						{
 							"Bool": {
+								"name": "SpareNoExpense",
+								"state": true,
+								"label": "Spare no Expense"
+							}
+						},
+						{
+							"Bool": {
 								"name": "StatuteOfLimitations",
 								"state": true,
-								"label": "Statute Of Limitations"
+								"label": "Statute of Limitations"
 							}
 						},
 						{
