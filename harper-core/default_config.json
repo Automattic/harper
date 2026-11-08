@@ -2674,6 +2674,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ComeAcross",
+								"state": true,
+								"label": "Come Across"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Dereference",
 								"state": true,
 								"label": "Dereference"
@@ -5617,6 +5624,13 @@
 								"name": "LittleKnown",
 								"state": true,
 								"label": "Little Known"
+							}
+						},
+						{
+							"Bool": {
+								"name": "LittleToNo",
+								"state": true,
+								"label": "Little to No"
 							}
 						},
 						{

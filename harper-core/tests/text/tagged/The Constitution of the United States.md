@@ -215,7 +215,7 @@
 >
 #
 > Judgment in        Cases   of impeachment shall not     extend further than to removal from
-# NSg+     NPr/J/R/P NPl/V3+ P  N🅪Sg        VXB   NSg/R/C NSg/VB VB/JC   C/P  P  NSg     P
+# NSg+     NPr/J/R/P NPl/V3+ P  N🅪Sg        VXB   NSg/R/C NSg/VB VB/JC/R C/P  P  NSg     P
 > Office  , and  disqualification to hold     and  enjoy any    Office of honor       , Trust     or
 # NSg/VB+ . VB/C N🅪Sg             P  NSg/VB/J VB/C VB    I/R/Dq NSg/VB P  N🅪Sg/VB/Am+ . N🅪Sg/VB/J NPr/C
 > Profit      under   the United States    : but     the Party     convicted shall nevertheless be

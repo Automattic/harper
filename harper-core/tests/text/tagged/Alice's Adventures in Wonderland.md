@@ -267,7 +267,7 @@
 > bleeds ; and  she  had never forgotten that      , if    you    drink   much         from a   bottle  marked
 # NPl/V3 . VB/C ISg+ VP  R     NSg/VPp/J I/C/Ddem+ . NSg/C ISgPl+ NSg/VB+ NSg/I/J/R/Dq P    D/P NSg/VB+ VP/J
 > “ poison   , ” it       is  almost certain to disagree with you    , sooner or    later .
-# . N🅪Sg/VB+ . . NSg/ISg+ VL3 R      I/J     P  VB       P    ISgPl+ . JC     NPr/C JC    .
+# . N🅪Sg/VB+ . . NSg/ISg+ VL3 R      I/J     P  VB       P    ISgPl+ . JC     NPr/C JC/R  .
 >
 #
 > However , this    bottle  was  not     marked “ poison   , ” so          Alice ventured to taste    it       , and
@@ -291,7 +291,7 @@
 > door    into that     lovely garden    . First , however , she  waited for   a    few       minutes to
 # NSg/VB+ P    I/C/Ddem NSg/J  NSg/VB/J+ . NSg/J . C       . ISg+ VP/J   R/C/P D/P+ NSg/I/Dq+ NPl/V3+ P
 > see    if    she  was  going   to shrink any    further : she  felt      a   little     nervous about
-# NSg/VB NSg/C ISg+ VLPt Nᴹ/Vg/J P  NSg/VB I/R/Dq VB/JC   . ISg+ N🅪Sg/VP/J D/P NPr/I/J/Dq J       J/P
+# NSg/VB NSg/C ISg+ VLPt Nᴹ/Vg/J P  NSg/VB I/R/Dq VB/JC/R . ISg+ N🅪Sg/VP/J D/P NPr/I/J/Dq J       J/P
 > this    ; “ for   it       might    end     , you    know , ” said Alice to herself , “ in        my  going   out
 # I/Ddem+ . . R/C/P NSg/ISg+ Nᴹ/VXB/J NSg/VB+ . ISgPl+ VB   . . VP/J NPr+  P  ISg+    . . NPr/J/R/P D$+ Nᴹ/Vg/J NSg/VB/J/R/P
 > altogether , like         a    candle  . I       wonder  what   I       should be       like         then      ? ” And  she  tried
@@ -2499,7 +2499,7 @@
 > about it       : it       was  neither more         nor   less    than a    pig     , and  she  felt      that     it       would be
 # J/P   NSg/ISg+ . NSg/ISg+ VLPt I/C     NPr/I/J/R/Dq NSg/C J/R/C/P C/P  D/P+ NSg/VB+ . VB/C ISg+ N🅪Sg/VP/J I/C/Ddem NSg/ISg+ VXB   NSg/VLXB
 > quite absurd for   her     to carry  it       further .
-# R     NSg/J  R/C/P ISg/D$+ P  NSg/VB NSg/ISg+ VB/JC   .
+# R     NSg/J  R/C/P ISg/D$+ P  NSg/VB NSg/ISg+ VB/JC/R .
 >
 #
 > So          she  set       the little      creature down        , and  felt      quite relieved to see    it       trot    away
@@ -4641,7 +4641,7 @@
 > “ What   matters it       how   far      we   go       ? ” his     scaly  friend    replied . “ There is  another
 # . NSg/I+ NPl/V3+ NSg/ISg+ NSg/C NSg/VB/J IPl+ NSg/VB/J . . ISg/D$+ NSg/J+ NPr/VB/J+ VP/J    . . R+    VL3 I/D+
 > shore   , you    know , upon the other     side      . The further off        from England the nearer
-# NSg/VB+ . ISgPl+ VB   . P    D+  NSg/VB/J+ NSg/VB/J+ . D   VB/JC   NSg/VB/J/P P    NPr+    D   NSg/JC
+# NSg/VB+ . ISgPl+ VB   . P    D+  NSg/VB/J+ NSg/VB/J+ . D   VB/JC/R NSg/VB/J/P P    NPr+    D   NSg/JC
 > is  to France — Then      turn   not     pale     , beloved  snail  , but     come       and  join   the dance    .
 # VL3 P  NPr+   . NSg/J/R/C NSg/VB NSg/R/C NSg/VB/J . NSg/VB/J NSg/VB . NSg/C/P NSg/VBPp/P VB/C NSg/VB D   N🅪Sg/VB+ .
 > Will    you    , won’t you    , will    you    , won’t you    , will    you    join   the dance    ? Will    you    ,
@@ -4857,7 +4857,7 @@
 >
 #
 > ( later editions continued as    follows When    the sands   are all          dry      , he       is  gay      as
-# . JC    NPl      VP/J      R/C/P NPl/V3  NSg/I/C D   NPl/V3+ VLB NSg/I/J/C/Dq NSg/VB/J . NPr/ISg+ VL3 NPr/VB/J R/C/P
+# . JC/R  NPl      VP/J      R/C/P NPl/V3  NSg/I/C D   NPl/V3+ VLB NSg/I/J/C/Dq NSg/VB/J . NPr/ISg+ VL3 NPr/VB/J R/C/P
 > a   lark   , And  will    talk    in        contemptuous tones  of the Shark   , But     , when    the tide
 # D/P NSg/VB . VB/C NPr/VXB N🅪Sg/VB NPr/J/R/P J            NPl/V3 P  D   NSg/VB+ . NSg/C/P . NSg/I/C D   NSg/VB+
 > rises   and  sharks are around , His     voice   has a   timid and  tremulous sound      . )
@@ -4919,7 +4919,7 @@
 >
 #
 > ( later editions continued as    follows The Panther took pie      - crust    , and  gravy    ,
-# . JC    NPl      VP/J      R/C/P NPl/V3  D   NSg     VPt  N🅪Sg/VB+ . N🅪Sg/VB+ . VB/C N🅪Sg/VB+ .
+# . JC/R  NPl      VP/J      R/C/P NPl/V3  D   NSg     VPt  N🅪Sg/VB+ . N🅪Sg/VB+ . VB/C N🅪Sg/VB+ .
 > and  meat  , While      the Owl     had the dish    as    its     share  of the treat   . When    the pie
 # VB/C N🅪Sg+ . NSg/VB/C/P D   NSg/VB+ VP  D   NSg/VB+ R/C/P ISg/D$+ NSg/VB P  D   NSg/VB+ . NSg/I/C D+  N🅪Sg/VB+
 > was  all          finished , the Owl     , as    a   boon  , Was  kindly permitted to pocket   the
