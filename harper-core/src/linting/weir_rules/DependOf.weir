@@ -1,0 +1,35 @@
+# "at the depends of" is a typo for "expense", so `depends` right after `the` is skipped.
+expr verb [depend, depended, depending]
+# "depends of course on ..." is correct, but "depends of course of ..." still needs a fix.
+expr main [<(@verb of ![course]), of>, <(![the] depends of ![course]), of>, <<([@verb, depends] of course of), (course of)>, of>]
+
+let message "In English it's `depend on`, not `depend of`."
+let description "Corrects the wrong preposition in `depend of`."
+let kind "Usage"
+let becomes "on"
+let strategy "MatchCase"
+
+# real sentences from Hacker News
+test "I would say it depends of the context." "I would say it depends on the context."
+test "We've not added absolute times because it strongly depends of your machines, network." "We've not added absolute times because it strongly depends on your machines, network."
+test "The correctness of stack unwinding code can sometimes depend of which exceptions a function raises." "The correctness of stack unwinding code can sometimes depend on which exceptions a function raises."
+test "The beauty of transducers is that they express efficient transformation chains which do not depend of actual input and output." "The beauty of transducers is that they express efficient transformation chains which do not depend on actual input and output."
+test "Add some media queries to change the % depending of the screen/window size, and maybe hide/add some elements so it is more readable." "Add some media queries to change the % depending on the screen/window size, and maybe hide/add some elements so it is more readable."
+test "The compilation process (executed in a compilation queue) could take a few minutes or half an hour depending of how many people and processes were running that day." "The compilation process (executed in a compilation queue) could take a few minutes or half an hour depending on how many people and processes were running that day."
+test "This all depends of course of the definition of cutting corners." "This all depends of course on the definition of cutting corners."
+# made-up sentences
+test "The result depended of the input." "The result depended on the input."
+test "IT DEPENDS OF THE BUDGET." "IT DEPENDS ON THE BUDGET."
+
+# correct text
+allows "It depends on the budget."
+allows "Depending on the case, we refund the order."
+allows "It depends."
+# real look-alikes that must not be flagged (Hacker News)
+allows "Binaries are reasonably small but it depends of course on what your app is doing."
+allows "It depends of course on implementation."
+allows "The amount of web traffic that SQLite can handle depends, of course, on how heavily the website uses its database."
+allows "I believe I needed to have a dependent of some kind at my income level."
+# made-up look-alikes
+allows "They are independent of each other."
+allows "We paid it at the depends of the team."

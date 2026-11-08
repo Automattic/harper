@@ -742,6 +742,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Roundabout",
+								"state": true,
+								"label": "Roundabout"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Shortcoming",
 								"state": true,
 								"label": "Shortcoming"
@@ -857,6 +864,13 @@
 								"name": "Upward",
 								"state": true,
 								"label": "Upward"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Whatsoever",
+								"state": true,
+								"label": "Whatsoever"
 							}
 						},
 						{
@@ -2674,6 +2688,13 @@
 						},
 						{
 							"Bool": {
+								"name": "DoinToDoing",
+								"state": true,
+								"label": "Doin to Doing"
+							}
+						},
+						{
+							"Bool": {
 								"name": "DoNotWant",
 								"state": true,
 								"label": "Do Not Want"
@@ -3548,6 +3569,13 @@
 					"settings": [
 						{
 							"Bool": {
+								"name": "ABitOfPlural",
+								"state": true,
+								"label": "A Bit of Plural"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AdjectiveDoubleDegree",
 								"state": true,
 								"label": "Adjective Double Degree"
@@ -3586,6 +3614,13 @@
 								"name": "AllReady",
 								"state": true,
 								"label": "All Ready"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AllThatsAre",
+								"state": true,
+								"label": "All That's Are"
 							}
 						},
 						{
@@ -3655,6 +3690,13 @@
 							"Bool": {
 								"name": "BackwardEngineer",
 								"state": true
+							}
+						},
+						{
+							"Bool": {
+								"name": "BeAgree",
+								"state": true,
+								"label": "Be Agree"
 							}
 						},
 						{
@@ -4072,6 +4114,13 @@
 						},
 						{
 							"Bool": {
+								"name": "QuestionVerbAgreement",
+								"state": true,
+								"label": "Question Verb Agreement"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ReadsAndWrites",
 								"state": true,
 								"label": "Reads and Writes"
@@ -4305,6 +4354,13 @@
 								"name": "WentAheadAndAgreement",
 								"state": true,
 								"label": "Went Ahead and Agreement"
+							}
+						},
+						{
+							"Bool": {
+								"name": "WeSeeUs",
+								"state": true,
+								"label": "We See Us"
 							}
 						},
 						{
@@ -4949,6 +5005,13 @@
 						},
 						{
 							"Bool": {
+								"name": "DependOf",
+								"state": true,
+								"label": "Depend Of"
+							}
+						},
+						{
+							"Bool": {
 								"name": "DigUnderTheHood",
 								"state": true,
 								"label": "Dig Under The Hood"
@@ -5565,6 +5628,13 @@
 						},
 						{
 							"Bool": {
+								"name": "LittleToNo",
+								"state": true,
+								"label": "Little to No"
+							}
+						},
+						{
+							"Bool": {
 								"name": "LongTimeAgo",
 								"state": true,
 								"label": "Long Time Ago"
@@ -5729,6 +5799,13 @@
 								"name": "OffLimits",
 								"state": true,
 								"label": "Off Limits"
+							}
+						},
+						{
+							"Bool": {
+								"name": "OfOff",
+								"state": true,
+								"label": "Of / Off"
 							}
 						},
 						{

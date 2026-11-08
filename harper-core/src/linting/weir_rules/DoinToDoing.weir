@@ -1,0 +1,29 @@
+expr main doin
+
+let message "Did you mean `doing`?"
+let description "Corrects `doin` to `doing`."
+let kind "Typo"
+let becomes "doing"
+
+# Weir lints have priority 31, ahead of SpellCheck's priority 63.
+test "She is doin well." "She is doing well."
+test "Doin the dishes takes time." "Doing the dishes takes time."
+test "They are DOIN fine." "They are DOING fine."
+test "What are we doin?" "What are we doing?"
+test "Keep doin it." "Keep doing it."
+test "He enjoys doin puzzles." "He enjoys doing puzzles."
+test "Thanks for doin that!" "Thanks for doing that!"
+test "She is doin, not watching." "She is doing, not watching."
+test "(doin)" "(doing)"
+test "doin" "doing"
+test "Doin" "Doing"
+test "DOIN" "DOING"
+test "They are	doin well." "They are	doing well."
+test "They are  doin well." "They are  doing well."
+
+allows "She is doing well."
+allows "Doing the dishes takes time."
+allows "They are DOING fine."
+allows "His doings were mysterious."
+allows "She likes redoing puzzles."
+allows "He is undoing the knot."
