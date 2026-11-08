@@ -191,7 +191,7 @@
 > cannot  . The program got about 70 % correct  . Its     results were repeatedly reviewed
 # NSg/VXB . D+  NPr/VB+ VP  J/P   #  . NSg/VB/J . ISg/D$+ NPl/V3+ VLPt R          VP/J
 > and  corrected by hand    , and  later users sent   in        errata so          that      by the late  70 s
-# VB/C VP/J      P  NSg/VB+ . VB/C JC    NPl+  NSg/VP NPr/J/R/P NSg    NSg/I/J/R/C I/C/Ddem+ P  D   NSg/J #  ?
+# VB/C VP/J      P  NSg/VB+ . VB/C JC/R  NPl+  NSg/VP NPr/J/R/P NSg    NSg/I/J/R/C I/C/Ddem+ P  D   NSg/J #  ?
 > the tagging was  nearly perfect  ( allowing for   some     cases   on  which even       human
 # D   NSg/Vg  VLPt R      NSg/VB/J . Nᴹ/Vg/J  R/C/P I/J/R/Dq NPl/V3+ J/P I/C+  NSg/VB/J/R NSg/J+
 > speakers might    not     agree ) .
@@ -205,7 +205,7 @@
 > other    languages . Statistics derived by analyzing it       formed the basis for   most
 # NSg/VB/J NPl+      . NPl/V3+    VP/J    P  Nᴹ/Vg/J   NSg/ISg+ VP/J   D+  NSg+  R/C/P NSg/I/J/R/Dq
 > later part      - of - speech   tagging systems , such  as    CLAWS   and  VOLSUNGA . However , by
-# JC    NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg  NPl+    . NSg/I R/C/P NPl/V3+ VB/C ?        . C       . P
+# JC/R  NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg  NPl+    . NSg/I R/C/P NPl/V3+ VB/C ?        . C       . P
 > this    time       ( 2005 ) it       has been   superseded by larger corpora such  as    the 100
 # I/Ddem+ N🅪Sg/VB/J+ . #    . NSg/ISg+ V3  VLPp/B VP/J       P  JC     NPl+    NSg/I R/C/P D   #
 > million word    British National Corpus , even       though larger corpora are rarely so
@@ -385,7 +385,7 @@
 >
 #
 > These   two  categories can     be       further subdivided into rule    - based , stochastic , and
-# I/Ddem+ NSg+ NPl+       NPr/VXB NSg/VLXB VB/JC   VP/J       P    NSg/VB+ . VP/J  . J          . VB/C
+# I/Ddem+ NSg+ NPl+       NPr/VXB NSg/VLXB VB/JC/R VP/J       P    NSg/VB+ . VP/J  . J          . VB/C
 > neural approaches .
 # J      NPl/V3+    .
 >
