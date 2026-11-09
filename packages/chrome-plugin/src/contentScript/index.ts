@@ -97,8 +97,6 @@ function maybeAddTextareaTarget(element: HTMLTextAreaElement, requireVisible: bo
 	fw.addTarget(element);
 }
 
-const registeredEditableRoots = new WeakSet<Element>();
-
 function scan() {
 	void syncGoogleDocsBridge();
 
@@ -231,15 +229,16 @@ function scan() {
 				continue;
 			}
 
-			if (blockContainer === element) {
-				registeredEditableRoots.add(element);
-			}
 			fw.addTarget(blockContainer);
 		}
 
 		// An empty editor can be its own target before the host inserts paragraphs.
 		// Stop linting that ancestor once all its leaves belong to closer blocks.
-		if (!seenBlockContainers.has(element) && registeredEditableRoots.delete(element)) {
+		if (
+			!element.matches('textarea, input') &&
+			!seenBlockContainers.has(element) &&
+			fw.hasTarget(element)
+		) {
 			void fw.removeTarget(element as HTMLElement);
 		}
 	});

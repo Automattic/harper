@@ -299,6 +299,10 @@ export default class LintFramework {
 		);
 	}
 
+	public hasTarget(target: Node): boolean {
+		return this.targets.has(target);
+	}
+
 	public async addTarget(target: Node) {
 		if (!this.targets.has(target)) {
 			this.targets.set(target, {});
