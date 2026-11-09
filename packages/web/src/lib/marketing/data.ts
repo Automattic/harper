@@ -262,9 +262,3 @@ export const compatibilityApps = [
 	{ id: 'things', name: 'Things' },
 	{ id: 'scrivener', name: 'Scrivener' },
 ];
-
-export const docSearchConfig = {
-	indexName: 'Documentation',
-	appId: 'YIV4D9QMR0',
-	apiKey: 'ff521ad7f129e4f4defe97dce3c923ad',
-};

@@ -1,5 +1,6 @@
 <script lang="ts">
 import { Button, Card } from 'components';
+import { studioPrimaryButton, studioSecondaryButton } from '$lib/components/weirStudioTheme';
 
 export let onUpload: () => void;
 export let onOpenExample: () => void;
@@ -10,16 +11,16 @@ export let loading = false;
 export let loadingLabel = 'Checking for saved Weirpack...';
 </script>
 
-<div class="absolute inset-0 z-30 flex items-center justify-center bg-[#fef4e7]/95">
-	<Card className="w-[min(640px,90vw)] space-y-6 border-black/10 bg-white/95 p-8">
+<div class="absolute inset-0 z-30 flex items-center justify-center bg-[#fef4e7]/95 dark:bg-black/90">
+	<Card className="w-[min(640px,90vw)] space-y-6 border-black/10 bg-white/95 p-8 dark:border-white/10 dark:bg-[#1c1a16]/95">
 		<div class="space-y-2">
-			<div class="text-xs font-semibold uppercase tracking-[0.25em] text-black/50">Weir Studio</div>
+			<div class="text-xs font-semibold uppercase tracking-[0.25em] text-black/50 dark:text-white/50">Weir Studio</div>
 			{#if loading}
-				<h2 class="text-2xl font-semibold text-black">Restoring session</h2>
-				<p class="text-sm text-black/60">{loadingLabel}</p>
+				<h2 class="text-2xl font-semibold text-black dark:text-white">Restoring session</h2>
+				<p class="text-sm text-black/60 dark:text-white/60">{loadingLabel}</p>
 			{:else}
-				<h2 class="text-2xl font-semibold text-black">Choose how to start</h2>
-				<p class="text-sm text-black/60">
+				<h2 class="text-2xl font-semibold text-black dark:text-white">Choose how to start</h2>
+				<p class="text-sm text-black/60 dark:text-white/60">
 					Load a Weirpack to edit rules, run tests, and export updates.
 				</p>
 			{/if}
@@ -36,32 +37,32 @@ export let loadingLabel = 'Checking for saved Weirpack...';
 			<Button
 				color="dark"
 				size="md"
-				className="w-full justify-between"
+				className={`w-full justify-between ${studioPrimaryButton}`}
 				on:click={onUpload}
 				disabled={loading}
 			>
 				<span>Upload an existing Weirpack</span>
-				<span class="text-xs uppercase tracking-[0.2em] text-white/60">Upload</span>
+				<span class="text-xs uppercase tracking-[0.2em] text-white/60 dark:text-black/50">Upload</span>
 			</Button>
 			<Button
 				color="white"
 				size="md"
-				className="w-full justify-between"
+				className={`w-full justify-between ${studioSecondaryButton}`}
 				on:click={onOpenExample}
 				disabled={loading}
 			>
 				<span>Open example Weirpack</span>
-				<span class="text-xs uppercase tracking-[0.2em] text-black/40">Example</span>
+				<span class="text-xs uppercase tracking-[0.2em] text-black/40 dark:text-white/40">Example</span>
 			</Button>
 			<Button
 				color="white"
 				size="md"
-				className="w-full justify-between"
+				className={`w-full justify-between ${studioSecondaryButton}`}
 				on:click={onCreateEmpty}
 				disabled={loading}
 			>
 				<span>Create an empty Weirpack</span>
-				<span class="text-xs uppercase tracking-[0.2em] text-black/40">Empty</span>
+				<span class="text-xs uppercase tracking-[0.2em] text-black/40 dark:text-white/40">Empty</span>
 			</Button>
 		</div>
 	</Card>

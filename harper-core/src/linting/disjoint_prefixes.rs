@@ -11,7 +11,7 @@ pub struct DisjointPrefixes<D> {
 }
 
 // Known false positives not to join to these prefixes:
-const OUT_EXCEPTIONS: &[&str] = &["boxes", "facing", "live", "numbers", "playing"];
+const OUT_EXCEPTIONS: &[&str] = &["boxes", "facing", "guesses", "live", "numbers", "playing"];
 const OVER_EXCEPTIONS: &[&str] = &["all", "joy", "long", "night", "reading", "steps", "time"];
 const UNDER_EXCEPTIONS: &[&str] = &["development", "mine"];
 const UP_EXCEPTIONS: &[&str] = &["loading", "right", "state", "time", "trend"];
@@ -212,6 +212,14 @@ mod tests {
     fn dont_join_hyphenated_re_execute_3954() {
         assert_no_lints(
             "I saw re-execute flagged with DisjointPrefixes.",
+            DisjointPrefixes::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn dont_join_out_guesses_4853() {
+        assert_no_lints(
+            "Leave out guesses about how people felt.",
             DisjointPrefixes::new(FstDictionary::curated()),
         );
     }

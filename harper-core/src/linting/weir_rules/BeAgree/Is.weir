@@ -1,0 +1,30 @@
+expr main <([he, she, everyone, everybody] is agree), (is agree)>
+
+let message "`agree` is a verb, so it doesn't need `is`: `she agrees`."
+let description "Corrects `she is agree` to `she agrees`."
+let kind "Grammar"
+let becomes "agrees"
+let strategy "MatchCase"
+
+# real sentences from Hacker News and GitHub issues
+test "Not everyone is agree with that." "Not everyone agrees with that."
+test "But he is agree that it is confusing to a user." "But he agrees that it is confusing to a user."
+# made-up sentences
+test "She is agree with the plan." "She agrees with the plan."
+test "He is agree." "He agrees."
+test "I think everyone is agree on this." "I think everyone agrees on this."
+test "If everybody is agree, we can start." "If everybody agrees, we can start."
+test "SHE IS AGREE." "SHE AGREES."
+test "So he is agree with the change?" "So he agrees with the change?"
+
+# correct text
+allows "She agrees with the plan."
+allows "She is in agreement."
+allows "Does he agree?"
+allows "Everyone agreed on this."
+# look-alikes that must not be flagged
+allows "Everyone is agreed on this."
+allows "He is agreeable."
+allows "Is she agreeing to this?"
+allows "She is, agree or not, leaving."
+allows "This is the deal everyone is asked to agree to."
