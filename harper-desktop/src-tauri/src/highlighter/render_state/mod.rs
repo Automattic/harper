@@ -73,6 +73,9 @@ pub struct RenderState {
     disable_rule: DisableRule,
 
     open_settings: OpenSettings,
+
+    /// Tracks whether an interactive action occurred since the last check.
+    action_occurred: bool,
 }
 
 impl RenderState {
@@ -98,6 +101,7 @@ impl RenderState {
             add_to_dictionary,
             disable_rule,
             open_settings,
+            action_occurred: false,
         };
         state.set_lints(rects);
         state
@@ -181,6 +185,22 @@ impl RenderState {
         self.current_sidebar_position = FIRST_ROW_OFFSET;
     }
 
+    /// Removes the lint at `index` from the cached lint list, if present.
+    fn remove_lint_at(&mut self, index: usize) {
+        let Some(lints) = self.last_lints.as_mut() else {
+            return;
+        };
+        if index < lints.len() {
+            lints.remove(index);
+        }
+    }
+
+    /// Clears all cached lints and closes any active popup.
+    pub fn clear_lints(&mut self) {
+        self.last_lints = Some(Vec::new());
+        self.close_popup();
+    }
+
     /// Checks if a given position touches a hit target.
     pub fn hit_target_at_pos(&self, pos: egui::Pos2) -> HitTarget {
         if self
@@ -212,6 +232,13 @@ impl RenderState {
                     self.tip_layout.as_ref().map_or(0.0, TipLayout::height),
                 )
             })
+    }
+
+    /// Reports an interactive action once, resetting the flag for the next check.
+    pub fn take_action_occurred(&mut self) -> bool {
+        let occurred = self.action_occurred;
+        self.action_occurred = false;
+        occurred
     }
 
     /// Draws highlights and the active popup from the same state used by hit-testing so visible
@@ -277,8 +304,12 @@ impl RenderState {
                 self.tip_layout.as_ref(),
                 &mut self.markdown_cache,
             ) {
-                Some(LintCardAction::Close) => self.close_popup(),
+                Some(LintCardAction::Close) => {
+                    self.action_occurred = true;
+                    self.close_popup();
+                }
                 Some(LintCardAction::OpenSettings) => {
+                    self.action_occurred = true;
                     (self.open_settings)();
                     self.close_popup();
                 }
@@ -286,6 +317,7 @@ impl RenderState {
                     self.shown_suggestion = Some(suggestion);
                 }
                 Some(LintCardAction::ApplySuggestion(suggestion)) => {
+                    self.action_occurred = true;
                     if let Some(actionable_lint) = self
                         .last_lints
                         .as_mut()
@@ -294,9 +326,11 @@ impl RenderState {
                         actionable_lint.apply_suggestion(suggestion);
                     }
 
+                    self.remove_lint_at(index);
                     self.close_popup();
                 }
                 Some(LintCardAction::IgnoreLint) => {
+                    self.action_occurred = true;
                     if let Some((lint, source_text)) =
                         self.lints().get(index).map(|actionable_lint| {
                             (
@@ -309,9 +343,11 @@ impl RenderState {
                         (self.ignore_lint)(&lint, &document);
                     }
 
+                    self.remove_lint_at(index);
                     self.close_popup();
                 }
                 Some(LintCardAction::AddToDictionary) => {
+                    self.action_occurred = true;
                     if let Some((lint, source_text)) =
                         self.lints().get(index).map(|actionable_lint| {
                             (
@@ -325,9 +361,11 @@ impl RenderState {
                         (self.add_to_dictionary)(&word);
                     }
 
+                    self.remove_lint_at(index);
                     self.close_popup();
                 }
                 Some(LintCardAction::DisableRule) => {
+                    self.action_occurred = true;
                     if let Some(rule_name) = self
                         .lints()
                         .get(index)
@@ -336,6 +374,7 @@ impl RenderState {
                         (self.disable_rule)(&rule_name);
                     }
 
+                    self.remove_lint_at(index);
                     self.close_popup();
                 }
                 None => {}
