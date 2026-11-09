@@ -3,11 +3,13 @@ use std::sync::Arc;
 
 use egui_wgpu::wgpu::PresentMode;
 use egui_wgpu::winit::Painter;
-use egui_wgpu::{RendererOptions, WgpuConfiguration, WgpuSetup};
+use egui_wgpu::{RendererOptions, WgpuConfiguration, WgpuSetup, WgpuSetupCreateNew};
 use winit::dpi::{PhysicalPosition, PhysicalSize};
 use winit::event::WindowEvent;
 use winit::event_loop::ActiveEventLoop;
 use winit::monitor::MonitorHandle;
+#[cfg(target_os = "windows")]
+use winit::platform::windows::WindowAttributesExtWindows;
 use winit::window::{Window as WinitWindow, WindowButtons, WindowId, WindowLevel};
 
 use super::Error;
@@ -34,20 +36,29 @@ impl Window {
         let context = super::fonts::context();
         let position = monitor.position();
         let size = monitor.size();
-        let window = Arc::new(
-            event_loop.create_window(
-                WinitWindow::default_attributes()
-                    .with_title("Harper")
-                    .with_inner_size(size)
-                    .with_position(position)
-                    .with_resizable(false)
-                    .with_enabled_buttons(WindowButtons::empty())
-                    .with_decorations(false)
-                    .with_transparent(true)
-                    .with_window_level(WindowLevel::AlwaysOnTop)
-                    .with_active(false),
-            )?,
-        );
+        let attributes = WinitWindow::default_attributes()
+            .with_title("Harper")
+            .with_inner_size(size)
+            .with_position(position)
+            .with_resizable(false)
+            .with_enabled_buttons(WindowButtons::empty())
+            .with_decorations(false)
+            .with_transparent(true)
+            .with_window_level(WindowLevel::AlwaysOnTop)
+            .with_active(false);
+
+        // Win32 gives every window a redirection bitmap that DWM paints with the window class's
+        // default (white) background brush. Blur-behind does not make that bitmap transparent, so
+        // without `WS_EX_NOREDIRECTIONBITMAP` the overlay shows up as a solid white sheet that
+        // hides the swapchain underneath it. The overlay is also not a user-facing window, so it
+        // should not take a taskbar button or draw a frame shadow.
+        #[cfg(target_os = "windows")]
+        let attributes = attributes
+            .with_no_redirection_bitmap(true)
+            .with_skip_taskbar(true)
+            .with_undecorated_shadow(false);
+
+        let window = Arc::new(event_loop.create_window(attributes)?);
 
         window.set_outer_position(PhysicalPosition::new(position.x, position.y));
         let _ = window.request_inner_size(PhysicalSize::new(size.width, size.height));
@@ -67,7 +78,7 @@ impl Window {
             context,
             WgpuConfiguration {
                 present_mode: PresentMode::Fifo,
-                wgpu_setup: WgpuSetup::from_display_handle(event_loop.owned_display_handle()),
+                wgpu_setup: wgpu_setup(event_loop),
                 ..Default::default()
             },
             true,
@@ -166,4 +177,30 @@ impl Window {
             Vec::new(),
         );
     }
+}
+
+/// Builds the wgpu setup for an overlay window.
+///
+/// On Windows, a swapchain created straight from the window handle only offers an opaque
+/// backbuffer, so wgpu ignores the overlay's alpha channel and DWM composites it as a solid black
+/// sheet. Presenting the DX12 backend through a DirectComposition visual instead exposes
+/// premultiplied alpha, which is what lets the overlay be see-through. Other backends cannot do
+/// this on Windows, so DX12 is the only one enabled there.
+fn wgpu_setup(event_loop: &ActiveEventLoop) -> WgpuSetup {
+    #[allow(unused_mut)]
+    let mut setup = WgpuSetupCreateNew::from_display_handle(event_loop.owned_display_handle());
+
+    #[cfg(target_os = "windows")]
+    {
+        use egui_wgpu::wgpu::{Backends, Dx12SwapchainKind};
+
+        setup.instance_descriptor.backends = Backends::DX12;
+        setup
+            .instance_descriptor
+            .backend_options
+            .dx12
+            .presentation_system = Dx12SwapchainKind::DxgiFromVisual;
+    }
+
+    WgpuSetup::CreateNew(setup)
 }
