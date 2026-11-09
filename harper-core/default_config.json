@@ -3363,6 +3363,13 @@
 						},
 						{
 							"Bool": {
+								"name": "MakeTheMostOf",
+								"state": true,
+								"label": "Make the Most of"
+							}
+						},
+						{
+							"Bool": {
 								"name": "MoreBetter",
 								"state": true,
 								"label": "More Better"
