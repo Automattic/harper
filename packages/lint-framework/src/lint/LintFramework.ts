@@ -47,9 +47,7 @@ const PAGE_EVENTS = [
 export default class LintFramework {
 	private highlights: Highlights;
 	private popupHandler: PopupHandler;
-	private targets: Set<Node>;
-	private targetIdentities = new WeakMap<Node, object>();
-	private targetObservers = new WeakMap<Node, MutationObserver>();
+	private targets: Map<Node, { observer?: MutationObserver }>;
 	private scrollableAncestors: Set<HTMLElement>;
 	private lintRequest: Promise<unknown> | null = null;
 	private renderRequested = false;
@@ -93,7 +91,7 @@ export default class LintFramework {
 			reportError: actions.reportError,
 			setRuleEnabled: actions.setRuleEnabled,
 		});
-		this.targets = new Set();
+		this.targets = new Map();
 		this.scrollableAncestors = new Set();
 		this.lastLints = [];
 
@@ -122,7 +120,7 @@ export default class LintFramework {
 	onScreenTargets(): Node[] {
 		const onScreen = [] as Node[];
 
-		for (const target of this.targets) {
+		for (const target of this.targets.keys()) {
 			if (isVisible(target)) {
 				onScreen.push(target);
 			}
@@ -182,7 +180,7 @@ export default class LintFramework {
 						return { target: null as HTMLElement | null, lints: {} };
 					}
 
-					const targetIdentity = this.targetIdentities.get(target)!;
+					const targetIdentity = this.targets.get(target)!;
 					const { text, isCM, newLineIndices } = this.getTargetText(target);
 
 					if (!text) {
@@ -303,27 +301,26 @@ export default class LintFramework {
 
 	public async addTarget(target: Node) {
 		if (!this.targets.has(target)) {
-			this.targetIdentities.set(target, {});
-			this.targets.add(target);
+			this.targets.set(target, {});
 			this.update();
 			this.attachTargetListeners(target);
 		}
 	}
 
 	public async removeTarget(target: HTMLElement) {
-		if (this.targets.has(target)) {
+		const registration = this.targets.get(target);
+		if (registration) {
 			this.targets.delete(target);
 			this.update();
 			this.detachTargetListeners(target);
-			this.targetObservers.get(target)?.disconnect();
-			this.targetObservers.delete(target);
+			registration.observer?.disconnect();
 		} else {
 			throw new Error('HTMLElement not added.');
 		}
 	}
 
 	private isCurrentTarget(target: Node, identity: object): boolean {
-		return this.targets.has(target) && this.targetIdentities.get(target) === identity;
+		return this.targets.get(target) === identity;
 	}
 
 	/** Return the last known ignorable lint boxes rendered on-screen. */
@@ -337,7 +334,7 @@ export default class LintFramework {
 		}
 
 		const observer = new MutationObserver(this.updateEventCallback);
-		this.targetObservers.set(target, observer);
+		this.targets.get(target)!.observer = observer;
 		const config = { subtree: true, characterData: true };
 
 		if ((target as any).tagName == undefined) {
