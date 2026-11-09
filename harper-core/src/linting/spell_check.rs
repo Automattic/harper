@@ -4,10 +4,11 @@ use itertools::Itertools;
 use lru::LruCache;
 use smallvec::ToSmallVec;
 
+use super::proper_noun_capitalization_linters::proper_nouns_expr;
 use super::{Lint, LintKind, Linter};
 use super::{Suggestion, informal_laughter::is_informal_laughter};
 use crate::document::Document;
-use crate::expr::{Filter, SequenceExpr};
+use crate::expr::{Filter, LongestMatchOf, SequenceExpr};
 use crate::spell::{Dictionary, suggest_correct_spelling};
 use crate::{CharString, CharStringExt, Dialect, TokenStringExt, remove_lints_overlapping_expr};
 
@@ -18,6 +19,7 @@ where
     dictionary: T,
     suggestion_cache: LruCache<CharString, Vec<CharString>>,
     dialect: Dialect,
+    proper_nouns: LongestMatchOf,
 }
 
 impl<T: Dictionary> SpellCheck<T> {
@@ -26,6 +28,7 @@ impl<T: Dictionary> SpellCheck<T> {
             dictionary,
             suggestion_cache: LruCache::new(NonZero::new(10000).unwrap()),
             dialect,
+            proper_nouns: proper_nouns_expr(),
         }
     }
 
@@ -168,6 +171,9 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
         }
 
         remove_lints_overlapping_expr(&parenthetical_plural_s_expr(), document, &mut lints);
+        // Names keep their official spelling in every dialect, such as `Pearl Harbor` in British
+        // English. Their capitalization is handled by `ProperNounCapitalizationLinter`.
+        remove_lints_overlapping_expr(&self.proper_nouns, document, &mut lints);
 
         lints
     }
@@ -238,12 +244,39 @@ mod tests {
     }
 
     #[test]
+    fn american_spelling_in_name_in_british_dialect() {
+        assert_lint_count(
+            "The attack on Pearl Harbor came before Labor Day.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            0,
+        );
+    }
+
+    #[test]
     fn title_case_nz_suggests_all_caps() {
         assert_good_and_bad_suggestions(
             "We flew to Nz.",
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
             &["We flew to NZ."],
             &[],
+        );
+    }
+
+    #[test]
+    fn british_spelling_in_name_in_american_dialect() {
+        assert_lint_count(
+            "The Ministry of Defence met the Labour Party.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            0,
+        );
+    }
+
+    #[test]
+    fn american_spelling_outside_name_in_british_dialect() {
+        assert_lint_count(
+            "The ship left the harbor near Pearl Harbor.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            1,
         );
     }
 
