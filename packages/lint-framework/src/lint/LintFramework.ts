@@ -1,8 +1,10 @@
 import type { LintOptions } from 'harper.js';
 import { closestBox, type IgnorableLintBox } from './Box';
+import { isGoogleDocsTarget } from './computeLintBoxes/googleDocsUtilities';
 import computeLintBoxes from './computeLintBoxes/index';
 import { isHeading, isVisible } from './domUtils';
 import { getCaretPosition, getCMRoot } from './editorUtils';
+import { getGoogleDocsLintWindows, MAX_LINT_TEXT_LENGTH } from './googleDocsLintWindows';
 import Highlights from './Highlights';
 import PopupHandler from './PopupHandler';
 import { remapLintToCurrentSource } from './spanMapping';
@@ -29,9 +31,17 @@ type FrameworkActions = {
 };
 
 /** Events on an input (any kind) that can trigger a re-render. */
-const INPUT_EVENTS = ['focus', 'keyup', 'paste', 'change', 'scroll'];
+const INPUT_EVENTS = ['focus', 'keyup', 'keydown', 'paste', 'change', 'scroll', 'input'];
 /** Events on the window that can trigger a re-render. */
-const PAGE_EVENTS = ['resize', 'scroll'];
+const PAGE_EVENTS = [
+	'resize',
+	'scroll',
+	'keyup',
+	'keydown',
+	'input',
+	'compositionend',
+	'selectionchange',
+];
 
 /** Orchestrates linting and rendering in response to events on the page. */
 export default class LintFramework {
@@ -39,7 +49,7 @@ export default class LintFramework {
 	private popupHandler: PopupHandler;
 	private targets: Set<Node>;
 	private scrollableAncestors: Set<HTMLElement>;
-	private lintRequested = false;
+	private lintRequest: Promise<unknown> | null = null;
 	private renderRequested = false;
 	private lintDelayTimer: number | null = null;
 	private lastInputAt = 0;
@@ -86,7 +96,20 @@ export default class LintFramework {
 			this.update();
 		};
 
+		// Catches edge cases where editors do not correctly emit events.
+		const timeoutCallback = () => {
+			this.update();
+
+			setTimeout(timeoutCallback, 1000);
+		};
+		timeoutCallback();
+
 		this.attachWindowListeners();
+	}
+
+	/** Enable optional hover activation without changing click or keyboard activation. */
+	public setOpenSuggestionsOnHover(enabled: boolean): void {
+		this.popupHandler.setOpenSuggestionsOnHover(enabled);
 	}
 
 	/** Returns the currents targets that are visible on-screen. */
@@ -107,21 +130,19 @@ export default class LintFramework {
 		this.requestLintUpdate();
 	}
 
-	async requestLintUpdate(force = false) {
-		if (this.lintRequested || this.targets.size === 0) {
-			return;
-		}
-
+	async requestLintUpdate(immediate = false): Promise<void> {
 		const delay = (await this.actions.getDelay?.()) ?? 0;
 		const remainingDelay = delay - (Date.now() - this.lastInputAt);
-		if (!force && delay > 0 && remainingDelay > 0) {
+
+		// Extend the delay if there is one in effect (this is the debounce behavior).
+		if (!immediate && delay > 0 && remainingDelay > 0) {
 			if (this.lintDelayTimer != null) {
 				window.clearTimeout(this.lintDelayTimer);
 			}
 
 			this.lintDelayTimer = window.setTimeout(() => {
 				this.lintDelayTimer = null;
-				void this.requestLintUpdate();
+				this.requestLintUpdate();
 			}, remainingDelay);
 			return;
 		}
@@ -131,50 +152,99 @@ export default class LintFramework {
 			this.lintDelayTimer = null;
 		}
 
-		// Avoid duplicate requests in the queue
-		this.lintRequested = true;
+		if (this.lintRequest != null) {
+			if (!immediate) {
+				return;
+			}
 
-		const lintResults = await Promise.all(
-			this.onScreenTargets().map(async (target) => {
-				if (!document.contains(target)) {
-					this.targets.delete(target);
-					return { target: null as HTMLElement | null, lints: {} };
-				}
+			// An immediate refresh must run after the current request. Running them concurrently
+			// allows an older result to finish last and redraw a lint that was just ignored.
+			try {
+				await this.lintRequest;
+			} catch {
+				// Still attempt the explicitly requested refresh after a failed background request.
+			}
+			await this.requestLintUpdate(true);
+			return;
+		}
 
-				const { text, isCM, newLineIndices } = this.getTargetText(target);
+		if (this.targets.size !== 0) {
+			const request = Promise.all(
+				this.onScreenTargets().map(async (target) => {
+					if (!document.contains(target)) {
+						this.targets.delete(target);
+						return { target: null as HTMLElement | null, lints: {} };
+					}
 
-				if (!text || text.length > 120000) {
-					return { target: null as HTMLElement | null, lints: {} };
-				}
+					const { text, isCM, newLineIndices } = this.getTargetText(target);
 
-				const language = getTargetLanguage(target);
-				let lintsBySource = await this.lintProvider(text, window.location.hostname, {
-					forceAllHeadings: isHeading(target),
-					language,
-				});
+					if (!text) {
+						return { target: null as HTMLElement | null, lints: {} };
+					}
 
-				if (isCM) {
-					// We're about to modify a reference, so let's work on a copy.
-					lintsBySource = window.structuredClone(lintsBySource);
+					const language = getTargetLanguage(target);
+					if (text.length > MAX_LINT_TEXT_LENGTH) {
+						const windows =
+							target instanceof HTMLElement ? getGoogleDocsLintWindows(target, text) : [];
+						if (windows.length === 0) {
+							return { target: null as HTMLElement | null, lints: {} };
+						}
+						const lintsBySource: UnpackedLintGroups = {};
+						for (const span of windows) {
+							const windowText = text.slice(span.start, span.end);
+							// Providers can cache their objects. Keep their window-local spans/source
+							// intact, and bind our copy to the full projection captured before await.
+							const groups = window.structuredClone(
+								await this.lintProvider(windowText, window.location.hostname, {
+									forceAllHeadings: isHeading(target),
+									language,
+								}),
+							);
+							for (const [rule, lints] of Object.entries(groups)) {
+								for (const lint of lints) {
+									lint.span.start += span.start;
+									lint.span.end += span.start;
+									lint.source = text;
+								}
+								lintsBySource[rule] ??= [];
+								lintsBySource[rule].push(...lints);
+							}
+						}
+						return { target: target as HTMLElement, lints: lintsBySource };
+					}
+					let lintsBySource = await this.lintProvider(text, window.location.hostname, {
+						forceAllHeadings: isHeading(target),
+						language,
+					});
 
-					for (const lints of Object.values(lintsBySource)) {
-						for (const lint of lints) {
-							const offset_start = newLineIndices.findIndex((i) => i > lint.span.start);
-							const offset_end = newLineIndices.findIndex((i) => i > lint.span.end);
+					if (isCM) {
+						// We're about to modify a reference, so let's work on a copy.
+						lintsBySource = window.structuredClone(lintsBySource);
 
-							lint.span.start -= offset_start;
-							lint.span.end -= offset_end;
+						for (const lints of Object.values(lintsBySource)) {
+							for (const lint of lints) {
+								const offset_start = newLineIndices.findIndex((i) => i > lint.span.start);
+								const offset_end = newLineIndices.findIndex((i) => i > lint.span.end);
+
+								lint.span.start -= offset_start;
+								lint.span.end -= offset_end;
+							}
 						}
 					}
+
+					return { target: target as HTMLElement, lints: lintsBySource };
+				}),
+			);
+
+			this.lintRequest = request;
+			const lintResults = await request.finally(() => {
+				if (this.lintRequest === request) {
+					this.lintRequest = null;
 				}
-
-				return { target: target as HTMLElement, lints: lintsBySource };
-			}),
-		);
-
-		this.lastLints = lintResults.filter((r) => r.target != null) as any;
-		this.lintRequested = false;
-		this.requestRender();
+			});
+			this.lastLints = lintResults.filter((r) => r.target != null) as any;
+			this.requestRender();
+		}
 	}
 
 	/**
@@ -205,6 +275,10 @@ export default class LintFramework {
 
 					if (caretPosition != null) {
 						const closestIdx = closestBox(caretPosition, this.lastBoxes);
+
+						if (closestIdx < 0) {
+							return;
+						}
 
 						const previousBox = this.lastBoxes[closestIdx];
 						const suggestions = previousBox.lint.suggestions;
@@ -297,6 +371,10 @@ export default class LintFramework {
 			const lineElements = (target as HTMLElement).querySelectorAll<HTMLElement>('.cm-line');
 			const lines = Array.from(lineElements).map((el) => el.textContent);
 			text = lines.reduce((acc: string, x: string | null) => `${acc}${x ?? ''}\n`, '');
+		} else if (target instanceof HTMLElement && isGoogleDocsTarget(target)) {
+			// The mirror already contains logical whitespace. innerText inserts line breaks
+			// between its positioned spans, splitting sentences at formatting boundaries.
+			text = target.textContent;
 		} else {
 			text =
 				target instanceof HTMLTextAreaElement || target instanceof HTMLInputElement
@@ -328,6 +406,7 @@ export default class LintFramework {
 				if (!target) {
 					return [];
 				}
+				const mapped = isGoogleDocsTarget(target);
 
 				const { text, isCM } = this.getTargetText(target);
 				if (text == null) {
@@ -336,11 +415,12 @@ export default class LintFramework {
 
 				return Object.entries(lints).flatMap(([ruleName, ls]) =>
 					ls.flatMap((lint) => {
-						const currentLint = isCM
-							? lint.source === text
-								? lint
-								: null
-							: remapLintToCurrentSource(lint, text);
+						const currentLint =
+							isCM || mapped
+								? lint.source === text
+									? lint
+									: null
+								: remapLintToCurrentSource(lint, text);
 						if (currentLint == null) {
 							return [];
 						}

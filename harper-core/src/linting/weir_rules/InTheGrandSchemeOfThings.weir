@@ -1,0 +1,10 @@
+expr main [(in the grand scale of things), (on the grand scale of things), (on the grand scheme of things)]
+
+let message "Did you mean `in the grand scheme of things`?"
+let description "Corrects nonstandard variants of `in the grand scheme of things`."
+let kind "Typo"
+let becomes "in the grand scheme of things"
+
+test "I realise that in the grand scale of things this is a fairly minor issue, but it still annoys me." "I realise that in the grand scheme of things this is a fairly minor issue, but it still annoys me."
+test "Besides, one match is a small sample size and would not change the data that much on the grand scheme of things" "Besides, one match is a small sample size and would not change the data that much in the grand scheme of things"
+test "It might be a while. How important is this on the grand scale of things?" "It might be a while. How important is this in the grand scheme of things?"

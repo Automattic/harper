@@ -19,10 +19,35 @@ test('Typst CodeMirror editor can apply a suggestion', async ({ page }) => {
 	await assertHighlightCount(page, 1);
 
 	expect(await clickHarperHighlight(page)).toBe(true);
-	await page.getByTitle('Replace with "a"').click();
+	await page.getByTitle('Click to replace "an" with "a"').click();
 
 	await expect(editor).toContainText('This is a test');
 });
+
+for (const blankLines of [1, 3, 5]) {
+	test(`Typst CodeMirror can apply a suggestion after ${blankLines} blank lines`, async ({
+		page,
+	}) => {
+		test.slow();
+		await page.goto(TEST_PAGE_URL, { waitUntil: 'domcontentloaded' });
+
+		const editor = page.locator('.cm-editor .cm-content[contenteditable="true"]').first();
+		await expect(editor).toBeVisible({ timeout: 30000 });
+		await replaceEditorContent(
+			editor,
+			`This is correct.${'\n'.repeat(blankLines + 1)}This is an test`,
+		);
+
+		await assertHighlightCount(page, 1);
+
+		expect(await clickHarperHighlight(page)).toBe(true);
+		await page.getByTitle('Click to replace "an" with "a"').click();
+
+		await expect(editor).toContainText('This is correct.');
+		await expect(editor).toContainText('This is a test');
+		await assertHighlightCount(page, 0);
+	});
+}
 
 test('Typst CodeMirror handles multiline suggestions distinctly', async ({ page }) => {
 	test.setTimeout(120000);
@@ -37,7 +62,7 @@ test('Typst CodeMirror handles multiline suggestions distinctly', async ({ page 
 	await assertHighlightCount(page, 2);
 	const initialHighlightCount = 2;
 	expect(await clickHarperHighlight(page)).toBe(true);
-	await page.getByTitle('Replace with "a"').click();
+	await page.getByTitle('Click to replace "an" with "a"').click();
 
 	const editorText = await editor.innerText();
 	expect((editorText.match(/an test/g) ?? []).length).toBe(1);

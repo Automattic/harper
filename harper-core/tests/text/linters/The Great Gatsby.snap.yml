@@ -5,7 +5,7 @@ Message: |
 Suggest:
   - Replace with: “Fa”
   - Replace with: “Fe”
-  - Replace with: “Ff”
+  - Replace with: “Ft”
 
 
 
@@ -521,17 +521,6 @@ Suggest:
 
 
 
-Lint:    Style (127 priority)
-Message: |
-     397 | There was something pathetic in his concentration, as if his complacency, more
-         |                                                                           ^~~~~
-     398 | acute than of old, was not enough to him any more. When, almost immediately, the
-         | ~~~~~ This is not an error, but an inflected form of this adjective also exists
-Suggest:
-  - Replace with: “acuter”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      416 | For a moment the last sunshine fell with romantic affection upon her glowing
@@ -770,9 +759,9 @@ Message: |
      664 | it, you perceive, after a moment, the eyes of Doctor T. J. Eckleburg. The eyes
          |                                                      ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Ta”
   - Replace with: “Ti”
   - Replace with: “To”
+  - Replace with: “Th”
 
 
 
@@ -782,8 +771,8 @@ Message: |
          |                                                         ^~ Did you mean to spell `J.` this way?
 Suggest:
   - Replace with: “Jo”
-  - Replace with: “J”
   - Replace with: “Jg”
+  - Replace with: “Jr”
 
 
 
@@ -804,9 +793,9 @@ Message: |
      665 | of Doctor T. J. Eckleburg are blue and gigantic—their retinas are one yard high.
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Ta”
   - Replace with: “Ti”
   - Replace with: “To”
+  - Replace with: “Th”
 
 
 
@@ -816,8 +805,8 @@ Message: |
          |              ^~ Did you mean to spell `J.` this way?
 Suggest:
   - Replace with: “Jo”
-  - Replace with: “J”
   - Replace with: “Jg”
+  - Replace with: “Jr”
 
 
 
@@ -893,7 +882,7 @@ Message: |
 Suggest:
   - Replace with: “Be”
   - Replace with: “Bi”
-  - Replace with: “Bu”
+  - Replace with: “BA”
 
 
 
@@ -978,7 +967,7 @@ Message: |
 Suggest:
   - Replace with: “Do”
   - Replace with: “DA”
-  - Replace with: “Di”
+  - Replace with: “DE”
 
 
 
@@ -1144,16 +1133,7 @@ Message: |
 Suggest:
   - Replace with: “Be”
   - Replace with: “Bi”
-  - Replace with: “Bu”
-
-
-
-Lint:    Style (127 priority)
-Message: |
-    1017 | “It’d be more discreet to go to Europe.”
-         |          ^~~~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
-Suggest:
-  - Replace with: “discreeter”
+  - Replace with: “BA”
 
 
 
@@ -1178,15 +1158,6 @@ Suggest:
   - Replace with: “kike”
   - Replace with: “dyke”
   - Replace with: “tyke”
-
-
-
-Lint:    Style (127 priority)
-Message: |
-    1060 | I never was any more crazy about him than I was about that man there.”
-         |                 ^~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
-Suggest:
-  - Replace with: “crazier”
 
 
 
@@ -1454,16 +1425,6 @@ Suggest:
 
 
 
-Lint:    Style (127 priority)
-Message: |
-    1202 | confident girls who weave here and there among the stouter and more stable,
-         |                                                                ^~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
-    1203 | become for a sharp, joyous moment the centre of a group, and then, excited with
-Suggest:
-  - Replace with: “stabler”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     1202 | confident girls who weave here and there among the stouter and more stable,
@@ -1703,15 +1664,6 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
-Message: |
-    1413 | trembling a little to the stiff, tinny drip of the banjoes on the lawn.
-         |                                                    ^~~~~~~ `banjoes` should probably be written as `banjo es`.
-Suggest:
-  - Replace with: “banjo es”
-
-
-
 Lint:    Enhancement (31 priority)
 Message: |
     1457 | “I thought you knew, old sport. I’m afraid I’m not a very good host.”
@@ -1800,16 +1752,6 @@ Message: |
          |                   ^~~~~~~~~ Did you mean `Castoff's`?
 Suggest:
   - Replace with: “Castoff's”
-
-
-
-Lint:    Style (127 priority)
-Message: |
-    1528 | drinking helped to set him off from his guests, for it seemed to me that he grew
-    1529 | more correct as the fraternal hilarity increased. When the “Jazz History of the
-         | ^~~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
-Suggest:
-  - Replace with: “correcter”
 
 
 
@@ -1917,16 +1859,6 @@ Suggest:
   - Replace with: “coup”
   - Replace with: “coupe”
   - Replace with: “coups”
-
-
-
-Lint:    WordChoice (127 priority)
-Message: |
-    1667 | “Don’t ask me,” said Owl Eyes, washing his hands of the whole matter. “I know
-    1668 | very little about driving—next to nothing. It happened, and that’s all I know.”
-         |                                ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
 
 
 
@@ -2110,16 +2042,6 @@ Message: |
 
 
 
-Lint:    Style (127 priority)
-Message: |
-    1800 | “You’re a rotten driver,” I protested. “Either you ought to be more careful, or
-         |                                                                ^~~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
-    1801 | you oughtn’t to drive at all.”
-Suggest:
-  - Replace with: “carefuller”
-
-
-
 Lint:    Punctuation (31 priority)
 Message: |
     1824 | perspiration appeared on her upper lip. Nevertheless there was a vague
@@ -2293,7 +2215,7 @@ Message: |
 Suggest:
   - Replace with: “RI”
   - Replace with: “Ra”
-  - Replace with: “Ru”
+  - Replace with: “Re”
 
 
 
@@ -2344,8 +2266,8 @@ Message: |
     1861 | the gravel drive that Mrs. Ulysses Swett’s automobile ran over his right hand.
          |                                    ^~~~~~~ Did you mean to spell `Swett’s` this way?
 Suggest:
-  - Replace with: “Sweat's”
   - Replace with: “Sweet's”
+  - Replace with: “Sweat's”
   - Replace with: “Seth's”
 
 
@@ -2368,7 +2290,7 @@ Message: |
 Suggest:
   - Replace with: “So”
   - Replace with: “SA”
-  - Replace with: “Se”
+  - Replace with: “SE”
 
 
 
@@ -2379,7 +2301,7 @@ Message: |
 Suggest:
   - Replace with: “Be”
   - Replace with: “Bi”
-  - Replace with: “Bu”
+  - Replace with: “BA”
 
 
 
@@ -2472,7 +2394,7 @@ Message: |
 Suggest:
   - Replace with: “So”
   - Replace with: “SA”
-  - Replace with: “Se”
+  - Replace with: “SE”
 
 
 
@@ -2518,8 +2440,8 @@ Message: |
          |                              ^~ Did you mean to spell `G.` this way?
 Suggest:
   - Replace with: “Go”
-  - Replace with: “GI”
-  - Replace with: “GU”
+  - Replace with: “GA”
+  - Replace with: “GE”
 
 
 
@@ -2595,7 +2517,7 @@ Message: |
 Suggest:
   - Replace with: “Lear's”
   - Replace with: “Leger's”
-  - Replace with: “Leer's”
+  - Replace with: “Lego's”
 
 
 
@@ -2607,7 +2529,7 @@ Message: |
 Suggest:
   - Replace with: “Be”
   - Replace with: “Bi”
-  - Replace with: “Bu”
+  - Replace with: “BA”
 
 
 
@@ -2619,7 +2541,7 @@ Message: |
 Suggest:
   - Replace with: “Jon's”
   - Replace with: “Jonas”
-  - Replace with: “Jogs”
+  - Replace with: “Jones”
 
 
 
@@ -2770,7 +2692,7 @@ Message: |
 Suggest:
   - Replace with: “So”
   - Replace with: “SA”
-  - Replace with: “Se”
+  - Replace with: “SE”
 
 
 
@@ -2826,9 +2748,9 @@ Message: |
     1882 | and Henry L. Palmetto, who killed himself by jumping in front of a subway train
          |           ^~ Did you mean to spell `L.` this way?
 Suggest:
+  - Replace with: “LA”
   - Replace with: “Le”
   - Replace with: “Li”
-  - Replace with: “Lu”
 
 
 
@@ -3002,8 +2924,8 @@ Message: |
     1982 | de Boulogne.
 Suggest:
   - Replace with: “Boss”
+  - Replace with: “Boas”
   - Replace with: “Boris”
-  - Replace with: “Bios”
 
 
 
@@ -3037,16 +2959,6 @@ Suggest:
   - Replace with: “Order”
   - Replace with: “Orders”
   - Replace with: “Order's”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    2006 | To my astonishment, the thing had an authentic look. “Orderi di Danilo,” ran the
-         |                                                              ^~ This word's canonical spelling is all-caps.
-    2007 | circular legend, “Montenegro, Nicolas Rex.”
-Suggest:
-  - Replace with: “DI”
 
 
 
@@ -3137,16 +3049,6 @@ Message: |
          |               ^~~~~~~~~~ Did you mean `Greensboro`?
 Suggest:
   - Replace with: “Greensboro”
-
-
-
-Lint:    Style (127 priority)
-Message: |
-    2073 | A dead man passed us in a hearse heaped with blooms, followed by two carriages
-    2074 | with drawn blinds, and by more cheerful carriages for friends. The friends
-         |                           ^~~~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
-Suggest:
-  - Replace with: “cheerfuller”
 
 
 
@@ -3563,17 +3465,6 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
-Message: |
-    2319 | That was nineteen-seventeen. By the next year I had a few beaux myself, and I
-         |                                                           ^~~~~ `beaux` has a missing space between words.
-    2320 | began to play in tournaments, so I didn’t see Daisy very often. She went with a
-Suggest:
-  - Replace with: “be aux”
-  - Replace with: “beau x”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     2329 | By the next autumn she was gay again, gay as ever. She had a début after the
@@ -3642,15 +3533,6 @@ Suggest:
   - Replace with: “dear's”
   - Replace with: “dares”
   - Replace with: “dearies”
-
-
-
-Lint:    Typo (31 priority)
-Message: |
-    2349 | “Here, deares’.” She groped around in a wastebasket she had with her on the bed
-         |        ^~~~~~ `deares` should probably be written as `dear es`.
-Suggest:
-  - Replace with: “dear es”
 
 
 
@@ -3781,18 +3663,6 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-    2467 | We passed a barrier of dark trees, and then the façade of Fifty-ninth Street, a
-         |                                                 ^~~~~~ Did you mean to spell `façade` this way?
-    2468 | block of delicate pale light, beamed down into the park. Unlike Gatsby and Tom
-Suggest:
-  - Replace with: “facade”
-  - Replace with: “fade”
-  - Replace with: “facades”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
     2492 | some of the rooms. Let’s go to Coney Island, old sport. In my car.”
          |                                ^~~~~ Did you mean to spell `Coney` this way?
 Suggest:
@@ -3891,16 +3761,6 @@ Suggest:
   - Replace with: “blared”
   - Replace with: “bleated”
   - Replace with: “beard”
-
-
-
-Lint:    Typo (31 priority)
-Message: |
-    2607 | Clay’s “Economics,” starting at the Finnish tread that shook the kitchen floor,
-    2608 | and peering toward the bleared windows from time to time as if a series of
-         |                        ^~~~~~~ `bleared` should probably be written as `bl eared`.
-Suggest:
-  - Replace with: “bl eared”
 
 
 
@@ -4182,15 +4042,6 @@ Message: |
 
 
 
-Lint:    Capitalization (31 priority)
-Message: |
-    2905 | “Who’s this?”
-         |  ^~~~~ The canonical dictionary spelling is `who's`.
-Suggest:
-  - Replace with: “who's”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     2940 | “I know what we'll do,” said Gatsby, “we'll have Klipspringer play the piano.”
@@ -4256,15 +4107,6 @@ Suggest:
   - Replace with: “prat”
   - Replace with: “pray”
   - Replace with: “pram”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    3003 | ## CHAPTER VI
-         | ^~~~~~~~~~~~~ Try to use title case in headings.
-Suggest:
-  - Replace with: “## CHAPTER Vi”
 
 
 
@@ -4635,26 +4477,6 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-    3349 | But the rest offended her—and inarguably, because it wasn’t a gesture but an
-         |                               ^~~~~~~~~~ Did you mean to spell `inarguably` this way?
-Suggest:
-  - Replace with: “inarguable”
-  - Replace with: “unarguably”
-  - Replace with: “arguably”
-
-
-
-Lint:    Typo (31 priority)
-Message: |
-    3349 | But the rest offended her—and inarguably, because it wasn’t a gesture but an
-         |                               ^~~~~~~~~~ `inarguably` should probably be written as `in arguably`.
-Suggest:
-  - Replace with: “in arguably”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     3350 | emotion. She was appalled by West Egg, this unprecedented “place” that Broadway
@@ -4668,15 +4490,6 @@ Message: |
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-    3353 | inhabitants along a short-cut from nothing to nothing. She saw something awful
-         |                                            ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     3389 | Daisy began to sing with the music in a husky, rythmic whisper, bringing out a
@@ -4685,16 +4498,6 @@ Message: |
 Suggest:
   - Replace with: “rhythmic”
   - Replace with: “mythic”
-
-
-
-Lint:    Capitalization (31 priority)
-Message: |
-    3409 | Her glance left me and sought the lighted top of the steps, where “Three o’Clock
-         |                                                                          ^~~~~~~ The canonical dictionary spelling is `o'clock`.
-    3410 | in the Morning,” a neat, sad little waltz of that year, was drifting out the
-Suggest:
-  - Replace with: “o'clock”
 
 
 
@@ -4753,18 +4556,6 @@ Message: |
          |     ^~~~~~~~~~ Did you mean the closed compound noun “heartbeat”?
 Suggest:
   - Replace with: “heartbeat”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    3490 | them than a wisp of startled air. But they made no sound, and what I had almost
-    3491 | remembered was uncommunicable forever.
-         |                ^~~~~~~~~~~~~~ Did you mean to spell `uncommunicable` this way?
-Suggest:
-  - Replace with: “incommunicable”
-  - Replace with: “communicable”
-  - Replace with: “noncommunicable”
 
 
 
@@ -4997,15 +4788,6 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
-Message: |
-    3646 | “The bles-sed pre-cious! Did mother get powder on your old yellowy hair? Stand
-         |      ^~~~ `bles` should probably be written as `bl es`.
-Suggest:
-  - Replace with: “bl es”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     3646 | “The bles-sed pre-cious! Did mother get powder on your old yellowy hair? Stand
@@ -5142,9 +4924,9 @@ Message: |
     3874 | while in silence. Then as Doctor T. J. Eckleburg’s faded eyes came into sight
          |                                  ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Ta”
   - Replace with: “Ti”
   - Replace with: “To”
+  - Replace with: “Th”
 
 
 
@@ -5154,8 +4936,8 @@ Message: |
          |                                     ^~ Did you mean to spell `J.` this way?
 Suggest:
   - Replace with: “Jo”
-  - Replace with: “J”
   - Replace with: “Jg”
+  - Replace with: “Jr”
 
 
 
@@ -5220,9 +5002,9 @@ Message: |
     3948 | behind. Over the ashheaps the giant eyes of Doctor T. J. Eckleburg kept their
          |                                                    ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Ta”
   - Replace with: “Ti”
   - Replace with: “To”
+  - Replace with: “Th”
 
 
 
@@ -5232,8 +5014,8 @@ Message: |
          |                                                       ^~ Did you mean to spell `J.` this way?
 Suggest:
   - Replace with: “Jo”
-  - Replace with: “J”
   - Replace with: “Jg”
+  - Replace with: “Jr”
 
 
 
@@ -5364,7 +5146,7 @@ Message: |
 Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
-  - Replace with: “Biro's”
+  - Replace with: “Bill's”
 
 
 
@@ -5375,7 +5157,7 @@ Message: |
 Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
-  - Replace with: “Biro's”
+  - Replace with: “Bill's”
 
 
 
@@ -5386,7 +5168,7 @@ Message: |
 Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
-  - Replace with: “Biro's”
+  - Replace with: “Bill's”
 
 
 
@@ -5398,7 +5180,7 @@ Message: |
 Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
-  - Replace with: “Biro's”
+  - Replace with: “Bill's”
 
 
 
@@ -5416,7 +5198,7 @@ Message: |
 Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
-  - Replace with: “Biro's”
+  - Replace with: “Bill's”
 
 
 
@@ -5426,6 +5208,28 @@ Message: |
          |                                                ^~~ If you mean the informal word for `yes` and not the biblical or legalistic `yea`, the standard spelling is `yeah`.
 Suggest:
   - Replace with: “Yeah”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    4070 | the window, followed by intermittent cries of “Yea—ea—ea!” and finally by a
+         |                                                    ^~ Did you mean to spell `ea` this way?
+Suggest:
+  - Replace with: “ear”
+  - Replace with: “eat”
+  - Replace with: “eh”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    4070 | the window, followed by intermittent cries of “Yea—ea—ea!” and finally by a
+         |                                                       ^~ Did you mean to spell `ea` this way?
+Suggest:
+  - Replace with: “ear”
+  - Replace with: “eat”
+  - Replace with: “eh”
 
 
 
@@ -5447,7 +5251,7 @@ Message: |
 Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
-  - Replace with: “Biro's”
+  - Replace with: “Bill's”
 
 
 
@@ -5465,7 +5269,7 @@ Message: |
 Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
-  - Replace with: “Biro's”
+  - Replace with: “Bill's”
 
 
 
@@ -5488,7 +5292,7 @@ Message: |
 Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
-  - Replace with: “Biro's”
+  - Replace with: “Bill's”
 
 
 
@@ -5499,7 +5303,7 @@ Message: |
 Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
-  - Replace with: “Biro's”
+  - Replace with: “Bill's”
 
 
 
@@ -5546,17 +5350,6 @@ Suggest:
   - Replace with: “Kaitlin”
   - Replace with: “Kaposi”
   - Replace with: “Kaolin”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    4265 | Why—there’re things between Daisy and me that you’ll never know, things that
-         |     ^~~~~~~~ Did you mean to spell `there’re` this way?
-Suggest:
-  - Replace with: “there's”
-  - Replace with: “there'd”
-  - Replace with: “there'll”
 
 
 
@@ -5732,15 +5525,6 @@ Suggest:
   - Replace with: “Michael's”
   - Replace with: “Michaela's”
   - Replace with: “Micheal's”
-
-
-
-Lint:    Style (31 priority)
-Message: |
-    4416 | he heard Mrs. Wilson’s voice, loud and scolding, down-stairs in the garage.
-         |                               ^~~~ An Oxford comma is necessary here.
-Suggest:
-  - Insert “,”
 
 
 
@@ -5946,8 +5730,8 @@ Message: |
          |      ^ Did you mean to spell `r` this way?
 Suggest:
   - Replace with: “re”
+  - Replace with: “I”
   - Replace with: “a”
-  - Replace with: “e”
 
 
 
@@ -5957,8 +5741,8 @@ Message: |
          |                                    ^ Did you mean to spell `r` this way?
 Suggest:
   - Replace with: “re”
+  - Replace with: “I”
   - Replace with: “a”
-  - Replace with: “e”
 
 
 
@@ -5988,8 +5772,8 @@ Message: |
          |  ^ Did you mean to spell `r` this way?
 Suggest:
   - Replace with: “re”
+  - Replace with: “I”
   - Replace with: “a”
-  - Replace with: “e”
 
 
 
@@ -6057,9 +5841,8 @@ Suggest:
 Lint:    Typo (31 priority)
 Message: |
     4503 | “She ran out ina road. Son-of-a-bitch didn’t even stopus car.”
-         |                                                   ^~~~~~ `stopus` has a missing space between words.
+         |                                                   ^~~~~~ `stopus` should probably be written as `stop us`.
 Suggest:
-  - Replace with: “st opus”
   - Replace with: “stop us”
 
 
@@ -6437,16 +6220,6 @@ Suggest:
 
 
 
-Lint:    Style (127 priority)
-Message: |
-    4883 | “Of course she might have loved him just for a minute, when they were first
-    4884 | married—and loved me more even then, do you see?”
-         |                      ^~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
-Suggest:
-  - Replace with: “evener”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     4921 | “I’m going to drain the pool to-day, Mr. Gatsby. Leaves’ll start falling pretty
@@ -6646,17 +6419,6 @@ Suggest:
 
 
 
-Lint:    Style (127 priority)
-Message: |
-    5062 | morning—and from time to time sat down beside Wilson trying to keep him more
-         |                                                                         ^~~~~
-    5063 | quiet.
-         | ~~~~~ This is not an error, but an inflected form of this adjective also exists
-Suggest:
-  - Replace with: “quieter”
-
-
-
 Lint:    WordChoice (127 priority)
 Message: |
     5065 | “Have you got a church you go to sometimes, George? Maybe even if you haven’t
@@ -6771,9 +6533,9 @@ Message: |
     5156 | of Doctor T. J. Eckleburg, which had just emerged, pale and enormous, from the
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Ta”
   - Replace with: “Ti”
   - Replace with: “To”
+  - Replace with: “Th”
 
 
 
@@ -6783,8 +6545,8 @@ Message: |
          |              ^~ Did you mean to spell `J.` this way?
 Suggest:
   - Replace with: “Jo”
-  - Replace with: “J”
   - Replace with: “Jg”
+  - Replace with: “Jr”
 
 
 
@@ -6848,9 +6610,9 @@ Message: |
     5172 | Roosevelt and then to Gad’s Hill, where he bought a sandwich that he didn’t eat,
          |                       ^~~~~ Did you mean to spell `Gad’s` this way?
 Suggest:
-  - Replace with: “Gab's”
-  - Replace with: “Gag's”
-  - Replace with: “Gal's”
+  - Replace with: “Gap's”
+  - Replace with: “Gay's”
+  - Replace with: “God's”
 
 
 
@@ -6860,9 +6622,9 @@ Message: |
     5174 | reach Gad’s Hill until noon. Thus far there was no difficulty in accounting for
          |       ^~~~~ Did you mean to spell `Gad’s` this way?
 Suggest:
-  - Replace with: “Gab's”
-  - Replace with: “Gag's”
-  - Replace with: “Gal's”
+  - Replace with: “Gap's”
+  - Replace with: “Gay's”
+  - Replace with: “God's”
 
 
 
@@ -7127,9 +6889,9 @@ Message: |
     5341 | “Young Parke’s in trouble,” he said rapidly. “They picked him up when he handed
          |        ^~~~~~~ Did you mean to spell `Parke’s` this way?
 Suggest:
+  - Replace with: “Park's”
   - Replace with: “Parker's”
   - Replace with: “Parks's”
-  - Replace with: “Park's”
 
 
 
@@ -7169,7 +6931,7 @@ Message: |
 Suggest:
   - Replace with: “Co”
   - Replace with: “Cu”
-  - Replace with: “CI”
+  - Replace with: “CA”
 
 
 
@@ -7285,8 +7047,8 @@ Message: |
          |                                                               ^~ Did you mean to spell `J.` this way?
 Suggest:
   - Replace with: “Jo”
-  - Replace with: “J”
   - Replace with: “Jg”
+  - Replace with: “Jr”
 
 
 
@@ -7317,7 +7079,7 @@ Message: |
 Suggest:
   - Replace with: “Be”
   - Replace with: “Bi”
-  - Replace with: “Bu”
+  - Replace with: “BA”
 
 
 
@@ -7328,7 +7090,7 @@ Message: |
 Suggest:
   - Replace with: “Fa”
   - Replace with: “Fe”
-  - Replace with: “Ff”
+  - Replace with: “Ft”
 
 
 
@@ -7476,16 +7238,6 @@ Suggest:
 
 
 
-Lint:    Style (127 priority)
-Message: |
-    5568 | admiration from my eyes. He had shown it so often that I think it was more real
-         |                                                                       ^~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
-    5569 | to him now than the house itself.
-Suggest:
-  - Replace with: “realer”
-
-
-
 Lint:    Agreement (127 priority)
 Message: |
     5575 | “He come out to see me two years ago and bought me the house I live in now. Of
@@ -7531,8 +7283,8 @@ Message: |
          |                                            ^~~~~~~~ Did you mean to spell `Hopalong` this way?
 Suggest:
   - Replace with: “Hopping”
+  - Replace with: “Halon”
   - Replace with: “Haling”
-  - Replace with: “Haloing”
 
 
 
@@ -7574,9 +7326,9 @@ Message: |
     5613 | great for that. He told me I et like a hog once, and I beat him for it.”
          |                              ^~ Did you mean to spell `et` this way?
 Suggest:
-  - Replace with: “e”
-  - Replace with: “ea”
   - Replace with: “eat”
+  - Replace with: “eh”
+  - Replace with: “em”
 
 
 
@@ -7647,15 +7399,6 @@ Message: |
          |                                    ^~~~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “They”
-
-
-
-Lint:    Style (127 priority)
-Message: |
-    5659 | One of my most vivid memories is of coming back West from prep school and later
-         |           ^~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
-Suggest:
-  - Replace with: “vividest”
 
 
 
@@ -7842,8 +7585,8 @@ Message: |
          |                                                                   ^~ Did you mean to spell `El` this way?
 Suggest:
   - Replace with: “Ell”
-  - Replace with: “E”
-  - Replace with: “Ea”
+  - Replace with: “Eel”
+  - Replace with: “Eh”
 
 
 

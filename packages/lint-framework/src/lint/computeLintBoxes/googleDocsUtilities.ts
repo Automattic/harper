@@ -2,6 +2,11 @@ import type { Span } from 'harper.js';
 import { leafNodes } from '../domUtils';
 import type { UnpackedLint, UnpackedSpan } from '../unpackLint';
 
+type GoogleDocsNativeRange = {
+	rangeSource: 'native-utf16-v1';
+	nativeSnapshot: string;
+};
+
 type GoogleDocsReplacePayload = {
 	start: number;
 	end: number;
@@ -19,6 +24,7 @@ type GoogleDocsBridgeClientLike = {
 		expectedText?: string,
 		beforeContext?: string,
 		afterContext?: string,
+		nativeRange?: GoogleDocsNativeRange,
 	) => Promise<unknown> | unknown;
 };
 
@@ -251,6 +257,15 @@ export function getGoogleDocsHighlightRects(target: HTMLElement, span: Span): DO
 		}
 
 		const positionedHost = getGoogleDocsPositionedLeafHost(child, target);
+		// Native gaps have text but no geometry. DOM Range on the hidden mirror
+		// would otherwise manufacture a box near the editor origin.
+		if (
+			(target.getAttribute('data-harper-gdocs-source') === 'native' ||
+				target.hasAttribute('data-harper-gdocs-native-snapshot') ||
+				target.hasAttribute('data-harper-gdocs-native-runs')) &&
+			!positionedHost?.hasAttribute('data-harper-gdocs-native-start')
+		)
+			continue;
 		if (positionedHost != null) {
 			const rect = getGoogleDocsTextSliceRect(positionedHost, childText, localStart, localEnd);
 			if (rect != null && rect.width > 0 && rect.height > 0) {
@@ -302,11 +317,12 @@ function getGoogleDocsPositionedLeafHost(child: Node, target: HTMLElement): HTML
  * The payload includes nearby context so the bridge can recover when the original
  * offsets have gone stale by the time the suggestion is applied.
  */
-export function replaceGoogleDocsValue(
+export async function replaceGoogleDocsValue(
 	span: { start: number; end: number },
 	replacementText: string,
 	source: string,
-) {
+	nativeRange?: GoogleDocsNativeRange,
+): Promise<boolean> {
 	try {
 		const safeStart = Math.max(0, Math.min(span.start, source.length));
 		const safeEnd = Math.max(safeStart, Math.min(span.end, source.length));
@@ -323,23 +339,24 @@ export function replaceGoogleDocsValue(
 			beforeContext,
 			afterContext,
 		};
-		// This looks awkward because lint-framework cannot import chrome-plugin code directly.
-		// The content script puts the bridge client on window so this shared package can call it.
+
 		const bridgeClient = (window as WindowWithGoogleDocsBridgeClient)
 			.__harperGoogleDocsBridgeClient;
 		if (bridgeClient && typeof bridgeClient.replaceText === 'function') {
-			void Promise.resolve(
-				bridgeClient.replaceText(
-					payload.start,
-					payload.end,
-					payload.replacementText,
-					payload.expectedText,
-					payload.beforeContext,
-					payload.afterContext,
-				),
+			const applied = await bridgeClient.replaceText(
+				payload.start,
+				payload.end,
+				payload.replacementText,
+				payload.expectedText,
+				payload.beforeContext,
+				payload.afterContext,
+				nativeRange,
 			);
+			return Boolean(applied);
 		}
-	} catch {
-		// Ignore bridge dispatch failures.
+
+		return false;
+	} catch (e) {
+		return false;
 	}
 }

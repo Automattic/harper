@@ -1,4 +1,7 @@
-expr main <([to, with, for, about, against, between, among, around, toward, towards, through, beyond, behind, across, near, inside, outside, call, contact, invite, remind, ask, see, watch, help, trust, send, support, follow, visit, tell, thank, mention, show] they), they>
+expr prepositions [to, with, for, about, against, between, among, around, toward, towards, through, beyond, behind, across, near, inside, outside]
+# Most of these are also nouns. In "the help they received", `they` is the subject of the verb that follows, so skip those
+expr verbs [call, contact, invite, remind, ask, see, watch, help, trust, send, support, follow, visit, tell, thank, mention, show]
+expr main [<(@prepositions they), they>, <[(@verbs they ![VERB, AUX]), (@verbs they.)], they>]
 
 let message "Use `them` when the pronoun follows a preposition or transitive verb."
 let description "Converts `they` to `them` whenever the pronoun serves as an object after common prepositions or actions that take direct objects."
@@ -24,6 +27,7 @@ test "Support they during the transition." "Support them during the transition."
 test "Show they how the tool works." "Show them how the tool works."
 
 test "Mention they in your update." "Mention them in your update."
+test "I will call they." "I will call them."
 
 # True negatives
 
@@ -32,3 +36,7 @@ test "I know they will arrive soon." "I know they will arrive soon."
 test "Because they are busy, we rescheduled." "Because they are busy, we rescheduled."
 test "They told us they would stay." "They told us they would stay."
 test "They announced the event yesterday." "They announced the event yesterday."
+allows "Whether they had families could affect the help they received."
+allows "We gave them the support they needed."
+allows "That was the show they watched."
+allows "The trust they built took years."

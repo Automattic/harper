@@ -28,7 +28,7 @@ pub struct NounCountability {
 
 impl Default for NounCountability {
     fn default() -> Self {
-        let quantifier = WordSet::new(&[
+        let quantifier = WordSet::new([
             "another", "both", "each", "every", "few", "fewer", "many", "multiple", "one",
             "several",
         ]);
@@ -74,6 +74,11 @@ impl ExprLinter for NounCountability {
 
         // the mass noun
         let noun = toks[2].get_str(src).to_lowercase();
+
+        // specific exceptions
+        if noun == "software" && followed_by_word(ctx, |t| t.get_ch(src).eq_str("rendered")) {
+            return None;
+        }
 
         let synonym_corrections: &'static [Correction] = match (noun.as_str(), dq.as_str()) {
             ("advice", "a" | "an" | "another" | "each" | "every" | "one") => &[
@@ -568,6 +573,14 @@ mod tests {
             "Not in this form because it currently works with one punctuation with one letter either side.",
             NounCountability::default(),
             "Not in this form because it currently works with one punctuation mark with one letter either side.",
+        );
+    }
+
+    #[test]
+    fn dont_flag_a_software_rendered_game() {
+        assert_no_lints(
+            "There was a software rendered game in vein of Tomb Raider",
+            NounCountability::default(),
         );
     }
 }

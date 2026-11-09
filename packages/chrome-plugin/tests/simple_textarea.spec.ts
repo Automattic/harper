@@ -20,6 +20,76 @@ testCanIgnoreSuggestion(TEST_PAGE_URL, getTextarea);
 testCanBlockRuleSuggestion(TEST_PAGE_URL, getTextarea);
 testMultipleSuggestionsAndUndo(TEST_PAGE_URL, getTextarea);
 
+test('Keeps the textarea typable after opening a suggestion with a click', async ({ page }) => {
+	await page.goto(TEST_PAGE_URL);
+
+	const editor = getTextarea(page);
+	await replaceEditorContent(editor, 'This word is misspellled.');
+
+	expect(await clickHarperHighlight(page)).toBe(true);
+	await page.locator('.harper-container').waitFor({ state: 'visible' });
+	await assertLocatorIsFocused(page, editor);
+
+	const valueBeforeDelete = await editor.inputValue();
+	await page.keyboard.press('Delete');
+	expect(await editor.inputValue()).not.toBe(valueBeforeDelete);
+});
+
+test('Focuses suggestions when opening the popup with the activation key', async ({
+	browserName,
+	context,
+	page,
+}) => {
+	test.skip(
+		browserName === 'firefox',
+		'Firefox MV3 background context is not exposed reliably in playwright-webextext.',
+	);
+	const background = await getBackground(context);
+	await background.evaluate(() => chrome.storage.local.set({ activationKey: 'shift' }));
+	await page.goto(TEST_PAGE_URL);
+
+	const editor = getTextarea(page);
+	await replaceEditorContent(editor, 'This is an test.');
+	await page.locator('#harper-highlight').waitFor({ state: 'visible' });
+
+	await page.keyboard.press('Shift');
+	await page.waitForTimeout(50);
+	await page.keyboard.press('Shift');
+
+	const firstSuggestion = page.getByTitle('Click to replace "an" with "a"');
+	await firstSuggestion.waitFor({ state: 'visible' });
+	// The row lives in the popup's shadow root, so `:focus` also matches its host.
+	await expect(firstSuggestion).toBeFocused();
+
+	await page.keyboard.press('Escape');
+	await page.locator('.harper-container').waitFor({ state: 'hidden' });
+	await assertLocatorIsFocused(page, editor);
+
+	await page.keyboard.press('Shift');
+	await page.waitForTimeout(50);
+	await page.keyboard.press('Shift');
+	await firstSuggestion.waitFor({ state: 'visible' });
+	await expect(firstSuggestion).toBeFocused();
+
+	await page.keyboard.press('Enter');
+	await expect(editor).toHaveValue('This is a test.');
+});
+
+test('Dismisses a click-opened popup when clicking outside its highlight', async ({ page }) => {
+	await page.goto(TEST_PAGE_URL);
+
+	const editor = getTextarea(page);
+	await replaceEditorContent(editor, 'This word is misspellled.');
+
+	expect(await clickHarperHighlight(page)).toBe(true);
+	await page.locator('.harper-container').waitFor({ state: 'visible' });
+
+	await editor.click({ position: { x: 2, y: 2 } });
+
+	await page.locator('.harper-container').waitFor({ state: 'hidden' });
+	await assertLocatorIsFocused(page, editor);
+});
+
 test('Wraps correctly', async ({ page }, testInfo) => {
 	await page.goto(TEST_PAGE_URL);
 
@@ -33,15 +103,54 @@ test('Wraps correctly', async ({ page }, testInfo) => {
 
 	if (testInfo.project.name == 'chromium') {
 		await assertHarperHighlightBoxes(page, [
-			{ x: 233.90625, y: 44, width: 48, height: 19 },
-			{ x: 281.90625, y: 44, width: 8, height: 19 },
-			{ x: 10, y: 61, width: 8, height: 19 },
-			{ x: 241.90625, y: 27, width: 24, height: 19 },
+			[
+				{
+					x: 196.52084350585938,
+					y: 48.66666793823242,
+					width: 39.96875,
+					height: 21.322917938232422,
+				},
+				{
+					x: 236.5,
+					y: 48.66666793823242,
+					width: 6.6666717529296875,
+					height: 21.322917938232422,
+				},
+				{
+					x: 10,
+					y: 68,
+					width: 6.666667938232422,
+					height: 21.333335876464844,
+				},
+				{
+					x: 203.17709350585938,
+					y: 29.33333396911621,
+					width: 20,
+					height: 21.33333396911621,
+				},
+			],
+			[
+				{ x: 234.671875, y: 40, width: 48.15625, height: 17 },
+				{ x: 282.828125, y: 40, width: 8.03125, height: 17 },
+				{ x: 10, y: 55, width: 8.03125, height: 17 },
+				{ x: 242.6875, y: 25, width: 24.09375, height: 17 },
+			],
 		]);
 	} else {
 		await assertHarperHighlightBoxes(page, [
-			{ x: 10, y: 71, width: 57.599998474121094, height: 17 },
-			{ x: 218.8000030517578, y: 26, width: 21.600006103515625, height: 17 },
+			[
+				{ x: 178, y: 28, width: 48, height: 20 },
+				{ x: 358, y: 10, width: 18, height: 20 },
+			],
+			[
+				{ x: 10, y: 70, width: 57.73333740234375, height: 17 },
+				{
+					x: 219.28334045410156,
+					y: 25,
+					width: 21.649993896484375,
+					height: 17,
+				},
+			],
 		]);
 	}
 });
@@ -52,12 +161,15 @@ test('Scrolls correctly', async ({ page }) => {
 	const editor = getTextarea(page);
 	await replaceEditorContent(
 		editor,
-		'This is a test of the the Harper grammar checker, specifically if \n\n\n\n\n\n\n\n\n\n\n\n\nit scrolls beyo nd the height of the buffer.',
+		'This is a test of the the Harper grammar checker, specifically if \n\n\n\n\n\n\n\n\n\n\n\n\nIt scrolls beyo nd the height of the buffer.',
 	);
 
 	await page.waitForTimeout(6000);
 
-	await assertHarperHighlightBoxes(page, [{ height: 19, width: 56, x: 97.953125, y: 63 }]);
+	await assertHarperHighlightBoxes(page, [
+		[{ height: 19, width: 56, x: 97.953125, y: 63 }],
+		[{ x: 76, y: 86, width: 42, height: 20 }],
+	]);
 });
 
 test.describe('textarea lint delay', () => {
@@ -128,12 +240,9 @@ test('Can dismiss with escape key', async ({ page }) => {
 	await page.goto(TEST_PAGE_URL);
 
 	const editor = getTextarea(page);
-	await replaceEditorContent(
-		editor,
-		'This is a test of the Harper grammar checker, specifically   if it is wrapped around a line weirdl y',
-	);
+	await replaceEditorContent(editor, 'This is an test.');
 
-	await page.waitForTimeout(6000);
+	await page.waitForTimeout(1000);
 
 	await clickHarperHighlight(page);
 

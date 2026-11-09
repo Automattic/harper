@@ -1,0 +1,10 @@
+expr main [<(to air is human), air>, <(air on the side of), air>]
+
+let message "Did you mean `err`? The correct phrase uses the verb `err`."
+let description "Corrects `air` to `err` in common idioms."
+let kind "Spelling"
+let becomes "err"
+let strategy "MatchCase"
+
+test "Im inclined to air on the side of caution tyvm..." "Im inclined to err on the side of caution tyvm..."
+test "They say to air is human, but to forgive is divine." "They say to err is human, but to forgive is divine."

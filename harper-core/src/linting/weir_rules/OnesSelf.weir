@@ -1,0 +1,9 @@
+expr main (one's self)
+
+let message "If you mean the reflexive pronoun for a generic or unspecified person, use `oneself`. Ignore this if you 're referring to an individual's distinct identity or ego."
+let description "Corrects the generic reflexive pronoun `one's self` to `oneself`."
+let kind "Usage"
+let becomes "oneself"
+
+test "Send via direct message: enable sending a skeet to one's self" "Send via direct message: enable sending a skeet to oneself"
+test "There is a tendency in language design to assume that one's users won't be as smart as one's self and thus one tends to dumb things down." "There is a tendency in language design to assume that one's users won't be as smart as oneself and thus one tends to dumb things down."

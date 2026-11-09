@@ -263,6 +263,15 @@ mod tests {
     }
 
     #[test]
+    fn allows_dickens_1656() {
+        assert_lint_count(
+            "Charles Dickens wrote many novels.",
+            AvoidCurses::default(),
+            0,
+        );
+    }
+
+    #[test]
     fn fix_shit() {
         assert_suggestion_result("shit", AvoidCurses::default(), "crap")
     }

@@ -1,5 +1,8 @@
 #![doc = include_str!("../README.md")]
 
+#[cfg(feature = "bench")]
+mod bench;
+
 use std::collections::HashMap;
 use std::convert::Into;
 use std::io::Cursor;

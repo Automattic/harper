@@ -11,6 +11,7 @@ import {
 	ActivationKey,
 	type AddToUserDictionaryRequest,
 	type AddWeirpackRequest,
+	type ClearIgnoredLintsResponse,
 	createUnitResponse,
 	type GetActivationKeyResponse,
 	type GetConfigRequest,
@@ -122,6 +123,7 @@ const defaultEnabledDomains = [
 	'chatgpt.com',
 	'www.perplexity.ai',
 	'textarea.online',
+	'onlinenotepad.org',
 	'webmail.porkbun.com',
 	'mail.google.com',
 	'trix-editor.org',
@@ -163,12 +165,18 @@ const defaultEnabledDomains = [
 	'ckeditor.com',
 	'app.slack.com',
 	'openrouter.ai',
+	'claude.ai',
 	'docs.google.com',
+	'gemini.google.com',
 	'typst.app',
 	'steamcommunity.com',
 	'store.steampowered.com',
 	'steampowered.com',
 	'help.steampowered.com',
+	'assistant.kagi.com',
+	'spicychat.ai',
+	'studio.novlr.org',
+	'app.dabblewriter.com',
 ] as const;
 const defaultEnabledDomainSet = new Set<string>(defaultEnabledDomains);
 
@@ -234,6 +242,15 @@ function handleRequest(message: Request, sender?: chrome.runtime.MessageSender):
 			return handleGetIsolateEnglish();
 		case 'setIsolateEnglish':
 			return handleSetIsolateEnglish(message);
+		case 'getOpenSuggestionsOnHover':
+			return chrome.storage.local.get({ openSuggestionsOnHover: false }).then((stored) => ({
+				kind: 'getOpenSuggestionsOnHover',
+				enabled: stored.openSuggestionsOnHover === true,
+			}));
+		case 'setOpenSuggestionsOnHover':
+			return chrome.storage.local
+				.set({ openSuggestionsOnHover: message.enabled === true })
+				.then(createUnitResponse);
 		case 'getDelay':
 			return handleGetDelay(message);
 		case 'setDelay':
@@ -244,6 +261,8 @@ function handleRequest(message: Request, sender?: chrome.runtime.MessageSender):
 			return handleSetDomainStatus(message);
 		case 'addToUserDictionary':
 			return handleAddToUserDictionary(message);
+		case 'clearIgnoredLints':
+			return handleClearIgnoredLints();
 		case 'ignoreLint':
 			return handleIgnoreLint(message);
 		case 'setDefaultStatus':
@@ -308,6 +327,12 @@ async function handleLint(
 	const unpackedEntries = await Promise.all(
 		Object.entries(grouped).map(async ([source, lints]) => {
 			const unpacked = await Promise.all(lints.map((lint) => unpackLint(req.text, lint, linter)));
+
+			// Free the lints
+			lints.forEach((l) => {
+				l.free();
+			});
+
 			return [source, unpacked] as const;
 		}),
 	);
@@ -411,6 +436,19 @@ async function handleSetDelay(req: SetDelayRequest): Promise<UnitResponse> {
 	return createUnitResponse();
 }
 
+/** Reset ignored suggestions globally and acknowledge only after the reset is saved. */
+async function handleClearIgnoredLints(): Promise<ClearIgnoredLintsResponse> {
+	try {
+		await ensureLinterReady();
+		await linter.clearIgnoredLints();
+		await setIgnoredLints(await linter.exportIgnoredLints());
+		return { kind: 'clearIgnoredLints', success: true };
+	} catch (error) {
+		console.error('Failed to clear ignored suggestions:', error);
+		return { kind: 'clearIgnoredLints', success: false };
+	}
+}
+
 async function handleIgnoreLint(req: IgnoreLintRequest): Promise<UnitResponse> {
 	await ensureLinterReady();
 	await linter.ignoreLintHash(BigInt(req.contextHash));
@@ -427,7 +465,7 @@ async function handleGetDefaultStatus(): Promise<GetDefaultStatusResponse> {
 }
 
 async function handleGetEnabledDomains(): Promise<GetEnabledDomainsResponse> {
-	const all = await chrome.storage.local.get(null as any);
+	const all = await chrome.storage.local.get(null);
 	const prefix = formatDomainKey(''); // yields 'domainStatus '
 	const domains = Object.entries(all)
 		.filter(([k, v]) => typeof v === 'boolean' && v === true && k.startsWith(prefix))
@@ -518,6 +556,8 @@ async function handleSetHotkey(req: SetHotkeyRequest): Promise<UnitResponse> {
 		key: req.hotkey.key,
 	};
 	await setHotkey(hotkey);
+
+	return createUnitResponse();
 }
 
 async function handleOpenReportError(
@@ -653,7 +693,7 @@ async function getLintConfig(): Promise<LintConfig> {
 	return JSON.parse(resp.lintConfig);
 }
 
-/** Get the ignored lint state from permanent storage. */
+/** Update the linter's ignored suggestions and save them to permanent storage. */
 async function setIgnoredLints(state: string): Promise<void> {
 	await linter.importIgnoredLints(state);
 	linterHasPersistedState = true;
@@ -744,7 +784,7 @@ async function setDelay(delay: number) {
 }
 
 async function getDelay(): Promise<number> {
-	const resp = await chrome.storage.local.get({ delay: 300 });
+	const resp = await chrome.storage.local.get({ delay: 0 });
 	const { delay } = resp;
 
 	return typeof delay === 'number' && Number.isFinite(delay) && delay >= 0 ? delay : 0;
@@ -781,7 +821,7 @@ async function getStoredDomainStatus(domain: string): Promise<boolean | undefine
 }
 
 /** Check if Harper has been enabled for a given domain. */
-async function enabledForDomain(domain: string): Promise<boolean | null> {
+async function enabledForDomain(domain: string): Promise<boolean> {
 	const stored = await getStoredDomainStatus(domain);
 	if (stored !== undefined) {
 		return stored;

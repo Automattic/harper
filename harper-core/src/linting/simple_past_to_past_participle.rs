@@ -1,9 +1,8 @@
-use crate::linting::expr_linter::Chunk;
 use crate::{
-    Token,
+    Token, TokenKind,
     expr::{All, Expr, FirstMatchOf, SequenceExpr},
     irregular_verbs::IrregularVerbs,
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
     patterns::{InflectionOfBe, WordSet},
 };
 
@@ -20,22 +19,25 @@ impl Default for SimplePastToPastParticiple {
                 Box::new(
                     SequenceExpr::any_of([
                         // for perfect tenses
-                        Box::new(WordSet::new(&["have", "had", "has", "having"])) as Box<dyn Expr>,
+                        Box::new(WordSet::new(["have", "had", "has", "having"])) as Box<dyn Expr>,
                         // for passive voice
                         Box::new(InflectionOfBe::default()),
                         // pronoun + have contractions
-                        Box::new(WordSet::new(&[
+                        Box::new(WordSet::new([
                             "I've", "I'd", "we've", "we'd", "you've", "you'd", "he's", "he'd",
                             "she's", "she'd", "it's", "it'd", "they've", "they'd",
                         ])),
                         // pronoun + have contractions missing apostrophes
-                        Box::new(WordSet::new(&[
+                        Box::new(WordSet::new([
                             "Ive", "Id", "weve", "wed", "youve", "youd", "hes", "hed", "shes",
                             "shed", "its", "itd", "theyve", "theyd",
                         ])),
                     ])
                     .t_ws()
-                    .then_verb_simple_past_form(),
+                    .then_kind_is_but_is_not(
+                        TokenKind::is_verb_simple_past_form,
+                        TokenKind::is_verb_past_participle_form,
+                    ),
                 ),
                 // negative: exceptions
                 Box::new(SequenceExpr::unless(FirstMatchOf::new(vec![
@@ -47,7 +49,7 @@ impl Default for SimplePastToPastParticiple {
                     Box::new(
                         SequenceExpr::aco("id")
                             .t_any()
-                            .then_word_set(&["came", "did", "went"]),
+                            .then_word_set(["came", "did", "went"]),
                     ),
                 ]))),
             ]),
@@ -104,6 +106,13 @@ impl ExprLinter for SimplePastToPastParticiple {
 
 #[cfg(test)]
 mod tests {
+    use crate::linting::pooled_linter::for_tests::create_test_pool;
+
+    create_test_pool!(
+        SimplePastToPastParticiple,
+        SimplePastToPastParticiple,
+        SimplePastToPastParticiple::default()
+    );
     use super::SimplePastToPastParticiple;
     use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
@@ -113,7 +122,7 @@ mod tests {
     fn correct_have_went() {
         assert_suggestion_result(
             "I have went into the btle.py file and added a print statement in _connect()",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "I have gone into the btle.py file and added a print statement in _connect()",
         );
     }
@@ -122,7 +131,7 @@ mod tests {
     fn correct_had_went() {
         assert_suggestion_result(
             "Not sure if TroLoos had went from Tasmota->minimal->Tasmota, or directly Minimal->Tasmota, but going ESPHome->Minimal->Tasmota is not possible",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "Not sure if TroLoos had gone from Tasmota->minimal->Tasmota, or directly Minimal->Tasmota, but going ESPHome->Minimal->Tasmota is not possible",
         );
     }
@@ -131,7 +140,7 @@ mod tests {
     fn correct_having_went() {
         assert_suggestion_result(
             "Having went through the setup guidelines and picking react starter, running npm run watch results in an error",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "Having gone through the setup guidelines and picking react starter, running npm run watch results in an error",
         );
     }
@@ -140,7 +149,7 @@ mod tests {
     fn correct_has_went() {
         assert_suggestion_result(
             "I would like to report that the package request which you are loading has went into maintenance mode.",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "I would like to report that the package request which you are loading has gone into maintenance mode.",
         );
     }
@@ -149,7 +158,7 @@ mod tests {
     fn correct_have_wrote() {
         assert_suggestion_result(
             "and while people have wrote partial ImGuiStyle save and ...",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "and while people have written partial ImGuiStyle save and ...",
         );
     }
@@ -158,7 +167,7 @@ mod tests {
     fn correct_has_came() {
         assert_suggestion_result(
             "and mail has came to a work account",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "and mail has come to a work account",
         );
     }
@@ -167,7 +176,7 @@ mod tests {
     fn correct_have_took() {
         assert_suggestion_result(
             "The Keychain took longer than I'd like it to have took, but it still works",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "The Keychain took longer than I'd like it to have taken, but it still works",
         );
     }
@@ -176,7 +185,7 @@ mod tests {
     fn correct_have_did() {
         assert_suggestion_result(
             "so I have did like below: cd ~/.pub-cache/hosted/pub.dev/",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "so I have done like below: cd ~/.pub-cache/hosted/pub.dev/",
         );
     }
@@ -185,7 +194,7 @@ mod tests {
     fn correct_has_fell() {
         assert_suggestion_result(
             "ScopedHistory instance has fell out of scope ...",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "ScopedHistory instance has fallen out of scope ...",
         );
     }
@@ -194,7 +203,7 @@ mod tests {
     fn correct_have_broke() {
         assert_suggestion_result(
             "PlanningEnitity to see the hard constraints that it may have broke",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "PlanningEnitity to see the hard constraints that it may have broken",
         );
     }
@@ -203,7 +212,7 @@ mod tests {
     fn correct_had_began() {
         assert_suggestion_result(
             "I had began learning Android App development since Aug 2021",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "I had begun learning Android App development since Aug 2021",
         );
     }
@@ -212,7 +221,7 @@ mod tests {
     fn correct_have_gave() {
         assert_suggestion_result(
             "I'm not aware we have gave up SM75, why are you asking this?",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "I'm not aware we have given up SM75, why are you asking this?",
         );
     }
@@ -221,7 +230,7 @@ mod tests {
     fn correct_have_saw() {
         assert_suggestion_result(
             "I have saw that your paper has been accepted by JAIR",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "I have seen that your paper has been accepted by JAIR",
         );
     }
@@ -230,7 +239,7 @@ mod tests {
     fn correct_have_spoke() {
         assert_suggestion_result(
             "so i may have spoke in error",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "so i may have spoken in error",
         );
     }
@@ -239,7 +248,7 @@ mod tests {
     fn correct_has_became() {
         assert_suggestion_result(
             "but it has became failed after v2.6.1",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "but it has become failed after v2.6.1",
         );
     }
@@ -248,7 +257,7 @@ mod tests {
     fn correct_have_knew() {
         assert_suggestion_result(
             "Oh, I have knew this. You can decrypted it in \"Assetstudio\".",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "Oh, I have known this. You can decrypted it in \"Assetstudio\".",
         );
     }
@@ -257,7 +266,7 @@ mod tests {
     fn correct_have_drank() {
         assert_suggestion_result(
             "User should be able to see approximately how much water they have drank today",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "User should be able to see approximately how much water they have drunk today",
         );
     }
@@ -267,7 +276,7 @@ mod tests {
     fn being_woke() {
         assert_suggestion_result(
             "and the containers will not being woke up until I execute a \"docker ps\"",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "and the containers will not being woken up until I execute a \"docker ps\"",
         );
     }
@@ -276,7 +285,7 @@ mod tests {
     fn correct_has_flew() {
         assert_suggestion_result(
             "Well time has flew and I was quite busy but I remember this conversation so I am sharing this with you.",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "Well time has flown and I was quite busy but I remember this conversation so I am sharing this with you.",
         );
     }
@@ -285,7 +294,7 @@ mod tests {
     fn correct_being_stole() {
         assert_suggestion_result(
             "any requests to obtain the hostname will return the hostname of the container being stole",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "any requests to obtain the hostname will return the hostname of the container being stolen",
         );
     }
@@ -294,7 +303,7 @@ mod tests {
     fn correct_are_broke() {
         assert_suggestion_result(
             "They all worked wonderfully under 3.4.2 and all are broke under 3.5.1.",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "They all worked wonderfully under 3.4.2 and all are broken under 3.5.1.",
         );
     }
@@ -303,7 +312,7 @@ mod tests {
     fn correct_were_gave() {
         assert_suggestion_result(
             "Some devices were gave up during a storm recently, but some are still the same as before.",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "Some devices were given up during a storm recently, but some are still the same as before.",
         );
     }
@@ -312,7 +321,7 @@ mod tests {
     fn correct_be_saw() {
         assert_suggestion_result(
             "Currently, it's 14560/14550 for default mavlink RX/TX, which can be saw in wfb-cli .",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "Currently, it's 14560/14550 for default mavlink RX/TX, which can be seen in wfb-cli .",
         );
     }
@@ -321,7 +330,7 @@ mod tests {
     fn correct_was_began() {
         assert_suggestion_result(
             "The initial intent, when v1alpha3 was began, was that almost all usages of InitConfiguration outside of kubeadm init code, could be easily replaced",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "The initial intent, when v1alpha3 was begun, was that almost all usages of InitConfiguration outside of kubeadm init code, could be easily replaced",
         );
     }
@@ -330,7 +339,7 @@ mod tests {
     fn correct_was_gave() {
         assert_suggestion_result(
             "you will find the config file path was gave by -c argument",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "you will find the config file path was given by -c argument",
         );
     }
@@ -339,7 +348,7 @@ mod tests {
     fn correct_be_began() {
         assert_suggestion_result(
             "Ticket requires something from design before it can be began.",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "Ticket requires something from design before it can be begun.",
         );
     }
@@ -348,7 +357,7 @@ mod tests {
     fn correct_being_took() {
         assert_suggestion_result(
             "Dunno, I saw some old threads about port not being took into account in asw-sdk library but seems fixed on aws side.",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "Dunno, I saw some old threads about port not being taken into account in asw-sdk library but seems fixed on aws side.",
         );
     }
@@ -357,7 +366,7 @@ mod tests {
     fn correct_are_took() {
         assert_suggestion_result(
             "In the example provided, TP53 and LMNB1 genes are took as seeds.",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "In the example provided, TP53 and LMNB1 genes are taken as seeds.",
         );
     }
@@ -368,7 +377,7 @@ mod tests {
     fn correct_ive_went() {
         assert_suggestion_result(
             "I've went through some tutorials and went back and forth with AI translating programs from one language to the other.",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "I've gone through some tutorials and went back and forth with AI translating programs from one language to the other.",
         );
     }
@@ -377,7 +386,7 @@ mod tests {
     fn correct_ive_went_no_apostrophe() {
         assert_suggestion_result(
             "I've went thru all the steps to help fix this Virus issue and im locked up.",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "I've gone thru all the steps to help fix this Virus issue and im locked up.",
         );
     }
@@ -386,7 +395,7 @@ mod tests {
     fn correct_id_did() {
         assert_suggestion_result(
             "I'd did a calibration after the FW update now.",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "I'd done a calibration after the FW update now.",
         );
     }
@@ -395,7 +404,7 @@ mod tests {
     fn correct_weve_went() {
         assert_suggestion_result(
             "Thanks for the feedback, but the issue is no longer relevant since we've went with different approach.",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "Thanks for the feedback, but the issue is no longer relevant since we've gone with different approach.",
         );
     }
@@ -404,7 +413,7 @@ mod tests {
     fn correct_wed_chose() {
         assert_suggestion_result(
             "whatever number we'd chose, only one tab will be allowed to run",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "whatever number we'd chosen, only one tab will be allowed to run",
         );
     }
@@ -413,7 +422,7 @@ mod tests {
     fn correct_youve_wrote() {
         assert_suggestion_result(
             "I love this project, it's impressing how many refactoring you've wrote in a limited amount of time.",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "I love this project, it's impressing how many refactoring you've written in a limited amount of time.",
         );
     }
@@ -422,7 +431,7 @@ mod tests {
     fn correct_youve_ran_no_apostrophe() {
         assert_suggestion_result(
             "after youve ran it, execute the file_mover.ps1 using powershell",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "after youve run it, execute the file_mover.ps1 using powershell",
         );
     }
@@ -431,7 +440,7 @@ mod tests {
     fn correct_youd_wrote() {
         assert_suggestion_result(
             "When I saw you'd wrote a terminal emulator I had to try it and so far it's amazing.",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "When I saw you'd written a terminal emulator I had to try it and so far it's amazing.",
         );
     }
@@ -440,7 +449,7 @@ mod tests {
     fn correct_its_broke() {
         assert_suggestion_result(
             "Not sure why it's broke for me but not for you.",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "Not sure why it's broken for me but not for you.",
         );
     }
@@ -449,7 +458,7 @@ mod tests {
     fn correct_its_broke_no_apostrophe() {
         assert_suggestion_result(
             "Now its broke and won't do batch images (decoding error).",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "Now its broken and won't do batch images (decoding error).",
         );
     }
@@ -458,7 +467,7 @@ mod tests {
     fn correct_theyve_broke() {
         assert_suggestion_result(
             "They've broke something again :D.",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "They've broken something again :D.",
         );
     }
@@ -467,7 +476,7 @@ mod tests {
     fn correct_theyd_forgot() {
         assert_suggestion_result(
             "they found the process they'd forgot they were running",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
             "they found the process they'd forgotten they were running",
         );
     }
@@ -478,7 +487,7 @@ mod tests {
     fn dont_flag_being_woke() {
         assert_no_lints(
             "Being woke to gender discrimination is difficult",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
         );
     }
 
@@ -486,23 +495,20 @@ mod tests {
     fn dont_flag_be_woke() {
         assert_no_lints(
             "So You Want To Be Woke. The path to becoming woke is hard",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
         );
     }
 
     #[test]
     fn dont_flag_id_did() {
-        assert_no_lints(
-            "Prop id did not match.",
-            SimplePastToPastParticiple::default(),
-        );
+        assert_no_lints("Prop id did not match.", test_linter());
     }
 
     #[test]
     fn dont_flag_id_came() {
         assert_no_lints(
             "I'm a longtime user of UniFi and site ID came around after my account was established.",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
         );
     }
 
@@ -510,23 +516,30 @@ mod tests {
     fn dont_flag_id_went() {
         assert_no_lints(
             "Could not determine debug ID went away after cleaning the dist/ before the build, so that's unrelated.",
-            SimplePastToPastParticiple::default(),
+            test_linter(),
         );
     }
 
     #[test]
     fn dont_flag_have_lost_issue_3011() {
-        assert_no_lints(
-            "Elite Universities Have Lost Their Way",
-            SimplePastToPastParticiple::default(),
-        );
+        assert_no_lints("Elite Universities Have Lost Their Way", test_linter());
     }
 
     #[test]
     fn dont_flag_has_lost() {
+        assert_no_lints("He has lost his keys.", test_linter());
+    }
+
+    #[test]
+    fn alice() {
+        assert_no_lints("it had struck her foot!", test_linter());
+    }
+
+    #[test]
+    fn gatsby() {
         assert_no_lints(
-            "He has lost his keys.",
-            SimplePastToPastParticiple::default(),
+            "the tuning-fork that had been struck upon a star",
+            test_linter(),
         );
     }
 }

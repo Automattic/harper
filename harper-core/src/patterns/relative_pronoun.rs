@@ -9,7 +9,7 @@ pub struct RelativePronoun {
 impl Default for RelativePronoun {
     fn default() -> Self {
         Self {
-            inner: WordSet::new(&["that", "which", "who", "whom", "whose"]),
+            inner: WordSet::new(["that", "which", "who", "whom", "whose"]),
         }
     }
 }

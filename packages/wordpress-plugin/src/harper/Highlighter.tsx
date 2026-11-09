@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import type { LintBox } from './Box';
+import type { IgnorableLintBox } from './Box';
 import type RichText from './RichText';
 import SuggestionControl from './SuggestionControl';
 
@@ -13,15 +13,15 @@ export default function Highlighter({
 	lintBoxes,
 	richText,
 }: {
-	lintBoxes: LintBox[];
+	lintBoxes: IgnorableLintBox[];
 	richText: RichText;
 }) {
 	// Disable browser spellchecking in favor of ours
 	useEffect(() => {
-		richText.getTargetElement().spellcheck = false;
+		(richText.getTargetElement() as HTMLElement).spellcheck = false;
 
 		return () => {
-			richText.getTargetElement().spellcheck = true;
+			(richText.getTargetElement() as HTMLElement).spellcheck = true;
 		};
 	}, [richText]);
 

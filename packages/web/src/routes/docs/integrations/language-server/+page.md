@@ -1,6 +1,9 @@
 ---
 title: Language Server
+description: Install and configure harper-ls, including dictionaries, grammar rules, and editor integrations.
 ---
+
+# Language Server
 
 `harper-ls` is the [Language Server Protocol](https://microsoft.github.io/language-server-protocol/) frontend for Harper.
 Out of the box, it has built-in support for parsing the comments of most programming languages, as well as any and all Markdown files.
@@ -58,6 +61,12 @@ or if you have the `nix-command` and `flakes` experimental features enabled:
 
 ```bash
 nix shell 'nixpkgs#harper'
+```
+
+### Termux
+You can install Harper on Termux using the built-in package manager:
+```bash
+apt install harper
 ```
 
 ### Cargo
@@ -276,7 +285,9 @@ These configs are under the `markdown` key:
 | C#                  |           `csharp`            |            ✅ |
 | DAML                |            `daml`             |            ✅ |
 | Dart                |            `dart`             |            ✅ |
+| Elixir              |            `elixir`           |            ✅ |
 | Git Commit          |   `git-commit`/`gitcommit`    |               |
+| Gleam               |            `gleam`            |            ✅ |
 | Go                  |             `go`              |            ✅ |
 | Groovy              |           `groovy`            |            ✅ |
 | Haskell             |           `haskell`           |            ✅ |
@@ -297,6 +308,7 @@ These configs are under the `markdown` key:
 | PowerShell          |         `powershell`          |            ✅ |
 | Plain Text          |      `plaintext`/`text`       |               |
 | Python              |           `python`            |            ✅ |
+| R                   |              `r`              |            ✅ |
 | Ruby                |            `ruby`             |            ✅ |
 | Rust                |            `rust`             |            ✅ |
 | Scala               |            `scala`            |            ✅ |

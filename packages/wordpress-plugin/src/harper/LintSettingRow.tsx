@@ -11,9 +11,9 @@ export default function LintSettingRow({
 }: {
 	name: string;
 	description: string;
-	value: boolean | undefined;
+	value: boolean | null;
 	defaultValue: boolean;
-	setValue: (newValue: boolean | undefined) => void;
+	setValue: (newValue: boolean | null) => void;
 }) {
 	const linter = useLinter();
 

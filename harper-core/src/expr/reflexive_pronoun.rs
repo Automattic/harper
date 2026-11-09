@@ -6,13 +6,7 @@ use crate::{
 
 // These are considered ungrammatical, or are at least not in `dictionary.dict` but are commonly used anyway.
 // The tests below check if this changes so we can update this `Expr`
-const BAD_REFLEXIVE_PRONOUNS: &[&str] = &[
-    "hisself",
-    "oneselves",
-    "theirself",
-    "theirselves",
-    "themself",
-];
+const BAD_REFLEXIVE_PRONOUNS: &[&str] = &["hisself", "oneselves", "theirself", "theirselves"];
 
 /// Matches reflexive pronouns with configurable strictness.
 ///

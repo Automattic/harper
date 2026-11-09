@@ -14,7 +14,7 @@ impl Default for FellowCoRedundancy {
             expr: SequenceExpr::any_capitalization_of("fellow")
                 .t_ws()
                 .then_any_of(vec![
-                    Box::new(SequenceExpr::aco("co").t_ws_h().t_set(&[
+                    Box::new(SequenceExpr::aco("co").t_ws_h().t_set([
                         "admin",
                         "admins",
                         "chair",
@@ -40,7 +40,7 @@ impl Default for FellowCoRedundancy {
                         "worker",
                         "workers",
                     ])),
-                    Box::new(SequenceExpr::word_set(&[
+                    Box::new(SequenceExpr::word_set([
                         "coadmin",
                         "coadmins",
                         "cochair",

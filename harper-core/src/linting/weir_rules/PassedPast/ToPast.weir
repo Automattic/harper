@@ -1,0 +1,39 @@
+expr verb [advance, advanced, advancing, advances, continue, continued, continuing, continues, fly, flew, flying, flies, go, goes, going, gone, went, move, moved, moves, moving, proceed, proceeded, proceeding, proceeds, progress, progressed, progressing, progresses, running, walk, walked, walking, walks, look, looked, looking, looks]
+expr modifiers [right, straight]
+expr nouns [test, tests]
+expr main [<([@verb, @modifiers, @nouns] passed), passed>, <([five, ten, quarter, half] passed [one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, noon, midnight]), passed>, <([during, for, in, over] the passed [second, minute, hour, day, week, month, year, decade, century]), passed>, <([during, for, in, over] the passed [(couple of), few] [seconds, minutes, hours, days, weeks, months, years, decades, centurys]), passed>]
+
+let message "Did you mean `past`?"
+let description "Corrects `passed` to `past`."
+let kind "WordChoice"
+let becomes "past"
+
+# verbs
+
+test "Still go passed the Old Gremlin office in Sheffield when i ever need to go in the city centre" "Still go past the Old Gremlin office in Sheffield when i ever need to go in the city centre"
+test "I don't know why it wont go passed get user first name." "I don't know why it wont go past get user first name."
+test "Good cause, but society has rapidly moved passed them" "Good cause, but society has rapidly moved past them"
+test "I just walked passed, it seems they cut the foundation" "I just walked past, it seems they cut the foundation"
+test "Random animation to play each time user walks passed object" "Random animation to play each time user walks past object"
+test "it will not progress passed the \"username: \" input part" "it will not progress past the \"username: \" input part"
+
+# telling time
+
+test "But at a quarter passed nine" "But at a quarter past nine"
+test "Marbles and play things and at a half passed four, There came a young lady" "Marbles and play things and at a half past four, There came a young lady"
+test "he wakes up almost at ten passed eleven, in the morning of course!" "he wakes up almost at ten past eleven, in the morning of course!"
+
+# recent time
+
+test "A graph analysis of the top AI/ML papers in the passed year" "A graph analysis of the top AI/ML papers in the past year"
+test "Over the passed few years, the ECMAScript spec has evolved" "Over the past few years, the ECMAScript spec has evolved"
+test "For the passed few years I have been working with: Django" "For the past few years I have been working with: Django"
+
+# false positives to avoid
+
+# 'run/runs' may be a noun
+allows "The result so far: 26 out of 26 unaided runs passed"
+allows "update --init was a no-op — yet the very next run passed"
+
+# clause bondary
+allows "A green pipeline proves the tests it ran passed"

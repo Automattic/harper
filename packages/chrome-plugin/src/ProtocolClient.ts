@@ -6,7 +6,8 @@ import type { ActivationKey, Hotkey, WeirpackMeta } from './protocol';
 export default class ProtocolClient {
 	private static readonly lintCache = new LRUCache<string, Promise<UnpackedLintGroups>>({
 		max: 5000,
-		ttl: 5_000,
+		ttl: 60_000,
+		ttlAutopurge: true,
 	});
 
 	private static cacheKey(text: string, domain: string, options?: LintOptions): string {
@@ -75,6 +76,16 @@ export default class ProtocolClient {
 	public static async setIsolateEnglish(isolateEnglish: boolean): Promise<void> {
 		this.lintCache.clear();
 		await chrome.runtime.sendMessage({ kind: 'setIsolateEnglish', isolateEnglish });
+	}
+
+	/** Read whether pointer hover should open suggestion popups. */
+	public static async getOpenSuggestionsOnHover(): Promise<boolean> {
+		return (await chrome.runtime.sendMessage({ kind: 'getOpenSuggestionsOnHover' })).enabled;
+	}
+
+	/** Persist the optional hover behavior for all extension tabs. */
+	public static async setOpenSuggestionsOnHover(enabled: boolean): Promise<void> {
+		await chrome.runtime.sendMessage({ kind: 'setOpenSuggestionsOnHover', enabled });
 	}
 
 	public static async getDelay(): Promise<number> {
@@ -165,6 +176,14 @@ export default class ProtocolClient {
 
 	public static async setReviewed(reviewed: boolean): Promise<void> {
 		await chrome.runtime.sendMessage({ kind: 'setReviewed', reviewed });
+	}
+
+	/** Clear and persist ignored suggestions for all websites. Open pages may need a reload. */
+	public static async clearIgnoredLints(): Promise<void> {
+		const response = await chrome.runtime.sendMessage({ kind: 'clearIgnoredLints' });
+		if (response?.kind !== 'clearIgnoredLints' || !response.success) {
+			throw new Error('Could not clear ignored suggestions. Please try again.');
+		}
 	}
 
 	public static async ignoreHash(hash: string): Promise<void> {
