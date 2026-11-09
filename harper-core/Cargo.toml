@@ -58,3 +58,4 @@ harness = false
 default = ["thesaurus", "concurrent"]
 concurrent = ["dep:boxcar"]
 thesaurus = ["dep:harper-thesaurus"]
+context-ranking = ["harper-brill/context-ranking"]

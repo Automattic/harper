@@ -2649,6 +2649,7 @@ dependencies = [
  "clap_complete",
  "dirs 7.0.0",
  "enum_dispatch",
+ "flate2",
  "harper-asciidoc",
  "harper-comments",
  "harper-core",

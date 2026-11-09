@@ -6,6 +6,9 @@ pub use harper_pos_utils::{
     BrillChunker, BrillTagger, BurnChunkerCpu, CachedChunker, Chunker, FreqDict, Tagger, UPOS,
 };
 
+#[cfg(feature = "context-ranking")]
+pub use harper_pos_utils::{CONTEXT_RADIUS, ContextRanker};
+
 const BRILL_TAGGER_SOURCE: &str = include_str!("../trained_tagger_model.json");
 
 static BRILL_TAGGER: LazyLock<Arc<BrillTagger<FreqDict>>> =
@@ -48,6 +51,22 @@ fn uncached_burn_chunker() -> CachedChunker<BurnChunkerCpu> {
         BurnChunkerCpu::load_from_bytes_cpu(BURN_CHUNKER_BIN, BURN_CHUNKER_VOCAB, 6, 0.3),
         NonZero::new(10000).unwrap(),
     )
+}
+
+#[cfg(feature = "context-ranking")]
+static CONTEXT_RANKER: LazyLock<Arc<ContextRanker>> = LazyLock::new(|| {
+    Arc::new(ContextRanker::load_from_bytes(
+        include_bytes!("../context_ranker/table.bin").as_slice(),
+        include_bytes!("../context_ranker/vocab.json"),
+        include_bytes!("../context_ranker/config.json"),
+    ))
+});
+
+/// Get a copy of a shared, lazily-initialized [`ContextRanker`]. There will be only one instance
+/// per-process.
+#[cfg(feature = "context-ranking")]
+pub fn context_ranker() -> Arc<ContextRanker> {
+    (*CONTEXT_RANKER).clone()
 }
 
 /// Get a copy of a shared, lazily-initialized [`BurnChunkerCpu`]. There will be only one instance

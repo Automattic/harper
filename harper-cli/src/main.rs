@@ -25,10 +25,17 @@ use harper_core::{
     weir::WeirLinter,
 };
 #[cfg(feature = "training")]
-use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
+use harper_pos_utils::{
+    BrillChunker, BrillTagger, BurnChunkerCpu, ContextRanker, TrainingOptions,
+    evaluate_context_ranker, read_examples, read_vocabulary, train_context_ranker_cpu,
+};
 use harper_stats::Stats;
 
 mod annotate;
+#[cfg(feature = "context-ranking")]
+mod compare_suggestions;
+#[cfg(feature = "training")]
+mod context_ranker_data;
 mod input;
 mod lint;
 mod lint_engine;
@@ -196,6 +203,62 @@ enum Args {
         test_file: PathBuf,
         #[arg(num_args = 1..)]
         datasets: Vec<PathBuf>,
+    },
+    /// Turn the corpus into context ranker examples and a vocabulary.
+    #[cfg(feature = "training")]
+    PrepareRankerData {
+        /// The directory that holds the Common Pile subsets.
+        #[arg(long, value_hint = ValueHint::DirPath)]
+        corpus: PathBuf,
+        /// The directory to write the examples and the vocabulary to.
+        #[arg(short, long, value_hint = ValueHint::DirPath)]
+        output: PathBuf,
+        /// Multiplies the amount of text drawn from each group.
+        #[arg(long, default_value_t = 1.0)]
+        scale: f64,
+        #[arg(long, default_value_t = 33_000)]
+        vocab_size: usize,
+        #[arg(long, default_value_t = 1)]
+        seed: u64,
+    },
+    /// Train the context ranker on prepared examples.
+    #[cfg(feature = "training")]
+    TrainContextRanker {
+        /// The directory that `prepare-ranker-data` wrote.
+        #[arg(long, value_hint = ValueHint::DirPath)]
+        data: PathBuf,
+        /// The directory to write the table to.
+        #[arg(short, long, value_hint = ValueHint::DirPath)]
+        output: PathBuf,
+        /// The number of values in the vector of each word.
+        #[arg(long, default_value_t = 64)]
+        dimensions: usize,
+        #[arg(short, long, default_value_t = 3)]
+        epochs: usize,
+        #[arg(short, long, default_value_t = 0.002)]
+        lr: f64,
+        #[arg(long, default_value_t = 2048)]
+        batch_size: usize,
+        #[arg(long, default_value_t = 16)]
+        candidates: usize,
+        #[arg(long, default_value_t = 1)]
+        seed: u64,
+    },
+    /// Compare the context ranker with the current order and a frequency tie-break.
+    #[cfg(feature = "training")]
+    EvalContextRanker {
+        /// The directory that `prepare-ranker-data` wrote.
+        #[arg(long, value_hint = ValueHint::DirPath)]
+        data: PathBuf,
+        /// The directory that `train-context-ranker` wrote.
+        #[arg(long, value_hint = ValueHint::DirPath)]
+        model: PathBuf,
+    },
+    /// Show Harper's spelling suggestions next to the context ranker's suggestions.
+    #[cfg(feature = "context-ranking")]
+    CompareSuggestions {
+        /// The text or file to check. If not provided, each line of standard input is checked.
+        input: Option<SingleInput>,
     },
     /// Print harper-core version.
     CoreVersion,
@@ -621,6 +684,64 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
+        #[cfg(feature = "training")]
+        Args::PrepareRankerData {
+            corpus,
+            output,
+            scale,
+            vocab_size,
+            seed,
+        } => context_ranker_data::prepare(&corpus, &output, scale, vocab_size, seed),
+        #[cfg(feature = "training")]
+        Args::TrainContextRanker {
+            data,
+            output,
+            dimensions,
+            epochs,
+            lr,
+            batch_size,
+            candidates,
+            seed,
+        } => {
+            let words = read_vocabulary(data.join("vocab.json"));
+            let train = read_examples(data.join("train"))?;
+            let tuning = read_examples(data.join("tuning"))?;
+            let test = read_examples(data.join("test"))?;
+
+            train_context_ranker_cpu(
+                train,
+                &tuning,
+                &test,
+                &words,
+                dimensions,
+                &TrainingOptions {
+                    epochs,
+                    learning_rate: lr,
+                    batch_size,
+                    candidates_per_example: candidates,
+                    seed,
+                },
+                &output,
+            );
+
+            Ok(())
+        }
+        #[cfg(feature = "training")]
+        Args::EvalContextRanker { data, model } => {
+            let tuning = read_examples(data.join("tuning"))?;
+            let test = read_examples(data.join("test"))?;
+            let ranker = ContextRanker::load_from_bytes(
+                fs::read(model.join("table.bin"))?,
+                fs::read(model.join("vocab.json"))?,
+                fs::read(model.join("config.json"))?,
+            );
+
+            println!("{}", evaluate_context_ranker(&ranker, &tuning, Some(&test)));
+
+            Ok(())
+        }
+        #[cfg(feature = "context-ranking")]
+        Args::CompareSuggestions { input } => compare_suggestions::run(input),
         Args::RenameFlag { old, new, dir } => {
             let dict_path = dir.join("dictionary.dict");
             let affixes_path = dir.join("annotations.json");
