@@ -1,4 +1,4 @@
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
        9 | - Afterwards.
          |   ^~~~~~~~~~ Did you mean to spell `Afterwards` this way?
@@ -20,7 +20,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       11 | - Labelled.
          |   ^~~~~~~~ Did you mean to spell `Labelled` this way?
@@ -31,7 +31,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       12 | - Flavour.
          |   ^~~~~~~ Did you mean to spell `Flavour` this way?
@@ -42,7 +42,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       13 | - Favoured.
          |   ^~~~~~~~ Did you mean to spell `Favoured` this way?
@@ -53,7 +53,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       14 | - Honour.
          |   ^~~~~~ Did you mean to spell `Honour` this way?
@@ -64,7 +64,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       15 | - Grey.
          |   ^~~~ Did you mean to spell `Grey` this way?
@@ -75,7 +75,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       16 | - Quarrelled.
          |   ^~~~~~~~~~ Did you mean to spell `Quarrelled` this way?
@@ -85,7 +85,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       17 | - Quarrelling.
          |   ^~~~~~~~~~~ Did you mean `Quarreling`?
@@ -94,7 +94,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       18 | - Recognised.
          |   ^~~~~~~~~~ Did you mean to spell `Recognised` this way?
@@ -105,7 +105,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       19 | - Neighbour.
          |   ^~~~~~~~~ Did you mean to spell `Neighbour` this way?
@@ -115,7 +115,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       20 | - Neighbouring.
          |   ^~~~~~~~~~~~ Did you mean `Neighboring`?
@@ -124,7 +124,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       21 | - Clamour.
          |   ^~~~~~~ Did you mean to spell `Clamour` this way?
@@ -146,7 +146,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       23 | - Analyse.
          |   ^~~~~~~ Did you mean to spell `Analyse` this way?

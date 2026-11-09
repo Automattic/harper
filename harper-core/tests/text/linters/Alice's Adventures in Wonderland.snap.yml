@@ -111,7 +111,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       68 | this New Zealand or Australia?” (and she tried to curtsey as she spoke—fancy
          |                                                   ^~~~~~~ Did you mean to spell `curtsey` this way?
@@ -123,7 +123,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       68 | this New Zealand or Australia?” (and she tried to curtsey as she spoke—fancy
       69 | curtseying as you’re falling through the air! Do you think you could manage it?)
@@ -460,7 +460,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      229 | “If you please, sir—” The Rabbit started violently, dropped the white kid gloves
      230 | and the fan, and skurried away into the darkness as hard as he could go.
@@ -614,7 +614,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      320 | she began again: “Où est ma chatte?” which was the first sentence in her French
          |                   ^~ Did you mean to spell `Où` this way?
@@ -625,7 +625,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      320 | she began again: “Où est ma chatte?” which was the first sentence in her French
          |                             ^~~~~~ Did you mean to spell `chatte` this way?
@@ -686,7 +686,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      362 | and animals that had fallen into it: there were a Duck and a Dodo, a Lory and an
          |                                                                      ^~~~ Did you mean to spell `Lory` this way?
@@ -698,7 +698,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      368 | They were indeed a queer-looking party that assembled on the bank—the birds with
      369 | draggled feathers, the animals with their fur clinging close to them, and all
@@ -734,7 +734,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      375 | Indeed, she had quite a long argument with the Lory, who at last turned sulky,
          |                                                ^~~~ Did you mean to spell `Lory` this way?
@@ -746,7 +746,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      377 | would not allow without knowing how old it was, and, as the Lory positively
          |                                                             ^~~~ Did you mean to spell `Lory` this way?
@@ -758,7 +758,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      390 | Edwin and Morcar, the earls of Mercia and Northumbria—’”
          |           ^~~~~~ Did you mean to spell `Morcar` this way?
@@ -776,7 +776,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      392 | “Ugh!” said the Lory, with a shiver.
          |                 ^~~~ Did you mean to spell `Lory` this way?
@@ -787,7 +787,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      397 | “Not I!” said the Lory hastily.
          |                   ^~~~ Did you mean to spell `Lory` this way?
@@ -798,7 +798,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      399 | “I thought you did,” said the Mouse. “—I proceed. ‘Edwin and Morcar, the earls
          |                                                              ^~~~~~ Did you mean to spell `Morcar` this way?
@@ -883,7 +883,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      527 | “What a pity it wouldn’t stay!” sighed the Lory, as soon as it was quite out of
          |                                            ^~~~ Did you mean to spell `Lory` this way?
@@ -895,7 +895,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      536 | “And who is Dinah, if I might venture to ask the question?” said the Lory.
          |                                                                      ^~~~ Did you mean to spell `Lory` this way?
@@ -943,7 +943,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      579 | little house, on the door of which was a bright brass plate with the name “W.
          |                                                                            ^~ Did you mean to spell `W.` this way?
@@ -1039,7 +1039,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      668 | “Sure, it’s an arm, yer honour!” (He pronounced it “arrum.”)
          |                                                     ^~~~~ Did you mean to spell `arrum` this way?
@@ -1207,7 +1207,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      777 | “And yet what a dear little puppy it was!” said Alice, as she leant against a
          |                                                               ^~~~~ Did you mean to spell `leant` this way?
@@ -1306,7 +1306,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      961 | her foot, that there was hardly room to open her mouth; but she did it at last,
      962 | and managed to swallow a morsel of the lefthand bit.
@@ -1414,7 +1414,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1055 | this size: why, I should frighten them out of their wits!” So she began nibbling
     1056 | at the righthand bit again, and did not venture to go near the house till she
@@ -1587,7 +1587,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1260 | The Cat only grinned when it saw Alice. It looked good-natured, she thought:
          |                                                        ^~~~~~~ Did you mean to spell `natured` this way?
@@ -1622,7 +1622,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1349 | did not like to go nearer till she had nibbled some more of the lefthand bit of
          |                                                                 ^~~~~~~~ Did you mean to spell `lefthand` this way?
@@ -1724,7 +1724,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1555 | great hurry; “and their names were Elsie, Lacie, and Tillie; and they lived at
          |                                           ^~~~~ Did you mean to spell `Lacie` this way?
@@ -2090,7 +2090,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1962 | pleased at having found out a new kind of rule, “and vinegar that makes them
     1963 | sour—and camomile that makes them bitter—and—and barley-sugar and such things
@@ -2101,7 +2101,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1985 | “’Tis so,” said the Duchess: “and the moral of that is—‘Oh, ’tis love, ’tis
          |   ^~~ Did you mean to spell `Tis` this way?
@@ -2112,7 +2112,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1985 | “’Tis so,” said the Duchess: “and the moral of that is—‘Oh, ’tis love, ’tis
          |                                                              ^~~ Did you mean to spell `tis` this way?
@@ -2124,7 +2124,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1985 | “’Tis so,” said the Duchess: “and the moral of that is—‘Oh, ’tis love, ’tis
          |                                                                         ^~~ Did you mean to spell `tis` this way?
@@ -2609,7 +2609,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2333 | “Yes,” said Alice, “I’ve often seen them at dinn—” she checked herself hastily.
          |                                             ^~~~ Did you mean to spell `dinn` this way?
@@ -2620,7 +2620,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2335 | “I don’t know where Dinn may be,” said the Mock Turtle, “but if you’ve seen them
          |                     ^~~~ Did you mean to spell `Dinn` this way?
@@ -2747,7 +2747,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2418 | “Stand up and repeat ‘’Tis the voice of the sluggard,’” said the Gryphon.
          |                        ^~~ Did you mean to spell `Tis` this way?
@@ -2774,7 +2774,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2425 | > “’Tis the voice of the Lobster; I heard him declare, “You have baked me too
          |     ^~~ Did you mean to spell `Tis` this way?
@@ -2869,7 +2869,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2477 | eagerly that the Gryphon said, in a rather offended tone, “Hm! No accounting for
          |                                                            ^~ Did you mean to spell `Hm` this way?
@@ -2898,7 +2898,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                         ^~~ Did you mean to spell `Soo` this way?
@@ -2918,7 +2918,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                             ^~~ Did you mean to spell `oop` this way?
@@ -2940,7 +2940,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                                               ^~~ Did you mean to spell `Soo` this way?
@@ -2960,7 +2960,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                                                   ^~~ Did you mean to spell `oop` this way?
@@ -2971,7 +2971,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                                                        ^~~ Did you mean to spell `Soo` this way?
@@ -2993,7 +2993,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                                                            ^~~ Did you mean to spell `oop` this way?
@@ -3015,7 +3015,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2488 | > “Beautiful Soup! Who cares for fish, Game, or any other dish? Who would not
     2489 | > give all else for two p ennyworth only of beautiful Soup? Pennyworth only of
@@ -3036,7 +3036,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                ^~~ Did you mean to spell `Soo` this way?
@@ -3056,7 +3056,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                    ^~~ Did you mean to spell `oop` this way?
@@ -3078,7 +3078,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                                      ^~~ Did you mean to spell `Soo` this way?
@@ -3098,7 +3098,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                                          ^~~ Did you mean to spell `oop` this way?
@@ -3109,7 +3109,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                                               ^~~ Did you mean to spell `Soo` this way?
@@ -3131,7 +3131,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                                                   ^~~ Did you mean to spell `oop` this way?
@@ -3143,7 +3143,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
     2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
@@ -3195,7 +3195,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2503 | > “Soo—oop of the e—e—evening, Beautiful, beautiful Soup!”
          |    ^~~ Did you mean to spell `Soo` this way?
@@ -3215,7 +3215,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2503 | > “Soo—oop of the e—e—evening, Beautiful, beautiful Soup!”
          |        ^~~ Did you mean to spell `oop` this way?
