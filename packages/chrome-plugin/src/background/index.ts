@@ -11,6 +11,7 @@ import {
 	ActivationKey,
 	type AddToUserDictionaryRequest,
 	type AddWeirpackRequest,
+	type ClearIgnoredLintsResponse,
 	createUnitResponse,
 	type GetActivationKeyResponse,
 	type GetConfigRequest,
@@ -173,6 +174,9 @@ const defaultEnabledDomains = [
 	'steampowered.com',
 	'help.steampowered.com',
 	'assistant.kagi.com',
+	'spicychat.ai',
+	'studio.novlr.org',
+	'app.dabblewriter.com',
 ] as const;
 const defaultEnabledDomainSet = new Set<string>(defaultEnabledDomains);
 
@@ -238,6 +242,15 @@ function handleRequest(message: Request, sender?: chrome.runtime.MessageSender):
 			return handleGetIsolateEnglish();
 		case 'setIsolateEnglish':
 			return handleSetIsolateEnglish(message);
+		case 'getOpenSuggestionsOnHover':
+			return chrome.storage.local.get({ openSuggestionsOnHover: false }).then((stored) => ({
+				kind: 'getOpenSuggestionsOnHover',
+				enabled: stored.openSuggestionsOnHover === true,
+			}));
+		case 'setOpenSuggestionsOnHover':
+			return chrome.storage.local
+				.set({ openSuggestionsOnHover: message.enabled === true })
+				.then(createUnitResponse);
 		case 'getDelay':
 			return handleGetDelay(message);
 		case 'setDelay':
@@ -248,6 +261,8 @@ function handleRequest(message: Request, sender?: chrome.runtime.MessageSender):
 			return handleSetDomainStatus(message);
 		case 'addToUserDictionary':
 			return handleAddToUserDictionary(message);
+		case 'clearIgnoredLints':
+			return handleClearIgnoredLints();
 		case 'ignoreLint':
 			return handleIgnoreLint(message);
 		case 'setDefaultStatus':
@@ -419,6 +434,19 @@ async function handleSetDelay(req: SetDelayRequest): Promise<UnitResponse> {
 	await setDelay(req.delay);
 
 	return createUnitResponse();
+}
+
+/** Reset ignored suggestions globally and acknowledge only after the reset is saved. */
+async function handleClearIgnoredLints(): Promise<ClearIgnoredLintsResponse> {
+	try {
+		await ensureLinterReady();
+		await linter.clearIgnoredLints();
+		await setIgnoredLints(await linter.exportIgnoredLints());
+		return { kind: 'clearIgnoredLints', success: true };
+	} catch (error) {
+		console.error('Failed to clear ignored suggestions:', error);
+		return { kind: 'clearIgnoredLints', success: false };
+	}
 }
 
 async function handleIgnoreLint(req: IgnoreLintRequest): Promise<UnitResponse> {
@@ -665,7 +693,7 @@ async function getLintConfig(): Promise<LintConfig> {
 	return JSON.parse(resp.lintConfig);
 }
 
-/** Get the ignored lint state from permanent storage. */
+/** Update the linter's ignored suggestions and save them to permanent storage. */
 async function setIgnoredLints(state: string): Promise<void> {
 	await linter.importIgnoredLints(state);
 	linterHasPersistedState = true;
