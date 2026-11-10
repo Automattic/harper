@@ -20,6 +20,10 @@ impl Linter for PrepositionalObjects {
 /// Requires a preposition in its syntactic role rather than dictionary membership
 /// alone. Bare institutions and repeated-noun idioms permit omission of an article.
 fn accepts(tokens: &[Token], phrase: &ArticlePhrase<'_>, source: &[char]) -> bool {
+    // Quoted expressions can name language rather than countable objects.
+    if tokens[phrase.start].kind.is_quote() {
+        return false;
+    }
     let Some(previous) = previous(tokens, phrase) else {
         return false;
     };

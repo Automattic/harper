@@ -37,11 +37,14 @@ fn has_finite_predicate(tokens: &[Token], phrase: &ArticlePhrase<'_>, source: &[
     {
         return false;
     }
-    if verb.kind.is_verb_past_participle_form() {
-        return verb.kind.is_verb_simple_past_form()
-            && tokens.get(phrase.end + 4).is_some_and(|next| {
-                (next.kind.is_determiner() || next.kind.is_noun() || next.kind.is_pronoun())
-                    && !next.get_ch(source).eq_any_ignore_ascii_case_str(&["by"])
+    if verb.kind.is_verb_past_participle_form() || verb.kind.is_verb_past_form() {
+        return (verb.kind.is_verb_simple_past_form() || verb.kind.is_verb_past_form())
+            && tokens.get(phrase.end + 4).is_none_or(|next| {
+                next.kind.is_sentence_terminator()
+                    || ((next.kind.is_upos(UPOS::DET)
+                        || next.kind.is_upos(UPOS::NOUN)
+                        || next.kind.is_upos(UPOS::PRON))
+                        && !next.kind.is_preposition())
             });
     }
     true

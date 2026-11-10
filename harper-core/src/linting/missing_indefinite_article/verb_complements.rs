@@ -24,8 +24,14 @@ fn accepts(tokens: &[Token], phrase: &ArticlePhrase<'_>, source: &[char]) -> boo
     let Some(previous) = previous(tokens, phrase) else {
         return false;
     };
-    if previous.kind.is_determiner()
+    if (tokens[phrase.start].kind.is_quote()
+        && phrase.head.kind.is_adjective()
+        && previous.get_ch(source).eq_any_ignore_ascii_case_str(&[
+            "am", "is", "are", "was", "were", "be", "been", "being",
+        ]))
+        || previous.kind.is_determiner()
         || !(previous.kind.is_upos(UPOS::VERB) || previous.kind.is_upos(UPOS::AUX))
+        || !(previous.kind.is_verb() || previous.kind.is_upos(UPOS::AUX))
         || is_coordinated_predicate(tokens, phrase, source)
         || takes_infinitive(previous, phrase, source)
         || is_adjective_predicate(previous, tokens, phrase, source)
@@ -33,8 +39,10 @@ fn accepts(tokens: &[Token], phrase: &ArticlePhrase<'_>, source: &[char]) -> boo
         return false;
     }
     if previous.kind.is_upos(UPOS::AUX)
-        && phrase.first.kind.is_upos(UPOS::VERB)
-        && (phrase.first.kind.is_verb_past_participle_form()
+        && !phrase.first.kind.is_upos(UPOS::ADJ)
+        && (phrase.first.kind.is_upos(UPOS::VERB) || !phrase.first.kind.is_np_member())
+        && (phrase.first.kind.is_verb_past_form()
+            || phrase.first.kind.is_verb_past_participle_form()
             || phrase.first.kind.is_verb_progressive_form())
     {
         return false;
@@ -90,6 +98,11 @@ fn is_adjective_predicate(
             "asleep",
             "alive",
             "alone",
+            "female",
+            "male",
+            "characteristic",
+            "strong",
+            "fierce",
         ])
         && tokens[phrase.start..phrase.end]
             .iter()
