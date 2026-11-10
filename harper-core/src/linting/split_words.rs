@@ -161,7 +161,7 @@ impl ExprLinter for SplitWords {
                 lint_kind: LintKind::Typo,
                 suggestions,
                 message: message?,
-                priority: 31,
+                priority: 33,
             });
         }
 

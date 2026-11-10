@@ -25,7 +25,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       56 | He was protected by his body armour.
          |                              ^~~~~~ Did you mean to spell `armour` this way?
@@ -86,7 +86,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      208 | My aim in travelling there was to find my missing friend.
          |           ^~~~~~~~~~ Did you mean to spell `travelling` this way?
@@ -129,7 +129,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      258 | I need to keep in with the neighbours in case I ever need a favour from them.
          |                            ^~~~~~~~~~ Did you mean to spell `neighbours` this way?
@@ -140,7 +140,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      258 | I need to keep in with the neighbours in case I ever need a favour from them.
          |                                                             ^~~~~~ Did you mean to spell `favour` this way?
@@ -161,7 +161,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      284 | This behaviour is typical of teenagers.
          |      ^~~~~~~~~ Did you mean to spell `behaviour` this way?
@@ -180,7 +180,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      300 | That TV programme that you wanted to watch is on now.
          |         ^~~~~~~~~ Did you mean to spell `programme` this way?
@@ -202,7 +202,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      310 | Ponsonby-Smythe hit a thumping on drive.
          |          ^~~~~~ Did you mean to spell `Smythe` this way?
@@ -296,7 +296,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      366 | He travelled on false documents.
          |    ^~~~~~~~~ Did you mean to spell `travelled` this way?
@@ -307,7 +307,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      398 | Who am I to criticise? I've done worse things myself.
          |             ^~~~~~~~~ Did you mean to spell `criticise` this way?

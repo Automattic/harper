@@ -8,6 +8,7 @@ use super::proper_noun_capitalization_linters::proper_nouns_expr;
 use super::{Lint, LintKind, Linter};
 use super::{Suggestion, informal_laughter::is_informal_laughter};
 use crate::document::Document;
+use crate::edit_distance::edit_distance;
 use crate::expr::{Filter, LongestMatchOf, SequenceExpr};
 use crate::spell::{Dictionary, suggest_correct_spelling};
 use crate::{CharString, CharStringExt, Dialect, TokenStringExt, remove_lints_overlapping_expr};
@@ -157,7 +158,15 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
                 lint_kind: LintKind::Spelling,
                 suggestions,
                 message,
-                priority: 63,
+                priority: if possibilities.first().is_some_and(|candidate| {
+                    word_chars.len() < 255
+                        && candidate.len() < 255
+                        && edit_distance(word_chars, candidate) == 1
+                }) {
+                    32
+                } else {
+                    63
+                },
             })
         }
 
@@ -196,6 +205,17 @@ mod tests {
         SpellCheck<Arc<FstDictionary>>,
         SpellCheck::new(FstDictionary::curated(), Dialect::American)
     );
+
+    #[test]
+    fn close_spelling_guesses_have_priority_over_generic_splits() {
+        let mut linter = SpellCheck::new(FstDictionary::curated(), Dialect::American);
+        for (source, priority) in [("coresponding", 32), ("worthchecking", 63)] {
+            let document = Document::new_plain_english_curated(source);
+            let lints = linter.lint(&document);
+            assert_eq!(lints.len(), 1);
+            assert_eq!(lints[0].priority, priority, "{source}");
+        }
+    }
 
     // Capitalization tests
 
