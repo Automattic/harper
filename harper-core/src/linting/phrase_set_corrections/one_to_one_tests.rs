@@ -2438,6 +2438,26 @@ fn took() {
     );
 }
 
+// Themself
+
+#[test]
+fn them_selves() {
+    assert_suggestion_result(
+        "apparently a multi bilion dollar corporation can't be bothered to do it them selves",
+        test_linter(),
+        "apparently a multi bilion dollar corporation can't be bothered to do it themselves",
+    );
+}
+
+#[test]
+fn them_self() {
+    assert_suggestion_result(
+        "What happened too much security checks, my agents cant run by them self",
+        test_linter(),
+        "What happened too much security checks, my agents cant run by themself",
+    );
+}
+
 // UseToUsedTo
 
 #[test]
