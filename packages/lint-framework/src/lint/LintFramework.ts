@@ -47,6 +47,7 @@ const PAGE_EVENTS = [
 export default class LintFramework {
 	private highlights: Highlights;
 	private popupHandler: PopupHandler;
+	/** Maps registered nodes to their current registration records and observers. */
 	private targets: Map<Node, { observer?: MutationObserver }>;
 	private scrollableAncestors: Set<HTMLElement>;
 	private lintRequest: Promise<unknown> | null = null;
