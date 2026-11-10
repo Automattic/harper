@@ -3953,6 +3953,13 @@
 						},
 						{
 							"Bool": {
+								"name": "MissingIndefiniteArticle",
+								"state": false,
+								"label": "Missing Indefinite Article"
+							}
+						},
+						{
+							"Bool": {
 								"name": "MissingPreposition",
 								"state": true,
 								"label": "Missing Preposition"
