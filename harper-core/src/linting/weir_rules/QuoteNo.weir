@@ -3,9 +3,10 @@
 # bold label ("Click **No**") is flagged too.
 expr verbs [click, clicks, clicked, clicking, press, presses, pressed, pressing, tap, taps, tapped, tapping, select, selects, selected, selecting, reply, replies, replied, replying, respond, responds, responded, responding, answer, answers, answered, answering, vote, votes, voted, voting, text, texts, texted, texting, type, types, typed, typing]
 # Before a noun, an adjective or a comparative, "no" is a determiner (answer no questions,
-# type no longer).
-expr nounPhrase [NOUN, ADJ, more, less, longer, later, sooner]
-expr main <(@verbs no!( @nounPhrase)), (no)>
+# type no longer, reply no further), and before "one" it's a pronoun (text no one reads).
+# A hyphen makes it part of a word (select No-Rush Shipping).
+expr nounPhrase [NOUN, ADJ, more, less, longer, later, sooner, further, one]
+expr main <(@verbs no![-, ( @nounPhrase)]), (no)>
 
 let message "Quote `no` when it names an answer or a button."
 let description "Suggests quotation marks around `no` after a verb like click, answer, reply or vote."
@@ -44,3 +45,7 @@ allows "Reply no sooner than Monday."
 allows "Answer no questions about it."
 allows "Select no new items."
 allows "Text no one after midnight."
+allows "Pages of legal text no one reads."
+allows "I will reply no further on this."
+allows "Select No-Rush Shipping at checkout."
+allows "Use the one-click no-signup checkout."
