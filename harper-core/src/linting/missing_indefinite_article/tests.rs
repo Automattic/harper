@@ -515,13 +515,13 @@ fn supports_vowel_pronunciation() {
 }
 
 #[test]
-fn curated_rule_inserts_once() {
+fn explicitly_enabled_curated_rule_inserts_once() {
     use crate::{linting::LintGroup, spell::FstDictionary};
-    assert_suggestion_result(
-        "He is engineer.",
-        LintGroup::new_curated(FstDictionary::curated(), Dialect::American),
-        "He is an engineer.",
-    );
+    let mut group = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
+    group
+        .config
+        .set_rule_enabled("MissingIndefiniteArticle", true);
+    assert_suggestion_result("He is engineer.", group, "He is an engineer.");
 }
 
 #[test]

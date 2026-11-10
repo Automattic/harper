@@ -1,13 +1,20 @@
 use super::MissingIndefiniteArticle;
 use crate::{
-    Dialect,
-    linting::tests::{assert_first_suggestion_result, assert_no_lints},
+    Dialect, Document,
+    linting::{
+        Linter,
+        tests::{assert_first_suggestion_result, assert_no_lints},
+    },
 };
 
 macro_rules! allows {
     ($($name:ident: $text:literal;)*) => {$(
         #[test]
-        fn $name() { assert_no_lints($text, MissingIndefiniteArticle::new(Dialect::American)); }
+        fn $name() {
+            assert_no_lints($text, MissingIndefiniteArticle::new(Dialect::American));
+            let document = Document::new_markdown_default_curated($text);
+            assert!(MissingIndefiniteArticle::new(Dialect::American).lint(&document).is_empty(), "Markdown: {}", $text);
+        }
     )*};
 }
 macro_rules! corrects {
@@ -96,7 +103,225 @@ allows! {
     finite_monitors: "The editor monitors changes.";
 }
 
+// Confirmed false positives from the full harper-llm-fuzz corpus. Keep the
+// grammatical context: phrase boundaries and Markdown can affect POS tagging.
+allows! {
+    coordinated_determined_modifiers: "They saw a detailed and meticulously maintained life list.";
+    comma_adverb_determined_modifiers: "She sat in a comfortable, warmly lit therapy office.";
+    comma_participle_determined_modifiers: "They responded to a novel, rapidly spreading viral outbreak.";
+    hyphen_participle_determined_modifiers: "The dining room features a striking, custom-built ceramic tile mosaic.";
+    slash_determined_modifiers: "Removes the redundant/conflicting indefinite article.";
+    coordinated_determined_adverbs: "They found a concise but carefully curated wine list.";
+    determined_unknown_plural: "They report a decrease in active volunteer firefighters.";
+    determined_plural_modifier: "The initial missing persons report was filed yesterday.";
+    percentage_subject_clause: "Seventy percent of users report successful offline access.";
+    percent_sign_subject_clause: "95% of users report successful offline access.";
+    kind_of_count: "It is a specific type of willow tree.";
+    kind_of_modified_count: "It is a special kind of clear toy that bends light.";
+    quantified_pigeons: "They respond only if a sufficient number of pigeons circle the building.";
+    named_station: "Oak Street station is currently closed.";
+    named_group: "Join the Neighborhood Watch email list.";
+    named_role: "Join local gardening expert, Sarah Chen, for a workshop.";
+    unpunctuated_named_role: "It was ceramicist Rhys Davies who faced elimination.";
+    mass_amusement: "David looked on in bewildered amusement.";
+    mass_plankton: "The tentacles capture tiny plankton.";
+    mass_ozone: "A third contributor is ozone, which is often present after thunderstorms.";
+    mass_flax: "Material appears to be flax, but requires further analysis.";
+    mass_wear: "Minor surface wear is consistent with normal use.";
+    mass_familiarity: "This guide assumes basic familiarity with the dashboard.";
+    mass_willpower: "Large changes require significant willpower.";
+    mass_certainty: "She knew with absolute certainty that she would return.";
+    mass_feedstock: "The process uses agricultural waste feedstock.";
+    mass_scientific_rigor: "The goals foster an appreciation for scientific rigor.";
+    mass_retrieval: "Cloud integration allows seamless content retrieval.";
+    mass_colonization: "They hydrated the waste to optimize fungal colonization.";
+    mass_conductivity: "Thermal conductivity is low.";
+    mass_self_efficacy: "It is about cultivating a sense of self-efficacy.";
+    mass_substrate_sterilization: "The study considers energy required for substrate sterilization.";
+    mass_currency: "The box contains a collection of foreign currency.";
+    mass_gingivitis: "He has a history of mild gingivitis.";
+    mass_regalia: "The photographs show people in traditional regalia.";
+    tomorrow_predicate: "The funeral was tomorrow.";
+    yesterday_predicate: "The breaking point was yesterday, August 5th.";
+    today_predicate: "He has grown into the man he is today.";
+    midnight_temporal: "The outcome may not be known until well after midnight.";
+    early_next_quarter: "An evaluation is scheduled for early next quarter.";
+    next_session: "We can discuss how that feels next session.";
+    seasonal_bare: "Be aware of hunting season before visiting.";
+    equal_measure: "They shared conversation and silence in equal measure.";
+    full_swing: "The wedding planning was in full swing.";
+    first_glance: "At first glance, it appeared straightforward.";
+    high_tide: "The beach lay submerged at high tide.";
+    generic_file_type: "The application filters by file type.";
+    generic_experience_level: "Everyone can participate, regardless of experience level.";
+    generic_substrate_type: "Strength varies depending on substrate type and mycelial density.";
+    generic_user_role: "The application curates information based on user role and interests.";
+    grade_level: "They built terrible treehouses in sixth grade.";
+    gerund_for: "They prepared a contingency plan for altering course significantly.";
+    gerund_while: "The rule works while ignoring legitimate phrasal-verb uses.";
+    gerund_of: "She explained his hobby of restoring vintage typewriters.";
+    gerund_by: "They recovered by increasing cache hit ratios.";
+    gerund_on: "The research focuses on adapting humanity to a changing climate.";
+    quoted_expression: "Flags common soundalikes of \"chock-full\".";
+    quoted_predicate: "She complained about the weather being \"too cold\".";
+    heading: "## Python list comprehension unexpectedly modifies original list\n";
+    table_fragment: "| Problem | Solution |\n| --- | --- |\n| Tank cracked | Replace water tank |";
+    label_fragment: "**Setting:** A comfortable, warmly lit therapy office.";
+    sound_label: "**(Sound Design: Gentle, flowing water sound effect)**";
+    template_describe: "The agreement specified [Briefly describe payment schedule, e.g., 50% upfront].";
+    template_time: "**Next Update:** [Time of next update]";
+    telegraphic_passive: "Full report uploaded to the central database.";
+    number_label: "Run diagnostic cycle 7B-Omega on startup.";
+    bare_instrument: "She played acoustic guitar and mandolin.";
+    determined_hyphenated_adverb: "They responded to a novel, rapidly-spreading viral outbreak.";
+    determined_multi_use: "The design includes a multi-use recreational path.";
+    determined_self_taught: "She is a self-taught abstract expressionist.";
+    determined_hand_built: "The room features a striking, hand-built brick fireplace.";
+    determined_on_call: "The alerts reached the on-call engineering team.";
+    determined_call_stack: "The call stack view is useful.";
+    determined_participle_coordination: "It has a highly praised and well-received renovation plan.";
+    interposed_modifier_adverb: "The first movement, with its simple, almost folk-like main theme, is cheerful.";
+    copular_temporal_adjective: "His vocal performance was particularly strong today.";
+    bare_long_term: "This is unsustainable long-term.";
+    labelled_section: "The check succeeds (see section V).";
+    plural_shared_head: "The exam consists of short answer and essay questions.";
+    adjective_after_plural: "It may show minor imperfections characteristic of its age.";
+    countable_administrator_modifier: "They need administrator or editor access to the site.";
+    gerund_after_verb: "She has loved watching unfold how they help each other.";
+    gerund_after_copula: "The system is prioritizing survival over enjoyment.";
+    gerund_determiner_clause: "They should focus on translating client needs into presentations.";
+    gerund_after_in: "They have a role in safeguarding humanity.";
+    unmarked_adjective: "The storm will be fierce tonight.";
+    quoted_company: "It was developed by local tech firm, Quantum Flux Solutions.";
+    italic_named_band: "Live music will be provided by local band, The Bluebirds.";
+    mass_help: "They need extra help.";
+    mass_toxicity: "They have concerns regarding reagent toxicity.";
+    mass_severity: "The cards represent increasing severity.";
+    mass_praise: "The meal earned high praise.";
+    mass_uncertainty: "He is experiencing significant career uncertainty.";
+    mass_conservation: "They focus on marine conservation.";
+    mass_depletion: "These brief resets prevent energy depletion.";
+    mass_imagination: "It is a testament to human imagination.";
+    mass_reputation: "The outage damaged brand reputation.";
+    mass_accommodation: "They budgeted for mid-range accommodation.";
+    mass_teamwork: "The game emphasizes interdisciplinary teamwork.";
+    mass_preference: "This is a matter of personal preference.";
+    mass_locomotion: "It is a display of efficient locomotion.";
+    mass_appeal: "The changes enhance aesthetic appeal.";
+    mass_excitation: "They avoided undue excitement.";
+    mass_curation: "The items represent a lifetime of careful curation.";
+    mass_snowfall: "A glitch resulted in simulated snowfall.";
+    mass_spaciousness: "She calls it cognitive spaciousness.";
+    mass_connectivity: "They live in a culture of constant connectivity.";
+    mass_retention: "Employee retention remains solid.";
+    mass_gingival_compound: "The tissue shows chronic gingival irritation.";
+    mass_sonar: "They observed contacts on long-range sonar.";
+    mass_fertilizer: "The demand for organic fertilizer increased.";
+    mass_jazz: "He infuses the piece with American jazz.";
+    mass_calculus: "They replaced advanced calculus with seed identification.";
+    mass_self_comparison: "They discourage negative self-comparison.";
+    mass_quantification: "They use colony-forming unit quantification.";
+    mass_disappearance: "The languages are facing imminent disappearance.";
+    mass_lateness: "Chronic lateness will be considered an absence.";
+    mass_feedstock_modifier: "This is made with agricultural waste feedstock.";
+    mass_passage: "The accord guarantees safe passage.";
+    mass_necessity: "It was born of pragmatic necessity.";
+    mass_determination: "It is a testament to relentless determination.";
+    mass_impairment: "He has a diagnosis of mild cognitive impairment.";
+    mass_reimbursement: "The funding is dedicated to direct reimbursement.";
+    mass_incubation: "The process includes controlled environmental incubation.";
+    mass_inundation: "They mapped the potential for coastal inundation.";
+    mass_bias: "They have concerns about algorithmic bias.";
+    mass_indentation: "The plugin provides accurate indentation.";
+    mass_bluntness: "He told her with characteristic bluntness.";
+    mass_overflow: "They need to direct overflow to another shelter.";
+    mass_airspace: "She is learning the intricacies of urban airspace.";
+    mass_burnout: "That is a recipe for long-term burnout.";
+    mass_coloration: "The sediment is indicated by mottled coloration.";
+    mass_rule: "They study the consequences of imperial rule.";
+    idiomatic_delay: "The files load with minimal delay.";
+    idiomatic_arrangement: "They will not accept late work without prior arrangement.";
+    minor_consequence: "It is of minor consequence.";
+    wild_game: "The diet includes wild game.";
+    soil_matrix: "Seeds were recovered from soil matrix.";
+    heat_island_effect: "The plan mitigates urban heat island effect and localized flooding.";
+    grade_like_rate: "These devices monitor heart rate and facial expressions.";
+    numbered_percent: "His oxygen saturation remained above ninety-five percent.";
+    mid_batch: "What about urgent tasks that come up mid-batch?";
+    head_to_toe: "He was covered head-to-toe in mud.";
+    gerund_auxiliary_full: "But beyond the funny moments, what I've truly loved watching unfold is how you two make each other better.";
+    gerund_at: "Beyond technical skill, Eleanor excels at translating client needs into compelling visual presentations.";
+    remaining_determined_coordination: "They prioritize short-term, reactive reporting over proactive, strategic insight generation.";
+    list_label: "**Deliverables include:** Community needs assessment report, final design plans, and permits.";
+    template_quoted_actions: "**Current Actions:** [Describe actions taken, e.g., \"Adjusting database connection pool.\"]";
+    proper_title_abbreviation: "Learn spring planting with local expert, Ms. Beatrice Holloway.";
+    nominal_after_conjunction: "Players must focus on high-priority, difficult-to-contain locations.";
+    source_hyphenated_name: "They use vim-plug for plugin management.";
+    technical_head: "The system must ensure optimal cache hit rates.";
+    process_submission: "The plugin handles form submission and email delivery.";
+    process_conversion: "They attempted explicit type conversion.";
+    process_adjustment: "They automate dynamic adjustment of pool size.";
+    process_transition: "The policy reduces service levels during transition.";
+    mass_clearance: "Ensure there is sufficient clearance above the unit.";
+    mass_ambiguity: "The question is posed with compelling ambiguity.";
+    mass_luck: "It relies on pure luck.";
+    plural_hyphen_tail: "These flags enable file addition/deletion indicators.";
+    long_qualifier: "This stabilizes access in the short to medium term.";
+    plural_tagged_as_name: "These creatures were powerful ecosystem engineers.";
+    plural_architects: "The garden was designed by certified landscape architects.";
+    plural_feature_sets: "They derive value from expanded feature sets.";
+    true_named_archivist: "It was discovered by volunteer archivist Sarah Jenkins.";
+    named_designer: "It was created by sound designer Charles Ritz.";
+    named_baron: "He exchanged letters with local timber baron, Harold Becker.";
+    named_anchor: "**(Cut to wider shot with co-anchor, David Chen)**";
+    parenthesized_direction: "**(Cut to present-day workshop – a modern cooperage.)**";
+    materials_label: "**Materials:** Name tags, markers, flip chart/whiteboard.";
+    materials_label_in_sentence: "They require materials.\n\n* **Materials:** Name tags, markers, flip chart/whiteboard.";
+    food_glaze: "The pork shoulder is served with apple-cider glaze.";
+    forensic_technology: "The unit is equipped with cutting-edge forensic technology.";
+    metric_time_to_fill: "They experienced an increase in time-to-fill for technical roles.";
+    no_modifier_article: "The system replaced traditional bus and train routes.";
+}
+
 corrects! {
+    plankton_modifier_count: "They bought plankton container." => "They bought a plankton container.";
+    wear_modifier_count: "They need surface wear gauge." => "They need a surface wear gauge.";
+    genuine_count: "The tentacles capture tiny creature." => "The tentacles capture a tiny creature.";
+    ordinary_predicate_date: "The funeral was unusual event." => "The funeral was an unusual event.";
+    ordinary_duration: "They waited for entire month." => "They waited for an entire month.";
+    distinct_later_object: "She has a detailed and carefully maintained list and needs new folder." => "She has a detailed and carefully maintained list and needs a new folder.";
+    determined_clause_boundary: "They found a quiet room, and she needs useful tool." => "They found a quiet room, and she needs a useful tool.";
+    bare_while_later_object: "While restoring the bicycle, she needs new helmet." => "While restoring the bicycle, she needs a new helmet.";
+    normal_label_sentence: "**Example:** She needs useful tool." => "**Example:** She needs a useful tool.";
+    ordinary_brackets: "[She needs old bicycle.]" => "[She needs an old bicycle.]";
+    unbracketed_describe: "Please describe unusual vehicle." => "Please describe an unusual vehicle.";
+    ordinary_named_noun: "They waited at old station." => "They waited at an old station.";
+    ordinary_type_object: "They need new file type." => "They need a new file type.";
+    full_swing_object: "They bought wooden swing." => "They bought a wooden swing.";
+    instrument_object: "She bought acoustic guitar." => "She bought an acoustic guitar.";
+    ordinary_measure: "They proposed useful measure." => "They proposed a useful measure.";
+    ordinary_grade: "She received excellent grade." => "She received an excellent grade.";
+    swimming_pool_preposition: "They swam in swimming pool." => "They swam in a swimming pool.";
+    sewing_machine_preposition: "They asked for sewing machine." => "They asked for a sewing machine.";
+    hyphenated_modifier_count: "They need high-priority task." => "They need a high-priority task.";
+    duration_modifier_count: "They need short-term loan." => "They need a short-term loan.";
+    object_subject_clause: "They saw old editor hit targets." => "They saw an old editor hit targets.";
+    count_diagnosis: "The doctor made incorrect diagnosis." => "The doctor made an incorrect diagnosis.";
+    independent_answer: "They need short answer and a useful diagram." => "They need a short answer and a useful diagram.";
+    quantified_percentage_modifier: "They observed ninety-five-percent increase." => "They observed a ninety-five-percent increase.";
+    ordinary_bare_head: "They found unusual effect." => "They found an unusual effect.";
+    count_titled_role: "The team hired local expert." => "The team hired a local expert.";
+    count_working_machine: "They need working machine." => "They need a working machine.";
+    count_book_title: "They bought new book." => "They bought a new book.";
+    count_before_pronoun: "They need unusual book I recommended." => "They need an unusual book I recommended.";
+    count_before_named_time: "They waited at old station Monday." => "They waited at an old station Monday.";
+    count_received_diagnosis: "She received incorrect diagnosis." => "She received an incorrect diagnosis.";
+    noun_after_shared_modifier: "They need short answer." => "They need a short answer.";
+    actual_plural_then_object: "They bought old bicycles and need new helmet." => "They bought old bicycles and need a new helmet.";
+    generic_relation_count: "They found unusual pattern." => "They found an unusual pattern.";
+    count_comparison: "She made useful comparison." => "She made a useful comparison.";
+    relative_role_object: "They need experienced consultant." => "They need an experienced consultant.";
+    real_noun_after_participle: "They found painted wooden sign." => "They found a painted wooden sign.";
     count_review: "She wrote helpful review." => "She wrote a helpful review.";
     count_survey: "They conducted detailed survey." => "They conducted a detailed survey.";
     count_attack: "They launched surprise attack." => "They launched a surprise attack.";

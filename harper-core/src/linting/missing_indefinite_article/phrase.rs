@@ -160,7 +160,9 @@ fn is_head(
         && token.kind.is_countable_noun()
         && !token.kind.is_comparative_adjective()
         // Mixed count/mass nouns ("work", "water") also permit bare uses.
-        && (!token.kind.is_mass_noun() || count_sense)
+        && (count_sense
+            || (!token.kind.is_mass_noun()
+                && !super::count_senses::allows_mass_reading(token.get_ch(source))))
         && (!token.kind.is_proper_noun() || (quoted && token.get_ch(source).iter().all(|c| c.is_lowercase())))
         && !token.kind.is_possessive_noun()
         // Tagging without an article can misread a predicate participle as
@@ -183,7 +185,9 @@ fn is_head(
         ])
 }
 
-/// Reads a complete nominal phrase, preserving determiner and possessive boundaries.
+/// Reads a complete nominal phrase, preserving determiner and possessive scope
+/// across coordinated modifiers, adverbs, and participles. Coordination is only
+/// joined before a nominal head, never across a new clause or a noun list.
 pub(super) fn phrase<'a>(tokens: &'a [Token], start: usize) -> Option<ArticlePhrase<'a>> {
     let mut cursor = start;
     let determined =
@@ -216,6 +220,8 @@ pub(super) fn phrase<'a>(tokens: &'a [Token], start: usize) -> Option<ArticlePhr
             || token.kind.is_verb_past_participle_form()
             || (token.kind.is_verb_past_form() && token.kind.is_adjective())
             || token.kind.is_verb_progressive_form()
+            || (determined
+                && (is_modifier(token) || (token.kind.is_noun() && token.kind.is_verb_lemma())))
             || is_nominal_fallback(tokens, start, cursor);
         if !nominal
             || token.kind.is_determiner()
@@ -228,25 +234,22 @@ pub(super) fn phrase<'a>(tokens: &'a [Token], start: usize) -> Option<ArticlePhr
         {
             return None;
         }
-        // Commas may separate modifiers within one determined phrase. Do not
-        // treat a noun list ("a dog, cat") as a shared determiner construction.
-        if determined
-            && (token.kind.is_upos(UPOS::ADJ) || token.kind.is_verb_past_participle_form())
-            && tokens.get(cursor + 1).is_some_and(|t| t.kind.is_comma())
-            && tokens
-                .get(cursor + 2)
-                .is_some_and(|t| t.kind.is_whitespace())
-            && tokens
-                .get(cursor + 3)
-                .is_some_and(|t| t.kind.is_adjective() || t.kind.is_verb_past_participle_form())
+        if (determined
+            || cursor
+                .checked_sub(1)
+                .is_some_and(|i| tokens[i].kind.is_hyphen()))
+            && (is_modifier(token)
+                || token.kind.is_adjective()
+                || is_hyphen_modifier(tokens, cursor))
+            && let Some(next) = coordinated_modifier(tokens, cursor)
         {
-            cursor += 3;
+            cursor = next;
             continue;
         }
         let next = cursor + 2;
         let continues = tokens
             .get(cursor + 1)
-            .is_some_and(|t| t.kind.is_whitespace() || t.kind.is_hyphen())
+            .is_some_and(|t| t.kind.is_whitespace() || t.kind.is_hyphen() || t.kind.is_slash())
             && tokens.get(next).is_some_and(|t| {
                 t.kind.is_upos(UPOS::NOUN)
                     || (is_nominal_fallback(tokens, start, next)
@@ -256,11 +259,29 @@ pub(super) fn phrase<'a>(tokens: &'a [Token], start: usize) -> Option<ArticlePhr
                                 .get(next + 4)
                                 .is_some_and(|after| after.kind.is_upos(UPOS::NOUN))))
                     || t.kind.is_upos(UPOS::ADJ)
-                    || t.kind.is_upos(UPOS::PROPN)
+                    || (t.kind.is_upos(UPOS::PROPN) && (determined || t.kind.is_lowercase()))
+                    || (determined
+                        && is_modifier(t)
+                        && (is_modifier(token)
+                            || tokens[cursor + 1].kind.is_hyphen()
+                            || cursor
+                                .checked_sub(1)
+                                .is_some_and(|i| tokens[i].kind.is_hyphen())))
                     || (token.kind.is_upos(UPOS::ADV)
-                        && (t.kind.is_adjective() || t.kind.is_verb_past_participle_form()))
+                        && (t.kind.is_adjective()
+                            || t.kind.is_verb_past_form()
+                            || t.kind.is_verb_past_participle_form()
+                            || t.kind.is_verb_progressive_form()))
             });
-        if !continues {
+        // A postnominal adjective describes a completed plural phrase rather
+        // than becoming a new singular head ("imperfections characteristic of").
+        let postnominal = token.kind.is_plural_noun()
+            && tokens.get(next).is_some_and(|t| {
+                t.kind.is_adjective()
+                    && !t.kind.is_verb()
+                    && (t.kind.is_upos(UPOS::ADJ) || !t.kind.is_np_member())
+            });
+        if !continues || postnominal {
             // Do not truncate a hyphenated modifier at an uncertain token.
             if tokens.get(cursor + 1).is_some_and(|t| t.kind.is_hyphen()) {
                 return None;
@@ -277,10 +298,59 @@ pub(super) fn phrase<'a>(tokens: &'a [Token], start: usize) -> Option<ArticlePhr
     }
 }
 
+/// Identifies attributive modifiers without treating a noun head as a modifier
+/// merely because it also has an adjective sense ("a dog, cat").
+fn is_modifier(token: &Token) -> bool {
+    token.kind.is_upos(UPOS::ADJ)
+        || (token.kind.is_adjective() && !token.kind.is_noun())
+        || token.kind.is_upos(UPOS::ADV)
+        || token.kind.is_verb_past_participle_form()
+        || token.kind.is_verb_past_form()
+        || token.kind.is_verb_progressive_form()
+}
+
+/// Finds a comma- or conjunction-linked modifier, including leading adverbs.
+/// A pronoun, determiner, or finite verb ends the shared determiner's scope.
+fn coordinated_modifier(tokens: &[Token], cursor: usize) -> Option<usize> {
+    let mut next = cursor + 1;
+    if tokens.get(next)?.kind.is_comma() {
+        next += 1;
+    }
+    if !tokens.get(next)?.kind.is_whitespace() {
+        return None;
+    }
+    next += 1;
+    if tokens.get(next)?.kind.is_upos(UPOS::CCONJ) {
+        next += 1;
+        if !tokens.get(next)?.kind.is_whitespace() {
+            return None;
+        }
+        next += 1;
+    } else if !tokens.get(cursor + 1)?.kind.is_comma() {
+        return None;
+    }
+    let modifier_start = next;
+    while tokens.get(next)?.kind.is_upos(UPOS::ADV) {
+        if !(tokens.get(next + 1)?.kind.is_whitespace() || tokens.get(next + 1)?.kind.is_hyphen()) {
+            return None;
+        }
+        next += 2;
+    }
+    (is_modifier(tokens.get(next)?) || is_hyphen_modifier(tokens, next)).then_some(modifier_start)
+}
+
 /// A preposition can be part of a hyphenated adjective ("built-in", "on-call")
 /// without turning a following noun into a separate prepositional object.
 fn is_hyphen_modifier(tokens: &[Token], index: usize) -> bool {
-    (tokens[index].kind.is_adjective() || tokens[index].kind.is_preposition())
+    (tokens[index].kind.is_adjective()
+        || tokens[index].kind.is_preposition()
+        || tokens[index].kind.is_noun()
+        || tokens[index]
+            .kind
+            .as_word()
+            .and_then(|m| m.as_ref())
+            .and_then(|m| m.affix)
+            .is_some_and(|a| a.is_prefix == Some(true)))
         && (index
             .checked_sub(1)
             .and_then(|i| tokens.get(i))
@@ -312,7 +382,6 @@ fn is_nominal_fallback(tokens: &[Token], start: usize, index: usize) -> bool {
     if !token.kind.is_upos(UPOS::VERB)
         || !token.kind.is_noun()
         || !token.kind.is_verb()
-        || token.kind.is_auxiliary_verb()
         || token.kind.is_preposition()
         || index <= start
     {
@@ -322,7 +391,10 @@ fn is_nominal_fallback(tokens: &[Token], start: usize, index: usize) -> bool {
         .checked_sub(2)
         .and_then(|i| tokens.get(i))
         .is_some_and(|t| {
-            t.kind.is_upos(UPOS::VERB) || t.kind.is_upos(UPOS::AUX) || t.kind.is_upos(UPOS::ADP)
+            t.kind.is_upos(UPOS::VERB)
+                || t.kind.is_upos(UPOS::AUX)
+                || t.kind.is_upos(UPOS::ADP)
+                || (t.kind.is_preposition() && t.kind.is_upos(UPOS::SCONJ))
         });
     let previous_noun = index
         .checked_sub(2)
@@ -335,11 +407,26 @@ fn is_nominal_fallback(tokens: &[Token], start: usize, index: usize) -> bool {
         .checked_sub(2)
         .and_then(|i| tokens.get(i))
         .is_some_and(|t| !t.kind.is_verb_progressive_form() && !t.kind.is_mass_noun());
+    if previous_noun
+        && tokens
+            .get(index + 2)
+            .is_some_and(|t| t.kind.is_upos(UPOS::AUX))
+    {
+        return true;
+    }
     governed
         && previous_noun
         && ((nominal_modifier && token.kind.is_plural_noun())
+            || (tokens
+                .get(index + 2)
+                .is_some_and(|t| t.kind.is_plural_noun())
+                && (token.kind.is_mass_noun() || tokens[index - 2].kind.is_mass_noun()))
             || token.kind.is_verb_progressive_form()
-            || (terminal && token.kind.is_verb_lemma()))
+            || ((terminal
+                || tokens
+                    .get(index + 2)
+                    .is_some_and(|t| t.kind.is_upos(UPOS::AUX)))
+                && token.kind.is_verb_lemma()))
 }
 
 /// Establishes selected count senses from the governor and modifiers, not countability defaults alone.
@@ -430,6 +517,19 @@ fn is_gerund_complement(tokens: &[Token], phrase: &ArticlePhrase<'_>, source: &[
     if !phrase.first.kind.is_verb_progressive_form() || phrase.first.span == phrase.head.span {
         return false;
     }
+    // "Sewing" has mass/progressive metadata even in the lexical compound
+    // "sewing machine"; its head is not an object of the verb "sew".
+    if phrase
+        .first
+        .get_ch(source)
+        .eq_any_ignore_ascii_case_str(&["sewing"])
+        && phrase
+            .head
+            .get_ch(source)
+            .eq_any_ignore_ascii_case_str(&["machine"])
+    {
+        return false;
+    }
     let Some(previous) = phrase.start.checked_sub(2).and_then(|i| tokens.get(i)) else {
         return false;
     };
@@ -438,6 +538,14 @@ fn is_gerund_complement(tokens: &[Token], phrase: &ArticlePhrase<'_>, source: &[
         "considers",
         "considered",
         "considering",
+        "love",
+        "loves",
+        "loved",
+        "loving",
+        "like",
+        "likes",
+        "liked",
+        "liking",
         "enjoy",
         "enjoys",
         "enjoyed",
@@ -454,5 +562,12 @@ fn is_gerund_complement(tokens: &[Token], phrase: &ArticlePhrase<'_>, source: &[
         return true;
     }
     previous.kind.is_preposition()
-        && (!phrase.first.kind.is_noun() || !phrase.head.kind.is_np_member())
+        && (!phrase.first.kind.is_noun()
+            || !phrase.head.kind.is_np_member()
+            || (phrase.first.kind.is_mass_noun()
+                && !phrase.first.kind.is_np_member()
+                && previous.get_ch(source).eq_any_ignore_ascii_case_str(&[
+                    "for", "by", "without", "before", "after", "from", "of", "in", "on", "while",
+                    "towards", "toward", "at",
+                ])))
 }
