@@ -160,7 +160,7 @@ impl ExprLinter for ConvenientStore {
     }
 
     fn description(&self) -> &str {
-        "Attempts to detect when `convenient store` is mistake for `convenience store`."
+        "Attempts to detect when `convenient store` is mistaken for `convenience store`."
     }
 }
 

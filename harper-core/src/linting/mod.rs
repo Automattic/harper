@@ -196,6 +196,7 @@ mod mass_nouns;
 mod means_a_lot_to;
 mod merge_linters;
 mod merge_words;
+mod missing_indefinite_article;
 mod missing_preposition;
 mod missing_space;
 mod missing_to;

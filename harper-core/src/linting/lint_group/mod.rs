@@ -182,6 +182,7 @@ use super::looking_forward_to::LookingForwardTo;
 use super::mass_nouns::MassNouns;
 use super::means_a_lot_to::MeansALotTo;
 use super::merge_words::MergeWords;
+use super::missing_indefinite_article::MissingIndefiniteArticle;
 use super::missing_preposition::MissingPreposition;
 use super::missing_to::MissingTo;
 use super::misspell::Misspell;
@@ -826,6 +827,7 @@ impl LintGroup {
         insert_struct_rule_with_dict!(MassNouns);
         insert_expr_rule!(MeansALotTo);
         insert_struct_rule!(MergeWords);
+        insert_struct_rule_with_dialect!(MissingIndefiniteArticle);
         insert_expr_rule!(MissingPreposition);
         insert_expr_rule!(MissingTo);
         insert_expr_rule!(Misspell);
