@@ -15,6 +15,7 @@ mod ignored_lints;
 mod indefinite_article;
 mod irregular_nouns;
 mod irregular_verbs;
+mod lang;
 pub mod language_detection;
 mod lexing;
 pub mod linting;
@@ -58,6 +59,7 @@ pub use irregular_nouns::IrregularNouns;
 pub use irregular_verbs::IrregularVerbs;
 // The old name, so code written for it keeps working.
 pub use dict_word_metadata::EnglishDialectFlags as DialectFlags;
+pub use lang::{Language, LanguageFamily};
 
 /// The old name of [`EnglishDialect`].
 #[deprecated(note = "renamed to `EnglishDialect`")]

@@ -383,7 +383,7 @@ use crate::{
         {ExprLinter, HtmlDescriptionLinter, Lint, Linter},
     },
     spell::Dictionary,
-    {Document, EnglishDialect, Span, TokenStringExt},
+    {Document, EnglishDialect, Language, Span, TokenStringExt},
 };
 
 pub use flat_config::FlatConfig;
@@ -601,6 +601,16 @@ impl LintGroup {
     pub fn with_lint_config(mut self, config: FlatConfig) -> Self {
         self.config = config;
         self
+    }
+
+    /// Create the curated group of rules for `language`.
+    pub fn new_curated_for_language(
+        dictionary: Arc<impl Dictionary + 'static>,
+        language: Language,
+    ) -> Self {
+        match language {
+            Language::English(dialect) => Self::new_curated(dictionary, dialect),
+        }
     }
 
     pub fn new_curated(
@@ -1202,7 +1212,7 @@ mod tests {
     use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
     use crate::spell::{FstDictionary, MutableDictionary};
     use crate::weir::WeirLinter;
-    use crate::{Document, EnglishDialect, linting::Linter};
+    use crate::{Document, EnglishDialect, Language, linting::Linter};
 
     create_test_pool!(
         LintGroup,
@@ -1465,5 +1475,16 @@ mod tests {
             test_linter(),
             "IMO these kind of advice never matters.",
         );
+    }
+
+    #[test]
+    fn english_group_matches_new_curated() {
+        let dict = FstDictionary::curated();
+        let english = LintGroup::new_curated_for_language(
+            dict.clone(),
+            Language::English(EnglishDialect::British),
+        );
+        let curated = LintGroup::new_curated(dict, EnglishDialect::British);
+        assert_eq!(english.config, curated.config);
     }
 }
