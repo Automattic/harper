@@ -66,6 +66,13 @@ jobs:
         run: cargo binstall wasm-pack --force --no-confirm
       - name: Install `cargo-xwin`
         run: cargo binstall cargo-xwin --force --no-confirm
+      # cargo-xwin otherwise downloads the MSVC CRT and Windows SDK on every
+      # run, which takes 5 to 11 minutes.
+      - name: Cache MSVC CRT
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/cargo-xwin
+          key: cargo-xwin-${{ runner.os }}
       - name: Build Harper Desktop for Windows
         run: just build-desktop-windows
       - name: Upload artifacts
