@@ -42,6 +42,29 @@ mod tests {
     }
 
     #[tokio::test]
+    async fn client_receives_weirpacks_and_removals_from_server() {
+        let (client_writer, server_reader) = duplex(16_384);
+        let (server_writer, client_reader) = duplex(16_384);
+        let pack = crate::config::InstalledWeirpack::install(
+            "test.weirpack".into(),
+            crate::config::test_weirpack().to_bytes().unwrap(),
+        )
+        .unwrap();
+        let config = Arc::new(Mutex::new(Config {
+            weirpacks: vec![pack.clone()],
+            ..Config::new()
+        }));
+        let mut client = Client::new(client_reader, client_writer);
+        let mut server = Server::new(server_reader, server_writer, config.clone());
+        let (packs, request) = tokio::join!(client.get_weirpacks(), server.receive_request());
+        assert_eq!(packs.unwrap(), vec![pack]);
+        assert!(matches!(request.unwrap(), Some(Request::GetWeirpacks)));
+        config.lock().await.weirpacks.clear();
+        let (packs, _) = tokio::join!(client.get_weirpacks(), server.receive_request());
+        assert!(packs.unwrap().is_empty());
+    }
+
+    #[tokio::test]
     async fn client_receives_dictionary_from_server() {
         let (client_request_writer, server_request_reader) = duplex(16_384);
         let (server_response_writer, client_response_reader) = duplex(16_384);

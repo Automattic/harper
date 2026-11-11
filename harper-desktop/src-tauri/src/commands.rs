@@ -1,7 +1,7 @@
 //! This module centralizes all the Rust commands to be made available to the JavaScript
 //! environment. Use [`application_message_handler`] to load them into the Tauri runtime.
 
-use crate::config::Config;
+use crate::config::{Config, InstalledWeirpack};
 use crate::desktop_updater::{DesktopUpdater, UpdateResult};
 use crate::highlighter_service::HighlighterService;
 use crate::os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker};
@@ -14,11 +14,15 @@ use harper_core::{
 };
 use std::sync::{Arc, RwLock};
 use tauri::ipc::Invoke;
-use tauri::{Manager, Runtime, State};
+use tauri::{Emitter, Manager, Runtime, State};
 use tokio::sync::Mutex;
 
 pub fn application_message_handler<R: Runtime>() -> impl Fn(Invoke<R>) -> bool {
     tauri::generate_handler![
+        get_weirpacks,
+        install_weirpack,
+        remove_weirpack,
+        update_weirpack,
         get_lint_config,
         get_dialect,
         get_debounce_ms,
@@ -50,6 +54,99 @@ pub fn application_message_handler<R: Runtime>() -> impl Fn(Invoke<R>) -> bool {
         launch_app,
         search_apps,
     ]
+}
+
+#[tauri::command]
+async fn get_weirpacks(
+    config: State<'_, Arc<Mutex<Config>>>,
+) -> Result<Vec<InstalledWeirpack>, String> {
+    Ok(config.lock().await.weirpacks.clone())
+}
+
+/// Validate before acquiring the settings lock; publish changes only after a successful save.
+#[tauri::command]
+async fn install_weirpack<R: Runtime>(
+    filename: String,
+    bytes: Vec<u8>,
+    config: State<'_, Arc<Mutex<Config>>>,
+    app: tauri::AppHandle<R>,
+) -> Result<(), String> {
+    let pack =
+        tauri::async_runtime::spawn_blocking(move || InstalledWeirpack::install(filename, bytes))
+            .await
+            .map_err(|error| error.to_string())??;
+    let mut config = config.lock().await;
+    let packs = config
+        .weirpacks
+        .iter()
+        .cloned()
+        .chain(std::iter::once(pack))
+        .collect();
+    config
+        .save_weirpacks(packs)
+        .await
+        .map_err(|error| error.to_string())?;
+    let _ = app.emit("weirpacks-changed", ());
+    Ok(())
+}
+
+#[tauri::command]
+async fn remove_weirpack<R: Runtime>(
+    id: String,
+    config: State<'_, Arc<Mutex<Config>>>,
+    app: tauri::AppHandle<R>,
+) -> Result<(), String> {
+    let mut config = config.lock().await;
+    let packs = config
+        .weirpacks
+        .iter()
+        .filter(|pack| pack.id != id)
+        .cloned()
+        .collect();
+    config
+        .save_weirpacks(packs)
+        .await
+        .map_err(|error| error.to_string())?;
+    let _ = app.emit("weirpacks-changed", ());
+    Ok(())
+}
+
+#[tauri::command]
+async fn update_weirpack<R: Runtime>(
+    id: String,
+    name: Option<String>,
+    enabled: Option<bool>,
+    config: State<'_, Arc<Mutex<Config>>>,
+    app: tauri::AppHandle<R>,
+) -> Result<(), String> {
+    let mut config = config.lock().await;
+    if !config.weirpacks.iter().any(|pack| pack.id == id) {
+        return Err("Weirpack not found.".into());
+    }
+    let name = name.map(|name| name.trim().to_owned());
+    if name.as_ref().is_some_and(|name| name.is_empty()) {
+        return Err("A pack name cannot be empty.".into());
+    }
+    let packs = config
+        .weirpacks
+        .iter()
+        .map(|pack| {
+            if pack.id != id {
+                return pack.clone();
+            }
+            InstalledWeirpack {
+                name: name.clone().unwrap_or_else(|| pack.name.clone()),
+                enabled: enabled.unwrap_or(pack.enabled),
+                ..pack.clone()
+            }
+        })
+        .collect();
+    config
+        .save_weirpacks(packs)
+        .await
+        .map_err(|error| error.to_string())?;
+    let _ = app.emit("weirpacks-changed", ());
+    Ok(())
 }
 
 #[tauri::command]

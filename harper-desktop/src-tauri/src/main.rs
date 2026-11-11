@@ -15,9 +15,9 @@ use crate::config::{Config, Integration};
 use crate::debounce::{DebounceState, DebounceStatus};
 use clap::Parser;
 use harper_core::{
-    Dialect, DictWordMetadata, Document, IgnoredLints,
+    DictWordMetadata, Document, IgnoredLints,
     linting::{Lint, LintGroup},
-    spell::MutableDictionary,
+    spell::MergedDictionary,
 };
 use serde::Serialize;
 use std::collections::BTreeMap;
@@ -268,15 +268,15 @@ pub fn run_highlighter(has_parent: bool) {
     };
 
     let startup_linter = startup_config.create_linter();
-    let ignored_lints = Rc::new(RefCell::new(startup_config.ignored_lints));
-    let user_dictionary = Rc::new(RefCell::new(startup_config.mutable_dictionary));
-    let dialect = Rc::new(RefCell::new(startup_config.dialect));
+    let ignored_lints = Rc::new(RefCell::new(startup_config.ignored_lints.clone()));
+    let dictionary = Rc::new(RefCell::new(startup_config.create_dictionary()));
     let integrations = Arc::new(StdMutex::new(IntegrationState {
-        integrations: startup_config.integrations,
+        integrations: startup_config.integrations.clone(),
         auto_enable_new_apps: startup_config.auto_enable_new_apps,
     }));
     let debounce_ms = Rc::new(RefCell::new(startup_config.debounce_ms));
     let linter = Rc::new(RefCell::new(startup_linter));
+    let config_snapshot = Rc::new(RefCell::new(startup_config));
 
     let integration_client = client.clone();
     let integration_runtime = sync_runtime.clone();
@@ -301,7 +301,7 @@ pub fn run_highlighter(has_parent: bool) {
 
     let lint_ignored_lints = ignored_lints.clone();
     let lint_linter = linter.clone();
-    let lint_user_dictionary = user_dictionary.clone();
+    let lint_dictionary = dictionary.clone();
     let lint_debounce_ms = debounce_ms.clone();
     let lint_debounce_state = Rc::new(RefCell::new(DebounceState::default()));
 
@@ -311,10 +311,9 @@ pub fn run_highlighter(has_parent: bool) {
 
     let dictionary_client = client.clone();
     let dictionary_runtime = sync_runtime.clone();
-    let dictionary_user_dictionary = user_dictionary.clone();
+    let dictionary_config = config_snapshot.clone();
     let dictionary_linter = linter.clone();
-    let dictionary_dialect = dialect.clone();
-    let dictionary_debounce_ms = debounce_ms.clone();
+    let dictionary_merged = dictionary.clone();
 
     let disable_client = client.clone();
     let disable_runtime = sync_runtime.clone();
@@ -326,8 +325,9 @@ pub fn run_highlighter(has_parent: bool) {
     let refresh_client = client.clone();
     let refresh_runtime = sync_runtime.clone();
     let refresh_ignored_lints = ignored_lints.clone();
-    let refresh_user_dictionary = user_dictionary.clone();
-    let refresh_dialect = dialect.clone();
+    let refresh_snapshot = config_snapshot.clone();
+    let refresh_dictionary = dictionary.clone();
+    let refresh_debounce_state = lint_debounce_state.clone();
     let refresh_integrations = integrations.clone();
     let refresh_debounce_ms = debounce_ms.clone();
     let refresh_linter = linter.clone();
@@ -341,9 +341,8 @@ pub fn run_highlighter(has_parent: bool) {
             DebounceStatus::Ready => {}
         }
 
-        let dictionary =
-            Config::dictionary_from_user_dictionary(lint_user_dictionary.borrow().clone());
-        let doc = Document::new_markdown_default(text, &dictionary);
+        let dictionary = lint_dictionary.borrow();
+        let doc = Document::new_markdown_default(text, &*dictionary);
         let mut organized_lints = lint_linter.borrow_mut().organized_lints(&doc);
 
         for lints in organized_lints.values_mut() {
@@ -374,25 +373,13 @@ pub fn run_highlighter(has_parent: bool) {
     };
 
     let add_to_dictionary = move |word: &str| {
-        dictionary_user_dictionary
-            .borrow_mut()
+        let mut config = dictionary_config.borrow_mut();
+        config
+            .mutable_dictionary
             .append_word_str(word, DictWordMetadata::default());
-
-        let lint_config = dictionary_linter.borrow().config.clone();
-        let config = Config {
-            mutable_dictionary: dictionary_user_dictionary.borrow().clone(),
-            dialect: *dictionary_dialect.borrow(),
-            ignored_lints: IgnoredLints::new(),
-            lint_config,
-            integrations: Vec::new(),
-            auto_enable_new_apps: false,
-            onboarding_completed: false,
-            debounce_ms: *dictionary_debounce_ms.borrow(),
-            auto_update: true,
-            last_update_check: None,
-            highlighter_service_enabled: true,
-        };
+        config.lint_config = dictionary_linter.borrow().config.clone();
         *dictionary_linter.borrow_mut() = config.create_linter();
+        *dictionary_merged.borrow_mut() = config.create_dictionary();
 
         if let Err(error) = dictionary_runtime.block_on(
             dictionary_client
@@ -410,7 +397,7 @@ pub fn run_highlighter(has_parent: bool) {
             .expect("IPC client lock poisoned")
             .disable_rule(rule_name),
     ) {
-        Ok(config) => disable_linter.borrow_mut().config = config,
+        Ok(config) => disable_linter.borrow_mut().config.merge_from(config),
         Err(error) => eprintln!("failed to disable rule {rule_name}: {error}"),
     };
 
@@ -439,15 +426,19 @@ pub fn run_highlighter(has_parent: bool) {
             &mut refresh_client.lock().expect("IPC client lock poisoned"),
             &refresh_runtime,
         ) {
-            Ok(config) => apply_highlighter_config(
-                config,
-                &refresh_ignored_lints,
-                &refresh_user_dictionary,
-                &refresh_dialect,
-                &refresh_integrations,
-                &refresh_debounce_ms,
-                &refresh_linter,
-            ),
+            Ok(config) => {
+                if apply_highlighter_config(
+                    config,
+                    &refresh_ignored_lints,
+                    &refresh_snapshot,
+                    &refresh_dictionary,
+                    &refresh_integrations,
+                    &refresh_debounce_ms,
+                    &refresh_linter,
+                ) {
+                    *refresh_debounce_state.borrow_mut() = DebounceState::default();
+                }
+            }
             Err(error) => {
                 eprintln!("failed to refresh highlighter config: {error}");
                 std::process::exit(1);
@@ -524,6 +515,7 @@ fn fetch_highlighter_config(
         let debounce_ms = client.get_debounce_ms().await?;
 
         Ok(Config {
+            weirpacks: client.get_weirpacks().await?,
             dialect,
             mutable_dictionary,
             ignored_lints,
@@ -539,32 +531,94 @@ fn fetch_highlighter_config(
     })
 }
 
+/// Refresh lint resources only when their inputs change; signal when cached lints must be cleared.
 fn apply_highlighter_config(
     config: Config,
     ignored_lints: &Rc<RefCell<IgnoredLints>>,
-    user_dictionary: &Rc<RefCell<MutableDictionary>>,
-    dialect: &Rc<RefCell<Dialect>>,
+    snapshot: &Rc<RefCell<Config>>,
+    dictionary: &Rc<RefCell<Arc<MergedDictionary>>>,
     integrations: &Arc<StdMutex<IntegrationState>>,
     debounce_ms: &Rc<RefCell<u64>>,
     linter: &Rc<RefCell<LintGroup>>,
-) {
-    if config.mutable_dictionary != *user_dictionary.borrow()
-        || config.dialect != *dialect.borrow()
-        || config.lint_config != linter.borrow().config
-    {
+) -> bool {
+    let changed = {
+        let previous = snapshot.borrow();
+        config.mutable_dictionary != previous.mutable_dictionary
+            || config.dialect != previous.dialect
+            || config.lint_config != previous.lint_config
+            || config.weirpacks != previous.weirpacks
+    };
+    if changed {
         *linter.borrow_mut() = config.create_linter();
+        *dictionary.borrow_mut() = config.create_dictionary();
     }
-    *ignored_lints.borrow_mut() = config.ignored_lints;
-    *user_dictionary.borrow_mut() = config.mutable_dictionary;
-    *dialect.borrow_mut() = config.dialect;
+    *ignored_lints.borrow_mut() = config.ignored_lints.clone();
     match integrations.lock() {
         Ok(mut integrations) => {
             *integrations = IntegrationState {
-                integrations: config.integrations,
+                integrations: config.integrations.clone(),
                 auto_enable_new_apps: config.auto_enable_new_apps,
             }
         }
         Err(error) => eprintln!("failed to update integrations: {error}"),
     }
     *debounce_ms.borrow_mut() = config.debounce_ms;
+    *snapshot.borrow_mut() = config;
+    changed
+}
+
+#[cfg(test)]
+mod weirpack_tests {
+    use super::*;
+
+    #[test]
+    fn highlighter_refresh_loads_and_removes_packs_without_restarting() {
+        let pack = crate::config::InstalledWeirpack::install(
+            "test.weirpack".into(),
+            crate::config::test_weirpack().to_bytes().unwrap(),
+        )
+        .unwrap();
+        let snapshot = Rc::new(RefCell::new(Config::new()));
+        let dictionary = Rc::new(RefCell::new(snapshot.borrow().create_dictionary()));
+        let linter = Rc::new(RefCell::new(snapshot.borrow().create_linter()));
+        let ignored = Rc::new(RefCell::new(IgnoredLints::new()));
+        let integrations = Arc::new(StdMutex::new(IntegrationState {
+            integrations: vec![],
+            auto_enable_new_apps: false,
+        }));
+        let debounce = Rc::new(RefCell::new(0));
+        let refresh = |packs| {
+            apply_highlighter_config(
+                Config {
+                    weirpacks: packs,
+                    ..Config::new()
+                },
+                &ignored,
+                &snapshot,
+                &dictionary,
+                &integrations,
+                &debounce,
+                &linter,
+            )
+        };
+        assert!(refresh(vec![pack.clone()]));
+        let doc = Document::new_markdown_default("banana", &*dictionary.borrow());
+        assert_eq!(
+            linter.borrow_mut().organized_lints(&doc)["DesktopTestRule"].len(),
+            1
+        );
+        assert!(!refresh(vec![pack.clone()]));
+        assert!(refresh(vec![crate::config::InstalledWeirpack {
+            enabled: false,
+            ..pack
+        }]));
+        assert!(
+            !linter
+                .borrow_mut()
+                .organized_lints(&doc)
+                .contains_key("DesktopTestRule")
+        );
+        assert!(refresh(vec![]));
+        assert!(!refresh(vec![]));
+    }
 }

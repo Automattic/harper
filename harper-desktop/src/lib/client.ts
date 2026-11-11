@@ -34,6 +34,19 @@ function getConfigLinter(): Promise<LocalLinterType> {
 	return configLinterPromise;
 }
 
+/** Persisted pack metadata and original archive, shared with Rust and the highlighter. */
+export interface InstalledWeirpack {
+	id: string;
+	name: string;
+	filename: string;
+	version: string;
+	size: number;
+	ruleCount: number;
+	addedAt: number;
+	enabled: boolean;
+	bytesBase64: string;
+}
+
 export interface Integration {
 	bundle_id: string;
 	enabled: boolean;
@@ -59,6 +72,60 @@ export interface UpdateResult {
 /** Provides an easy-to-use interface for interacting with the main Rust Tauri process.
  * Relevant because that is where the canonical state is stored. */
 export class Client {
+	/** Rebuild the editor engine from canonical settings. A fresh engine removes disabled pack rules and words. */
+	static async createEditorLinter(): Promise<Linter> {
+		const [{ WorkerLinter }, { slimBinaryInlined }, packs, dialect, words, config] =
+			await Promise.all([
+				import('harper.js'),
+				import('harper.js/slimBinaryInlined'),
+				Client.getWeirpacks(),
+				Client.getDialect(),
+				Client.getDictionary(),
+				Client.getLintConfig(),
+			]);
+		const linter = new WorkerLinter({ binary: slimBinaryInlined, dialect });
+		try {
+			await linter.setup();
+			await linter.importWords(words);
+			for (const pack of packs.filter((pack) => pack.enabled)) {
+				const bytes = Uint8Array.from(atob(pack.bytesBase64), (character) =>
+					character.charCodeAt(0),
+				);
+				const failures = await linter.loadWeirpackFromBytes(bytes);
+				if (failures && Object.keys(failures).length)
+					throw new Error(`Tests failed in ${pack.name}.`);
+			}
+			await linter.setLintConfig({
+				...(await linter.getLintConfig()),
+				...Object.fromEntries(Object.entries(config).filter(([, value]) => value != null)),
+			});
+			return linter;
+		} catch (error) {
+			await linter.dispose();
+			throw error;
+		}
+	}
+
+	static async getWeirpacks(): Promise<InstalledWeirpack[]> {
+		return invoke('get_weirpacks');
+	}
+
+	/** Rust validates rules, tests, and dictionaries before saving and notifying open editors. */
+	static async installWeirpack(filename: string, bytes: Uint8Array): Promise<void> {
+		await invoke('install_weirpack', { filename, bytes: Array.from(bytes) });
+	}
+
+	static async removeWeirpack(id: string): Promise<void> {
+		await invoke('remove_weirpack', { id });
+	}
+
+	static async updateWeirpack(
+		id: string,
+		patch: { name?: string; enabled?: boolean },
+	): Promise<void> {
+		await invoke('update_weirpack', { id, ...patch });
+	}
+
 	static async getLintConfig(): Promise<LintConfig> {
 		return await invoke<LintConfig>('get_lint_config');
 	}
