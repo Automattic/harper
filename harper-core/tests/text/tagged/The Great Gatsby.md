@@ -272,8 +272,8 @@
 # J        NPl/V3+ I/C/Ddem+ J/R  VP/J   NSg/VB+  NSg/P NSg/J+ NSg/VB+ . D/P NSg/J    NSg/VB+ NPr/J/R/P D/P+ NSg/J+ .
 > one     of those   men  who    reach  such  an   acute     limited   excellence at    twenty - one     that
 # NSg/I/J P  I/Ddem+ NPl+ NPr/I+ NSg/VB NSg/I D/P+ NSg/VB/J+ NSg/VP/J+ NSg+       NSg/P NSg    . NSg/I/J I/C/Ddem
-> everything afterward savors of anti    - climax . His     family  were enormously
-# NSg/I/VB+  R/Am      NPl/V3 P  NSg/J/P . NSg/VB . ISg/D$+ N🅪Sg/J+ VLPt R
+> everything afterward savors    of anti    - climax . His     family  were enormously
+# NSg/I/VB+  R/Am      NPl/V3/Am P  NSg/J/P . NSg/VB . ISg/D$+ N🅪Sg/J+ VLPt R
 > wealthy — even       in        college his     freedom with money   was  a   matter  for   reproach — but     now
 # NSg/J   . NSg/VB/J/R NPr/J/R/P NSg+    ISg/D$+ N🅪Sg    P    N🅪Sg/J+ VLPt D/P N🅪Sg/VB R/C/P NSg/VB   . NSg/C/P NSg/J/R/C
 > he’d left     Chicago and  come       East   in        a   fashion  that      rather took your breath     away :
@@ -9591,7 +9591,7 @@
 > He       might    have    despised himself , for   he       had certainly taken her     under   false
 # NPr/ISg+ Nᴹ/VXB/J NSg/VXB VP/J     ISg+    . R/C/P NPr/ISg+ VP  R         VPp/J ISg/D$+ NSg/J/P NSg/VB/J
 > pretenses . I       don’t mean     that     he       had traded on  his     phantom millions , but     he       had
-# NPl       . ISg/#r+ VXB   NSg/VB/J I/C/Ddem NPr/ISg+ VP  VP/J   J/P ISg/D$+ NSg/J+  NPl+     . NSg/C/P NPr/ISg+ VP
+# NPl/NoAm  . ISg/#r+ VXB   NSg/VB/J I/C/Ddem NPr/ISg+ VP  VP/J   J/P ISg/D$+ NSg/J+  NPl+     . NSg/C/P NPr/ISg+ VP
 > deliberately given       Daisy a   sense   of security ; he       let     her     believe that     he       was  a
 # R            NSg/VPp/J/P NPr+  D/P N🅪Sg/VB P  Nᴹ+      . NPr/ISg+ NSg/VBP ISg/D$+ VB      I/C/Ddem NPr/ISg+ VLPt D/P
 > person  from much         the same strata as    herself — that     he       was  fully able     to take   care
@@ -11488,8 +11488,8 @@
 # NSg/VB+ R/C/P NSg/C P  NSg/VB NSg/VB/J/P NSg/VB+      . ISg/D$+ NPr/VB/J+ Nᴹ/Vg/J R       R    VB/C R     .
 > adapting itself to his     restless eyes    . Just as    I       slowed up         to avoid overtaking
 # Nᴹ/Vg/J  ISg+   P  ISg/D$+ J        NPl/V3+ . J/R  R/C/P ISg/#r+ VP/J   NSg/VB/J/P P  VB    Nᴹ/Vg/J
-> him  he       stopped and  began frowning into the windows  of a    jewelry store   . Suddenly
-# ISg+ NPr/ISg+ VP/J    VB/C VPt   Nᴹ/Vg/J  P    D   NPrPl/V3 P  D/P+ Nᴹ/VB+  NSg/VB+ . R
+> him  he       stopped and  began frowning into the windows  of a    jewelry   store   . Suddenly
+# ISg+ NPr/ISg+ VP/J    VB/C VPt   Nᴹ/Vg/J  P    D   NPrPl/V3 P  D/P+ Nᴹ/VB/Am+ NSg/VB+ . R
 > he       saw     me       and  walked back     , holding out          his     hand    .
 # NPr/ISg+ NSg/VPt NPr/ISg+ VB/C VP/J   NSg/VB/J . Nᴹ/Vg/J NSg/VB/J/R/P ISg/D$+ NSg/VB+ .
 >
@@ -11566,8 +11566,8 @@
 #
 > I       shook     hands   with him  ; it       seemed silly not     to , for   I       felt      suddenly as    though I
 # ISg/#r+ NSg/VPt/J NPl/V3+ P    ISg+ . NSg/ISg+ VP/J   NSg/J NSg/R/C P  . R/C/P ISg/#r+ N🅪Sg/VP/J R        R/C/P C      ISg/#r+
-> were talking to a    child   . Then      he       went into the jewelry store   to buy    a    pearl
-# VLPt Nᴹ/Vg/J P  D/P+ NSg/VB+ . NSg/J/R/C NPr/ISg+ VPt  P    D+  Nᴹ/VB+  NSg/VB+ P  NSg/VB D/P+ NPr/VB+
+> were talking to a    child   . Then      he       went into the jewelry   store   to buy    a    pearl
+# VLPt Nᴹ/Vg/J P  D/P+ NSg/VB+ . NSg/J/R/C NPr/ISg+ VPt  P    D+  Nᴹ/VB/Am+ NSg/VB+ P  NSg/VB D/P+ NPr/VB+
 > necklace — or    perhaps only  a   pair   of cuff   buttons — rid of my  provincial
 # NSg/VB+  . NPr/C NSg/R   J/R/C D/P NSg/VB P  NSg/VB NPl/V3+ . VB  P  D$+ NSg/J
 > squeamishness forever .

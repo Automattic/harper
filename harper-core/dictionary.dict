@@ -12096,7 +12096,7 @@ airlock/NSg
 airmail/~NSgVGd
 airman/~N0g
 airmen/~N9
-airplane/~NgSV
+airplane/~NgSV<@
 airplay/~Nmg
 airport/~NSg
 airship/~NSgV
@@ -19648,10 +19648,12 @@ councilperson/N0Sg
 councilwoman/N0g
 councilwomen/N9
 counsel/~NgSVdGz
+counseled/VtT<
+counseling/NV6<
 counselled/VtT!@_₹
 counselling/NV6!@_₹
 counsellor/NSg!@_₹
-counselor/~NgS
+counselor/~NgS<
 count/~VdGSNgEr
 countability/Nmg
 countable/~JNU
@@ -23402,7 +23404,7 @@ endangerment/Ng
 endear/VSGdL
 endearing/JYNV
 endearment/NSg
-endeavor/~NSgVGd
+endeavor/~NSgVGd<
 endeavour/NgSVdG!@_₹
 endemic/~JNgSQ
 endgame/~NSJ
@@ -23525,10 +23527,10 @@ enrapture/VdSG
 enrich/~VdSGL
 enrichment/~Ng
 enrol/VSL!@_₹
-enroll/~VdSGL
-enrolled/VtT
-enrolling/V6N
-enrollment/~NgS
+enroll/~VdSGL<
+enrolled/VtT<!@_₹
+enrolling/V6N<!@_₹
+enrollment/~NgS<
 enrolment/NSg!@_₹
 ensconce/VdSG
 ensemble/~NSgV
@@ -24967,10 +24969,10 @@ fib/NSgV>Z
 fibbed/VtT
 fibber/NSg
 fibbing/V6N
-fiber/~NwgS
-fiberboard/Nmg
-fiberfill/Ng
-fiberglass/~NmgV
+fiber/~NwgS<
+fiberboard/Nmg<
+fiberfill/Ng<
+fiberglass/~NmgV<
 fibre/NwSg!@_₹
 fibreboard/Nmg!@_₹
 fibrefill/Ng!@_₹
@@ -26253,7 +26255,7 @@ fulfil/VSL!_@₹
 fulfill/~VdGSL<@
 fulfilled/~VtTJU
 fulfilling/~JV6NU
-fulfillment/~Ng
+fulfillment/~Ng<@
 fulfilment/Ng!_₹
 full/~J^>pNgSVdGZ
 full on/JR
@@ -30563,7 +30565,7 @@ instability/~NS
 install/~V>dGSNUBZ
 installation/~NwgS
 installer/NgSU
-installment/~NSg
+installment/~NSg<
 instalment/NgS!@_₹
 instance/~NVGd
 instant/~NgSJY>V
@@ -31275,8 +31277,8 @@ jewelled/JVtT!@_₹
 jeweller/NgS!@_₹
 jewellery/Nmg!@_₹
 jewelling/V6!@_₹
-jewelries/NV!@_₹
-jewelry/~NmSgV
+jewelries/NV<
+jewelry/~NmSgV<
 jg/~
 jib/~NSgVGd
 jibbed/VtT
@@ -32745,7 +32747,7 @@ lit/~VtT>JNZ
 litany/NSg
 litchi/NgS
 lite/~JNV
-liter/~Ng
+liter/~NgS<
 literacy/~Nmg
 literal/~JYpNSg
 literalness/Nmg
@@ -33980,7 +33982,7 @@ mechanoluminescent/J
 mechatronics/Ng
 med/~NSg
 medal/~NSgV
-medalist/~NgS
+medalist/~NgS<
 medallion/~NSgV
 medallist/NSg!@_₹
 meddle/VGd>SZ
@@ -34376,7 +34378,8 @@ microeconomic/JSQ
 microelectronic/JNS
 microelectronics/~Nmg
 microfarad/NgS
-microfiber/NgS
+microfiber/NgS<
+microfibre/NgS!@_₹
 microfiche/NgV
 microfilm/~NgSVGd
 microfinance/Nmg
@@ -37067,7 +37070,7 @@ offbeat/~NgSJ
 offence/NwgS!@_₹
 offend/~VGd>SZ
 offender/~NgS
-offense/~NwgS
+offense/~NwgS<
 offensive/~JYpNi
 offensive's
 offensiveness/Nmgi
@@ -40714,7 +40717,7 @@ preteen/JNgS
 pretence/NSg!_₹
 pretend/~Vd>GSJNZ
 pretender/~NgV
-pretense/NSgXn
+pretense/NSgXn<@
 pretension/NgSVdG
 pretentious/~JYU
 pretentiousness/Nmg
@@ -44007,7 +44010,7 @@ savings/~Nmg
 savior/~NSg<
 saviour/NgS!@_₹
 savoir faire/Nm
-savor/NgSVdG
+savor/NgSVdG<
 savoriness/Nmg<
 savory/J^>pNSg
 savour/NSgVGd!@_₹
@@ -45708,8 +45711,8 @@ skill/~Nw☁SJVde
 skill's
 skilled/~JV6U
 skillet/~NSgV
-skillful/~JYU
-skillfulness/Nmg
+skillful/~JYU<
+skillfulness/Nmg<
 skim/VSJNg
 skimmed/VtT
 skimmer/NSgV
@@ -46656,7 +46659,7 @@ spectacles/~N9g
 spectacular/~JYNgS
 spectate/VdSG
 spectator/~NSg
-specter/~NgSr
+specter/~NgSr<
 spectra/~9
 spectral/~J
 spectre/NgS!@_₹
@@ -51545,7 +51548,8 @@ unshockable/J
 unshorn/J
 unsightliness/Ng
 unsightly/J^p
-unskillful/JY!@_₹
+unskilful/JY!@_₹
+unskillful/JY<
 unskippable/J
 unsmiling/J
 unsociable/JN
@@ -51891,7 +51895,7 @@ vape/NSVGd
 vapid/JYp
 vapidity/Nmg
 vapidness/Nmg
-vapor/~NwSgV
+vapor/~NwSgV<
 vaporisation/Ng!_₹
 vaporise/Vd>SGZ!_₹
 vaporiser/NgS!_₹
@@ -53243,8 +53247,8 @@ wilful/JYp!@_₹
 wilfulness/Ng!@_₹
 wiliness/Ng
 will/~NgSAd
-willful/JYp
-willfulness/Ng
+willful/JYp<
+willfulness/Ng<
 willies/Ng
 willing/~JYpNV6U
 willingness/~NgU
@@ -53499,7 +53503,7 @@ woof/NgSVd>GZ
 woofer/Ng
 woohoo
 wool/~NwgnX
-woolen/~JNg
+woolen/~JNgS<
 woolgathering/Nmg
 wooliness/Nmg
 woollen/JNSg!@_₹
