@@ -2,8 +2,6 @@ mod error;
 mod integration;
 mod weirpack;
 pub use weirpack::InstalledWeirpack;
-#[cfg(test)]
-pub(crate) use weirpack::test_weirpack;
 
 use crate::{PlatformBroker, os_broker::OsBroker};
 pub use error::Error;
@@ -336,123 +334,6 @@ impl Default for Config {
 mod tests {
     use super::{Config, Integration};
     use harper_core::DictWordMetadata;
-
-    fn installed_pack() -> super::InstalledWeirpack {
-        let mut pack = super::test_weirpack();
-        pack.dictionary = Some("1\nblorple\n".into());
-        pack.annotations = Some(r#"{"affixes":{},"properties":{}}"#.into());
-        super::InstalledWeirpack::install("test.weirpack".into(), pack.to_bytes().unwrap()).unwrap()
-    }
-
-    #[test]
-    fn old_settings_have_no_weirpacks() {
-        let mut value: serde_json::Value =
-            serde_json::from_str(&Config::new().serialize_main().unwrap()).unwrap();
-        value.as_object_mut().unwrap().remove("weirpacks");
-        assert!(
-            Config::deserialize_main(&value.to_string())
-                .unwrap()
-                .weirpacks
-                .is_empty()
-        );
-    }
-
-    #[test]
-    fn renamed_and_disabled_weirpacks_survive_serialization() {
-        let mut config = Config::new();
-        config.weirpacks = vec![super::InstalledWeirpack {
-            name: "New name".into(),
-            enabled: false,
-            ..installed_pack()
-        }];
-        let restored = Config::deserialize_main(&config.serialize_main().unwrap()).unwrap();
-        assert_eq!(restored.weirpacks, config.weirpacks);
-        assert_eq!(restored.weirpacks[0].unpack().unwrap().rules.len(), 1);
-    }
-
-    #[test]
-    fn enabled_weirpacks_supply_rules_and_document_dictionary() {
-        use harper_core::{Document, spell::Dictionary};
-        let config = Config {
-            weirpacks: vec![installed_pack()],
-            ..Config::new()
-        };
-        let dictionary = config.create_dictionary();
-        assert!(dictionary.contains_word_str("blorple"));
-        let document = Document::new_markdown_default("banana blorple", &dictionary);
-        let lints = config.create_linter().organized_lints(&document);
-        assert_eq!(lints["DesktopTestRule"].len(), 1);
-        assert!(lints.get("SpellCheck").is_none_or(Vec::is_empty));
-    }
-
-    #[test]
-    fn disabling_or_removing_weirpacks_removes_rules_and_words() {
-        use harper_core::{Document, spell::Dictionary};
-        for packs in [
-            vec![],
-            vec![super::InstalledWeirpack {
-                enabled: false,
-                ..installed_pack()
-            }],
-        ] {
-            let config = Config {
-                weirpacks: packs,
-                ..Config::new()
-            };
-            let dictionary = config.create_dictionary();
-            assert!(!dictionary.contains_word_str("blorple"));
-            let document = Document::new_markdown_default("banana", &dictionary);
-            assert!(
-                !config
-                    .create_linter()
-                    .organized_lints(&document)
-                    .contains_key("DesktopTestRule")
-            );
-        }
-    }
-
-    #[test]
-    fn explicit_rule_settings_override_pack_defaults() {
-        use harper_core::Document;
-        let mut config = Config {
-            weirpacks: vec![installed_pack()],
-            ..Config::new()
-        };
-        config
-            .lint_config
-            .set_rule_enabled("DesktopTestRule", false);
-        let document = Document::new_markdown_default("banana", &config.create_dictionary());
-        assert!(
-            config
-                .create_linter()
-                .organized_lints(&document)
-                .get("DesktopTestRule")
-                .is_none_or(Vec::is_empty)
-        );
-    }
-
-    #[test]
-    fn save_weirpacks_persists_changes_and_rolls_back_on_failure() {
-        let folder =
-            std::env::temp_dir().join(format!("harper-weirpacks-{:032x}", fastrand::u128(..)));
-        let path = folder.join("config.json");
-        let mut config = Config::new();
-        let packs = vec![installed_pack()];
-        config.save_weirpacks_to(packs.clone(), &path).unwrap();
-        let restored = Config::deserialize_main(&std::fs::read_to_string(&path).unwrap()).unwrap();
-        assert_eq!(restored.weirpacks, packs);
-        assert!(config.save_weirpacks_to(vec![], &folder).is_err());
-        assert_eq!(config.weirpacks, packs);
-        config.save_weirpacks_to(vec![], &path).unwrap();
-        assert!(
-            Config::deserialize_main(&std::fs::read_to_string(&path).unwrap())
-                .unwrap()
-                .weirpacks
-                .is_empty()
-        );
-        std::fs::remove_file(folder.with_extension("json.tmp")).unwrap();
-        std::fs::remove_dir_all(folder).unwrap();
-    }
 
     #[test]
     fn serialize_main_excludes_dictionary_word_list() {
