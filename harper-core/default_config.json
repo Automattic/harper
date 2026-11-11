@@ -2674,9 +2674,23 @@
 						},
 						{
 							"Bool": {
+								"name": "ComeAcross",
+								"state": true,
+								"label": "Come Across"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Dereference",
 								"state": true,
 								"label": "Dereference"
+							}
+						},
+						{
+							"Bool": {
+								"name": "DoinToDoing",
+								"state": true,
+								"label": "Doin to Doing"
 							}
 						},
 						{
@@ -3680,6 +3694,13 @@
 						},
 						{
 							"Bool": {
+								"name": "BeAgree",
+								"state": true,
+								"label": "Be Agree"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Beforehand",
 								"state": true,
 								"label": "Beforehand"
@@ -4089,6 +4110,13 @@
 								"name": "QuantifierNumeralConflict",
 								"state": true,
 								"label": "Quantifier Numeral Conflict"
+							}
+						},
+						{
+							"Bool": {
+								"name": "QuestionVerbAgreement",
+								"state": true,
+								"label": "Question Verb Agreement"
 							}
 						},
 						{
@@ -4977,6 +5005,13 @@
 						},
 						{
 							"Bool": {
+								"name": "DependOf",
+								"state": true,
+								"label": "Depend Of"
+							}
+						},
+						{
+							"Bool": {
 								"name": "DigUnderTheHood",
 								"state": true,
 								"label": "Dig Under The Hood"
@@ -5593,6 +5628,13 @@
 						},
 						{
 							"Bool": {
+								"name": "LittleToNo",
+								"state": true,
+								"label": "Little to No"
+							}
+						},
+						{
+							"Bool": {
 								"name": "LongTimeAgo",
 								"state": true,
 								"label": "Long Time Ago"
@@ -5757,6 +5799,13 @@
 								"name": "OffLimits",
 								"state": true,
 								"label": "Off Limits"
+							}
+						},
+						{
+							"Bool": {
+								"name": "OfOff",
+								"state": true,
+								"label": "Of / Off"
 							}
 						},
 						{

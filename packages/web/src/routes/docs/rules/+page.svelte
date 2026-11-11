@@ -29,17 +29,17 @@ let { data }: { data: PageData } = $props();
 
 <div class="w-full overflow-x-auto" role="region" aria-label="Grammar rules" tabindex="0">
 <Table>
-	<TableHead>
+	<TableHead class="dark:bg-(--docs-panel) dark:text-(--docs-muted)">
 		<TableHeadCell>Name</TableHeadCell>
 		<TableHeadCell>Enabled by Default</TableHeadCell>
 		<TableHeadCell>Description</TableHeadCell>
 	</TableHead>
 	<TableBody>
 		{#each Object.entries(data.descriptions) as [name, description]}
-			<TableBodyRow>
-				<TableBodyCell>{name}</TableBodyCell>
+			<TableBodyRow class="dark:border-(--docs-border) dark:bg-transparent">
+				<TableBodyCell class="dark:text-(--docs-heading)">{name}</TableBodyCell>
 				<TableBodyCell>{data.defaultConfig[name] ? '✔️' : '❌'}</TableBodyCell>
-				<TableBodyCell tdClass="px-6 py-4 font-medium">{@html description.replaceAll('<p>', "").replaceAll('<p />', "")}</TableBodyCell>
+				<TableBodyCell tdClass="px-6 py-4 font-medium" class="dark:text-(--docs-text)">{@html description.replaceAll('<p>', "").replaceAll('<p />', "")}</TableBodyCell>
 			</TableBodyRow>
 		{/each}
 	</TableBody>
