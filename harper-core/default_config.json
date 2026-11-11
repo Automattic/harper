@@ -3160,6 +3160,13 @@
 						},
 						{
 							"Bool": {
+								"name": "BesidesFor",
+								"state": true,
+								"label": "Besides for"
+							}
+						},
+						{
+							"Bool": {
 								"name": "BoringWords",
 								"state": false,
 								"label": "Boring Words"
