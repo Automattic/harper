@@ -48,15 +48,14 @@ jobs:
       - name: Enable Corepack
         run: corepack enable
       - name: Install Tauri and cross-compilation dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            libayatana-appindicator3-dev \
-            librsvg2-dev \
-            libwebkit2gtk-4.1-dev \
-            libxdo-dev \
-            llvm \
-            nsis
+        run: >-
+          .github/scripts/apt-install.sh
+          libayatana-appindicator3-dev
+          librsvg2-dev
+          libwebkit2gtk-4.1-dev
+          libxdo-dev
+          llvm
+          nsis
       - name: Verify Windows build tools
         run: command -v clang-cl llvm-lib makensis
       - name: Rust Cache
