@@ -438,27 +438,22 @@ pub fn spelling_candidates(
     dialect: Dialect,
     limit: usize,
 ) -> Vec<(CharString, i32)> {
-    for dist in 2..5 {
-        let suggestions: Vec<(CharString, i32)> = scored_suggestions(word, 200, dist, dictionary)
-            .into_iter()
-            .filter(|(candidate, _)| {
-                dictionary
-                    .get_word_metadata(candidate)
-                    .unwrap()
-                    .dialects
-                    .is_dialect_enabled(dialect)
-            })
-            .unique_by(|(candidate, _)| candidate.to_lower())
-            .map(|(candidate, score)| (candidate.to_smallvec(), score))
-            .take(limit)
-            .collect();
-
-        if !suggestions.is_empty() {
-            return suggestions;
-        }
-    }
-
-    Vec::new()
+    (2..5)
+        .map(|dist| {
+            scored_suggestions(word, 200, dist, dictionary)
+                .into_iter()
+                .filter(|(candidate, _)| {
+                    dictionary
+                        .get_word_metadata(candidate)
+                        .is_some_and(|meta| meta.dialects.is_dialect_enabled(dialect))
+                })
+                .unique_by(|(candidate, _)| candidate.to_lower())
+                .map(|(candidate, score)| (candidate.to_smallvec(), score))
+                .take(limit)
+                .collect::<Vec<_>>()
+        })
+        .find(|suggestions| !suggestions.is_empty())
+        .unwrap_or_default()
 }
 
 /// Convenience function over [`suggest_correct_spelling`] that does conversions
