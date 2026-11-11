@@ -31,8 +31,6 @@ use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
 use harper_stats::Stats;
 
 mod annotate;
-#[cfg(feature = "context-ranking")]
-mod compare_suggestions;
 #[cfg(feature = "training")]
 mod context_ranker_data;
 mod input;
@@ -242,22 +240,6 @@ enum Args {
         candidates: usize,
         #[arg(long, default_value_t = 1)]
         seed: u64,
-    },
-    /// Compare the context ranker with the current order and a frequency tie-break.
-    #[cfg(feature = "training")]
-    EvalContextRanker {
-        /// The directory that `prepare-ranker-data` wrote.
-        #[arg(long, value_hint = ValueHint::DirPath)]
-        data: PathBuf,
-        /// The directory that `train-context-ranker` wrote.
-        #[arg(long, value_hint = ValueHint::DirPath)]
-        model: PathBuf,
-    },
-    /// Show Harper's spelling suggestions next to the context ranker's suggestions.
-    #[cfg(feature = "context-ranking")]
-    CompareSuggestions {
-        /// The text or file to check. If not provided, each line of standard input is checked.
-        input: Option<SingleInput>,
     },
     /// Print harper-core version.
     CoreVersion,
@@ -720,14 +702,6 @@ fn main() -> anyhow::Result<()> {
                 seed,
             },
         )?),
-        #[cfg(feature = "training")]
-        Args::EvalContextRanker { data, model } => {
-            println!("{}", harper_context_ranker::evaluate(&data, &model)?);
-
-            Ok(())
-        }
-        #[cfg(feature = "context-ranking")]
-        Args::CompareSuggestions { input } => compare_suggestions::run(input),
         Args::RenameFlag { old, new, dir } => {
             let dict_path = dir.join("dictionary.dict");
             let affixes_path = dir.join("annotations.json");

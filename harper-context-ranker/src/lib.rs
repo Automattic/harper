@@ -14,7 +14,7 @@ use std::sync::LazyLock;
 pub use prepare::{SentenceWord, Speller, prepare};
 pub use ranker::CONTEXT_RADIUS;
 #[cfg(feature = "training")]
-pub use training::{EvaluationReport, TrainingOptions, evaluate, train};
+pub use training::{TrainingOptions, train};
 
 static RANKER: LazyLock<ranker::ContextRanker> = LazyLock::new(|| {
     ranker::ContextRanker::load_from_bytes(

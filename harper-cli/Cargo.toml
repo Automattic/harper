@@ -37,4 +37,3 @@ tempfile = "3"
 [features]
 default = []
 training = ["harper-pos-utils/training", "dep:harper-context-ranker", "harper-context-ranker/training"]
-context-ranking = ["harper-core/context-ranking"]

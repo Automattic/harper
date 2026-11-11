@@ -291,7 +291,8 @@ impl<B: Backend> TableModel<B> {
     }
 }
 
-/// Train the table on the examples that [`crate::prepare`] wrote to `data`, and save it to `output`.
+/// Train the table on the examples that [`crate::prepare`] wrote to `data`, save it to `output`,
+/// and report its accuracy on the tuning and test splits.
 pub fn train(
     data: &Path,
     output: &Path,
@@ -315,19 +316,6 @@ pub fn train(
     );
 
     Ok(())
-}
-
-/// Report the accuracy of the table in `model` on the tuning and test examples in `data`.
-pub fn evaluate(data: &Path, model: &Path) -> io::Result<EvaluationReport> {
-    let tuning = read_examples(data.join("tuning"))?;
-    let test = read_examples(data.join("test"))?;
-    let ranker = ContextRanker::load_from_bytes(
-        std::fs::read(model.join("table.bin"))?,
-        std::fs::read(model.join("vocab.json"))?,
-        std::fs::read(model.join("config.json"))?,
-    );
-
-    Ok(evaluate_context_ranker(&ranker, &tuning, Some(&test)))
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -405,7 +393,11 @@ fn train_context_ranker<B: AutodiffBackend>(
             },
         );
 
-        let report = evaluate_context_ranker(&epoch_ranker, tuning, None);
+        let report = evaluate_context_ranker(
+            &epoch_ranker,
+            tuning,
+            (epoch == options.epochs).then_some(test),
+        );
         epoch_ranker.set_spelling_weight(report.spelling_weight);
         epoch_ranker.save_to(output);
 
