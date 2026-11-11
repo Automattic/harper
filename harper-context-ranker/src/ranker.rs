@@ -1,14 +1,13 @@
 use std::borrow::Cow;
+#[cfg(any(test, feature = "training"))]
 use std::path::Path;
 
 use hashbrown::HashMap;
 use serde::{Deserialize, Serialize};
 
-#[cfg(feature = "training")]
-pub mod training;
-
 pub const PAD_IDX: usize = 0;
 pub const UNK_IDX: usize = 1;
+#[cfg(feature = "training")]
 pub const SPECIAL_WORDS: [&str; 4] = ["<PAD>", "<UNK>", "<TARGET>", "<NUM>"];
 
 /// The maximum number of words the ranker reads on each side of a misspelled word.
@@ -77,6 +76,7 @@ impl ContextRanker {
         Self::from_parts(&words, table.into(), config)
     }
 
+    #[cfg(any(test, feature = "training"))]
     pub fn save_to(&self, dir: impl AsRef<Path>) {
         let dir = dir.as_ref();
         std::fs::create_dir_all(dir).unwrap();
@@ -95,10 +95,12 @@ impl ContextRanker {
         .unwrap();
     }
 
+    #[cfg(any(test, feature = "training"))]
     pub fn config(&self) -> &ContextRankerConfig {
         &self.config
     }
 
+    #[cfg(feature = "training")]
     pub fn set_spelling_weight(&mut self, spelling_weight: f32) {
         self.config.spelling_weight = spelling_weight;
     }

@@ -28,13 +28,14 @@ strum = "0.28.0"
 strum_macros = "0.28.0"
 harper-ink = { version = "3.0.0", path = "../harper-ink" }
 enum_dispatch = "0.3.13"
-flate2 = { version = "1.1.10", optional = true }
+harper-context-ranker = { path = "../harper-context-ranker", version = "3.1.0", optional = true }
 yansi = "1.0.1"
 
 [dev-dependencies]
+flate2 = "1.1.10"
 tempfile = "3"
 
 [features]
 default = []
-training = ["harper-pos-utils/training", "dep:flate2"]
+training = ["harper-pos-utils/training", "dep:harper-context-ranker", "harper-context-ranker/training"]
 context-ranking = ["harper-core/context-ranking"]

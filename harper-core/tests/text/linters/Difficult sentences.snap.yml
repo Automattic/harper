@@ -31,7 +31,7 @@ Message: |
          |                              ^~~~~~ Did you mean to spell `armour` this way?
 Suggest:
   - Replace with: “armor”
-  - Replace with: “amour”
+  - Replace with: “armory”
   - Replace with: “arbor”
 
 
@@ -51,9 +51,9 @@ Message: |
       88 | By Chabad, it's different. (with, among)
          |    ^~~~~~ Did you mean to spell `Chabad` this way?
 Suggest:
-  - Replace with: “Cabal”
+  - Replace with: “Chased”
   - Replace with: “Chad”
-  - Replace with: “Charade”
+  - Replace with: “Chard”
 
 
 
@@ -80,9 +80,9 @@ Message: |
      180 | I’ve been doing this from pickney.
          |                           ^~~~~~~ Did you mean to spell `pickney` this way?
 Suggest:
-  - Replace with: “picket”
+  - Replace with: “picked”
   - Replace with: “pickle”
-  - Replace with: “piney”
+  - Replace with: “pickles”
 
 
 
@@ -92,8 +92,8 @@ Message: |
          |           ^~~~~~~~~~ Did you mean to spell `travelling` this way?
 Suggest:
   - Replace with: “traveling”
+  - Replace with: “traversing”
   - Replace with: “travailing”
-  - Replace with: “travelings”
 
 
 
@@ -103,8 +103,8 @@ Message: |
          |                          ^~~~~~~~~~~ Did you mean to spell `centimetres` this way?
 Suggest:
   - Replace with: “centimeters”
-  - Replace with: “centimeter's”
   - Replace with: “centimeter”
+  - Replace with: “centimeter's”
 
 
 
@@ -123,9 +123,9 @@ Message: |
          |                                          ^~~~~~ Did you mean to spell `seisin` this way?
      257 | He is very in with the Joneses.
 Suggest:
-  - Replace with: “season”
   - Replace with: “seismic”
-  - Replace with: “sepsis”
+  - Replace with: “session”
+  - Replace with: “season”
 
 
 
@@ -135,8 +135,8 @@ Message: |
          |                            ^~~~~~~~~~ Did you mean to spell `neighbours` this way?
 Suggest:
   - Replace with: “neighbors”
-  - Replace with: “neighbor's”
   - Replace with: “neighbor”
+  - Replace with: “neighbor's”
 
 
 
@@ -147,7 +147,7 @@ Message: |
 Suggest:
   - Replace with: “favor”
   - Replace with: “famous”
-  - Replace with: “flavor”
+  - Replace with: “four”
 
 
 
@@ -185,9 +185,9 @@ Message: |
      300 | That TV programme that you wanted to watch is on now.
          |         ^~~~~~~~~ Did you mean to spell `programme` this way?
 Suggest:
-  - Replace with: “programmed”
   - Replace with: “programmer”
   - Replace with: “programmes”
+  - Replace with: “programmed”
 
 
 
@@ -196,9 +196,9 @@ Message: |
      310 | Ponsonby-Smythe hit a thumping on drive.
          | ^~~~~~~~ Did you mean to spell `Ponsonby` this way?
 Suggest:
-  - Replace with: “Poison's”
   - Replace with: “Poison”
   - Replace with: “Poisoned”
+  - Replace with: “Poisons”
 
 
 
@@ -207,9 +207,9 @@ Message: |
      310 | Ponsonby-Smythe hit a thumping on drive.
          |          ^~~~~~ Did you mean to spell `Smythe` this way?
 Suggest:
-  - Replace with: “Scythe”
   - Replace with: “Smith”
-  - Replace with: “Smiths”
+  - Replace with: “Soothe”
+  - Replace with: “Myth”
 
 
 
@@ -302,7 +302,7 @@ Message: |
          |    ^~~~~~~~~ Did you mean to spell `travelled` this way?
 Suggest:
   - Replace with: “traveled”
-  - Replace with: “travailed”
+  - Replace with: “traversed”
   - Replace with: “traveler”
 
 
@@ -314,7 +314,7 @@ Message: |
 Suggest:
   - Replace with: “criticize”
   - Replace with: “criticism”
-  - Replace with: “critic's”
+  - Replace with: “critics”
 
 
 

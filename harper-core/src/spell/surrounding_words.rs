@@ -93,4 +93,17 @@ mod tests {
         assert!(left.is_empty());
         assert!(right.is_empty());
     }
+
+    #[test]
+    fn skips_punctuation_and_lowercases_words() {
+        let (left, right) = around("One, TWO; fibe (Four)", "fibe", 5);
+        assert_eq!(left, ["one", "two"]);
+        assert_eq!(right, ["four"]);
+    }
+
+    #[test]
+    fn the_radius_counts_only_words() {
+        let (left, _) = around("a, b, c, d, fibe", "fibe", 2);
+        assert_eq!(left, ["c", "d"]);
+    }
 }

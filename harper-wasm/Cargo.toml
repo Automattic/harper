@@ -26,7 +26,7 @@ harper-stats = { path = "../harper-stats", version = "3.0.0", features = ["js"] 
 sysinfo = { version = "0.39.5", default-features = false, features = [ "system" ] }
 
 [features]
-default = ["typst", "thesaurus"]
+default = ["typst", "thesaurus", "context-ranking"]
 typst = ["dep:harper-typst"]
 thesaurus = ["harper-core/thesaurus"]
 context-ranking = ["harper-core/context-ranking"]

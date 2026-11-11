@@ -3772,6 +3772,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "harper-context-ranker"
+version = "3.1.0"
+dependencies = [
+ "hashbrown 0.16.1",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "harper-core"
 version = "3.1.0"
 dependencies = [
@@ -3783,6 +3792,7 @@ dependencies = [
  "foldhash 0.2.0",
  "fst",
  "harper-brill",
+ "harper-context-ranker",
  "harper-thesaurus",
  "hashbrown 0.16.1",
  "indexmap 2.14.2",

@@ -1,15 +1,16 @@
 //! Turns the Common Pile subsets into context ranker examples.
 
-use std::borrow::Cow;
-use std::collections::hash_map::DefaultHasher;
 use std::fs::{self, File};
-use std::hash::{Hash, Hasher};
-use std::io::{BufRead, BufReader, BufWriter, Write};
-use std::path::{Path, PathBuf};
+use std::io::{self, BufWriter, Write};
+use std::path::Path;
 use std::sync::atomic::{AtomicU64, Ordering};
 
-use anyhow::{Context, Result};
-use flate2::read::MultiGzDecoder;
+use anyhow::{Result, ensure};
+use harper_context_ranker::{
+    CONTEXT_RADIUS, CorpusDocument, FileTask, RankerExample, Split, SplitMix, context_ids,
+    file_tasks, for_each_document, is_target_shape, make_typo, stable_hash, vocabulary, word_id,
+    word_ids,
+};
 use harper_core::language_detection::is_likely_english;
 use harper_core::parsers::{Parser, PlainEnglish};
 use harper_core::spell::{
@@ -17,100 +18,10 @@ use harper_core::spell::{
     surrounding_words,
 };
 use harper_core::{CharStringExt, Dialect, Token, TokenStringExt};
-use harper_pos_utils::{
-    CONTEXT_RADIUS, GROUP_NAMES, PAD_IDX, RankerExample, SPECIAL_WORDS, UNK_IDX,
-};
-use hashbrown::HashMap;
+use hashbrown::{HashMap, HashSet};
 use rayon::prelude::*;
-use serde::Deserialize;
 
-struct Group {
-    subsets: &'static [&'static str],
-    target_words: f64,
-    usable_words: f64,
-}
-
-const GROUPS: [Group; 5] = [
-    Group {
-        subsets: &["youtube_filtered"],
-        target_words: 128e6,
-        usable_words: 3_445e6,
-    },
-    Group {
-        subsets: &[
-            "pressbooks_filtered",
-            "libretexts_filtered",
-            "oercommons_filtered",
-        ],
-        target_words: 64e6,
-        usable_words: 125.7e6,
-    },
-    Group {
-        subsets: &["news_filtered", "foodista_filtered"],
-        target_words: 48e6,
-        usable_words: 48.2e6,
-    },
-    Group {
-        subsets: &["usgpo_filtered"],
-        target_words: 48e6,
-        usable_words: 5_003e6,
-    },
-    Group {
-        subsets: &["uk_hansard_filtered"],
-        target_words: 32e6,
-        usable_words: 866e6,
-    },
-];
-
-const HANSARD_SUBSET: &str = "uk_hansard_filtered";
-const HANSARD_FIRST_YEAR: u32 = 2000;
-const FIRST_LETTER_TYPO_RATE: f64 = 0.05;
-const TYPO_ATTEMPTS: usize = 8;
-
-#[derive(Deserialize)]
-struct RawDoc<'a> {
-    #[serde(default)]
-    id: serde_json::Value,
-    #[serde(borrow)]
-    text: Cow<'a, str>,
-    metadata: RawMetadata<'a>,
-}
-
-#[derive(Deserialize)]
-struct RawMetadata<'a> {
-    #[serde(borrow, default)]
-    license: Cow<'a, str>,
-    #[serde(default)]
-    year: serde_json::Value,
-}
-
-#[derive(Clone, Copy, PartialEq, Eq)]
-enum Split {
-    Train,
-    Tuning,
-    Test,
-}
-
-impl Split {
-    const ALL: [Split; 3] = [Split::Train, Split::Tuning, Split::Test];
-
-    fn dir_name(self) -> &'static str {
-        match self {
-            Split::Train => "train",
-            Split::Tuning => "tuning",
-            Split::Test => "test",
-        }
-    }
-}
-
-struct FileTask {
-    group: u8,
-    keep_probability: f64,
-    subset: &'static str,
-    path: PathBuf,
-}
-
-/// A document that passed every filter, split into Harper's tokens.
+/// An English corpus document, split into Harper's tokens.
 struct Selected {
     identity: String,
     split: Split,
@@ -129,142 +40,42 @@ struct Stats {
     right_word_missing: AtomicU64,
 }
 
-fn stable_hash(value: impl Hash) -> u64 {
-    let mut hasher = DefaultHasher::new();
-    value.hash(&mut hasher);
-    hasher.finish()
-}
-
-fn unit_hash(value: impl Hash) -> f64 {
-    stable_hash(value) as f64 / u64::MAX as f64
-}
-
-/// A small seeded generator, so one document always yields the same examples.
-struct SplitMix(u64);
-
-impl SplitMix {
-    fn next(&mut self) -> u64 {
-        self.0 = self.0.wrapping_add(0x9E37_79B9_7F4A_7C15);
-        let mut z = self.0;
-        z = (z ^ (z >> 30)).wrapping_mul(0xBF58_476D_1CE4_E5B9);
-        z = (z ^ (z >> 27)).wrapping_mul(0x94D0_49BB_1331_11EB);
-        z ^ (z >> 31)
-    }
-
-    fn below(&mut self, bound: usize) -> usize {
-        (self.next() % bound as u64) as usize
-    }
-
-    fn chance(&mut self, probability: f64) -> bool {
-        (self.next() as f64 / u64::MAX as f64) < probability
-    }
-}
-
-fn license_is_usable(license: &str) -> bool {
-    const SHARE_ALIKE: [&str; 5] = ["share-alike", "sharealike", "by-sa", "gnu free", "gfdl"];
-    const USABLE: [&str; 5] = [
-        "attribution",
-        "cc0",
-        "zero",
-        "public domain",
-        "open parliament",
-    ];
-
-    let license = license.to_lowercase();
-    USABLE.iter().any(|term| license.contains(term))
-        && !SHARE_ALIKE.iter().any(|term| license.contains(term))
-}
-
-fn year_of(value: &serde_json::Value) -> Option<u32> {
-    let text = match value {
-        serde_json::Value::String(text) => text.clone(),
-        serde_json::Value::Number(number) => number.to_string(),
-        _ => return None,
-    };
-
-    text.get(..4)?.parse().ok()
-}
-
-fn select(
-    line: &str,
-    line_no: usize,
-    task: &FileTask,
-    dictionary: &impl Dictionary,
+/// What every example of one run shares.
+struct Run<'a, D: Dictionary> {
+    dictionary: &'a D,
+    vocab: &'a HashMap<String, u16>,
     seed: u64,
-) -> Result<Option<Selected>> {
-    let doc: RawDoc =
-        serde_json::from_str(line).with_context(|| format!("{}:{line_no}", task.path.display()))?;
+    stats: &'a Stats,
+}
 
-    if !license_is_usable(&doc.metadata.license) {
-        return Ok(None);
-    }
-
-    if task.subset == HANSARD_SUBSET
-        && year_of(&doc.metadata.year).is_none_or(|year| year < HANSARD_FIRST_YEAR)
-    {
-        return Ok(None);
-    }
-
-    let identity = if doc.id.is_null() {
-        format!("{}:{line_no}", task.subset)
-    } else {
-        format!("{}:{}", task.subset, doc.id)
-    };
-
-    if unit_hash((seed, "keep", &identity)) >= task.keep_probability {
-        return Ok(None);
-    }
-
-    let source: Vec<char> = doc.text.chars().collect();
+fn parse(document: CorpusDocument, dictionary: &impl Dictionary) -> Option<Selected> {
+    let source: Vec<char> = document.text.chars().collect();
     let tokens = PlainEnglish.parse(&source);
 
-    if !is_likely_english(&tokens, &source, dictionary) {
-        return Ok(None);
-    }
-
-    let split = match stable_hash((seed, "split", &identity)) % 100 {
-        0 => Split::Tuning,
-        1 => Split::Test,
-        _ => Split::Train,
-    };
-
-    Ok(Some(Selected {
-        identity,
-        split,
+    is_likely_english(&tokens, &source, dictionary).then_some(Selected {
+        identity: document.identity,
+        split: document.split,
         source,
         tokens,
-    }))
+    })
 }
 
 fn for_each_selected(
     task: &FileTask,
     dictionary: &impl Dictionary,
     seed: u64,
-    mut visit: impl FnMut(Selected) -> Result<()>,
-) -> Result<()> {
-    let file = File::open(&task.path).with_context(|| task.path.display().to_string())?;
-    let mut reader = BufReader::with_capacity(1 << 20, MultiGzDecoder::new(file));
-    let mut line = String::new();
-    let mut line_no = 0;
-
-    loop {
-        line.clear();
-        if reader.read_line(&mut line)? == 0 {
-            return Ok(());
-        }
-        line_no += 1;
-
-        if let Some(selected) = select(&line, line_no, task, dictionary, seed)? {
-            visit(selected)?;
-        }
-    }
+    mut visit: impl FnMut(Selected) -> io::Result<()>,
+) -> io::Result<()> {
+    for_each_document(task, seed, |document| {
+        parse(document, dictionary).map_or(Ok(()), &mut visit)
+    })
 }
 
 fn count_words(
     task: &FileTask,
     dictionary: &impl Dictionary,
     seed: u64,
-) -> Result<HashMap<String, u64>> {
+) -> io::Result<HashMap<String, u64>> {
     let mut counts = HashMap::new();
 
     for_each_selected(task, dictionary, seed, |doc| {
@@ -281,108 +92,12 @@ fn count_words(
     Ok(counts)
 }
 
-fn keyboard_neighbors(letter: char) -> &'static [u8] {
-    match letter {
-        'q' => b"wa",
-        'w' => b"qes",
-        'e' => b"wrd",
-        'r' => b"etf",
-        't' => b"ryg",
-        'y' => b"tuh",
-        'u' => b"yij",
-        'i' => b"uok",
-        'o' => b"ipl",
-        'p' => b"ol",
-        'a' => b"qsz",
-        's' => b"awdx",
-        'd' => b"sefc",
-        'f' => b"drgv",
-        'g' => b"fthb",
-        'h' => b"gyjn",
-        'j' => b"hukm",
-        'k' => b"jil",
-        'l' => b"kop",
-        'z' => b"asx",
-        'x' => b"zsc",
-        'c' => b"xdv",
-        'v' => b"cfb",
-        'b' => b"vgn",
-        'n' => b"bhm",
-        'm' => b"njk",
-        _ => b"e",
-    }
-}
-
-fn apply_one_edit(word: &[char], random: &mut SplitMix) -> Vec<char> {
-    let position = if random.chance(FIRST_LETTER_TYPO_RATE) {
-        0
-    } else {
-        1 + random.below(word.len() - 1)
-    };
-
-    let neighbors = keyboard_neighbors(word[position]);
-    let neighbor = neighbors[random.below(neighbors.len())] as char;
-    let mut typo = word.to_vec();
-
-    match random.below(100) {
-        0..40 => typo[position] = neighbor,
-        40..65 => {
-            typo.remove(position);
-        }
-        65..85 => {
-            let first = position.min(word.len() - 2);
-            typo.swap(first, first + 1);
-        }
-        _ => typo.insert(position, neighbor),
-    }
-
-    typo
-}
-
-fn make_typo(
-    word: &[char],
-    dictionary: &impl Dictionary,
-    random: &mut SplitMix,
-) -> Option<Vec<char>> {
-    (0..TYPO_ATTEMPTS)
-        .map(|_| apply_one_edit(word, random))
-        .find(|typo| typo.as_slice() != word && !dictionary.contains_word(typo))
-}
-
-fn is_target_shape(word: &[char]) -> bool {
-    word.len() >= 3 && word.iter().all(|c| c.is_ascii_lowercase())
-}
-
-fn word_id(word: &str, vocab: &HashMap<String, u16>) -> u16 {
-    vocab.get(word).copied().unwrap_or(UNK_IDX as u16)
-}
-
-fn left_ids(words: &[String], vocab: &HashMap<String, u16>) -> [u16; CONTEXT_RADIUS] {
-    let mut ids = [PAD_IDX as u16; CONTEXT_RADIUS];
-    let start = CONTEXT_RADIUS - words.len();
-    for (slot, word) in ids[start..].iter_mut().zip(words) {
-        *slot = word_id(word, vocab);
-    }
-    ids
-}
-
-fn right_ids(words: &[String], vocab: &HashMap<String, u16>) -> [u16; CONTEXT_RADIUS] {
-    let mut ids = [PAD_IDX as u16; CONTEXT_RADIUS];
-    for (slot, word) in ids.iter_mut().zip(words) {
-        *slot = word_id(word, vocab);
-    }
-    ids
-}
-
 fn example_from_sentence(
     sentence: &[Token],
     sentence_no: usize,
     doc: &Selected,
     group: u8,
-    dictionary: &impl Dictionary,
-    vocab: &HashMap<String, u16>,
-    seed: u64,
-    stats: &Stats,
+    run: &Run<impl Dictionary>,
 ) -> Option<RankerExample> {
     let eligible: Vec<usize> = sentence
         .iter()
@@ -390,17 +105,17 @@ fn example_from_sentence(
         .filter(|(_, token)| token.kind.is_word())
         .filter(|(_, token)| {
             let chars = token.get_ch(&doc.source);
-            is_target_shape(chars) && vocab.contains_key(&chars.iter().collect::<String>())
+            is_target_shape(chars) && run.vocab.contains_key(&chars.iter().collect::<String>())
         })
         .map(|(position, _)| position)
         .collect();
 
     if eligible.is_empty() {
-        stats.no_target.fetch_add(1, Ordering::Relaxed);
+        run.stats.no_target.fetch_add(1, Ordering::Relaxed);
         return None;
     }
 
-    let mut random = SplitMix(stable_hash((seed, &doc.identity, sentence_no)));
+    let mut random = SplitMix::new(stable_hash((run.seed, &doc.identity, sentence_no)));
     let position = eligible[random.below(eligible.len())];
     let right_word = sentence[position].get_ch(&doc.source);
     let right_text: String = right_word.iter().collect();
@@ -409,25 +124,33 @@ fn example_from_sentence(
     if !left
         .iter()
         .chain(&right)
-        .any(|word| vocab.contains_key(word))
+        .any(|word| run.vocab.contains_key(word))
     {
-        stats.no_known_context.fetch_add(1, Ordering::Relaxed);
+        run.stats.no_known_context.fetch_add(1, Ordering::Relaxed);
         return None;
     }
 
-    let Some(typo) = make_typo(right_word, dictionary, &mut random) else {
-        stats.no_typo.fetch_add(1, Ordering::Relaxed);
+    let Some(typo) = make_typo(
+        right_word,
+        |typo| run.dictionary.contains_word(typo),
+        &mut random,
+    ) else {
+        run.stats.no_typo.fetch_add(1, Ordering::Relaxed);
         return None;
     };
 
-    let candidates: Vec<(String, i32)> =
-        spelling_candidates(&typo, dictionary, Dialect::American, MAX_RANKED_CANDIDATES)
-            .into_iter()
-            .map(|(word, score)| (word.to_lower().iter().collect(), score))
-            .collect();
+    let candidates: Vec<(String, i32)> = spelling_candidates(
+        &typo,
+        run.dictionary,
+        Dialect::American,
+        MAX_RANKED_CANDIDATES,
+    )
+    .into_iter()
+    .map(|(word, score)| (word.to_lower().iter().collect(), score))
+    .collect();
 
     let Some(target) = candidates.iter().position(|(word, _)| *word == right_text) else {
-        stats.right_word_missing.fetch_add(1, Ordering::Relaxed);
+        run.stats.right_word_missing.fetch_add(1, Ordering::Relaxed);
         return None;
     };
 
@@ -435,36 +158,34 @@ fn example_from_sentence(
         .iter()
         .filter_map(|token| context_word(token, &doc.source))
         .collect();
+    let (left, right) = context_ids(&left, &right, run.vocab);
 
     Some(RankerExample {
         group,
         sentence_hash: stable_hash(&words),
-        left: left_ids(&left, vocab),
-        right: right_ids(&right, vocab),
+        left,
+        right,
         target: target as u8,
         candidates: candidates
             .iter()
-            .map(|(word, score)| (word_id(word, vocab), *score as i16))
+            .map(|(word, score)| (word_id(word, run.vocab), *score as i16))
             .collect(),
     })
 }
 
-fn write_examples(
-    task: &FileTask,
-    output: &Path,
-    dictionary: &impl Dictionary,
-    vocab: &HashMap<String, u16>,
-    seed: u64,
-    stats: &Stats,
-) -> Result<()> {
-    let name = format!(
+fn shard_name(task: &FileTask) -> String {
+    format!(
         "{}.bin",
         task.path
             .file_stem()
             .unwrap()
             .to_string_lossy()
             .replace('.', "-")
-    );
+    )
+}
+
+fn write_examples(task: &FileTask, output: &Path, run: &Run<impl Dictionary>) -> io::Result<()> {
+    let name = shard_name(task);
 
     let mut writers = Vec::new();
     for split in Split::ALL {
@@ -475,8 +196,8 @@ fn write_examples(
         ));
     }
 
-    for_each_selected(task, dictionary, seed, |doc| {
-        stats.documents.fetch_add(1, Ordering::Relaxed);
+    for_each_selected(task, run.dictionary, run.seed, |doc| {
+        run.stats.documents.fetch_add(1, Ordering::Relaxed);
 
         let writer = &mut writers
             .iter_mut()
@@ -485,19 +206,12 @@ fn write_examples(
             .1;
 
         for (sentence_no, sentence) in doc.tokens.iter_sentences().enumerate() {
-            stats.sentences.fetch_add(1, Ordering::Relaxed);
+            run.stats.sentences.fetch_add(1, Ordering::Relaxed);
 
-            if let Some(example) = example_from_sentence(
-                sentence,
-                sentence_no,
-                &doc,
-                task.group,
-                dictionary,
-                vocab,
-                seed,
-                stats,
-            ) {
-                stats.examples.fetch_add(1, Ordering::Relaxed);
+            if let Some(example) =
+                example_from_sentence(sentence, sentence_no, &doc, task.group, run)
+            {
+                run.stats.examples.fetch_add(1, Ordering::Relaxed);
                 example.write_to(writer)?;
             }
         }
@@ -512,38 +226,12 @@ fn write_examples(
     Ok(())
 }
 
-fn file_tasks(corpus: &Path, scale: f64) -> Result<Vec<FileTask>> {
-    let mut tasks = Vec::new();
-
-    for (group, spec) in GROUPS.iter().enumerate() {
-        let keep_probability = (scale * spec.target_words / spec.usable_words).min(1.0);
-
-        for subset in spec.subsets {
-            let mut paths: Vec<PathBuf> = fs::read_dir(corpus.join(subset))
-                .with_context(|| format!("reading {subset}"))?
-                .map(|entry| entry.map(|e| e.path()))
-                .collect::<Result<_, _>>()?;
-            paths.retain(|path| path.to_string_lossy().ends_with(".json.gz"));
-            paths.sort();
-
-            tasks.extend(paths.into_iter().map(|path| FileTask {
-                group: group as u8,
-                keep_probability,
-                subset,
-                path,
-            }));
-        }
-    }
-
-    Ok(tasks)
-}
-
 fn build_vocabulary(
     tasks: &[FileTask],
     dictionary: &impl Dictionary,
     vocab_size: usize,
     seed: u64,
-) -> Result<Vec<String>> {
+) -> io::Result<Vec<String>> {
     let per_file: Vec<HashMap<String, u64>> = tasks
         .par_iter()
         .map(|task| {
@@ -551,27 +239,13 @@ fn build_vocabulary(
             eprintln!("counted {}", task.path.display());
             Ok(counts)
         })
-        .collect::<Result<_>>()?;
+        .collect::<io::Result<_>>()?;
 
-    let mut totals: HashMap<String, u64> = HashMap::new();
-    for counts in per_file {
-        for (word, count) in counts {
-            *totals.entry(word).or_insert(0) += count;
-        }
-    }
-
-    let mut known: Vec<(String, u64)> = totals
-        .into_iter()
-        .filter(|(word, _)| dictionary.contains_word_str(word))
-        .collect();
-    known.sort_unstable_by(|a, b| b.1.cmp(&a.1).then_with(|| a.0.cmp(&b.0)));
-    known.truncate(vocab_size);
-
-    Ok(SPECIAL_WORDS
-        .iter()
-        .map(|word| word.to_string())
-        .chain(known.into_iter().map(|(word, _)| word))
-        .collect())
+    Ok(vocabulary(
+        per_file,
+        |word| dictionary.contains_word_str(word),
+        vocab_size,
+    ))
 }
 
 pub fn prepare(
@@ -581,10 +255,14 @@ pub fn prepare(
     vocab_size: usize,
     seed: u64,
 ) -> Result<()> {
-    assert_eq!(GROUPS.len(), GROUP_NAMES.len());
-
     let dictionary = FstDictionary::curated();
     let tasks = file_tasks(corpus, scale)?;
+
+    let shards: HashSet<String> = tasks.iter().map(shard_name).collect();
+    ensure!(
+        shards.len() == tasks.len(),
+        "two corpus files would write the same shard"
+    );
 
     for split in Split::ALL {
         fs::create_dir_all(output.join(split.dir_name()))?;
@@ -594,15 +272,17 @@ pub fn prepare(
     fs::write(output.join("vocab.json"), serde_json::to_vec(&words)?)?;
     eprintln!("vocabulary has {} words", words.len());
 
-    let vocab: HashMap<String, u16> = words
-        .iter()
-        .enumerate()
-        .map(|(id, word)| (word.clone(), id as u16))
-        .collect();
-
+    let vocab = word_ids(&words);
     let stats = Stats::default();
+    let run = Run {
+        dictionary: dictionary.as_ref(),
+        vocab: &vocab,
+        seed,
+        stats: &stats,
+    };
+
     tasks.par_iter().try_for_each(|task| {
-        write_examples(task, output, dictionary.as_ref(), &vocab, seed, &stats)?;
+        write_examples(task, output, &run)?;
         eprintln!("wrote {}", task.path.display());
         Ok::<(), anyhow::Error>(())
     })?;
@@ -629,40 +309,136 @@ pub fn prepare(
 
 #[cfg(test)]
 mod tests {
-    use super::{SplitMix, apply_one_edit, license_is_usable, year_of};
+    use std::fs::{self, File};
+    use std::io::Write;
+    use std::path::Path;
 
-    #[test]
-    fn license_filter_keeps_only_usable_licenses() {
-        assert!(license_is_usable(
-            "Creative Commons - Attribution - https://creativecommons.org/licenses/by/4.0/"
-        ));
-        assert!(license_is_usable("Public Domain"));
-        assert!(license_is_usable("Open Parliament Licence - https://x"));
-        assert!(!license_is_usable(
-            "Creative Commons - Attribution Share-Alike - https://creativecommons.org/licenses/by-sa/4.0/"
-        ));
-        assert!(!license_is_usable("GNU Free Documentation License"));
-        assert!(!license_is_usable(""));
+    use flate2::{Compression, write::GzEncoder};
+    use harper_context_ranker::{GROUPS, SPECIAL_WORDS, Split, read_examples, read_vocabulary};
+
+    use super::prepare;
+
+    const TEXTS: [&str; 3] = [
+        "The committee will review the contract before the meeting on Friday. \
+         We ate lunch at noon and then walked back to the office together. \
+         The teacher wrote three questions on the board for the class.",
+        "People all over the world watched the game on television last night. \
+         Please save the file to your desktop before you close the window. \
+         The car lost a front wheel on the highway near the bridge.",
+        "Add salt and pepper to taste, then cook the soup for five minutes. \
+         It was raining outside, so the children played games in the house. \
+         He told me a funny story about his first job at the bakery.",
+    ];
+
+    fn write_corpus(dir: &Path, file_name: impl Fn(&str) -> String) {
+        for subset in GROUPS.iter().flat_map(|group| group.subsets) {
+            let subset_dir = dir.join(subset);
+            fs::create_dir_all(&subset_dir).unwrap();
+
+            let file = File::create(subset_dir.join(file_name(subset))).unwrap();
+            let mut gz = GzEncoder::new(file, Compression::default());
+            for (i, text) in TEXTS.iter().enumerate() {
+                let line = serde_json::json!({
+                    "id": format!("{subset}-{i}"),
+                    "text": text,
+                    "metadata": { "license": "Public Domain", "year": "2010" },
+                });
+                writeln!(gz, "{line}").unwrap();
+            }
+            gz.finish().unwrap();
+        }
+    }
+
+    fn files_in(dir: &Path) -> Vec<(String, Vec<u8>)> {
+        let mut files: Vec<_> = fs::read_dir(dir)
+            .unwrap()
+            .map(|entry| entry.unwrap().path())
+            .filter(|path| path.is_file())
+            .map(|path| {
+                (
+                    path.file_name().unwrap().to_string_lossy().to_string(),
+                    fs::read(&path).unwrap(),
+                )
+            })
+            .collect();
+        files.sort();
+        files
+    }
+
+    fn all_files(dir: &Path) -> Vec<(String, Vec<u8>)> {
+        Split::ALL
+            .iter()
+            .flat_map(|split| files_in(&dir.join(split.dir_name())))
+            .chain(files_in(dir))
+            .collect()
+    }
+
+    fn unique_name(subset: &str) -> String {
+        format!("{subset}-0000.json.gz")
     }
 
     #[test]
-    fn reads_years_from_strings_and_numbers() {
-        assert_eq!(year_of(&serde_json::json!("2016")), Some(2016));
-        assert_eq!(year_of(&serde_json::json!("2016-06-15")), Some(2016));
-        assert_eq!(year_of(&serde_json::json!(1987)), Some(1987));
-        assert_eq!(year_of(&serde_json::Value::Null), None);
+    fn prepare_writes_the_same_examples_every_time() {
+        let corpus = tempfile::tempdir().unwrap();
+        let first = tempfile::tempdir().unwrap();
+        let second = tempfile::tempdir().unwrap();
+        write_corpus(corpus.path(), unique_name);
+
+        prepare(corpus.path(), first.path(), 1e9, 500, 1).unwrap();
+        prepare(corpus.path(), second.path(), 1e9, 500, 1).unwrap();
+
+        assert_eq!(all_files(first.path()), all_files(second.path()));
     }
 
     #[test]
-    fn one_edit_changes_the_word() {
-        let word: Vec<char> = "contract".chars().collect();
-        let mut random = SplitMix(7);
+    fn prepared_examples_are_valid() {
+        let corpus = tempfile::tempdir().unwrap();
+        let output = tempfile::tempdir().unwrap();
+        write_corpus(corpus.path(), unique_name);
 
-        let changed = (0..500)
-            .map(|_| apply_one_edit(&word, &mut random))
-            .filter(|typo| *typo != word)
-            .count();
+        prepare(corpus.path(), output.path(), 1e9, 500, 1).unwrap();
 
-        assert!(changed > 450);
+        let words = read_vocabulary(output.path().join("vocab.json"));
+        let examples: Vec<_> = Split::ALL
+            .iter()
+            .flat_map(|split| read_examples(output.path().join(split.dir_name())).unwrap())
+            .collect();
+        let stats: serde_json::Value =
+            serde_json::from_slice(&fs::read(output.path().join("prepare-stats.json")).unwrap())
+                .unwrap();
+
+        assert_eq!(words[..SPECIAL_WORDS.len()], SPECIAL_WORDS);
+        assert!(words.len() > SPECIAL_WORDS.len());
+        assert!(examples.len() > 10);
+        assert_eq!(Some(examples.len() as u64), stats["examples"].as_u64());
+        for example in &examples {
+            let (right_word, _) = example.candidates[example.target as usize];
+            assert!((example.group as usize) < GROUPS.len());
+            assert!((right_word as usize) < words.len());
+            assert!(
+                example
+                    .left
+                    .iter()
+                    .chain(&example.right)
+                    .all(|id| (*id as usize) < words.len())
+            );
+        }
+    }
+
+    #[test]
+    fn files_that_would_share_a_shard_are_an_error() {
+        let corpus = tempfile::tempdir().unwrap();
+        let output = tempfile::tempdir().unwrap();
+        write_corpus(corpus.path(), |_| "part-0.json.gz".to_string());
+
+        assert!(prepare(corpus.path(), output.path(), 1e9, 500, 1).is_err());
+    }
+
+    #[test]
+    fn a_missing_corpus_is_an_error() {
+        let corpus = tempfile::tempdir().unwrap();
+        let output = tempfile::tempdir().unwrap();
+
+        assert!(prepare(corpus.path(), output.path(), 1.0, 500, 1).is_err());
     }
 }

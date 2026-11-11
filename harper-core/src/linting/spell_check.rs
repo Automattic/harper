@@ -62,15 +62,14 @@ fn order_by_context(
         document.get_tokens(),
         document.get_source(),
         index,
-        harper_brill::CONTEXT_RADIUS,
+        harper_context_ranker::CONTEXT_RADIUS,
     );
     let lowered: Vec<(String, i32)> = candidates
         .iter()
         .map(|(candidate, score)| (candidate.to_lower().iter().collect(), *score))
         .collect();
 
-    harper_brill::context_ranker()
-        .rank(&left, &right, &lowered)
+    harper_context_ranker::rank(&left, &right, &lowered)
         .into_iter()
         .map(|position| candidates[position].0.clone())
         .collect()

@@ -17,6 +17,11 @@ use hashbrown::HashMap;
 use serde::Serialize;
 use serde_json::Value;
 
+#[cfg(feature = "training")]
+use harper_context_ranker::{
+    ContextRanker, TrainingOptions, evaluate_context_ranker, read_examples, read_vocabulary,
+    train_context_ranker_cpu,
+};
 use harper_core::{
     CharStringExt, Dialect, DictWordMetadata, OrthFlags, Span, TokenKind, TokenStringExt,
     linting::LintGroup,
@@ -25,10 +30,7 @@ use harper_core::{
     weir::WeirLinter,
 };
 #[cfg(feature = "training")]
-use harper_pos_utils::{
-    BrillChunker, BrillTagger, BurnChunkerCpu, ContextRanker, TrainingOptions,
-    evaluate_context_ranker, read_examples, read_vocabulary, train_context_ranker_cpu,
-};
+use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
 use harper_stats::Stats;
 
 mod annotate;

@@ -36,9 +36,9 @@ Message: |
          |                                                               ^~~ Did you mean to spell `PoS` this way?
        9 | POST), also called grammatical tagging is the process of marking up a word in a
 Suggest:
-  - Replace with: “Pod”
-  - Replace with: “Poi”
-  - Replace with: “Pol”
+  - Replace with: “Post”
+  - Replace with: “PBS”
+  - Replace with: “PPS”
 
 
 
@@ -47,9 +47,9 @@ Message: |
       18 | two distinctive groups: rule-based and stochastic. E. Brill's tagger, one of the
          |                                                    ^~ Did you mean to spell `E.` this way?
 Suggest:
-  - Replace with: “Eh”
-  - Replace with: “Em”
-  - Replace with: “Ex”
+  - Replace with: “EC”
+  - Replace with: “EV”
+  - Replace with: “Esq”
 
 
 
@@ -60,8 +60,8 @@ Message: |
       19 | first and most widely used English POS-taggers, employs rule-based algorithms.
 Suggest:
   - Replace with: “Bill's”
-  - Replace with: “Brillo's”
-  - Replace with: “Drill's”
+  - Replace with: “Brian's”
+  - Replace with: “Bills”
 
 
 
@@ -103,9 +103,9 @@ Message: |
       49 | tags. For example, NN for singular common nouns, NNS for plural common nouns, NP
          |                    ^~ Did you mean to spell `NN` this way?
 Suggest:
-  - Replace with: “No”
   - Replace with: “Non”
-  - Replace with: “Nu”
+  - Replace with: “NZ”
+  - Replace with: “No”
 
 
 
@@ -115,9 +115,9 @@ Message: |
          |                                                  ^~~ Did you mean to spell `NNS` this way?
       50 | for singular proper nouns (see the POS tags used in the Brown Corpus). Other
 Suggest:
+  - Replace with: “NBA”
   - Replace with: “NES”
-  - Replace with: “Nos”
-  - Replace with: “Nuns”
+  - Replace with: “NYSE”
 
 
 
@@ -127,9 +127,9 @@ Message: |
       56 | Koine Greek (DeRose 1990) has used over 1,000 parts of speech and found that
          | ^~~~~ Did you mean to spell `Koine` this way?
 Suggest:
-  - Replace with: “Kline”
-  - Replace with: “Kine”
-  - Replace with: “Kin”
+  - Replace with: “Knife”
+  - Replace with: “Kobe”
+  - Replace with: “Kong”
 
 
 
@@ -139,9 +139,9 @@ Message: |
       56 | Koine Greek (DeRose 1990) has used over 1,000 parts of speech and found that
          |              ^~~~~~ Did you mean to spell `DeRose` this way?
 Suggest:
-  - Replace with: “Depose”
-  - Replace with: “Demise”
-  - Replace with: “Dense”
+  - Replace with: “Drove”
+  - Replace with: “Derive”
+  - Replace with: “Denote”
 
 
 
@@ -172,8 +172,8 @@ Message: |
          |                                                        ^~~~~~ Did you mean to spell `Ncmsan` this way?
       60 | Type = common, Gender = masculine, Number = singular, Case = accusative, Animate
 Suggest:
-  - Replace with: “Nisan”
   - Replace with: “Nissan”
+  - Replace with: “Nisan”
 
 
 
@@ -183,9 +183,9 @@ Message: |
       64 | Penn tag set, developed in the Penn Treebank project. It is largely similar to
          |                                     ^~~~~~~~ Did you mean to spell `Treebank` this way?
 Suggest:
+  - Replace with: “Freeman”
   - Replace with: “Tie back”
   - Replace with: “Tieback”
-  - Replace with: “Traceback”
 
 
 
@@ -227,9 +227,9 @@ Message: |
       87 | developed at Brown University by Henry Kučera and W. Nelson Francis, in the
          |                                        ^~~~~~ Did you mean to spell `Kučera` this way?
 Suggest:
-  - Replace with: “Kara”
-  - Replace with: “Kendra”
-  - Replace with: “Keri”
+  - Replace with: “Korea”
+  - Replace with: “Khmer”
+  - Replace with: “Kurt”
 
 
 
@@ -238,9 +238,9 @@ Message: |
       87 | developed at Brown University by Henry Kučera and W. Nelson Francis, in the
          |                                                   ^~ Did you mean to spell `W.` this way?
 Suggest:
-  - Replace with: “We”
-  - Replace with: “WA”
+  - Replace with: “Wu”
   - Replace with: “WI”
+  - Replace with: “We”
 
 
 
@@ -250,9 +250,9 @@ Message: |
          |                                                                             ^ Did you mean to spell `s` this way?
       99 | the tagging was nearly perfect (allowing for some cases on which even human
 Suggest:
+  - Replace with: “U”
   - Replace with: “so”
-  - Replace with: “as”
-  - Replace with: “is”
+  - Replace with: “us”
 
 
 
@@ -273,8 +273,8 @@ Message: |
      105 | later part-of-speech tagging systems, such as CLAWS and VOLSUNGA. However, by
          |                                                         ^~~~~~~~ Did you mean to spell `VOLSUNGA` this way?
 Suggest:
-  - Replace with: “Volcanic”
-  - Replace with: “Volcano”
+  - Replace with: “Voluntary”
+  - Replace with: “Volume”
   - Replace with: “Voltage”
 
 
@@ -307,9 +307,9 @@ Message: |
          |                                                                            ^~~~ Did you mean to spell `HMMs` this way?
      120 | to disambiguate parts of speech, when working to tag the Lancaster-Oslo-Bergen
 Suggest:
-  - Replace with: “Hams”
-  - Replace with: “Hems”
-  - Replace with: “Hums”
+  - Replace with: “HDMI”
+  - Replace with: “Homes”
+  - Replace with: “His”
 
 
 
@@ -318,9 +318,9 @@ Message: |
      121 | Corpus of British English. HMMs involve counting cases (such as from the Brown
          |                            ^~~~ Did you mean to spell `HMMs` this way?
 Suggest:
-  - Replace with: “Hams”
-  - Replace with: “Hems”
-  - Replace with: “Hums”
+  - Replace with: “He's”
+  - Replace with: “Has”
+  - Replace with: “His”
 
 
 
@@ -329,9 +329,9 @@ Message: |
      129 | More advanced ("higher-order") HMMs learn the probabilities not only of pairs
          |                                ^~~~ Did you mean to spell `HMMs` this way?
 Suggest:
-  - Replace with: “Hams”
-  - Replace with: “Hems”
-  - Replace with: “Hums”
+  - Replace with: “HDMI”
+  - Replace with: “Home”
+  - Replace with: “Homes”
 
 
 
@@ -355,9 +355,9 @@ Message: |
      141 | Eugene Charniak points out in Statistical techniques for natural language
          |        ^~~~~~~~ Did you mean to spell `Charniak` this way?
 Suggest:
-  - Replace with: “Cardiac”
-  - Replace with: “Carnal”
+  - Replace with: “Churning”
   - Replace with: “Carnival”
+  - Replace with: “Charcoal”
 
 
 
@@ -389,9 +389,9 @@ Message: |
      153 | HMMs underlie the functioning of stochastic taggers and are used in various
          | ^~~~ Did you mean to spell `HMMs` this way?
 Suggest:
+  - Replace with: “Harms”
+  - Replace with: “He's”
   - Replace with: “Hams”
-  - Replace with: “Hems”
-  - Replace with: “Hums”
 
 
 
@@ -419,9 +419,9 @@ Message: |
      159 | In 1987, Steven DeRose and Kenneth W. Church independently developed dynamic
          |                 ^~~~~~ Did you mean to spell `DeRose` this way?
 Suggest:
-  - Replace with: “Depose”
-  - Replace with: “Demise”
-  - Replace with: “Dense”
+  - Replace with: “Drone”
+  - Replace with: “Drove”
+  - Replace with: “Deposed”
 
 
 
@@ -430,9 +430,9 @@ Message: |
      159 | In 1987, Steven DeRose and Kenneth W. Church independently developed dynamic
          |                                    ^~ Did you mean to spell `W.` this way?
 Suggest:
-  - Replace with: “We”
-  - Replace with: “WA”
   - Replace with: “WI”
+  - Replace with: “WA”
+  - Replace with: “WV”
 
 
 
@@ -442,9 +442,9 @@ Message: |
      161 | methods were similar to the Viterbi algorithm known for some time in other
          |                             ^~~~~~~ Did you mean to spell `Viterbi` this way?
 Suggest:
-  - Replace with: “Vite's”
-  - Replace with: “Viper's”
-  - Replace with: “Voter's”
+  - Replace with: “Verb”
+  - Replace with: “Voter”
+  - Replace with: “Veteran”
 
 
 
@@ -453,9 +453,9 @@ Message: |
      162 | fields. DeRose used a table of pairs, while Church used a table of triples and a
          |         ^~~~~~ Did you mean to spell `DeRose` this way?
 Suggest:
-  - Replace with: “Depose”
-  - Replace with: “Demise”
-  - Replace with: “Dense”
+  - Replace with: “Drove”
+  - Replace with: “Dose”
+  - Replace with: “Drone”
 
 
 
@@ -490,8 +490,8 @@ Message: |
          |                                           ^~~~~~~~ Did you mean to spell `analyses` this way?
      167 | probabilities, and other related data, and replicated his work for Greek, where
 Suggest:
-  - Replace with: “analyzes”
   - Replace with: “analysis”
+  - Replace with: “analyzes”
   - Replace with: “analysts”
 
 
@@ -557,9 +557,9 @@ Message: |
          |                                                                      ^~~~~~~ Did you mean to spell `Viterbi` this way?
      201 | algorithm, Brill tagger, Constraint Grammar, and the Baum-Welch algorithm (also
 Suggest:
-  - Replace with: “Vite's”
-  - Replace with: “Viper's”
-  - Replace with: “Voter's”
+  - Replace with: “Verb”
+  - Replace with: “Veteran”
+  - Replace with: “Voter”
 
 
 
@@ -569,9 +569,9 @@ Message: |
          |                                                           ^~~~~ Did you mean to spell `Welch` this way?
      202 | known as the forward-backward algorithm). Hidden Markov model and visible Markov
 Suggest:
+  - Replace with: “Which”
   - Replace with: “Welsh”
-  - Replace with: “Wench”
-  - Replace with: “Watch”
+  - Replace with: “Well”
 
 
 
@@ -580,9 +580,9 @@ Message: |
      203 | model taggers can both be implemented using the Viterbi algorithm. The
          |                                                 ^~~~~~~ Did you mean to spell `Viterbi` this way?
 Suggest:
-  - Replace with: “Vite's”
-  - Replace with: “Viper's”
-  - Replace with: “Voter's”
+  - Replace with: “Voter”
+  - Replace with: “Verb”
+  - Replace with: “Veteran”
 
 
 
@@ -591,9 +591,9 @@ Message: |
      208 | tagging. Methods such as SVM, maximum entropy classifier, perceptron, and
          |                          ^~~ Did you mean to spell `SVM` this way?
 Suggest:
-  - Replace with: “Sim”
   - Replace with: “Sum”
-  - Replace with: “SAM”
+  - Replace with: “SUV”
+  - Replace with: “STI”
 
 
 
@@ -603,9 +603,9 @@ Message: |
          |                                                                 ^~~~~~~~ Did you mean to spell `Treebank` this way?
      214 | so the results are directly comparable. However, many significant taggers are
 Suggest:
+  - Replace with: “Freeman”
   - Replace with: “Tie back”
   - Replace with: “Tieback”
-  - Replace with: “Traceback”
 
 
 

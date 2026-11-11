@@ -19,20 +19,13 @@ use burn_ndarray::{NdArray, NdArrayDevice};
 use hashbrown::HashSet;
 use rand::{SeedableRng, rngs::StdRng, seq::SliceRandom};
 
-use super::{
+use crate::corpus::GROUPS;
+use crate::ranker::{
     CONTEXT_RADIUS, CONTEXT_SLOTS, ContextRanker, ContextRankerConfig, PAD_IDX, UNK_IDX,
     combined_score, is_known_word,
 };
 
 const REJECTED_LOGIT: f32 = -1e4;
-
-pub const GROUP_NAMES: [&str; 5] = [
-    "YouTube",
-    "Textbooks",
-    "News and blogs",
-    "US government",
-    "Hansard from 2000",
-];
 
 /// One typo in one sentence, with every spelling candidate that Harper proposes for it.
 #[derive(Clone, Debug, PartialEq)]
@@ -76,14 +69,18 @@ impl RankerExample {
         let mut context = [0u8; CONTEXT_RADIUS * 4];
         reader.read_exact(&mut context)?;
         let ids: Vec<u16> = context
-            .chunks_exact(2)
-            .map(|b| u16::from_le_bytes([b[0], b[1]]))
+            .as_chunks::<2>()
+            .0
+            .iter()
+            .map(|b| u16::from_le_bytes(*b))
             .collect();
 
         let mut items = vec![0u8; count as usize * 4];
         reader.read_exact(&mut items)?;
         let candidates = items
-            .chunks_exact(4)
+            .as_chunks::<4>()
+            .0
+            .iter()
             .map(|b| {
                 (
                     u16::from_le_bytes([b[0], b[1]]),
@@ -492,7 +489,7 @@ impl Accuracy {
 
 /// Accuracy over all examples, then one entry per group.
 fn measure(scored: &[ScoredExample], method: Method) -> Vec<Accuracy> {
-    let mut results = vec![Accuracy::default(); GROUP_NAMES.len() + 1];
+    let mut results = vec![Accuracy::default(); GROUPS.len() + 1];
 
     for item in scored {
         let order = order_for(item, method);
@@ -529,11 +526,11 @@ fn report_table(title: &str, scored: &[ScoredExample], methods: &[(&str, Method)
         .map(|(name, method)| (*name, measure(scored, *method)))
         .collect();
 
-    for row in 0..=GROUP_NAMES.len() {
+    for row in 0..=GROUPS.len() {
         let label = if row == 0 {
             "All"
         } else {
-            GROUP_NAMES[row - 1]
+            GROUPS[row - 1].name
         };
         out += &format!("  {label} (n={})\n", results[0].1[row].total);
         for (name, accuracy) in &results {
