@@ -1606,44 +1606,6 @@ fn litotes_more_preferable() {
     );
 }
 
-// LookForwardTo
-
-#[test]
-fn fix_look_forward_for() {
-    assert_suggestion_result(
-        "I will mark this issue as an enhancement and will look forward for enrolling it.",
-        test_linter(),
-        "I will mark this issue as an enhancement and will look forward to enrolling it.",
-    );
-}
-
-#[test]
-fn fix_looked_forward_for() {
-    assert_suggestion_result(
-        "Looked forward for standalone components so much, please fix this.",
-        test_linter(),
-        "Looked forward to standalone components so much, please fix this.",
-    );
-}
-
-#[test]
-fn fix_looking_forward_for() {
-    assert_suggestion_result(
-        "Looking forward for Typed version of this stack navigation",
-        test_linter(),
-        "Looking forward to Typed version of this stack navigation",
-    );
-}
-
-#[test]
-fn fix_looks_forward_for() {
-    assert_suggestion_result(
-        "Please take this words as from one of your fans who looks forward for a great and interesting project :)",
-        test_linter(),
-        "Please take this words as from one of your fans who looks forward to a great and interesting project :)",
-    );
-}
-
 // MakeDoWith
 
 #[test]
