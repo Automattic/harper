@@ -1,4 +1,5 @@
 <script lang="ts">
+import { openUrl } from '@tauri-apps/plugin-opener';
 import {
 	Button,
 	IconButton,
@@ -86,7 +87,13 @@ function formatSize(bytes: number) {
 <section aria-busy={busy}>
     <div class="stanza">
         <div class="eyebrow">Weirpacks</div>
-        <p class="section-copy">Custom rules and dictionaries for the editor and system-wide highlighter.</p>
+        <p class="section-copy">
+            Custom rules and dictionaries for the editor and system-wide highlighter.
+            <a href="https://writewithharper.com/docs/weir" class="underline" on:click={(event) => {
+                event.preventDefault();
+                void openUrl(event.currentTarget.href).catch((cause) => { error = String(cause); });
+            }}>Read the Weir documentation.</a>
+        </p>
         <label
             class:dragging
             class="drop-zone"
