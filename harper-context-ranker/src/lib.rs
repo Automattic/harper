@@ -2,6 +2,8 @@
 
 #[cfg(feature = "training")]
 mod corpus;
+#[cfg(feature = "training")]
+mod prepare;
 mod ranker;
 #[cfg(feature = "training")]
 mod training;
@@ -9,18 +11,10 @@ mod training;
 use std::sync::LazyLock;
 
 #[cfg(feature = "training")]
-pub use corpus::{
-    CorpusDocument, FileTask, GROUPS, Group, Split, SplitMix, context_ids, file_tasks,
-    for_each_document, is_target_shape, make_typo, stable_hash, vocabulary, word_id, word_ids,
-};
+pub use prepare::{SentenceWord, Speller, prepare};
 pub use ranker::CONTEXT_RADIUS;
 #[cfg(feature = "training")]
-pub use ranker::{ContextRanker, ContextRankerConfig, SPECIAL_WORDS};
-#[cfg(feature = "training")]
-pub use training::{
-    EvaluationReport, RankerExample, TrainingOptions, evaluate_context_ranker, read_examples,
-    read_vocabulary, train_context_ranker, train_context_ranker_cpu,
-};
+pub use training::{EvaluationReport, TrainingOptions, evaluate, train};
 
 static RANKER: LazyLock<ranker::ContextRanker> = LazyLock::new(|| {
     ranker::ContextRanker::load_from_bytes(

@@ -115,12 +115,12 @@ impl RankerExample {
     }
 }
 
-pub fn read_vocabulary(path: impl AsRef<Path>) -> Vec<String> {
-    serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap()
+pub(crate) fn read_vocabulary(path: impl AsRef<Path>) -> io::Result<Vec<String>> {
+    Ok(serde_json::from_slice(&std::fs::read(path)?)?)
 }
 
 /// Read every `.bin` shard in a directory, in file name order.
-pub fn read_examples(dir: impl AsRef<Path>) -> io::Result<Vec<RankerExample>> {
+pub(crate) fn read_examples(dir: impl AsRef<Path>) -> io::Result<Vec<RankerExample>> {
     let mut shards: Vec<PathBuf> = std::fs::read_dir(dir)?
         .map(|entry| entry.map(|e| e.path()))
         .collect::<Result<_, _>>()?;
@@ -291,29 +291,47 @@ impl<B: Backend> TableModel<B> {
     }
 }
 
-pub fn train_context_ranker_cpu(
-    train: Vec<RankerExample>,
-    tuning: &[RankerExample],
-    test: &[RankerExample],
-    words: &[String],
+/// Train the table on the examples that [`crate::prepare`] wrote to `data`, and save it to `output`.
+pub fn train(
+    data: &Path,
+    output: &Path,
     dimensions: usize,
     options: &TrainingOptions,
-    output: &Path,
-) -> ContextRanker {
+) -> io::Result<()> {
+    let words = read_vocabulary(data.join("vocab.json"))?;
+    let train = read_examples(data.join("train"))?;
+    let tuning = read_examples(data.join("tuning"))?;
+    let test = read_examples(data.join("test"))?;
+
     train_context_ranker::<Autodiff<NdArray>>(
         train,
-        tuning,
-        test,
-        words,
+        &tuning,
+        &test,
+        &words,
         dimensions,
         options,
         output,
         NdArrayDevice::Cpu,
-    )
+    );
+
+    Ok(())
+}
+
+/// Report the accuracy of the table in `model` on the tuning and test examples in `data`.
+pub fn evaluate(data: &Path, model: &Path) -> io::Result<EvaluationReport> {
+    let tuning = read_examples(data.join("tuning"))?;
+    let test = read_examples(data.join("test"))?;
+    let ranker = ContextRanker::load_from_bytes(
+        std::fs::read(model.join("table.bin"))?,
+        std::fs::read(model.join("vocab.json"))?,
+        std::fs::read(model.join("config.json"))?,
+    );
+
+    Ok(evaluate_context_ranker(&ranker, &tuning, Some(&test)))
 }
 
 #[allow(clippy::too_many_arguments)]
-pub fn train_context_ranker<B: AutodiffBackend>(
+fn train_context_ranker<B: AutodiffBackend>(
     train: Vec<RankerExample>,
     tuning: &[RankerExample],
     test: &[RankerExample],
@@ -546,7 +564,7 @@ fn report_table(title: &str, scored: &[ScoredExample], methods: &[(&str, Method)
 }
 
 /// Tune the spelling weight on `tuning`, report it, and also report `test` if it is present.
-pub fn evaluate_context_ranker(
+fn evaluate_context_ranker(
     ranker: &ContextRanker,
     tuning: &[RankerExample],
     test: Option<&[RankerExample]>,

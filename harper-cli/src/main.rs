@@ -18,10 +18,7 @@ use serde::Serialize;
 use serde_json::Value;
 
 #[cfg(feature = "training")]
-use harper_context_ranker::{
-    ContextRanker, TrainingOptions, evaluate_context_ranker, read_examples, read_vocabulary,
-    train_context_ranker_cpu,
-};
+use harper_context_ranker::TrainingOptions;
 use harper_core::{
     CharStringExt, Dialect, DictWordMetadata, OrthFlags, Span, TokenKind, TokenStringExt,
     linting::LintGroup,
@@ -209,7 +206,7 @@ enum Args {
     /// Turn the corpus into context ranker examples and a vocabulary.
     #[cfg(feature = "training")]
     PrepareRankerData {
-        /// The directory that holds the Common Pile subsets.
+        /// The directory that holds the files in `harper-context-ranker/data/corpus-manifest.json`.
         #[arg(long, value_hint = ValueHint::DirPath)]
         corpus: PathBuf,
         /// The directory to write the examples and the vocabulary to.
@@ -693,7 +690,14 @@ fn main() -> anyhow::Result<()> {
             scale,
             vocab_size,
             seed,
-        } => context_ranker_data::prepare(&corpus, &output, scale, vocab_size, seed),
+        } => Ok(harper_context_ranker::prepare(
+            &corpus,
+            &output,
+            &context_ranker_data::CuratedSpeller::curated(),
+            scale,
+            vocab_size,
+            seed,
+        )?),
         #[cfg(feature = "training")]
         Args::TrainContextRanker {
             data,
@@ -704,41 +708,21 @@ fn main() -> anyhow::Result<()> {
             batch_size,
             candidates,
             seed,
-        } => {
-            let words = read_vocabulary(data.join("vocab.json"));
-            let train = read_examples(data.join("train"))?;
-            let tuning = read_examples(data.join("tuning"))?;
-            let test = read_examples(data.join("test"))?;
-
-            train_context_ranker_cpu(
-                train,
-                &tuning,
-                &test,
-                &words,
-                dimensions,
-                &TrainingOptions {
-                    epochs,
-                    learning_rate: lr,
-                    batch_size,
-                    candidates_per_example: candidates,
-                    seed,
-                },
-                &output,
-            );
-
-            Ok(())
-        }
+        } => Ok(harper_context_ranker::train(
+            &data,
+            &output,
+            dimensions,
+            &TrainingOptions {
+                epochs,
+                learning_rate: lr,
+                batch_size,
+                candidates_per_example: candidates,
+                seed,
+            },
+        )?),
         #[cfg(feature = "training")]
         Args::EvalContextRanker { data, model } => {
-            let tuning = read_examples(data.join("tuning"))?;
-            let test = read_examples(data.join("test"))?;
-            let ranker = ContextRanker::load_from_bytes(
-                fs::read(model.join("table.bin"))?,
-                fs::read(model.join("vocab.json"))?,
-                fs::read(model.join("config.json"))?,
-            );
-
-            println!("{}", evaluate_context_ranker(&ranker, &tuning, Some(&test)));
+            println!("{}", harper_context_ranker::evaluate(&data, &model)?);
 
             Ok(())
         }

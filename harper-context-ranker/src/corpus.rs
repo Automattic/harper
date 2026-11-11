@@ -344,8 +344,8 @@ pub fn make_typo(
 }
 
 /// Whether a word can be the hidden word of an example.
-pub fn is_target_shape(word: &[char]) -> bool {
-    word.len() >= 3 && word.iter().all(|c| c.is_ascii_lowercase())
+pub fn is_target_shape(word: &str) -> bool {
+    word.len() >= 3 && word.bytes().all(|b| b.is_ascii_lowercase())
 }
 
 pub fn word_ids(words: &[String]) -> HashMap<String, u16> {
@@ -655,10 +655,10 @@ mod tests {
 
     #[test]
     fn target_words_are_lowercase_and_long_enough() {
-        assert!(is_target_shape(&chars("five")));
-        assert!(!is_target_shape(&chars("to")));
-        assert!(!is_target_shape(&chars("Five")));
-        assert!(!is_target_shape(&chars("café")));
+        assert!(is_target_shape("five"));
+        assert!(!is_target_shape("to"));
+        assert!(!is_target_shape("Five"));
+        assert!(!is_target_shape("café"));
     }
 
     #[test]

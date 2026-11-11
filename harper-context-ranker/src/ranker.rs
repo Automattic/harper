@@ -95,7 +95,7 @@ impl ContextRanker {
         .unwrap();
     }
 
-    #[cfg(any(test, feature = "training"))]
+    #[cfg(test)]
     pub fn config(&self) -> &ContextRankerConfig {
         &self.config
     }

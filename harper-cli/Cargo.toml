@@ -32,7 +32,6 @@ harper-context-ranker = { path = "../harper-context-ranker", version = "3.1.0", 
 yansi = "1.0.1"
 
 [dev-dependencies]
-flate2 = "1.1.10"
 tempfile = "3"
 
 [features]
