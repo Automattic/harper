@@ -231,6 +231,16 @@ function scan() {
 
 			fw.addTarget(blockContainer);
 		}
+
+		// An empty editor can be its own target before the host inserts paragraphs.
+		// Stop linting that ancestor once all its leaves belong to closer blocks.
+		if (
+			!element.matches('textarea, input') &&
+			!seenBlockContainers.has(element) &&
+			fw.hasTarget(element)
+		) {
+			void fw.removeTarget(element as HTMLElement);
+		}
 	});
 }
 
