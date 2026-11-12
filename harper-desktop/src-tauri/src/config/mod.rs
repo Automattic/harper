@@ -1,5 +1,7 @@
 mod error;
 mod integration;
+mod weirpack;
+pub use weirpack::InstalledWeirpack;
 
 use crate::{PlatformBroker, os_broker::OsBroker};
 pub use error::Error;
@@ -15,6 +17,7 @@ use std::{fs, io, path::PathBuf, sync::Arc};
 
 /// User-controlled app state needed by Tauri commands and the highlighter process.
 pub struct Config {
+    pub weirpacks: Vec<InstalledWeirpack>,
     pub mutable_dictionary: MutableDictionary,
     pub dialect: Dialect,
     pub ignored_lints: IgnoredLints,
@@ -34,6 +37,7 @@ pub struct Config {
 impl Config {
     pub fn new() -> Self {
         Self {
+            weirpacks: Vec::new(),
             mutable_dictionary: MutableDictionary::new(),
             dialect: Self::detect_system_dialect(),
             ignored_lints: IgnoredLints::new(),
@@ -161,13 +165,66 @@ impl Config {
         Arc::new(dictionary)
     }
 
-    fn create_dictionary(&self) -> Arc<MergedDictionary> {
-        Self::dictionary_from_user_dictionary(self.mutable_dictionary.clone())
+    /// Build the dictionary used by both document parsing and the linter, including enabled packs.
+    pub fn create_dictionary(&self) -> Arc<MergedDictionary> {
+        let mut dictionary = MergedDictionary::new();
+        dictionary.add_dictionary(Self::dictionary_from_user_dictionary(
+            self.mutable_dictionary.clone(),
+        ));
+        for pack in self.weirpacks.iter().filter(|pack| pack.enabled) {
+            match pack
+                .unpack()
+                .and_then(|pack| pack.load_dictionary().map_err(|error| error.to_string()))
+            {
+                Ok(Some(pack_dictionary)) => dictionary.add_dictionary(Arc::new(pack_dictionary)),
+                Ok(None) => {}
+                Err(error) => eprintln!("Failed to load dictionary from {}: {error}", pack.name),
+            }
+        }
+        Arc::new(dictionary)
     }
 
+    /// Rebuild from enabled packs so removed rules cannot remain active. Explicit rule settings win.
     pub fn create_linter(&self) -> LintGroup {
-        LintGroup::new_curated(self.create_dictionary(), self.dialect)
-            .with_lint_config(self.lint_config.clone())
+        let mut linter = LintGroup::new_curated(self.create_dictionary(), self.dialect);
+        for pack in self.weirpacks.iter().filter(|pack| pack.enabled) {
+            match pack
+                .unpack()
+                .and_then(|pack| pack.to_lint_group().map_err(|error| error.to_string()))
+            {
+                Ok(group) => linter.merge_from(group),
+                Err(error) => eprintln!("Failed to load rules from {}: {error}", pack.name),
+            }
+        }
+        linter.config.merge_from(self.lint_config.clone());
+        linter
+    }
+
+    /// Persist a replacement pack list, restoring in-memory state if persistence fails.
+    pub async fn save_weirpacks(&mut self, packs: Vec<InstalledWeirpack>) -> Result<(), Error> {
+        let path = Self::main_path().ok_or(Error::ConfigDirUnavailable)?;
+        self.save_weirpacks_to(packs, &path)
+    }
+
+    fn save_weirpacks_to(
+        &mut self,
+        packs: Vec<InstalledWeirpack>,
+        path: &std::path::Path,
+    ) -> Result<(), Error> {
+        let previous = std::mem::replace(&mut self.weirpacks, packs);
+        let result = (|| {
+            if let Some(parent) = path.parent() {
+                fs::create_dir_all(parent)?;
+            }
+            let temporary = path.with_extension("json.tmp");
+            fs::write(&temporary, self.serialize_main()?)?;
+            fs::rename(temporary, path)?;
+            Ok(())
+        })();
+        if result.is_err() {
+            self.weirpacks = previous;
+        }
+        result
     }
 
     #[allow(dead_code)]
@@ -188,6 +245,7 @@ impl Config {
     #[allow(dead_code)]
     fn serialize_main(&self) -> serde_json::Result<String> {
         serde_json::to_string(&serde_json::json!({
+            "weirpacks": &self.weirpacks,
             "dialect": &self.dialect,
             "ignored_lints": &self.ignored_lints,
             "lint_config": &self.lint_config,
@@ -209,6 +267,7 @@ impl Config {
             .ok_or_else(|| serde_json::Error::custom("config must be a JSON object"))?;
 
         Ok(Self {
+            weirpacks: deserialize_optional_field(object, "weirpacks")?.unwrap_or_default(),
             mutable_dictionary: MutableDictionary::new(),
             dialect: deserialize_field(object, "dialect")?,
             ignored_lints: deserialize_field(object, "ignored_lints")?,
