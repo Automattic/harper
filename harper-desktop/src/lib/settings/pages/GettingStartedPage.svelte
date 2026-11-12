@@ -28,7 +28,7 @@ const allSlides: OnboardingSlide[] = [
 	{
 		id: 'accessibility',
 		title: 'Give Harper Permission',
-		lede: "Harper needs permission to read and write text in your favorite text editors. None of your text will leave your device.\n\nFind Harper in System Settings → Privacy & Security → Device Control and Data Access. Grant the permission in system settings, then come back here. If you've already granted permission and it isn't being reflected here, you may need to restart Harper.",
+		lede: "Harper needs permission to read and write text in your favorite text editors. None of your text will leave your device.\n\nFind Harper in System Settings → Privacy & Security → Device Control and Data Access. Grant the permission in system settings, then come back here. If you've already granted permission and Harper isn't detecting it, try restarting Harper or removing and re-adding it in your permission list.",
 	},
 	{
 		id: 'integration',
