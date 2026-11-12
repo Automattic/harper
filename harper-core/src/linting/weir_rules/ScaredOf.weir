@@ -1,0 +1,9 @@
+expr main <(scared about), about>
+
+let message "Use `scared of` instead of `scared about`"
+let description "Fixes `scared about` to `scared of`, using the standard preposition."
+let kind "Usage"
+let becomes "of"
+
+test "Those who are scared about the capability of AI (like the author)." "Those who are scared of the capability of AI (like the author)."
+test "I am really scared about the future of programming especially data analysis" "I am really scared of the future of programming especially data analysis"
