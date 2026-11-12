@@ -11,7 +11,7 @@ use self::highlighter_service::HighlighterService;
 use self::tray::set_up_tray_menu;
 use crate::args::{Args, Command};
 use crate::communication::{Client, ProtocolError};
-use crate::config::{Config, Integration};
+use crate::config::{Config, Integration, OnboardingState};
 use crate::debounce::{DebounceState, DebounceStatus};
 use clap::Parser;
 use harper_core::{
@@ -159,7 +159,7 @@ pub fn run_tauri() {
         }
     };
 
-    let show_onboarding = !config.onboarding_completed;
+    let show_onboarding = config.onboarding_state != OnboardingState::Complete;
     let broker = platform_broker(|_| false);
 
     let should_start_highlighter = config.highlighter_service_enabled
@@ -388,7 +388,7 @@ pub fn run_highlighter(has_parent: bool) {
             lint_config,
             integrations: Vec::new(),
             auto_enable_new_apps: false,
-            onboarding_completed: false,
+            onboarding_state: OnboardingState::Welcome,
             debounce_ms: *dictionary_debounce_ms.borrow(),
             auto_update: true,
             last_update_check: None,
@@ -532,7 +532,7 @@ fn fetch_highlighter_config(
             lint_config,
             integrations,
             auto_enable_new_apps,
-            onboarding_completed: false,
+            onboarding_state: OnboardingState::Welcome,
             debounce_ms,
             auto_update: true,
             last_update_check: None,

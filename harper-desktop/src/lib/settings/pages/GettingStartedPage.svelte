@@ -4,12 +4,17 @@ import { openUrl } from '@tauri-apps/plugin-opener';
 import { platform } from '@tauri-apps/plugin-os';
 import { Button, SlideDeck } from 'components';
 import { onMount } from 'svelte';
-import { type AccessibilityPermissionStatus, Client, type Integration } from '$lib/client';
+import {
+	type AccessibilityPermissionStatus,
+	Client,
+	type Integration,
+	type OnboardingState,
+} from '$lib/client';
 import AppIcon from '../components/AppIcon.svelte';
 
 /** Slide identities determine setup gates; only the welcome and test drive need no action. */
 type OnboardingSlide = {
-	id: 'welcome' | 'accessibility' | 'integration' | 'test-drive' | 'ready';
+	id: Exclude<OnboardingState, 'complete'>;
 	title: string;
 	lede: string;
 };
@@ -42,6 +47,7 @@ const allSlides: OnboardingSlide[] = [
 	},
 ];
 
+export let initialState: Exclude<OnboardingState, 'complete'>;
 export let onComplete: () => void;
 
 let step = 0;
@@ -59,7 +65,7 @@ let isCompletingOnboarding = false;
 let onboardingError = '';
 let isRestarting = false;
 let restartError = '';
-const restartSlideKey = 'harper-onboarding-restart-slide';
+let isSavingStep = false;
 
 $: slides = allSlides.filter((slide) => slide.id !== 'accessibility' || isMacOS);
 $: textEditIntegration = integrations.find((item) => item.bundle_id === 'com.apple.TextEdit');
@@ -69,21 +75,18 @@ $: accessibilityReady =
 $: integrationReady =
 	isTextEditEnabled && !isLoadingIntegrations && !isEnablingTextEdit && !integrationsError;
 $: nextDisabled =
-	isRestarting || !canAdvance(slides[step].id, accessibilityReady, integrationReady, isMacOS);
+	isRestarting ||
+	isSavingStep ||
+	isCompletingOnboarding ||
+	!canAdvance(slides[step].id, accessibilityReady, integrationReady, isMacOS);
 
 onMount(() => {
 	// Use the native platform in Tauri; user-agent detection is only for browser previews.
 	isMacOS = isTauri() ? platform() === 'macos' : navigator.userAgent.includes('Macintosh');
-	try {
-		const savedSlide = localStorage.getItem(restartSlideKey);
-		const restoredStep = allSlides
-			.filter((slide) => slide.id !== 'accessibility' || isMacOS)
-			.findIndex((slide) => slide.id === savedSlide);
-		if (restoredStep >= 0) step = restoredStep;
-		localStorage.removeItem(restartSlideKey);
-	} catch (error) {
-		restartError = `Unable to restore the setup page: ${error}`;
-	}
+	const availableSlides = allSlides.filter((slide) => slide.id !== 'accessibility' || isMacOS);
+	// Accessibility is skipped when a config is resumed on a non-macOS platform.
+	const restoredState = initialState === 'accessibility' && !isMacOS ? 'integration' : initialState;
+	step = availableSlides.findIndex((slide) => slide.id === restoredState);
 	void prepareService();
 	void loadIntegrations();
 	const permissionTimer = isMacOS ? setInterval(() => void prepareService(), 2000) : undefined;
@@ -148,14 +151,40 @@ async function launchTextEditForTestDrive() {
 	}
 }
 
-/** Persist completion only after mandatory setup; leave the deck only when the save succeeds. */
+/** Persist navigation before showing the next page so a relaunch restores it. */
+async function changeStep(direction: -1 | 1) {
+	if (isSavingStep || isCompletingOnboarding || isRestarting) return;
+	if (direction === 1 && nextDisabled) return;
+	const nextStep = step + direction;
+	const nextSlide = slides[nextStep];
+	if (!nextSlide) return;
+	isSavingStep = true;
+	onboardingError = '';
+	try {
+		await Client.setOnboardingState(nextSlide.id);
+		step = nextStep;
+	} catch (error) {
+		onboardingError = `Unable to save onboarding progress: ${error}. Please try again.`;
+	} finally {
+		isSavingStep = false;
+	}
+}
+
+/** Leave the deck only after completion has been saved successfully. */
 async function completeOnboarding() {
-	if (!accessibilityReady || !integrationReady || isCompletingOnboarding) return;
+	if (
+		!accessibilityReady ||
+		!integrationReady ||
+		isCompletingOnboarding ||
+		isSavingStep ||
+		isRestarting
+	)
+		return;
 	isCompletingOnboarding = true;
 	onboardingError = '';
 
 	try {
-		await Client.setOnboardingCompleted(true);
+		await Client.setOnboardingState('complete');
 		onComplete();
 	} catch (error) {
 		onboardingError = `Unable to complete onboarding: ${error}`;
@@ -166,11 +195,11 @@ async function completeOnboarding() {
 
 /** Save the current page before restarting the parent; never restart from a permission check. */
 async function restartHarper() {
-	if (isRestarting) return;
+	if (isRestarting || isSavingStep || isCompletingOnboarding) return;
 	isRestarting = true;
 	restartError = '';
 	try {
-		localStorage.setItem(restartSlideKey, slides[step].id);
+		await Client.setOnboardingState(slides[step].id);
 		await Client.restartHarper();
 	} catch (error) {
 		restartError = `Unable to restart Harper: ${error}. If needed, quit Harper and open the installed application again.`;
@@ -221,10 +250,8 @@ async function prepareService() {
     lede={slides[step].lede}
     slideProgress={step / (slides.length - 1)}
     {nextDisabled}
-    onBack={() => {
-      if (!isCompletingOnboarding && !isRestarting) step--;
-    }}
-    onNext={() => step++}
+    onBack={() => void changeStep(-1)}
+    onNext={() => void changeStep(1)}
   >
     {#if slides[step].id === 'welcome' && !isMacOS}
       {#if isPreparingService}
@@ -304,13 +331,13 @@ async function prepareService() {
       </div>
     {:else if slides[step].id === 'ready'}
       <div class="onboarding-actions">
-        {#if onboardingError}
-          <p role="alert">{onboardingError}</p>
-        {/if}
         <Button disabled={isCompletingOnboarding || !accessibilityReady || !integrationReady} on:click={completeOnboarding}>
           {isCompletingOnboarding ? 'Finishing...' : 'Finish'}
         </Button>
       </div>
+    {/if}
+    {#if onboardingError}
+      <p role="alert">{onboardingError}</p>
     {/if}
   </SlideDeck>
 </div>

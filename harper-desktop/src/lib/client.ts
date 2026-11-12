@@ -45,6 +45,14 @@ export interface AppSearchResult {
 	bundle_id: string;
 }
 
+export type OnboardingState =
+	| 'welcome'
+	| 'accessibility'
+	| 'integration'
+	| 'test-drive'
+	| 'ready'
+	| 'complete';
+
 export type AccessibilityPermissionStatus = 'Granted' | 'NotGranted' | 'Unsupported';
 
 /** Serializable Rust updater outcome; an installed update may still require a restart. */
@@ -119,12 +127,12 @@ export class Client {
 		await invoke('restart_harper');
 	}
 
-	static async getOnboardingCompleted(): Promise<boolean> {
-		return await invoke<boolean>('get_onboarding_completed');
+	static async getOnboardingState(): Promise<OnboardingState> {
+		return await invoke<OnboardingState>('get_onboarding_state');
 	}
 
-	static async setOnboardingCompleted(onboardingCompleted: boolean): Promise<void> {
-		await invoke('set_onboarding_completed', { onboardingCompleted });
+	static async setOnboardingState(onboardingState: OnboardingState): Promise<void> {
+		await invoke('set_onboarding_state', { onboardingState });
 	}
 
 	static async getLaunchAtStartup(): Promise<boolean> {
