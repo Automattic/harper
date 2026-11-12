@@ -1,5 +1,6 @@
 <script lang="ts">
 import { isTauri } from '@tauri-apps/api/core';
+import { openUrl } from '@tauri-apps/plugin-opener';
 import { platform } from '@tauri-apps/plugin-os';
 import { Button, SlideDeck } from 'components';
 import { onMount } from 'svelte';
@@ -47,8 +48,7 @@ let step = 0;
 let isMacOS = false;
 let accessibilityStatus: AccessibilityPermissionStatus | null = null;
 let setupError = '';
-let isPreparingService = true;
-let hasRequestedAccessibility = false;
+let isPreparingService = false;
 let integrations: Integration[] = [];
 let integrationsError = '';
 let isLoadingIntegrations = true;
@@ -72,6 +72,8 @@ onMount(() => {
 	isMacOS = isTauri() ? platform() === 'macos' : navigator.userAgent.includes('Macintosh');
 	void prepareService();
 	void loadIntegrations();
+	const permissionTimer = isMacOS ? setInterval(() => void prepareService(), 2000) : undefined;
+	return () => clearInterval(permissionTimer);
 });
 
 /** Gate service startup on Welcome outside macOS, or on Accessibility on macOS; the trial is optional. */
@@ -148,23 +150,30 @@ async function completeOnboarding() {
 	}
 }
 
-/** Start Harper on every platform, checking or requesting Accessibility permission only on macOS. */
-async function prepareService(request = false) {
+async function openAccessibilitySettings() {
+	try {
+		await openUrl(
+			'x-apple.systempreferences:com.apple.settings.PrivacySecurity.extension?Privacy_Accessibility',
+		);
+	} catch (error) {
+		setupError = `Unable to open System Settings: ${error}`;
+	}
+}
+
+/** Check permission without overlapping requests; start Harper when access becomes available. */
+async function prepareService() {
+	if (isPreparingService) return;
+	const shouldStartService = accessibilityStatus !== 'Granted' || !!setupError;
 	isPreparingService = true;
 	setupError = '';
-	accessibilityStatus = null;
 
 	try {
 		if (isMacOS) {
-			if (request) {
-				accessibilityStatus = await Client.requestAccessibilityPermission();
-				hasRequestedAccessibility = true;
-			} else {
-				accessibilityStatus = await Client.getAccessibilityPermissionStatus();
-			}
+			accessibilityStatus = await Client.getAccessibilityPermissionStatus();
 		}
 
 		if (
+			shouldStartService &&
 			(!isMacOS || accessibilityStatus === 'Granted') &&
 			!(await Client.startHighlighterService())
 		) {
@@ -202,36 +211,24 @@ async function prepareService(request = false) {
       {/if}
     {:else if slides[step].id === 'accessibility'}
       <div class="onboarding-actions">
-        <p role="status">
-          {#if isPreparingService}
-            Checking Accessibility access...
-          {:else if accessibilityReady}
-            Accessibility access granted. Harper is ready to check your writing.
-          {:else if accessibilityStatus === 'Unsupported'}
-            Accessibility setup is unavailable on this platform. Setup cannot continue here.
-          {:else if hasRequestedAccessibility && accessibilityStatus === 'NotGranted'}
-            Enable Harper in System Settings → Privacy &amp; Security → Accessibility, then recheck permission.
-          {/if}
-        </p>
+        <p>Enable Harper in System Settings → Privacy &amp; Security → Device Control and Data Access.</p>
+        <div class="permission-actions">
+          <Button on:click={openAccessibilitySettings}>Open System Settings</Button>
+          <span role="status">
+            {#if accessibilityStatus === 'Granted'}
+              Permission granted
+            {:else if accessibilityStatus === 'NotGranted'}
+              Permission not granted
+            {:else if accessibilityStatus === 'Unsupported'}
+              Permission check unavailable
+            {:else}
+              Checking permission...
+            {/if}
+          </span>
+        </div>
         {#if setupError}
           <p role="alert">{setupError}</p>
         {/if}
-        <Button
-          disabled={isPreparingService || accessibilityReady || accessibilityStatus === 'Unsupported'}
-          on:click={() => prepareService(!hasRequestedAccessibility && accessibilityStatus !== 'Granted')}
-        >
-          {#if isPreparingService}
-            Checking...
-          {:else if accessibilityReady}
-            Granted
-          {:else if accessibilityStatus === 'Unsupported'}
-            Unavailable
-          {:else if hasRequestedAccessibility || accessibilityStatus === 'Granted'}
-            Recheck Permission
-          {:else}
-            Open System Settings
-          {/if}
-        </Button>
       </div>
     {:else if slides[step].id === 'integration'}
       <div class="onboarding-actions">
@@ -282,3 +279,12 @@ async function prepareService(request = false) {
     {/if}
   </SlideDeck>
 </div>
+
+<style>
+.permission-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+</style>
