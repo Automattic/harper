@@ -1,6 +1,9 @@
 ---
 title: Author a Rule
+description: Follow the contributor guide to implement a Harper grammar rule and test its suggestions.
 ---
+
+# Author a Rule
 
 [Harper's grammatical rules are many](../rules), but most are relatively easy to understand.
 Before we get into how to write a rule, it is important that we get some of the language cleared up.
@@ -291,9 +294,9 @@ Every time you want to test a change, you'll have to recompile `harper-ls` and r
 cargo build --release # Run in the monorepo to compile `harper-ls`.
 ```
 
-:::note
-This workflow only works if all you're changing is the Rust code. If your changes include updates to the VS Code extension or if you'd like to test your new rule's setting in VS Code by adding it to `package.json`, then you'd need to open the extension in an [Extension Development Host](./visual-studio-code#Running-the-Extension).
-:::
+> **Note**
+>
+> This workflow only works if all you're changing is the Rust code. If your changes include updates to the VS Code extension or if you'd like to test your new rule's setting in VS Code by adding it to `package.json`, then you'd need to open the extension in an [Extension Development Host](./visual-studio-code#Running-the-Extension).
 
 ## Elevate Your Pull Request
 
