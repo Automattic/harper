@@ -105,6 +105,8 @@ static TEMPORAL_NOUNS: &[&str] = &[
     "time", "times", "moment", "moments", "stage", "stages", "point", "points",
 ];
 
+static TEMPORAL_MODIFIERS: &[&str] = &["same", "later", "earlier", "next", "last"];
+
 /// Corrects "get access at <resource>" to "get access to <resource>", while avoiding
 /// false positives like "get access at all", "get access at least", URLs, or time expressions.
 pub struct GetAccessAt {
@@ -186,11 +188,18 @@ impl ExprLinter for GetAccessAt {
                     return None;
                 }
 
-                // Check for temporal adverbials like "at this time", "at any point", "at that moment"
+                // Check temporal adverbials, including "at the same time" and "at a later stage".
                 if following_words_len >= 2 {
                     let second_chars = following_words[1].unwrap().span.get_content(src);
                     if first_chars.eq_any_ignore_ascii_case_str(TEMPORAL_DETERMINERS)
-                        && second_chars.eq_any_ignore_ascii_case_str(TEMPORAL_NOUNS)
+                        && (second_chars.eq_any_ignore_ascii_case_str(TEMPORAL_NOUNS)
+                            || (second_chars.eq_any_ignore_ascii_case_str(TEMPORAL_MODIFIERS)
+                                && following_words[2].is_some_and(|token| {
+                                    token
+                                        .span
+                                        .get_content(src)
+                                        .eq_any_ignore_ascii_case_str(TEMPORAL_NOUNS)
+                                })))
                     {
                         return None;
                     }
@@ -385,6 +394,37 @@ mod tests {
             GetAccessAt::default(),
             "They need to get full access to the database.",
         );
+    }
+
+    #[test]
+    fn ignores_modified_temporal_adverbials() {
+        for text in [
+            "We can get free access at the same time.",
+            "They can get open access at a later stage.",
+            "You can gain limited access at the next stage.",
+        ] {
+            assert_lint_count(text, GetAccessAt::default(), 0);
+        }
+    }
+
+    #[test]
+    fn ambiguous_adjectives_still_allow_resource_corrections() {
+        for (text, corrected) in [
+            (
+                "We can get free access at the repository.",
+                "We can get free access to the repository.",
+            ),
+            (
+                "They can get open access at the database.",
+                "They can get open access to the database.",
+            ),
+            (
+                "You can gain limited access at the system.",
+                "You can gain limited access to the system.",
+            ),
+        ] {
+            assert_suggestion_result(text, GetAccessAt::default(), corrected);
+        }
     }
 
     #[test]
