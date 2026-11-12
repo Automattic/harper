@@ -50,7 +50,7 @@ async function loadOnboardingState() {
 /** Remount the walkthrough at Welcome without clearing persisted completion or other settings. */
 function restartOnboarding() {
 	active = 'general';
-	onboardingCompleted = false;
+	onboardingState = 'welcome';
 }
 
 $: title = titleMap[active];
