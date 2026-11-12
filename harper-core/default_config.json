@@ -5243,6 +5243,13 @@
 						},
 						{
 							"Bool": {
+								"name": "GaugeGouge",
+								"state": true,
+								"label": "Gauge / Gouge"
+							}
+						},
+						{
+							"Bool": {
 								"name": "GildedAge",
 								"state": true,
 								"label": "Gilded Age"
