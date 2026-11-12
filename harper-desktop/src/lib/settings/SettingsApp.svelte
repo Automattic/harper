@@ -47,6 +47,12 @@ async function loadOnboardingState() {
 	}
 }
 
+/** Remount the walkthrough at Welcome without clearing persisted completion or other settings. */
+function restartOnboarding() {
+	active = 'general';
+	onboardingCompleted = false;
+}
+
 $: title = titleMap[active];
 
 $: if (contentEl && active) {
@@ -75,7 +81,7 @@ $: if (contentEl && active) {
 
     <main bind:this={contentEl} class="content" aria-label={title}>
       {#if active === "general"}
-        <GeneralPage />
+        <GeneralPage onRestartOnboarding={restartOnboarding} />
       {:else if active === "writing"}
         <WritingPage />
       {:else if active === "dictionary"}

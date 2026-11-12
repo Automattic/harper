@@ -5,6 +5,8 @@ import { onMount } from 'svelte';
 import { Client } from '$lib/client';
 import { DIALECT_OPTIONS } from '../settings-data';
 
+export let onRestartOnboarding: () => void;
+
 const DialectValue = {
 	American: 0,
 	British: 1,
@@ -330,6 +332,20 @@ function settingsValueToDialect(value: string): Dialect {
               <p class="result-summary">{updateStatus}</p>
             {/if}
           </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="stanza">
+          <SettingRow top>
+            <div class="eyebrow">Restart Onboarding from the Beginning</div>
+            <p class="section-copy">
+              Useful to give Harper accessibility permission again or to learn how Harper works.
+            </p>
+            <Button slot="control" unstyled class="button" type="button" on:click={onRestartOnboarding}>
+              Restart onboarding
+            </Button>
+          </SettingRow>
         </div>
 
         <div class="divider"></div>
