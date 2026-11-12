@@ -14,8 +14,9 @@ pub const ANCHOR_GAP: f32 = 3.0;
 
 /// A viewport with no edges, so the cards are never clamped, flipped, or stacked.
 ///
-/// The highlighter does not yet know which monitor a popup is on. Until it does, both drawing and
-/// hit-testing use this value, so the later change only has to replace it in one place.
+/// The layout does not use the bounds of the popup's monitor yet. Both drawing and hit-testing use
+/// this value, but drawing passes the anchor in window coordinates and hit-testing passes it in
+/// screen coordinates, so a bounded viewport has to be given in the same coordinates as the anchor.
 pub const UNBOUNDED_VIEWPORT: egui::Rect = egui::Rect::EVERYTHING;
 
 /// The time constant, in seconds, of the sidebar's movement toward its target.

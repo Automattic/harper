@@ -6,7 +6,7 @@ import { Button, Card, Checkbox, Input, Isolate, Label, Radio } from 'components
   <div class="flex flex-row justify-center items-center h-screen"> 
     <Card> 
       <h1 class="text-3xl font-semibold">Report Problematic Lint</h1> 
-      <p class="text-sm text-gray-600">If you've encountered an example of Harper producing an incorrect result, we'd love to know about it.</p>
+      <p class="text-sm text-gray-600 dark:text-white/60">If you've encountered an example of Harper producing an incorrect result, we'd love to know about it.</p>
       <form method="POST" class="mt-4 space-y-6" action="/api/problematic-lints">
         <div class="space-y-3">
           <div class="flex items-baseline gap-2">

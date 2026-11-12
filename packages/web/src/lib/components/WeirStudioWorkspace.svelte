@@ -1,7 +1,16 @@
 <script lang="ts">
 import { Button, Card, CloseIcon, DownloadIcon, PlayIcon } from 'components';
-import type { ComponentType } from 'svelte';
+import { type ComponentType, getContext } from 'svelte';
 import WeirStudioFileExplorer from '$lib/components/WeirStudioFileExplorer.svelte';
+import {
+	studioAceTheme,
+	studioPrimaryButton,
+	studioSecondaryButton,
+} from '$lib/components/weirStudioTheme';
+import type ThemeController from '$lib/docs/ThemeController';
+import { THEME_CONTEXT } from '$lib/docs/ThemeController';
+
+const theme = getContext<ThemeController>(THEME_CONTEXT);
 
 export let drawerOpen = true;
 export let files: Map<string, string> = new Map();
@@ -38,19 +47,19 @@ export let getEditorMode: (name: string) => string;
 />
 
 <main class="relative z-10 flex flex-1 flex-col">
-	<div class="flex items-center justify-between border-b border-black/10 bg-white/70 px-4 py-3">
+	<div class="flex items-center justify-between border-b border-black/10 bg-white/70 px-4 py-3 dark:border-white/10 dark:bg-[#1c1a16]/70">
 		<div class="flex items-center gap-3">
-			<div class="text-xs font-semibold uppercase tracking-[0.2em] text-black/50">Studio</div>
-			<div class="text-sm font-medium text-black/80">{activeFile ?? 'No file selected'}</div>
+			<div class="text-xs font-semibold uppercase tracking-[0.2em] text-black/50 dark:text-white/50">Studio</div>
+			<div class="text-sm font-medium text-black/80 dark:text-white/80">{activeFile ?? 'No file selected'}</div>
 		</div>
 		<div class="flex items-center gap-3">
-			<div class="text-xs uppercase tracking-[0.18em] text-black/40">
+			<div class="text-xs uppercase tracking-[0.18em] text-black/40 dark:text-white/40">
 				{linterReady ? 'Weir runner online' : 'Warming up harper.js'}
 			</div>
 			<Button
 				size="xs"
 				color="white"
-				className="h-8 w-8 !p-0"
+				className={`h-8 w-8 !p-0 ${studioSecondaryButton}`}
 				title="Close Weirpack"
 				aria-label="Close Weirpack"
 				on:click={onClosePack}
@@ -61,22 +70,22 @@ export let getEditorMode: (name: string) => string;
 	</div>
 
 	<div class="flex-1 overflow-hidden p-4">
-		<Card className="h-full border-black/10 bg-white/95 p-0 shadow-[0_20px_60px_-40px_rgba(0,0,0,0.4)]">
+		<Card className="h-full border-black/10 bg-white/95 p-0 shadow-[0_20px_60px_-40px_rgba(0,0,0,0.4)] dark:border-white/10 dark:bg-[#1c1a16]/95">
 			{#if editorReady && AceEditorComponent}
-				{#key activeFile}
+				{#key `${activeFile}:${$theme}`}
 					<svelte:component
 						this={AceEditorComponent}
 						width="100%"
 						height="100%"
 						value={activeFile ? files.get(activeFile) : ""}
 						lang={getEditorMode(activeFile ?? '')}
-						theme="chrome"
+						theme={studioAceTheme[$theme]}
 						options={editorOptions}
 						on:input={(event: CustomEvent<string>) => onUpdateContent(event.detail)}
 					/>
 				{/key}
 			{:else}
-				<div class="flex h-full items-center justify-center text-sm uppercase tracking-[0.3em] text-black/40">
+				<div class="flex h-full items-center justify-center text-sm uppercase tracking-[0.3em] text-black/40 dark:text-white/40">
 					Loading editor…
 				</div>
 			{/if}
@@ -89,14 +98,21 @@ export let getEditorMode: (name: string) => string;
 		size="md"
 		color="dark"
 		pill
-		className={runningTests ? 'opacity-70' : undefined}
+		className={`${studioPrimaryButton} ${runningTests ? 'opacity-70' : ''}`}
 		on:click={onRunTests}
 		disabled={!packLoaded || runningTests}
 	>
 		<PlayIcon className="h-4 w-4" />
 		{runningTests ? 'Running' : 'Run tests'}
 	</Button>
-	<Button size="md" color="white" pill on:click={onDownload} disabled={!packLoaded}>
+	<Button
+		size="md"
+		color="white"
+		pill
+		className={studioSecondaryButton}
+		on:click={onDownload}
+		disabled={!packLoaded}
+	>
 		<DownloadIcon className="h-4 w-4" />
 		Download
 	</Button>
