@@ -2877,6 +2877,7 @@ Suggest:
   - Replace with: “Ha”
   - Replace with: “Ham”
   - Replace with: “He”
+  - Replace with: “HM”
 
 
 
@@ -2909,7 +2910,7 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                             ^~~ This word's canonical spelling is all-caps.
@@ -2951,7 +2952,7 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                                                   ^~~ This word's canonical spelling is all-caps.
@@ -2983,7 +2984,7 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                                                            ^~~ This word's canonical spelling is all-caps.
@@ -3047,7 +3048,7 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                    ^~~ This word's canonical spelling is all-caps.
@@ -3089,7 +3090,7 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                                          ^~~ This word's canonical spelling is all-caps.
@@ -3121,7 +3122,7 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                                                   ^~~ This word's canonical spelling is all-caps.
@@ -3206,7 +3207,7 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
     2503 | > “Soo—oop of the e—e—evening, Beautiful, beautiful Soup!”
          |        ^~~ This word's canonical spelling is all-caps.

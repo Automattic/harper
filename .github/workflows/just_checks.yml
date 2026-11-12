@@ -7,6 +7,12 @@ on:
     branches: ["master"]
   merge_group:
 
+# Cancel superseded runs when a PR gets new commits, freeing runners for other
+# jobs. Non-PR runs get a unique group, so they are never queued or cancelled.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
 env:
   CARGO_TERM_COLOR: always
 
@@ -41,13 +47,12 @@ jobs:
         with:
           node-version-file: ".node-version"
       - name: Install Tauri Linux dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            libayatana-appindicator3-dev \
-            librsvg2-dev \
-            libwebkit2gtk-4.1-dev \
-            libxdo-dev 
+        run: >-
+          .github/scripts/apt-install.sh
+          libayatana-appindicator3-dev
+          librsvg2-dev
+          libwebkit2gtk-4.1-dev
+          libxdo-dev
       - name: Rust Cache
         uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
         with:

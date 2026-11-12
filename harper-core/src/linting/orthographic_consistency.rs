@@ -84,7 +84,8 @@ impl ExprLinter for OrthographicConsistency {
                     chars.iter().map(|c| c.to_ascii_uppercase()).collect(),
                 )],
                 message: "This word's canonical spelling is all-caps.".to_owned(),
-                priority: 127,
+                // Two-letter matches are often typos (`ot` for `to`), so `SpellCheck` should win.
+                priority: if chars.len() > 2 { 31 } else { 127 },
             });
         }
 
@@ -152,12 +153,74 @@ fn alphabetic_differs(a: &[char], b: &[char]) -> bool {
 
 #[cfg(test)]
 mod tests {
+    use crate::Dialect;
+    use crate::linting::LintGroup;
     use crate::linting::tests::{
         assert_good_and_bad_suggestions, assert_lint_count, assert_no_lints,
         assert_suggestion_result,
     };
+    use crate::spell::FstDictionary;
 
     use super::OrthographicConsistency;
+
+    fn curated_linter() -> LintGroup {
+        LintGroup::new_curated(FstDictionary::curated(), Dialect::American)
+    }
+
+    #[test]
+    fn lowercase_bbc_beats_spell_check() {
+        assert_suggestion_result(
+            "The bbc reported it.",
+            curated_linter(),
+            "The BBC reported it.",
+        );
+    }
+
+    #[test]
+    fn title_case_bbc_beats_spell_check() {
+        assert_suggestion_result(
+            "The Bbc reported it.",
+            curated_linter(),
+            "The BBC reported it.",
+        );
+    }
+
+    #[test]
+    fn lowercase_html_beats_spell_check() {
+        assert_suggestion_result(
+            "Validate the html first.",
+            curated_linter(),
+            "Validate the HTML first.",
+        );
+    }
+
+    #[test]
+    fn lowercase_nhs_beats_spell_check() {
+        assert_suggestion_result(
+            "The nhs is very busy.",
+            curated_linter(),
+            "The NHS is very busy.",
+        );
+    }
+
+    #[test]
+    fn two_letter_typo_stays_with_spell_check() {
+        assert_suggestion_result(
+            "We went ot the shop.",
+            curated_linter(),
+            "We went out the shop.",
+        );
+    }
+
+    // `us`, `who` and `it` are common words, even though `US`, `WHO` and `IT` are also dictionary
+    // entries, so they shouldn't be changed to all-caps.
+    #[test]
+    fn dont_capitalize_common_words_that_match_acronyms() {
+        assert_no_lints(
+            "They told us who it was.",
+            OrthographicConsistency::default(),
+        );
+    }
 
     #[test]
     fn nasa_should_be_all_caps() {
