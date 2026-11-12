@@ -1,0 +1,19 @@
+expr main <(by hands!-), hands>
+
+let message "Use `by hand` instead of `by hands` when referring to manual construction."
+let description "Corrects `by hands` to `by hand`, as `by hand` is the standard phrase for manual construction."
+let kind "Usage"
+let becomes "hand"
+
+# Typical use
+
+test "Init Features with tools (so, we don't need to do it by hands)" "Init Features with tools (so, we don't need to do it by hand)"
+test "Man-pages created by hands following online API document at https://wiki.libsdl.org/CategoryAPI." "Man-pages created by hand following online API document at https://wiki.libsdl.org/CategoryAPI."
+
+# At end of sentence
+test "Is there some manual way to add my own snippets to your plugin, or now I need to clone it and edit by hands?" "Is there some manual way to add my own snippets to your plugin, or now I need to clone it and edit by hand?"
+
+# Don't flag when immediately followed by a hyphen
+
+allows "The session is guided by hands-on challenges."
+allows "This repository is used by hands-on session at Okinawa Open Days."
