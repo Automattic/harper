@@ -3160,6 +3160,13 @@
 						},
 						{
 							"Bool": {
+								"name": "BesidesFor",
+								"state": true,
+								"label": "Besides for"
+							}
+						},
+						{
+							"Bool": {
 								"name": "BoringWords",
 								"state": false,
 								"label": "Boring Words"
@@ -3359,6 +3366,13 @@
 								"name": "LongSentences",
 								"state": true,
 								"label": "Long Sentences"
+							}
+						},
+						{
+							"Bool": {
+								"name": "MakeTheMostOf",
+								"state": true,
+								"label": "Make the Most of"
 							}
 						},
 						{
@@ -4837,6 +4851,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ByHand",
+								"state": true,
+								"label": "By Hand"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ByOnesOwn",
 								"state": true,
 								"label": "By One's Own"
@@ -6195,9 +6216,16 @@
 						},
 						{
 							"Bool": {
+								"name": "SpareNoExpense",
+								"state": true,
+								"label": "Spare no Expense"
+							}
+						},
+						{
+							"Bool": {
 								"name": "StatuteOfLimitations",
 								"state": true,
-								"label": "Statute Of Limitations"
+								"label": "Statute of Limitations"
 							}
 						},
 						{
@@ -6373,6 +6401,13 @@
 								"name": "UnderneathOf",
 								"state": true,
 								"label": "Underneath of"
+							}
+						},
+						{
+							"Bool": {
+								"name": "UnderThreat",
+								"state": true,
+								"label": "Under Threat"
 							}
 						},
 						{
