@@ -90,6 +90,31 @@ impl ExprLinter for OrthographicConsistency {
         }
 
         let canonical_flags = metadata.orth_info;
+
+        // Correct an accidental second capital without changing the initial capital.
+        if chars.len() >= 3
+            && chars[0].is_ascii_uppercase()
+            && chars[1].is_ascii_uppercase()
+            && chars[2..].iter().all(char::is_ascii_lowercase)
+            && let Some(canonical) = self.dict.get_correct_capitalization_of(chars)
+            && OrthFlags::from_letters(canonical)
+                .intersects(OrthFlags::LOWERCASE | OrthFlags::TITLECASE)
+        {
+            let mut corrected = chars.to_vec();
+            corrected[1].make_ascii_lowercase();
+
+            return Some(Lint {
+                span: word.span,
+                lint_kind: LintKind::Capitalization,
+                message: format!(
+                    "Did you mean `{}`? Only the first letter should be capitalized.",
+                    corrected.iter().collect::<String>()
+                ),
+                suggestions: vec![Suggestion::ReplaceWith(corrected)],
+                priority: 31,
+            });
+        }
+
         let flags_to_check = [
             OrthFlags::LOWER_CAMEL,
             OrthFlags::UPPER_CAMEL,
@@ -495,6 +520,54 @@ mod tests {
 
         for sentence in sentences {
             assert_no_lints(sentence, OrthographicConsistency::default());
+        }
+    }
+
+    #[test]
+    fn corrects_accidental_double_initial_capitals() {
+        for (input, expected) in [
+            ("THe", "The"),
+            ("LIzard", "Lizard"),
+            ("DOor", "Door"),
+            ("THe lizard opened the door.", "The lizard opened the door."),
+            ("A LIzard opened the door.", "A Lizard opened the door."),
+            ("Open the DOor.", "Open the Door."),
+            ("\"THe\"", "\"The\""),
+            ("LIzard!", "Lizard!"),
+            ("DOor?", "Door?"),
+            ("THe, DOor", "The, Door"),
+            ("THe\nLIzard", "The\nLizard"),
+            ("THe\tDOor", "The\tDoor"),
+            ("HEllo", "Hello"),
+            ("WOrld", "World"),
+            ("ENgland", "England"),
+        ] {
+            assert_suggestion_result(input, OrthographicConsistency::default(), expected);
+        }
+    }
+
+    #[test]
+    fn preserves_other_casing_and_unknown_words() {
+        for input in [
+            "The lizard opened the door.",
+            "Lizard Door",
+            "THE LIZARD DOOR",
+            "NASA",
+            "iPhone",
+            "LinkedIn",
+            "WordPress",
+            "macOS",
+            "YouTube",
+            "DO",
+            "PR",
+            "QZxqzq",
+            "tHe",
+            "lIzard",
+            "DOOr",
+            "THe-like",
+            "pre-DOor",
+        ] {
+            assert_no_lints(input, OrthographicConsistency::default());
         }
     }
 
