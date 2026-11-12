@@ -30,7 +30,9 @@ impl Integration {
             .into_iter()
             .map(|bundle_id| Integration {
                 bundle_id: bundle_id.to_string(),
-                enabled: true,
+                // Onboarding teaches users to enable integrations by enabling TextEdit,
+                // so it starts disabled while the other curated integrations start enabled.
+                enabled: bundle_id != "com.apple.TextEdit",
             })
             .collect()
     }

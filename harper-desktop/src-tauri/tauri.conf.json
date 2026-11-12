@@ -28,6 +28,23 @@
 			"icons/icon.icns",
 			"icons/icon.ico"
 		],
+		"macOS": {
+			"dmg": {
+				"background": "dmg/background.png",
+				"windowSize": {
+					"width": 440,
+					"height": 640
+				},
+				"appPosition": {
+					"x": 220,
+					"y": 120
+				},
+				"applicationFolderPosition": {
+					"x": 220,
+					"y": 470
+				}
+			}
+		},
 		"createUpdaterArtifacts": true
 	},
 	"plugins": {

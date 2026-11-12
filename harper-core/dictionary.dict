@@ -12096,7 +12096,7 @@ airlock/NSg
 airmail/~NSgVGd
 airman/~N0g
 airmen/~N9
-airplane/~NgSV
+airplane/~NgSV<@
 airplay/~Nmg
 airport/~NSg
 airship/~NSgV
@@ -12680,6 +12680,8 @@ anointment/Nmg
 anomalous/~JY
 anomaly/~NSg
 anon/~NSJ
+anonymisation/Nmg!_₹
+anonymise/VdSG!_₹
 anonymity/~Ng
 anonymization/Nmg
 anonymize/Vd
@@ -12928,6 +12930,7 @@ apothecary/NSg
 apothegm/NSg
 apotheoses/N9V
 apotheosis/N0g
+apotheosise/VdSG!_₹
 app/~NSg
 appal/VS!_₹
 appall/VGdS
@@ -13632,7 +13635,7 @@ author/~NSgVdG
 authoress/NgS
 authorial/J
 authorisation/NwSg!_₹
-authorise/VGdS!_₹
+authorise/VGdSr!_₹
 authorised/JVtT!_₹
 authoritarian/~JNgS
 authoritarianism/Nmg
@@ -16569,6 +16572,7 @@ canoeist/NSg
 canola/Ng
 canon/~NgSJ
 canonical/~JYN
+canonicalisation/Ng!_₹
 canonicalise/VGdS!_₹
 canonicalize/VGdS
 canonisation/NgS!_₹
@@ -16921,6 +16925,7 @@ cataract/~NgS
 catarrh/Ng
 catastrophe/~NgS
 catastrophic/~JQ
+catastrophise/VdSG!_₹
 catastrophize/VdSG
 catatonia/Ng
 catatonic/JNSg
@@ -17824,6 +17829,7 @@ civics/~Nmg
 civil/~JYU
 civilian/~NgSJ
 civilisation/NSg!_₹
+civilisational/J!_₹
 civilise/VGdS!_₹
 civilised/VJU!_₹tT
 civility/~Nmgi
@@ -18368,6 +18374,7 @@ collard/NSg
 collarless/J
 collate/VdSGXn
 collateral/~JYNmg
+collateralisation/Ng!_₹
 collateralise/V!_₹
 collateralization/Ng
 collateralize/V
@@ -18609,6 +18616,7 @@ commode's
 commodification/NwSg
 commodify/VdSG
 commodious/JY
+commoditise/VdSG!_₹
 commoditize/VdSG
 commodity/~NSg
 commodore/~NSg
@@ -18811,8 +18819,8 @@ concept/~NSgV
 conception/~NwSg
 conceptional/J
 conceptual/~JY
-conceptualisation/NSg!_₹
-conceptualise/VdSG!_₹
+conceptualisation/NSgr!_₹
+conceptualise/VdSGr!_₹
 conceptualization/NgSr
 conceptualize/VdSGr
 concern/~Nw0gVdU
@@ -19648,10 +19656,12 @@ councilperson/N0Sg
 councilwoman/N0g
 councilwomen/N9
 counsel/~NgSVdGz
+counseled/VtT<
+counseling/NV6<
 counselled/VtT!@_₹
 counselling/NV6!@_₹
 counsellor/NSg!@_₹
-counselor/~NgS
+counselor/~NgS<
 count/~VdGSNgEr
 countability/Nmg
 countable/~JNU
@@ -20386,8 +20396,11 @@ customarily/~R8
 customary/~JNU
 customer/~NgS
 customhouse/NSg
+customisability/Nmg!_₹
+customisable/J!_₹
 customisation/NwgS!_₹
 customise/VdSG!_₹
+customiser/NgS!_₹
 customizability/Nmg
 customizable/J
 customization/~NwgS
@@ -20752,6 +20765,7 @@ decapitate/VGdSXn
 decapitator/NgS
 decapped/VtTJ
 decapping/V6N
+decarbonise/VdSG!_₹
 decarbonize/VdSG
 decathlete/NS
 decathlon/NSg
@@ -20847,6 +20861,8 @@ dedicate/~VbGdSJNr
 dedication/~NwSg
 dedicator/NSg
 dedicatory/JN
+dedollarisation/Nmg!_₹
+dedollarise/VSdG!_₹
 dedollarization/Nmg
 dedollarize/VSdG
 deduce/~VGdS
@@ -21100,6 +21116,8 @@ denim/~NwgS
 denitrification/N
 denizen/NgSV
 denominational/~J
+denormalisation/Nmg!_₹
+denormalise/VGdS!_₹
 denormalization/Nmg
 denormalize/VGdS
 denotation/NSgQ
@@ -21247,6 +21265,8 @@ descry/VGdS
 desecrate/VdSGJn
 desecration/Nmg
 deselection/Ng
+deserialisation/NgS!_₹
+deserialise/VSGd!_₹
 deserialization/NgS
 deserialize/VSGd
 desert/~NwSgJ>VdGZ
@@ -21580,6 +21600,7 @@ digital/~JYN
 digitalis/Ng
 digitisation/N!_₹
 digitise/VGdS!_₹
+digitiser/NgS!_₹
 digitization/N
 digitize/VGdS
 digitizer/NgS
@@ -22131,6 +22152,8 @@ doleful/JYp
 dolefulness/Nmg
 doll/~NgSdG
 dollar/~NSg
+dollarisation/Ng!_₹
+dollarise/VdSG!_₹
 dollarization/Ng
 dollarize/VdSG
 dollhouse/NSg
@@ -23297,7 +23320,7 @@ empathy/~Nmg
 emperor/~NgS
 emphases/N9
 emphasis/~N0g
-emphasise/VGdSr!_₹
+emphasise/VGdSre!_₹
 emphasize/~VGdSre
 emphatic/~JNUQ
 emphysema/~Ng
@@ -23402,7 +23425,7 @@ endangerment/Ng
 endear/VSGdL
 endearing/JYNV
 endearment/NSg
-endeavor/~NSgVGd
+endeavor/~NSgVGd<
 endeavour/NgSVdG!@_₹
 endemic/~JNgSQ
 endgame/~NSJ
@@ -23525,10 +23548,10 @@ enrapture/VdSG
 enrich/~VdSGL
 enrichment/~Ng
 enrol/VSL!@_₹
-enroll/~VdSGL
-enrolled/VtT
-enrolling/V6N
-enrollment/~NgS
+enroll/~VdSGL<
+enrolled/VtT<!@_₹
+enrolling/V6N<!@_₹
+enrollment/~NgS<
 enrolment/NSg!@_₹
 ensconce/VdSG
 ensemble/~NSgV
@@ -23946,6 +23969,7 @@ eulogizer/Ng
 eulogy/~NSg
 eunuch/~N0gV
 eunuchs/~N9
+euphemise/VdGS!_₹
 euphemize/VdGS!_₹
 euphemism/~NwSg
 euphemistic/JQ
@@ -23959,6 +23983,7 @@ euro/~NgS
 europium/Nmg
 eutectic/~JN
 euthanasia/~Nmg
+euthanise/VdSG!_₹
 euthanize/VdSG
 euthenics/Ng
 eutrophy/Nmn
@@ -24653,6 +24678,7 @@ far/~JVN
 far right/NgS
 far-right/J
 farad/NSg
+faradise/VdG!_₹
 faradize/VdG
 faraway/~JN
 farce/~NwSgV
@@ -24932,6 +24958,8 @@ fete/NgSVGd
 fetid/JpN
 fetidness/Ng
 fetish/~NgS
+fetishisation/Ng!_₹
+fetishise/VdSG!_₹
 fetishism/~Ng
 fetishist/NSg
 fetishistic/J
@@ -24967,10 +24995,10 @@ fib/NSgV>Z
 fibbed/VtT
 fibber/NSg
 fibbing/V6N
-fiber/~NwgS
-fiberboard/Nmg
-fiberfill/Ng
-fiberglass/~NmgV
+fiber/~NwgS<
+fiberboard/Nmg<
+fiberfill/Ng<
+fiberglass/~NmgV<
 fibre/NwSg!@_₹
 fibreboard/Nmg!@_₹
 fibrefill/Ng!@_₹
@@ -25109,6 +25137,8 @@ finalize/~VdSG
 finance/~NwSVdGr
 finance's
 financial/~JY
+financialisation/Ng!_₹
+financialise/VdSG!_₹
 financialization/Ng
 financialize/VdSG
 financials/9
@@ -26253,7 +26283,7 @@ fulfil/VSL!_@₹
 fulfill/~VdGSL<@
 fulfilled/~VtTJU
 fulfilling/~JV6NU
-fulfillment/~Ng
+fulfillment/~Ng<@
 fulfilment/Ng!_₹
 full/~J^>pNgSVdGZ
 full on/JR
@@ -26677,7 +26707,7 @@ genealogy/~NSg
 genera/~N9
 general/~JYNSgV
 generalisation/NgS!_₹
-generalise/VGdS!_₹
+generalise/VGdSB!_₹
 generaliser/NgS!_₹
 generalissimo/NgS
 generalist/NgS
@@ -29510,7 +29540,7 @@ hypothalamus/~Ng
 hypothermia/~Ng
 hypotheses/~N9
 hypothesis/~N0g
-hypothesise/V!_₹
+hypothesise/VdSG!_₹
 hypothesize/VdSG
 hypothetical/~JYNS
 hypothyroid/Jg
@@ -30222,8 +30252,8 @@ indulge/~VdSG
 indulgence/~NwSgV
 indulgent/JY
 industrial/~JYN
-industrialisation/Ng!_₹
-industrialise/VdSG!_₹
+industrialisation/Nge!_₹
+industrialise/VdSGr!_₹
 industrialism/Ng
 industrialist/~NSg
 industrialization/~Nge
@@ -30563,7 +30593,7 @@ instability/~NS
 install/~V>dGSNUBZ
 installation/~NwgS
 installer/NgSU
-installment/~NSg
+installment/~NSg<
 instalment/NgS!@_₹
 instance/~NVGd
 instant/~NgSJY>V
@@ -30961,6 +30991,7 @@ ion/~NSgU
 ionic/~J
 ionisation/NgU!_₹
 ionise/VdSGU!_₹
+ioniser/NgS!_₹
 ionization/~NgU
 ionize/VdSGU
 ionizer/NgS
@@ -31275,8 +31306,8 @@ jewelled/JVtT!@_₹
 jeweller/NgS!@_₹
 jewellery/Nmg!@_₹
 jewelling/V6!@_₹
-jewelries/NV!@_₹
-jewelry/~NmSgV
+jewelries/NV<
+jewelry/~NmSgV<
 jg/~
 jib/~NSgVGd
 jibbed/VtT
@@ -32302,6 +32333,7 @@ legal/~JYNSg
 legalese/Nmg
 legalisation/Nmg!_₹
 legalise/VGdS!_₹
+legaliser/NgS!_₹
 legalism/NgS
 legalist/JNS
 legalistic/JQ
@@ -32338,8 +32370,8 @@ legitimacy/~Ng
 legitimate/~JYNSVdG
 legitimatise/VGdS!_₹
 legitimatize/VGdS
-legitimisation/Ng!_₹
-legitimise/VdSG!_₹
+legitimisation/Nge!_₹
+legitimise/VdSGe!_₹
 legitimization/Nge
 legitimize/~VdSGe
 legless/J
@@ -32647,6 +32679,7 @@ lineage/~NgS
 lineal/~JY
 lineament/NSg
 linear/~JYN
+linearise/VdSG>!_₹
 linearity/Ng
 linearize/VdSG>
 linebacker/~NgS
@@ -32745,7 +32778,7 @@ lit/~VtT>JNZ
 litany/NSg
 litchi/NgS
 lite/~JNV
-liter/~Ng
+liter/~NgS<
 literacy/~Nmg
 literal/~JYpNSg
 literalness/Nmg
@@ -32854,7 +32887,7 @@ local/~JYNSg
 locale/~NgS
 localhost/NSg
 localisation/Nwg!_₹
-localise/VdSG!_₹
+localise/VdSG>!_₹
 localish/J
 localism/Nmg
 localist/JNgs
@@ -33754,6 +33787,8 @@ masc/~JN
 mascara/NwgSVGd
 mascot/~NgSV
 masculine/~JNSg
+masculinisation/Ng!_₹
+masculinise/VdSG!_₹
 masculinity/~Ng
 masculinization/Ng
 masculinize/VdSG
@@ -33896,6 +33931,7 @@ maximalism/Ng
 maximalist/NgSJ
 maximisation/Ng!_₹
 maximise/VGdS!_₹
+maximiser/NgS!_₹
 maximization/Ng
 maximize/~VGdS
 maximum/~NSgJ
@@ -33980,7 +34016,7 @@ mechanoluminescent/J
 mechatronics/Ng
 med/~NSg
 medal/~NSgV
-medalist/~NgS
+medalist/~NgS<
 medallion/~NSgV
 medallist/NSg!@_₹
 meddle/VGd>SZ
@@ -34094,6 +34130,8 @@ meme/~NgSV
 memento/~NgS
 memo/~NgSV
 memoir/~NgS
+memoisation/Nmg!_₹
+memoise/VGdS!_₹
 memoization/Nmg
 memoize/VGdS
 memorabilia/~Nmg
@@ -34260,6 +34298,7 @@ metal/~NwSgJVd
 metalanguage/NgS
 metalled/JVtT!@_₹
 metallic/~JN
+metallise/VGd>SZ!_₹
 metallize/VGd>SZ    # ll vs l not clearly US/UK difference, few dictionaries include -ise spellings
 metallurgic/J
 metallurgical/~J
@@ -34279,7 +34318,7 @@ metaphysical/~JY
 metaphysics/~Ng
 metastases/9
 metastasis/Ng
-metastasise/V!_₹
+metastasise/VdSG!_₹
 metastasize/VdSG
 metastatic/J
 metatarsal/JNgS
@@ -34376,7 +34415,8 @@ microeconomic/JSQ
 microelectronic/JNS
 microelectronics/~Nmg
 microfarad/NgS
-microfiber/NgS
+microfiber/NgS<
+microfibre/NgS!@_₹
 microfiche/NgV
 microfilm/~NgSVGd
 microfinance/Nmg
@@ -34578,6 +34618,7 @@ mine/~INgSVGd>ZnX
 minefield/NSg
 miner/~NgS
 mineral/~NgSJ
+mineralise/VGdS!_₹
 mineralize/VGdS
 mineralogical/J
 mineralogist/NgS
@@ -36550,6 +36591,7 @@ nonsmoker/NSg
 nonsmoking/J
 nonsocial/J
 nonspeaking/J
+nonspecialising/J!_₹
 nonspecialist/JNgS
 nonspecializing/J
 nonspecific/J
@@ -36567,6 +36609,7 @@ nonsuccessive/J
 nonsupport/NgG
 nonsurgical/J
 nonsustaining/J
+nonsympathiser/NgS!_₹
 nonsympathizer/NgS
 nontarnishable/J
 nontaxable/JN
@@ -36617,8 +36660,8 @@ nor'easter/N
 norm/~NgSV
 normal/~JYNgS
 normalcy/Ng
-normalisation/Ng!_₹
-normalise/VdSG!_₹
+normalisation/Ngr!_₹
+normalise/VdSGrn!_₹
 normality/Ng
 normalization/~NOgr
 normalize/VdSGrn
@@ -36878,6 +36921,8 @@ objectionably/Ry
 objectivation/Ng
 objective/~JYpNSg
 objectiveness/Ng
+objectivisation/Ng!_₹
+objectivise/VdSG!_₹
 objectivism/~Nmg
 objectivity/~Nmg
 objectivization/Ng
@@ -37067,7 +37112,7 @@ offbeat/~NgSJ
 offence/NwgS!@_₹
 offend/~VGd>SZ
 offender/~NgS
-offense/~NwgS
+offense/~NwgS<
 offensive/~JYpNi
 offensive's
 offensiveness/Nmgi
@@ -37279,6 +37324,7 @@ operatic/~J
 operatically/Ry
 operation/~NwgS
 operational/~JY
+operationalise/VGdS!_₹
 operationalize/VGdS
 operative/~JNSg
 operator/~NSg
@@ -37324,8 +37370,10 @@ optician/NSg
 optics/~Ng
 optima/N9
 optimal/~JYN
+optimisable/J!_₹
 optimisation/NwSg!_₹
 optimise/Vd>SG!_₹
+optimiser/NgS!_₹
 optimism/~NSg
 optimist/NSg
 optimistic/~JQ
@@ -37694,6 +37742,7 @@ overaggressive/J
 overall/~JNSg
 overalls/Ng
 overambitious/J
+overanalyse/VSdG!_₹
 overanalyze/VSdG
 overanxious/J
 overarching/~VJN
@@ -37722,6 +37771,7 @@ overburden/VGdSN
 overbuy/VGS
 overcame/~V
 overcapacity/Ng
+overcapitalise/VdSG!_₹
 overcapitalize/VdSG
 overcareful/J
 overcast/NgSJVG
@@ -37767,7 +37817,7 @@ overeager/J
 overeat/VGSn
 overemotional/J
 overemphasis/Ng
-overemphasise/V!_₹
+overemphasise/VGdS!_₹
 overemphasize/VGdS
 overengineer/VGdS
 overenthusiastic/J
@@ -38055,6 +38105,7 @@ packager/NSg
 packaging/~VNmg
 packer/~NgS
 packet/~NgSV
+packetise/VSdG!_₹
 packetize/VSdG
 packing's
 packinghouse/NSg
@@ -38159,6 +38210,7 @@ pall/~NgSVdG
 palladium/~Ng
 pallbearer/NgS
 pallet/~NgSV
+palletise/VSdG!_₹
 palletize/VSdG
 palliate/VdSGJnv
 palliation/Ng
@@ -38305,6 +38357,7 @@ parallax/~NgSV
 parallel/~JNSgVGd
 paralleled/~VtTU
 parallelisation/NwSg!_₹
+parallelise/VdSGB!_₹
 parallelised/J!_₹
 parallelism/NgS
 parallelization/NwSg
@@ -38352,6 +38405,7 @@ parascending/N
 parasite/~NSgV
 parasitic/~JN
 parasitical/JY
+parasitise/VdSG!_₹
 parasitism/Ng
 parasitize/VdSG
 parasitoid/NgS
@@ -38383,7 +38437,7 @@ parentage/~Ng
 parental/~JN
 parentheses/~N9
 parenthesis/N0g
-parenthesise/V!_₹
+parenthesise/VdSG!_₹
 parenthesize/VdSG
 parenthetic/J
 parenthetical/JYN
@@ -38514,6 +38568,7 @@ passivation/Nmg
 passive/~JYpNgS
 passiveness/Nmg
 passivisation/N!_₹
+passivise/VdSG!_₹
 passivity/Nmg
 passivization/Nmg
 passivize/VdSG
@@ -39351,7 +39406,7 @@ photostatic/J
 photostatted/VtT
 photostatting/V6
 photosynthesis/~Nmg
-photosynthesise/V!_₹
+photosynthesise/VGdS!_₹
 photosynthesize/VGdS
 photosynthetic/J
 phototropic/J
@@ -39999,7 +40054,7 @@ politesse/Ng
 politic/~JNSV
 political/~JYN
 politician/~NSg
-politicisation/Ng!_₹
+politicisation/Nger!_₹
 politicise/VdSGe!_₹
 politicization/Nger
 politicize/VdSGe
@@ -40694,6 +40749,7 @@ pressmen/N9
 pressure/~NwSgVdG
 pressurisation/Ng!_₹
 pressurise/VGdSe!_₹
+pressuriser/NSg!_₹
 pressurization/Nmg
 pressurize/VGdSe
 pressurizer/NSg
@@ -40714,7 +40770,7 @@ preteen/JNgS
 pretence/NSg!_₹
 pretend/~Vd>GSJNZ
 pretender/~NgV
-pretense/NSgXn
+pretense/NSgXn<@
 pretension/NgSVdG
 pretentious/~JYU
 pretentiousness/Nmg
@@ -40816,7 +40872,7 @@ prion/NS
 prior/~JNgS
 prioress/NgS
 prioritisation/N!_₹
-prioritise/VdSG!_₹
+prioritise/VdSGe!_₹
 prioritization/N
 prioritize/~VdSGe
 priority/~NSg
@@ -41221,6 +41277,7 @@ pseud/NS
 pseudo/~NSJ(
 pseudocode/NmgG
 pseudonym/~NSg
+pseudonymise/VdSG!_₹
 pseudonymous/~J
 pseudorandom/Jp
 pseudoscience/~NgS
@@ -41594,7 +41651,7 @@ quantification/~Ng
 quantifier/~Ng
 quantify/~Vd>SGnZ
 quantisation/NgS!_₹
-quantise/V!_₹
+quantise/VSdG!_₹
 quantitation/N
 quantitative/~JY
 quantity/~NwSg
@@ -41770,6 +41827,7 @@ racer/~Ng
 racetrack/~NgS
 raceway/~NgS
 racial/~JYN
+racialise/VdSG!_₹
 racialism/Nmg
 racialist/NgS
 racily/Ry
@@ -41799,8 +41857,8 @@ radiation/~NwSg
 radiative/~J
 radiator/~NSg
 radical/~JYpNSg
-radicalisation/Ng!_₹
-radicalise/VdSG!_₹
+radicalisation/Nge!_₹
+radicalise/VdSGe!_₹
 radicalism/~Ng
 radicalization/Nge
 radicalize/VdSGe
@@ -41934,7 +41992,7 @@ rand/~NgV
 randiness/Ng
 random/~NSJYpV
 randomisation/Ng!_₹
-randomise/VdSG!_₹
+randomise/VdSG>!_₹
 randomization/Ng
 randomize/VdSG>
 randomness/NgS
@@ -42156,6 +42214,7 @@ reasonably/~RyU
 reasoner/Ng
 reasoning/~NgV
 reassuring/VJYN
+reauthorisation/Ng!_₹
 reauthorise/VS!_₹
 reauthorized/V!_₹
 reauthorizing/V!_₹
@@ -42562,6 +42621,7 @@ relation/~Ng
 relational/~J
 relationship/~NgS
 relative/~JYNgS
+relativise/VdSG>!_₹
 relativism/Nmg
 relativist/NgS
 relativistic/~J
@@ -42624,6 +42684,7 @@ remedy/~NSgVGd
 remember/~VdG
 remembered/~VtTU
 remembrance/~NgSV
+remilitarise/VGdS!_₹
 remilitarize/VGdS
 remind/VGdS
 reminder/~NgS
@@ -42682,6 +42743,8 @@ renter/NgV
 rentier/NgS
 renunciation/~NwSg
 reopen/~VSdG
+reoptimisation/NgS!_₹
+reoptimise/VdSG!_₹
 reorg/NgSVdG
 reorientate/VGdSn
 rep/~NSgV
@@ -42808,6 +42871,7 @@ requital/Ng
 requite/Vd>GSNZ
 requited/VU
 requiter/Ng
+reradicalise/VdSG!_₹
 reradicalize/VdSG
 rerank/VGdS
 reranking/NmgV6
@@ -43395,6 +43459,7 @@ romancer/Ng
 romanisation/NSg!_₹
 romanization/NSg
 romantic/~JNgSQ
+romanticisation/Ng!_₹
 romanticise/VdSG!_₹
 romanticism/~Nmg
 romanticist/NSg
@@ -43572,6 +43637,8 @@ ruffled/VtTJU
 rug/~NSgVJ
 rugby/~NgV
 rugged/~J^Y>pV
+ruggedisation/NwSg!_₹
+ruggedise/VdSG!_₹
 ruggedization/NwSg
 ruggedize/VdSG
 ruggedness/Ng
@@ -43684,6 +43751,7 @@ sacker/Ng
 sackful/NgSJ
 sacking/~NgV6
 sacra/~N
+sacralise/VGdSre!_₹
 sacralize/VGdSre
 sacrament/~NgSV
 sacramental/~JN
@@ -44007,7 +44075,7 @@ savings/~Nmg
 savior/~NSg<
 saviour/NgS!@_₹
 savoir faire/Nm
-savor/NgSVdG
+savor/NgSVdG<
 savoriness/Nmg<
 savory/J^>pNSg
 savour/NSgVGd!@_₹
@@ -44737,7 +44805,7 @@ sensibility/~N0wgi
 sensible/~JpN
 sensibleness/Nmg
 sensibly/Ryi
-sensitisation/Nge!_₹
+sensitisation/NgewS!_₹
 sensitise/VdSGe!_₹
 sensitive/~JYpNSg
 sensitiveness/Nmg
@@ -44825,7 +44893,7 @@ serge/~NgV
 sergeant/~NgS
 serial/~JYNSgV
 serialisation/NwSg!_₹
-serialise/VGdSB!_₹
+serialise/VGdSB>!_₹
 serialization/NwSg
 serialize/VGdS>B
 series/~Ng09        # singular and plural
@@ -44929,6 +44997,7 @@ sexting/NmgV6
 sexton/~NgS
 sextuplet/NSg
 sexual/~JYN
+sexualise/VGdS!_₹
 sexuality/~Nmg
 sexualize/VGdS
 sexy/~J^>p
@@ -45708,8 +45777,8 @@ skill/~Nw☁SJVde
 skill's
 skilled/~JV6U
 skillet/~NSgV
-skillful/~JYU
-skillfulness/Nmg
+skillful/~JYU<
+skillfulness/Nmg<
 skim/VSJNg
 skimmed/VtT
 skimmer/NSgV
@@ -45858,6 +45927,7 @@ sleigh/~N0gVdGJ
 sleighs/N9Vh
 sleight/NSg
 slender/~J>^Yp
+slenderise/VdSG!_₹
 slenderize/VdSG
 slenderness/Nmg
 slept/~VtT
@@ -46656,7 +46726,7 @@ spectacles/~N9g
 spectacular/~JYNgS
 spectate/VdSG
 spectator/~NSg
-specter/~NgSr
+specter/~NgSr<
 spectra/~9
 spectral/~J
 spectre/NgS!@_₹
@@ -47041,8 +47111,8 @@ stab/~NgSVJY
 stabbed/~VtT
 stabber/NgS
 stabbing/~JNgSV6
-stabilisation/Ng!_₹
-stabilise/VdSGe!_₹
+stabilisation/Ngme!_₹
+stabilise/VdSGer!_₹
 stabiliser/NgS!_₹
 stability/~Nmgi
 stabilization/~Nmge
@@ -47123,7 +47193,7 @@ stand-up/JN
 standalone/~JN
 standard/~JNgS
 standard-bearer/NgS
-standardisation/Ng!_₹
+standardisation/NgS!_₹
 standardise/VdSG!_₹
 standardization/~NgS
 standardize/~VdSG
@@ -47369,8 +47439,8 @@ stifling/JYVN
 stigma/~NSg
 stigmata/N
 stigmatic/JN
-stigmatisation/Ng!_₹
-stigmatise/VGdS!_₹
+stigmatisation/Nge!_₹
+stigmatise/VGdSe!_₹
 stigmatization/Nge
 stigmatize/VGdSe
 stile/NSgV
@@ -47561,6 +47631,7 @@ stratagem/NSg
 strategic/~JS
 strategical/JY
 strategics/Ng
+strategise/VdSG!_₹
 strategist/~NSg
 strategize/VdSG
 strategy/~NwSg
@@ -47820,6 +47891,7 @@ subject/~JNgSVGdv
 subjecthood/Nmg
 subjection/Nmg
 subjective/~JYN
+subjectivisation/Ng!_₹
 subjectivity/~Ng
 subjectivization/Ng
 subjoin/VGdSN
@@ -48069,7 +48141,9 @@ sultry/J>^p
 sum/~NSgV
 sumac/~NgVS
 summarily/~Ry
+summarisation/NgS!_₹
 summarise/VGdS!_₹
+summariser/NgS!_₹
 summarization/NgS
 summarize/~VGdS
 summarizer/NgS
@@ -48601,6 +48675,7 @@ syndicalist/NS
 syndicate/~NSgVdGn
 syndication/~Ng
 syndrome/~NSg
+synergise/VSdG!_₹
 synergism/Ng
 synergistic/J
 synergize/VSdG
@@ -48623,7 +48698,7 @@ synthpop/Nmg        # only in Collins
 synth-pop/Nmg
 syntheses/N9
 synthesis/~N0wg
-synthesise/V!_₹
+synthesise/VGd>SZ!_₹
 synthesiser/~NgS!_₹
 synthesize/~VGd>SZ
 synthesizer/~NgS
@@ -48645,6 +48720,7 @@ systematise/VGdS!_₹
 systematization/Nmg
 systematize/VGdS
 systemic/~JSgQ
+systemise/VGdS!_₹
 systemize/VGdS
 systemwide/J
 systole/NSg
@@ -49298,6 +49374,7 @@ texted/VtT
 textile/~NwgSJ
 texting/V6Nm
 textual/~JYW
+textualisation/NwgS!_₹
 textualization/NwgS
 textural/J
 texture/~NgSVGd
@@ -49858,6 +49935,9 @@ toilette/Ng
 toilsome/J
 toke/NgSVGd
 token/~NSgJV
+tokenisation/Nmg!_₹
+tokenise/VdSG!_₹
+tokeniser/NgS!_₹
 tokenism/Nmg
 tokenization/Nmg
 tokenize/VdSG
@@ -50028,6 +50108,7 @@ tossup/NgS
 tot/~NSgVGd
 total/~NSgJVGd
 totalisator/NgS!@_₹
+totalise/VSdG!_₹
 totalitarian/~JNSg
 totalitarianism/~Nmg
 totality/~NwSg
@@ -50597,6 +50678,8 @@ trope/NSgV
 trophy/~NSgV
 tropic/~NgSJ
 tropical/~JYN
+tropicalisation/Nmg!_₹
+tropicalise/VSdG!_₹
 tropicalization/Nmg
 tropicalize/VSdG
 tropics/~N9g
@@ -51074,6 +51157,7 @@ uncanny/~J^N
 uncap/VS
 uncaring/JN
 uncatalogued/J
+uncategorised/J!_₹
 uncategorized/J
 unceasing/JY
 unchangeable/JN
@@ -51118,6 +51202,7 @@ uncrushable/J
 unction/~NSg
 unctuous/JYp
 unctuousness/Ng
+uncustomised/J!_₹
 uncut/~J
 undaunted/JY
 undead/JN
@@ -51383,6 +51468,7 @@ unimpressive/J
 uninflected/J
 uninformative/J
 uninhibited/JY
+uninitialise/VdSG!_₹
 uninstallation/NSg
 uninsurable/J
 uninsured/JN
@@ -51468,6 +51554,7 @@ unobtanium/Nmg
 unoffensive/J
 unofficial/~JY
 unopen/J
+unoptimised/J!_₹
 unoptimized/VJ
 unoriginal/JN
 unpause/VdSG
@@ -51500,6 +51587,7 @@ unravelling/V6N!@_₹
 unread/JVNB
 unready/J
 unreal/~J
+unrealisable/J!_₹
 unreasoning/J
 unreciprocated/J
 unreflectively/Ry
@@ -51534,6 +51622,7 @@ unseemly/J^
 unseen/~JVNg
 unselect/VGdS
 unsentimental/J
+unserialise/VdSG!_₹
 unset/JV
 unsettlingly/R
 unshakable/J
@@ -51545,7 +51634,8 @@ unshockable/J
 unshorn/J
 unsightliness/Ng
 unsightly/J^p
-unskillful/JY!@_₹
+unskilful/JY!@_₹
+unskillful/JY<
 unskippable/J
 unsmiling/J
 unsociable/JN
@@ -51873,6 +51963,7 @@ vampiric/J
 van/~NSgV
 vanadium/~Ng
 vandal/~NSg
+vandalisation/Ng!_₹
 vandalise/VbdSG!_₹
 vandalism/~Ng
 vandalization/Ng
@@ -51891,7 +51982,7 @@ vape/NSVGd
 vapid/JYp
 vapidity/Nmg
 vapidness/Nmg
-vapor/~NwSgV
+vapor/~NwSgV<
 vaporisation/Ng!_₹
 vaporise/Vd>SGZ!_₹
 vaporiser/NgS!_₹
@@ -51930,6 +52021,7 @@ varsity/~NSg
 vary/~VdGSN
 varying/~V6NU
 vascular/~J
+vascularise/VdSG!_₹
 vascularize/VdSG
 vase/~NgSV
 vasectomy/NSg
@@ -51951,6 +52043,8 @@ vaunt/VdGSNg
 vb/~N
 veal/NmgV
 vector/~NSgVGd
+vectorisation/Nmg!_₹
+vectorise/VdSG>!_₹
 vectorization/Nmg
 vectorize/VdSG>
 veejay/NSgV
@@ -52230,6 +52324,7 @@ villa/~NSg
 village/~NSg>Z
 villager/Ng
 villain/~NSgV
+villainise/VGdS!_₹
 villainize/VGdS
 villainous/~J
 villainy/NSgJ
@@ -52814,6 +52909,8 @@ wealthiness/Ng
 wealthy/~J^>pN
 wean/VdGSN
 weapon/~NgSV
+weaponisation/Nmg!_₹
+weaponise/VGdS!_₹
 weaponization/Nmg
 weaponize/VGdS
 weaponless/J
@@ -52835,6 +52932,7 @@ weather-beaten/J
 weatherboard/~NSVG
 weathercock/NgSV
 weathering/~NgV
+weatherisation/Ng!_₹
 weatherise/VdSG!_₹
 weatherization/Ng
 weatherize/VdSG
@@ -53199,6 +53297,7 @@ widescale/J
 widescreen/~NgSJ
 widespread/~J
 widget/NS
+widgetise/VdSG!_₹
 widow/~NSgVd>GZ
 widower/~Ng
 widowhood/~Nmg
@@ -53243,8 +53342,8 @@ wilful/JYp!@_₹
 wilfulness/Ng!@_₹
 wiliness/Ng
 will/~NgSAd
-willful/JYp
-willfulness/Ng
+willful/JYp<
+willfulness/Ng<
 willies/Ng
 willing/~JYpNV6U
 willingness/~NgU
@@ -53499,7 +53598,7 @@ woof/NgSVd>GZ
 woofer/Ng
 woohoo
 wool/~NwgnX
-woolen/~JNg
+woolen/~JNgS<
 woolgathering/Nmg
 wooliness/Nmg
 woollen/JNSg!@_₹
@@ -54658,6 +54757,7 @@ dedup/Ng            # not well covered by dictionaries. wiktionary has only sing
 dedupe/NSgVdG       # not well covered by dictionaries. wiktionary has noun and verb. cf. dedup
 devlog/NSg
 diahcronic/JQ       # linguistics
+diarisation/NmgS!_₹
 diarization/NmgS    # used in voice recognition
 docstring/NSg
 doomerism/Nmg
@@ -54861,6 +54961,7 @@ queenship/Nwg
 resolutive/J
 retrocomputing/Nmg
 sortition/Nmg       # Political science: a method of appointment to office by random draw
+subvocalisation/Nwg!_₹
 subvocalization/Nwg # phonetics
 supervenience/Nmg   # From emergentist ontology
 # tête à tête
@@ -54977,6 +55078,7 @@ mantid/gNS
 mantidfly/gNS
 melanism/Nmg
 melanistic/J
+mineralisation/gNSer!_₹
 mineralization/gNSer
 monocot/gNS
 moonflower/gNS

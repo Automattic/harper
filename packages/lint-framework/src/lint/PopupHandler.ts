@@ -50,6 +50,7 @@ export default class PopupHandler {
 	private currentHintFor: number | undefined;
 	private renderBox: RenderBox;
 	private pointerDownCallback: (e: PointerEvent) => void;
+	private outsidePointerDocuments: Document[] = [];
 	private activationKeyListener: (() => void) | undefined;
 	private readonly actions: {
 		getActivationKey?: () => Promise<ActivationKey>;
@@ -238,6 +239,41 @@ export default class PopupHandler {
 		this.close();
 	};
 
+	/** Pointer events do not cross iframe boundaries. Keep exact documents for cleanup. */
+	private syncOutsideListeners(open: boolean) {
+		if (!open) {
+			for (const owner of this.outsidePointerDocuments) {
+				owner.removeEventListener('pointerdown', this.onOutsidePointerDown, true);
+			}
+			this.outsidePointerDocuments = [];
+			window.removeEventListener('blur', this.close);
+			window.removeEventListener('pagehide', this.close);
+			return;
+		}
+		if (this.outsidePointerDocuments.length > 0) return;
+
+		let owner: Window = window;
+		while (true) {
+			try {
+				const ownerDocument = owner.document;
+				ownerDocument.addEventListener('pointerdown', this.onOutsidePointerDown, true);
+				this.outsidePointerDocuments.push(ownerDocument);
+			} catch {
+				// An inaccessible document can have an accessible ancestor.
+			}
+			try {
+				const parent = owner.parent;
+				if (parent === owner) break;
+				owner = parent;
+			} catch {
+				// Stop if traversal fails. Frame focus loss still closes the popup.
+				break;
+			}
+		}
+		window.addEventListener('blur', this.close);
+		window.addEventListener('pagehide', this.close);
+	}
+
 	private render() {
 		let tree = h('div', {}, []);
 		const host = this.renderBox.getShadowHost();
@@ -265,13 +301,13 @@ export default class PopupHandler {
 		this.renderBox.render(tree);
 
 		if (this.popupLint != null && this.popupLint < this.currentLintBoxes.length) {
-			document.addEventListener('pointerdown', this.onOutsidePointerDown, true);
+			this.syncOutsideListeners(true);
 			host.style.setProperty('visibility', 'visible', 'important');
 			if (host.isConnected && !host.matches(':popover-open')) {
 				host.showPopover();
 			}
 		} else {
-			document.removeEventListener('pointerdown', this.onOutsidePointerDown, true);
+			this.syncOutsideListeners(false);
 			host.style.setProperty('visibility', 'hidden', 'important');
 			if (host.isConnected && host.matches(':popover-open')) {
 				host.hidePopover();

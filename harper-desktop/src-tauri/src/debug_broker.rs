@@ -12,6 +12,10 @@ use crate::rect::ActionableLint;
 pub struct DebugBroker;
 
 impl OsBroker for DebugBroker {
+    fn should_hide_overlay(&mut self) -> bool {
+        false
+    }
+
     fn get_boxes(
         &mut self,
         _: &mut dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>>,
