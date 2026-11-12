@@ -1,4 +1,4 @@
-54900
+55100
 
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
@@ -3446,9 +3446,12 @@ FOFL
 FORTRAN/Og
 FOSS/ONV            # free open source software
 FPO/N
+FPS/N               # frames per second; first-person shooter
 FSF/Og
 FSLIC/O
 FTC/O
+FTP/Ng              # file transfer protocol
+FTPS/Ng             # FTP over TLS
 FUD/NS
 FWD/N
 FWIW/
@@ -6268,6 +6271,7 @@ MP/NOgJ             # military police; member of parliament
 MP3/NSg             # audio format
 MP4/NSg             # audio/video format
 MPEG/ON
+MPG/N               # miles per gallon
 MRI/NgV             # magnetic resonance imaging
 MS/NOg4             # US state (Mississippi)
 MSG/NOg             # flavour enhancer
@@ -8990,6 +8994,7 @@ SS/NOJ
 SSA/ONJ
 SSD/NSg             # solid-state drive
 SSE/NOgJ
+SSH/Ng              # secure shell
 SSS/ON
 SST/NO
 SSW/NgJ
@@ -13762,7 +13767,7 @@ awash/J
 away/~JV
 awe/~Nm☁SgVdG
 aweigh/J
-awesome/~JYpN
+awesome/~JYp
 awesomeness/Nmg
 awestruck/J
 awful/~JYp
@@ -15268,6 +15273,7 @@ boar/~NSg
 board/~NwgSVGd>Z
 boarder/Ng
 boarding/~V6Ng
+boarding school/NgS
 boardinghouse/NgS
 boardroom/NgS
 boardwalk/~NgSV
@@ -17862,6 +17868,7 @@ clangor/NgV
 clangorous/JY
 clangour/NgV!@_₹
 clank/~NgSVGd
+clanker/NgS
 clannish/Jp
 clannishness/Nmg
 clansman/N0g
@@ -18266,6 +18273,7 @@ coexistent/JN
 coexists/Vh
 coextensive/J
 coffee/~NwSgJV
+coffee shop/NgS
 coffeecake/NwSg
 coffeehouse/~NgS
 coffeemaker/NSg
@@ -26155,6 +26163,7 @@ frolicsome/J
 from/~P
 frond/NSg
 front/~NSJVdGW
+front door/NgS
 front-line/J
 front man/N0g♂
 front matter/Nmg
@@ -26339,7 +26348,7 @@ furriness/Ng
 furring/V6Ng
 furrow/NgSVdG
 furry/~J^>pNZ
-further/~VSGdJc
+further/~VSGdJcR
 furtherance/Nmg
 furthermore/~J
 furthermost/J
@@ -28673,6 +28682,7 @@ high-quality/J
 high-ranking/J
 high-res/J
 high-rise/NgS
+high school/NgS
 high-speed/J
 high tech/Ng
 highball/NSgV
@@ -28878,7 +28888,6 @@ hombre/~NgS
 homburg/~NSg
 home/~NgSVGd>JYZ
 home-grown/J
-home school/NgSVdG
 homebody/NSg
 homeboy/NSgI
 homebrew/NwSgVdG
@@ -28908,7 +28917,8 @@ homeowner/~NgS
 homepage/~NgS
 homer/~NgVGd
 homeroom/NgS
-homeschooling/Nmg
+homeschool/VSdG
+home school/NgSVdG
 homesick/Jp
 homesickness/Ng
 homespun/JNg
@@ -32092,6 +32102,7 @@ latecomer/NgS
 latency/~Ng
 lateness/Ng
 latent/~JYNgS
+later/~JcR
 lateral/~JYNgSVdG
 latest/~JNg
 latex/~Ng
@@ -33030,7 +33041,7 @@ lottery/~NSg
 lotto/~Ng
 lotus/~NgS
 louche/JNV
-loud/~J>Y^pN
+loud/~J>Y^p
 loudhailer/NSg
 loudmouth/N0gd
 loudmouths/N9
@@ -34407,6 +34418,7 @@ midcentury/J
 midday/~Ng
 midden/NgS
 middle/~NgSJVG
+middle school/NgS
 middle-sized/J
 middlebrow/JNSg
 middleman/NgV
@@ -37246,6 +37258,7 @@ opaqueness/Nmg
 opcode/NSg
 ope/~JVSN
 open/~J^Y>pVGdSNgZzB
+open house/NgS
 open source/Ng
 open-source/JVSdG
 opencast/J
@@ -39773,7 +39786,7 @@ plead/~Vd>GSZz
 pleader/Ng
 pleading/~NgV6JY
 pleasance/Ng
-pleasant/~J^YpNU
+pleasant/~J^YpU
 pleasanter/Jc
 pleasantness/NgU
 pleasantry/NSg
@@ -40766,6 +40779,7 @@ primal/~JNV
 primality/J
 primarily/~R        # focusing/viewpoint/comment adverb
 primary/~JNSgVdG
+primary school/NgS
 primate/~NgS
 prime/~JNgSV
 primer/~NgJ
@@ -41277,6 +41291,7 @@ pubic/J
 pubis/Ng
 public/~JNmgVr
 public key/NgS
+public school/NgS
 publican/NgSr
 publication/~NwSgr
 publicise/VGdS!_₹
@@ -44462,7 +44477,7 @@ seasoned/~VtTJU
 seasoning/~NwgV6
 seastead/NgS
 seasteading/Ng
-seat/~NSVGdU
+seat/~NSVGdUr
 seat belt/NgS
 seat's
 seating/~VNmg
@@ -47598,7 +47613,7 @@ stria/N0g
 striae/N9
 striated/JV
 striation/NgS
-stricken/~JV
+stricken/~JVT
 strict/~J>Y^p
 strictness/Nmg
 stricture/NSg
@@ -47633,8 +47648,8 @@ stripping/~V6Ng
 striptease/NgSVGd>Z
 stripteaser/Ng
 stripy/J
-strive/~VGSN
-striven/V
+strive/~VGSd
+striven/VT
 strobe/~NgSV
 stroboscope/NgS
 stroboscopic/J
@@ -47656,8 +47671,8 @@ stropped/VtT
 stroppily/Ry
 stropping/V6N
 stroppy/J^>p
-strove/~V
-struck/~V
+strove/~Vt
+struck/~VtT
 struct/NgS
 structural/~JYN
 structuralism/N
@@ -51616,7 +51631,8 @@ updraft/~NgS
 updraught/NSg!_₹
 upend/VSGd
 upfront/JNV
-upgradable/J
+upgradability/Nmg
+upgradable/JU
 upgrade/~NgSVGd
 upheaval/~NgS
 upheld/~V

@@ -1,15 +1,20 @@
-use std::num::NonZero;
+use std::{iter::once, num::NonZero};
 
 use itertools::Itertools;
 use lru::LruCache;
 use smallvec::ToSmallVec;
 
-use super::{Lint, LintKind, Linter};
-use super::{Suggestion, informal_laughter::is_informal_laughter};
-use crate::document::Document;
-use crate::expr::{Filter, SequenceExpr};
-use crate::spell::{Dictionary, suggest_correct_spelling};
-use crate::{CharString, CharStringExt, Dialect, TokenStringExt, remove_lints_overlapping_expr};
+use crate::{
+    CharString, CharStringExt, Dialect, TokenStringExt,
+    document::Document,
+    expr::{Filter, LongestMatchOf, SequenceExpr},
+    linting::{
+        Lint, LintKind, Linter, Suggestion, informal_laughter::is_informal_laughter,
+        proper_noun_capitalization_linters::proper_nouns_expr,
+    },
+    remove_lints_overlapping_expr,
+    spell::{Dictionary, suggest_correct_spelling},
+};
 
 pub struct SpellCheck<T>
 where
@@ -18,6 +23,7 @@ where
     dictionary: T,
     suggestion_cache: LruCache<CharString, Vec<CharString>>,
     dialect: Dialect,
+    proper_nouns: LongestMatchOf,
 }
 
 impl<T: Dictionary> SpellCheck<T> {
@@ -26,6 +32,7 @@ impl<T: Dictionary> SpellCheck<T> {
             dictionary,
             suggestion_cache: LruCache::new(NonZero::new(10000).unwrap()),
             dialect,
+            proper_nouns: proper_nouns_expr(),
         }
     }
 
@@ -40,32 +47,37 @@ impl<T: Dictionary> SpellCheck<T> {
             suggestions
         }
     }
+
     fn uncached_suggest_correct_spelling(&self, word: &[char]) -> Vec<CharString> {
         // Back off until we find a match.
-        for dist in 2..5 {
-            let suggestions: Vec<CharString> =
-                suggest_correct_spelling(word, 200, dist, &self.dictionary)
+        (2..5)
+            .filter_map(|dist| {
+                let mut iter = suggest_correct_spelling(word, 200, dist, &self.dictionary)
                     .into_iter()
                     .filter(|v| {
                         // Ignore entries outside the configured dialect
                         self.dictionary
                             .get_word_metadata_folded(v)
-                            .unwrap()
-                            .dialects
-                            .is_dialect_enabled(self.dialect)
+                            .is_some_and(|meta| meta.dialects.is_dialect_enabled(self.dialect))
                     })
                     .unique_by(|v| v.to_lower())
-                    .map(|v| v.to_smallvec())
+                    .map(|v| v.to_smallvec());
+
+                // Lazily peek at the first matching element.
+                // If None, this entire distance is skipped without allocating a Vec!
+                let first = iter.next()?;
+
+                // If we get here, we found at least one match.
+                // Now we pull the rest up to our limit and collect.
+                let suggestions = once(first)
+                    .chain(iter)
                     .take(Self::MAX_SUGGESTIONS)
                     .collect();
 
-            if !suggestions.is_empty() {
-                return suggestions;
-            }
-        }
-
-        // no suggestions found
-        Vec::new()
+                Some(suggestions)
+            })
+            .next() // Grab the first distance that successfully yielded a Vec
+            .unwrap_or_default()
     }
 }
 
@@ -99,7 +111,7 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
                 continue;
             }
 
-            if let Some(metadata) = word.kind.as_word().unwrap()
+            if let Some(Some(metadata)) = word.kind.as_word()
                 && metadata.dialects.is_dialect_enabled(self.dialect)
                 && (self.dictionary.contains_exact_word(word_chars)
                     || self
@@ -127,7 +139,9 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
                         .then_some(w.first_mut())
                         .flatten()
                 }) {
-                    *sug_f = sug_f.to_uppercase().next().unwrap();
+                    if let Some(upper_c) = sug_f.to_uppercase().next() {
+                        *sug_f = upper_c;
+                    }
                 }
             }
 
@@ -159,6 +173,9 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
         }
 
         remove_lints_overlapping_expr(&parenthetical_plural_s_expr(), document, &mut lints);
+        // Names keep their official spelling in every dialect, such as `Pearl Harbor` in British
+        // English. Their capitalization is handled by `ProperNounCapitalizationLinter`.
+        remove_lints_overlapping_expr(&self.proper_nouns, document, &mut lints);
 
         lints
     }
@@ -213,6 +230,33 @@ mod tests {
     fn american_color_in_british_dialect() {
         assert_lint_count(
             "Do you like the color?",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            1,
+        );
+    }
+
+    #[test]
+    fn american_spelling_in_name_in_british_dialect() {
+        assert_lint_count(
+            "The attack on Pearl Harbor came before Labor Day.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            0,
+        );
+    }
+
+    #[test]
+    fn british_spelling_in_name_in_american_dialect() {
+        assert_lint_count(
+            "The Ministry of Defence met the Labour Party.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            0,
+        );
+    }
+
+    #[test]
+    fn american_spelling_outside_name_in_british_dialect() {
+        assert_lint_count(
+            "The ship left the harbor near Pearl Harbor.",
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
             1,
         );

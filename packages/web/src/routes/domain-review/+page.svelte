@@ -6,7 +6,7 @@ import { Button, Card, Input, Isolate, Label } from 'components';
 	<div class="flex h-screen flex-row items-center justify-center">
 		<Card>
 			<h1 class="text-3xl font-semibold">Domain Review</h1>
-			<p class="text-sm text-gray-600">
+			<p class="text-sm text-gray-600 dark:text-white/60">
 				If Harper is not working correctly on a website, we'd love to know about it.
 			</p>
 			<form method="POST" class="mt-4 space-y-6" action="/api/domain-reviews">

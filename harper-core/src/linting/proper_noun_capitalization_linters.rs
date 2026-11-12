@@ -1,4 +1,4 @@
-use crate::expr::{Expr, ExprMap, FixedPhrase};
+use crate::expr::{Expr, ExprMap, FixedPhrase, LongestMatchOf};
 use hashbrown::HashMap;
 use serde::{Deserialize, Serialize};
 
@@ -113,6 +113,19 @@ pub fn lint_group() -> LintGroup {
     lint_group_from_json(include_str!("../../proper_noun_rules.json"))
 }
 
+/// Matches every proper noun in `proper_noun_rules.json`, in any capitalization.
+pub(super) fn proper_nouns_expr() -> LongestMatchOf {
+    let rules: HashMap<String, RuleEntry> =
+        serde_json::from_str(include_str!("../../proper_noun_rules.json")).unwrap();
+
+    LongestMatchOf::new(
+        rules
+            .into_values()
+            .flat_map(|rule| rule.canonical)
+            .map(|name| Box::new(FixedPhrase::from_phrase(&name)) as Box<dyn Expr>),
+    )
+}
+
 #[cfg(test)]
 mod tests {
     use super::lint_group;
@@ -121,6 +134,25 @@ mod tests {
     use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     create_test_pool!(LintGroup, LintGroup, lint_group());
+
+    #[test]
+    fn name_with_american_spelling_lowercase() {
+        assert_suggestion_result("pearl harbor", test_linter(), "Pearl Harbor");
+    }
+
+    #[test]
+    fn world_health_organization_lowercase() {
+        assert_suggestion_result(
+            "world health organization",
+            test_linter(),
+            "World Health Organization",
+        );
+    }
+
+    #[test]
+    fn name_with_british_spelling_lowercase() {
+        assert_suggestion_result("ministry of defence", test_linter(), "Ministry of Defence");
+    }
 
     #[test]
     fn americas_lowercase() {

@@ -1,0 +1,16 @@
+expr main <[([single, double][-, ( )]backlashes), (both backlashes), ([enter, entered, insert, inserted, type, typed] two backlashes), (backlashes [character, characters])], backlashes>
+
+let message "Did you mean `backslashes`?"
+let description "Corrects `backlashes` to `backslashes` when it looks like a typo."
+let kind "Typo"
+let becomes "backslashes"
+
+test "Using r-strings is the correct solution if you want unescaped single backlashes" "Using r-strings is the correct solution if you want unescaped single backslashes"
+test "As an aside, it looks like the Markdown extension only interprets double-backlashes as escapes." "As an aside, it looks like the Markdown extension only interprets double-backslashes as escapes."
+test "To make a \“SLSH\” appear in the forum, type TWO backlashes" "To make a \“SLSH\” appear in the forum, type TWO backslashes"
+test "To use a backslash in such shell string, enter two backlashes" "To use a backslash in such shell string, enter two backslashes"
+test "A parameter designator consists of a backlashes character, followed by a digit (0 - 9)" "A parameter designator consists of a backslashes character, followed by a digit (0 - 9)"
+
+# test "Replacing backslash with two backlashes in ansible" "Replacing backslash with two backslashes in ansible"
+
+allows "The two backlashes against globalisation."

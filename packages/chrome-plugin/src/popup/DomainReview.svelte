@@ -1,21 +1,28 @@
 <script lang="ts">
-import { Button, Input, Label, Select } from 'components';
+import { Button, Input, Label } from 'components';
 import ProtocolClient from '../ProtocolClient';
 
 let {
-	domain,
-	works,
-	feedback,
+	domain: initialDomain,
+	works: initialWorks,
+	feedback: initialFeedback,
 	onSubmit,
 }: { domain: string; works: boolean; feedback: string; onSubmit: () => void } = $props();
 
+// Local copies so the form can be edited without mutating props.
+let domain = $state(initialDomain);
+let works = $state(initialWorks);
+let feedback = $state(initialFeedback);
+
 let submitting = $state(false);
 let successful = $state(false);
+let failed = $state(false);
 
 async function handleSubmit(event: SubmitEvent) {
 	event.preventDefault();
 
 	submitting = true;
+	failed = false;
 
 	const success = await ProtocolClient.postFormData(
 		'https://writewithharper.com/api/domain-reviews',
@@ -29,53 +36,100 @@ async function handleSubmit(event: SubmitEvent) {
 	submitting = false;
 
 	if (success) {
-		onSubmit();
 		successful = true;
+		setTimeout(onSubmit, 1200);
+	} else {
+		failed = true;
 	}
 }
+
+const segment =
+	'flex-1 rounded-md px-3 py-1 text-sm font-semibold transition-colors cursor-pointer text-center';
 </script>
 
-<div class="p-5">
-	<h1 class="text-2xl font-semibold">Domain Review</h1>
-	<p class="text-sm">
-		Only the data you enter below will be sent to the Harper maintainer.
-	</p>
-	<form class="mt-4 space-y-6" onsubmit={handleSubmit}>
-		<div class="space-y-3">
-			<div class="flex items-baseline gap-2">
-				<Label class=" ">Which domain would you like to tell us about?</Label>
-			</div>
-			<Input
-				name="domain"
-				bind:value={domain}
-				placeholder="example.com"
-				class="dark:bg-slate-900 dark:border-slate-700 "
-			/>
-			<div class="flex items-baseline gap-2">
-				<Label class=" ">Would you say that Harper works well on this domain?</Label>
-			</div>
-			<Select
-				name="works"
-				bind:value={works}
-				class="dark:bg-slate-900 dark:border-slate-700 "
-			>
-        <option value={true}>Yes</option>
-        <option value={false}>No</option>
-        </Select>
+<div class="flex h-full flex-col justify-between px-5 py-3">
+    <div>
+        <h1 class="text-lg font-bold text-gray-900 dark:text-white">Review this site</h1>
+        <p class="mt-0.5 text-xs text-gray-600 dark:text-slate-300">
+            Only what you enter below is sent to the Harper maintainer.
+        </p>
+    </div>
 
-			<div class="flex items-baseline gap-2">
-				<Label class=" ">Additional Feedback</Label>
-			</div>
-			<Input
-				name="feedback"
-				placeholder="Tell us what went wrong."
-				bind:value={feedback}
-				class="dark:bg-slate-900 dark:border-slate-700 "
-			/>
+    <form class="mt-2.5 flex flex-1 flex-col justify-between overflow-hidden" onsubmit={handleSubmit}>
+        <!-- Scrollable Inputs Area (Prevents pushing button out of bounds) -->
+        <div class="space-y-2.5 overflow-y-auto pr-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div class="space-y-1">
+                <Label class="text-xs font-bold text-gray-900 dark:text-white">Domain</Label>
+                <Input
+                    name="domain"
+                    bind:value={domain}
+                    placeholder="example.com"
+                    class="w-full border-gray-200 text-gray-900 outline-none! transition-colors focus:border-primary! focus:ring-0! dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+                />
+            </div>
 
-			<div class="flex items-center justify-between pt-2">
-				<Button state={submitting ? (successful ? "success" : "loading") : "idle"} type="submit" disabled={submitting}>Submit</Button>
-			</div>
-		</div>
-	</form>
+            <div class="space-y-1">
+                <Label class="text-xs font-bold text-gray-900 dark:text-white">Does Harper work well here?</Label>
+                <div class="rounded-lg border border-gray-200 p-1 dark:border-slate-700 dark:bg-slate-900">
+                    <div
+                        class="relative flex w-full"
+                        role="radiogroup"
+                        aria-label="Does Harper work well on this domain?"
+                    >
+                        <!-- Animated Sliding Background -->
+                        <div
+                            class="absolute inset-y-0 left-0 w-1/2 rounded-md bg-primary transition-transform duration-300 ease-out"
+                            class:translate-x-0={works}
+                            class:translate-x-full={!works}
+                        ></div>
+
+                        <button
+                            type="button"
+                            role="radio"
+                            aria-checked={works}
+                            class="relative z-10 {segment} {works ? 'text-black' : 'text-gray-600 hover:text-gray-900 dark:text-slate-300 dark:hover:text-white'}"
+                            onclick={() => (works = true)}
+                        >
+                            Yes
+                        </button>
+                        <button
+                            type="button"
+                            role="radio"
+                            aria-checked={!works}
+                            class="relative z-10 {segment} {!works ? 'text-black' : 'text-gray-600 hover:text-gray-900 dark:text-slate-300 dark:hover:text-white'}"
+                            onclick={() => (works = false)}
+                        >
+                            No
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-1">
+                <Label class="text-xs font-bold text-gray-900 dark:text-white">{works ? 'Anything else? (optional)' : 'What went wrong?'}</Label>
+                <textarea
+                    name="feedback"
+                    rows="4.5"
+                    bind:value={feedback}
+                    placeholder={works ? 'Optional notes' : 'e.g. underlines are misplaced, editor loses focus'}
+                    class="w-full resize-none rounded-md border border-gray-200 bg-transparent px-3 py-1.5 text-sm text-gray-900 placeholder:text-gray-400 outline-none! transition-colors focus:border-primary! focus:ring-0! dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:placeholder:text-slate-400"
+                ></textarea>
+            </div>
+        </div>
+
+        {#if failed}
+            <p class="py-1 text-xs text-red-500 dark:text-red-400" role="alert">Couldn't send your review. Check your connection and try again.</p>
+        {/if}
+
+        <div class="pt-2">
+            <Button
+                class="w-full shrink-0 {successful ? '' : 'bg-primary! text-black! hover:bg-primary/85!'} ring-0! focus:ring-0! focus-visible:ring-0! focus:shadow-none! focus-visible:shadow-none! focus-visible:outline! focus-visible:outline-1! focus-visible:outline-offset-2! focus-visible:outline-primary!"
+                state={successful ? 'success' : submitting ? 'loading' : 'idle'}
+                type="submit"
+                disabled={submitting || successful}
+            >
+                {successful ? 'Sent. Thank you!' : 'Send review'}
+            </Button>
+        </div>
+    </form>
 </div>

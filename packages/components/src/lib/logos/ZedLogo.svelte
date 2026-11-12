@@ -4,7 +4,7 @@ export let height = '100%';
 </script>
 
 <svg
-	class="block text-black"
+	class="block text-black dark:text-white"
 	{width}
 	{height}
 	viewBox="0 0 90 90"

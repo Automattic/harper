@@ -1,0 +1,10 @@
+expr main (the all the)
+
+let message "Remove redundant `the`"
+let description "Fixes redundant double `the` in `the all the`"
+let kind "Redundancy"
+let becomes "all the"
+
+test "I would wager that the all the customization layers (like \"One UI\") that OEMs put on top of AOSP is the component" "I would wager that all the customization layers (like \"One UI\") that OEMs put on top of AOSP is the component"
+test "This is the all the code that was used in my thesis" "This is all the code that was used in my thesis"
+test "test IG that tests out the all the features of IGs" "test IG that tests out all the features of IGs"

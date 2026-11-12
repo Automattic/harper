@@ -246,7 +246,7 @@ async function prepareService(request = false) {
         </p>
         {#if integrationsError}
           <p role="alert">{integrationsError}</p>
-          <Button color="light" disabled={isLoadingIntegrations || isEnablingTextEdit} on:click={loadIntegrations}>
+          <Button color="white" disabled={isLoadingIntegrations || isEnablingTextEdit} on:click={loadIntegrations}>
             Retry Loading Integrations
           </Button>
         {/if}

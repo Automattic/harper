@@ -550,4 +550,9 @@ mod lints {
     fn dont_flag_4388() {
         assert_no_lints("We humans are naturally curious.", test_linter());
     }
+
+    #[test]
+    fn dont_flag_she_further_explained() {
+        assert_no_lints("She further explained the plan.", test_linter());
+    }
 }
