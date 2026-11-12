@@ -120,6 +120,7 @@ struct WindowManagerApp {
     cursor_hittest_enabled: bool,
     occluded_windows: HashSet<WindowId>,
     overlays_paused: bool,
+    overlays_hidden: bool,
     error: Option<Error>,
 }
 
@@ -148,6 +149,7 @@ impl WindowManagerApp {
             cursor_hittest_enabled: false,
             occluded_windows: HashSet::new(),
             overlays_paused: false,
+            overlays_hidden: false,
             error: None,
         }
     }
@@ -171,7 +173,8 @@ impl WindowManagerApp {
     /// Configuration synchronization remains active. An empty window list alone does not imply
     /// occlusion: windows may not have been created yet.
     fn should_pause_overlays(&self) -> bool {
-        all_displays_asleep()
+        self.overlays_hidden
+            || all_displays_asleep()
             || (!self.windows.is_empty()
                 && self
                     .windows
@@ -183,7 +186,30 @@ impl WindowManagerApp {
     /// latest window occlusion events. Apply this both when requesting and consuming redraws:
     /// an already-queued redraw must not render an unavailable overlay.
     fn can_render_window(&self, window_id: WindowId) -> bool {
-        !self.overlays_paused && !self.occluded_windows.contains(&window_id)
+        !self.overlays_hidden
+            && !self.overlays_paused
+            && !self.occluded_windows.contains(&window_id)
+    }
+
+    fn update_overlay_visibility(&mut self) -> Result<(), Error> {
+        let hidden = self.os_broker.should_hide_overlay();
+        if hidden == self.overlays_hidden {
+            return Ok(());
+        }
+        self.overlays_hidden = hidden;
+
+        // Empty geometry also closes the popup. Do not resurrect an old selection or stale
+        // highlights if the first accessibility read after restoring visibility fails.
+        self.render_state.set_lints(Vec::new());
+        self.hovered_lint = None;
+        for window in &self.windows {
+            // Restore visibility even if orderOut previously marked the window occluded. Waiting
+            // for an unoccluded event before showing it would leave it permanently hidden.
+            window.set_visible(!hidden);
+            window.set_cursor_hittest(false)?;
+        }
+        self.cursor_hittest_enabled = false;
+        Ok(())
     }
 
     fn refresh_config(&mut self) {
@@ -244,8 +270,13 @@ impl WindowManagerApp {
 
 impl ApplicationHandler for WindowManagerApp {
     fn about_to_wait(&mut self, event_loop: &ActiveEventLoop) {
-        let now = Instant::now();
+        if let Err(error) = self.update_overlay_visibility() {
+            self.error = Some(error);
+            event_loop.exit();
+            return;
+        }
 
+        let now = Instant::now();
         if now.duration_since(self.last_config_poll) >= CONFIG_POLL_INTERVAL {
             self.refresh_config();
             self.last_config_poll = now;
@@ -255,8 +286,12 @@ impl ApplicationHandler for WindowManagerApp {
         // Suspend overlay work until it can be displayed again, but keep config sync alive.
         self.overlays_paused = self.should_pause_overlays();
         if self.overlays_paused {
-            event_loop
-                .set_control_flow(ControlFlow::WaitUntil(now + OVERLAY_RESUME_CHECK_INTERVAL));
+            // Unrelated events must not postpone the next visibility check while hidden.
+            let next_check = match event_loop.control_flow() {
+                ControlFlow::WaitUntil(deadline) if deadline > now => deadline,
+                _ => now + OVERLAY_RESUME_CHECK_INTERVAL,
+            };
+            event_loop.set_control_flow(ControlFlow::WaitUntil(next_check));
             return;
         }
 
@@ -271,10 +306,17 @@ impl ApplicationHandler for WindowManagerApp {
             return;
         }
 
+        // Check before creating windows so overlays start hidden when the OS requires it.
+        if let Err(error) = self.update_overlay_visibility() {
+            self.error = Some(error);
+            event_loop.exit();
+            return;
+        }
+
         let monitors = event_loop.available_monitors().collect::<Vec<_>>();
 
         for monitor in monitors {
-            match pollster::block_on(Window::new(event_loop, monitor)) {
+            match pollster::block_on(Window::new(event_loop, monitor, !self.overlays_hidden)) {
                 Ok(window) => self.windows.push(window),
                 Err(error) => {
                     self.error = Some(error);
@@ -326,14 +368,21 @@ impl ApplicationHandler for WindowManagerApp {
             .enumerate()
             .find(|(_, window)| window.id() == window_id)
         {
-            window.handle_event(&event);
+            if !self.overlays_hidden
+                || matches!(
+                    &event,
+                    WindowEvent::Resized(_) | WindowEvent::ScaleFactorChanged { .. }
+                )
+            {
+                window.handle_event(&event);
+            }
 
             if should_render {
                 window.render(&mut self.render_state, &screen_rects, index);
             }
         }
 
-        if should_select_hit_lint && !self.overlays_paused {
+        if should_select_hit_lint && !self.overlays_hidden && !self.overlays_paused {
             self.select_hit_lint();
         }
 
