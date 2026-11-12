@@ -6111,6 +6111,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ScaredOf",
+								"state": true,
+								"label": "Scared of"
+							}
+						},
+						{
+							"Bool": {
 								"name": "SetABadExample",
 								"state": true,
 								"label": "Set a Bad Example"
