@@ -38,6 +38,7 @@ use tokio::{
     sync::Mutex,
 };
 
+mod app_restart;
 mod args;
 pub mod color;
 mod commands;
@@ -158,6 +159,7 @@ pub fn run_tauri() {
         }
     };
 
+    let show_onboarding = !config.onboarding_completed;
     let broker = platform_broker(|_| false);
 
     let should_start_highlighter = config.highlighter_service_enabled
@@ -192,7 +194,7 @@ pub fn run_tauri() {
             warm_app_search_cache(app.handle().clone());
             desktop_updater::start_auto_updates(app.handle().clone());
 
-            if is_first_launch {
+            if is_first_launch || show_onboarding {
                 windows::show_settings_window(app.handle())?;
             }
 

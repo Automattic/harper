@@ -22,8 +22,8 @@ const allSlides: OnboardingSlide[] = [
 	},
 	{
 		id: 'accessibility',
-		title: 'Accessibility',
-		lede: 'To be able to read and write text to your favorite text editors, you need to grant Harper the permission to do so.\n\nNone of your text will leave your device.',
+		title: 'Give Harper Permission',
+		lede: "Harper needs permission to read and write text in your favorite text editors. None of your text will leave your device.\n\nFind Harper in System Settings → Privacy & Security → Device Control and Data Access. Grant the permission in system settings, then come back here. If you've already granted permission and it isn't being reflected here, you may need to restart Harper.",
 	},
 	{
 		id: 'integration',
@@ -57,6 +57,9 @@ let isLaunchingTextEdit = false;
 let testDriveError = '';
 let isCompletingOnboarding = false;
 let onboardingError = '';
+let isRestarting = false;
+let restartError = '';
+const restartSlideKey = 'harper-onboarding-restart-slide';
 
 $: slides = allSlides.filter((slide) => slide.id !== 'accessibility' || isMacOS);
 $: textEditIntegration = integrations.find((item) => item.bundle_id === 'com.apple.TextEdit');
@@ -65,11 +68,22 @@ $: accessibilityReady =
 	(!isMacOS || accessibilityStatus === 'Granted') && !isPreparingService && !setupError;
 $: integrationReady =
 	isTextEditEnabled && !isLoadingIntegrations && !isEnablingTextEdit && !integrationsError;
-$: nextDisabled = !canAdvance(slides[step].id, accessibilityReady, integrationReady, isMacOS);
+$: nextDisabled =
+	isRestarting || !canAdvance(slides[step].id, accessibilityReady, integrationReady, isMacOS);
 
 onMount(() => {
 	// Use the native platform in Tauri; user-agent detection is only for browser previews.
 	isMacOS = isTauri() ? platform() === 'macos' : navigator.userAgent.includes('Macintosh');
+	try {
+		const savedSlide = localStorage.getItem(restartSlideKey);
+		const restoredStep = allSlides
+			.filter((slide) => slide.id !== 'accessibility' || isMacOS)
+			.findIndex((slide) => slide.id === savedSlide);
+		if (restoredStep >= 0) step = restoredStep;
+		localStorage.removeItem(restartSlideKey);
+	} catch (error) {
+		restartError = `Unable to restore the setup page: ${error}`;
+	}
 	void prepareService();
 	void loadIntegrations();
 	const permissionTimer = isMacOS ? setInterval(() => void prepareService(), 2000) : undefined;
@@ -150,6 +164,20 @@ async function completeOnboarding() {
 	}
 }
 
+/** Save the current page before restarting the parent; never restart from a permission check. */
+async function restartHarper() {
+	if (isRestarting) return;
+	isRestarting = true;
+	restartError = '';
+	try {
+		localStorage.setItem(restartSlideKey, slides[step].id);
+		await Client.restartHarper();
+	} catch (error) {
+		restartError = `Unable to restart Harper: ${error}. If needed, quit Harper and open the installed application again.`;
+		isRestarting = false;
+	}
+}
+
 async function openAccessibilitySettings() {
 	try {
 		await openUrl(
@@ -162,7 +190,7 @@ async function openAccessibilitySettings() {
 
 /** Check permission without overlapping requests; start Harper when access becomes available. */
 async function prepareService() {
-	if (isPreparingService) return;
+	if (isPreparingService || isRestarting) return;
 	const shouldStartService = accessibilityStatus !== 'Granted' || !!setupError;
 	isPreparingService = true;
 	setupError = '';
@@ -194,7 +222,7 @@ async function prepareService() {
     slideProgress={step / (slides.length - 1)}
     {nextDisabled}
     onBack={() => {
-      if (!isCompletingOnboarding) step--;
+      if (!isCompletingOnboarding && !isRestarting) step--;
     }}
     onNext={() => step++}
   >
@@ -211,7 +239,6 @@ async function prepareService() {
       {/if}
     {:else if slides[step].id === 'accessibility'}
       <div class="onboarding-actions">
-        <p>Enable Harper in System Settings → Privacy &amp; Security → Device Control and Data Access.</p>
         <div class="permission-actions">
           <Button on:click={openAccessibilitySettings}>Open System Settings</Button>
           <span role="status">
@@ -225,7 +252,15 @@ async function prepareService() {
               Checking permission...
             {/if}
           </span>
+          {#if accessibilityStatus === 'NotGranted'}
+            <button type="button" class="restart-link" disabled={isRestarting} on:click={restartHarper}>
+              {isRestarting ? 'Restarting Harper...' : 'Restart Harper'}
+            </button>
+          {/if}
         </div>
+        {#if restartError}
+          <p role="alert">{restartError}</p>
+        {/if}
         {#if setupError}
           <p role="alert">{setupError}</p>
         {/if}
@@ -286,5 +321,19 @@ async function prepareService() {
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
+}
+
+.restart-link {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--settings-accent);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.restart-link:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 </style>

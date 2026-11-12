@@ -115,6 +115,10 @@ export class Client {
 		return await invoke<UpdateResult>('update_to_latest');
 	}
 
+	static async restartHarper(): Promise<void> {
+		await invoke('restart_harper');
+	}
+
 	static async getOnboardingCompleted(): Promise<boolean> {
 		return await invoke<boolean>('get_onboarding_completed');
 	}

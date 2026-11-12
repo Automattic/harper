@@ -47,6 +47,7 @@ pub fn application_message_handler<R: Runtime>() -> impl Fn(Invoke<R>) -> bool {
         request_accessibility_permission,
         start_highlighter_service,
         stop_highlighter_service,
+        restart_harper,
         launch_app,
         search_apps,
     ]
@@ -420,6 +421,28 @@ pub(crate) async fn stop_highlighter_service(
     }
 
     Ok(highlighter_service.stop())
+}
+
+/// Unlike Tauri's infallible restart API, keep the current app alive on spawn failure.
+#[tauri::command]
+async fn restart_harper<R: Runtime>(
+    app: tauri::AppHandle<R>,
+    config: State<'_, Arc<Mutex<Config>>>,
+    highlighter_service: State<'_, HighlighterService>,
+) -> Result<(), String> {
+    config
+        .lock()
+        .await
+        .save_to_system()
+        .await
+        .map_err(|error| format!("Could not save progress: {error}. Retry Restart Harper."))?;
+    let binary = tauri::process::current_binary(&app.env())
+        .map_err(|error| format!("Could not locate Harper: {error}. Quit Harper and open the installed application again."))?;
+    highlighter_service.restart_app(|| {
+        std::process::Command::new(binary).spawn().map(|_| ())
+    }).map_err(|error| format!("Could not restart Harper: {error}. Retry, or quit Harper and open the installed application again."))?;
+    app.exit(0);
+    Ok(())
 }
 
 #[tauri::command]
