@@ -523,17 +523,6 @@ pub fn lint_group() -> LintGroup {
             LintKind::Style
         ),
 
-        "LookForwardTo" => (
-            &[
-                ("look forward for", "look forward to"),
-                ("looked forward for", "looked forward to"),
-                ("looks forward for", "looks forward to"),
-                ("looking forward for", "looking forward to")
-            ],
-            "The correct preposition in this phrase is `to`.",
-            "Corrects `look forward for` to `look forward to`.",
-            LintKind::Usage
-        ),
         "MakeDoWith" => (
             &[
                 ("make due with", "make do with"),
@@ -1043,6 +1032,17 @@ pub fn lint_group() -> LintGroup {
             "Corrects `look-a-like` to `look alike` or `look-alike`.",
             LintKind::Spelling
         ),
+        "LookForwardTo" => (
+            &[
+                (&["look forward for", "look forwards to"], &["look forward to"]),
+                (&["looked forward for", "looked forwards to"], &["looked forward to"]),
+                (&["looks forward for", "looks forwards to"], &["looks forward to"]),
+                (&["looking forward for", "looking forwards to"], &["looking forward to"])
+            ],
+            "The correct preposition in this phrase is `to`.",
+            "Corrects `look forward for` to `look forward to`.",
+            LintKind::Usage
+        ),
         "MakeItSeem" => (
             &[
                 (&["make it seems"], &["make it seem"]),
@@ -1256,6 +1256,7 @@ pub fn lint_group() -> LintGroup {
                 (&["worst than"], &["worse than"]),
                 // worse -> worst
                 (&["at worse"], &["at worst"]),
+                (&["the worse thing"], &["the worst thing"]),
                 (&["worse case scenario", "worse-case scenario", "worse-case-scenario"], &["worst-case scenario"]),
                 (&["worse ever"], &["worst ever"]),
             ],

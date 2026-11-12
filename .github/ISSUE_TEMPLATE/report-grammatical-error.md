@@ -4,15 +4,15 @@ about: Harper missed a grammatical error
 title: ''
 labels: enhancement, harper-core, linting
 ---
-**The Error**
+## The Error
 Description of the error.
 
-**Examples (2-3):**
+## Examples (2-3)
 1. 
 2. 
 
-**References**
+## References
 Any grammar rules or resources that support this.
 
-**Potential Edge Cases**
+## Potential Edge Cases
 When might this not apply?

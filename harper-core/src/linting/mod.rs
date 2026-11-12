@@ -2,6 +2,7 @@
 //!
 //! See the [`Linter`] trait and the [documentation for authoring a rule](https://writewithharper.com/docs/contributors/author-a-rule) for more information.
 
+mod a_bit_of_plural;
 mod a_part;
 mod a_some_time;
 mod a_ways_to_go;
@@ -15,6 +16,7 @@ mod ajar;
 mod akimbo;
 mod all_hell_break_loose;
 mod all_intents_and_purposes;
+mod all_thats_are;
 mod allow_to;
 mod am_in_the_morning;
 mod amounts_for;
@@ -183,6 +185,7 @@ mod lint;
 mod lint_group;
 mod lint_kind;
 mod little_known;
+mod little_to_no;
 mod long_sentences;
 mod long_time_ago;
 mod look_down_ones_nose;
@@ -359,6 +362,7 @@ mod vicious_loop;
 mod waist_waste;
 mod was_aloud;
 mod way_too_adjective;
+mod we_see_us;
 mod web_scraping;
 mod weir_rules;
 mod well_educated;

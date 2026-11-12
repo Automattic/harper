@@ -497,6 +497,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Fanfare",
+								"state": true,
+								"label": "Fanfare"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Furthermore",
 								"state": true,
 								"label": "Furthermore"
@@ -735,6 +742,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Roundabout",
+								"state": true,
+								"label": "Roundabout"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Shortcoming",
 								"state": true,
 								"label": "Shortcoming"
@@ -850,6 +864,13 @@
 								"name": "Upward",
 								"state": true,
 								"label": "Upward"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Whatsoever",
+								"state": true,
+								"label": "Whatsoever"
 							}
 						},
 						{
@@ -2597,9 +2618,23 @@
 						},
 						{
 							"Bool": {
+								"name": "ComeAcross",
+								"state": true,
+								"label": "Come Across"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Dereference",
 								"state": true,
 								"label": "Dereference"
+							}
+						},
+						{
+							"Bool": {
+								"name": "DoinToDoing",
+								"state": true,
+								"label": "Doin to Doing"
 							}
 						},
 						{
@@ -3471,6 +3506,13 @@
 					"settings": [
 						{
 							"Bool": {
+								"name": "ABitOfPlural",
+								"state": true,
+								"label": "A Bit of Plural"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AdjectiveDoubleDegree",
 								"state": true,
 								"label": "Adjective Double Degree"
@@ -3509,6 +3551,13 @@
 								"name": "AllReady",
 								"state": true,
 								"label": "All Ready"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AllThatsAre",
+								"state": true,
+								"label": "All That's Are"
 							}
 						},
 						{
@@ -3578,6 +3627,13 @@
 							"Bool": {
 								"name": "BackwardEngineer",
 								"state": true
+							}
+						},
+						{
+							"Bool": {
+								"name": "BeAgree",
+								"state": true,
+								"label": "Be Agree"
 							}
 						},
 						{
@@ -3995,6 +4051,13 @@
 						},
 						{
 							"Bool": {
+								"name": "QuestionVerbAgreement",
+								"state": true,
+								"label": "Question Verb Agreement"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ReadsAndWrites",
 								"state": true,
 								"label": "Reads and Writes"
@@ -4214,6 +4277,13 @@
 								"name": "WentAheadAndAgreement",
 								"state": true,
 								"label": "Went Ahead and Agreement"
+							}
+						},
+						{
+							"Bool": {
+								"name": "WeSeeUs",
+								"state": true,
+								"label": "We See Us"
 							}
 						},
 						{
@@ -4497,6 +4567,13 @@
 								"name": "AWholeOther",
 								"state": true,
 								"label": "A Whole Other"
+							}
+						},
+						{
+							"Bool": {
+								"name": "BacklashBackslash",
+								"state": true,
+								"label": "Backlash / Backslash"
 							}
 						},
 						{
@@ -4840,6 +4917,13 @@
 								"name": "DenyOffer",
 								"state": true,
 								"label": "Deny Offer"
+							}
+						},
+						{
+							"Bool": {
+								"name": "DependOf",
+								"state": true,
+								"label": "Depend Of"
 							}
 						},
 						{
@@ -5432,6 +5516,13 @@
 						},
 						{
 							"Bool": {
+								"name": "LittleToNo",
+								"state": true,
+								"label": "Little to No"
+							}
+						},
+						{
+							"Bool": {
 								"name": "LongTimeAgo",
 								"state": true,
 								"label": "Long Time Ago"
@@ -5596,6 +5687,13 @@
 								"name": "OffLimits",
 								"state": true,
 								"label": "Off Limits"
+							}
+						},
+						{
+							"Bool": {
+								"name": "OfOff",
+								"state": true,
+								"label": "Of / Off"
 							}
 						},
 						{
@@ -5869,6 +5967,13 @@
 								"name": "ScantilyClad",
 								"state": true,
 								"label": "Scantily Clad"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ScaredOf",
+								"state": true,
+								"label": "Scared of"
 							}
 						},
 						{
