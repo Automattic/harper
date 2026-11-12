@@ -263,6 +263,24 @@ mod tests {
     }
 
     #[test]
+    fn british_ise_words_in_british_dialect() {
+        assert_lint_count(
+            "We anonymise it with the customisable tokeniser, then we synthesised the results.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            0,
+        );
+    }
+
+    #[test]
+    fn british_ise_words_in_american_dialect() {
+        assert_lint_count(
+            "We anonymise it with the customisable tokeniser, then we synthesised the results.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            4,
+        );
+    }
+
+    #[test]
     fn canadian_words_in_australian_dialect() {
         assert_lint_count(
             "Does your mom like yogourt?",
