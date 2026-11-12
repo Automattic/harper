@@ -1515,6 +1515,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Themselves",
+								"state": true,
+								"label": "Them Selves"
+							}
+						},
+						{
+							"Bool": {
 								"name": "TooTo",
 								"state": true,
 								"label": "Too To"
