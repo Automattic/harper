@@ -2,6 +2,10 @@ use std::path::Path;
 use std::{borrow::Cow, io::Read, path::PathBuf};
 
 use enum_dispatch::enum_dispatch;
+use mdream::{HtmlToMarkdownOptions, html_to_markdown};
+use reqwest::Url;
+use reqwest::blocking::Client;
+use reqwest::header::USER_AGENT;
 use strum_macros::EnumTryAs;
 
 use harper_asciidoc::AsciidocParser;
@@ -58,6 +62,8 @@ pub(crate) trait SingleInputTrait: InputTrait {
 pub(crate) enum SingleInput {
     /// Read from a file.
     File(FileInput),
+    /// Fetch and lint a document from a URL.
+    Url(UrlInput),
     /// Direct text input via the command line.
     Text(TextInput),
     /// Read from standard input.
@@ -68,9 +74,11 @@ impl SingleInput {
     /// type based on its contents.
     ///
     /// For instance, an `input_string` that corresponds to a valid filepath will be parsed as
-    /// a [`SingleInput::File`].
+    /// a [`SingleInput::File`], while an HTTP(S) URL will be parsed as a [`SingleInput::Url`].
     pub(crate) fn parse_string(input_string: &str) -> Self {
-        if let Ok(file) = FileInput::try_from_path(Path::new(input_string)) {
+        if let Some(url) = UrlInput::try_parse(input_string) {
+            Self::Url(url)
+        } else if let Ok(file) = FileInput::try_from_path(Path::new(input_string)) {
             // Input is a valid filepath.
             Self::File(file)
         } else {
@@ -170,6 +178,42 @@ impl InputTrait for FileInput {
         self.path
             .file_name()
             .map_or(Cow::from("<file>"), |file_name| file_name.to_string_lossy())
+    }
+}
+
+/// URL input.
+#[derive(Clone)]
+pub(crate) struct UrlInput {
+    url: Url,
+}
+impl UrlInput {
+    /// Try to create a `UrlInput` from an input. Returns `None` if cannot parse the URL.
+    pub(crate) fn try_parse(input: &str) -> Option<Self> {
+        match Url::parse(input) {
+            Ok(url) => Some(Self { url }),
+            Err(_) => None,
+        }
+    }
+}
+impl SingleInputTrait for UrlInput {
+    fn get_content(&self) -> anyhow::Result<Cow<'_, str>> {
+        let client = Client::new();
+        let html = client
+            .get(self.url.clone())
+            .header(USER_AGENT, "harper-cli")
+            .send()?
+            .text()?;
+        let md = html_to_markdown(&html, HtmlToMarkdownOptions::default());
+        Ok(Cow::Owned(md))
+    }
+
+    fn get_parser(&self, _markdown_options: MarkdownOptions) -> Box<dyn Parser> {
+        Box::new(Markdown::default())
+    }
+}
+impl InputTrait for UrlInput {
+    fn get_identifier(&self) -> Cow<'_, str> {
+        Cow::Borrowed("<url>")
     }
 }
 
