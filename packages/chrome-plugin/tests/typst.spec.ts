@@ -1,6 +1,11 @@
 import type { Page } from '@playwright/test';
 import { expect, test } from './fixtures';
-import { clickHarperHighlight, getHarperHighlights, replaceEditorContent } from './testUtils';
+import {
+	clickHarperHighlight,
+	getHarperHighlights,
+	replaceEditorContent,
+	waitForHighlightsToSettle,
+} from './testUtils';
 
 const TEST_PAGE_URL = 'https://typst.app/play/';
 
@@ -17,6 +22,7 @@ test('Typst CodeMirror editor can apply a suggestion', async ({ page }) => {
 	await replaceEditorContent(editor, 'This is an test');
 
 	await assertHighlightCount(page, 1);
+	await waitForHighlightsToSettle(page);
 
 	expect(await clickHarperHighlight(page)).toBe(true);
 	await page.getByTitle('Click to replace "an" with "a"').click();
@@ -39,6 +45,7 @@ for (const blankLines of [1, 3, 5]) {
 		);
 
 		await assertHighlightCount(page, 1);
+		await waitForHighlightsToSettle(page);
 
 		expect(await clickHarperHighlight(page)).toBe(true);
 		await page.getByTitle('Click to replace "an" with "a"').click();
@@ -60,6 +67,7 @@ test('Typst CodeMirror handles multiline suggestions distinctly', async ({ page 
 	await expect(editor).toContainText('First line an test');
 	await expect(editor).toContainText('Second line an test');
 	await assertHighlightCount(page, 2);
+	await waitForHighlightsToSettle(page);
 	const initialHighlightCount = 2;
 	expect(await clickHarperHighlight(page)).toBe(true);
 	await page.getByTitle('Click to replace "an" with "a"').click();
