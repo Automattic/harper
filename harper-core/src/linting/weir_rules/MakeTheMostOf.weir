@@ -1,0 +1,11 @@
+expr main <([make, made, making, makes] the most out of), (most out of)>
+
+let message "You may be mixing up `get the most out of` with `make the most of`."
+let description "Removes redundant `out` in `make the most out of`."
+let kind "Redundancy"
+let becomes "most of"
+
+test "And so if I want to make the most out of my budget and gather a variety of cool items ..." "And so if I want to make the most of my budget and gather a variety of cool items ..."
+test "Making the most out of Jupyter Notebooks.ipynb." "Making the most of Jupyter Notebooks.ipynb."
+test "Carmack makes the most out of those remaining hours." "Carmack makes the most of those remaining hours."
+test "He made the most out of all the opportunities put in front of him and has an entrepreneurial mindset" "He made the most of all the opportunities put in front of him and has an entrepreneurial mindset"
