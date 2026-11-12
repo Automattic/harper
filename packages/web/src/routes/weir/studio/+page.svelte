@@ -1,4 +1,17 @@
+<script module lang="ts">
+export const frontmatter = {
+	title: 'Weir Studio',
+	description:
+		'Write and test custom Harper grammar rules in the browser, then package them as Weirpacks.',
+};
+</script>
+
+<PageMetadata metadata={frontmatter} />
+<h1 class="mt-0 mb-5 text-[32px]! leading-[1.3]! font-bold! tracking-[-0.02em]! text-(--docs-heading)!">{frontmatter.title}</h1>
+
 <script lang="ts">
+import PageMetadata from '$lib/PageMetadata.svelte';
+import EditPage from '$lib/docs/EditPage.svelte';
 import { Isolate } from 'components';
 import { packWeirpackFiles, unpackWeirpackBytes } from 'harper.js';
 import type { ComponentType } from 'svelte';
@@ -387,6 +400,7 @@ onMount(async () => {
 		import('brace/mode/typescript'),
 		import('brace/mode/yaml'),
 		import('brace/theme/chrome'),
+		import('brace/theme/tomorrow_night'),
 	]);
 
 	const newLinter = new LocalLinter({ binary });
@@ -401,8 +415,8 @@ setInterval(saveWeirpackToStorage, 5000);
 </script>
 
 <Isolate>
-	<div class="relative flex h-screen w-screen overflow-hidden bg-[#fef4e7] text-black">
-		<div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(244,168,62,0.25),transparent_55%)]"></div>
+	<div class="relative flex h-screen w-screen overflow-hidden bg-[#fef4e7] text-black dark:bg-black dark:text-white">
+		<div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(244,168,62,0.25),transparent_55%)] dark:opacity-40"></div>
 
 		<WeirStudioWorkspace
 			{drawerOpen}
@@ -441,3 +455,4 @@ setInterval(saveWeirpackToStorage, 5000);
 		{/if}
 	</div>
 </Isolate>
+<EditPage sourcePath="weir/studio/+page.svelte" />

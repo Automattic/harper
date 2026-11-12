@@ -10,6 +10,7 @@ const reasons = {
 	'false-positive': 'It incorrectly flagged my text as an error',
 	'false-negative': "It didn't identify enough errors in my text",
 	'no-positives': "It didn't identify any errors in my text",
+	'malfunction-on-important-site': "Harper didn't work on a site I use regularly.",
 	other: 'Other',
 };
 
@@ -39,7 +40,7 @@ function handleFormData(e: FormDataEvent) {
 			class="w-full max-w-[38rem]"
 			on:formdata={handleFormData}
 		>
-			<Card className="!p-0 overflow-hidden bg-white !shadow-[0_30px_60px_-24px_rgba(28,26,22,0.22)] dark:bg-gray-900">
+			<Card className="!p-0 overflow-hidden bg-white !shadow-[0_30px_60px_-24px_rgba(28,26,22,0.22)] dark:bg-[#1c1a16]">
 				<!-- Unsplash photo by Ray Zhuang. -->
 				<img
 					src="/images/uninstall-kitten.webp"
@@ -69,7 +70,7 @@ function handleFormData(e: FormDataEvent) {
 								<input type="radio" name="feedback" {value} bind:group={selected} class="peer sr-only" />
 								<span
 									aria-hidden="true"
-									class="flex size-[18px] flex-none items-center justify-center rounded-full border-[1.5px] border-[#ada79a] bg-white peer-checked:border-[#f1920e] dark:bg-gray-900"
+									class="flex size-[18px] flex-none items-center justify-center rounded-full border-[1.5px] border-[#ada79a] bg-white peer-checked:border-[#f1920e] dark:bg-black"
 								>
 									<span class="size-2 rounded-full bg-[#f1920e] opacity-0 transition-opacity duration-[120ms] group-has-[:checked]:opacity-100 motion-reduce:transition-none"></span>
 								</span>
@@ -79,7 +80,7 @@ function handleFormData(e: FormDataEvent) {
 
 						{#if selected === 'other'}
 							<label for="other-answer" class="sr-only">Other reason</label>
-							<Input id="other-answer" name="other" bind:value={otherText} placeholder="Your answer" class="block w-full dark:!bg-gray-900 dark:!text-white" />
+							<Input id="other-answer" name="other" bind:value={otherText} placeholder="Your answer" class="block w-full dark:!bg-black dark:!text-white" />
 						{/if}
 					</fieldset>
 
@@ -98,7 +99,7 @@ function handleFormData(e: FormDataEvent) {
 							href="/get"
 							color="white"
 							size="lg"
-							class="whitespace-normal !text-gray-900 hover:!no-underline dark:!text-white"
+							class="whitespace-normal !text-gray-900 hover:!no-underline dark:!border-white/15 dark:!bg-[#1c1a16] dark:!text-white dark:hover:!bg-white/10"
 						>
 							I made a mistake. I want to reinstall.
 						</Button>

@@ -34,6 +34,8 @@
  * @property {string=} expectedText Optional expected source text for defensive re-alignment.
  * @property {string=} beforeContext Optional context before the span for re-alignment scoring.
  * @property {string=} afterContext Optional context after the span for re-alignment scoring.
+ * @property {'native-utf16-v1'=} rangeSource Strict native UTF-16 range mode. No relocation is permitted.
+ * @property {string=} nativeSnapshot Exact bridge-normalized text captured with the lint. Required with rangeSource.
  */
 
 /**

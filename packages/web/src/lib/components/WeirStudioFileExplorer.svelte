@@ -9,6 +9,7 @@ import {
 	PlusIcon,
 	TrashIcon,
 } from 'components';
+import { studioPrimaryButton, studioSecondaryButton } from '$lib/components/weirStudioTheme';
 
 /** Whether to render the file explorer as a closed drawer or an open one. */
 export let drawerOpen = true;
@@ -49,15 +50,15 @@ function commitRename(from: string) {
 </script>
 
 <aside
-	class={`relative z-10 flex h-full flex-col border-r border-black/10 bg-white/80 backdrop-blur transition-all duration-300 ${drawerOpen ? 'w-72' : 'w-14'}`}
+	class={`relative z-10 flex h-full flex-col border-r border-black/10 bg-white/80 backdrop-blur dark:border-white/10 dark:bg-[#1c1a16]/80 transition-all duration-300 ${drawerOpen ? 'w-72' : 'w-14'}`}
 >
 	<div class="flex items-center justify-between px-3 py-3">
 		{#if drawerOpen}
-			<div class="text-sm font-semibold uppercase tracking-wider text-black/70">Weirpack</div>
+			<div class="text-sm font-semibold uppercase tracking-wider text-black/70 dark:text-white/70">Weirpack</div>
 			<Button
 				size="xs"
 				color="white"
-				className="h-8 w-8 !p-0"
+				className={`h-8 w-8 !p-0 ${studioSecondaryButton}`}
 				on:click={onToggleDrawer}
 				title="Collapse drawer"
 				aria-label="Collapse drawer"
@@ -68,7 +69,7 @@ function commitRename(from: string) {
 			<Button
 				size="xs"
 				color="white"
-				className="mx-auto h-8 w-8 !p-0"
+				className={`mx-auto h-8 w-8 !p-0 ${studioSecondaryButton}`}
 				on:click={onToggleDrawer}
 				title="Expand drawer"
 				aria-label="Expand drawer"
@@ -83,7 +84,7 @@ function commitRename(from: string) {
 			<Button
 				color="dark"
 				size="sm"
-				className="w-full uppercase tracking-wide"
+				className={`w-full uppercase tracking-wide ${studioPrimaryButton}`}
 				on:click={onCreateFile}
 			>
 				<PlusIcon className="h-4 w-4" />
@@ -94,7 +95,7 @@ function commitRename(from: string) {
 		<div class="flex-1 overflow-auto px-2 pb-4">
 			{#each files as [file]}
 				<div
-					class={`group flex items-center justify-between rounded-lg px-2 py-2 text-sm ${file == activeFile ? 'bg-white shadow-sm' : 'hover:bg-white/60'}`}
+					class={`group flex items-center justify-between rounded-lg px-2 py-2 text-sm ${file == activeFile ? 'bg-white shadow-sm dark:bg-white/10' : 'hover:bg-white/60 dark:hover:bg-white/5'}`}
 				>
 					<div class="flex flex-1 items-center gap-2 text-left">
 						<span class={`h-2 w-2 rounded-full ${file == activeFile ? 'bg-primary': ''} bg-cream`}></span>
@@ -118,20 +119,20 @@ function commitRename(from: string) {
 								/>
 							</div>
 						{:else}
-							<button class="flex-1 truncate text-left" on:click={() => onSelectFile(file)}>
+							<button class="flex-1 truncate text-left dark:text-white/85" on:click={() => onSelectFile(file)}>
 								{file}
 							</button>
 						{/if}
 					</div>
 
 					<div
-						class={`flex items-center gap-1 text-black/50 transition ${renamingFile === file ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
+						class={`flex items-center gap-1 text-black/50 transition dark:text-white/50 ${renamingFile === file ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
 					>
 						{#if renamingFile === file}
 							<Button
 								size="xs"
 								color="white"
-								className="h-6 w-6 !p-0"
+								className={`h-6 w-6 !p-0 ${studioSecondaryButton}`}
 								on:click={() => commitRename(file)}
 								title="Confirm rename"
 								aria-label="Confirm rename"
@@ -142,7 +143,7 @@ function commitRename(from: string) {
 							<Button
 								size="xs"
 								color="white"
-								className="h-6 w-6 !p-0"
+								className={`h-6 w-6 !p-0 ${studioSecondaryButton}`}
 								on:click={() => startRename(file)}
 								title="Rename file"
 								aria-label="Rename file"
@@ -153,7 +154,7 @@ function commitRename(from: string) {
 								<Button
 									size="xs"
 									color="white"
-									className="h-6 w-6 !p-0"
+									className={`h-6 w-6 !p-0 ${studioSecondaryButton}`}
 									on:click={() => onDeleteFile(file)}
 									title="Delete file"
 									aria-label="Delete file"
@@ -167,7 +168,7 @@ function commitRename(from: string) {
 			{/each}
 		</div>
 	{:else}
-		<div class="flex flex-1 flex-col items-center gap-4 pt-6 text-xs text-black/50">
+		<div class="flex flex-1 flex-col items-center gap-4 pt-6 text-xs text-black/50 dark:text-white/50">
 			<div class="rotate-135 text-xs font-semibold tracking-widest uppercase">Files</div>
 		</div>
 	{/if}

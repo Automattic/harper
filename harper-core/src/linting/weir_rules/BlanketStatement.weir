@@ -1,8 +1,16 @@
-expr main (blanketed statement)
+expr main <([blanketed, blanked, blanker] [statement, statements]), [blanketed, blanked, blanker]>
 
-let message "Use the more idiomatic phrasing."
+let message "Did you mean `blanket statement`, meaning a sweeping generalization?"
 let description "Corrects common errors in the phrase `blanket statement`."
 let kind "Usage"
-let becomes "blanket statement"
+let becomes "blanket"
 
+# blanketed
 test "This seems like a blanketed statement and I have not found any info to back up whether PyJWT is affected." "This seems like a blanket statement and I have not found any info to back up whether PyJWT is affected."
+test "I'm sick of the blanketed statements. Why not tell each other the truth?" "I'm sick of the blanket statements. Why not tell each other the truth?"
+# blanked
+test "The blanked statement and advice to 'use of SVG for icons' is something I can debate." "The blanket statement and advice to 'use of SVG for icons' is something I can debate."
+test "These blanked statements about monoliths are what made every junior dev think that microservices are the only solution." "These blanket statements about monoliths are what made every junior dev think that microservices are the only solution."
+# blanker
+test "To make a blanker statement that \"Fidelity is a bad broker\" is not true though." "To make a blanket statement that \"Fidelity is a bad broker\" is not true though."
+test "The point is that legitimate companies sell through eBay and blanker statements about their legitimacy cannot be supported." "The point is that legitimate companies sell through eBay and blanket statements about their legitimacy cannot be supported."

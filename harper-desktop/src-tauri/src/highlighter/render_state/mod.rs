@@ -1,6 +1,7 @@
 mod draw_highlight;
 mod popup_layout;
 mod render_lint_card;
+mod tips;
 
 use std::time::Instant;
 
@@ -11,8 +12,8 @@ use self::{
     draw_highlight::draw_highlight,
     popup_layout::{PopupLayout, approach},
     render_lint_card::{
-        FIRST_ROW_OFFSET, LintCardAction, popup_layout_for_lint, render_lint_card, row_count,
-        sidebar_target,
+        FIRST_ROW_OFFSET, LintCardAction, TipLayout, popup_layout_for_lint, render_lint_card,
+        row_count, sidebar_target,
     },
 };
 use super::{AddToDictionary, DisableRule, IgnoreLint, OpenSettings};
@@ -43,6 +44,14 @@ pub struct RenderState {
 
     /// Index of the suggestion row that the user hovered last in the visible popup.
     shown_suggestion: Option<usize>,
+
+    /// The tip chosen when this popup opened. `None` is a retained decision not to show a tip,
+    /// not a request to reroll on the next frame; `highlighted_lint` identifies the session.
+    current_tip: Option<&'static str>,
+
+    /// Text measured with the active egui fonts before drawing. Hit-testing reuses its height
+    /// between frames. A newly selected tip has no extra hit area until its first render.
+    tip_layout: Option<TipLayout>,
 
     /// The flyout card's drawn offset from the list card's top, in points.
     current_sidebar_position: f32,
@@ -80,6 +89,8 @@ impl RenderState {
             last_lints: None,
             highlighted_lint: None,
             shown_suggestion: None,
+            current_tip: None,
+            tip_layout: None,
             current_sidebar_position: FIRST_ROW_OFFSET,
             last_render: None,
             markdown_cache: CommonMarkCache::default(),
@@ -94,17 +105,25 @@ impl RenderState {
 
     /// Saves successful accessibility reads while retaining the previous lints after a failed read.
     ///
-    /// Closes the popup when its lint disappeared, and forgets the shown suggestion when the
-    /// refreshed lint has fewer rows.
+    /// Preserves the tip through geometry-only refreshes, but closes the popup if its index no
+    /// longer refers to the same rule, span, and source text. Forget the shown suggestion when the
+    /// refreshed lint has fewer rows. Conservatively closing on source changes prevents a popup
+    /// (and its tip) from silently moving to another occurrence after an edit or lint reordering.
     pub fn set_lints(&mut self, lints: Vec<ActionableLint>) {
-        self.last_lints = Some(lints);
-
-        if self
-            .highlighted_lint
-            .is_some_and(|index| index >= self.lints().len())
-        {
+        let same_lint = self.highlighted_lint.is_some_and(|index| {
+            self.lints()
+                .get(index)
+                .zip(lints.get(index))
+                .is_some_and(|(old, new)| {
+                    old.rule_name == new.rule_name
+                        && old.lint.span == new.lint.span
+                        && old.source_text == new.source_text
+                })
+        });
+        if !same_lint {
             self.close_popup();
         }
+        self.last_lints = Some(lints);
 
         let row_count = self
             .highlighted_lint
@@ -125,17 +144,40 @@ impl RenderState {
     /// selection. Filtering invalid indexes here keeps stale cursor state from selecting a lint that
     /// disappeared after the latest accessibility read.
     ///
-    /// Like the Chrome extension, each new selection starts again from the first suggestion row.
+    /// Like the Chrome extension, each new selection starts again from the first suggestion row
+    /// and makes one tip decision. Clicking the already-open lint does not reroll its tip.
     pub fn set_highlighted_lint(&mut self, highlighted_lint: Option<usize>) {
-        self.highlighted_lint = highlighted_lint.filter(|index| *index < self.lints().len());
+        self.open_popup(highlighted_lint, || {
+            tips::choose_tip(&mut fastrand::Rng::new())
+        });
+    }
+
+    /// Applies a popup transition, invoking the supplied selector only for a new valid session.
+    fn open_popup(
+        &mut self,
+        highlighted_lint: Option<usize>,
+        choose_tip: impl FnOnce() -> Option<&'static str>,
+    ) {
+        let highlighted_lint = highlighted_lint.filter(|index| *index < self.lints().len());
+        if highlighted_lint.is_none() {
+            self.close_popup();
+            return;
+        }
+        if self.highlighted_lint != highlighted_lint {
+            self.current_tip = choose_tip();
+            self.tip_layout = None;
+        }
+        self.highlighted_lint = highlighted_lint;
         self.shown_suggestion = None;
         self.current_sidebar_position = FIRST_ROW_OFFSET;
     }
 
-    /// Centralizes the close behavior so the popup close button only has to clear the selected lint.
+    /// Clears all popup-session state, including a selected tip, for every close path.
     pub fn close_popup(&mut self) {
         self.highlighted_lint = None;
         self.shown_suggestion = None;
+        self.current_tip = None;
+        self.tip_layout = None;
         self.current_sidebar_position = FIRST_ROW_OFFSET;
     }
 
@@ -156,8 +198,9 @@ impl RenderState {
             .map_or(HitTarget::None, HitTarget::Lint)
     }
 
-    /// Computes popup hit-test bounds from our layout contract instead of waiting for egui to report
-    /// rendered bounds, which keeps hit-testing available before the next render pass completes.
+    /// Computes hit-test bounds from fixed row geometry and the tip's most recent text measurement.
+    /// `render` updates that measurement before computing and drawing the same bounds; until a new
+    /// tip's first render, only the suggestion rows and footer have a hit area.
     pub fn popup_layout(&self) -> Option<PopupLayout> {
         self.highlighted_lint
             .and_then(|index| self.lints().get(index))
@@ -166,6 +209,7 @@ impl RenderState {
                     &positioned_lint.rect,
                     &positioned_lint.lint,
                     self.current_sidebar_position,
+                    self.tip_layout.as_ref().map_or(0.0, TipLayout::height),
                 )
             })
     }
@@ -173,8 +217,17 @@ impl RenderState {
     /// Draws highlights and the active popup from the same state used by hit-testing so visible
     /// regions and clickable regions do not drift apart.
     ///
+    /// Each monitor has its own window. `screen_rects` holds the bounds of every window, in the
+    /// screen coordinates that lints and hit-testing use, and `window` is the index of the one being
+    /// drawn. Lints are moved into that window's coordinates, and only one window draws the popup.
+    ///
     /// Each call also moves the sidebar toward its target by the time since the previous call.
-    pub fn render(&mut self, ui: &mut egui::Ui) {
+    pub fn render(&mut self, ui: &mut egui::Ui, screen_rects: &[egui::Rect], window: usize) {
+        let window_rect = screen_rects[window];
+        // egui caches text layout internally. Measuring each frame also handles font/DPI changes.
+        self.tip_layout = self
+            .current_tip
+            .map(|tip| TipLayout::new(ui.painter(), tip));
         let now = Instant::now();
         let time_since_last_render = self
             .last_render
@@ -194,23 +247,34 @@ impl RenderState {
         }
 
         for positioned_lint in self.lints() {
-            draw_highlight(ui, &positioned_lint.rect, &positioned_lint.lint);
+            draw_highlight(
+                ui,
+                &to_window_space(&positioned_lint.rect, window_rect),
+                &positioned_lint.lint,
+            );
         }
 
         if let Some(index) = self.highlighted_lint
             && let Some(positioned_lint) = self.lints().get(index)
+            && popup_window(screen_rects, &positioned_lint.rect) == Some(window)
         {
-            let rect = positioned_lint.rect;
+            let rect = to_window_space(&positioned_lint.rect, window_rect);
+            let layout = popup_layout_for_lint(
+                &rect,
+                &positioned_lint.lint,
+                self.current_sidebar_position,
+                self.tip_layout.as_ref().map_or(0.0, TipLayout::height),
+            );
             let lint = positioned_lint.lint.clone();
             let source_text = positioned_lint.source_text.clone();
 
             match render_lint_card(
                 ui,
-                &rect,
+                layout,
                 &lint,
                 &source_text,
                 self.shown_suggestion,
-                self.current_sidebar_position,
+                self.tip_layout.as_ref(),
                 &mut self.markdown_cache,
             ) {
                 Some(LintCardAction::Close) => self.close_popup(),
@@ -289,8 +353,110 @@ fn rect_bounds(rect: &Rect) -> egui::Rect {
     )
 }
 
+/// Moves a screen-space rectangle into the coordinates of the window at `window_rect`, whose
+/// top-left corner egui draws at the origin.
+fn to_window_space(rect: &Rect, window_rect: egui::Rect) -> Rect {
+    Rect::new(
+        rect.x - window_rect.min.x as f64,
+        rect.y - window_rect.min.y as f64,
+        rect.width,
+        rect.height,
+    )
+}
+
+/// Picks the index of the window that draws the popup for the lint at `lint_rect`: the window that
+/// contains the lint's center, or the nearest window when the center is outside all of them.
+///
+/// Egui moves popups that would be outside a window back inside it, so exactly one window may draw
+/// the popup. When the center is on the edge between two windows, the first one is picked.
+fn popup_window(screen_rects: &[egui::Rect], lint_rect: &Rect) -> Option<usize> {
+    let center = rect_bounds(lint_rect).center();
+
+    screen_rects
+        .iter()
+        .map(|screen_rect| screen_rect.distance_sq_to_pos(center))
+        .enumerate()
+        .min_by(|(_, a), (_, b)| a.total_cmp(b))
+        .map(|(index, _)| index)
+}
+
 fn lint_kind_color32(lint_kind: LintKind) -> egui::Color32 {
     let color = lint_kind_color(lint_kind);
 
     egui::Color32::from_rgb(color.r, color.g, color.b)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// A built-in display at the origin, with an external display to its left and above it.
+    const BUILT_IN: egui::Rect =
+        egui::Rect::from_min_max(egui::pos2(0.0, 0.0), egui::pos2(1512.0, 982.0));
+    const EXTERNAL: egui::Rect =
+        egui::Rect::from_min_max(egui::pos2(-3008.0, -392.0), egui::pos2(0.0, 1300.0));
+    const SCREENS: [egui::Rect; 2] = [BUILT_IN, EXTERNAL];
+
+    #[test]
+    fn to_window_space_moves_rect_by_window_origin() {
+        let rect = Rect::new(-2900.0, -300.0, 30.0, 12.0);
+
+        assert_eq!(
+            to_window_space(&rect, EXTERNAL),
+            Rect::new(108.0, 92.0, 30.0, 12.0)
+        );
+        assert_eq!(to_window_space(&rect, BUILT_IN), rect);
+    }
+
+    #[test]
+    fn popup_with_tip_uses_window_coordinates_and_preserves_hit_test_size() {
+        let rect = Rect::new(-2900.0, -300.0, 30.0, 12.0);
+        let lint = harper_core::linting::Lint::default();
+
+        for tip_height in [0.0, 80.0] {
+            let screen_layout = popup_layout_for_lint(&rect, &lint, FIRST_ROW_OFFSET, tip_height);
+            let window_layout = popup_layout_for_lint(
+                &to_window_space(&rect, EXTERNAL),
+                &lint,
+                FIRST_ROW_OFFSET,
+                tip_height,
+            );
+
+            assert_eq!(
+                window_layout.list,
+                screen_layout.list.translate(-EXTERNAL.min.to_vec2())
+            );
+            assert_eq!(
+                window_layout.flyout,
+                screen_layout.flyout.translate(-EXTERNAL.min.to_vec2())
+            );
+        }
+    }
+
+    #[test]
+    fn popup_window_contains_lint() {
+        let on_built_in = Rect::new(100.0, 100.0, 30.0, 12.0);
+        let on_external = Rect::new(-2900.0, -300.0, 30.0, 12.0);
+
+        assert_eq!(popup_window(&SCREENS, &on_built_in), Some(0));
+        assert_eq!(popup_window(&SCREENS, &on_external), Some(1));
+    }
+
+    #[test]
+    fn popup_window_is_nearest_when_lint_center_is_off_screen() {
+        let below_built_in = Rect::new(100.0, 975.0, 30.0, 20.0);
+        let left_of_external = Rect::new(-3030.0, 100.0, 30.0, 12.0);
+
+        assert_eq!(popup_window(&SCREENS, &below_built_in), Some(0));
+        assert_eq!(popup_window(&SCREENS, &left_of_external), Some(1));
+        assert_eq!(popup_window(&[BUILT_IN], &left_of_external), Some(0));
+    }
+
+    #[test]
+    fn popup_window_picks_one_window_for_lint_on_shared_edge() {
+        let on_edge = Rect::new(-15.0, 100.0, 30.0, 12.0);
+
+        assert_eq!(popup_window(&SCREENS, &on_edge), Some(0));
+        assert_eq!(popup_window(&[EXTERNAL, BUILT_IN], &on_edge), Some(0));
+    }
 }
