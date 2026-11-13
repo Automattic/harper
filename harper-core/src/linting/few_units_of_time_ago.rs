@@ -1,6 +1,6 @@
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
-use crate::expr::TimeUnitExpr;
+use crate::lang::en::expr::TimeUnitExpr;
 use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,

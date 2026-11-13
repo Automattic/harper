@@ -1,6 +1,7 @@
+use crate::lang::en::expr::SpelledNumberExpr;
 use crate::{
     CharStringExt, EnglishDialect, IrregularNouns, Lint, Lrc, Token, TokenStringExt,
-    expr::{Expr, FirstMatchOf, OwnedExprExt, SequenceExpr, SpelledNumberExpr},
+    expr::{Expr, FirstMatchOf, OwnedExprExt, SequenceExpr},
     indefinite_article::{InitialSound, starts_with_vowel},
     linting::{
         ExprLinter, LintKind, Suggestion,

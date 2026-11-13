@@ -1,7 +1,8 @@
+use crate::lang::en::expr::SpelledNumberExpr;
 use crate::{
     Lint, Span, Token,
     char_string::CharStringExt,
-    expr::{AnchorEnd, Expr, SequenceExpr, SpelledNumberExpr},
+    expr::{AnchorEnd, Expr, SequenceExpr},
     linting::{
         ExprLinter, LintKind, Suggestion,
         expr_linter::{Chunk, find_the_only_token_matching},

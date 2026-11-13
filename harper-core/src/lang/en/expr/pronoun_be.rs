@@ -36,10 +36,8 @@ impl Expr for PronounBe {
 
 #[cfg(test)]
 mod tests {
-    use crate::{
-        Document,
-        expr::{ExprExt, PronounBe},
-    };
+    use super::PronounBe;
+    use crate::{Document, expr::ExprExt};
 
     fn assert_count(text: &str, expected_count: usize) {
         assert_eq!(
