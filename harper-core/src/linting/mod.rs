@@ -310,6 +310,7 @@ mod spaces;
 mod spell_check;
 mod spelled_numbers;
 mod split_words;
+mod strive_for;
 mod subject_pronoun;
 mod such_shame;
 mod suggestion;

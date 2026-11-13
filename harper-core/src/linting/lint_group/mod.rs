@@ -292,6 +292,7 @@ use super::spaces::Spaces;
 use super::spell_check::SpellCheck;
 use super::spelled_numbers::SpelledNumbers;
 use super::split_words::SplitWords;
+use super::strive_for::StriveFor;
 use super::subject_pronoun::SubjectPronoun;
 use super::such_shame::SuchShame;
 use super::summary_summery::SummarySummery;
@@ -935,6 +936,7 @@ impl LintGroup {
         insert_struct_rule!(Spaces);
         insert_struct_rule!(SpelledNumbers);
         insert_expr_rule!(SplitWords);
+        insert_expr_rule!(StriveFor);
         insert_struct_rule!(SubjectPronoun);
         insert_expr_rule!(SuchShame);
         insert_expr_rule!(SummarySummery);

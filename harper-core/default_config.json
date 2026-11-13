@@ -6034,6 +6034,13 @@
 						},
 						{
 							"Bool": {
+								"name": "StriveFor",
+								"state": true,
+								"label": "Strive for"
+							}
+						},
+						{
+							"Bool": {
 								"name": "SubjectAndObjectPronoun",
 								"state": true,
 								"label": "SubjectAndObjectPronoun"
