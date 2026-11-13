@@ -1,7 +1,12 @@
 expr verb [advance, advanced, advancing, advances, continue, continued, continuing, continues, fly, flew, flying, flies, go, goes, going, gone, went, move, moved, moves, moving, proceed, proceeded, proceeding, proceeds, progress, progressed, progressing, progresses, running, walk, walked, walking, walks, look, looked, looking, looks]
 expr modifiers [right, straight]
 expr nouns [test, tests]
-expr main [<([@verb, @modifiers, @nouns] passed), passed>, <([five, ten, quarter, half] passed [one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, noon, midnight]), passed>, <([during, for, in, over] the passed [second, minute, hour, day, week, month, year, decade, century]), passed>, <([during, for, in, over] the passed [(couple of), few] [seconds, minutes, hours, days, weeks, months, years, decades, centurys]), passed>]
+expr main [
+    <([@verb, @modifiers, @nouns] passed), passed>,
+    <([five, ten, quarter, half] passed [one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, noon, midnight]), passed>,
+    <([during, for, in, over] the passed [second, minute, hour, day, week, month, year, decade, century]), passed>,
+    <([during, for, in, over] the passed [(couple of), few] [seconds, minutes, hours, days, weeks, months, years, decades, centurys]), passed>
+]
 
 let message "Did you mean `past`?"
 let description "Corrects `passed` to `past`."

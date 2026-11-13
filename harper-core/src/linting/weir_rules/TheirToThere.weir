@@ -1,4 +1,10 @@
-expr main [<(their [is, are, was, were, isn't, aren't, wasn't, weren't, (will be), (can be), (could be), (should be), (would be), (may be), (might be), (must be), (has been), (have been)]), their>, <(their [on, after, beside, in, by, until, again, to, and, right, at]), their>, <((over their), their)>, <((over they're), they're)>, <(their,), their>, their's]
+expr main [
+    <(their [is, are, was, were, isn't, aren't, wasn't, weren't, (will be), (can be), (could be), (should be), (would be), (may be), (might be), (must be), (has been), (have been)]), their>,
+    <(their [on, after, beside, in, by, until, again, to, and, right, at]), their>,
+    <((over their), their)>,
+    <((over they're), they're)>,
+    <(their,), their>, their's
+]
 
 let message "Did you mean `there`?"
 let description "Corrects `their` when the intended meaning is `there`."
