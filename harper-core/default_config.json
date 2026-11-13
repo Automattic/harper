@@ -2527,6 +2527,13 @@
 					"settings": [
 						{
 							"Bool": {
+								"name": "Abreast",
+								"state": true,
+								"label": "Abreast"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AdNauseam",
 								"state": true,
 								"label": "Ad Nauseam"
