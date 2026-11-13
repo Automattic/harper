@@ -201,7 +201,7 @@ impl Document {
                 if let TokenKind::Word(meta) = &mut token.kind {
                     let word_source = word_sources[wi];
                     let mut found_meta = dictionary
-                        .get_word_metadata(word_source)
+                        .get_word_metadata_folded(word_source)
                         .map(|c| c.into_owned());
 
                     if let Some(inner) = &mut found_meta {

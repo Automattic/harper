@@ -57,7 +57,7 @@ impl<T: Dictionary> SpellCheck<T> {
                     .filter(|v| {
                         // Ignore entries outside the configured dialect
                         self.dictionary
-                            .get_word_metadata(v)
+                            .get_word_metadata_folded(v)
                             .is_some_and(|meta| meta.dialects.is_dialect_enabled(self.dialect))
                     })
                     .unique_by(|v| v.to_lower())
@@ -552,7 +552,7 @@ mod tests {
         let mut merged_dict = MergedDictionary::new();
         merged_dict.add_dictionary(FstDictionary::curated());
         merged_dict.add_dictionary(std::sync::Arc::from(user_dict));
-        assert!(merged_dict.contains_word_str("Calibre"));
+        assert!(merged_dict.contains_folded_word_str("Calibre"));
 
         // No dialect issues should be found if the word from another dialect is in our user dictionary.
         assert_eq!(

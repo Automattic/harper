@@ -421,24 +421,52 @@ fn main() -> anyhow::Result<()> {
             ];
 
             for word in words {
-                let meta = curated_dictionary.get_word_metadata_str(&word);
-                let (flags, emojis) = meta.as_ref().map_or_else(
-                    || (String::new(), String::new()),
-                    |md| {
-                        POS.iter()
-                            .filter(|&(_, pred)| pred(md))
-                            .map(|(syms, _)| {
-                                let mut ch = syms.chars();
-                                (ch.next().unwrap(), ch.next().unwrap())
-                            })
-                            .unzip()
-                    },
-                );
+                let meta = curated_dictionary.get_word_metadata_exact_str(&word);
+
+                let flags_w_emojis = match &meta {
+                    None => {
+                        let variants: Vec<String> = curated_dictionary
+                            .get_correct_capitalizations_of(&word.chars().collect::<Vec<char>>())
+                            .map(|w| w.iter().collect::<String>())
+                            .collect();
+
+                        let details = if !variants.is_empty() {
+                            format!(
+                                "not in dictionary, but {}: {}",
+                                match variants.len() {
+                                    1 => "this is",
+                                    _ => "these are",
+                                },
+                                variants.join(", ")
+                            )
+                        } else {
+                            "\x1b[2m\x1b[3mnot in dictionary\x1b[0m".to_string()
+                        };
+                        format!("- {details}")
+                    }
+                    Some(md) => {
+                        let matched_pos: Vec<_> =
+                            POS.iter().filter(|&(_, pred)| pred(md)).collect();
+
+                        if matched_pos.is_empty() {
+                            "? \x1b[2m\x1b[3mno POS\x1b[0m".to_string()
+                        } else {
+                            let (flags, emojis): (String, String) = matched_pos
+                                .into_iter()
+                                .map(|(syms, _)| {
+                                    let mut ch = syms.chars();
+                                    (ch.next().unwrap(), ch.next().unwrap())
+                                })
+                                .unzip();
+                            format!("{} {}", flags, emojis)
+                        }
+                    }
+                };
 
                 let json = brief.then(String::new).unwrap_or_else(|| {
                     format!("\n{}", serde_json::to_string_pretty(&meta).unwrap())
                 });
-                println!("{}: {} {}{}", word, flags, emojis, json);
+                println!("{}: {}{}", word, flags_w_emojis, json);
             }
             Ok(())
         }
@@ -924,7 +952,7 @@ fn main() -> anyhow::Result<()> {
             let mut processed_words = HashMap::new();
             let mut longest_word = 0;
             for word in curated_dictionary.words_iter() {
-                if let Some(metadata) = curated_dictionary.get_word_metadata(word) {
+                if let Some(metadata) = curated_dictionary.get_word_metadata_folded(word) {
                     let orth = metadata.orth_info;
                     let bits = orth.bits() & case_bitmask.bits();
 

@@ -94,14 +94,14 @@ impl<D: Dictionary + 'static> ExprLinter for OneOfTheSingular<D> {
 
         if self
             .dict
-            .get_word_metadata(&plural_s)
+            .get_word_metadata_folded(&plural_s)
             .is_some_and(|m| m.is_plural_noun())
         {
             suggestions.push(Suggestion::replace_with_match_case(plural_s, singular));
         }
         if self
             .dict
-            .get_word_metadata(&plural_es)
+            .get_word_metadata_folded(&plural_es)
             .is_some_and(|m| m.is_plural_noun())
         {
             suggestions.push(Suggestion::replace_with_match_case(plural_es, singular));
@@ -113,7 +113,7 @@ impl<D: Dictionary + 'static> ExprLinter for OneOfTheSingular<D> {
             plural_ies.extend(['i', 'e', 's']);
             if self
                 .dict
-                .get_word_metadata(&plural_ies)
+                .get_word_metadata_folded(&plural_ies)
                 .is_some_and(|m| m.is_plural_noun())
             {
                 suggestions.push(Suggestion::replace_with_match_case(plural_ies, singular));
@@ -126,7 +126,7 @@ impl<D: Dictionary + 'static> ExprLinter for OneOfTheSingular<D> {
             plural_ves.extend(['v', 'e', 's']);
             if self
                 .dict
-                .get_word_metadata(&plural_ves)
+                .get_word_metadata_folded(&plural_ves)
                 .is_some_and(|m| m.is_plural_noun())
             {
                 suggestions.push(Suggestion::replace_with_match_case(plural_ves, singular));
