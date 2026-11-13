@@ -212,6 +212,7 @@ use super::nominal_wants::NominalWants;
 use super::nor_modal_pronoun::NorModalPronoun;
 use super::not_only_inversion::NotOnlyInversion;
 use super::noun_verb_confusion::NounVerbConfusion;
+use super::noun_verb_spelling::NounVerbSpelling;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
 use super::numeric_range_en_dash::NumericRangeEnDash;
 use super::obsess_preposition::ObsessPreposition;
@@ -856,6 +857,7 @@ impl LintGroup {
         insert_expr_rule!(NorModalPronoun);
         insert_expr_rule!(NotOnlyInversion);
         insert_struct_rule!(NounVerbConfusion);
+        insert_expr_rule_with_dialect!(NounVerbSpelling);
         insert_struct_rule!(NumberSuffixCapitalization);
         insert_expr_rule!(NumericRangeEnDash);
         insert_expr_rule!(ObsessPreposition);
