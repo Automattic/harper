@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "3.1.0",
+	"version": "3.2.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -930,6 +930,12 @@
 					"default": true,
 					"description": "Corrects `besides the point` to `beside the point`."
 				},
+				"harper.linters.BesidesFor": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Replaces nonstandard `besides for` or `beside for` with `besides`, `except for`, or `other than`."
+				},
 				"harper.linters.BestOfAllTime": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1037,6 +1043,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `by extent` to `by extension`."
+				},
+				"harper.linters.ByHand": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `by hands` to `by hand`, as `by hand` is the standard phrase for manual construction."
 				},
 				"harper.linters.ByOnesOwn": {
 					"scope": "resource",
@@ -1247,6 +1259,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Suggests replacing the nonstandard verb `combinate` with the standard `combine`."
+				},
+				"harper.linters.ComeAcross": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects common errors in `come across`."
 				},
 				"harper.linters.ComfortableWith": {
 					"scope": "resource",
@@ -1632,6 +1650,12 @@
 					"default": true,
 					"description": "Encourages hyphenating `double-click` and its inflections."
 				},
+				"harper.linters.DoubleDown": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `dabble down` to `double down`."
+				},
 				"harper.linters.DoubleEdgedSword": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1907,6 +1931,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Expands the abbreviation `govt` or `govt.` to the full word `government` for clarity."
+				},
+				"harper.linters.ExpandIme": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands the abbreviation `ime` to the full phrase `in my experience` for clarity."
 				},
 				"harper.linters.ExpandLegitimate": {
 					"scope": "resource",
@@ -3276,6 +3306,12 @@
 					"default": true,
 					"description": "Fixes nonstandard uses of `little known`."
 				},
+				"harper.linters.LittleToNo": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Converts the clunky or unidiomatic phrase `no to little` into the standard English idiom `little to no`."
+				},
 				"harper.linters.LongSentences": {
 					"scope": "resource",
 					"type": "boolean",
@@ -3353,6 +3389,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `make senses` to `make sense`."
+				},
+				"harper.linters.MakeTheMostOf": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Removes redundant `out` in `make the most out of`."
 				},
 				"harper.linters.MakeupCompoundNoun": {
 					"scope": "resource",
@@ -4662,6 +4704,12 @@
 					"default": true,
 					"description": "Corrects `scape goat` to `scapegoat`, which is the proper term for a person blamed for others' failures."
 				},
+				"harper.linters.ScaredOf": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Fixes `scared about` to `scared of`, using the standard preposition."
+				},
 				"harper.linters.SeamToSeem": {
 					"scope": "resource",
 					"type": "boolean",
@@ -4865,6 +4913,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Words should be separated by at most one space."
+				},
+				"harper.linters.SpareNoExpense": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `spare no expenses` to `spare no expense`."
 				},
 				"harper.linters.SpecialAttention": {
 					"scope": "resource",
@@ -5537,6 +5591,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Quotation marks should always be closed. Unpaired quotation marks are a hallmark of sloppy work."
+				},
+				"harper.linters.UnderThreat": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `in threat` to `under threat` for standard idiomatic usage."
 				},
 				"harper.linters.Underclock": {
 					"scope": "resource",
