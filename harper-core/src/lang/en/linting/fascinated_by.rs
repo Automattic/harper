@@ -50,7 +50,7 @@ impl ExprLinter for FascinatedBy {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{fascinated_by::FascinatedBy, tests::assert_good_and_bad_suggestions};
+    use crate::linting::{en::fascinated_by::FascinatedBy, tests::assert_good_and_bad_suggestions};
 
     #[test]
     fn fix_amiga() {

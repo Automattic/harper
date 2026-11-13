@@ -1,7 +1,6 @@
 mod human_readable_structured_config;
 
 use super::FlatConfig;
-use serde_json;
 
 pub use human_readable_structured_config::{HumanReadableSetting, HumanReadableStructuredConfig};
 
@@ -19,13 +18,7 @@ pub struct StructuredConfig {
 impl StructuredConfig {
     /// Build the curated structured config, including labels.
     pub fn curated() -> Self {
-        let human: HumanReadableStructuredConfig = serde_json::from_str(include_str!(concat!(
-            env!("CARGO_MANIFEST_DIR"),
-            "/default_config.json"
-        )))
-        .unwrap();
-
-        human.to_structured_config().unwrap()
+        crate::lang::en::linting::default_config()
     }
 
     /// Validate that the structure of the settings is valid.

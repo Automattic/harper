@@ -71,7 +71,7 @@ fn rust_string_literal(value: &str) -> String {
 
 fn main() {
     let manifest_dir = Path::new(env!("CARGO_MANIFEST_DIR"));
-    let weir_rule_dir = manifest_dir.join("./src/linting/weir_rules");
+    let weir_rule_dir = manifest_dir.join("./src/lang/en/linting/weir_rules");
     let out_dir = Path::new(&env::var("OUT_DIR").unwrap()).to_path_buf();
     let dest = out_dir.join("weir_rules_generated_list.rs");
 

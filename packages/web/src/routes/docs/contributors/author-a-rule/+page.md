@@ -42,7 +42,7 @@ GitHub has some [good documentation on how to create a draft PR](https://docs.gi
 
 A vast plurality of potential grammatical rules are pretty simple.
 If you're trying to extend Harper to identify a given phrase (like "all of the sudden") and replace it with something else (like "all of a sudden"), you can do this without any complex programming at all.
-All you have to do is add a line to `harper-core/src/linting/phrase_corrections/mod.rs`:
+All you have to do is add a line to `harper-core/src/lang/en/linting/phrase_corrections/mod.rs`:
 
 ```rust
 "AllOfASudden" => (
@@ -74,7 +74,7 @@ You can actually add multiple offending phrases and correct phrases to the same 
     ["in itself", "in and of itself"],
 ```
 
-For more complex corrections with multiple variants, singular and plural, or multiple verb tenses, you can use `harper-core/src/linting/phrase_set_corrections/mod.rs`.
+For more complex corrections with multiple variants, singular and plural, or multiple verb tenses, you can use `harper-core/src/lang/en/linting/phrase_set_corrections/mod.rs`.
 
 It has two sections. The `add_1_to_1_mappings` section is simpler, supporting sets of corrections with a single name, where each pair is a single offending phrase and a single correct phrase.
 ```rust
@@ -125,7 +125,7 @@ Similarly, if you just want Harper to enforce proper capitalization of a multi-t
 },
 ```
 
-If your rule is a good fit for Weir, add it under `harper-core/src/linting/weir_rules`.
+If your rule is a good fit for Weir, add it under `harper-core/src/lang/en/linting/weir_rules`.
 A top-level file, such as `RuleName.weir`, is loaded as one public rule named `RuleName`.
 If several related Weir rules should share one setting and one rules-catalog entry, put them in a directory instead.
 For example, `RuleName/Singular.weir` and `RuleName/Plural.weir` run as separate child rules, but Harper exposes them together as one public rule named `RuleName`.
@@ -136,7 +136,7 @@ If none of those work for the rule you have in mind, continue on to the next sec
 
 Now that we've established that your rule is of a non-trivial level of complexity, here is what you need to do.
 
-We separate each rule into its own file inside the `harper-core/src/linting` [directory.](https://github.com/Automattic/harper/tree/master/harper-core/src/linting)
+We separate each English rule into its own file inside the `harper-core/src/lang/en/linting` [directory.](https://github.com/Automattic/harper/tree/master/harper-core/src/lang/en/linting)
 Create a new file under that directory with the name of your rule in `snake_case`.
 If you can't decide yet, just call it `my_rule.rs`.
 
@@ -146,10 +146,10 @@ Don't put anything in this file yet, there's some bookkeeping we have to do firs
 
 Before we start describing to Harper what grammatical errors to look for, we need to register your rule within the system.
 
-First, add your rule's module to the tree by adding it to [the top of the mod file](https://github.com/Automattic/harper/blob/master/harper-core/src/linting/mod.rs).
+First, add your rule's module to the tree by adding it to [the top of the mod file](https://github.com/Automattic/harper/blob/master/harper-core/src/lang/en/linting/mod.rs).
 It should look something like this:
 
-```rust title="harper-core/src/linting/mod.rs"
+```rust title="harper-core/src/lang/en/linting/mod.rs"
 mod an_a;
 mod avoid_curses;
 mod boring_words;
@@ -160,20 +160,20 @@ mod capitalize_personal_pronouns;
 Next, we need to configure whether your rule will be enabled by default.
 While you're working on it, we **highly suggest** you enable it to avoid confusion.
 
-To do that, import your rule at the top of the `lint_group` [file](https://github.com/Automattic/harper/blob/master/harper-core/src/linting/mod.rs).
+To do that, import your rule in the same [file](https://github.com/Automattic/harper/blob/master/harper-core/src/lang/en/linting/mod.rs), above `new_curated`.
 
-```rust title="harper-core/src/linting/lint_group.rs"
-use super::an_a::AnA;
-use super::avoid_curses::AvoidCurses;
-use super::boring_words::BoringWords;
-use super::capitalize_personal_pronouns::CapitalizePersonalPronouns;
-use super::correct_number_suffix::CorrectNumberSuffix;
-// [svp! df:+]use super::my_rule::MyRule;
+```rust title="harper-core/src/lang/en/linting/mod.rs"
+use an_a::AnA;
+use avoid_curses::AvoidCurses;
+use boring_words::BoringWords;
+use capitalize_personal_pronouns::CapitalizePersonalPronouns;
+use correct_number_suffix::CorrectNumberSuffix;
+// [svp! df:+]use my_rule::MyRule;
 ```
 
 Finally, add it in a macro invocation near the bottom:
 
-```rust title="harper-core/src/linting/lint_group.rs"
+```rust title="harper-core/src/lang/en/linting/mod.rs"
 insert_struct_rule!(AdjectiveOfA);
 insert_expr_rule!(BackInTheDay);
 insert_struct_rule!(WordPressDotcom);
@@ -186,7 +186,7 @@ Otherwise, use `insert_struct_rule`.
 
 ## Update `default_config.json`
 
-Whenever you add a new rule, update `harper-core/default_config.json` too.
+Whenever you add a new rule, update `harper-core/src/lang/en/linting/default_config.json` too.
 That file defines the curated default configuration shown throughout Harper, so a new rule will not
 appear in the default setup until it is added there as well.
 See also [`StructuredConfig`](https://docs.rs/harper-core/latest/harper_core/linting/lint_group/struct.StructuredConfig.html).
@@ -244,7 +244,7 @@ To make it easier to get started with ExprLinter rules, Harper provides skeleton
 - **[harper-core/expr_linter_skeleton_commented.rs](../../../../../../../harper-core/expr_linter_skeleton_commented.rs)** - A heavily commented version with detailed explanations
 
 To use these:
-1. Copy either file to `harper-core/src/linting/my_rule.rs`
+1. Copy either file to `harper-core/src/lang/en/linting/my_rule.rs`
 2. Rename the struct from `ExprLinterSkeleton` to your rule name
 3. Follow the `// EDIT` comments to customize the expression and logic
 4. Remove the debug `eprintln!` statement before committing

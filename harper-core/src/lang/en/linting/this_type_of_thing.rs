@@ -151,7 +151,9 @@ impl ExprLinter for ThisTypeOfThing {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{tests::assert_suggestion_result, this_type_of_thing::ThisTypeOfThing};
+    use crate::linting::{
+        en::this_type_of_thing::ThisTypeOfThing, tests::assert_suggestion_result,
+    };
 
     #[test]
     fn fix_that_kind_of_things() {

@@ -11,8 +11,8 @@ use crate::{
     edit_distance::edit_distance,
     expr::{Filter, LongestMatchOf, SequenceExpr},
     linting::{
-        Lint, LintKind, Linter, Suggestion, informal_laughter::is_informal_laughter,
-        proper_noun_capitalization_linters::proper_nouns_expr,
+        Lint, LintKind, Linter, Suggestion, en::informal_laughter::is_informal_laughter,
+        en::proper_noun_capitalization_linters::proper_nouns_expr,
     },
     remove_lints_overlapping_expr,
     spell::{Dictionary, spelling_candidates},
