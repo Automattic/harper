@@ -1,11 +1,12 @@
 use crate::expr::Expr;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
+use crate::lang::en::patterns::InflectionOfBe;
 use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::{InflectionOfBe, Word},
+    patterns::Word,
 };
 
 pub struct SaveToSafe {

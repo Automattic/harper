@@ -1,8 +1,9 @@
+use crate::lang::en::patterns::ModalVerb;
 use crate::{
     Lint, Token,
     expr::{All, Expr, OwnedExprExt, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
-    patterns::{ModalVerb, WordSet},
+    patterns::WordSet,
 };
 
 pub struct EverEvery {

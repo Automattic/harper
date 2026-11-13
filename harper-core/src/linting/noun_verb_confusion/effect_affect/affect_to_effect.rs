@@ -1,3 +1,4 @@
+use crate::lang::en::patterns::ModalVerb;
 use harper_brill::UPOS;
 
 use crate::linting::expr_linter::Chunk;
@@ -5,7 +6,7 @@ use crate::{
     CharStringExt, Token, TokenKind,
     expr::{Expr, ExprMap, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::{ModalVerb, Pattern, UPOSSet},
+    patterns::{Pattern, UPOSSet},
 };
 
 pub(super) struct AffectToEffect {

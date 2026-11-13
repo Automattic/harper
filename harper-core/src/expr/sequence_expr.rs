@@ -3,7 +3,8 @@ use paste::paste;
 use crate::{
     CharStringExt, Lrc, Span, Token, TokenKind,
     expr::{AsBoxedExpr, FirstMatchOf, FixedPhrase, LongestMatchOf},
-    patterns::{AnyPattern, IndefiniteArticle, RelativePronoun, WhitespacePattern, Word, WordSet},
+    lang::en::patterns::{IndefiniteArticle, RelativePronoun},
+    patterns::{AnyPattern, WhitespacePattern, Word, WordSet},
 };
 
 use super::{Expr, Optional, OwnedExprExt, Repeating, Step, UnlessStep};
