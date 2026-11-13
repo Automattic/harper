@@ -1522,30 +1522,9 @@
 						},
 						{
 							"Bool": {
-								"name": "TooTo",
-								"state": true,
-								"label": "Too To"
-							}
-						},
-						{
-							"Bool": {
-								"name": "ToTooIdioms",
-								"state": true,
-								"label": "To Too Idioms"
-							}
-						},
-						{
-							"Bool": {
 								"name": "UseToUsedTo",
 								"state": true,
 								"label": "Use To Used To"
-							}
-						},
-						{
-							"Bool": {
-								"name": "VerseAsVerb",
-								"state": true,
-								"label": "Verse As Verb"
 							}
 						},
 						{
@@ -2234,20 +2213,6 @@
 						},
 						{
 							"Bool": {
-								"name": "ItsContraction",
-								"state": true,
-								"label": "Its Contraction"
-							}
-						},
-						{
-							"Bool": {
-								"name": "ItsPossessive",
-								"state": true,
-								"label": "Its Possessive"
-							}
-						},
-						{
-							"Bool": {
 								"name": "MultipleSequentialPronouns",
 								"state": true,
 								"label": "Multiple Sequential Pronouns"
@@ -2363,27 +2328,6 @@
 								"name": "Theres",
 								"state": true,
 								"label": "There's"
-							}
-						},
-						{
-							"Bool": {
-								"name": "ThereToTheir",
-								"state": true,
-								"label": "There To Their"
-							}
-						},
-						{
-							"Bool": {
-								"name": "TheyreConfusions",
-								"state": true,
-								"label": "They're Confusions"
-							}
-						},
-						{
-							"Bool": {
-								"name": "TheyreToTheir",
-								"state": true,
-								"label": "Theyre To Their"
 							}
 						},
 						{
@@ -2733,13 +2677,6 @@
 								"name": "ExMachina",
 								"state": true,
 								"label": "Ex Machina"
-							}
-						},
-						{
-							"Bool": {
-								"name": "FetalPosition",
-								"state": true,
-								"label": "Fetal Position"
 							}
 						},
 						{
@@ -4274,13 +4211,6 @@
 						},
 						{
 							"Bool": {
-								"name": "ThenThan",
-								"state": true,
-								"label": "Then Than"
-							}
-						},
-						{
-							"Bool": {
 								"name": "ThereIsAgreement",
 								"state": true,
 								"label": "There Is Agreement"
@@ -4291,13 +4221,6 @@
 								"name": "ThereMissingIsClause",
 								"state": true,
 								"label": "There Missing Is Clause"
-							}
-						},
-						{
-							"Bool": {
-								"name": "ThinkKnowOff",
-								"state": true,
-								"label": "Think Know Off"
 							}
 						},
 						{
@@ -4970,13 +4893,6 @@
 						},
 						{
 							"Bool": {
-								"name": "ConvenientStore",
-								"state": true,
-								"label": "Convenient Store"
-							}
-						},
-						{
-							"Bool": {
 								"name": "CoolCalmCollected",
 								"state": true,
 								"label": "Cool, Calm, Collected"
@@ -5043,13 +4959,6 @@
 								"name": "DigUnderTheHood",
 								"state": true,
 								"label": "Dig Under The Hood"
-							}
-						},
-						{
-							"Bool": {
-								"name": "DissembleDisassemble",
-								"state": true,
-								"label": "Dissemble / Disassemble"
 							}
 						},
 						{
@@ -5215,13 +5124,6 @@
 						},
 						{
 							"Bool": {
-								"name": "FleshOutVsFullFledged",
-								"state": true,
-								"label": "Flesh Out Vs Full Fledged"
-							}
-						},
-						{
-							"Bool": {
 								"name": "ForArgumentsSake",
 								"state": true,
 								"label": "For Arguments Sake"
@@ -5246,13 +5148,6 @@
 								"name": "FreePredicate",
 								"state": true,
 								"label": "Free Predicate"
-							}
-						},
-						{
-							"Bool": {
-								"name": "FreeRein",
-								"state": true,
-								"label": "Free Rein"
 							}
 						},
 						{
@@ -5344,13 +5239,6 @@
 								"name": "HighLowStandards",
 								"state": true,
 								"label": "High/Low Standards"
-							}
-						},
-						{
-							"Bool": {
-								"name": "HopHope",
-								"state": true,
-								"label": "Hop Hope"
 							}
 						},
 						{
@@ -6090,13 +5978,6 @@
 						},
 						{
 							"Bool": {
-								"name": "RogueRouge",
-								"state": true,
-								"label": "Rogue / Rouge"
-							}
-						},
-						{
-							"Bool": {
 								"name": "RollerSkated",
 								"state": true,
 								"label": "Roller Skated"
@@ -6107,20 +5988,6 @@
 								"name": "RunIntoProblemsOrTrouble",
 								"state": true,
 								"label": "Run Into Problems / Trouble"
-							}
-						},
-						{
-							"Bool": {
-								"name": "SafeToSave",
-								"state": true,
-								"label": "Safe To Save"
-							}
-						},
-						{
-							"Bool": {
-								"name": "SaveToSafe",
-								"state": true,
-								"label": "Save To Safe"
 							}
 						},
 						{
@@ -6170,13 +6037,6 @@
 								"name": "SneakingSuspicion",
 								"state": true,
 								"label": "Sneaking Suspicion"
-							}
-						},
-						{
-							"Bool": {
-								"name": "SneakPeekPreview",
-								"state": true,
-								"label": "Sneak Peek Preview"
 							}
 						},
 						{
@@ -6286,13 +6146,6 @@
 						},
 						{
 							"Bool": {
-								"name": "TendTo",
-								"state": true,
-								"label": "Tend to"
-							}
-						},
-						{
-							"Bool": {
 								"name": "ThatChallenged",
 								"state": true,
 								"label": "That Challenged"
@@ -6324,13 +6177,6 @@
 								"name": "Themself",
 								"state": true,
 								"label": "Themself"
-							}
-						},
-						{
-							"Bool": {
-								"name": "TheWhetherWeather",
-								"state": true,
-								"label": "The Whether Weather"
 							}
 						},
 						{
@@ -6558,13 +6404,6 @@
 					"settings": [
 						{
 							"Bool": {
-								"name": "Addicting",
-								"state": true,
-								"label": "Addicting"
-							}
-						},
-						{
-							"Bool": {
 								"name": "AfterLater",
 								"state": true,
 								"label": "After Later"
@@ -6670,20 +6509,6 @@
 						},
 						{
 							"Bool": {
-								"name": "BellowBelow",
-								"state": true,
-								"label": "Bellow Below"
-							}
-						},
-						{
-							"Bool": {
-								"name": "Cant",
-								"state": true,
-								"label": "Can't"
-							}
-						},
-						{
-							"Bool": {
 								"name": "CriteriaPhenomena",
 								"state": true,
 								"label": "Criteria Phenomena"
@@ -6733,13 +6558,6 @@
 						},
 						{
 							"Bool": {
-								"name": "FindFine",
-								"state": true,
-								"label": "Find Fine"
-							}
-						},
-						{
-							"Bool": {
 								"name": "FindOut",
 								"state": true,
 								"label": "Find Out"
@@ -6785,13 +6603,6 @@
 								"name": "InOnTheCards",
 								"state": true,
 								"label": "In On The Cards"
-							}
-						},
-						{
-							"Bool": {
-								"name": "LetsConfusion",
-								"state": true,
-								"label": "Lets Confusion"
 							}
 						},
 						{
@@ -6897,6 +6708,205 @@
 								"name": "Whereas",
 								"state": true,
 								"label": "Whereas"
+							}
+						}
+					]
+				}
+			}
+		},
+		{
+			"Group": {
+				"label": "Word Confusions",
+				"description": "Catches common word confusions where similar-sounding or similar-looking words are mistakenly used in place of each other.",
+				"child": {
+					"settings": [
+						{
+							"Bool": {
+								"name": "Addicting",
+								"state": true,
+								"label": "Addicting"
+							}
+						},
+						{
+							"Bool": {
+								"name": "BellowBelow",
+								"state": true,
+								"label": "Bellow Below"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Cant",
+								"state": true,
+								"label": "Can't"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ConvenientStore",
+								"state": true,
+								"label": "Convenient Store"
+							}
+						},
+						{
+							"Bool": {
+								"name": "DissembleDisassemble",
+								"state": true,
+								"label": "Dissemble / Disassemble"
+							}
+						},
+						{
+							"Bool": {
+								"name": "FetalPosition",
+								"state": true,
+								"label": "Fetal Position"
+							}
+						},
+						{
+							"Bool": {
+								"name": "FindFine",
+								"state": true,
+								"label": "Find Fine"
+							}
+						},
+						{
+							"Bool": {
+								"name": "FleshOutVsFullFledged",
+								"state": true,
+								"label": "Flesh Out Vs Full Fledged"
+							}
+						},
+						{
+							"Bool": {
+								"name": "FreeRein",
+								"state": true,
+								"label": "Free Rein"
+							}
+						},
+						{
+							"Bool": {
+								"name": "HopHope",
+								"state": true,
+								"label": "Hop Hope"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ItsContraction",
+								"state": true,
+								"label": "Its Contraction"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ItsPossessive",
+								"state": true,
+								"label": "Its Possessive"
+							}
+						},
+						{
+							"Bool": {
+								"name": "LetsConfusion",
+								"state": true,
+								"label": "Lets Confusion"
+							}
+						},
+						{
+							"Bool": {
+								"name": "RogueRouge",
+								"state": true,
+								"label": "Rogue / Rouge"
+							}
+						},
+						{
+							"Bool": {
+								"name": "SafeToSave",
+								"state": true,
+								"label": "Safe To Save"
+							}
+						},
+						{
+							"Bool": {
+								"name": "SaveToSafe",
+								"state": true,
+								"label": "Save To Safe"
+							}
+						},
+						{
+							"Bool": {
+								"name": "SneakPeekPreview",
+								"state": true,
+								"label": "Sneak Peek Preview"
+							}
+						},
+						{
+							"Bool": {
+								"name": "TendTo",
+								"state": true,
+								"label": "Tend to"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ThenThan",
+								"state": true,
+								"label": "Then Than"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ThereToTheir",
+								"state": true,
+								"label": "There To Their"
+							}
+						},
+						{
+							"Bool": {
+								"name": "TheWhetherWeather",
+								"state": true,
+								"label": "The Whether Weather"
+							}
+						},
+						{
+							"Bool": {
+								"name": "TheyreConfusions",
+								"state": true,
+								"label": "They're Confusions"
+							}
+						},
+						{
+							"Bool": {
+								"name": "TheyreToTheir",
+								"state": true,
+								"label": "Theyre To Their"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ThinkKnowOff",
+								"state": true,
+								"label": "Think Know Off"
+							}
+						},
+						{
+							"Bool": {
+								"name": "TooTo",
+								"state": true,
+								"label": "Too To"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ToTooIdioms",
+								"state": true,
+								"label": "To Too Idioms"
+							}
+						},
+						{
+							"Bool": {
+								"name": "VerseAsVerb",
+								"state": true,
+								"label": "Verse As Verb"
 							}
 						}
 					]
