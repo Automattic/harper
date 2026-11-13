@@ -1,9 +1,10 @@
+use crate::lang::en::patterns::InflectionOfBe;
 use crate::{
     Token, TokenKind,
     expr::{All, Expr, FirstMatchOf, SequenceExpr},
     irregular_verbs::IrregularVerbs,
     linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
-    patterns::{InflectionOfBe, WordSet},
+    patterns::WordSet,
 };
 
 /// Corrects simple past tense verbs to past participle after auxiliary verbs like "have" or "be".

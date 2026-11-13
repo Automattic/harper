@@ -1,3 +1,4 @@
+use crate::lang::en::patterns::InflectionOfBe;
 use crate::{
     Lint, Token, TokenKind,
     char_string::CharStringExt,
@@ -6,7 +7,7 @@ use crate::{
         ExprLinter, LintKind, Suggestion,
         expr_linter::{Chunk, find_the_only_token_matching},
     },
-    patterns::{InflectionOfBe, Word},
+    patterns::Word,
 };
 
 pub struct InStock {

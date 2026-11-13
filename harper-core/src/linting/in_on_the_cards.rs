@@ -1,8 +1,9 @@
+use crate::lang::en::patterns::InflectionOfBe;
 use crate::{
     CharStringExt, EnglishDialect, Token,
     expr::{Expr, FirstMatchOf, SequenceExpr},
     linting::{LintKind, Suggestion},
-    patterns::{InflectionOfBe, WordSet},
+    patterns::WordSet,
 };
 
 use super::{ExprLinter, Lint};

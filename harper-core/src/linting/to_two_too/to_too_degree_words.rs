@@ -2,7 +2,8 @@ use crate::{
     Token, TokenKind,
     char_string::CharStringExt,
     expr::{AnchorEnd, Expr, FirstMatchOf, SequenceExpr},
-    patterns::{SingleTokenPattern, prepositional_preceder},
+    lang::en::patterns::prepositional_preceder,
+    patterns::SingleTokenPattern,
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};

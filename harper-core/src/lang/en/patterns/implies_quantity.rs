@@ -41,10 +41,8 @@ impl SingleTokenPattern for ImpliesQuantity {
 
 #[cfg(test)]
 mod tests {
-    use crate::{
-        Document, Span,
-        patterns::{DocPattern, ImpliesQuantity},
-    };
+    use super::ImpliesQuantity;
+    use crate::{Document, Span, patterns::DocPattern};
 
     #[test]
     fn number_implies() {
