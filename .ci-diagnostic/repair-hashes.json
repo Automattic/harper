@@ -1,0 +1,6 @@
+{
+  "packages/chrome-plugin/playwright.config.ts": "b842af2bbf6b6f57683c5c0e089c5e438aff33341690b88b34ac7030e808572a",
+  "packages/chrome-plugin/tests/lexical.spec.ts": "efe0febf803c2246d2c2a42fffe30a70152a53393f722167889a9515dc8449cf",
+  "packages/chrome-plugin/tests/pages/lexical.html": "a12c4cb325ec6b5d33334994c4bac06e1919d7fd02981073a89fed75bfddf782",
+  "packages/chrome-plugin/tests/testUtils.ts": "e175b82072a0dd35a5538b40a5057b84a745a4de7e32f78be3aca8023df23fd7"
+}

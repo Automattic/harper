@@ -12,11 +12,15 @@ jobs:
   chromium-passive-trace:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: [traced, untraced, compatibility]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
-          fetch-depth: 3
+          fetch-depth: 4
       - name: Record runner tools
         run: |
           node --version
@@ -34,12 +38,17 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh api repos/Automattic/harper/actions/artifacts/14001621916/zip > "$RUNNER_TEMP/chrome-artifact.zip"
-          CI_DIAGNOSTIC_ARCHIVE="$RUNNER_TEMP/chrome-artifact.zip" python3 .ci-diagnostic/prepare.py
-      - name: Run original assertions with passive tracing
+          CI_DIAGNOSTIC_ARCHIVE="$RUNNER_TEMP/chrome-artifact.zip" python3 .ci-diagnostic/prepare-fixed.py
+      - name: Run fixed tests without retries
         working-directory: packages/chrome-plugin
         env:
           CI: 'true'
+          CI_DIAGNOSTIC_MODE: ${{ matrix.mode }}
         run: |
+          if [ "$CI_DIAGNOSTIC_MODE" != traced ]; then
+            git show b31ee25e1c9bd94395a0c3449ad5185d18e48970:packages/chrome-plugin/tests/fixtures.ts > tests/fixtures.ts
+          fi
+          sha256sum tests/fixtures.ts > diagnostic-output/runtime-fixture.sha256
           export PLAYWRIGHT_BROWSERS_PATH="$HOME/bin/harper-ci-browsers"
           node "$HOME/bin/harper-ci-diagnostic/node_modules/playwright/cli.js" --version
           xvfb-run -a node "$HOME/bin/harper-ci-diagnostic/node_modules/playwright/cli.js" test --config=ci-diagnostic.config.ts --headed --project=chromium
@@ -47,7 +56,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
-          name: browser-failure-diagnostic
+          name: browser-fix-${{ matrix.mode }}
           path: packages/chrome-plugin/diagnostic-output/
           if-no-files-found: warn
           retention-days: 7
