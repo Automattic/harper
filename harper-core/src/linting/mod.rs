@@ -129,6 +129,7 @@ mod for_the_nth_time;
 mod free_predicate;
 mod friend_of_me;
 mod full_to_the_brim;
+mod gauge_gouge;
 mod get_access_at;
 mod get_pass_go_pass;
 mod go_missing;

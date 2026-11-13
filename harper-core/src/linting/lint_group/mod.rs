@@ -128,6 +128,7 @@ use super::for_the_nth_time::ForTheNthTime;
 use super::free_predicate::FreePredicate;
 use super::friend_of_me::FriendOfMe;
 use super::full_to_the_brim::FullToTheBrim;
+use super::gauge_gouge::GaugeGouge;
 use super::get_access_at::GetAccessAt;
 use super::get_pass_go_pass::GetPassGoPass;
 use super::go_missing::GoMissing;
@@ -774,6 +775,7 @@ impl LintGroup {
         insert_expr_rule!(FriendOfMe);
         insert_expr_rule!(GetAccessAt);
         insert_expr_rule!(FullToTheBrim);
+        insert_expr_rule!(GaugeGouge);
         insert_expr_rule!(GetPassGoPass);
         insert_expr_rule!(GoMissing);
         insert_expr_rule!(GoSoFarAsTo);
