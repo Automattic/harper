@@ -1,6 +1,7 @@
+use crate::lang::en::expr::ReflexivePronoun;
 use crate::{
     CharStringExt, Span, Token,
-    expr::{Expr, ReflexivePronoun, SequenceExpr},
+    expr::{Expr, SequenceExpr},
     linting::Suggestion,
     patterns::WordSet,
 };

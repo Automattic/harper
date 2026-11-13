@@ -1,6 +1,7 @@
+use crate::lang::en::expr::DurationExpr;
 use crate::{
     CharStringExt, Token, TokenStringExt,
-    expr::{DurationExpr, Expr, SequenceExpr},
+    expr::{Expr, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
 };
 
