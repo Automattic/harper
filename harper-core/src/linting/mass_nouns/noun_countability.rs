@@ -1,3 +1,4 @@
+use crate::lang::en::patterns::IndefiniteArticle;
 use crate::{
     CharStringExt, Span, Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
@@ -5,7 +6,7 @@ use crate::{
         ExprLinter, Lint, LintKind, Suggestion,
         expr_linter::{Chunk, followed_by_hyphen, followed_by_word},
     },
-    patterns::{IndefiniteArticle, WordSet},
+    patterns::WordSet,
 };
 
 #[derive(Debug, Clone, Copy)]

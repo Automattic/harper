@@ -1,8 +1,9 @@
+use crate::lang::en::patterns::InflectionOfBe;
 use crate::{
     Lint, Token, TokenStringExt,
     expr::{Expr, FirstMatchOf, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
-    patterns::{InflectionOfBe, WordSet},
+    patterns::WordSet,
 };
 
 pub struct GoodAt {

@@ -1,10 +1,11 @@
+use crate::lang::en::patterns::ImpliesQuantity;
 use std::sync::Arc;
 
 use super::{ExprLinter, Lint, LintKind};
 use crate::{
     expr::{Expr, SequenceExpr},
     linting::{Suggestion, expr_linter::Chunk},
-    patterns::{ImpliesQuantity, WordSet},
+    patterns::WordSet,
     {CharStringExt, Token},
 };
 

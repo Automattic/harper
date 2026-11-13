@@ -1,7 +1,5 @@
-use crate::{
-    Span, Token,
-    patterns::{IndefiniteArticle, WordSet},
-};
+use crate::lang::en::patterns::IndefiniteArticle;
+use crate::{Span, Token, patterns::WordSet};
 
 use super::{Expr, SequenceExpr, SpelledNumberExpr};
 

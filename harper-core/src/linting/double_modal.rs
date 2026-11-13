@@ -1,6 +1,6 @@
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
-use crate::patterns::ModalVerb;
+use crate::lang::en::patterns::ModalVerb;
 use crate::{Token, TokenStringExt};
 
 use super::Suggestion;

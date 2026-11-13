@@ -1,8 +1,8 @@
+use crate::lang::en::patterns::IndefiniteArticle;
 use crate::{
     EnglishDialect, Lint, Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
-    patterns::IndefiniteArticle,
 };
 
 pub struct AnalogAcousticBike {

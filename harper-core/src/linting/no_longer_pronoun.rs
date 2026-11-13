@@ -1,3 +1,4 @@
+use crate::lang::en::patterns::RelativePronoun;
 use crate::{
     Lint, Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
@@ -5,7 +6,7 @@ use crate::{
         ExprLinter, LintKind, Suggestion,
         expr_linter::{Chunk, followed_by_word},
     },
-    patterns::{RelativePronoun, SingleTokenPattern},
+    patterns::SingleTokenPattern,
 };
 
 pub struct NoLongerPronoun {
