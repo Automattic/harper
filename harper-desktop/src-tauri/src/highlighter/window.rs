@@ -30,7 +30,11 @@ pub struct Window {
 }
 
 impl Window {
-    pub async fn new(event_loop: &ActiveEventLoop, monitor: MonitorHandle) -> Result<Self, Error> {
+    pub async fn new(
+        event_loop: &ActiveEventLoop,
+        monitor: MonitorHandle,
+        visible: bool,
+    ) -> Result<Self, Error> {
         let context = super::fonts::context();
         let position = monitor.position();
         let size = monitor.size();
@@ -43,6 +47,7 @@ impl Window {
             .with_decorations(false)
             .with_transparent(true)
             .with_window_level(WindowLevel::AlwaysOnTop)
+            .with_visible(visible)
             .with_active(false);
 
         // DWM blur-behind alone leaves the Win32 redirection surface opaque white, hiding the
@@ -99,6 +104,32 @@ impl Window {
 
     pub fn request_redraw(&self) {
         self.inner.request_redraw();
+    }
+
+    /// Restore overlays without making them key or interrupting typing in the underlying app.
+    #[cfg(target_os = "macos")]
+    pub fn set_visible(&self, visible: bool) {
+        use objc2_app_kit::NSView;
+        use winit::raw_window_handle::{HasWindowHandle, RawWindowHandle};
+
+        let handle = self.inner.window_handle().expect("overlay window handle");
+        let RawWindowHandle::AppKit(handle) = handle.as_raw() else {
+            unreachable!("macOS overlay must have an AppKit window handle");
+        };
+        // SAFETY: Winit owns this live NSView, and overlay lifecycle operations run on the main
+        // event-loop thread. Keep the window handle alive while accessing the view and its window.
+        let view = unsafe { handle.ns_view.cast::<NSView>().as_ref() };
+        let window = view.window().expect("overlay view must belong to a window");
+        if visible {
+            window.orderFrontRegardless();
+        } else {
+            window.orderOut(None);
+        }
+    }
+
+    #[cfg(not(target_os = "macos"))]
+    pub fn set_visible(&self, visible: bool) {
+        self.inner.set_visible(visible);
     }
 
     /// Controls whether the transparent overlay can receive pointer events.

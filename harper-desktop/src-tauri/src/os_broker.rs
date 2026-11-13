@@ -42,6 +42,10 @@ pub trait OsBroker {
     /// Grab the position of the user's cursor on the screen.
     fn cursor_position(&self) -> Option<egui::Pos2>;
 
+    /// Whether the OS currently requires the overlay to be hidden.
+    /// Implementations may cache platform checks between calls.
+    fn should_hide_overlay(&mut self) -> bool;
+
     /// Check whether Harper has permission to access the OS' native accessibility API.
     fn accessibility_permission_status(&self) -> AccessibilityPermissionStatus;
 
@@ -88,6 +92,10 @@ pub struct NoopBroker;
 
 #[cfg(not(any(target_os = "macos", target_os = "windows")))]
 impl OsBroker for NoopBroker {
+    fn should_hide_overlay(&mut self) -> bool {
+        false
+    }
+
     fn get_boxes(
         &mut self,
         _lint_text: &mut dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>>,

@@ -6,6 +6,7 @@ mod app_icons;
 mod core_foundation_utilities;
 mod focused_target;
 mod focused_window_pid;
+mod screenshot;
 mod window_stability;
 
 use accessibility::TreeWalker;
@@ -46,6 +47,7 @@ use self::accessibility_activation::{
 use self::accessibility_text::RectCollector;
 use self::core_foundation_utilities::ax_element_attribute;
 use self::focused_target::FocusedTarget;
+use self::screenshot::ScreenshotPoll;
 use self::window_stability::{
     WINDOW_MOVEMENT_SETTLE_DURATION, WindowMovementState, frontmost_window_frame_for_pid,
     settled_window_state, window_frame_changed,
@@ -67,6 +69,7 @@ pub struct MacBroker {
     application_icon_cache: Mutex<HashMap<String, Vec<u8>>>,
     window_movement: Option<WindowMovementState>,
     accessibility_activation: Option<AccessibilityActivationState>,
+    screenshot_poll: ScreenshotPoll,
 }
 
 impl MacBroker {
@@ -79,6 +82,7 @@ impl MacBroker {
             application_icon_cache: Mutex::new(HashMap::new()),
             window_movement: None,
             accessibility_activation: None,
+            screenshot_poll: ScreenshotPoll::new(Instant::now()),
         }
     }
 
@@ -293,6 +297,10 @@ pub(super) type LintCallback<'a> = dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>
 impl OsBroker for MacBroker {
     fn is_harper_desktop(app_id: &str) -> bool {
         app_id == BUNDLE_ID
+    }
+
+    fn should_hide_overlay(&mut self) -> bool {
+        self.screenshot_poll.is_running()
     }
 
     fn get_boxes(&mut self, lint_text: &mut LintCallback) -> Option<Vec<ActionableLint>> {

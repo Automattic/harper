@@ -61,7 +61,7 @@
 		"components": "workspace:*",
 		"harper.js": "workspace:*",
 		"lint-framework": "workspace:*",
-		"playwright": "1.60.0",
+		"playwright": "1.65.0",
 		"publint": "^0.3.14",
 		"storybook": "^10.6.3",
 		"quill": "^2.0.3",

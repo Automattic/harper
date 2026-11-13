@@ -2482,6 +2482,7 @@ Suggest:
   - Replace with: “Dab”
   - Replace with: “Dad”
   - Replace with: “Dag”
+  - Replace with: “DA”
 
 
 
@@ -3663,17 +3664,6 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-    2492 | some of the rooms. Let’s go to Coney Island, old sport. In my car.”
-         |                                ^~~~~ Did you mean to spell `Coney` this way?
-Suggest:
-  - Replace with: “Convey”
-  - Replace with: “Conley”
-  - Replace with: “Corey”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
     2526 | “There’s another little thing,” he said uncertainly, and hesitated.
          |                                         ^~~~~~~~~~~ Did you mean to spell `uncertainly` this way?
 Suggest:
@@ -3706,18 +3696,6 @@ Message: |
          |                             ^~~~~~~~~~ Did you mean `connection`?
 Suggest:
   - Replace with: “connection”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    2561 | sleep as I entered my front door. So I don’t know whether or not Gatsby went to
-    2562 | Coney Island, or for how many hours he “glanced into rooms” while his house
-         | ^~~~~ Did you mean to spell `Coney` this way?
-Suggest:
-  - Replace with: “Convey”
-  - Replace with: “Conley”
-  - Replace with: “Corey”
 
 
 
@@ -5659,6 +5637,7 @@ Suggest:
   - Replace with: “odd”
   - Replace with: “ode”
   - Replace with: “of”
+  - Replace with: “OD”
 
 
 
@@ -5670,6 +5649,7 @@ Suggest:
   - Replace with: “odd”
   - Replace with: “ode”
   - Replace with: “of”
+  - Replace with: “OD”
 
 
 
@@ -5681,6 +5661,7 @@ Suggest:
   - Replace with: “odd”
   - Replace with: “ode”
   - Replace with: “of”
+  - Replace with: “OD”
 
 
 
@@ -5692,6 +5673,7 @@ Suggest:
   - Replace with: “odd”
   - Replace with: “ode”
   - Replace with: “of”
+  - Replace with: “OD”
 
 
 
@@ -6469,6 +6451,7 @@ Suggest:
   - Replace with: “Ha”
   - Replace with: “Ham”
   - Replace with: “He”
+  - Replace with: “HM”
 
 
 
@@ -7329,6 +7312,7 @@ Suggest:
   - Replace with: “eat”
   - Replace with: “eh”
   - Replace with: “em”
+  - Replace with: “ET”
 
 
 

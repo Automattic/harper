@@ -1,3 +1,4 @@
+use std::collections::HashSet;
 use std::time::{Duration, Instant};
 
 use winit::application::ApplicationHandler;
@@ -19,6 +20,7 @@ use crate::os_broker::{LintText, OsBroker};
 use crate::rect::ActionableLint;
 
 const CONFIG_POLL_INTERVAL: Duration = Duration::from_secs(1);
+const OVERLAY_RESUME_CHECK_INTERVAL: Duration = Duration::from_millis(500);
 
 /// Owns the winit event loop and the overlay windows created for each monitor.
 ///
@@ -94,7 +96,8 @@ impl WindowManager {
             },
         );
 
-        // Run continuously without a read timer; VSync presentation provides backpressure.
+        // VSync provides backpressure while displays are awake. The handler waits while overlays
+        // are paused instead of relying on presentation to throttle the loop during display sleep.
         self.event_loop.set_control_flow(ControlFlow::Poll);
         let result = self.event_loop.run_app(&mut app);
 
@@ -115,6 +118,9 @@ struct WindowManagerApp {
     refresh_config: RefreshConfig,
     hovered_lint: Option<usize>,
     cursor_hittest_enabled: bool,
+    occluded_windows: HashSet<WindowId>,
+    overlays_paused: bool,
+    overlays_hidden: bool,
     error: Option<Error>,
 }
 
@@ -141,6 +147,9 @@ impl WindowManagerApp {
             refresh_config: callbacks.refresh_config,
             hovered_lint: None,
             cursor_hittest_enabled: false,
+            occluded_windows: HashSet::new(),
+            overlays_paused: false,
+            overlays_hidden: false,
             error: None,
         }
     }
@@ -154,8 +163,53 @@ impl WindowManagerApp {
         }
 
         for window in &self.windows {
-            window.request_redraw();
+            if self.can_render_window(window.id()) {
+                window.request_redraw();
+            }
         }
+    }
+
+    /// Whether to suspend overlay OS reads and rendering because no overlay can be seen.
+    /// Configuration synchronization remains active. An empty window list alone does not imply
+    /// occlusion: windows may not have been created yet.
+    fn should_pause_overlays(&self) -> bool {
+        self.overlays_hidden
+            || all_displays_asleep()
+            || (!self.windows.is_empty()
+                && self
+                    .windows
+                    .iter()
+                    .all(|window| self.occluded_windows.contains(&window.id())))
+    }
+
+    /// Checks redraw eligibility using the pause state last refreshed in `about_to_wait` and the
+    /// latest window occlusion events. Apply this both when requesting and consuming redraws:
+    /// an already-queued redraw must not render an unavailable overlay.
+    fn can_render_window(&self, window_id: WindowId) -> bool {
+        !self.overlays_hidden
+            && !self.overlays_paused
+            && !self.occluded_windows.contains(&window_id)
+    }
+
+    fn update_overlay_visibility(&mut self) -> Result<(), Error> {
+        let hidden = self.os_broker.should_hide_overlay();
+        if hidden == self.overlays_hidden {
+            return Ok(());
+        }
+        self.overlays_hidden = hidden;
+
+        // Empty geometry also closes the popup. Do not resurrect an old selection or stale
+        // highlights if the first accessibility read after restoring visibility fails.
+        self.render_state.set_lints(Vec::new());
+        self.hovered_lint = None;
+        for window in &self.windows {
+            // Restore visibility even if orderOut previously marked the window occluded. Waiting
+            // for an unoccluded event before showing it would leave it permanently hidden.
+            window.set_visible(!hidden);
+            window.set_cursor_hittest(false)?;
+        }
+        self.cursor_hittest_enabled = false;
+        Ok(())
     }
 
     fn refresh_config(&mut self) {
@@ -207,22 +261,43 @@ impl WindowManagerApp {
         self.render_state.set_highlighted_lint(Some(index));
 
         for window in &self.windows {
-            window.request_redraw();
+            if self.can_render_window(window.id()) {
+                window.request_redraw();
+            }
         }
     }
 }
 
 impl ApplicationHandler for WindowManagerApp {
     fn about_to_wait(&mut self, event_loop: &ActiveEventLoop) {
+        if let Err(error) = self.update_overlay_visibility() {
+            self.error = Some(error);
+            event_loop.exit();
+            return;
+        }
+
         let now = Instant::now();
-
-        self.read_rect_updates();
-
         if now.duration_since(self.last_config_poll) >= CONFIG_POLL_INTERVAL {
             self.refresh_config();
             self.last_config_poll = now;
         }
 
+        // Rendering while displays sleep can rapidly accumulate Metal drawables (#3874).
+        // Suspend overlay work until it can be displayed again, but keep config sync alive.
+        self.overlays_paused = self.should_pause_overlays();
+        if self.overlays_paused {
+            // Unrelated events must not postpone the next visibility check while hidden.
+            let next_check = match event_loop.control_flow() {
+                ControlFlow::WaitUntil(deadline) if deadline > now => deadline,
+                _ => now + OVERLAY_RESUME_CHECK_INTERVAL,
+            };
+            event_loop.set_control_flow(ControlFlow::WaitUntil(next_check));
+            return;
+        }
+
+        // Preserve VSync-driven polling while awake. This also requests a fresh frame on wake.
+        event_loop.set_control_flow(ControlFlow::Poll);
+        self.read_rect_updates();
         self.update_cursor_hittest(event_loop);
     }
 
@@ -231,10 +306,17 @@ impl ApplicationHandler for WindowManagerApp {
             return;
         }
 
+        // Check before creating windows so overlays start hidden when the OS requires it.
+        if let Err(error) = self.update_overlay_visibility() {
+            self.error = Some(error);
+            event_loop.exit();
+            return;
+        }
+
         let monitors = event_loop.available_monitors().collect::<Vec<_>>();
 
         for monitor in monitors {
-            match pollster::block_on(Window::new(event_loop, monitor)) {
+            match pollster::block_on(Window::new(event_loop, monitor, !self.overlays_hidden)) {
                 Ok(window) => self.windows.push(window),
                 Err(error) => {
                     self.error = Some(error);
@@ -251,6 +333,20 @@ impl ApplicationHandler for WindowManagerApp {
         window_id: WindowId,
         event: WindowEvent,
     ) {
+        if let WindowEvent::Occluded(occluded) = &event {
+            if *occluded {
+                self.occluded_windows.insert(window_id);
+            } else {
+                self.occluded_windows.remove(&window_id);
+            }
+        }
+
+        // Do not pass paused redraws to egui: it requests another redraw in response, which
+        // would keep waking the event loop even though no frame can be presented (#3874).
+        if matches!(&event, WindowEvent::RedrawRequested) && !self.can_render_window(window_id) {
+            return;
+        }
+
         let should_select_hit_lint = matches!(
             &event,
             WindowEvent::MouseInput {
@@ -272,14 +368,21 @@ impl ApplicationHandler for WindowManagerApp {
             .enumerate()
             .find(|(_, window)| window.id() == window_id)
         {
-            window.handle_event(&event);
+            if !self.overlays_hidden
+                || matches!(
+                    &event,
+                    WindowEvent::Resized(_) | WindowEvent::ScaleFactorChanged { .. }
+                )
+            {
+                window.handle_event(&event);
+            }
 
             if should_render {
                 window.render(&mut self.render_state, &screen_rects, index);
             }
         }
 
-        if should_select_hit_lint {
+        if should_select_hit_lint && !self.overlays_hidden && !self.overlays_paused {
             self.select_hit_lint();
         }
 
@@ -287,4 +390,25 @@ impl ApplicationHandler for WindowManagerApp {
             event_loop.exit();
         }
     }
+}
+
+/// Whether macOS reports no awake, drawable displays. Sleeping displays may disappear from the
+/// active list, so an empty list also pauses rendering. On query failure, leave rendering enabled
+/// rather than indefinitely hiding highlights.
+#[cfg(target_os = "macos")]
+fn all_displays_asleep() -> bool {
+    use core_graphics::display::CGDisplay;
+
+    CGDisplay::active_displays()
+        .map(|displays| {
+            displays
+                .into_iter()
+                .all(|id| CGDisplay::new(id).is_asleep())
+        })
+        .unwrap_or(false)
+}
+
+#[cfg(not(target_os = "macos"))]
+fn all_displays_asleep() -> bool {
+    false
 }
