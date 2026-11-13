@@ -3680,6 +3680,13 @@
 						},
 						{
 							"Bool": {
+								"name": "DespiteSubject",
+								"state": true,
+								"label": "Despite Subject"
+							}
+						},
+						{
+							"Bool": {
 								"name": "DoIAdjective",
 								"state": true,
 								"label": "Do I Adjective"
