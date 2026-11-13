@@ -99,9 +99,69 @@ export async function replaceEditorContent(editorEl: Locator, text: string, soft
 			await editorEl.page().keyboard.insertText(lines[i]);
 		}
 		if (i < lines.length - 1) {
+			if (lines[i]) {
+				// Some editors leave the caret behind inserted text, so put it at the end of the line.
+				// On macOS, End scrolls the page instead.
+				await editorEl.press(process.platform === 'darwin' ? 'Meta+ArrowRight' : 'End');
+				await waitForCaretAfter(editorEl, lines[i]);
+			}
 			await editorEl.press(breakKey);
 		}
 	}
+}
+
+/**
+ * Wait until the caret has stayed directly after `text` for `quietMs`.
+ *
+ * Some editors (Slate in Firefox, for example) apply inserted text before their own selection
+ * catches up, and can leave the caret where it was. A key pressed before the caret settles lands
+ * in the wrong place: a break key splits the line at the old position and scrambles the content.
+ */
+async function waitForCaretAfter(editorEl: Locator, text: string, quietMs = 100) {
+	let settledSince: number | undefined;
+
+	await expect
+		.poll(
+			async () => {
+				const caretFollowsText = await editorEl.evaluate((el, text) => {
+					if (el instanceof HTMLTextAreaElement || el instanceof HTMLInputElement) {
+						return (
+							el.selectionStart === el.selectionEnd &&
+							el.value.slice(0, el.selectionStart ?? 0).endsWith(text)
+						);
+					}
+					const selection = el.ownerDocument.getSelection();
+					if (
+						!selection?.isCollapsed ||
+						!selection.focusNode ||
+						!el.contains(selection.focusNode)
+					) {
+						return false;
+					}
+					const beforeCaret = el.ownerDocument.createRange();
+					beforeCaret.setStart(el, 0);
+					beforeCaret.setEnd(selection.focusNode, selection.focusOffset);
+					// Editors such as Slate pad empty nodes with zero-width characters.
+					return beforeCaret
+						.toString()
+						.replace(/[\uFEFF\u200B]/g, '')
+						.endsWith(text);
+				}, text);
+
+				const now = performance.now();
+				if (!caretFollowsText) {
+					settledSince = undefined;
+					return false;
+				}
+				settledSince ??= now;
+				return now - settledSince >= quietMs;
+			},
+			{
+				message: `The caret should stay after "${text}" for ${quietMs} ms`,
+				intervals: [10],
+			},
+		)
+		.toBe(true);
 }
 
 /** Locate replacement rows (including explicit empty states) inside Harper's suggestion popup. */
@@ -320,14 +380,14 @@ export async function testBasicSuggestion(
 		await assertEditorText(editor, 'This is a test');
 		await expect(editor).toBeFocused();
 
-		// Cursor should be right after "a" (pos 9). ArrowRight×3 + Backspace deletes 'e'.
+		// The caret should be right after "a" (pos 9). ArrowRight×3 + Backspace then deletes 'e',
+		// which checks the editor's own selection agrees. Wait for each caret move to settle, as
+		// keys pressed while an editor is still syncing its selection land in the wrong place.
+		await waitForCaretAfter(editor, 'This is a');
 		await page.keyboard.press('ArrowRight');
 		await page.keyboard.press('ArrowRight');
 		await page.keyboard.press('ArrowRight');
-		// Let rich editors process the queued selectionchange before deleting.
-		await page.evaluate(
-			() => new Promise<void>((resolve) => requestAnimationFrame(() => resolve())),
-		);
+		await waitForCaretAfter(editor, 'This is a te');
 		await page.keyboard.press('Backspace');
 		await assertEditorText(editor, 'This is a tst');
 
