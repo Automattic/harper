@@ -49,6 +49,26 @@
         }, { discrete: true });
         // Expose the editable only after its initial paragraph exists, as on the playground.
         root.contentEditable = 'true';
+        // Read only: do not import or change selection on behalf of the editor.
+        window.isLexicalSelectionSynchronized = () => editor.getEditorState().read(() => {
+          const selection = lexical.$getSelection();
+          const native = document.getSelection();
+          if (document.activeElement !== root || !document.hasFocus() ||
+              !lexical.$isRangeSelection(selection) || !native || native.rangeCount !== 1 ||
+              selection.isCollapsed() !== native.isCollapsed) return false;
+
+          const matches = (point, node, offset) => {
+            const element = editor.getElementByKey(point.key);
+            if (!element || !root.contains(element)) return false;
+            // This plain-text fixture renders each text point in one Text node.
+            const expected = point.type === 'text' ? element.firstChild : element;
+            return expected !== null &&
+              (point.type !== 'text' || expected.nodeType === Node.TEXT_NODE) &&
+              expected === node && point.offset === offset;
+          };
+          return matches(selection.anchor, native.anchorNode, native.anchorOffset) &&
+            matches(selection.focus, native.focusNode, native.focusOffset);
+        });
         status.textContent = 'Ready';
       } catch (error) {
         status.textContent = `Lexical initialization failed: ${error.message}`;

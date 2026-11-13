@@ -297,6 +297,7 @@ export async function testBasicSuggestion(
 	testPageUrl: TestPageUrlProvider,
 	getEditor: EditorLocatorProvider,
 	setup?: (page: Page, editor: Locator) => Promise<void>,
+	waitForSelection?: (page: Page, editor: Locator) => Promise<void>,
 ) {
 	test('Can apply basic suggestion.', async ({ page }) => {
 		test.slow();
@@ -328,6 +329,9 @@ export async function testBasicSuggestion(
 		await page.evaluate(
 			() => new Promise<void>((resolve) => requestAnimationFrame(() => resolve())),
 		);
+		if (waitForSelection) {
+			await waitForSelection(page, editor);
+		}
 		await page.keyboard.press('Backspace');
 		await assertEditorText(editor, 'This is a tst');
 
