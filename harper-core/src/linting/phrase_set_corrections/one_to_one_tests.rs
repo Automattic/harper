@@ -800,7 +800,7 @@ fn corrects_dabbled_down() {
     assert_suggestion_result(
         "it really was the perfect pose and everybody dabbled down on that when they did switch from heel",
         test_linter(),
-        "it really was the perfect pose and everybody doubled downed on that when they did switch from heel",
+        "it really was the perfect pose and everybody doubled down on that when they did switch from heel",
     );
 }
 
