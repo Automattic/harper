@@ -12,6 +12,8 @@ export default defineConfig({
 	testDir: './tests',
 	testIgnore: ['**/google_docs*.spec.ts', '**/googleDocs*.spec.ts'],
 	fullyParallel: true,
+	/* Trial only: per-project `workers` can only lower this total. */
+	workers: process.env.CI ? Number(process.env.PLAYWRIGHT_WORKERS ?? 2) : '50%',
 	/* Fail the build on CI if you accidentally left test.only in the source code. */
 	forbidOnly: !!process.env.CI,
 	/** Extremely important to avoid flaky tests. DO NOT CHANGE or I will kill you. */
@@ -38,7 +40,6 @@ export default defineConfig({
 	projects: [
 		{
 			name: 'chromium',
-			workers: process.env.CI ? 2 : '50%',
 			use: {
 				...devices['Desktop Chrome'],
 				launchOptions: {
@@ -56,7 +57,6 @@ export default defineConfig({
 		},
 		{
 			name: 'firefox',
-			workers: process.env.CI ? 2 : '50%',
 			use: { ...devices['Desktop Firefox'] },
 		},
 	],

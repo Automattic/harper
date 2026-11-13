@@ -19,21 +19,18 @@ env:
 jobs:
   just-checks:
     runs-on: ubuntu-latest
-    name: just ${{ matrix.task }}
+    name: just ${{ matrix.task }} (4 workers, copy ${{ matrix.copy }})
     strategy:
+      # Trial only: several copies of each browser job at four workers.
+      fail-fast: false
       matrix:
-        task:
-          [
-            check-rust,
-            check-js,
-            test-rust,
-            test-harperjs,
-            test-vscode,
-            test-chrome-plugin,
-            test-firefox-plugin,
-            test-obsidian,
-            check-desktop,
-          ]
+        task: [test-firefox-plugin, test-chrome-plugin]
+        copy: [1, 2, 3]
+        include:
+          - task: test-firefox-plugin
+            copy: 4
+          - task: test-firefox-plugin
+            copy: 5
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4.0.0
@@ -71,3 +68,5 @@ jobs:
         run: cargo binstall tauri-cli --force --no-confirm
       - name: Run `${{ matrix.task }}`
         run: just ${{ matrix.task }}
+        env:
+          PLAYWRIGHT_WORKERS: 4
