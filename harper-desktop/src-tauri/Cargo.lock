@@ -3779,7 +3779,6 @@ dependencies = [
  "bitflags 2.13.1",
  "blanket",
  "boxcar",
- "cached",
  "foldhash 0.2.0",
  "fst",
  "harper-brill",
@@ -3882,7 +3881,6 @@ version = "3.2.0"
 dependencies = [
  "hashbrown 0.16.1",
  "indexmap 2.14.2",
- "itertools 0.15.0",
  "ruzstd",
  "zstd",
 ]

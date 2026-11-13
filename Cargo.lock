@@ -697,39 +697,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "fc652a48c352aef3ea3aed32080501cf3ef6ed5da78602a020c991775b0aff04"
 
 [[package]]
-name = "cached"
-version = "2.0.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dc0df7748fe2f601e376916ab19e7bfc2c74461b8abe3bce2ce20036ad8de38f"
-dependencies = [
- "ahash",
- "cached_proc_macro",
- "cached_proc_macro_types",
- "hashbrown 0.16.1",
- "parking_lot",
- "thiserror 2.0.21",
- "web-time",
-]
-
-[[package]]
-name = "cached_proc_macro"
-version = "2.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "66e734c52502e6cf54dce2ba07108906b04b8fe57f4f5e3ef7d58267b4abf060"
-dependencies = [
- "darling 0.20.11",
- "proc-macro2",
- "quote",
- "syn 2.0.119",
-]
-
-[[package]]
-name = "cached_proc_macro_types"
-version = "1.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "26cf465651fa6ad902a2d327ba60c3a6bc61c6a2f4ad70d091cf20dfda0074ef"
-
-[[package]]
 name = "candle-core"
 version = "0.9.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2299,7 +2266,6 @@ dependencies = [
  "harper-comments",
  "harper-core",
  "harper-html",
- "harper-literate-haskell",
  "harper-typst",
  "libfuzzer-sys",
 ]
@@ -2717,7 +2683,6 @@ dependencies = [
  "bitflags 2.13.2",
  "blanket",
  "boxcar",
- "cached",
  "criterion",
  "foldhash 0.2.0",
  "fst",
@@ -2900,7 +2865,6 @@ version = "3.2.0"
 dependencies = [
  "hashbrown 0.16.1",
  "indexmap",
- "itertools 0.15.0",
  "ruzstd",
  "zstd",
 ]
