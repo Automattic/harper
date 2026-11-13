@@ -2,13 +2,15 @@
 //! dictionary lookups).
 
 use itertools::Itertools;
+use smallvec::ToSmallVec;
 
-use crate::{CharString, CharStringExt, DictWordMetadata};
+use crate::{CharString, CharStringExt, Dialect, DictWordMetadata};
 
 pub use self::dictionary::Dictionary;
 pub use self::fst_dictionary::FstDictionary;
 pub use self::merged_dictionary::MergedDictionary;
 pub use self::mutable_dictionary::MutableDictionary;
+pub use self::surrounding_words::{context_word, surrounding_words};
 pub use self::trie_dictionary::TrieDictionary;
 pub use self::word_id::{CanonicalWordId, CaseFoldedWordId};
 
@@ -17,6 +19,7 @@ mod fst_dictionary;
 mod merged_dictionary;
 mod mutable_dictionary;
 mod rune;
+mod surrounding_words;
 mod trie_dictionary;
 mod word_id;
 mod word_map;
@@ -403,6 +406,54 @@ pub fn suggest_correct_spelling<'a>(
         .collect();
 
     order_suggestions(misspelled_word, matches)
+}
+
+/// Get the closest matches in the provided [`Dictionary`], each with the score that orders it.
+/// Lower scores are better.
+pub fn scored_suggestions<'a>(
+    misspelled_word: &[char],
+    result_limit: usize,
+    max_edit_dist: u8,
+    dictionary: &'a impl Dictionary,
+) -> Vec<(&'a [char], i32)> {
+    let mut scored: Vec<_> = dictionary
+        .fuzzy_match(misspelled_word, max_edit_dist, result_limit)
+        .into_iter()
+        .map(|sug| (sug.word, score_suggestion(misspelled_word, &sug)))
+        .collect();
+
+    scored.sort_by_key(|(_, score)| *score);
+    scored
+}
+
+/// The maximum number of candidates the context ranker considers for one word.
+pub const MAX_RANKED_CANDIDATES: usize = 64;
+
+/// Spelling candidates for a misspelled word with their scores, in Harper's spelling order.
+///
+/// Widens the edit distance until a match appears.
+pub fn spelling_candidates(
+    word: &[char],
+    dictionary: &impl Dictionary,
+    dialect: Dialect,
+    limit: usize,
+) -> Vec<(CharString, i32)> {
+    (2..5)
+        .map(|dist| {
+            scored_suggestions(word, 200, dist, dictionary)
+                .into_iter()
+                .filter(|(candidate, _)| {
+                    dictionary
+                        .get_word_metadata(candidate)
+                        .is_some_and(|meta| meta.dialects.is_dialect_enabled(dialect))
+                })
+                .unique_by(|(candidate, _)| candidate.to_lower())
+                .map(|(candidate, score)| (candidate.to_smallvec(), score))
+                .take(limit)
+                .collect::<Vec<_>>()
+        })
+        .find(|suggestions| !suggestions.is_empty())
+        .unwrap_or_default()
 }
 
 /// Convenience function over [`suggest_correct_spelling`] that does conversions

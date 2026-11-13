@@ -117,9 +117,9 @@ Message: |
          |                                                   ^~~~~~~ Did you mean to spell `curtsey` this way?
       69 | curtseying as you’re falling through the air! Do you think you could manage it?)
 Suggest:
-  - Replace with: “curtsy”
   - Replace with: “courtesy”
   - Replace with: “curse”
+  - Replace with: “cursed”
 
 
 
@@ -385,8 +385,8 @@ Message: |
          |  ^~~~~~~~~ Did you mean to spell `Curiouser` this way?
 Suggest:
   - Replace with: “Curious”
-  - Replace with: “Carouser”
   - Replace with: “Curiously”
+  - Replace with: “Carouser”
 
 
 
@@ -396,8 +396,8 @@ Message: |
          |                ^~~~~~~~~ Did you mean to spell `curiouser` this way?
 Suggest:
   - Replace with: “curious”
-  - Replace with: “carouser”
   - Replace with: “curiously”
+  - Replace with: “carouser”
 
 
 
@@ -466,9 +466,9 @@ Message: |
      230 | and the fan, and skurried away into the darkness as hard as he could go.
          |                  ^~~~~~~~ Did you mean to spell `skurried` this way?
 Suggest:
-  - Replace with: “scurried”
   - Replace with: “spurred”
-  - Replace with: “scurries”
+  - Replace with: “hurried”
+  - Replace with: “curried”
 
 
 
@@ -619,9 +619,9 @@ Message: |
      320 | she began again: “Où est ma chatte?” which was the first sentence in her French
          |                   ^~ Did you mean to spell `Où` this way?
 Suggest:
-  - Replace with: “Of”
-  - Replace with: “Oh”
-  - Replace with: “Oi”
+  - Replace with: “OK”
+  - Replace with: “OT”
+  - Replace with: “O”
 
 
 
@@ -630,9 +630,9 @@ Message: |
      320 | she began again: “Où est ma chatte?” which was the first sentence in her French
          |                             ^~~~~~ Did you mean to spell `chatte` this way?
 Suggest:
-  - Replace with: “chaste”
   - Replace with: “chatted”
-  - Replace with: “chattel”
+  - Replace with: “chatter”
+  - Replace with: “chapter”
 
 
 
@@ -692,9 +692,9 @@ Message: |
          |                                                                      ^~~~ Did you mean to spell `Lory` this way?
      363 | Eaglet, and several other curious creatures. Alice led the way, and the whole
 Suggest:
-  - Replace with: “Lord”
-  - Replace with: “Lore”
   - Replace with: “Lorry”
+  - Replace with: “Lori”
+  - Replace with: “Lord”
 
 
 
@@ -705,8 +705,8 @@ Message: |
          | ^~~~~~~~ Did you mean to spell `draggled` this way?
 Suggest:
   - Replace with: “dragged”
+  - Replace with: “ragged”
   - Replace with: “drugged”
-  - Replace with: “dangled”
 
 
 
@@ -741,8 +741,8 @@ Message: |
      376 | and would only say, “I am older than you, and must know better;” and this Alice
 Suggest:
   - Replace with: “Lord”
-  - Replace with: “Lore”
-  - Replace with: “Lorry”
+  - Replace with: “Lori”
+  - Replace with: “Long”
 
 
 
@@ -752,8 +752,8 @@ Message: |
          |                                                             ^~~~ Did you mean to spell `Lory` this way?
      378 | refused to tell its age, there was no more to be said.
 Suggest:
+  - Replace with: “Lori”
   - Replace with: “Lord”
-  - Replace with: “Lore”
   - Replace with: “Lorry”
 
 
@@ -764,8 +764,8 @@ Message: |
          |           ^~~~~~ Did you mean to spell `Morcar` this way?
 Suggest:
   - Replace with: “Mortar”
-  - Replace with: “Mercer”
-  - Replace with: “Molar”
+  - Replace with: “Mortal”
+  - Replace with: “Moral”
 
 
 
@@ -781,9 +781,9 @@ Message: |
      392 | “Ugh!” said the Lory, with a shiver.
          |                 ^~~~ Did you mean to spell `Lory` this way?
 Suggest:
+  - Replace with: “Lorry”
   - Replace with: “Lord”
   - Replace with: “Lore”
-  - Replace with: “Lorry”
 
 
 
@@ -793,8 +793,8 @@ Message: |
          |                   ^~~~ Did you mean to spell `Lory` this way?
 Suggest:
   - Replace with: “Lord”
-  - Replace with: “Lore”
-  - Replace with: “Lorry”
+  - Replace with: “Lori”
+  - Replace with: “Lara”
 
 
 
@@ -805,8 +805,8 @@ Message: |
      400 | of Mercia and Northumbria, declared for him: and even Stigand, the patriotic
 Suggest:
   - Replace with: “Mortar”
-  - Replace with: “Mercer”
-  - Replace with: “Molar”
+  - Replace with: “Mortal”
+  - Replace with: “Moral”
 
 
 
@@ -837,8 +837,8 @@ Message: |
          |                            ^~~~~~~~ Did you mean to spell `Atheling` this way?
 Suggest:
   - Replace with: “Adhering”
-  - Replace with: “Fathering”
   - Replace with: “Gathering”
+  - Replace with: “Fathering”
 
 
 
@@ -890,7 +890,7 @@ Message: |
      528 | sight; and an old Crab took the opportunity of saying to her daughter “Ah, my
 Suggest:
   - Replace with: “Lord”
-  - Replace with: “Lore”
+  - Replace with: “Lori”
   - Replace with: “Lorry”
 
 
@@ -948,9 +948,9 @@ Message: |
      579 | little house, on the door of which was a bright brass plate with the name “W.
          |                                                                            ^~ Did you mean to spell `W.` this way?
 Suggest:
-  - Replace with: “We”
-  - Replace with: “WA”
   - Replace with: “WI”
+  - Replace with: “AZ”
+  - Replace with: “We”
 
 
 
@@ -1044,9 +1044,9 @@ Message: |
      668 | “Sure, it’s an arm, yer honour!” (He pronounced it “arrum.”)
          |                                                     ^~~~~ Did you mean to spell `arrum` this way?
 Suggest:
-  - Replace with: “arum”
+  - Replace with: “argue”
   - Replace with: “album”
-  - Replace with: “alum”
+  - Replace with: “array”
 
 
 
@@ -1213,9 +1213,9 @@ Message: |
          |                                                               ^~~~~ Did you mean to spell `leant` this way?
      778 | buttercup to rest herself, and fanned herself with one of the leaves: “I should
 Suggest:
-  - Replace with: “lean”
-  - Replace with: “learnt”
-  - Replace with: “least”
+  - Replace with: “leans”
+  - Replace with: “lent”
+  - Replace with: “meant”
 
 
 
@@ -1593,8 +1593,8 @@ Message: |
          |                                                        ^~~~~~~ Did you mean to spell `natured` this way?
 Suggest:
   - Replace with: “nature”
-  - Replace with: “natures”
-  - Replace with: “nature's”
+  - Replace with: “natural”
+  - Replace with: “nurtured”
 
 
 
@@ -1729,9 +1729,9 @@ Message: |
     1555 | great hurry; “and their names were Elsie, Lacie, and Tillie; and they lived at
          |                                           ^~~~~ Did you mean to spell `Lacie` this way?
 Suggest:
-  - Replace with: “Lace”
-  - Replace with: “Lacier”
-  - Replace with: “Lac's”
+  - Replace with: “Lucia”
+  - Replace with: “Lance”
+  - Replace with: “Laid”
 
 
 
@@ -1740,9 +1740,9 @@ Message: |
     1555 | great hurry; “and their names were Elsie, Lacie, and Tillie; and they lived at
          |                                                      ^~~~~~ Did you mean to spell `Tillie` this way?
 Suggest:
-  - Replace with: “Till's”
-  - Replace with: “Tile”
   - Replace with: “Till”
+  - Replace with: “Title”
+  - Replace with: “Willie”
 
 
 
@@ -2107,8 +2107,8 @@ Message: |
          |   ^~~ Did you mean to spell `Tis` this way?
 Suggest:
   - Replace with: “This”
-  - Replace with: “T's”
-  - Replace with: “Ti's”
+  - Replace with: “TVs”
+  - Replace with: “Tips”
 
 
 
@@ -2119,8 +2119,8 @@ Message: |
     1986 | love, that makes the world go round!’”
 Suggest:
   - Replace with: “this”
-  - Replace with: “ti's”
-  - Replace with: “tic”
+  - Replace with: “tips”
+  - Replace with: “tip”
 
 
 
@@ -2131,8 +2131,8 @@ Message: |
     1986 | love, that makes the world go round!’”
 Suggest:
   - Replace with: “this”
-  - Replace with: “ti's”
-  - Replace with: “tic”
+  - Replace with: “his”
+  - Replace with: “tips”
 
 
 
@@ -2288,9 +2288,9 @@ Message: |
     2134 | exclamation of “Hjckrrh!” from the Gryphon, and the constant heavy sobbing of
          |                 ^~~~~~~ Did you mean to spell `Hjckrrh` this way?
 Suggest:
-  - Replace with: “Hickory”
-  - Replace with: “Hacker”
   - Replace with: “Hackers”
+  - Replace with: “Hacker”
+  - Replace with: “Hickory”
 
 
 
@@ -2357,9 +2357,9 @@ Message: |
     2195 | uglifying!” it exclaimed. “You know what to beautify is, I suppose?”
          | ^~~~~~~~~ Did you mean to spell `uglifying` this way?
 Suggest:
-  - Replace with: “unifying”
   - Replace with: “uplifting”
-  - Replace with: “nullifying”
+  - Replace with: “unifying”
+  - Replace with: “qualifying”
 
 
 
@@ -2378,9 +2378,9 @@ Message: |
          |                                                               ^~~~~~ Did you mean to spell `uglify` this way?
     2200 | a simpleton.”
 Suggest:
+  - Replace with: “uplift”
   - Replace with: “ugly”
   - Replace with: “unify”
-  - Replace with: “uplift”
 
 
 
@@ -2412,9 +2412,9 @@ Message: |
     2206 | his flappers, “—Mystery, ancient and modern, with Seaography: then Drawling—the
          |                                                   ^~~~~~~~~~ Did you mean to spell `Seaography` this way?
 Suggest:
-  - Replace with: “Scenography”
-  - Replace with: “Stenography”
+  - Replace with: “Geography”
   - Replace with: “Demography”
+  - Replace with: “Scenography”
 
 
 
@@ -2614,9 +2614,9 @@ Message: |
     2333 | “Yes,” said Alice, “I’ve often seen them at dinn—” she checked herself hastily.
          |                                             ^~~~ Did you mean to spell `dinn` this way?
 Suggest:
-  - Replace with: “din”
   - Replace with: “dine”
-  - Replace with: “ding”
+  - Replace with: “down”
+  - Replace with: “done”
 
 
 
@@ -2625,9 +2625,9 @@ Message: |
     2335 | “I don’t know where Dinn may be,” said the Mock Turtle, “but if you’ve seen them
          |                     ^~~~ Did you mean to spell `Dinn` this way?
 Suggest:
-  - Replace with: “Din”
-  - Replace with: “Dine”
-  - Replace with: “Diann”
+  - Replace with: “Dunn”
+  - Replace with: “Dino”
+  - Replace with: “Did”
 
 
 
@@ -2753,8 +2753,8 @@ Message: |
          |                        ^~~ Did you mean to spell `Tis` this way?
 Suggest:
   - Replace with: “This”
-  - Replace with: “T's”
-  - Replace with: “Ti's”
+  - Replace with: “Tip”
+  - Replace with: “TVs”
 
 
 
@@ -2780,8 +2780,8 @@ Message: |
          |     ^~~ Did you mean to spell `Tis` this way?
 Suggest:
   - Replace with: “This”
-  - Replace with: “T's”
-  - Replace with: “Ti's”
+  - Replace with: “Tip”
+  - Replace with: “TVs”
 
 
 
@@ -2874,8 +2874,8 @@ Message: |
     2477 | eagerly that the Gryphon said, in a rather offended tone, “Hm! No accounting for
          |                                                            ^~ Did you mean to spell `Hm` this way?
 Suggest:
-  - Replace with: “Ha”
-  - Replace with: “Ham”
+  - Replace with: “Hum”
+  - Replace with: “Him”
   - Replace with: “He”
   - Replace with: “HM”
 
@@ -2893,8 +2893,8 @@ Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                 ^~~~~~~ Did you mean to spell `ootiful` this way?
 Suggest:
-  - Replace with: “dutiful”
   - Replace with: “pitiful”
+  - Replace with: “dutiful”
   - Replace with: “potful”
 
 
@@ -2904,9 +2904,9 @@ Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                         ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “So”
-  - Replace with: “Soc”
-  - Replace with: “Sod”
+  - Replace with: “Son”
+  - Replace with: “Solo”
+  - Replace with: “Soon”
 
 
 
@@ -2925,8 +2925,8 @@ Message: |
          |                                             ^~~ Did you mean to spell `oop` this way?
 Suggest:
   - Replace with: “oops”
-  - Replace with: “op”
   - Replace with: “opp”
+  - Replace with: “ooh”
 
 
 
@@ -2935,8 +2935,8 @@ Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                                       ^~~~~~~ Did you mean to spell `ootiful` this way?
 Suggest:
-  - Replace with: “dutiful”
   - Replace with: “pitiful”
+  - Replace with: “dutiful”
   - Replace with: “potful”
 
 
@@ -2946,9 +2946,9 @@ Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                                               ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “So”
-  - Replace with: “Soc”
-  - Replace with: “Sod”
+  - Replace with: “Son”
+  - Replace with: “Solo”
+  - Replace with: “Soon”
 
 
 
@@ -2967,8 +2967,8 @@ Message: |
          |                                                                   ^~~ Did you mean to spell `oop` this way?
 Suggest:
   - Replace with: “oops”
-  - Replace with: “op”
   - Replace with: “opp”
+  - Replace with: “ooh”
 
 
 
@@ -2978,9 +2978,9 @@ Message: |
          |                                                                        ^~~ Did you mean to spell `Soo` this way?
     2486 | > of the e—e—evening, Beautiful, beautiful Soup!
 Suggest:
-  - Replace with: “So”
-  - Replace with: “Soc”
-  - Replace with: “Sod”
+  - Replace with: “Son”
+  - Replace with: “Solo”
+  - Replace with: “Soon”
 
 
 
@@ -3000,9 +3000,9 @@ Message: |
          |                                                                            ^~~ Did you mean to spell `oop` this way?
     2486 | > of the e—e—evening, Beautiful, beautiful Soup!
 Suggest:
+  - Replace with: “top”
+  - Replace with: “ooh”
   - Replace with: “oops”
-  - Replace with: “op”
-  - Replace with: “opp”
 
 
 
@@ -3031,8 +3031,8 @@ Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                        ^~~~~~~ Did you mean to spell `ootiful` this way?
 Suggest:
-  - Replace with: “dutiful”
   - Replace with: “pitiful”
+  - Replace with: “dutiful”
   - Replace with: “potful”
 
 
@@ -3042,9 +3042,9 @@ Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “So”
-  - Replace with: “Soc”
-  - Replace with: “Sod”
+  - Replace with: “Son”
+  - Replace with: “Solo”
+  - Replace with: “Soon”
 
 
 
@@ -3063,8 +3063,8 @@ Message: |
          |                                    ^~~ Did you mean to spell `oop` this way?
 Suggest:
   - Replace with: “oops”
-  - Replace with: “op”
   - Replace with: “opp”
+  - Replace with: “ooh”
 
 
 
@@ -3073,8 +3073,8 @@ Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                              ^~~~~~~ Did you mean to spell `ootiful` this way?
 Suggest:
-  - Replace with: “dutiful”
   - Replace with: “pitiful”
+  - Replace with: “dutiful”
   - Replace with: “potful”
 
 
@@ -3084,9 +3084,9 @@ Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                                      ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “So”
-  - Replace with: “Soc”
-  - Replace with: “Sod”
+  - Replace with: “Son”
+  - Replace with: “Solo”
+  - Replace with: “Soon”
 
 
 
@@ -3105,8 +3105,8 @@ Message: |
          |                                                          ^~~ Did you mean to spell `oop` this way?
 Suggest:
   - Replace with: “oops”
-  - Replace with: “op”
   - Replace with: “opp”
+  - Replace with: “ooh”
 
 
 
@@ -3116,9 +3116,9 @@ Message: |
          |                                                               ^~~ Did you mean to spell `Soo` this way?
     2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
 Suggest:
-  - Replace with: “So”
-  - Replace with: “Soc”
-  - Replace with: “Sod”
+  - Replace with: “Son”
+  - Replace with: “Solo”
+  - Replace with: “Soon”
 
 
 
@@ -3138,9 +3138,9 @@ Message: |
          |                                                                   ^~~ Did you mean to spell `oop` this way?
     2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
 Suggest:
+  - Replace with: “top”
+  - Replace with: “ooh”
   - Replace with: “oops”
-  - Replace with: “op”
-  - Replace with: “opp”
 
 
 
@@ -3151,8 +3151,8 @@ Message: |
          |                           ^~~~~~ Did you mean to spell `beauti` this way?
 Suggest:
   - Replace with: “beauty”
-  - Replace with: “beaut”
-  - Replace with: “beauts”
+  - Replace with: “beauties”
+  - Replace with: “beast”
 
 
 
@@ -3163,8 +3163,8 @@ Message: |
          |                                  ^~~ Did you mean to spell `FUL` this way?
 Suggest:
   - Replace with: “Full”
-  - Replace with: “Flu”
-  - Replace with: “Fol”
+  - Replace with: “Fuel”
+  - Replace with: “Fun”
 
 
 
@@ -3201,9 +3201,9 @@ Message: |
     2503 | > “Soo—oop of the e—e—evening, Beautiful, beautiful Soup!”
          |    ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “So”
-  - Replace with: “Soc”
-  - Replace with: “Sod”
+  - Replace with: “Son”
+  - Replace with: “Solo”
+  - Replace with: “Soon”
 
 
 
@@ -3221,9 +3221,9 @@ Message: |
     2503 | > “Soo—oop of the e—e—evening, Beautiful, beautiful Soup!”
          |        ^~~ Did you mean to spell `oop` this way?
 Suggest:
+  - Replace with: “top”
+  - Replace with: “ooh”
   - Replace with: “oops”
-  - Replace with: “op”
-  - Replace with: “opp”
 
 
 

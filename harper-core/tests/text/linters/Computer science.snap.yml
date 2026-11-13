@@ -22,8 +22,8 @@ Message: |
       45 | Wilhelm Schickard designed and constructed the first working mechanical
          |         ^~~~~~~~~ Did you mean to spell `Schickard` this way?
 Suggest:
-  - Replace with: “Schick's”
   - Replace with: “Shipyard”
+  - Replace with: “Schick's”
   - Replace with: “Schick”
 
 
@@ -33,9 +33,9 @@ Message: |
       46 | calculator in 1623. In 1673, Gottfried Leibniz demonstrated a digital mechanical
          |                              ^~~~~~~~~ Did you mean to spell `Gottfried` this way?
 Suggest:
-  - Replace with: “Guttered”
-  - Replace with: “Lotteries”
   - Replace with: “Notified”
+  - Replace with: “Lotteries”
+  - Replace with: “Guttered”
 
 
 
@@ -46,8 +46,8 @@ Message: |
          |                                ^~~~~~~~ Did you mean to spell `Reckoner` this way?
 Suggest:
   - Replace with: “Reckoned”
-  - Replace with: “Reasoner”
-  - Replace with: “Rickover”
+  - Replace with: “Recover”
+  - Replace with: “Reckon”
 
 
 
@@ -58,8 +58,8 @@ Message: |
          |    ^~~~~~ Did you mean to spell `Colmar` this way?
 Suggest:
   - Replace with: “Collar”
-  - Replace with: “Cellar”
   - Replace with: “Clear”
+  - Replace with: “Cellar”
 
 
 
@@ -93,8 +93,8 @@ Message: |
          |                                                                ^~~~~~~ Did you mean to spell `Ludgate` this way?
       66 | published the 2nd of the only two designs for mechanical analytical engines in
 Suggest:
-  - Replace with: “Legate”
   - Replace with: “Luggage”
+  - Replace with: “Legate”
   - Replace with: “Luddite”
 
 
@@ -155,9 +155,9 @@ Message: |
       78 | ASCC/Harvard Mark I, based on Babbage's Analytical Engine, which itself used
          | ^~~~ Did you mean to spell `ASCC` this way?
 Suggest:
-  - Replace with: “Ac”
-  - Replace with: “Ace”
-  - Replace with: “Act”
+  - Replace with: “ABC”
+  - Replace with: “APC”
+  - Replace with: “ADC”
 
 
 
@@ -178,9 +178,9 @@ Message: |
          |                                                   ^~~~~ Did you mean to spell `ENIAC` this way?
       84 | to refer to the machines rather than their human predecessors. As it became
 Suggest:
-  - Replace with: “Enact”
   - Replace with: “Epic”
-  - Replace with: “Enc”
+  - Replace with: “Enact”
+  - Replace with: “Denial”
 
 
 
@@ -234,9 +234,9 @@ Message: |
          |                                                      ^~~~ Did you mean to spell `Fein` this way?
      106 | creation of a Graduate School in Computer Sciences analogous to the creation of
 Suggest:
-  - Replace with: “Fen”
-  - Replace with: “Fern”
-  - Replace with: “Fin”
+  - Replace with: “Finn”
+  - Replace with: “Find”
+  - Replace with: “Vein”
 
 
 
@@ -255,9 +255,9 @@ Message: |
      116 | Peter Naur suggested the term datalogy, to reflect the fact that the scientific
          |       ^~~~ Did you mean to spell `Naur` this way?
 Suggest:
-  - Replace with: “Nair”
-  - Replace with: “Nauru”
-  - Replace with: “Nag”
+  - Replace with: “Name”
+  - Replace with: “Nagpur”
+  - Replace with: “Nature”
 
 
 
@@ -267,8 +267,8 @@ Message: |
      116 | Peter Naur suggested the term datalogy, to reflect the fact that the scientific
          |                               ^~~~~~~~ Did you mean to spell `datalogy` this way?
 Suggest:
-  - Replace with: “analogy”
   - Replace with: “catalog”
+  - Replace with: “analogy”
   - Replace with: “catalogs”
 
 
@@ -279,9 +279,9 @@ Message: |
      119 | Department of Datalogy at the University of Copenhagen, founded in 1969, with
          |               ^~~~~~~~ Did you mean to spell `Datalogy` this way?
 Suggest:
-  - Replace with: “DataDog”
-  - Replace with: “Analogy”
   - Replace with: “Catalog”
+  - Replace with: “Analogy”
+  - Replace with: “Catalogs”
 
 
 
@@ -291,9 +291,9 @@ Message: |
      120 | Peter Naur being the first professor in datalogy. The term is used mainly in the
          |       ^~~~ Did you mean to spell `Naur` this way?
 Suggest:
-  - Replace with: “Nair”
-  - Replace with: “Nauru”
-  - Replace with: “Nag”
+  - Replace with: “Nature”
+  - Replace with: “Near”
+  - Replace with: “Name”
 
 
 
@@ -315,9 +315,9 @@ Message: |
          |                                                               ^~~~ Did you mean to spell `Naur` this way?
      122 | science; this is now used for a multi-disciplinary field of data analysis,
 Suggest:
-  - Replace with: “Nair”
-  - Replace with: “Nauru”
-  - Replace with: “Nag”
+  - Replace with: “Nature”
+  - Replace with: “Name”
+  - Replace with: “Noun”
 
 
 
@@ -383,9 +383,9 @@ Message: |
          |                                                           ^~~~~~~~~ Did you mean to spell `computics` this way?
      130 | been suggested. In Europe, terms derived from contracted translations of the
 Suggest:
-  - Replace with: “computers”
   - Replace with: “computes”
   - Replace with: “computing”
+  - Replace with: “computers”
 
 
 
@@ -423,8 +423,8 @@ Message: |
      132 | or "information and mathematics" are often used, e.g. informatique (French),
 Suggest:
   - Replace with: “automatic”
-  - Replace with: “automatics”
-  - Replace with: “automatic's”
+  - Replace with: “automation”
+  - Replace with: “automating”
 
 
 
@@ -454,9 +454,9 @@ Message: |
      133 | Informatik (German), informatica (Italian, Dutch), informática (Spanish,
          | ^~~~~~~~~~ Did you mean to spell `Informatik` this way?
 Suggest:
-  - Replace with: “Informatics”
   - Replace with: “Information”
   - Replace with: “Informative”
+  - Replace with: “Informatics”
 
 
 
@@ -467,8 +467,8 @@ Message: |
          |                      ^~~~~~~~~~~ Did you mean to spell `informatica` this way?
 Suggest:
   - Replace with: “informatics”
-  - Replace with: “information”
   - Replace with: “informative”
+  - Replace with: “information”
 
 
 
@@ -488,9 +488,9 @@ Message: |
      134 | Portuguese), informatika (Slavic languages and Hungarian) or pliroforiki
          |              ^~~~~~~~~~~ Did you mean to spell `informatika` this way?
 Suggest:
-  - Replace with: “informatics”
-  - Replace with: “information”
   - Replace with: “informative”
+  - Replace with: “information”
+  - Replace with: “informatics”
 
 
 
@@ -508,9 +508,9 @@ Message: |
      141 | formulated by—Edsger Dijkstra, states that "computer science is no more about
          |               ^~~~~~ Did you mean to spell `Edsger` this way?
 Suggest:
-  - Replace with: “Edger”
+  - Replace with: “Easier”
   - Replace with: “Eager”
-  - Replace with: “Edge”
+  - Replace with: “Edgar”
 
 
 
@@ -537,7 +537,7 @@ Message: |
 Suggest:
   - Replace with: “van”
   - Replace with: “vol”
-  - Replace with: “vow”
+  - Replace with: “hon”
 
 
 
@@ -567,9 +567,9 @@ Message: |
      156 | von Neumann, Rózsa Péter and Alonzo Church and there continues to be a useful
          |                    ^~~~~ Did you mean to spell `Péter` this way?
 Suggest:
+  - Replace with: “Power”
   - Replace with: “Peter”
-  - Replace with: “Pother”
-  - Replace with: “Paper”
+  - Replace with: “Patel”
 
 
 
@@ -596,9 +596,9 @@ Message: |
          |                                                                          ^~~~~~ Did you mean to spell `Parnas` this way?
      163 | taking a cue from the relationship between other engineering and science
 Suggest:
-  - Replace with: “Paras”
-  - Replace with: “Parkas”
-  - Replace with: “Pan's”
+  - Replace with: “Parents”
+  - Replace with: “Pranks”
+  - Replace with: “Paris”
 
 
 
@@ -617,9 +617,9 @@ Message: |
      182 | Newell and Herbert A. Simon argued in 1975,
          | ^~~~~~ Did you mean to spell `Newell` this way?
 Suggest:
-  - Replace with: “Newel”
-  - Replace with: “Newels”
-  - Replace with: “Newel's”
+  - Replace with: “Newly”
+  - Replace with: “Nell”
+  - Replace with: “Newest”
 
 
 
@@ -629,9 +629,9 @@ Message: |
      182 | Newell and Herbert A. Simon argued in 1975,
          |                    ^~ Did you mean to spell `A.` this way?
 Suggest:
-  - Replace with: “A”
-  - Replace with: “Ab”
-  - Replace with: “Ac”
+  - Replace with: “AZ”
+  - Replace with: “AFC”
+  - Replace with: “AK”
 
 
 
@@ -670,9 +670,9 @@ Message: |
      207 | Computer scientists Edsger W. Dijkstra and Tony Hoare regard instructions for
          |                     ^~~~~~ Did you mean to spell `Edsger` this way?
 Suggest:
-  - Replace with: “Edger”
-  - Replace with: “Eager”
+  - Replace with: “Easier”
   - Replace with: “Edge”
+  - Replace with: “Eager”
 
 
 
@@ -681,9 +681,9 @@ Message: |
      207 | Computer scientists Edsger W. Dijkstra and Tony Hoare regard instructions for
          |                            ^~ Did you mean to spell `W.` this way?
 Suggest:
-  - Replace with: “We”
-  - Replace with: “WA”
   - Replace with: “WI”
+  - Replace with: “WC”
+  - Replace with: “We”
 
 
 
@@ -693,9 +693,9 @@ Message: |
          |                                                 ^~~~~ Did you mean to spell `Hoare` this way?
      208 | computer programs as mathematical sentences and interpret formal semantics for
 Suggest:
-  - Replace with: “Hare”
-  - Replace with: “Hoard”
-  - Replace with: “Hoary”
+  - Replace with: “Hope”
+  - Replace with: “Have”
+  - Replace with: “House”
 
 
 
@@ -715,8 +715,8 @@ Message: |
      215 | are science, technology, and mathematics. Peter Denning's working group argued
 Suggest:
   - Replace with: “Wagner”
-  - Replace with: “Wigner”
-  - Replace with: “Wetter”
+  - Replace with: “Winner”
+  - Replace with: “Weber”
 
 
 
@@ -726,9 +726,9 @@ Message: |
          |                                                 ^~~~~~~~~ Did you mean to spell `Denning's` this way?
      216 | that they are theory, abstraction (modeling), and design. Amnon H. Eden
 Suggest:
+  - Replace with: “Manning's”
+  - Replace with: “Jennings”
   - Replace with: “Deming's”
-  - Replace with: “Dennis's”
-  - Replace with: “Dancing's”
 
 
 
@@ -738,8 +738,8 @@ Message: |
          |                                                           ^~~~~ Did you mean to spell `Amnon` this way?
 Suggest:
   - Replace with: “Anon”
-  - Replace with: “Amnion”
   - Replace with: “Amazon”
+  - Replace with: “Among”
 
 
 
@@ -769,9 +769,9 @@ Message: |
      216 | that they are theory, abstraction (modeling), and design. Amnon H. Eden
          |                                                                 ^~ Did you mean to spell `H.` this way?
 Suggest:
-  - Replace with: “Ha”
   - Replace with: “He”
-  - Replace with: “Hi”
+  - Replace with: “HUD”
+  - Replace with: “Hun”
 
 
 
@@ -791,9 +791,9 @@ Message: |
          |                                                          ^~~~ Did you mean to spell `CSAB` this way?
      232 | Computing Sciences Accreditation Board—which is made up of representatives of
 Suggest:
-  - Replace with: “Cab”
   - Replace with: “Crab”
-  - Replace with: “Cad”
+  - Replace with: “Club”
+  - Replace with: “Cab”
 
 
 
@@ -844,9 +844,9 @@ Message: |
      237 | In addition to these four areas, CSAB also identifies fields such as software
          |                                  ^~~~ Did you mean to spell `CSAB` this way?
 Suggest:
-  - Replace with: “Cab”
-  - Replace with: “Crab”
-  - Replace with: “Cad”
+  - Replace with: “CSS”
+  - Replace with: “CSV”
+  - Replace with: “Clay”
 
 
 
@@ -873,9 +873,9 @@ Message: |
      252 | According to Peter Denning, the fundamental question underlying computer science
          |                    ^~~~~~~ Did you mean to spell `Denning` this way?
 Suggest:
-  - Replace with: “Dunning”
-  - Replace with: “Denting”
   - Replace with: “Denying”
+  - Replace with: “Donning”
+  - Replace with: “Defining”
 
 
 
@@ -1039,9 +1039,9 @@ Message: |
      346 | Human–computer interaction (HCI) is the field of study and research concerned
          |                             ^~~ Did you mean to spell `HCI` this way?
 Suggest:
-  - Replace with: “Hi”
-  - Replace with: “Chi”
-  - Replace with: “Sci”
+  - Replace with: “HDMI”
+  - Replace with: “HPV”
+  - Replace with: “HR”
 
 
 
@@ -1051,9 +1051,9 @@ Message: |
          |                                                     ^~~ Did you mean to spell `HCI` this way?
      349 | that focus on the relationship between emotions, social behavior and brain
 Suggest:
-  - Replace with: “Hi”
-  - Replace with: “Chi”
-  - Replace with: “Sci”
+  - Replace with: “HHS”
+  - Replace with: “HDMI”
+  - Replace with: “HUD”
 
 
 
@@ -1107,9 +1107,9 @@ Message: |
      393 | term "architecture" in computer literature can be traced to the work of Lyle R.
          |                                                                              ^~ Did you mean to spell `R.` this way?
 Suggest:
+  - Replace with: “RP”
   - Replace with: “RI”
-  - Replace with: “Ra”
-  - Replace with: “Re”
+  - Replace with: “R”
 
 
 
@@ -1118,9 +1118,9 @@ Message: |
      394 | Johnson and Frederick P. Brooks Jr., members of the Machine Organization
          |                       ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pa”
-  - Replace with: “Pi”
+  - Replace with: “PO”
   - Replace with: “PE”
+  - Replace with: “PR”
 
 
 
@@ -1139,9 +1139,9 @@ Message: |
      402 | including Petri nets, process calculi and the parallel random access machine
          |           ^~~~~ Did you mean to spell `Petri` this way?
 Suggest:
-  - Replace with: “Petra”
-  - Replace with: “Perth”
-  - Replace with: “Pet's”
+  - Replace with: “Petrol”
+  - Replace with: “Petty”
+  - Replace with: “Per”
 
 
 
@@ -1208,9 +1208,9 @@ Message: |
      439 | - Gottfried Wilhelm Leibniz's, George Boole's, Alan Turing's, Claude Shannon's,
          |   ^~~~~~~~~ Did you mean to spell `Gottfried` this way?
 Suggest:
-  - Replace with: “Guttered”
-  - Replace with: “Lotteries”
   - Replace with: “Notified”
+  - Replace with: “Lotteries”
+  - Replace with: “Guttered”
 
 
 
@@ -1238,9 +1238,9 @@ Message: |
      458 | - Corrado Böhm and Giuseppe Jacopini's insight: there are only three ways of
          |   ^~~~~~~ Did you mean to spell `Corrado` this way?
 Suggest:
-  - Replace with: “Comrade”
-  - Replace with: “Corral”
   - Replace with: “Corridor”
+  - Replace with: “Colorado”
+  - Replace with: “Comrade”
 
 
 
@@ -1249,9 +1249,9 @@ Message: |
      458 | - Corrado Böhm and Giuseppe Jacopini's insight: there are only three ways of
          |           ^~~~ Did you mean to spell `Böhm` this way?
 Suggest:
-  - Replace with: “Bah”
-  - Replace with: “Baht”
-  - Replace with: “Beam”
+  - Replace with: “Bohr”
+  - Replace with: “Boom”
+  - Replace with: “Bum”
 
 
 
@@ -1288,9 +1288,9 @@ Message: |
      468 |     Boehm's and Jacopini's insight can be further simplified with the use of
          |     ^~~~~~~ Did you mean to spell `Boehm's` this way?
 Suggest:
-  - Replace with: “Boer's”
   - Replace with: “Bohr's”
-  - Replace with: “Beam's”
+  - Replace with: “Ohm's”
+  - Replace with: “Boer's”
 
 
 
@@ -1310,9 +1310,9 @@ Message: |
      469 |     goto (which means it is more elementary than structured programming).
          |     ^~~~ Did you mean to spell `goto` this way?
 Suggest:
-  - Replace with: “goth”
-  - Replace with: “goo”
   - Replace with: “got”
+  - Replace with: “good”
+  - Replace with: “goal”
 
 
 

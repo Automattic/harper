@@ -2651,6 +2651,7 @@ dependencies = [
  "enum_dispatch",
  "harper-asciidoc",
  "harper-comments",
+ "harper-context-ranker",
  "harper-core",
  "harper-ink",
  "harper-literate-haskell",
@@ -2710,6 +2711,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "harper-context-ranker"
+version = "3.1.0"
+dependencies = [
+ "burn",
+ "burn-ndarray",
+ "flate2",
+ "hashbrown 0.16.1",
+ "rand 0.10.3",
+ "rayon",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
 name = "harper-core"
 version = "3.1.0"
 dependencies = [
@@ -2722,6 +2738,7 @@ dependencies = [
  "foldhash 0.2.0",
  "fst",
  "harper-brill",
+ "harper-context-ranker",
  "harper-thesaurus",
  "hashbrown 0.16.1",
  "indexmap",

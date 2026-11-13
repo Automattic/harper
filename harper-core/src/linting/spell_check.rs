@@ -1,9 +1,10 @@
-use std::{iter::once, num::NonZero};
+use std::num::NonZero;
 
-use itertools::Itertools;
 use lru::LruCache;
 use smallvec::ToSmallVec;
 
+#[cfg(feature = "context-ranking")]
+use crate::spell::{MAX_RANKED_CANDIDATES, surrounding_words};
 use crate::{
     CharString, CharStringExt, Dialect, TokenStringExt,
     document::Document,
@@ -13,7 +14,7 @@ use crate::{
         proper_noun_capitalization_linters::proper_nouns_expr,
     },
     remove_lints_overlapping_expr,
-    spell::{Dictionary, suggest_correct_spelling},
+    spell::{Dictionary, spelling_candidates},
 };
 
 pub struct SpellCheck<T>
@@ -21,7 +22,7 @@ where
     T: Dictionary,
 {
     dictionary: T,
-    suggestion_cache: LruCache<CharString, Vec<CharString>>,
+    suggestion_cache: LruCache<CharString, Vec<(CharString, i32)>>,
     dialect: Dialect,
     proper_nouns: LongestMatchOf,
 }
@@ -38,47 +39,60 @@ impl<T: Dictionary> SpellCheck<T> {
 
     const MAX_SUGGESTIONS: usize = 3;
 
-    fn suggest_correct_spelling(&mut self, word: &[char]) -> Vec<CharString> {
+    #[cfg(feature = "context-ranking")]
+    const CACHED_CANDIDATES: usize = MAX_RANKED_CANDIDATES;
+    #[cfg(not(feature = "context-ranking"))]
+    const CACHED_CANDIDATES: usize = Self::MAX_SUGGESTIONS;
+
+    fn suggest_correct_spelling(&mut self, word: &[char]) -> Vec<(CharString, i32)> {
         if let Some(hit) = self.suggestion_cache.get(word) {
             hit.clone()
         } else {
-            let suggestions = self.uncached_suggest_correct_spelling(word);
+            let suggestions = spelling_candidates(
+                word,
+                &self.dictionary,
+                self.dialect,
+                Self::CACHED_CANDIDATES,
+            );
             self.suggestion_cache.put(word.into(), suggestions.clone());
             suggestions
         }
     }
+}
 
-    fn uncached_suggest_correct_spelling(&self, word: &[char]) -> Vec<CharString> {
-        // Back off until we find a match.
-        (2..5)
-            .filter_map(|dist| {
-                let mut iter = suggest_correct_spelling(word, 200, dist, &self.dictionary)
-                    .into_iter()
-                    .filter(|v| {
-                        // Ignore entries outside the configured dialect
-                        self.dictionary
-                            .get_word_metadata(v)
-                            .is_some_and(|meta| meta.dialects.is_dialect_enabled(self.dialect))
-                    })
-                    .unique_by(|v| v.to_lower())
-                    .map(|v| v.to_smallvec());
+#[cfg(feature = "context-ranking")]
+fn order_by_context(
+    candidates: Vec<(CharString, i32)>,
+    document: &Document,
+    index: usize,
+) -> Vec<CharString> {
+    let (left, right) = surrounding_words(
+        document.get_tokens(),
+        document.get_source(),
+        index,
+        harper_context_ranker::CONTEXT_RADIUS,
+    );
+    let lowered: Vec<(String, i32)> = candidates
+        .iter()
+        .map(|(candidate, score)| (candidate.to_lower().iter().collect(), *score))
+        .collect();
 
-                // Lazily peek at the first matching element.
-                // If None, this entire distance is skipped without allocating a Vec!
-                let first = iter.next()?;
+    harper_context_ranker::rank(&left, &right, &lowered)
+        .into_iter()
+        .map(|position| candidates[position].0.clone())
+        .collect()
+}
 
-                // If we get here, we found at least one match.
-                // Now we pull the rest up to our limit and collect.
-                let suggestions = once(first)
-                    .chain(iter)
-                    .take(Self::MAX_SUGGESTIONS)
-                    .collect();
-
-                Some(suggestions)
-            })
-            .next() // Grab the first distance that successfully yielded a Vec
-            .unwrap_or_default()
-    }
+#[cfg(not(feature = "context-ranking"))]
+fn order_by_context(
+    candidates: Vec<(CharString, i32)>,
+    _document: &Document,
+    _index: usize,
+) -> Vec<CharString> {
+    candidates
+        .into_iter()
+        .map(|(candidate, _)| candidate)
+        .collect()
 }
 
 fn parenthetical_plural_s_expr() -> Filter {
@@ -104,7 +118,8 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {
         let mut lints = Vec::new();
 
-        for word in document.iter_words() {
+        for word_index in document.iter_word_indices() {
+            let word = &document.get_tokens()[word_index];
             let word_chars = document.get_span_content(&word.span);
 
             if is_informal_laughter(word_chars) {
@@ -124,7 +139,12 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
                 continue;
             };
 
-            let mut possibilities = self.suggest_correct_spelling(word_chars);
+            let candidates = self.suggest_correct_spelling(word_chars);
+            let mut possibilities: Vec<CharString> =
+                order_by_context(candidates, document, word_index)
+                    .into_iter()
+                    .take(Self::MAX_SUGGESTIONS)
+                    .collect();
 
             // If the misspelled word is capitalized, capitalize the results too.
             if let Some(mis_f) = word_chars.first()

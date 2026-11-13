@@ -3,9 +3,9 @@ Message: |
        3 | BY F. SCOTT FITZGERALD
          |    ^~ Did you mean to spell `F.` this way?
 Suggest:
-  - Replace with: “Fa”
-  - Replace with: “Fe”
-  - Replace with: “Ft”
+  - Replace with: “FD”
+  - Replace with: “FDA”
+  - Replace with: “FBI”
 
 
 
@@ -14,9 +14,9 @@ Message: |
        3 | BY F. SCOTT FITZGERALD
          |       ^~~~~ Did you mean to spell `SCOTT` this way?
 Suggest:
-  - Replace with: “Scout”
   - Replace with: “Scott”
-  - Replace with: “Scoot”
+  - Replace with: “Scout”
+  - Replace with: “Stout”
 
 
 
@@ -160,9 +160,9 @@ Message: |
       50 | three generations. The Carraways are something of a clan, and we have a
          |                        ^~~~~~~~~ Did you mean to spell `Carraways` this way?
 Suggest:
+  - Replace with: “Caraway”
   - Replace with: “Caraways”
   - Replace with: “Caraway's”
-  - Replace with: “Castaways”
 
 
 
@@ -172,9 +172,9 @@ Message: |
          |                                                  ^~~~~~~~~ Did you mean to spell `Buccleuch` this way?
       52 | founder of my line was my grandfather’s brother, who came here in fifty-one,
 Suggest:
-  - Replace with: “Buckley's”
-  - Replace with: “Buckle's”
-  - Replace with: “Buckler's”
+  - Replace with: “Nucleus”
+  - Replace with: “Buckle”
+  - Replace with: “Bleach”
 
 
 
@@ -185,8 +185,8 @@ Message: |
       62 | seemed like the ragged edge of the universe—so I decided to go East and learn
 Suggest:
   - Replace with: “center”
-  - Replace with: “cent's”
-  - Replace with: “censure”
+  - Replace with: “century”
+  - Replace with: “central”
 
 
 
@@ -295,8 +295,8 @@ Message: |
          |                                 ^~~~~ Did you mean to spell `Hôtel` this way?
 Suggest:
   - Replace with: “Hotel”
-  - Replace with: “Hate”
-  - Replace with: “Hazel”
+  - Replace with: “Hostel”
+  - Replace with: “Hotels”
 
 
 
@@ -306,9 +306,9 @@ Message: |
          |                                          ^~~~~ Did you mean to spell `Ville` this way?
      121 | side, spanking new under a thin beard of raw ivy, and a marble swimming pool,
 Suggest:
-  - Replace with: “Vile”
   - Replace with: “Villa”
-  - Replace with: “Villi”
+  - Replace with: “Vile”
+  - Replace with: “Village”
 
 
 
@@ -340,8 +340,8 @@ Message: |
      131 | drove over there to have dinner with the Tom Buchanans. Daisy was my second
          |                                              ^~~~~~~~~ Did you mean to spell `Buchanans` this way?
 Suggest:
-  - Replace with: “Buchanan's”
   - Replace with: “Buchanan”
+  - Replace with: “Buchanan's”
 
 
 
@@ -438,7 +438,7 @@ Message: |
 Suggest:
   - Replace with: “Decline”
   - Replace with: “Demand”
-  - Replace with: “Demise”
+  - Replace with: “Detainee”
 
 
 
@@ -557,8 +557,8 @@ Message: |
          |                                                 ^~~~~~ Did you mean to spell `gayety` this way?
 Suggest:
   - Replace with: “gaiety”
-  - Replace with: “gamely”
   - Replace with: “gamete”
+  - Replace with: “gamely”
 
 
 
@@ -611,8 +611,8 @@ Message: |
          |                                                            ^~~~~~~~~~~~ Did you mean to spell `contributary` this way?
      530 | from me. I waited, and sure enough, in a moment she looked at me with an
 Suggest:
-  - Replace with: “contributory”
   - Replace with: “contributor”
+  - Replace with: “contributory”
   - Replace with: “contributors”
 
 
@@ -623,8 +623,8 @@ Message: |
      552 | Westchester.”
          | ^~~~~~~~~~~ Did you mean to spell `Westchester` this way?
 Suggest:
-  - Replace with: “Westminster”
   - Replace with: “Winchester”
+  - Replace with: “Westminster”
 
 
 
@@ -759,9 +759,9 @@ Message: |
      664 | it, you perceive, after a moment, the eyes of Doctor T. J. Eckleburg. The eyes
          |                                                      ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Ti”
   - Replace with: “To”
-  - Replace with: “Th”
+  - Replace with: “AZ”
+  - Replace with: “TV”
 
 
 
@@ -770,9 +770,9 @@ Message: |
      664 | it, you perceive, after a moment, the eyes of Doctor T. J. Eckleburg. The eyes
          |                                                         ^~ Did you mean to spell `J.` this way?
 Suggest:
+  - Replace with: “JP”
+  - Replace with: “JS”
   - Replace with: “Jo”
-  - Replace with: “Jg”
-  - Replace with: “Jr”
 
 
 
@@ -781,9 +781,9 @@ Message: |
      664 | it, you perceive, after a moment, the eyes of Doctor T. J. Eckleburg. The eyes
          |                                                            ^~~~~~~~~ Did you mean to spell `Eckleburg` this way?
 Suggest:
+  - Replace with: “Iceberg”
   - Replace with: “Excalibur”
   - Replace with: “Vicksburg”
-  - Replace with: “Heckler”
 
 
 
@@ -793,9 +793,9 @@ Message: |
      665 | of Doctor T. J. Eckleburg are blue and gigantic—their retinas are one yard high.
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Ti”
   - Replace with: “To”
-  - Replace with: “Th”
+  - Replace with: “AZ”
+  - Replace with: “TV”
 
 
 
@@ -804,9 +804,9 @@ Message: |
      665 | of Doctor T. J. Eckleburg are blue and gigantic—their retinas are one yard high.
          |              ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jo”
-  - Replace with: “Jg”
-  - Replace with: “Jr”
+  - Replace with: “JP”
+  - Replace with: “JS”
+  - Replace with: “AZ”
 
 
 
@@ -815,9 +815,9 @@ Message: |
      665 | of Doctor T. J. Eckleburg are blue and gigantic—their retinas are one yard high.
          |                 ^~~~~~~~~ Did you mean to spell `Eckleburg` this way?
 Suggest:
+  - Replace with: “Iceberg”
   - Replace with: “Excalibur”
   - Replace with: “Vicksburg”
-  - Replace with: “Heckler”
 
 
 
@@ -838,9 +838,9 @@ Message: |
      684 | ashheaps he jumped to his feet and, taking hold of my elbow, literally forced me
          | ^~~~~~~~ Did you mean to spell `ashheaps` this way?
 Suggest:
-  - Replace with: “asthma's”
-  - Replace with: “airheads”
-  - Replace with: “ashcans”
+  - Replace with: “ashes”
+  - Replace with: “shears”
+  - Replace with: “heaps”
 
 
 
@@ -881,7 +881,7 @@ Message: |
          |                        ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Be”
-  - Replace with: “Bi”
+  - Replace with: “BO”
   - Replace with: “BA”
 
 
@@ -922,9 +922,9 @@ Message: |
      731 | nerves of her body were continually smouldering. She smiled slowly and, walking
          |                                     ^~~~~~~~~~~ Did you mean to spell `smouldering` this way?
 Suggest:
+  - Replace with: “soldering”
   - Replace with: “smoldering”
   - Replace with: “shouldering”
-  - Replace with: “soldering”
 
 
 
@@ -933,9 +933,9 @@ Message: |
      756 | “Terrible place, isn’t it,” said Tom, exchanging a frown with Doctor Eckleburg.
          |                                                                      ^~~~~~~~~ Did you mean to spell `Eckleburg` this way?
 Suggest:
+  - Replace with: “Iceberg”
   - Replace with: “Excalibur”
   - Replace with: “Vicksburg”
-  - Replace with: “Heckler”
 
 
 
@@ -945,9 +945,9 @@ Message: |
      769 | to the sensibilities of those East Eggers who might be on the train.
          |                                    ^~~~~~ Did you mean to spell `Eggers` this way?
 Suggest:
-  - Replace with: “Edgers”
-  - Replace with: “Eggo's”
-  - Replace with: “Edge's”
+  - Replace with: “Elders”
+  - Replace with: “Enters”
+  - Replace with: “Edges”
 
 
 
@@ -965,9 +965,9 @@ Message: |
      784 | We backed up to a gray old man who bore an absurd resemblance to John D.
          |                                                                       ^~ Did you mean to spell `D.` this way?
 Suggest:
-  - Replace with: “Do”
-  - Replace with: “DA”
-  - Replace with: “DE”
+  - Replace with: “Dr”
+  - Replace with: “DJ”
+  - Replace with: “DM”
 
 
 
@@ -995,9 +995,9 @@ Message: |
      838 | “I’m going to have the McKees come up,” she announced as we rose in the
          |                        ^~~~~~ Did you mean to spell `McKees` this way?
 Suggest:
-  - Replace with: “McKee's”
+  - Replace with: “McGee”
   - Replace with: “McKee”
-  - Replace with: “McGee's”
+  - Replace with: “Makes”
 
 
 
@@ -1095,9 +1095,9 @@ Message: |
      931 | “You McKees have something to drink,” he said. “Get some more ice and mineral
          |      ^~~~~~ Did you mean to spell `McKees` this way?
 Suggest:
-  - Replace with: “McKee's”
+  - Replace with: “McGee”
+  - Replace with: “Makes”
   - Replace with: “McKee”
-  - Replace with: “McGee's”
 
 
 
@@ -1107,9 +1107,9 @@ Message: |
          |                                   ^~~~~~~ Did you mean to spell `Montauk` this way?
      951 | ‘Montauk Point—The Sea.’”
 Suggest:
+  - Replace with: “Montana”
   - Replace with: “Montage”
   - Replace with: “Montague”
-  - Replace with: “Montana”
 
 
 
@@ -1119,9 +1119,9 @@ Message: |
      951 | ‘Montauk Point—The Sea.’”
          |  ^~~~~~~ Did you mean to spell `Montauk` this way?
 Suggest:
+  - Replace with: “Montana”
   - Replace with: “Montage”
   - Replace with: “Montague”
-  - Replace with: “Montana”
 
 
 
@@ -1132,8 +1132,8 @@ Message: |
          | ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Be”
-  - Replace with: “Bi”
-  - Replace with: “BA”
+  - Replace with: “BO”
+  - Replace with: “BIA”
 
 
 
@@ -1143,9 +1143,9 @@ Message: |
          |                                                         ^~~~~ Did you mean to spell `gyped` this way?
     1030 | two days in the private rooms. We had an awful time getting back, I can tell
 Suggest:
-  - Replace with: “gaped”
-  - Replace with: “gypped”
-  - Replace with: “gyved”
+  - Replace with: “typed”
+  - Replace with: “hyped”
+  - Replace with: “wiped”
 
 
 
@@ -1155,9 +1155,9 @@ Message: |
     1038 | little kyke who’d been after me for years. I knew he was below me. Everybody
          |        ^~~~ Did you mean to spell `kyke` this way?
 Suggest:
-  - Replace with: “kike”
-  - Replace with: “dyke”
-  - Replace with: “tyke”
+  - Replace with: “like”
+  - Replace with: “Kyle”
+  - Replace with: “knee”
 
 
 
@@ -1251,9 +1251,9 @@ Message: |
          |                                                                      ^~~~~~~ Did you mean to spell `Brook’n` this way?
     1153 | Bridge . . .” Then I was lying half asleep in the cold lower level of the
 Suggest:
-  - Replace with: “Brook's”
-  - Replace with: “Brock's”
-  - Replace with: “Brooke's”
+  - Replace with: “Broken”
+  - Replace with: “Brooklyn”
+  - Replace with: “Brook”
 
 
 
@@ -1297,9 +1297,9 @@ Message: |
     1173 | of pulpless halves. There was a machine in the kitchen which could extract the
          |    ^~~~~~~~ Did you mean to spell `pulpless` this way?
 Suggest:
+  - Replace with: “helpless”
+  - Replace with: “purples”
   - Replace with: “purple's”
-  - Replace with: “pullers”
-  - Replace with: “pullets”
 
 
 
@@ -1320,8 +1320,8 @@ Message: |
     1180 | spiced baked hams crowded against salads of harlequin designs and pastry pigs
 Suggest:
   - Replace with: “hours”
-  - Replace with: “ho's”
-  - Replace with: “hers”
+  - Replace with: “horse”
+  - Replace with: “horns”
 
 
 
@@ -1343,8 +1343,8 @@ Message: |
          |       ^~~~~~ Did you mean to spell `pitful` this way?
 Suggest:
   - Replace with: “pitiful”
-  - Replace with: “potful”
   - Replace with: “painful”
+  - Replace with: “sinful”
 
 
 
@@ -1380,8 +1380,8 @@ Message: |
          | ^~~~~~~ Did you mean to spell `Castile` this way?
 Suggest:
   - Replace with: “Castle”
-  - Replace with: “Captive”
-  - Replace with: “Caste”
+  - Replace with: “Cattle”
+  - Replace with: “Casting”
 
 
 
@@ -1433,8 +1433,8 @@ Message: |
     1204 | triumph, glide on through the sea-change of faces and voices and color under the
 Suggest:
   - Replace with: “center”
-  - Replace with: “cent's”
-  - Replace with: “censure”
+  - Replace with: “central”
+  - Replace with: “century”
 
 
 
@@ -1536,8 +1536,8 @@ Message: |
          |                                                            ^~~~~~ Did you mean to spell `gayety` this way?
 Suggest:
   - Replace with: “gaiety”
-  - Replace with: “gamely”
   - Replace with: “gamete”
+  - Replace with: “safety”
 
 
 
@@ -1570,8 +1570,8 @@ Message: |
          |                    ^~~~~~~~ Did you mean to spell `Stoddard` this way?
 Suggest:
   - Replace with: “Standard”
-  - Replace with: “Stoppard”
   - Replace with: “Goddard”
+  - Replace with: “Stoppard”
 
 
 
@@ -1580,9 +1580,9 @@ Message: |
     1376 | “See!” he cried triumphantly. “It’s a bona-fide piece of printed matter. It
          |                                       ^~~~ Did you mean to spell `bona` this way?
 Suggest:
-  - Replace with: “boa”
-  - Replace with: “bond”
   - Replace with: “bone”
+  - Replace with: “bond”
+  - Replace with: “book”
 
 
 
@@ -1591,8 +1591,8 @@ Message: |
     1376 | “See!” he cried triumphantly. “It’s a bona-fide piece of printed matter. It
          |                                            ^~~~ Did you mean to spell `fide` this way?
 Suggest:
-  - Replace with: “fade”
-  - Replace with: “fife”
+  - Replace with: “five”
+  - Replace with: “fine”
   - Replace with: “file”
 
 
@@ -1603,8 +1603,8 @@ Message: |
          |                 ^~~~~~~ Did you mean to spell `fella’s` this way?
 Suggest:
   - Replace with: “fellas”
-  - Replace with: “fell's”
-  - Replace with: “Bella's”
+  - Replace with: “Tesla's”
+  - Replace with: “fellows”
 
 
 
@@ -1613,9 +1613,9 @@ Message: |
     1377 | fooled me. This fella’s a regular Belasco. It’s a triumph. What thoroughness!
          |                                   ^~~~~~~ Did you mean to spell `Belasco` this way?
 Suggest:
-  - Replace with: “Bela's”
-  - Replace with: “Belau's”
+  - Replace with: “Black”
   - Replace with: “Balance”
+  - Replace with: “Blast”
 
 
 
@@ -1624,9 +1624,9 @@ Message: |
     1389 | “I was brought by a woman named Roosevelt,” he continued. “Mrs. Claud Roosevelt.
          |                                                                 ^~~~~ Did you mean to spell `Claud` this way?
 Suggest:
-  - Replace with: “Clad”
-  - Replace with: “Cloud”
   - Replace with: “Claude”
+  - Replace with: “Cloud”
+  - Replace with: “Clad”
 
 
 
@@ -1658,9 +1658,9 @@ Message: |
     1413 | trembling a little to the stiff, tinny drip of the banjoes on the lawn.
          |                                                    ^~~~~~~ Did you mean to spell `banjoes` this way?
 Suggest:
+  - Replace with: “bangles”
   - Replace with: “banjo's”
-  - Replace with: “banjos”
-  - Replace with: “bandies”
+  - Replace with: “mangoes”
 
 
 
@@ -1832,9 +1832,9 @@ Message: |
     1615 | Sigourney Howard. . . . My aunt. . . .” She was hurrying off as she talked—her
          | ^~~~~~~~~ Did you mean to spell `Sigourney` this way?
 Suggest:
-  - Replace with: “Sojourned”
   - Replace with: “Sojourner”
-  - Replace with: “Gurney”
+  - Replace with: “Journey”
+  - Replace with: “Sojourned”
 
 
 
@@ -1844,9 +1844,9 @@ Message: |
          |                                                                   ^~~~~ Did you mean to spell `shorn` this way?
     1643 | wheel, rested a new coupé which had left Gatsby’s drive not two minutes before.
 Suggest:
-  - Replace with: “shore”
-  - Replace with: “short”
-  - Replace with: “shown”
+  - Replace with: “sword”
+  - Replace with: “sworn”
+  - Replace with: “storm”
 
 
 
@@ -1857,8 +1857,8 @@ Message: |
          |                     ^~~~~ Did you mean to spell `coupé` this way?
 Suggest:
   - Replace with: “coup”
-  - Replace with: “coupe”
-  - Replace with: “coups”
+  - Replace with: “couple”
+  - Replace with: “could”
 
 
 
@@ -1869,8 +1869,8 @@ Message: |
          |                 ^~~~~ Did you mean to spell `coupé` this way?
 Suggest:
   - Replace with: “coup”
-  - Replace with: “coupe”
-  - Replace with: “coups”
+  - Replace with: “couch”
+  - Replace with: “court”
 
 
 
@@ -1879,9 +1879,9 @@ Message: |
     1693 | “Wha’s matter?” he inquired calmly. “Did we run outa gas?”
          |  ^~~~~ Did you mean to spell `Wha’s` this way?
 Suggest:
-  - Replace with: “Wham's”
   - Replace with: “What's”
   - Replace with: “Who's”
+  - Replace with: “Was”
 
 
 
@@ -1891,8 +1891,8 @@ Message: |
          |                                                 ^~~~ Did you mean to spell `outa` this way?
 Suggest:
   - Replace with: “out”
-  - Replace with: “outta”
   - Replace with: “outs”
+  - Replace with: “our”
 
 
 
@@ -1979,8 +1979,8 @@ Message: |
     1766 | heart. Forms leaned together in the taxis as they waited, and voices sang, and
 Suggest:
   - Replace with: “theater”
-  - Replace with: “they're”
   - Replace with: “there”
+  - Replace with: “they're”
 
 
 
@@ -1991,7 +1991,7 @@ Message: |
     1769 | and sharing their intimate excitement, I wished them well.
 Suggest:
   - Replace with: “gaiety”
-  - Replace with: “gamely”
+  - Replace with: “safety”
   - Replace with: “gamete”
 
 
@@ -2068,7 +2068,7 @@ Message: |
          |               ^~~ Did you mean to spell `Von` this way?
 Suggest:
   - Replace with: “Van”
-  - Replace with: “Vol”
+  - Replace with: “VW”
   - Replace with: “Vow”
 
 
@@ -2088,9 +2088,9 @@ Message: |
          |                                       ^~~~~~~ Did you mean to spell `Beckers` this way?
     1849 | Bunsen, whom I knew at Yale, and Doctor Webster Civet, who was drowned last
 Suggest:
-  - Replace with: “Becker's”
   - Replace with: “Backers”
-  - Replace with: “Beakers”
+  - Replace with: “Breakers”
+  - Replace with: “Becker”
 
 
 
@@ -2110,9 +2110,9 @@ Message: |
          |                                                      ^~~~~~~~~ Did you mean to spell `Voltaires` this way?
     1851 | named Blackbuck, who always gathered in a corner and flipped up their noses like
 Suggest:
-  - Replace with: “Voltaire's”
   - Replace with: “Voltaire”
   - Replace with: “Voltages”
+  - Replace with: “Voltaire's”
 
 
 
@@ -2122,8 +2122,8 @@ Message: |
     1851 | named Blackbuck, who always gathered in a corner and flipped up their noses like
          |       ^~~~~~~~~ Did you mean to spell `Blackbuck` this way?
 Suggest:
-  - Replace with: “Blackjack”
   - Replace with: “Blackburn”
+  - Replace with: “Blackjack”
 
 
 
@@ -2133,9 +2133,9 @@ Message: |
          |                                       ^~~~~~ Did you mean to spell `Ismays` this way?
     1853 | Auerbach and Mr. Chrystie’s wife), and Edgar Beaver, whose hair, they say,
 Suggest:
-  - Replace with: “Irma's”
-  - Replace with: “Ism's”
-  - Replace with: “Dismays”
+  - Replace with: “Imams”
+  - Replace with: “Ismail”
+  - Replace with: “Says”
 
 
 
@@ -2145,9 +2145,9 @@ Message: |
          |                                                      ^~~~~~~~~ Did you mean to spell `Chrysties` this way?
     1853 | Auerbach and Mr. Chrystie’s wife), and Edgar Beaver, whose hair, they say,
 Suggest:
+  - Replace with: “Christie”
   - Replace with: “Christi's”
   - Replace with: “Christie's”
-  - Replace with: “Christie”
 
 
 
@@ -2158,8 +2158,8 @@ Message: |
          | ^~~~~~~~ Did you mean to spell `Auerbach` this way?
 Suggest:
   - Replace with: “Approach”
+  - Replace with: “Outreach”
   - Replace with: “Acerbate”
-  - Replace with: “Acerbic”
 
 
 
@@ -2179,9 +2179,9 @@ Message: |
     1857 | knickerbockers, and had a fight with a bum named Etty in the garden. From
          |                                                  ^~~~ Did you mean to spell `Etty` this way?
 Suggest:
-  - Replace with: “Etta”
-  - Replace with: “Ethyl”
-  - Replace with: “Jetty”
+  - Replace with: “Entity”
+  - Replace with: “Empty”
+  - Replace with: “Entry”
 
 
 
@@ -2192,8 +2192,8 @@ Message: |
          |                                    ^~~~~~~~ Did you mean to spell `Cheadles` this way?
 Suggest:
   - Replace with: “Charles”
-  - Replace with: “Cradles”
   - Replace with: “Headless”
+  - Replace with: “Cradles”
 
 
 
@@ -2202,9 +2202,9 @@ Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                     ^~ Did you mean to spell `O.` this way?
 Suggest:
-  - Replace with: “Of”
-  - Replace with: “Oh”
-  - Replace with: “Oi”
+  - Replace with: “OK”
+  - Replace with: “O”
+  - Replace with: “OT”
 
 
 
@@ -2213,9 +2213,9 @@ Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                        ^~ Did you mean to spell `R.` this way?
 Suggest:
+  - Replace with: “RP”
+  - Replace with: “R”
   - Replace with: “RI”
-  - Replace with: “Ra”
-  - Replace with: “Re”
 
 
 
@@ -2224,9 +2224,9 @@ Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                           ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pa”
-  - Replace with: “Pi”
   - Replace with: “PE”
+  - Replace with: “PS”
+  - Replace with: “PR”
 
 
 
@@ -2236,8 +2236,8 @@ Message: |
          |                                                              ^~~~~~~~~~ Did you mean to spell `Schraeders` this way?
     1859 | Stonewall Jackson Abrams of Georgia, and the Fishguards and the Ripley Snells.
 Suggest:
-  - Replace with: “Schroeder's”
   - Replace with: “Schroeder”
+  - Replace with: “Schroeder's”
 
 
 
@@ -2255,9 +2255,9 @@ Message: |
     1859 | Stonewall Jackson Abrams of Georgia, and the Fishguards and the Ripley Snells.
          |                                                                        ^~~~~~ Did you mean to spell `Snells` this way?
 Suggest:
-  - Replace with: “Snell's”
+  - Replace with: “Smells”
   - Replace with: “Sells”
-  - Replace with: “Shells”
+  - Replace with: “Spells”
 
 
 
@@ -2266,9 +2266,9 @@ Message: |
     1861 | the gravel drive that Mrs. Ulysses Swett’s automobile ran over his right hand.
          |                                    ^~~~~~~ Did you mean to spell `Swett’s` this way?
 Suggest:
-  - Replace with: “Sweet's”
-  - Replace with: “Sweat's”
-  - Replace with: “Seth's”
+  - Replace with: “Scott's”
+  - Replace with: “Sweets”
+  - Replace with: “West's”
 
 
 
@@ -2278,8 +2278,8 @@ Message: |
          |     ^~~~~~~ Did you mean to spell `Dancies` this way?
 Suggest:
   - Replace with: “Dances”
-  - Replace with: “Dandies”
-  - Replace with: “Dannie's”
+  - Replace with: “Daniels”
+  - Replace with: “Dancers”
 
 
 
@@ -2299,9 +2299,9 @@ Message: |
     1862 | The Dancies came, too, and S. B. Whitebait, who was well over sixty, and Maurice
          |                               ^~ Did you mean to spell `B.` this way?
 Suggest:
+  - Replace with: “BB”
+  - Replace with: “BR”
   - Replace with: “Be”
-  - Replace with: “Bi”
-  - Replace with: “BA”
 
 
 
@@ -2311,9 +2311,9 @@ Message: |
     1863 | A. Flink, and the Hammerheads, and Beluga the tobacco importer, and Beluga’s
          | ^~ Did you mean to spell `A.` this way?
 Suggest:
-  - Replace with: “A”
-  - Replace with: “Ab”
-  - Replace with: “Ac”
+  - Replace with: “AZ”
+  - Replace with: “AK”
+  - Replace with: “ABC”
 
 
 
@@ -2322,9 +2322,9 @@ Message: |
     1863 | A. Flink, and the Hammerheads, and Beluga the tobacco importer, and Beluga’s
          |    ^~~~~ Did you mean to spell `Flink` this way?
 Suggest:
-  - Replace with: “Fink”
+  - Replace with: “Finn”
   - Replace with: “Flank”
-  - Replace with: “Flick”
+  - Replace with: “Flying”
 
 
 
@@ -2347,8 +2347,8 @@ Message: |
          |                                      ^~~~~~~~~ Did you mean to spell `Mulreadys` this way?
     1867 | Schoen and Gulick the State senator and Newton Orchid, who controlled Films Par
 Suggest:
-  - Replace with: “Misreads”
   - Replace with: “Already”
+  - Replace with: “Misreads”
   - Replace with: “Unready”
 
 
@@ -2360,8 +2360,8 @@ Message: |
          | ^~~~~~ Did you mean to spell `Schoen` this way?
 Suggest:
   - Replace with: “School”
-  - Replace with: “Scion”
-  - Replace with: “Scone”
+  - Replace with: “Screen”
+  - Replace with: “Shone”
 
 
 
@@ -2371,7 +2371,7 @@ Message: |
     1867 | Schoen and Gulick the State senator and Newton Orchid, who controlled Films Par
          |            ^~~~~~ Did you mean to spell `Gulick` this way?
 Suggest:
-  - Replace with: “Gulch”
+  - Replace with: “Quick”
   - Replace with: “Click”
   - Replace with: “Flick”
 
@@ -2415,9 +2415,9 @@ Message: |
     1870 | Catlips and the Bembergs and G. Earl Muldoon, brother to that Muldoon who
          | ^~~~~~~ Did you mean to spell `Catlips` this way?
 Suggest:
+  - Replace with: “Caliph”
+  - Replace with: “Clips”
   - Replace with: “Cali's”
-  - Replace with: “Catnip's”
-  - Replace with: “Caliphs”
 
 
 
@@ -2427,9 +2427,9 @@ Message: |
     1870 | Catlips and the Bembergs and G. Earl Muldoon, brother to that Muldoon who
          |                 ^~~~~~~~ Did you mean to spell `Bembergs` this way?
 Suggest:
-  - Replace with: “Berber's”
-  - Replace with: “Bomber's”
-  - Replace with: “Berbers”
+  - Replace with: “Bombers”
+  - Replace with: “Members”
+  - Replace with: “Member's”
 
 
 
@@ -2440,8 +2440,8 @@ Message: |
          |                              ^~ Did you mean to spell `G.` this way?
 Suggest:
   - Replace with: “Go”
-  - Replace with: “GA”
-  - Replace with: “GE”
+  - Replace with: “GI”
+  - Replace with: “GU”
 
 
 
@@ -2479,9 +2479,9 @@ Message: |
     1871 | afterward strangled his wife. Da Fontano the promoter came there, and Ed Legros
          |                               ^~ Did you mean to spell `Da` this way?
 Suggest:
-  - Replace with: “Dab”
-  - Replace with: “Dad”
-  - Replace with: “Dag”
+  - Replace with: “Dr”
+  - Replace with: “Dan”
+  - Replace with: “DM”
   - Replace with: “DA”
 
 
@@ -2504,9 +2504,9 @@ Message: |
     1871 | afterward strangled his wife. Da Fontano the promoter came there, and Ed Legros
          |                                  ^~~~~~~ Did you mean to spell `Fontano` this way?
 Suggest:
+  - Replace with: “Montana”
   - Replace with: “Fondant”
   - Replace with: “Fontanel”
-  - Replace with: “Montana”
 
 
 
@@ -2516,9 +2516,9 @@ Message: |
          |                                                                          ^~~~~~ Did you mean to spell `Legros` this way?
     1872 | and James B. (“Rot-Gut”) Ferret and the De Jongs and Ernest Lilly—they came to
 Suggest:
-  - Replace with: “Lear's”
-  - Replace with: “Leger's”
-  - Replace with: “Lego's”
+  - Replace with: “Logos”
+  - Replace with: “Learns”
+  - Replace with: “Lagos”
 
 
 
@@ -2529,8 +2529,8 @@ Message: |
          |           ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Be”
-  - Replace with: “Bi”
-  - Replace with: “BA”
+  - Replace with: “BO”
+  - Replace with: “BB”
 
 
 
@@ -2540,9 +2540,9 @@ Message: |
          |                                            ^~~~~ Did you mean to spell `Jongs` this way?
     1873 | gamble, and when Ferret wandered into the garden it meant he was cleaned out and
 Suggest:
-  - Replace with: “Jon's”
   - Replace with: “Jonas”
   - Replace with: “Jones”
+  - Replace with: “John's”
 
 
 
@@ -2572,9 +2572,9 @@ Message: |
     1878 | Gus Waize and Horace O’Donavan and Lester Myer and George Duckweed and Francis
          |     ^~~~~ Did you mean to spell `Waize` this way?
 Suggest:
-  - Replace with: “Waive”
+  - Replace with: “While”
+  - Replace with: “White”
   - Replace with: “Waite”
-  - Replace with: “Maize”
 
 
 
@@ -2596,7 +2596,7 @@ Message: |
 Suggest:
   - Replace with: “Mayer”
   - Replace with: “Meyer”
-  - Replace with: “Myers”
+  - Replace with: “Mr”
 
 
 
@@ -2655,9 +2655,9 @@ Message: |
          |                                            ^~~~~~~~~ Did you mean to spell `Kellehers` this way?
     1881 | Scullys and S. W. Belcher and the Smirkes and the young Quinns, divorced now,
 Suggest:
-  - Replace with: “Keller's”
-  - Replace with: “Kelley's”
-  - Replace with: “Kellie's”
+  - Replace with: “Killers”
+  - Replace with: “Keepers”
+  - Replace with: “Keller”
 
 
 
@@ -2667,9 +2667,9 @@ Message: |
          |                                                              ^~~~~~ Did you mean to spell `Dewars` this way?
     1881 | Scullys and S. W. Belcher and the Smirkes and the young Quinns, divorced now,
 Suggest:
-  - Replace with: “Dewar's”
-  - Replace with: “Dears”
-  - Replace with: “Debars”
+  - Replace with: “Delays”
+  - Replace with: “Departs”
+  - Replace with: “Dwarf”
 
 
 
@@ -2679,9 +2679,9 @@ Message: |
     1881 | Scullys and S. W. Belcher and the Smirkes and the young Quinns, divorced now,
          | ^~~~~~~ Did you mean to spell `Scullys` this way?
 Suggest:
+  - Replace with: “Skulls”
   - Replace with: “Scull's”
   - Replace with: “Sculls”
-  - Replace with: “Sculley's”
 
 
 
@@ -2693,7 +2693,7 @@ Message: |
 Suggest:
   - Replace with: “So”
   - Replace with: “SA”
-  - Replace with: “SE”
+  - Replace with: “SK”
 
 
 
@@ -2702,9 +2702,9 @@ Message: |
     1881 | Scullys and S. W. Belcher and the Smirkes and the young Quinns, divorced now,
          |                ^~ Did you mean to spell `W.` this way?
 Suggest:
-  - Replace with: “We”
-  - Replace with: “WA”
   - Replace with: “WI”
+  - Replace with: “We”
+  - Replace with: “WC”
 
 
 
@@ -2713,9 +2713,9 @@ Message: |
     1881 | Scullys and S. W. Belcher and the Smirkes and the young Quinns, divorced now,
          |                   ^~~~~~~ Did you mean to spell `Belcher` this way?
 Suggest:
-  - Replace with: “Beecher”
-  - Replace with: “Belched”
-  - Replace with: “Belches”
+  - Replace with: “Becker”
+  - Replace with: “Butcher”
+  - Replace with: “Benches”
 
 
 
@@ -2725,9 +2725,9 @@ Message: |
          |                                   ^~~~~~~ Did you mean to spell `Smirkes` this way?
     1882 | and Henry L. Palmetto, who killed himself by jumping in front of a subway train
 Suggest:
-  - Replace with: “Smirk's”
-  - Replace with: “Smirks”
-  - Replace with: “Smirked”
+  - Replace with: “Smiles”
+  - Replace with: “Strikes”
+  - Replace with: “Spikes”
 
 
 
@@ -2737,9 +2737,9 @@ Message: |
          |                                                         ^~~~~~ Did you mean to spell `Quinns` this way?
     1882 | and Henry L. Palmetto, who killed himself by jumping in front of a subway train
 Suggest:
-  - Replace with: “Quinn's”
-  - Replace with: “Quines”
-  - Replace with: “Quins”
+  - Replace with: “Quinn”
+  - Replace with: “Queens”
+  - Replace with: “Quincy”
 
 
 
@@ -2749,9 +2749,9 @@ Message: |
     1882 | and Henry L. Palmetto, who killed himself by jumping in front of a subway train
          |           ^~ Did you mean to spell `L.` this way?
 Suggest:
-  - Replace with: “LA”
-  - Replace with: “Le”
-  - Replace with: “Li”
+  - Replace with: “Lt”
+  - Replace with: “LAN”
+  - Replace with: “LP”
 
 
 
@@ -2797,9 +2797,9 @@ Message: |
          |                                   ^~~~~~~~ Did you mean to spell `Consuela` this way?
     1889 | last names were either the melodious names of flowers and months or the sterner
 Suggest:
-  - Replace with: “Consuelo”
-  - Replace with: “Consul”
+  - Replace with: “Consult”
   - Replace with: “Consular”
+  - Replace with: “Consul”
 
 
 
@@ -2809,9 +2809,9 @@ Message: |
          |                                              ^~~~~~~~ Did you mean to spell `Faustina` this way?
     1894 | least once and the Baedeker girls and young Brewer, who had his nose shot off in
 Suggest:
-  - Replace with: “Faustian”
-  - Replace with: “Faustino”
   - Replace with: “Fasting”
+  - Replace with: “Faulting”
+  - Replace with: “Faustian”
 
 
 
@@ -2829,8 +2829,8 @@ Message: |
     1896 | Fitz-Peters and Mr. P. Jewett, once head of the American Legion, and Miss
 Suggest:
   - Replace with: “Hang”
-  - Replace with: “Haas”
-  - Replace with: “Hag”
+  - Replace with: “Head”
+  - Replace with: “Hand”
 
 
 
@@ -2841,8 +2841,8 @@ Message: |
     1896 | Fitz-Peters and Mr. P. Jewett, once head of the American Legion, and Miss
 Suggest:
   - Replace with: “fiance”
-  - Replace with: “fiancee”
   - Replace with: “finance”
+  - Replace with: “fiancee”
 
 
 
@@ -2852,9 +2852,9 @@ Message: |
          |                                                                 ^~~~~~ Did you mean to spell `Ardita` this way?
     1896 | Fitz-Peters and Mr. P. Jewett, once head of the American Legion, and Miss
 Suggest:
-  - Replace with: “Aria”
+  - Replace with: “Anita”
   - Replace with: “Audit”
-  - Replace with: “Akita”
+  - Replace with: “Audits”
 
 
 
@@ -2864,9 +2864,9 @@ Message: |
     1896 | Fitz-Peters and Mr. P. Jewett, once head of the American Legion, and Miss
          | ^~~~ Did you mean to spell `Fitz` this way?
 Suggest:
-  - Replace with: “Fits”
-  - Replace with: “Fit”
   - Replace with: “Fritz”
+  - Replace with: “Fits”
+  - Replace with: “Faith”
 
 
 
@@ -2875,9 +2875,9 @@ Message: |
     1896 | Fitz-Peters and Mr. P. Jewett, once head of the American Legion, and Miss
          |                     ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pa”
-  - Replace with: “Pi”
   - Replace with: “PE”
+  - Replace with: “PO”
+  - Replace with: “Pi”
 
 
 
@@ -2887,8 +2887,8 @@ Message: |
          |                        ^~~~~~ Did you mean to spell `Jewett` this way?
 Suggest:
   - Replace with: “Jewel”
-  - Replace with: “Jewell”
-  - Replace with: “Jewess”
+  - Replace with: “Jewels”
+  - Replace with: “Newest”
 
 
 
@@ -2925,7 +2925,7 @@ Message: |
     1982 | de Boulogne.
 Suggest:
   - Replace with: “Boss”
-  - Replace with: “Boas”
+  - Replace with: “Boys”
   - Replace with: “Boris”
 
 
@@ -2959,7 +2959,7 @@ Message: |
 Suggest:
   - Replace with: “Order”
   - Replace with: “Orders”
-  - Replace with: “Order's”
+  - Replace with: “Ordered”
 
 
 
@@ -2969,9 +2969,9 @@ Message: |
          |                                                              ^~ Did you mean to spell `di` this way?
     2007 | circular legend, “Montenegro, Nicolas Rex.”
 Suggest:
-  - Replace with: “db”
-  - Replace with: “dc”
-  - Replace with: “dd”
+  - Replace with: “did”
+  - Replace with: “die”
+  - Replace with: “din”
 
 
 
@@ -2981,9 +2981,9 @@ Message: |
          |                                                                 ^~~~~~ Did you mean to spell `Danilo` this way?
     2007 | circular legend, “Montenegro, Nicolas Rex.”
 Suggest:
-  - Replace with: “Daily”
   - Replace with: “Danish”
-  - Replace with: “Danial”
+  - Replace with: “Daniel”
+  - Replace with: “Daniels”
 
 
 
@@ -2993,8 +2993,8 @@ Message: |
          |                                  ^~~~~~ Did you mean to spell `Valour` this way?
 Suggest:
   - Replace with: “Valor”
-  - Replace with: “Velour”
   - Replace with: “Value”
+  - Replace with: “Balfour”
 
 
 
@@ -3014,9 +3014,9 @@ Message: |
     2022 | crimson-lighted depths, the gnawings of his broken heart.
          |                             ^~~~~~~~ Did you mean to spell `gnawings` this way?
 Suggest:
+  - Replace with: “drawings”
   - Replace with: “gnawing”
   - Replace with: “gearings”
-  - Replace with: “gratings”
 
 
 
@@ -3026,9 +3026,9 @@ Message: |
          |                                                           ^~~~~~~~~~ Did you mean to spell `undeserted` this way?
     2048 | the faded-gilt nineteen-hundreds. Then the valley of ashes opened out on both
 Suggest:
-  - Replace with: “undeserved”
-  - Replace with: “undefeated”
+  - Replace with: “undetected”
   - Replace with: “underserved”
+  - Replace with: “deserted”
 
 
 
@@ -3060,7 +3060,7 @@ Message: |
          |       ^~~~~~ Did you mean to spell `sombre` this way?
 Suggest:
   - Replace with: “somber”
-  - Replace with: “hombre”
+  - Replace with: “some”
   - Replace with: “sober”
 
 
@@ -3082,8 +3082,8 @@ Message: |
     2079 | girl. I laughed aloud as the yolks of their eyeballs rolled toward us in haughty
 Suggest:
   - Replace with: “Negroes”
-  - Replace with: “Negro's”
-  - Replace with: “Negros”
+  - Replace with: “neurons”
+  - Replace with: “nerves”
 
 
 
@@ -3093,8 +3093,8 @@ Message: |
          |      ^~~~~~~~ Did you mean to spell `Carraway` this way?
 Suggest:
   - Replace with: “Caraway”
+  - Replace with: “Faraway”
   - Replace with: “Caraways”
-  - Replace with: “Castaway”
 
 
 
@@ -3140,9 +3140,9 @@ Message: |
     2105 | “I handed the money to Katspaugh and I sid: ‘All right, Katspaugh, don’t pay him
          |                                        ^~~ Did you mean to spell `sid` this way?
 Suggest:
-  - Replace with: “sad”
   - Replace with: “said”
-  - Replace with: “sic”
+  - Replace with: “six”
+  - Replace with: “sit”
 
 
 
@@ -3424,9 +3424,9 @@ Message: |
     2269 | “Where’ve you been?” he demanded eagerly. “Daisy’s furious because you haven’t
          |  ^~~~~~~~ Did you mean to spell `Where’ve` this way?
 Suggest:
-  - Replace with: “Where'd”
-  - Replace with: “Where's”
   - Replace with: “Wherever”
+  - Replace with: “Where's”
+  - Replace with: “Where'd”
 
 
 
@@ -3435,9 +3435,9 @@ Message: |
     2277 | “How’ve you been, anyhow?” demanded Tom of me. “How’d you happen to come up this
          |  ^~~~~~ Did you mean to spell `How’ve` this way?
 Suggest:
-  - Replace with: “How're”
-  - Replace with: “How'd”
+  - Replace with: “However”
   - Replace with: “How's”
+  - Replace with: “How'd”
 
 
 
@@ -3460,9 +3460,9 @@ Message: |
          |                                                           ^~~~~ Did you mean to spell `beaux` this way?
     2320 | began to play in tournaments, so I didn’t see Daisy very often. She went with a
 Suggest:
-  - Replace with: “beau”
-  - Replace with: “beaus”
-  - Replace with: “beaut”
+  - Replace with: “beat”
+  - Replace with: “beauty”
+  - Replace with: “beach”
 
 
 
@@ -3473,8 +3473,8 @@ Message: |
     2330 | armistice, and in February she was presumably engaged to a man from New Orleans.
 Suggest:
   - Replace with: “debut”
-  - Replace with: “debt”
   - Replace with: “doubt”
+  - Replace with: “donut”
 
 
 
@@ -3498,8 +3498,8 @@ Message: |
     2334 | the wedding he gave her a string of pearls valued at three hundred and fifty
 Suggest:
   - Replace with: “Mulch”
+  - Replace with: “Pullback”
   - Replace with: “Mullah”
-  - Replace with: “Fullback”
 
 
 
@@ -3520,8 +3520,8 @@ Message: |
     2342 | “’Gratulate me,” she muttered. “Never had a drink before, but oh how I do enjoy
          |   ^~~~~~~~~ Did you mean to spell `Gratulate` this way?
 Suggest:
-  - Replace with: “Granulate”
   - Replace with: “Graduate”
+  - Replace with: “Granulate”
   - Replace with: “Granulated”
 
 
@@ -3531,9 +3531,9 @@ Message: |
     2349 | “Here, deares’.” She groped around in a wastebasket she had with her on the bed
          |        ^~~~~~ Did you mean to spell `deares` this way?
 Suggest:
-  - Replace with: “dear's”
+  - Replace with: “dearest”
   - Replace with: “dares”
-  - Replace with: “dearies”
+  - Replace with: “debris”
 
 
 
@@ -3573,7 +3573,7 @@ Message: |
 Suggest:
   - Replace with: “Venture”
   - Replace with: “Ventral”
-  - Replace with: “Ventured”
+  - Replace with: “Ventures”
 
 
 
@@ -3604,8 +3604,8 @@ Message: |
          |                               ^~~~~~~~ Did you mean to spell `victoria` this way?
 Suggest:
   - Replace with: “Victoria”
-  - Replace with: “victor's”
-  - Replace with: “victor”
+  - Replace with: “victory”
+  - Replace with: “pictorial”
 
 
 
@@ -3615,8 +3615,8 @@ Message: |
          |            ^~~~~ Did you mean to spell `Sheik` this way?
 Suggest:
   - Replace with: “Sheikh”
-  - Replace with: “She'd”
-  - Replace with: “She's”
+  - Replace with: “Shell”
+  - Replace with: “Speak”
 
 
 
@@ -3668,8 +3668,8 @@ Message: |
          |                                         ^~~~~~~~~~~ Did you mean to spell `uncertainly` this way?
 Suggest:
   - Replace with: “uncertainty”
-  - Replace with: “uncertain”
   - Replace with: “certainly”
+  - Replace with: “uncertain”
 
 
 
@@ -3736,9 +3736,9 @@ Message: |
     2608 | and peering toward the bleared windows from time to time as if a series of
          |                        ^~~~~~~ Did you mean to spell `bleared` this way?
 Suggest:
-  - Replace with: “blared”
-  - Replace with: “bleated”
-  - Replace with: “beard”
+  - Replace with: “cleared”
+  - Replace with: “beamed”
+  - Replace with: “blurred”
 
 
 
@@ -3767,9 +3767,9 @@ Message: |
     2641 | “Come back in an hour, Ferdie.” Then in a grave murmur: “His name is Ferdie.”
          |                        ^~~~~~ Did you mean to spell `Ferdie` this way?
 Suggest:
-  - Replace with: “Faerie”
-  - Replace with: “Fertile”
-  - Replace with: “Fermi”
+  - Replace with: “Ferris”
+  - Replace with: “Foodie”
+  - Replace with: “Ferries”
 
 
 
@@ -3778,9 +3778,9 @@ Message: |
     2641 | “Come back in an hour, Ferdie.” Then in a grave murmur: “His name is Ferdie.”
          |                                                                      ^~~~~~ Did you mean to spell `Ferdie` this way?
 Suggest:
-  - Replace with: “Faerie”
   - Replace with: “Fertile”
-  - Replace with: “Fermi”
+  - Replace with: “Foodie”
+  - Replace with: “Freddie”
 
 
 
@@ -3878,9 +3878,9 @@ Message: |
     2827 | entered by the big postern. With enchanting murmurs Daisy admired this aspect or
          |                    ^~~~~~~ Did you mean to spell `postern` this way?
 Suggest:
-  - Replace with: “pastern”
-  - Replace with: “poster”
   - Replace with: “posters”
+  - Replace with: “poster”
+  - Replace with: “pattern”
 
 
 
@@ -3992,9 +3992,9 @@ Message: |
          |                                 ^~~~~~~~~~ Did you mean to spell `applegreen` this way?
     2880 | monograms of Indian blue. Suddenly, with a strained sound, Daisy bent her head
 Suggest:
-  - Replace with: “Appleseed”
-  - Replace with: “allergen”
   - Replace with: “appeared”
+  - Replace with: “allergen”
+  - Replace with: “Appleseed”
 
 
 
@@ -4061,9 +4061,9 @@ Message: |
     2955 | “I don’t play well. I don’t—I hardly play at all. I’m all out of prac———”
          |                                                                  ^~~~ Did you mean to spell `prac` this way?
 Suggest:
-  - Replace with: “prat”
   - Replace with: “pray”
-  - Replace with: “pram”
+  - Replace with: “part”
+  - Replace with: “piracy”
 
 
 
@@ -4082,9 +4082,9 @@ Message: |
     2969 | prac—”
          | ^~~~ Did you mean to spell `prac` this way?
 Suggest:
-  - Replace with: “prat”
   - Replace with: “pray”
-  - Replace with: “pram”
+  - Replace with: “part”
+  - Replace with: “piracy”
 
 
 
@@ -4108,8 +4108,8 @@ Message: |
          |                                   ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
   - Replace with: “Gate”
-  - Replace with: “Garth”
-  - Replace with: “Goth”
+  - Replace with: “Got”
+  - Replace with: “Gave”
 
 
 
@@ -4119,8 +4119,8 @@ Message: |
          |       ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
   - Replace with: “Gate”
-  - Replace with: “Garth”
-  - Replace with: “Goth”
+  - Replace with: “Got”
+  - Replace with: “Gave”
 
 
 
@@ -4142,9 +4142,9 @@ Message: |
     3029 | on Lake Superior. It was James Gatz who had been loafing along the beach that
          |                                ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
+  - Replace with: “Got”
+  - Replace with: “Gave”
   - Replace with: “Gate”
-  - Replace with: “Garth”
-  - Replace with: “Goth”
 
 
 
@@ -4200,9 +4200,9 @@ Message: |
     3077 | when he turned up as James Gatz’s destiny in Little Girl Bay.
          |                            ^~~~~~ Did you mean to spell `Gatz’s` this way?
 Suggest:
-  - Replace with: “Gate's”
-  - Replace with: “Garth's”
-  - Replace with: “Goth's”
+  - Replace with: “Matt's”
+  - Replace with: “Gates”
+  - Replace with: “Gaza's”
 
 
 
@@ -4212,8 +4212,8 @@ Message: |
          |          ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
   - Replace with: “Gate”
-  - Replace with: “Garth”
-  - Replace with: “Goth”
+  - Replace with: “Gaze”
+  - Replace with: “Gaia”
 
 
 
@@ -4248,9 +4248,9 @@ Message: |
          |                                                     ^~~~~~ Did you mean to spell `jailor` this way?
     3090 | knew what lavish doings Dan Cody drunk might soon be about, and he provided for
 Suggest:
-  - Replace with: “jailer”
-  - Replace with: “jail's”
-  - Replace with: “sailor”
+  - Replace with: “jailed”
+  - Replace with: “jail”
+  - Replace with: “janitor”
 
 
 
@@ -4356,8 +4356,8 @@ Message: |
     3180 | “Be ver’ nice,” said Mr. Sloane, without gratitude. “Well—think ought to be
          |     ^~~ Did you mean to spell `ver` this way?
 Suggest:
-  - Replace with: “var”
-  - Replace with: “veer”
+  - Replace with: “very”
+  - Replace with: “over”
   - Replace with: “verb”
 
 
@@ -4441,8 +4441,8 @@ Message: |
          |                                                       ^~~~~~~ Did you mean to spell `defence` this way?
 Suggest:
   - Replace with: “defense”
-  - Replace with: “decency”
-  - Replace with: “defect”
+  - Replace with: “defunct”
+  - Replace with: “deference”
 
 
 
@@ -4559,8 +4559,8 @@ Message: |
     3508 | over.”
 Suggest:
   - Replace with: “Caraway”
+  - Replace with: “Faraway”
   - Replace with: “Caraways”
-  - Replace with: “Castaway”
 
 
 
@@ -4658,8 +4658,8 @@ Message: |
     3572 | . . . Through the hall of the Buchanans’ house blew a faint wind, carrying the
          |                               ^~~~~~~~~ Did you mean to spell `Buchanans` this way?
 Suggest:
-  - Replace with: “Buchanan's”
   - Replace with: “Buchanan”
+  - Replace with: “Buchanan's”
 
 
 
@@ -4687,8 +4687,8 @@ Message: |
          |                     ^~~~~~ Did you mean to spell `centre` this way?
 Suggest:
   - Replace with: “center”
-  - Replace with: “cent's”
-  - Replace with: “censure”
+  - Replace with: “central”
+  - Replace with: “century”
 
 
 
@@ -4716,9 +4716,9 @@ Message: |
     3612 | “No, he’s not,” I assured her. “It’s a bona-fide deal. I happen to know about
          |                                        ^~~~ Did you mean to spell `bona` this way?
 Suggest:
-  - Replace with: “boa”
   - Replace with: “bond”
   - Replace with: “bone”
+  - Replace with: “book”
 
 
 
@@ -4727,9 +4727,9 @@ Message: |
     3612 | “No, he’s not,” I assured her. “It’s a bona-fide deal. I happen to know about
          |                                             ^~~~ Did you mean to spell `fide` this way?
 Suggest:
-  - Replace with: “fade”
-  - Replace with: “fife”
-  - Replace with: “file”
+  - Replace with: “fine”
+  - Replace with: “fire”
+  - Replace with: “five”
 
 
 
@@ -4739,7 +4739,7 @@ Message: |
          |  ^~~~ Did you mean to spell `Bles` this way?
 Suggest:
   - Replace with: “Bless”
-  - Replace with: “Bales”
+  - Replace with: “Blew”
   - Replace with: “Bees”
 
 
@@ -4749,9 +4749,9 @@ Message: |
     3640 | “Bles-sed pre-cious,” she crooned, holding out her arms. “Come to your own
          |               ^~~~~ Did you mean to spell `cious` this way?
 Suggest:
-  - Replace with: “coo's”
-  - Replace with: “pious”
-  - Replace with: “chorus”
+  - Replace with: “coup”
+  - Replace with: “copious”
+  - Replace with: “circus”
 
 
 
@@ -4761,7 +4761,7 @@ Message: |
          |      ^~~~ Did you mean to spell `bles` this way?
 Suggest:
   - Replace with: “bless”
-  - Replace with: “bales”
+  - Replace with: “blues”
   - Replace with: “bees”
 
 
@@ -4771,9 +4771,9 @@ Message: |
     3646 | “The bles-sed pre-cious! Did mother get powder on your old yellowy hair? Stand
          |                   ^~~~~ Did you mean to spell `cious` this way?
 Suggest:
-  - Replace with: “coo's”
-  - Replace with: “pious”
-  - Replace with: “chorus”
+  - Replace with: “coup”
+  - Replace with: “citrus”
+  - Replace with: “circus”
 
 
 
@@ -4782,9 +4782,9 @@ Message: |
     3672 | “Come, Pammy.”
          |        ^~~~~ Did you mean to spell `Pammy` this way?
 Suggest:
-  - Replace with: “Palmy”
-  - Replace with: “Pommy”
-  - Replace with: “Pam's”
+  - Replace with: “Pay”
+  - Replace with: “Party”
+  - Replace with: “Tammy”
 
 
 
@@ -4794,9 +4794,9 @@ Message: |
     3678 | rickeys that clicked full of ice.
          | ^~~~~~~ Did you mean to spell `rickeys` this way?
 Suggest:
-  - Replace with: “rickets”
-  - Replace with: “Rickey's”
-  - Replace with: “rice's”
+  - Replace with: “rockets”
+  - Replace with: “rockers”
+  - Replace with: “riches”
 
 
 
@@ -4824,7 +4824,7 @@ Message: |
          |              ^~~~~~ Did you mean to spell `gayety` this way?
 Suggest:
   - Replace with: “gaiety”
-  - Replace with: “gamely”
+  - Replace with: “safety”
   - Replace with: “gamete”
 
 
@@ -4861,9 +4861,9 @@ Message: |
     3809 | “Well, you take my coupé and let me drive your car to town.”
          |                    ^~~~~ Did you mean to spell `coupé` this way?
 Suggest:
-  - Replace with: “coup”
-  - Replace with: “coupe”
-  - Replace with: “coups”
+  - Replace with: “could”
+  - Replace with: “couple”
+  - Replace with: “copy”
 
 
 
@@ -4873,8 +4873,8 @@ Message: |
          |                                                    ^~~~~ Did you mean to spell `coupé` this way?
 Suggest:
   - Replace with: “coup”
-  - Replace with: “coupe”
-  - Replace with: “coups”
+  - Replace with: “could”
+  - Replace with: “court”
 
 
 
@@ -4902,9 +4902,9 @@ Message: |
     3874 | while in silence. Then as Doctor T. J. Eckleburg’s faded eyes came into sight
          |                                  ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Ti”
   - Replace with: “To”
-  - Replace with: “Th”
+  - Replace with: “Tu”
+  - Replace with: “AZ”
 
 
 
@@ -4913,9 +4913,9 @@ Message: |
     3874 | while in silence. Then as Doctor T. J. Eckleburg’s faded eyes came into sight
          |                                     ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jo”
-  - Replace with: “Jg”
-  - Replace with: “Jr”
+  - Replace with: “JP”
+  - Replace with: “JS”
+  - Replace with: “AZ”
 
 
 
@@ -4937,8 +4937,8 @@ Message: |
          |     ^~~~~ Did you mean to spell `coupé` this way?
 Suggest:
   - Replace with: “coup”
-  - Replace with: “coupe”
-  - Replace with: “coups”
+  - Replace with: “court”
+  - Replace with: “could”
 
 
 
@@ -4960,9 +4960,9 @@ Message: |
     3948 | behind. Over the ashheaps the giant eyes of Doctor T. J. Eckleburg kept their
          |                  ^~~~~~~~ Did you mean to spell `ashheaps` this way?
 Suggest:
-  - Replace with: “asthma's”
-  - Replace with: “airheads”
-  - Replace with: “ashcans”
+  - Replace with: “ashes”
+  - Replace with: “shears”
+  - Replace with: “heaps”
 
 
 
@@ -4980,9 +4980,9 @@ Message: |
     3948 | behind. Over the ashheaps the giant eyes of Doctor T. J. Eckleburg kept their
          |                                                    ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Ti”
+  - Replace with: “AZ”
   - Replace with: “To”
-  - Replace with: “Th”
+  - Replace with: “TV”
 
 
 
@@ -4991,9 +4991,9 @@ Message: |
     3948 | behind. Over the ashheaps the giant eyes of Doctor T. J. Eckleburg kept their
          |                                                       ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jo”
-  - Replace with: “Jg”
-  - Replace with: “Jr”
+  - Replace with: “JP”
+  - Replace with: “JS”
+  - Replace with: “AZ”
 
 
 
@@ -5003,9 +5003,9 @@ Message: |
          |                                                          ^~~~~~~~~ Did you mean to spell `Eckleburg` this way?
     3949 | vigil, but I perceived, after a moment, that other eyes were regarding us with
 Suggest:
+  - Replace with: “Iceberg”
   - Replace with: “Excalibur”
   - Replace with: “Vicksburg”
-  - Replace with: “Heckler”
 
 
 
@@ -5046,8 +5046,8 @@ Message: |
          |                 ^~~~~ Did you mean to spell `coupé` this way?
 Suggest:
   - Replace with: “coup”
-  - Replace with: “coupe”
-  - Replace with: “coups”
+  - Replace with: “couch”
+  - Replace with: “count”
 
 
 
@@ -5058,8 +5058,8 @@ Message: |
          |                            ^~~~~ Did you mean to spell `coupé` this way?
 Suggest:
   - Replace with: “coup”
-  - Replace with: “coupe”
-  - Replace with: “coups”
+  - Replace with: “could”
+  - Replace with: “court”
 
 
 
@@ -5111,9 +5111,9 @@ Message: |
     4016 | “Well, we’d better telephone for an axe———”
          |                                     ^~~ Did you mean to spell `axe` this way?
 Suggest:
+  - Replace with: “axle”
   - Replace with: “ace”
   - Replace with: “age”
-  - Replace with: “ale”
 
 
 
@@ -5122,9 +5122,9 @@ Message: |
     4054 | “Biloxi,” he answered shortly.
          |  ^~~~~~ Did you mean to spell `Biloxi` this way?
 Suggest:
-  - Replace with: “Biko's”
-  - Replace with: “Bilbo's”
-  - Replace with: “Bill's”
+  - Replace with: “Blog”
+  - Replace with: “Bill”
+  - Replace with: “Bikini”
 
 
 
@@ -5133,9 +5133,9 @@ Message: |
     4056 | “A man named Biloxi. ‘Blocks’ Biloxi, and he made boxes—that’s a fact—and he was
          |              ^~~~~~ Did you mean to spell `Biloxi` this way?
 Suggest:
-  - Replace with: “Biko's”
-  - Replace with: “Bilbo's”
-  - Replace with: “Bill's”
+  - Replace with: “Below”
+  - Replace with: “Bison”
+  - Replace with: “Bikini”
 
 
 
@@ -5144,9 +5144,9 @@ Message: |
     4056 | “A man named Biloxi. ‘Blocks’ Biloxi, and he made boxes—that’s a fact—and he was
          |                               ^~~~~~ Did you mean to spell `Biloxi` this way?
 Suggest:
-  - Replace with: “Biko's”
-  - Replace with: “Bilbo's”
-  - Replace with: “Bill's”
+  - Replace with: “Below”
+  - Replace with: “Block”
+  - Replace with: “Blown”
 
 
 
@@ -5156,9 +5156,9 @@ Message: |
     4057 | from Biloxi, Tennessee.”
          |      ^~~~~~ Did you mean to spell `Biloxi` this way?
 Suggest:
-  - Replace with: “Biko's”
-  - Replace with: “Bilbo's”
-  - Replace with: “Bill's”
+  - Replace with: “Bill”
+  - Replace with: “Blog”
+  - Replace with: “Bailout”
 
 
 
@@ -5174,9 +5174,9 @@ Message: |
     4064 | “I used to know a Bill Biloxi from Memphis,” I remarked.
          |                        ^~~~~~ Did you mean to spell `Biloxi` this way?
 Suggest:
-  - Replace with: “Biko's”
-  - Replace with: “Bilbo's”
-  - Replace with: “Bill's”
+  - Replace with: “Bill”
+  - Replace with: “Block”
+  - Replace with: “Below”
 
 
 
@@ -5194,9 +5194,9 @@ Message: |
     4070 | the window, followed by intermittent cries of “Yea—ea—ea!” and finally by a
          |                                                    ^~ Did you mean to spell `ea` this way?
 Suggest:
-  - Replace with: “ear”
-  - Replace with: “eat”
-  - Replace with: “eh”
+  - Replace with: “yea”
+  - Replace with: “ex”
+  - Replace with: “eta”
 
 
 
@@ -5206,8 +5206,8 @@ Message: |
          |                                                       ^~ Did you mean to spell `ea` this way?
 Suggest:
   - Replace with: “ear”
-  - Replace with: “eat”
-  - Replace with: “eh”
+  - Replace with: “era”
+  - Replace with: “ex”
 
 
 
@@ -5217,8 +5217,8 @@ Message: |
          |                                   ^~ Did you mean to spell `lf` this way?
 Suggest:
   - Replace with: “la”
+  - Replace with: “of”
   - Replace with: “lo”
-  - Replace with: “elf”
 
 
 
@@ -5227,9 +5227,9 @@ Message: |
     4075 | “Remember Biloxi,” Jordan warned her. ‘‘Where’d you know him, Tom?”
          |           ^~~~~~ Did you mean to spell `Biloxi` this way?
 Suggest:
-  - Replace with: “Biko's”
-  - Replace with: “Bilbo's”
-  - Replace with: “Bill's”
+  - Replace with: “Blog”
+  - Replace with: “Below”
+  - Replace with: “Bikini”
 
 
 
@@ -5257,9 +5257,9 @@ Message: |
          |                                                                  ^~~ Did you mean to spell `Asa` this way?
     4084 | brought him around at the last minute and asked if we had room for him.”
 Suggest:
-  - Replace with: “Aha”
-  - Replace with: “Aka”
-  - Replace with: “As”
+  - Replace with: “Ala”
+  - Replace with: “Ash”
+  - Replace with: “Ana”
 
 
 
@@ -5279,9 +5279,9 @@ Message: |
     4109 | “You must have gone there about the time Biloxi went to New Haven.”
          |                                          ^~~~~~ Did you mean to spell `Biloxi` this way?
 Suggest:
-  - Replace with: “Biko's”
-  - Replace with: “Bilbo's”
-  - Replace with: “Bill's”
+  - Replace with: “Box”
+  - Replace with: “Bill”
+  - Replace with: “Blown”
 
 
 
@@ -5325,9 +5325,9 @@ Message: |
     4241 | “Not at Kapiolani?” demanded Tom suddenly.
          |         ^~~~~~~~~ Did you mean to spell `Kapiolani` this way?
 Suggest:
-  - Replace with: “Kaitlin”
-  - Replace with: “Kaposi”
-  - Replace with: “Kaolin”
+  - Replace with: “Mainland”
+  - Replace with: “Papillary”
+  - Replace with: “Ravioli”
 
 
 
@@ -5422,8 +5422,8 @@ Message: |
     4378 | Island. Tom talked incessantly, exulting and laughing, but his voice was as
 Suggest:
   - Replace with: “coup”
-  - Replace with: “coupe”
-  - Replace with: “coups”
+  - Replace with: “couple”
+  - Replace with: “could”
 
 
 
@@ -5433,8 +5433,8 @@ Message: |
          |                  ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael's”
-  - Replace with: “Michaela's”
-  - Replace with: “Micheal's”
+  - Replace with: “Michael”
+  - Replace with: “Michelin”
 
 
 
@@ -5444,9 +5444,9 @@ Message: |
          |                                                                 ^~~~~~~~ Did you mean to spell `ashheaps` this way?
     4392 | principal witness at the inquest. He had slept through the heat until after
 Suggest:
-  - Replace with: “asthma's”
-  - Replace with: “airheads”
-  - Replace with: “ashcans”
+  - Replace with: “ashes”
+  - Replace with: “shears”
+  - Replace with: “heaps”
 
 
 
@@ -5467,8 +5467,8 @@ Message: |
     4395 | advised him to go to bed, but Wilson refused, saying that he’d miss a lot of
 Suggest:
   - Replace with: “Michael's”
-  - Replace with: “Michaela's”
-  - Replace with: “Micheal's”
+  - Replace with: “Michael”
+  - Replace with: “Michelin”
 
 
 
@@ -5478,8 +5478,8 @@ Message: |
          | ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael's”
-  - Replace with: “Michaela's”
-  - Replace with: “Micheal's”
+  - Replace with: “Michael”
+  - Replace with: “Michelin”
 
 
 
@@ -5489,8 +5489,8 @@ Message: |
          |              ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael's”
-  - Replace with: “Michaela's”
-  - Replace with: “Micheal's”
+  - Replace with: “Michael”
+  - Replace with: “Michelin”
 
 
 
@@ -5501,8 +5501,8 @@ Message: |
          |                 ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael's”
-  - Replace with: “Michaela's”
-  - Replace with: “Micheal's”
+  - Replace with: “Michael”
+  - Replace with: “Michelin”
 
 
 
@@ -5544,8 +5544,8 @@ Message: |
          | ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael's”
-  - Replace with: “Michaela's”
-  - Replace with: “Micheal's”
+  - Replace with: “Michael”
+  - Replace with: “Michelin”
 
 
 
@@ -5578,8 +5578,8 @@ Message: |
     4452 | resolved itself into the words “Oh, my God!” uttered over and over in a gasping
 Suggest:
   - Replace with: “coup”
-  - Replace with: “coupe”
-  - Replace with: “coups”
+  - Replace with: “couple”
+  - Replace with: “could”
 
 
 
@@ -5634,9 +5634,9 @@ Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |            ^~ Did you mean to spell `od` this way?
 Suggest:
-  - Replace with: “odd”
-  - Replace with: “ode”
-  - Replace with: “of”
+  - Replace with: “ox”
+  - Replace with: “oi”
+  - Replace with: “oh”
   - Replace with: “OD”
 
 
@@ -5646,9 +5646,9 @@ Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |                          ^~ Did you mean to spell `od` this way?
 Suggest:
-  - Replace with: “odd”
-  - Replace with: “ode”
-  - Replace with: “of”
+  - Replace with: “ox”
+  - Replace with: “oi”
+  - Replace with: “oh”
   - Replace with: “OD”
 
 
@@ -5658,9 +5658,9 @@ Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |                                     ^~ Did you mean to spell `od` this way?
 Suggest:
-  - Replace with: “odd”
-  - Replace with: “ode”
-  - Replace with: “of”
+  - Replace with: “ox”
+  - Replace with: “oi”
+  - Replace with: “oh”
   - Replace with: “OD”
 
 
@@ -5670,9 +5670,9 @@ Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |                                                   ^~ Did you mean to spell `od` this way?
 Suggest:
-  - Replace with: “odd”
-  - Replace with: “ode”
-  - Replace with: “of”
+  - Replace with: “ox”
+  - Replace with: “oi”
+  - Replace with: “oh”
   - Replace with: “OD”
 
 
@@ -5691,9 +5691,9 @@ Message: |
     4484 | “M-a-v—” the policeman was saying, “—o———”
          |                                      ^ Did you mean to spell `o` this way?
 Suggest:
-  - Replace with: “of”
+  - Replace with: “O”
   - Replace with: “oh”
-  - Replace with: “oi”
+  - Replace with: “on”
 
 
 
@@ -5711,9 +5711,9 @@ Message: |
     4486 | “No, r—” corrected the man, “M-a-v-r-o———”
          |      ^ Did you mean to spell `r` this way?
 Suggest:
-  - Replace with: “re”
-  - Replace with: “I”
-  - Replace with: “a”
+  - Replace with: “U”
+  - Replace with: “R”
+  - Replace with: “Mr”
 
 
 
@@ -5722,9 +5722,9 @@ Message: |
     4486 | “No, r—” corrected the man, “M-a-v-r-o———”
          |                                    ^ Did you mean to spell `r` this way?
 Suggest:
-  - Replace with: “re”
-  - Replace with: “I”
-  - Replace with: “a”
+  - Replace with: “O”
+  - Replace with: “R”
+  - Replace with: “M”
 
 
 
@@ -5733,9 +5733,9 @@ Message: |
     4486 | “No, r—” corrected the man, “M-a-v-r-o———”
          |                                      ^ Did you mean to spell `o` this way?
 Suggest:
-  - Replace with: “of”
-  - Replace with: “oh”
-  - Replace with: “oi”
+  - Replace with: “R”
+  - Replace with: “M”
+  - Replace with: “F”
 
 
 
@@ -5755,7 +5755,7 @@ Message: |
 Suggest:
   - Replace with: “re”
   - Replace with: “I”
-  - Replace with: “a”
+  - Replace with: “U”
 
 
 
@@ -5773,9 +5773,9 @@ Message: |
     4490 | “r—” said the policeman, “o———”
          |                           ^ Did you mean to spell `o` this way?
 Suggest:
-  - Replace with: “of”
+  - Replace with: “O”
   - Replace with: “oh”
-  - Replace with: “oi”
+  - Replace with: “or”
 
 
 
@@ -5803,9 +5803,9 @@ Message: |
     4503 | “She ran out ina road. Son-of-a-bitch didn’t even stopus car.”
          |              ^~~ Did you mean to spell `ina` this way?
 Suggest:
+  - Replace with: “inn”
   - Replace with: “in”
-  - Replace with: “ind”
-  - Replace with: “inf”
+  - Replace with: “ink”
 
 
 
@@ -5814,9 +5814,9 @@ Message: |
     4503 | “She ran out ina road. Son-of-a-bitch didn’t even stopus car.”
          |                                                   ^~~~~~ Did you mean to spell `stopus` this way?
 Suggest:
-  - Replace with: “stop's”
   - Replace with: “stops”
-  - Replace with: “stoups”
+  - Replace with: “stop”
+  - Replace with: “stores”
 
 
 
@@ -5835,8 +5835,8 @@ Message: |
          |                            ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael's”
-  - Replace with: “Michaela's”
-  - Replace with: “Micheal's”
+  - Replace with: “Michael”
+  - Replace with: “Michelin”
 
 
 
@@ -5845,9 +5845,9 @@ Message: |
     4505 | “There was two cars,” said Michaelis, “one comin’, one goin’, see?”
          |                                            ^~~~~ Did you mean to spell `comin` this way?
 Suggest:
+  - Replace with: “coming”
   - Replace with: “coin”
   - Replace with: “comic”
-  - Replace with: “coming”
 
 
 
@@ -5866,9 +5866,9 @@ Message: |
     4505 | “There was two cars,” said Michaelis, “one comin’, one goin’, see?”
          |                                                        ^~~~ Did you mean to spell `goin` this way?
 Suggest:
-  - Replace with: “gain”
-  - Replace with: “gin”
-  - Replace with: “goon”
+  - Replace with: “going”
+  - Replace with: “good”
+  - Replace with: “gown”
 
 
 
@@ -5886,9 +5886,9 @@ Message: |
     4509 | “One goin’ each way. Well, she”—his hand rose toward the blankets but stopped
          |      ^~~~ Did you mean to spell `goin` this way?
 Suggest:
-  - Replace with: “gain”
-  - Replace with: “gin”
-  - Replace with: “goon”
+  - Replace with: “going”
+  - Replace with: “good”
+  - Replace with: “gown”
 
 
 
@@ -5917,9 +5917,9 @@ Message: |
          |                                                              ^~~~~ Did you mean to spell `comin` this way?
     4511 | knock right into her, goin’ thirty or forty miles an hour.”
 Suggest:
-  - Replace with: “coin”
-  - Replace with: “comic”
   - Replace with: “coming”
+  - Replace with: “comes”
+  - Replace with: “comic”
 
 
 
@@ -5950,9 +5950,9 @@ Message: |
     4511 | knock right into her, goin’ thirty or forty miles an hour.”
          |                       ^~~~ Did you mean to spell `goin` this way?
 Suggest:
-  - Replace with: “gain”
-  - Replace with: “gin”
-  - Replace with: “goon”
+  - Replace with: “going”
+  - Replace with: “gown”
+  - Replace with: “got”
 
 
 
@@ -5971,9 +5971,9 @@ Message: |
     4523 | “No, but the car passed me down the road, going faster’n forty. Going fifty,
          |                                                 ^~~~~~~~ Did you mean to spell `faster’n` this way?
 Suggest:
-  - Replace with: “falter's”
-  - Replace with: “feaster's”
-  - Replace with: “fester's”
+  - Replace with: “faster”
+  - Replace with: “fasten”
+  - Replace with: “eastern”
 
 
 
@@ -5982,9 +5982,9 @@ Message: |
     4544 | New York. I was bringing you that coupé we’ve been talking about. That yellow
          |                                   ^~~~~ Did you mean to spell `coupé` this way?
 Suggest:
+  - Replace with: “could”
+  - Replace with: “coupon”
   - Replace with: “coup”
-  - Replace with: “coupe”
-  - Replace with: “coups”
 
 
 
@@ -5994,8 +5994,8 @@ Message: |
          |                     ^~~~~ Did you mean to spell `coupé` this way?
 Suggest:
   - Replace with: “coup”
-  - Replace with: “coupe”
-  - Replace with: “coups”
+  - Replace with: “couple”
+  - Replace with: “copy”
 
 
 
@@ -6024,8 +6024,8 @@ Message: |
          |     ^~~~~ Did you mean to spell `coupé` this way?
 Suggest:
   - Replace with: “coup”
-  - Replace with: “coupe”
-  - Replace with: “coups”
+  - Replace with: “couch”
+  - Replace with: “couple”
 
 
 
@@ -6034,8 +6034,8 @@ Message: |
     4588 | The Buchanans’ house floated suddenly toward us through the dark rustling trees.
          |     ^~~~~~~~~ Did you mean to spell `Buchanans` this way?
 Suggest:
-  - Replace with: “Buchanan's”
   - Replace with: “Buchanan”
+  - Replace with: “Buchanan's”
 
 
 
@@ -6173,9 +6173,9 @@ Message: |
          |                                                ^~~~~ Did you mean to spell `Beale` this way?
     4851 | hundred pairs of golden and silver slippers shuffled the shining dust. At the
 Suggest:
-  - Replace with: “Bale”
-  - Replace with: “Beagle”
-  - Replace with: “Belle”
+  - Replace with: “Became”
+  - Replace with: “Beach”
+  - Replace with: “Brave”
 
 
 
@@ -6208,9 +6208,9 @@ Message: |
          |                                                  ^~~~~~~~~ Did you mean to spell `Leaves’ll` this way?
     4922 | soon, and then there’s always trouble with the pipes.”
 Suggest:
+  - Replace with: “Leaves”
   - Replace with: “Leave's”
   - Replace with: “Leaven's”
-  - Replace with: “Leaver's”
 
 
 
@@ -6238,9 +6238,9 @@ Message: |
     5015 | When I passed the ashheaps on the train that morning I had crossed deliberately
          |                   ^~~~~~~~ Did you mean to spell `ashheaps` this way?
 Suggest:
-  - Replace with: “asthma's”
-  - Replace with: “airheads”
-  - Replace with: “ashcans”
+  - Replace with: “ashes”
+  - Replace with: “shears”
+  - Replace with: “heaps”
 
 
 
@@ -6303,8 +6303,8 @@ Message: |
          |                      ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael's”
-  - Replace with: “Michaela's”
-  - Replace with: “Micheal's”
+  - Replace with: “Michael”
+  - Replace with: “Michelin”
 
 
 
@@ -6325,8 +6325,8 @@ Message: |
     5036 | stranger to wait there fifteen minutes longer, while he went back to his own
 Suggest:
   - Replace with: “Michael's”
-  - Replace with: “Michaela's”
-  - Replace with: “Micheal's”
+  - Replace with: “Michael”
+  - Replace with: “Michelin”
 
 
 
@@ -6349,8 +6349,8 @@ Message: |
          |                              ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael's”
-  - Replace with: “Michaela's”
-  - Replace with: “Micheal's”
+  - Replace with: “Michael”
+  - Replace with: “Michelin”
 
 
 
@@ -6361,8 +6361,8 @@ Message: |
          | ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael's”
-  - Replace with: “Michaela's”
-  - Replace with: “Micheal's”
+  - Replace with: “Michael”
+  - Replace with: “Michelin”
 
 
 
@@ -6416,8 +6416,8 @@ Message: |
          | ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael's”
-  - Replace with: “Michaela's”
-  - Replace with: “Micheal's”
+  - Replace with: “Michael”
+  - Replace with: “Michelin”
 
 
 
@@ -6448,8 +6448,8 @@ Message: |
     5122 | ghost of a superior “Hm!”
          |                      ^~ Did you mean to spell `Hm` this way?
 Suggest:
-  - Replace with: “Ha”
-  - Replace with: “Ham”
+  - Replace with: “Him”
+  - Replace with: “Hum”
   - Replace with: “He”
   - Replace with: “HM”
 
@@ -6461,8 +6461,8 @@ Message: |
          | ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael's”
-  - Replace with: “Michaela's”
-  - Replace with: “Micheal's”
+  - Replace with: “Michelin”
+  - Replace with: “Michael”
 
 
 
@@ -6472,8 +6472,8 @@ Message: |
          |                             ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael's”
-  - Replace with: “Michaela's”
-  - Replace with: “Micheal's”
+  - Replace with: “Michael”
+  - Replace with: “Michelin”
 
 
 
@@ -6483,9 +6483,9 @@ Message: |
          |                                        ^~~~~~~~ Did you mean to spell `ashheaps` this way?
     5147 | fantastic shapes and scurried here and there in the faint dawn wind.
 Suggest:
-  - Replace with: “asthma's”
-  - Replace with: “airheads”
-  - Replace with: “ashcans”
+  - Replace with: “ashes”
+  - Replace with: “shears”
+  - Replace with: “heaps”
 
 
 
@@ -6505,8 +6505,8 @@ Message: |
          |                      ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael's”
-  - Replace with: “Michaela's”
-  - Replace with: “Micheal's”
+  - Replace with: “Michael”
+  - Replace with: “Michelin”
 
 
 
@@ -6516,9 +6516,9 @@ Message: |
     5156 | of Doctor T. J. Eckleburg, which had just emerged, pale and enormous, from the
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Ti”
   - Replace with: “To”
-  - Replace with: “Th”
+  - Replace with: “AZ”
+  - Replace with: “TV”
 
 
 
@@ -6527,9 +6527,9 @@ Message: |
     5156 | of Doctor T. J. Eckleburg, which had just emerged, pale and enormous, from the
          |              ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jo”
-  - Replace with: “Jg”
-  - Replace with: “Jr”
+  - Replace with: “JP”
+  - Replace with: “JS”
+  - Replace with: “AZ”
 
 
 
@@ -6538,9 +6538,9 @@ Message: |
     5156 | of Doctor T. J. Eckleburg, which had just emerged, pale and enormous, from the
          |                 ^~~~~~~~~ Did you mean to spell `Eckleburg` this way?
 Suggest:
+  - Replace with: “Iceberg”
   - Replace with: “Excalibur”
   - Replace with: “Vicksburg”
-  - Replace with: “Heckler”
 
 
 
@@ -6550,8 +6550,8 @@ Message: |
          |                            ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael's”
-  - Replace with: “Michaela's”
-  - Replace with: “Micheal's”
+  - Replace with: “Michael”
+  - Replace with: “Michelin”
 
 
 
@@ -6571,8 +6571,8 @@ Message: |
          |                ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael's”
-  - Replace with: “Michaela's”
-  - Replace with: “Micheal's”
+  - Replace with: “Michael”
+  - Replace with: “Michelin”
 
 
 
@@ -6582,8 +6582,8 @@ Message: |
          |                                               ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael's”
-  - Replace with: “Michaela's”
-  - Replace with: “Micheal's”
+  - Replace with: “Michael”
+  - Replace with: “Michelin”
 
 
 
@@ -6593,9 +6593,9 @@ Message: |
     5172 | Roosevelt and then to Gad’s Hill, where he bought a sandwich that he didn’t eat,
          |                       ^~~~~ Did you mean to spell `Gad’s` this way?
 Suggest:
-  - Replace with: “Gap's”
-  - Replace with: “Gay's”
   - Replace with: “God's”
+  - Replace with: “Gaza's”
+  - Replace with: “Dad's”
 
 
 
@@ -6605,9 +6605,9 @@ Message: |
     5174 | reach Gad’s Hill until noon. Thus far there was no difficulty in accounting for
          |       ^~~~~ Did you mean to spell `Gad’s` this way?
 Suggest:
-  - Replace with: “Gap's”
-  - Replace with: “Gay's”
   - Replace with: “God's”
+  - Replace with: “Gaza's”
+  - Replace with: “G's”
 
 
 
@@ -6618,8 +6618,8 @@ Message: |
          | ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael's”
-  - Replace with: “Michaela's”
-  - Replace with: “Micheal's”
+  - Replace with: “Michael”
+  - Replace with: “Michelin”
 
 
 
@@ -6841,9 +6841,9 @@ Message: |
     5327 | Let me know about the funeral etc do not know his family at all.
          |                               ^~~ Did you mean to spell `etc` this way?
 Suggest:
-  - Replace with: “eta”
-  - Replace with: “etc.”
-  - Replace with: “enc”
+  - Replace with: “epic”
+  - Replace with: “eye”
+  - Replace with: “end”
 
 
 
@@ -6852,9 +6852,9 @@ Message: |
     5333 | “This is Slagle speaking . . .”
          |          ^~~~~~ Did you mean to spell `Slagle` this way?
 Suggest:
-  - Replace with: “Slag's”
-  - Replace with: “Sable”
-  - Replace with: “Sage”
+  - Replace with: “Stage”
+  - Replace with: “Stable”
+  - Replace with: “Single”
 
 
 
@@ -6873,8 +6873,8 @@ Message: |
          |        ^~~~~~~ Did you mean to spell `Parke’s` this way?
 Suggest:
   - Replace with: “Park's”
-  - Replace with: “Parker's”
-  - Replace with: “Parks's”
+  - Replace with: “Party's”
+  - Replace with: “Parks”
 
 
 
@@ -6883,8 +6883,8 @@ Message: |
     5343 | numbers just five minutes before. What d’you know about that, hey? You never can
          |                                        ^~~~~ Did you mean to spell `d’you` this way?
 Suggest:
-  - Replace with: “bayou”
   - Replace with: “you”
+  - Replace with: “bayou”
 
 
 
@@ -6912,9 +6912,9 @@ Message: |
     5352 | I think it was on the third day that a telegram signed Henry C. Gatz arrived
          |                                                              ^~ Did you mean to spell `C.` this way?
 Suggest:
-  - Replace with: “Co”
-  - Replace with: “Cu”
-  - Replace with: “CA”
+  - Replace with: “CEO”
+  - Replace with: “CIA”
+  - Replace with: “CFO”
 
 
 
@@ -6924,9 +6924,9 @@ Message: |
          |                                                                 ^~~~ Did you mean to spell `Gatz` this way?
     5353 | from a town in Minnesota. It said only that the sender was leaving immediately
 Suggest:
+  - Replace with: “Got”
+  - Replace with: “Gave”
   - Replace with: “Gate”
-  - Replace with: “Garth”
-  - Replace with: “Goth”
 
 
 
@@ -6957,8 +6957,8 @@ Message: |
          |                          ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
   - Replace with: “Gate”
-  - Replace with: “Garth”
-  - Replace with: “Goth”
+  - Replace with: “Got”
+  - Replace with: “Gave”
 
 
 
@@ -7001,8 +7001,8 @@ Message: |
          |  ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
   - Replace with: “Gate”
-  - Replace with: “Garth”
-  - Replace with: “Goth”
+  - Replace with: “Gut”
+  - Replace with: “Game”
 
 
 
@@ -7029,9 +7029,9 @@ Message: |
     5412 | “If he’d of lived, he’d of been a great man. A man like James J. Hill. He’d of
          |                                                               ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jo”
-  - Replace with: “Jg”
-  - Replace with: “Jr”
+  - Replace with: “JP”
+  - Replace with: “Joe”
+  - Replace with: “JD”
 
 
 
@@ -7041,8 +7041,8 @@ Message: |
          |              ^~~~~~~~ Did you mean to spell `Carraway` this way?
 Suggest:
   - Replace with: “Caraway”
+  - Replace with: “Faraway”
   - Replace with: “Caraways”
-  - Replace with: “Castaway”
 
 
 
@@ -7061,8 +7061,8 @@ Message: |
          |                                                              ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Be”
-  - Replace with: “Bi”
-  - Replace with: “BA”
+  - Replace with: “BIA”
+  - Replace with: “BO”
 
 
 
@@ -7071,9 +7071,9 @@ Message: |
     5455 | and I’m sort of helpless without them. My address is care of B. F.———”
          |                                                                 ^~ Did you mean to spell `F.` this way?
 Suggest:
-  - Replace with: “Fa”
-  - Replace with: “Fe”
-  - Replace with: “Ft”
+  - Replace with: “FD”
+  - Replace with: “FDA”
+  - Replace with: “FBI”
 
 
 
@@ -7113,8 +7113,8 @@ Message: |
          |                      ^~~~~~~~ Did you mean to spell `Carraway` this way?
 Suggest:
   - Replace with: “Caraway”
+  - Replace with: “Faraway”
   - Replace with: “Caraways”
-  - Replace with: “Castaway”
 
 
 
@@ -7182,9 +7182,9 @@ Message: |
     5509 | on have some lunch with me,’ I sid. He ate more than four dollars’ worth of food
          |                                ^~~ Did you mean to spell `sid` this way?
 Suggest:
-  - Replace with: “sad”
   - Replace with: “said”
-  - Replace with: “sic”
+  - Replace with: “sir”
+  - Replace with: “six”
 
 
 
@@ -7216,8 +7216,8 @@ Message: |
     5560 | up and down excitedly in the hall. His pride in his son and in his son’s
 Suggest:
   - Replace with: “Gate”
-  - Replace with: “Garth”
-  - Replace with: “Goth”
+  - Replace with: “Got”
+  - Replace with: “Get”
 
 
 
@@ -7266,8 +7266,8 @@ Message: |
          |                                            ^~~~~~~~ Did you mean to spell `Hopalong` this way?
 Suggest:
   - Replace with: “Hopping”
-  - Replace with: “Halon”
-  - Replace with: “Haling”
+  - Replace with: “Healing”
+  - Replace with: “Howling”
 
 
 
@@ -7277,9 +7277,9 @@ Message: |
     5602 | > No wasting time at Shafters or [a name, indecipherable] No more smokeing or
          |                      ^~~~~~~~ Did you mean to spell `Shafters` this way?
 Suggest:
-  - Replace with: “Shatters”
-  - Replace with: “Shifters”
-  - Replace with: “Shaffer's”
+  - Replace with: “Staffers”
+  - Replace with: “Shooters”
+  - Replace with: “Starters”
 
 
 
@@ -7310,8 +7310,8 @@ Message: |
          |                              ^~ Did you mean to spell `et` this way?
 Suggest:
   - Replace with: “eat”
-  - Replace with: “eh”
-  - Replace with: “em”
+  - Replace with: “Lt”
+  - Replace with: “get”
   - Replace with: “ET”
 
 
@@ -7322,8 +7322,8 @@ Message: |
          |          ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
   - Replace with: “Gate”
-  - Replace with: “Garth”
-  - Replace with: “Goth”
+  - Replace with: “Gave”
+  - Replace with: “Got”
 
 
 
@@ -7430,8 +7430,8 @@ Message: |
          |                                               ^~~~~~~~~ Did you mean to spell `matchings` this way?
 Suggest:
   - Replace with: “matching”
-  - Replace with: “catchings”
   - Replace with: “machines”
+  - Replace with: “marching”
 
 
 
@@ -7441,9 +7441,9 @@ Message: |
     5666 | going to the Ordways’? the Herseys’? the Schultzes’?” and the long green tickets
          |              ^~~~~~~ Did you mean to spell `Ordways` this way?
 Suggest:
+  - Replace with: “Roadways”
   - Replace with: “Ordeals”
   - Replace with: “Endways”
-  - Replace with: “Midways”
 
 
 
@@ -7453,7 +7453,7 @@ Message: |
          |                            ^~~~~~~ Did you mean to spell `Herseys` this way?
 Suggest:
   - Replace with: “Hersey's”
-  - Replace with: “Hersey”
+  - Replace with: “Here's”
   - Replace with: “Hershey's”
 
 
@@ -7464,8 +7464,8 @@ Message: |
          |                                          ^~~~~~~~~ Did you mean to spell `Schultzes` this way?
 Suggest:
   - Replace with: “Schultz's”
-  - Replace with: “Schulz's”
   - Replace with: “Schultz”
+  - Replace with: “Schulz's”
 
 
 
@@ -7512,8 +7512,8 @@ Message: |
     5683 | city where dwellings are still called through decades by a family’s name. I see
 Suggest:
   - Replace with: “Caraway”
+  - Replace with: “Faraway”
   - Replace with: “Caraways”
-  - Replace with: “Castaway”
 
 
 
@@ -7568,9 +7568,9 @@ Message: |
     5692 | figures in my more fantastic dreams. I see it as a night scene by El Greco: a
          |                                                                   ^~ Did you mean to spell `El` this way?
 Suggest:
-  - Replace with: “Ell”
-  - Replace with: “Eel”
-  - Replace with: “Eh”
+  - Replace with: “EC”
+  - Replace with: “Eli”
+  - Replace with: “E”
 
 
 
@@ -7579,9 +7579,9 @@ Message: |
     5692 | figures in my more fantastic dreams. I see it as a night scene by El Greco: a
          |                                                                      ^~~~~ Did you mean to spell `Greco` this way?
 Suggest:
-  - Replace with: “Gecko”
-  - Replace with: “Grace”
   - Replace with: “Great”
+  - Replace with: “Green”
+  - Replace with: “Greek”
 
 
 
@@ -7777,8 +7777,8 @@ Message: |
     5818 | contemplation he neither understood nor desired, face to face for the last time
 Suggest:
   - Replace with: “aesthetic”
-  - Replace with: “pathetic”
   - Replace with: “aesthetics”
+  - Replace with: “pathetic”
 
 
 
@@ -7788,9 +7788,9 @@ Message: |
          |                                         ^~~~~~~~ Did you mean to spell `orgastic` this way?
     5829 | recedes before us. It eluded us then, but that’s no matter—to-morrow we will run
 Suggest:
-  - Replace with: “orgasmic”
-  - Replace with: “orgiastic”
   - Replace with: “organic”
+  - Replace with: “drastic”
+  - Replace with: “orgasmic”
 
 
 
