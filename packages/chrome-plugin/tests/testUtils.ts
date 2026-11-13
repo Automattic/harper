@@ -100,6 +100,9 @@ export async function replaceEditorContent(editorEl: Locator, text: string, soft
 		}
 		if (i < lines.length - 1) {
 			if (lines[i]) {
+				// Some editors leave the caret behind inserted text, so put it at the end of the line.
+				// On macOS, End scrolls the page instead.
+				await editorEl.press(process.platform === 'darwin' ? 'Meta+ArrowRight' : 'End');
 				await waitForCaretAfter(editorEl, lines[i]);
 			}
 			await editorEl.press(breakKey);
@@ -111,8 +114,8 @@ export async function replaceEditorContent(editorEl: Locator, text: string, soft
  * Wait until the caret has stayed directly after `text` for `quietMs`.
  *
  * Some editors (Slate in Firefox, for example) apply inserted text before their own selection
- * catches up, then briefly restore the caret to where it was. A break key pressed in that window
- * splits the line at the old position and scrambles the content.
+ * catches up, and can leave the caret where it was. A key pressed before the caret settles lands
+ * in the wrong place: a break key splits the line at the old position and scrambles the content.
  */
 async function waitForCaretAfter(editorEl: Locator, text: string, quietMs = 100) {
 	let settledSince: number | undefined;
