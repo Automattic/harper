@@ -226,6 +226,7 @@ mod nominal_wants;
 mod nor_modal_pronoun;
 mod not_only_inversion;
 mod noun_verb_confusion;
+mod noun_verb_spelling;
 mod number_suffix_capitalization;
 mod numeric_range_en_dash;
 mod obsess_preposition;

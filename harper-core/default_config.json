@@ -6520,6 +6520,13 @@
 					"settings": [
 						{
 							"Bool": {
+								"name": "NounVerbSpelling",
+								"state": true,
+								"label": "Noun and Verb Spelling"
+							}
+						},
+						{
+							"Bool": {
 								"name": "OutOfTheWindow",
 								"state": true,
 								"label": "Out (of) the Window"
