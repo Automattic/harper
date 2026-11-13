@@ -497,6 +497,17 @@ pub fn lint_group() -> LintGroup {
             "`Invest` is traditionally followed by 'in,' not `into.`",
             LintKind::Usage
         ),
+        "InterveneIn" => (
+            &[
+                ("intervene into", "intervene in"),
+                ("intervened into", "intervened in"),
+                ("intervening into", "intervening in"),
+                ("intervenes into", "intervenes in"),
+            ],
+            "`Intervene` uses the preposition `in`.",
+            "Corrects `intervene into` to `intervene in`.",
+            LintKind::Usage
+        ),
         "LayoutVerb" => (
             &[
                 ("layouted", "laid out"),
