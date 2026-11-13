@@ -162,7 +162,6 @@ Read the [Desktop contributor documentation](packages/web/src/routes/docs/contri
 ### OS Integration
 
 - OS integration is behind `harper-desktop/src-tauri/src/os_broker.rs`.
-- macOS uses `harper-desktop/src-tauri/src/mac_broker.rs`.
 - non-macOS currently uses `NoopBroker`.
 - macOS highlighter focus handling depends on `MacBroker.last_focused`; clicking the overlay can make the highlighter process focused, so accessibility reads fall back to the last non-highlighter PID.
 - macOS integrations are bundle-ID based and controlled by persisted `Integration` entries.
@@ -170,14 +169,14 @@ Read the [Desktop contributor documentation](packages/web/src/routes/docs/contri
 
 ### IPC And App State
 
-- Tauri app state lives in `harper-desktop/src-tauri/src/config.rs`.
+- Tauri app state lives in `harper-desktop/src-tauri/src/config/mod.rs`.
 - `Config` currently stores `mutable_dictionary: MutableDictionary`, `dialect: Dialect`, `ignored_lints: IgnoredLints`, `lint_config: FlatConfig`, and `integrations: Vec<Integration>`.
 - `Config::new()` uses `MutableDictionary::new()`, `Dialect::American`, `IgnoredLints::new()`, `FlatConfig::new_curated()`, and curated default integrations.
 - Config is persisted under the system config directory in a `harper-desktop` folder. Main settings are serialized to `config.json`; the mutable dictionary is stored separately as `dictionary.txt`.
 - `Config::load_from_system()` loads the serialized config and then hydrates the mutable dictionary with the selected dialect.
 - The Tauri app owns shared config as `Arc<Mutex<Config>>`.
 - `run_tauri()` loads persisted config, creates `HighlighterService`, starts the highlighter service, and creates the tray/menu-bar UI.
-- The highlighter process is spawned through `harper-desktop/src-tauri/src/highlighter_process.rs`.
+- The highlighter process is spawned through `harper-desktop/src-tauri/src/highlighter_service/highlighter_process.rs`.
 - IPC is implemented under `harper-desktop/src-tauri/src/communication/`.
 - IPC uses newline-delimited JSON over child stdin/stdout.
 - The Tauri app is the protocol server.
