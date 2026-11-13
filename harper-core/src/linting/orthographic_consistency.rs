@@ -84,11 +84,37 @@ impl ExprLinter for OrthographicConsistency {
                     chars.iter().map(|c| c.to_ascii_uppercase()).collect(),
                 )],
                 message: "This word's canonical spelling is all-caps.".to_owned(),
-                priority: 127,
+                // Two-letter matches are often typos (`ot` for `to`), so `SpellCheck` should win.
+                priority: if chars.len() > 2 { 31 } else { 127 },
             });
         }
 
         let canonical_flags = metadata.orth_info;
+
+        // Correct an accidental second capital without changing the initial capital.
+        if chars.len() >= 3
+            && chars[0].is_ascii_uppercase()
+            && chars[1].is_ascii_uppercase()
+            && chars[2..].iter().all(char::is_ascii_lowercase)
+            && let Some(canonical) = self.dict.get_correct_capitalization_of(chars)
+            && OrthFlags::from_letters(canonical)
+                .intersects(OrthFlags::LOWERCASE | OrthFlags::TITLECASE)
+        {
+            let mut corrected = chars.to_vec();
+            corrected[1].make_ascii_lowercase();
+
+            return Some(Lint {
+                span: word.span,
+                lint_kind: LintKind::Capitalization,
+                message: format!(
+                    "Did you mean `{}`? Only the first letter should be capitalized.",
+                    corrected.iter().collect::<String>()
+                ),
+                suggestions: vec![Suggestion::ReplaceWith(corrected)],
+                priority: 31,
+            });
+        }
+
         let flags_to_check = [
             OrthFlags::LOWER_CAMEL,
             OrthFlags::UPPER_CAMEL,
@@ -152,12 +178,74 @@ fn alphabetic_differs(a: &[char], b: &[char]) -> bool {
 
 #[cfg(test)]
 mod tests {
+    use crate::Dialect;
+    use crate::linting::LintGroup;
     use crate::linting::tests::{
         assert_good_and_bad_suggestions, assert_lint_count, assert_no_lints,
         assert_suggestion_result,
     };
+    use crate::spell::FstDictionary;
 
     use super::OrthographicConsistency;
+
+    fn curated_linter() -> LintGroup {
+        LintGroup::new_curated(FstDictionary::curated(), Dialect::American)
+    }
+
+    #[test]
+    fn lowercase_bbc_beats_spell_check() {
+        assert_suggestion_result(
+            "The bbc reported it.",
+            curated_linter(),
+            "The BBC reported it.",
+        );
+    }
+
+    #[test]
+    fn title_case_bbc_beats_spell_check() {
+        assert_suggestion_result(
+            "The Bbc reported it.",
+            curated_linter(),
+            "The BBC reported it.",
+        );
+    }
+
+    #[test]
+    fn lowercase_html_beats_spell_check() {
+        assert_suggestion_result(
+            "Validate the html first.",
+            curated_linter(),
+            "Validate the HTML first.",
+        );
+    }
+
+    #[test]
+    fn lowercase_nhs_beats_spell_check() {
+        assert_suggestion_result(
+            "The nhs is very busy.",
+            curated_linter(),
+            "The NHS is very busy.",
+        );
+    }
+
+    #[test]
+    fn two_letter_typo_stays_with_spell_check() {
+        assert_suggestion_result(
+            "We went ot the shop.",
+            curated_linter(),
+            "We went out the shop.",
+        );
+    }
+
+    // `us`, `who` and `it` are common words, even though `US`, `WHO` and `IT` are also dictionary
+    // entries, so they shouldn't be changed to all-caps.
+    #[test]
+    fn dont_capitalize_common_words_that_match_acronyms() {
+        assert_no_lints(
+            "They told us who it was.",
+            OrthographicConsistency::default(),
+        );
+    }
 
     #[test]
     fn nasa_should_be_all_caps() {
@@ -432,6 +520,54 @@ mod tests {
 
         for sentence in sentences {
             assert_no_lints(sentence, OrthographicConsistency::default());
+        }
+    }
+
+    #[test]
+    fn corrects_accidental_double_initial_capitals() {
+        for (input, expected) in [
+            ("THe", "The"),
+            ("LIzard", "Lizard"),
+            ("DOor", "Door"),
+            ("THe lizard opened the door.", "The lizard opened the door."),
+            ("A LIzard opened the door.", "A Lizard opened the door."),
+            ("Open the DOor.", "Open the Door."),
+            ("\"THe\"", "\"The\""),
+            ("LIzard!", "Lizard!"),
+            ("DOor?", "Door?"),
+            ("THe, DOor", "The, Door"),
+            ("THe\nLIzard", "The\nLizard"),
+            ("THe\tDOor", "The\tDoor"),
+            ("HEllo", "Hello"),
+            ("WOrld", "World"),
+            ("ENgland", "England"),
+        ] {
+            assert_suggestion_result(input, OrthographicConsistency::default(), expected);
+        }
+    }
+
+    #[test]
+    fn preserves_other_casing_and_unknown_words() {
+        for input in [
+            "The lizard opened the door.",
+            "Lizard Door",
+            "THE LIZARD DOOR",
+            "NASA",
+            "iPhone",
+            "LinkedIn",
+            "WordPress",
+            "macOS",
+            "YouTube",
+            "DO",
+            "PR",
+            "QZxqzq",
+            "tHe",
+            "lIzard",
+            "DOOr",
+            "THe-like",
+            "pre-DOor",
+        ] {
+            assert_no_lints(input, OrthographicConsistency::default());
         }
     }
 
