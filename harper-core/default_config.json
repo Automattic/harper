@@ -1067,6 +1067,13 @@
 						},
 						{
 							"Bool": {
+								"name": "DoubleDown",
+								"state": true,
+								"label": "Double Down"
+							}
+						},
+						{
+							"Bool": {
 								"name": "DoubleEdgedSword",
 								"state": true,
 								"label": "Double Edged Sword"
