@@ -3,17 +3,11 @@ import { defineConfig } from '@playwright/test';
 import original from './playwright.config';
 
 const tools = process.env.CI_DIAGNOSTIC_TOOLS || path.join(process.env.HOME!, 'bin/harper-ci-diagnostic/node_modules');
-const workers = process.env.CI_DIAGNOSTIC_WORKERS;
-if (workers === 'serial') {
-  if (original.workers !== 1 || original.projects?.some(project => project.workers !== undefined)) {
-    throw new Error('Serial control must retain the global single-worker repair');
-  }
-} else if (workers === 'original') {
-  if (original.workers !== undefined || original.projects?.some(project => project.workers !== 2)) {
-    throw new Error('Original control must restore the original CI per-project worker settings');
-  }
-} else {
-  throw new Error('Unknown worker experiment arm');
+if (original.workers !== 1 || original.projects?.some(project => project.workers !== undefined)) {
+  throw new Error('Every arm must retain the global single-worker repair');
+}
+if (!['synchronized', 'original'].includes(process.env.CI_DIAGNOSTIC_SELECTION || '')) {
+  throw new Error('Unknown selection experiment arm');
 }
 
 export default defineConfig({

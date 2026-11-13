@@ -1,4 +1,4 @@
-name: Browser Worker Ablation
+name: Browser Selection Ablation
 
 on:
   push:
@@ -16,12 +16,12 @@ jobs:
       fail-fast: false
       matrix:
         mode: [traced, untraced]
-        workers: [serial, original]
+        selection: [synchronized, original]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
-          fetch-depth: 5
+          fetch-depth: 6
       - name: Record runner tools
         run: |
           node --version
@@ -40,14 +40,14 @@ jobs:
         run: |
           gh api repos/Automattic/harper/actions/artifacts/14001621916/zip > "$RUNNER_TEMP/chrome-artifact.zip"
           CI_DIAGNOSTIC_ARCHIVE="$RUNNER_TEMP/chrome-artifact.zip" python3 .ci-diagnostic/prepare-fixed.py
-      - name: Run worker-count experiment without retries
+      - name: Run selection synchronization experiment without retries
         working-directory: packages/chrome-plugin
         env:
           CI: 'true'
           CI_DIAGNOSTIC_MODE: ${{ matrix.mode }}
-          CI_DIAGNOSTIC_WORKERS: ${{ matrix.workers }}
+          CI_DIAGNOSTIC_SELECTION: ${{ matrix.selection }}
         run: |
-          python3 ../../.ci-diagnostic/runtime-mode.py
+          python3 ../../.ci-diagnostic/runtime-selection.py
           sha256sum tests/fixtures.ts > diagnostic-output/runtime-fixture.sha256
           export PLAYWRIGHT_BROWSERS_PATH="$HOME/bin/harper-ci-browsers"
           node "$HOME/bin/harper-ci-diagnostic/node_modules/playwright/cli.js" --version
@@ -56,7 +56,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
-          name: worker-ablation-${{ matrix.workers }}-${{ matrix.mode }}
+          name: selection-ablation-${{ matrix.selection }}-${{ matrix.mode }}
           path: packages/chrome-plugin/diagnostic-output/
           if-no-files-found: warn
           retention-days: 7
