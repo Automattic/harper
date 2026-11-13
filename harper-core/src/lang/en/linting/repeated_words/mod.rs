@@ -2,7 +2,7 @@ mod go_the_the;
 mod repeated_words_general;
 mod the_the_to_that_the;
 
-use super::merge_linters::merge_linters;
+use crate::linting::merge_linters::merge_linters;
 use go_the_the::GoTheThe;
 use repeated_words_general::RepeatedWordsGeneral;
 use the_the_to_that_the::TheTheToThatThe;
@@ -21,7 +21,8 @@ mod tests {
         assert_good_and_bad_suggestions, assert_no_lints, assert_suggestion_result,
     };
 
-    use super::{super::tests::assert_lint_count, GoTheThe, RepeatedWordsGeneral, TheTheToThatThe};
+    use super::{GoTheThe, RepeatedWordsGeneral, TheTheToThatThe};
+    use crate::linting::tests::assert_lint_count;
 
     // General
 

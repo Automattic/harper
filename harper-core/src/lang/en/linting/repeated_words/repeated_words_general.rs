@@ -1,7 +1,7 @@
 use crate::{
     CharString, CharStringExt, Document, Span, TokenStringExt,
     char_string::char_string,
-    linting::{Lint, LintKind, Linter, Suggestion, informal_laughter::is_informal_laughter},
+    linting::{Lint, LintKind, Linter, Suggestion, en::informal_laughter::is_informal_laughter},
 };
 
 #[derive(Debug, Clone)]

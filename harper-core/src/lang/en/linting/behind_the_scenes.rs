@@ -61,7 +61,7 @@ impl ExprLinter for BehindTheScenes {
 #[cfg(test)]
 mod tests {
     use crate::linting::{
-        behind_the_scenes::BehindTheScenes,
+        en::behind_the_scenes::BehindTheScenes,
         tests::{assert_no_lints, assert_suggestion_result},
     };
 

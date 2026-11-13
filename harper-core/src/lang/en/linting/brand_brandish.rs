@@ -70,7 +70,7 @@ impl ExprLinter for BrandBrandish {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{brand_brandish::BrandBrandish, tests::assert_suggestion_result};
+    use crate::linting::{en::brand_brandish::BrandBrandish, tests::assert_suggestion_result};
 
     #[test]
     fn correct_brandish_a_traitor() {

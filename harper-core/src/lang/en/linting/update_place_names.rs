@@ -138,8 +138,8 @@ impl<'a> ExprLinter for UpdatePlaceNames<'a> {
 #[cfg(test)]
 mod tests {
     use crate::linting::{
+        en::update_place_names::UpdatePlaceNames,
         tests::{assert_lint_count, assert_suggestion_result},
-        update_place_names::UpdatePlaceNames,
     };
 
     #[test]

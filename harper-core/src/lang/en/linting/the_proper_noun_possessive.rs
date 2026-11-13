@@ -54,8 +54,8 @@ impl ExprLinter for TheProperNounPossessive {
 #[cfg(test)]
 mod tests {
     use crate::linting::{
+        en::the_proper_noun_possessive::TheProperNounPossessive,
         tests::{assert_no_lints, assert_suggestion_result},
-        the_proper_noun_possessive::TheProperNounPossessive,
     };
 
     #[test]

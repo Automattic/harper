@@ -183,7 +183,7 @@ impl ExprLinter for FleshOutVsFullFledged {
 #[cfg(test)]
 mod tests {
     use crate::linting::{
-        flesh_out_vs_full_fledged::FleshOutVsFullFledged,
+        en::flesh_out_vs_full_fledged::FleshOutVsFullFledged,
         tests::{assert_good_and_bad_suggestions, assert_suggestion_result},
     };
 

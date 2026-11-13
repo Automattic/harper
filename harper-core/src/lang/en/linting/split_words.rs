@@ -7,8 +7,8 @@ use crate::{
     expr::Expr,
     linting::{
         ExprLinter, LintKind, Suggestion,
+        en::informal_laughter::is_informal_laughter,
         expr_linter::{Chunk, at_start_of_sentence, preceded_by_word},
-        informal_laughter::is_informal_laughter,
     },
     spell::{Dictionary, FstDictionary, TrieDictionary},
 };

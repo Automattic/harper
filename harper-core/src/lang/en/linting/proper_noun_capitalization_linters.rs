@@ -110,13 +110,13 @@ fn lint_group_from_json(json: &str) -> LintGroup {
 }
 
 pub fn lint_group() -> LintGroup {
-    lint_group_from_json(include_str!("../../proper_noun_rules.json"))
+    lint_group_from_json(include_str!("../../../../proper_noun_rules.json"))
 }
 
 /// Matches every proper noun in `proper_noun_rules.json`, in any capitalization.
-pub(super) fn proper_nouns_expr() -> LongestMatchOf {
+pub(crate) fn proper_nouns_expr() -> LongestMatchOf {
     let rules: HashMap<String, RuleEntry> =
-        serde_json::from_str(include_str!("../../proper_noun_rules.json")).unwrap();
+        serde_json::from_str(include_str!("../../../../proper_noun_rules.json")).unwrap();
 
     LongestMatchOf::new(
         rules
