@@ -81,16 +81,16 @@ export default class HarperPlugin extends Plugin {
 	}
 
 	async onExternalSettingsChange() {
-		await this.reloadSettingsFromDisk();
+		await this.reloadSettingsFromDisk(false);
 	}
 
-	private async reloadSettingsFromDisk() {
+	private async reloadSettingsFromDisk(save = true) {
 		const data = await this.loadData();
 		if (this.state == null) {
 			return;
 		}
 
-		await this.state.initializeFromSettings(data);
+		await this.state.initializeFromSettings(data, save);
 
 		if (!(data?.lintEnabled ?? true)) {
 			this.state.disableEditorLinter(false);
