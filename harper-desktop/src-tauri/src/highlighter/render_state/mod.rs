@@ -109,7 +109,12 @@ impl RenderState {
     /// longer refers to the same rule, span, and source text. Forget the shown suggestion when the
     /// refreshed lint has fewer rows. Conservatively closing on source changes prevents a popup
     /// (and its tip) from silently moving to another occurrence after an edit or lint reordering.
-    pub fn set_lints(&mut self, lints: Vec<ActionableLint>) {
+    ///
+    /// Returns whether the display needs repainting. Compare data rather than callbacks: even an
+    /// identical display must receive fresh suggestion actions targeting the latest OS element.
+    pub fn set_lints(&mut self, lints: Vec<ActionableLint>) -> bool {
+        let changed = !same_lint_display(self.lints(), &lints);
+        let popup_before = (self.highlighted_lint, self.shown_suggestion);
         let same_lint = self.highlighted_lint.is_some_and(|index| {
             self.lints()
                 .get(index)
@@ -132,6 +137,8 @@ impl RenderState {
         self.shown_suggestion = self
             .shown_suggestion
             .filter(|index| row_count.is_some_and(|row_count| *index < row_count));
+
+        changed || popup_before != (self.highlighted_lint, self.shown_suggestion)
     }
 
     fn lints(&self) -> &[ActionableLint] {
@@ -170,6 +177,7 @@ impl RenderState {
         self.highlighted_lint = highlighted_lint;
         self.shown_suggestion = None;
         self.current_sidebar_position = FIRST_ROW_OFFSET;
+        self.last_render = None;
     }
 
     /// Clears all popup-session state, including a selected tip, for every close path.
@@ -221,31 +229,14 @@ impl RenderState {
     /// screen coordinates that lints and hit-testing use, and `window` is the index of the one being
     /// drawn. Lints are moved into that window's coordinates, and only one window draws the popup.
     ///
-    /// Each call also moves the sidebar toward its target by the time since the previous call.
+    /// Only the popup's owning window advances the sidebar animation and requests further frames.
+    /// Once it reaches its target, an unchanged popup needs no ongoing repaint.
     pub fn render(&mut self, ui: &mut egui::Ui, screen_rects: &[egui::Rect], window: usize) {
         let window_rect = screen_rects[window];
         // egui caches text layout internally. Measuring each frame also handles font/DPI changes.
         self.tip_layout = self
             .current_tip
             .map(|tip| TipLayout::new(ui.painter(), tip));
-        let now = Instant::now();
-        let time_since_last_render = self
-            .last_render
-            .map_or(0.0, |last_render| (now - last_render).as_secs_f32());
-        self.last_render = Some(now);
-
-        if let Some(positioned_lint) = self
-            .highlighted_lint
-            .and_then(|index| self.lints().get(index))
-        {
-            let target = sidebar_target(&positioned_lint.lint, self.shown_suggestion);
-            self.current_sidebar_position = approach(
-                self.current_sidebar_position,
-                target,
-                time_since_last_render,
-            );
-        }
-
         for positioned_lint in self.lints() {
             draw_highlight(
                 ui,
@@ -258,6 +249,15 @@ impl RenderState {
             && let Some(positioned_lint) = self.lints().get(index)
             && popup_window(screen_rects, &positioned_lint.rect) == Some(window)
         {
+            let target = sidebar_target(&positioned_lint.lint, self.shown_suggestion);
+            let now = Instant::now();
+            let dt = self
+                .last_render
+                .map_or(0.0, |last| (now - last).as_secs_f32());
+            self.last_render = Some(now);
+            self.current_sidebar_position = approach(self.current_sidebar_position, target, dt);
+
+            let positioned_lint = &self.lints()[index];
             let rect = to_window_space(&positioned_lint.rect, window_rect);
             let layout = popup_layout_for_lint(
                 &rect,
@@ -267,6 +267,7 @@ impl RenderState {
             );
             let lint = positioned_lint.lint.clone();
             let source_text = positioned_lint.source_text.clone();
+            let popup_before = (self.highlighted_lint, self.shown_suggestion);
 
             match render_lint_card(
                 ui,
@@ -340,8 +341,30 @@ impl RenderState {
                 }
                 None => {}
             }
+
+            // Actions happen after painting. Draw their result (including a cleared popup) on the
+            // next frame, and keep the custom flyout animation alive only until it reaches target.
+            let animating = self.highlighted_lint.is_some_and(|index| {
+                self.current_sidebar_position
+                    != sidebar_target(&self.lints()[index].lint, self.shown_suggestion)
+            });
+            if animating || popup_before != (self.highlighted_lint, self.shown_suggestion) {
+                ui.ctx().request_repaint();
+            }
         }
     }
+}
+
+/// Compares the ordered, display-relevant lint data without comparing OS suggestion callbacks.
+/// Source text and rule identity also affect popup validity even when rectangles have not moved.
+fn same_lint_display(old: &[ActionableLint], new: &[ActionableLint]) -> bool {
+    old.len() == new.len()
+        && old.iter().zip(new).all(|(old, new)| {
+            old.rect == new.rect
+                && old.lint == new.lint
+                && old.rule_name == new.rule_name
+                && old.source_text == new.source_text
+        })
 }
 
 /// Converts accessibility rectangles into egui rectangles so rendering and hit-testing use the same
@@ -389,6 +412,257 @@ fn lint_kind_color32(lint_kind: LintKind) -> egui::Color32 {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use harper_core::{
+        Span,
+        linting::{Lint, Suggestion},
+    };
+    use std::{cell::Cell, rc::Rc, time::Duration};
+
+    fn lint_at(x: f64) -> ActionableLint {
+        ActionableLint::new(
+            Rect::new(x, 100.0, 40.0, 20.0),
+            "ExampleRule".to_owned(),
+            Lint {
+                span: Span::new(0, 3),
+                message: "Example message".to_owned(),
+                suggestions: vec![
+                    Suggestion::Remove,
+                    Suggestion::ReplaceWith("the".chars().collect()),
+                ],
+                ..Lint::default()
+            },
+            "teh word".to_owned(),
+            |_| {},
+        )
+    }
+
+    fn state(lints: Vec<ActionableLint>) -> RenderState {
+        RenderState::new(
+            lints,
+            Box::new(|_, _| {}),
+            Box::new(|_| {}),
+            Box::new(|_| {}),
+            Box::new(|| {}),
+        )
+    }
+
+    fn paint_frame(
+        state: &mut RenderState,
+        context: &egui::Context,
+        window: usize,
+        events: Vec<egui::Event>,
+    ) -> Duration {
+        // Advance the custom animation deterministically without sleeping in tests.
+        state.last_render = Some(Instant::now() - Duration::from_millis(16));
+        let output = context.run_ui(
+            egui::RawInput {
+                screen_rect: Some(egui::Rect::from_min_size(
+                    egui::Pos2::ZERO,
+                    SCREENS[window].size(),
+                )),
+                events,
+                ..Default::default()
+            },
+            |ui| state.render(ui, &SCREENS, window),
+        );
+        output.viewport_output[&egui::ViewportId::ROOT].repaint_delay
+    }
+
+    #[test]
+    fn unchanged_empty_lints_do_not_repaint() {
+        let mut state = state(Vec::new());
+        assert!(!state.set_lints(Vec::new()));
+    }
+
+    #[test]
+    fn identical_lints_do_not_repaint_or_close_popup() {
+        let mut state = state(vec![lint_at(100.0)]);
+        state.open_popup(Some(0), || Some("Keep this tip"));
+        assert!(!state.set_lints(vec![lint_at(100.0)]));
+        assert_eq!(state.highlighted_lint, Some(0));
+        assert_eq!(state.current_tip, Some("Keep this tip"));
+    }
+
+    #[test]
+    fn changed_lint_data_repaints() {
+        let changes: [fn(&mut ActionableLint); 11] = [
+            |lint| lint.rect.x += 1.0,
+            |lint| lint.rect.y += 1.0,
+            |lint| lint.rect.width += 1.0,
+            |lint| lint.rect.height += 1.0,
+            |lint| lint.rule_name.push('!'),
+            |lint| lint.source_text.push('!'),
+            |lint| lint.lint.message.push('!'),
+            |lint| lint.lint.span = Span::new(4, 8),
+            |lint| lint.lint.lint_kind = LintKind::Spelling,
+            |lint| lint.lint.suggestions.clear(),
+            |lint| lint.lint.priority = 1,
+        ];
+        for change in changes {
+            let mut state = state(vec![lint_at(100.0)]);
+            let mut changed = lint_at(100.0);
+            change(&mut changed);
+            assert!(state.set_lints(vec![changed]));
+        }
+    }
+
+    #[test]
+    fn adding_removing_and_reordering_lints_repaints() {
+        let mut state = state(Vec::new());
+        assert!(state.set_lints(vec![lint_at(100.0)]));
+        assert!(state.set_lints(vec![lint_at(100.0), lint_at(200.0)]));
+        assert!(state.set_lints(vec![lint_at(200.0), lint_at(100.0)]));
+        assert!(state.set_lints(vec![lint_at(100.0)]));
+        assert!(state.set_lints(Vec::new()));
+        assert!(!state.set_lints(Vec::new()));
+    }
+
+    #[test]
+    fn unchanged_display_still_replaces_suggestion_callback() {
+        let applied = Rc::new(Cell::new(false));
+        let mut state = state(vec![lint_at(100.0)]);
+        let lint = lint_at(100.0);
+        let callback_applied = applied.clone();
+        let updated = ActionableLint::new(
+            lint.rect,
+            lint.rule_name,
+            lint.lint,
+            lint.source_text,
+            move |_| callback_applied.set(true),
+        );
+        assert!(!state.set_lints(vec![updated]));
+        state.last_lints.as_mut().unwrap()[0].apply_suggestion(Suggestion::Remove);
+        assert!(applied.get());
+    }
+
+    #[test]
+    fn moving_lint_preserves_popup_but_repaints() {
+        let mut state = state(vec![lint_at(100.0)]);
+        state.open_popup(Some(0), || None);
+        assert!(state.set_lints(vec![lint_at(200.0)]));
+        assert_eq!(state.highlighted_lint, Some(0));
+    }
+
+    #[test]
+    fn changed_source_closes_popup_and_repaints() {
+        let mut state = state(vec![lint_at(100.0)]);
+        state.open_popup(Some(0), || None);
+        let mut changed = lint_at(100.0);
+        changed.source_text.push('!');
+        assert!(state.set_lints(vec![changed]));
+        assert_eq!(state.highlighted_lint, None);
+    }
+
+    #[test]
+    fn removed_lint_closes_popup_and_repaints() {
+        let mut state = state(vec![lint_at(100.0)]);
+        state.open_popup(Some(0), || None);
+        assert!(state.set_lints(Vec::new()));
+        assert_eq!(state.highlighted_lint, None);
+    }
+
+    #[test]
+    fn removed_suggestion_clears_selected_row_and_repaints() {
+        let mut state = state(vec![lint_at(100.0)]);
+        state.open_popup(Some(0), || None);
+        state.shown_suggestion = Some(1);
+        let mut changed = lint_at(100.0);
+        changed.lint.suggestions.pop();
+        assert!(state.set_lints(vec![changed]));
+        assert_eq!(state.highlighted_lint, Some(0));
+        assert_eq!(state.shown_suggestion, None);
+    }
+
+    #[test]
+    fn static_overlay_stops_requesting_frames() {
+        let context = egui::Context::default();
+        let mut state = state(vec![lint_at(100.0)]);
+        for _ in 0..5 {
+            paint_frame(&mut state, &context, 0, Vec::new());
+        }
+        assert_eq!(
+            paint_frame(&mut state, &context, 0, Vec::new()),
+            Duration::MAX
+        );
+    }
+
+    #[test]
+    fn sidebar_animation_requests_frames_then_stops() {
+        let context = egui::Context::default();
+        let mut state = state(vec![lint_at(100.0)]);
+        state.open_popup(Some(0), || None);
+        for _ in 0..30 {
+            paint_frame(&mut state, &context, 0, Vec::new());
+        }
+        state.shown_suggestion = Some(1);
+        assert_eq!(
+            paint_frame(&mut state, &context, 0, Vec::new()),
+            Duration::ZERO
+        );
+        for _ in 0..100 {
+            paint_frame(&mut state, &context, 0, Vec::new());
+        }
+        assert_eq!(
+            state.current_sidebar_position,
+            sidebar_target(&state.lints()[0].lint, Some(1))
+        );
+        assert_eq!(
+            paint_frame(&mut state, &context, 0, Vec::new()),
+            Duration::MAX
+        );
+    }
+
+    #[test]
+    fn popup_animation_does_not_repaint_other_monitors() {
+        let context = egui::Context::default();
+        let mut state = state(vec![lint_at(100.0)]);
+        state.open_popup(Some(0), || None);
+        state.shown_suggestion = Some(1);
+        for _ in 0..5 {
+            paint_frame(&mut state, &context, 1, Vec::new());
+        }
+        assert_eq!(state.current_sidebar_position, FIRST_ROW_OFFSET);
+        assert_eq!(
+            paint_frame(&mut state, &context, 1, Vec::new()),
+            Duration::MAX
+        );
+    }
+
+    #[test]
+    fn applying_suggestion_requests_frame_to_clear_popup() {
+        let context = egui::Context::default();
+        let mut state = state(vec![lint_at(100.0)]);
+        state.open_popup(Some(0), || None);
+        for _ in 0..30 {
+            paint_frame(&mut state, &context, 0, Vec::new());
+        }
+        let pos = state.popup_layout().unwrap().list.min + egui::vec2(80.0, 20.0);
+        for pressed in [true, false] {
+            let delay = paint_frame(
+                &mut state,
+                &context,
+                0,
+                vec![
+                    egui::Event::PointerMoved(pos),
+                    egui::Event::PointerButton {
+                        pos,
+                        button: egui::PointerButton::Primary,
+                        pressed,
+                        modifiers: egui::Modifiers::NONE,
+                    },
+                ],
+            );
+            assert_eq!(delay, Duration::ZERO);
+        }
+        assert_eq!(state.highlighted_lint, None);
+        for _ in 0..30 {
+            paint_frame(&mut state, &context, 0, Vec::new());
+        }
+        assert_eq!(
+            paint_frame(&mut state, &context, 0, Vec::new()),
+            Duration::MAX
+        );
+    }
 
     /// A built-in display at the origin, with an external display to its left and above it.
     const BUILT_IN: egui::Rect =
