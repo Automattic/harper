@@ -955,13 +955,6 @@
 						},
 						{
 							"Bool": {
-								"name": "BainBane",
-								"state": true,
-								"label": "Bain / Bane"
-							}
-						},
-						{
-							"Bool": {
 								"name": "Bollocks",
 								"state": true,
 								"label": "Bollocks"
@@ -2821,13 +2814,6 @@
 						},
 						{
 							"Bool": {
-								"name": "NobelNoble",
-								"state": true,
-								"label": "Nobel / Noble"
-							}
-						},
-						{
-							"Bool": {
 								"name": "NotIn",
 								"state": true,
 								"label": "Not In"
@@ -2957,20 +2943,6 @@
 								"name": "StrikeOfLuck",
 								"state": true,
 								"label": "Strike Of Luck"
-							}
-						},
-						{
-							"Bool": {
-								"name": "SummarySummery",
-								"state": true,
-								"label": "Summary / Summery"
-							}
-						},
-						{
-							"Bool": {
-								"name": "TenantTenet",
-								"state": true,
-								"label": "Tenant / Tenet"
 							}
 						},
 						{
@@ -3981,13 +3953,6 @@
 						},
 						{
 							"Bool": {
-								"name": "NounVerbConfusion",
-								"state": true,
-								"label": "Noun Verb Confusion"
-							}
-						},
-						{
-							"Bool": {
 								"name": "ObsessPreposition",
 								"state": true,
 								"label": "Obsess Preposition"
@@ -4417,13 +4382,6 @@
 						},
 						{
 							"Bool": {
-								"name": "AltarAlter",
-								"state": true,
-								"label": "Altar / Alter"
-							}
-						},
-						{
-							"Bool": {
 								"name": "AlzheimersDisease",
 								"state": true,
 								"label": "Alzheimers Disease"
@@ -4588,13 +4546,6 @@
 								"name": "AWholeOther",
 								"state": true,
 								"label": "A Whole Other"
-							}
-						},
-						{
-							"Bool": {
-								"name": "BacklashBackslash",
-								"state": true,
-								"label": "Backlash / Backslash"
 							}
 						},
 						{
@@ -5719,13 +5670,6 @@
 						},
 						{
 							"Bool": {
-								"name": "OfOff",
-								"state": true,
-								"label": "Of / Off"
-							}
-						},
-						{
-							"Bool": {
 								"name": "OldestInTheBook",
 								"state": true,
 								"label": "Oldest In The Book"
@@ -5841,13 +5785,6 @@
 								"name": "PaleByComparison",
 								"state": true,
 								"label": "Pale by Comparison"
-							}
-						},
-						{
-							"Bool": {
-								"name": "PassedPast",
-								"state": true,
-								"label": "Passed / Past"
 							}
 						},
 						{
@@ -6223,13 +6160,6 @@
 						},
 						{
 							"Bool": {
-								"name": "ToteTout",
-								"state": true,
-								"label": "Tote/Tout"
-							}
-						},
-						{
-							"Bool": {
 								"name": "ToTheMannerBorn",
 								"state": true,
 								"label": "To The Manner Born"
@@ -6282,13 +6212,6 @@
 								"name": "ViceVersa",
 								"state": true,
 								"label": "Vice Versa"
-							}
-						},
-						{
-							"Bool": {
-								"name": "WaistWaste",
-								"state": true,
-								"label": "Waist / Waste"
 							}
 						},
 						{
@@ -6729,6 +6652,27 @@
 						},
 						{
 							"Bool": {
+								"name": "AltarAlter",
+								"state": true,
+								"label": "Altar / Alter"
+							}
+						},
+						{
+							"Bool": {
+								"name": "BacklashBackslash",
+								"state": true,
+								"label": "Backlash / Backslash"
+							}
+						},
+						{
+							"Bool": {
+								"name": "BainBane",
+								"state": true,
+								"label": "Bain / Bane"
+							}
+						},
+						{
+							"Bool": {
 								"name": "BellowBelow",
 								"state": true,
 								"label": "Bellow Below"
@@ -6813,6 +6757,34 @@
 						},
 						{
 							"Bool": {
+								"name": "NobelNoble",
+								"state": true,
+								"label": "Nobel / Noble"
+							}
+						},
+						{
+							"Bool": {
+								"name": "NounVerbConfusion",
+								"state": true,
+								"label": "Noun Verb Confusion"
+							}
+						},
+						{
+							"Bool": {
+								"name": "OfOff",
+								"state": true,
+								"label": "Of / Off"
+							}
+						},
+						{
+							"Bool": {
+								"name": "PassedPast",
+								"state": true,
+								"label": "Passed / Past"
+							}
+						},
+						{
+							"Bool": {
 								"name": "RogueRouge",
 								"state": true,
 								"label": "Rogue / Rouge"
@@ -6837,6 +6809,20 @@
 								"name": "SneakPeekPreview",
 								"state": true,
 								"label": "Sneak Peek Preview"
+							}
+						},
+						{
+							"Bool": {
+								"name": "SummarySummery",
+								"state": true,
+								"label": "Summary / Summery"
+							}
+						},
+						{
+							"Bool": {
+								"name": "TenantTenet",
+								"state": true,
+								"label": "Tenant / Tenet"
 							}
 						},
 						{
@@ -6897,6 +6883,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ToteTout",
+								"state": true,
+								"label": "Tote/Tout"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ToTooIdioms",
 								"state": true,
 								"label": "To Too Idioms"
@@ -6907,6 +6900,13 @@
 								"name": "VerseAsVerb",
 								"state": true,
 								"label": "Verse As Verb"
+							}
+						},
+						{
+							"Bool": {
+								"name": "WaistWaste",
+								"state": true,
+								"label": "Waist / Waste"
 							}
 						}
 					]
