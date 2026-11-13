@@ -1347,6 +1347,13 @@
 						},
 						{
 							"Bool": {
+								"name": "InterveneIn",
+								"state": true,
+								"label": "Intervene In"
+							}
+						},
+						{
+							"Bool": {
 								"name": "InvestIn",
 								"state": true,
 								"label": "Invest In"

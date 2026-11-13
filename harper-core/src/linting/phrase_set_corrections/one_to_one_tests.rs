@@ -1543,6 +1543,44 @@ fn corrects_investment_into() {
     );
 }
 
+// InterveneIn
+
+#[test]
+fn corrects_intervene_into() {
+    assert_suggestion_result(
+        "And how do I intervene into the system that produced this software to make these misalignments statically not meet acceptance criteria?",
+        test_linter(),
+        "And how do I intervene in the system that produced this software to make these misalignments statically not meet acceptance criteria?",
+    );
+}
+
+#[test]
+fn corrects_governments_intervened_into() {
+    assert_suggestion_result(
+        "Governments have always intervened into energy markets to implement policy goals.",
+        test_linter(),
+        "Governments have always intervened in energy markets to implement policy goals.",
+    );
+}
+
+#[test]
+fn corrects_intervenes_into() {
+    assert_suggestion_result(
+        "Whenever the state intervenes into the economy it just further supports the massive bloated legacy companies who lobby the politicians",
+        test_linter(),
+        "Whenever the state intervenes in the economy it just further supports the massive bloated legacy companies who lobby the politicians",
+    );
+}
+
+#[test]
+fn corrects_intervening_into() {
+    assert_suggestion_result(
+        "I looking at foreign powers intervening into civil wars using R studio.",
+        test_linter(),
+        "I looking at foreign powers intervening in civil wars using R studio.",
+    );
+}
+
 // LayoutVerb
 
 #[test]
