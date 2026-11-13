@@ -1,39 +1,58 @@
-import { mkdir, rm } from 'node:fs/promises';
-import path from 'node:path';
-import { test as base, expect } from '@playwright/test';
-import { withExtension } from 'playwright-webextext';
+import { mkdir, rm } from "node:fs/promises";
+import path from "node:path";
+import { test as base, expect } from "@playwright/test";
+import { withExtension } from "playwright-webextext";
+import { installPassiveRecorder } from "../../../.ci-diagnostic/recorder.cjs";
 
-const pathToExtension = path.join(import.meta.dirname, '../build');
-const welcomeUrl = 'https://writewithharper.com/install-browser-extension';
+const pathToExtension = path.join(import.meta.dirname, "../build");
+const welcomeUrl = "https://writewithharper.com/install-browser-extension";
 
 const test = base.extend({
 	context: [
-		async ({ playwright, browserName, contextOptions, launchOptions, headless }, use, testInfo) => {
-			if (browserName === 'chromium' && headless) {
-				throw new Error('Chromium extensions require headed mode');
+		async (
+			{ playwright, browserName, contextOptions, launchOptions, headless },
+			use,
+			testInfo,
+		) => {
+			if (browserName === "chromium" && headless) {
+				throw new Error("Chromium extensions require headed mode");
 			}
 
-			const profile = testInfo.outputPath('browser-profile');
+			const profile = testInfo.outputPath("browser-profile");
 			await mkdir(profile, { recursive: true });
 
-			const browserType = withExtension(playwright[browserName], pathToExtension);
+			const browserType = withExtension(
+				playwright[browserName],
+				pathToExtension,
+			);
 			const context = await browserType.launchPersistentContext(profile, {
 				...contextOptions,
 				...launchOptions,
 				headless,
 			});
 
+			await context.addInitScript({
+				content: `(${installPassiveRecorder.toString()})()`,
+			});
+
 			try {
 				// The install tab can steal focus and pause Firefox's animation frames.
 				// Stub its network load, then close it before creating the test page.
 				await context.route(`${welcomeUrl}**`, (route) =>
-					route.fulfill({ contentType: 'text/html', body: '<title>Installed</title>' }),
+					route.fulfill({
+						contentType: "text/html",
+						body: "<title>Installed</title>",
+					}),
 				);
 				await expect
-					.poll(() => context.pages().some((page) => page.url().startsWith(welcomeUrl)), {
-						timeout: 90000,
-						message: 'The extension install hook should open its welcome tab',
-					})
+					.poll(
+						() =>
+							context.pages().some((page) => page.url().startsWith(welcomeUrl)),
+						{
+							timeout: 90000,
+							message: "The extension install hook should open its welcome tab",
+						},
+					)
 					.toBe(true);
 				for (const page of context.pages()) {
 					if (page.url().startsWith(welcomeUrl)) await page.close();
@@ -44,10 +63,12 @@ const test = base.extend({
 				// A normal page works in Firefox too, which does not expose background pages.
 				const startupPage = await context.newPage();
 				try {
-					await startupPage.goto('http://localhost:8081/simple_textarea.html');
+					await startupPage.goto("http://localhost:8081/simple_textarea.html");
 					await startupPage.bringToFront();
-					await startupPage.locator('textarea').fill('This is an test');
-					await expect(startupPage.locator('#harper-highlight').first()).toBeVisible({
+					await startupPage.locator("textarea").fill("This is an test");
+					await expect(
+						startupPage.locator("#harper-highlight").first(),
+					).toBeVisible({
 						timeout: 90000,
 					});
 				} finally {
@@ -60,8 +81,41 @@ const test = base.extend({
 				await rm(profile, { recursive: true, force: true });
 			}
 		},
-		{ scope: 'test', timeout: 120000 },
+		{ scope: "test", timeout: 120000 },
 	],
+	page: async ({ context }, use, testInfo) => {
+		const page = await context.newPage();
+		try {
+			await use(page);
+		} finally {
+			const frames = [];
+			for (const frame of page.frames()) {
+				try {
+					frames.push({
+						url: frame.url(),
+						data: await frame.evaluate(() =>
+							(window as any).__harperCIDiagnostic?.export(),
+						),
+					});
+				} catch (error) {
+					frames.push({ url: frame.url(), error: String(error) });
+				}
+			}
+			await testInfo.attach("passive-browser-events", {
+				contentType: "application/json",
+				body: Buffer.from(
+					JSON.stringify({
+						title: testInfo.titlePath,
+						repeat: testInfo.repeatEachIndex,
+						worker: testInfo.workerIndex,
+						status: testInfo.status,
+						browser: context.browser()?.version(),
+						frames,
+					}),
+				),
+			});
+		}
+	},
 });
 
 export { test, expect };

@@ -1,0 +1,52 @@
+name: Browser Failure Diagnostic
+
+on:
+  push:
+    branches: ['ci/browser-failure-trace-20261112']
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  chromium-passive-trace:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+      - name: Record runner tools
+        run: |
+          node --version
+          npm --version
+          Xvfb -help 2>&1 || true
+          command -v xvfb-run
+      - name: Install approved diagnostic dependencies
+        run: |
+          npm install --prefix "$HOME/bin/harper-ci-diagnostic" --ignore-scripts --no-package-lock @playwright/test@1.65.0 playwright-webextext@0.0.5 http-server@14.1.1
+          PLAYWRIGHT_BROWSERS_PATH="$HOME/bin/harper-ci-browsers" node "$HOME/bin/harper-ci-diagnostic/node_modules/playwright/cli.js" install chromium
+          python3 -c 'import os; from pathlib import Path; p=Path("packages/chrome-plugin/node_modules"); assert not p.exists(); p.symlink_to(Path.home()/"bin/harper-ci-diagnostic/node_modules", target_is_directory=True)'
+      - name: Retrieve and verify the unchanged same-SHA extension
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api repos/Automattic/harper/actions/artifacts/14001621916/zip > "$RUNNER_TEMP/chrome-artifact.zip"
+          CI_DIAGNOSTIC_ARCHIVE="$RUNNER_TEMP/chrome-artifact.zip" python3 .ci-diagnostic/prepare.py
+      - name: Run original assertions with passive tracing
+        working-directory: packages/chrome-plugin
+        env:
+          CI: 'true'
+        run: |
+          export PLAYWRIGHT_BROWSERS_PATH="$HOME/bin/harper-ci-browsers"
+          node "$HOME/bin/harper-ci-diagnostic/node_modules/playwright/cli.js" --version
+          xvfb-run -a node "$HOME/bin/harper-ci-diagnostic/node_modules/playwright/cli.js" test --config=ci-diagnostic.config.ts --headed --project=chromium
+      - name: Retain diagnostic evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: browser-failure-diagnostic
+          path: packages/chrome-plugin/diagnostic-output/
+          if-no-files-found: warn
+          retention-days: 7
