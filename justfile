@@ -351,13 +351,10 @@ test-firefox-plugin: build-firefox-plugin
   cd "{{justfile_directory()}}/packages/chrome-plugin"
   pnpm playwright install
 
-  # For environments without displays like CI servers or containers
-  if [[ "$(uname)" == "Linux" ]]; then
-    env -u WAYLAND_DISPLAY XDG_SESSION_TYPE=x11 \
-    xvfb-run --auto-servernum pnpm test --project firefox 
-  else
-    pnpm test --project firefox 
-  fi
+  # Run Firefox headless: `pnpm test` passes `--headed`, which Chromium needs for extensions
+  # but Firefox doesn't. On a virtual display every headed window opens in the same place,
+  # and Firefox stops drawing frames for windows that are covered, which stalls the tests.
+  pnpm exec playwright test --project firefox
 
 # Run VSCode plugin unit and integration tests.
 alias test-vscode-extension := test-vscode
