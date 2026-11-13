@@ -933,7 +933,7 @@ run-snapshots:
 ls-config mode="brief":
   #! /usr/bin/env node
   const verbose = '{{mode}}' === 'verbose';
-  const config = JSON.parse(require('fs').readFileSync(require('path').join('{{justfile_directory()}}', 'harper-core/default_config.json'), 'utf8')).settings;
+  const config = JSON.parse(require('fs').readFileSync(require('path').join('{{justfile_directory()}}', 'harper-core/src/lang/en/linting/default_config.json'), 'utf8')).settings;
   
   const formatLine = (items, maxLen = 120) => {
     const lines = [];
@@ -963,7 +963,7 @@ ls-config mode="brief":
 grep-config query:
   #! /usr/bin/env node
   const q = '{{query}}'.toLowerCase();
-  const config = JSON.parse(require('fs').readFileSync(require('path').join('{{justfile_directory()}}', 'harper-core/default_config.json'), 'utf8')).settings;
+  const config = JSON.parse(require('fs').readFileSync(require('path').join('{{justfile_directory()}}', 'harper-core/src/lang/en/linting/default_config.json'), 'utf8')).settings;
   
   config.filter(g => g.Group.label.toLowerCase().includes(q) || g.Group.description.toLowerCase().includes(q))
         .forEach(g => console.log(`\x1b[1m${g.Group.label}\x1b[0m: \x1b[36m${g.Group.description}\x1b[0m`));
@@ -996,7 +996,7 @@ bench-wasm:
 grep-config-settings query:
   #! /usr/bin/env node
   const q = '{{query}}'.toLowerCase();
-  const config = JSON.parse(require('fs').readFileSync(require('path').join('{{justfile_directory()}}', 'harper-core/default_config.json'), 'utf8')).settings;
+  const config = JSON.parse(require('fs').readFileSync(require('path').join('{{justfile_directory()}}', 'harper-core/src/lang/en/linting/default_config.json'), 'utf8')).settings;
   
   const formatLine = (items, maxLen = 120) => {
     const lines = [];
@@ -1030,7 +1030,7 @@ sort-config-settings:
   #! /usr/bin/env node
   const fs = require('fs');
   const path = require('path');
-  const configPath = path.join('{{justfile_directory()}}', 'harper-core/default_config.json');
+  const configPath = path.join('{{justfile_directory()}}', 'harper-core/src/lang/en/linting/default_config.json');
   const inputJson = JSON.parse(fs.readFileSync(configPath, 'utf8'));
 
   // Sort the nested child settings

@@ -53,7 +53,7 @@ impl ExprLinter for BellowBelow {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{bellow_below::BellowBelow, tests::assert_no_lints};
+    use crate::linting::{en::bellow_below::BellowBelow, tests::assert_no_lints};
 
     use super::BellowBelow as Rule;
     use crate::linting::tests::assert_suggestion_result;

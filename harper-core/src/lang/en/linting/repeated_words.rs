@@ -1,7 +1,7 @@
+use super::informal_laughter::is_informal_laughter;
 use super::{Lint, LintKind, Linter, Suggestion};
 use crate::TokenStringExt;
 use crate::char_string::char_string;
-use crate::linting::informal_laughter::is_informal_laughter;
 use crate::{CharString, CharStringExt, Document, Span};
 
 #[derive(Debug, Clone)]

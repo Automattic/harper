@@ -3040,7 +3040,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "A linter skeleton for contributors to copy into `harper_core/src/linting/` and rename."
+					"description": "A linter skeleton for contributors to copy into `harper_core/src/lang/en/linting/` and rename."
 				},
 				"harper.linters.ItCan": {
 					"scope": "resource",
@@ -4102,7 +4102,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "A linter skeleton for contributors to copy into `harper_core/src/linting/` and rename."
+					"description": "A linter skeleton for contributors to copy into `harper_core/src/lang/en/linting/` and rename."
 				},
 				"harper.linters.OutOfDate": {
 					"scope": "resource",
