@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
-          fetch-depth: 2
+          fetch-depth: 3
       - name: Record runner tools
         run: |
           node --version
@@ -26,6 +26,7 @@ jobs:
       - name: Install approved diagnostic dependencies
         run: |
           npm install --prefix "$HOME/bin/harper-ci-diagnostic" --ignore-scripts --no-package-lock @playwright/test@1.65.0 playwright-webextext@0.0.5 http-server@14.1.1
+          npm install --prefix "$HOME/bin/harper-ci-diagnostic" --ignore-scripts --no-package-lock tslib@2.8.1
           PLAYWRIGHT_BROWSERS_PATH="$HOME/bin/harper-ci-browsers" node "$HOME/bin/harper-ci-diagnostic/node_modules/playwright/cli.js" install chromium
           python3 -c 'import os; from pathlib import Path; p=Path("packages/chrome-plugin/node_modules"); assert not p.exists(); p.symlink_to(Path.home()/"bin/harper-ci-diagnostic/node_modules", target_is_directory=True)'
       - name: Retrieve and verify the unchanged same-SHA extension
