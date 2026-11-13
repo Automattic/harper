@@ -6,10 +6,10 @@ use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::patterns::AnyPattern;
 use crate::patterns::UPOSSet;
-use crate::{Token, TokenStringExt};
+use crate::{CharStringExt, Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind};
-use crate::linting::expr_linter::Chunk;
+use crate::linting::expr_linter::{Chunk, find_the_only_token_matching};
 
 pub struct MissingPreposition {
     expr: SequenceExpr,
@@ -45,8 +45,19 @@ impl ExprLinter for MissingPreposition {
         &self.expr
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         if matched_tokens.last()?.kind.is_upos(UPOS::ADP) {
+            return None;
+        }
+
+        // A form of "have" before an adjective and a noun is usually the main
+        // verb of possession ("it has new formats"), which needs no preposition.
+        let aux =
+            find_the_only_token_matching(matched_tokens, source, |t, _| t.kind.is_upos(UPOS::AUX))?;
+        if aux
+            .get_ch(source)
+            .eq_any_ignore_ascii_case_str(&["has", "have", "had", "having"])
+        {
             return None;
         }
 
@@ -145,5 +156,22 @@ mod tests {
             "Each agent has specific tools and tasks orchestrated through a crew workflow.",
             MissingPreposition::default(),
         );
+    }
+
+    #[test]
+    fn allows_has_as_main_verb_issue_4581() {
+        assert_no_lints(
+            "The A18 Pro user space is very different from the M1/M2; it has new descriptor formats, a new layout.",
+            MissingPreposition::default(),
+        );
+    }
+
+    #[test]
+    fn allows_other_forms_of_have_as_main_verb() {
+        assert_no_lints(
+            "The old house had large windows.",
+            MissingPreposition::default(),
+        );
+        assert_no_lints("Our cats have green eyes.", MissingPreposition::default());
     }
 }
