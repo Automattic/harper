@@ -1,5 +1,6 @@
 use crate::Token;
-use crate::expr::{DurationExpr, Expr, SequenceExpr};
+use crate::expr::{Expr, SequenceExpr};
+use crate::lang::en::expr::DurationExpr;
 use crate::linting::expr_linter::Chunk;
 use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::token_string_ext::TokenStringExt;
