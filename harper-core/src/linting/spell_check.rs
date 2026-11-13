@@ -1,6 +1,7 @@
 use std::num::NonZero;
 
 use lru::LruCache;
+use smallvec::ToSmallVec;
 
 #[cfg(feature = "context-ranking")]
 use crate::spell::{MAX_RANKED_CANDIDATES, surrounding_words};
@@ -164,6 +165,15 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
                 }
             }
 
+            // `OrthographicConsistency` leaves two-letter words to us, since they're often typos.
+            // Offer the all-caps form last, so that `uk` can still become `UK`.
+            if word_chars.len() == 2
+                && let Some(canonical) = self.dictionary.get_correct_capitalization_of(word_chars)
+                && canonical.iter().all(|c| c.is_uppercase())
+            {
+                possibilities.push(canonical.to_smallvec());
+            }
+
             let suggestions: Vec<_> = possibilities
                 .iter()
                 .map(|sug| Suggestion::ReplaceWith(sug.to_vec()))
@@ -212,7 +222,7 @@ mod tests {
     use crate::dict_word_metadata::DialectFlags;
     use crate::linting::Linter;
     use crate::linting::pooled_linter::for_tests::create_test_pool;
-    use crate::linting::tests::assert_no_lints;
+    use crate::linting::tests::{assert_good_and_bad_suggestions, assert_no_lints};
     use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
     use crate::{
         Dialect,
@@ -255,11 +265,31 @@ mod tests {
     }
 
     #[test]
+    fn lowercase_uk_suggests_all_caps() {
+        assert_good_and_bad_suggestions(
+            "We flew to the uk.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            &["We flew to the UK."],
+            &[],
+        );
+    }
+
+    #[test]
     fn american_spelling_in_name_in_british_dialect() {
         assert_lint_count(
             "The attack on Pearl Harbor came before Labor Day.",
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
             0,
+        );
+    }
+
+    #[test]
+    fn title_case_nz_suggests_all_caps() {
+        assert_good_and_bad_suggestions(
+            "We flew to Nz.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            &["We flew to NZ."],
+            &[],
         );
     }
 
@@ -278,6 +308,24 @@ mod tests {
             "The ship left the harbor near Pearl Harbor.",
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
             1,
+        );
+    }
+
+    #[test]
+    fn british_ise_words_in_british_dialect() {
+        assert_lint_count(
+            "We anonymise it with the customisable tokeniser, then we synthesised the results.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            0,
+        );
+    }
+
+    #[test]
+    fn british_ise_words_in_american_dialect() {
+        assert_lint_count(
+            "We anonymise it with the customisable tokeniser, then we synthesised the results.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            4,
         );
     }
 

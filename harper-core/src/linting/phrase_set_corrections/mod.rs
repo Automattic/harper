@@ -226,6 +226,17 @@ pub fn lint_group() -> LintGroup {
             "Tries to correct typos of `dose` to `does`.",
             LintKind::Typo
         ),
+        "DoubleDown" => (
+            &[
+                ("dabble down", "double down"),
+                ("dabbled down", "doubled down"),
+                ("dabbles down", "doubles down"),
+                ("dabbling down", "doubling down"),
+            ],
+            "Did you mean `double down`?",
+            "Corrects `dabble down` to `double down`.",
+            LintKind::Style
+        ),
         "ExpandAlgorithm" => (
             &[
                 ("algo", "algorithm"),
