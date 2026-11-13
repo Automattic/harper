@@ -82,7 +82,7 @@ impl<D: Dictionary> ExprLinter for RegularIrregulars<D> {
                 irregulars, word
             ),
             suggestions,
-            priority: 62, // higher priority (lower number) than `SpellCheck` (which is 63)
+            priority: 31,
         })
     }
 }
