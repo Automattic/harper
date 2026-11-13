@@ -1,0 +1,12 @@
+expr main <[(acquainted to), ([acquaint, acquainted, acquainting, acquaints] [myself, yourself, himself, herself, itself, ourselves, yourselves, themselves] to)], to>
+
+let message "The standard preposition after `acquaint` is `with`, not `to`."
+let description "Corrects `to` used with `acquaint` instead of the correct `with`."
+let kind "Usage"
+let becomes "with"
+
+test "You can get acquainted to C++ features on an as-needed basis." "You can get acquainted with C++ features on an as-needed basis."
+test "I kindly request that you allow me the privilege to acquaint myself to your esteemed persona" "I kindly request that you allow me the privilege to acquaint myself with your esteemed persona"
+test "how to use the navigation system while I'm also acquainting myself to an unfamiliar car" "how to use the navigation system while I'm also acquainting myself with an unfamiliar car"
+test "and actually were more open to acquainting ourselves to new strangers we met in public" "and actually were more open to acquainting ourselves with new strangers we met in public"
+test "As FanDuel Casino introduces and acquaints itself to people across North America" "As FanDuel Casino introduces and acquaints itself with people across North America"
