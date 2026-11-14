@@ -1,7 +1,8 @@
-expr prepositions [to, with, for, about, against, between, among, around, toward, towards, through, beyond, behind, across, near, inside, outside]
+expr prepositions [to, with, about, against, between, among, around, toward, towards, through, beyond, behind, across, near, inside, outside]
+# `for` can also act as a coordinating conjunction introducing a finite clause, where `they` is the subject
 # Most of these are also nouns. In "the help they received", `they` is the subject of the verb that follows, so skip those
 expr verbs [call, contact, invite, remind, ask, see, watch, help, trust, send, support, follow, visit, tell, thank, mention, show]
-expr main [<(@prepositions they), they>, <[(@verbs they ![VERB, AUX]), (@verbs they.)], they>]
+expr main [<(@prepositions they), they>, <[(for they ![VERB, AUX]), (for they.)], they>, <[(@verbs they ![VERB, AUX]), (@verbs they.)], they>]
 
 let message "Use `them` when the pronoun follows a preposition or transitive verb."
 let description "Converts `they` to `them` whenever the pronoun serves as an object after common prepositions or actions that take direct objects."
@@ -28,6 +29,8 @@ test "Show they how the tool works." "Show them how the tool works."
 
 test "Mention they in your update." "Mention them in your update."
 test "I will call they." "I will call them."
+test "This gift is for they." "This gift is for them."
+test "Wait for they at the station." "Wait for them at the station."
 
 # True negatives
 
@@ -40,3 +43,6 @@ allows "Whether they had families could affect the help they received."
 allows "We gave them the support they needed."
 allows "That was the show they watched."
 allows "The trust they built took years."
+allows "At least their deaths are not meaningless, for they shall all be unified into the white and delightsome hosts of Heaven."
+allows "For they know not what they do."
+allows "Rejoice, for they have returned safely."
