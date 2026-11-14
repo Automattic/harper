@@ -2626,7 +2626,9 @@ dependencies = [
  "harper-tex",
  "harper-typst",
  "hashbrown 0.16.1",
+ "mdream",
  "rayon",
+ "reqwest",
  "serde",
  "serde_json",
  "strum 0.28.0",
@@ -3601,6 +3603,12 @@ name = "md5"
 version = "0.8.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7ebb8d8732c6a6df3d8f032a82911cfc747e00efb95cc46e8d0acd5b5b88570c"
+
+[[package]]
+name = "mdream"
+version = "2.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5424a4181fc304424e4428181e874870481aef02ce685a0221cf51c4213d9d0a"
 
 [[package]]
 name = "memchr"

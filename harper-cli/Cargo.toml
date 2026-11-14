@@ -29,6 +29,8 @@ strum_macros = "0.28.0"
 harper-ink = { version = "3.0.0", path = "../harper-ink" }
 enum_dispatch = "0.3.13"
 yansi = "1.0.1"
+mdream = "2.1.0"
+reqwest = { version = "0.12", default-features = false, features = ["blocking", "rustls-tls"] }
 
 [dev-dependencies]
 tempfile = "3"

@@ -59,8 +59,8 @@ struct Cli {
 enum Args {
     /// Lint provided documents.
     Lint {
-        /// The text or file you wish to grammar check. If not provided, it will be read from
-        /// standard input.
+        /// The text, file, or URL you wish to grammar check. If not provided, it will be read
+        /// from standard input.
         inputs: Vec<AnyInput>,
         /// Whether to merely print out the number of errors encountered,
         /// without further details. Only valid with the default output format.
