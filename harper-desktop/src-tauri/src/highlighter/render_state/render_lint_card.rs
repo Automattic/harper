@@ -828,6 +828,8 @@ fn suggestion_text(suggestion: &Suggestion) -> String {
         Suggestion::ReplaceWith(_) => "Replace".to_owned(),
         Suggestion::InsertAfter(_) => "Insert After".to_owned(),
         Suggestion::Remove => "Remove".to_owned(),
+        Suggestion::RemovePrefix(_) => "Remove Prefix".to_owned(),
+        Suggestion::RemoveSuffix(_) => "Remove Suffix".to_owned(),
     }
 }
 
@@ -843,6 +845,8 @@ fn suggestion_hover_text(suggestion: &Suggestion, problem_text: &str) -> String 
             chars.iter().collect::<String>()
         ),
         Suggestion::Remove => format!("Click to remove \"{problem_text}\""),
+        Suggestion::RemovePrefix(_) => format!("Click to remove prefix from \"{problem_text}\""),
+        Suggestion::RemoveSuffix(_) => format!("Click to remove suffix from \"{problem_text}\""),
     }
 }
 
