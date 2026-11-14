@@ -189,6 +189,13 @@ pub fn followed_by_hyphen(context: Option<(&[Token], &[Token])>) -> bool {
     followed_by_token(context, |hy| hy.kind.is_hyphen())
 }
 
+pub fn following_word<'a>(context: Option<(&'a [Token], &'a [Token])>) -> Option<&'a Token> {
+    context.and_then(|(_, after)| match after {
+        [ws, word, ..] if ws.kind.is_whitespace() && word.kind.is_word() => Some(word),
+        _ => None,
+    })
+}
+
 /// Counterintuitively, a sentence includes the whitespace after
 /// the sentence-final punctuation.
 pub fn at_start_of_sentence(context: Option<(&[Token], &[Token])>) -> bool {
@@ -218,6 +225,13 @@ pub fn preceded_by_word(
         return predicate(word);
     }
     false
+}
+
+pub fn preceding_word<'a>(context: Option<(&'a [Token], &'a [Token])>) -> Option<&'a Token> {
+    context.and_then(|(before, _)| match before {
+        [.., ws, word] if ws.kind.is_whitespace() && word.kind.is_word() => Some(word),
+        _ => None,
+    })
 }
 
 /// Check for sentence context surrounding a matched span on both sides.
