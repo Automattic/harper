@@ -1,0 +1,34 @@
+expr aux [have, has, had]
+expr main <[(@aux do ![not, NOUN, PROG, -]), (@aux do.), (@aux do?), (@aux do,)], do>
+
+let message "Add `to` before `do`, or use `done`."
+let description "Catches `have do` where `have to do` or `have done` was meant."
+let kind "Grammar"
+let scope "Sentence"
+let becomes ["to do", "done"]
+let strategy "MatchCase"
+
+# real sentences from Hacker News
+test "There is no value in the UI, in fact I hate it, but I have do it anyway, because it's the only way to get the answers I need." "There is no value in the UI, in fact I hate it, but I have to do it anyway, because it's the only way to get the answers I need."
+test "Now he has do something about it because the bear will keep returning until he has nothing left." "Now he has to do something about it because the bear will keep returning until he has nothing left."
+test "They had do it the old-fashioned way by reaching people via publications or organizations." "They had to do it the old-fashioned way by reaching people via publications or organizations."
+test "We had do an actual video session with ID." "We had to do an actual video session with ID."
+# made-up sentences
+test "I have do the report today." "I have to do the report today."
+test "She has do it again." "She has to do it again."
+test "We had do it ourselves." "We had to do it ourselves."
+test "I HAVE DO IT NOW." "I HAVE TO DO IT NOW."
+test "That is what I have do." "That is what I have to do."
+test "Sorry, I have do this first." "Sorry, I have to do this first."
+
+# correct text
+allows "I have to do the report today."
+allows "I have done it before."
+allows "Do I have to do it?"
+allows "We had done it already."
+# look-alikes that must not be flagged
+allows "We have do-it-yourself kits."
+allows "We had doing it right in mind."
+allows "What we have, do share it."
+allows "If I have Do Not Track set, the site still tracks me."
+allows "We have do loops in the legacy code."
