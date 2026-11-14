@@ -49,7 +49,6 @@ pub use dict_word_metadata::{
     AdverbData, ConjunctionData, Degree, DeterminerData, DictWordMetadata, NounData, PronounData,
     VerbData, VerbForm, VerbFormFlags,
 };
-pub use dict_word_metadata::{EnglishDialect, EnglishDialectFlags};
 pub use dict_word_metadata_orthography::{OrthFlags, Orthography};
 pub use document::Document;
 pub use fat_token::{FatStringToken, FatToken};
@@ -57,8 +56,9 @@ pub use ignored_lints::{IgnoredLints, LintContext};
 pub use indefinite_article::{InitialSound, starts_with_vowel};
 pub use irregular_nouns::IrregularNouns;
 pub use irregular_verbs::IrregularVerbs;
+pub use lang::en::dialect::{EnglishDialect, EnglishDialectFlags};
 // The old name, so code written for it keeps working.
-pub use dict_word_metadata::EnglishDialectFlags as DialectFlags;
+pub use lang::en::dialect::EnglishDialectFlags as DialectFlags;
 pub use lang::{Language, LanguageFamily};
 
 /// The old name of [`EnglishDialect`].
