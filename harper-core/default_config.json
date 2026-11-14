@@ -5579,6 +5579,13 @@
 						},
 						{
 							"Bool": {
+								"name": "MoralMorale",
+								"state": true,
+								"label": "Moral / Morale"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Monumentous",
 								"state": true,
 								"label": "Monumentous"

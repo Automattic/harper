@@ -1,0 +1,25 @@
+# `moral` (ethics or lesson) is often confused with `morale` (spirit or confidence).
+expr verb [boost, boosts, boosted, boosting, bolster, bolsters, bolstered, bolstering, lift, lifts, lifted, lifting, raise, raises, raised, raising, improve, improves, improved, improving, hurt, hurts, hurting, lower, lowers, lowered, lowering, undermine, undermines, undermined, undermining, destroy, destroys, destroyed, destroying, crush, crushes, crushed, crushing, sap, saps, sapped, sapping, shatter, shatters, shattered, shattering]
+expr group [team, employee, staff, troop, worker, player, soldier, student, crew, group, office, company, workplace]
+expr copula [is, was, has, seems, remains]
+expr state [high, low, soaring, plummeting, dropping, sinking, flagging, fading, crumbling, collapsing]
+expr main [<(@verb moral ![NOUN, ADJ]), moral>, <(@verb moral.), moral>, <(@group moral ![NOUN, ADJ]), moral>, <(@group moral.), moral>, <([low, high, poor, good, strong] moral [is, was, among, within, across]), moral>, <(moral @copula @state), moral>]
+
+let message "Did you mean `morale`? `Moral` relates to ethics or a lesson; `morale` refers to spirit or confidence."
+let description "Corrects `moral` to `morale` when referring to spirit, confidence, or enthusiasm."
+let kind "Malapropism"
+let becomes "morale"
+let strategy "MatchCase"
+
+test "The offsite helped boost moral across the engineering org." "The offsite helped boost morale across the engineering org."
+test "Constant delays can hurt moral." "Constant delays can hurt morale."
+test "Team moral is high heading into the release." "Team morale is high heading into the release."
+test "Employee moral has been dropping all quarter." "Employee morale has been dropping all quarter."
+test "With staff moral at a record low, changes were needed." "With staff morale at a record low, changes were needed."
+test "High moral among the crew kept the project moving." "High morale among the crew kept the project moving."
+
+allows "The moral of the story is clear."
+allows "We should never compromise our moral values."
+allows "Public policy cannot ignore moral philosophy."
+allows "They refused to lower moral standards for short-term gain."
+allows "We discussed moral responsibility during the seminar."
