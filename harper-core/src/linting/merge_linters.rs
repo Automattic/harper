@@ -34,6 +34,17 @@ macro_rules! merge_linters {
                     fn description(&self) -> &'static str {
                         $desc
                     }
+
+                    fn merged_linter_child_names(&self) -> Vec<&'static str> {
+                        let mut names = Vec::new();
+
+                        $(
+                            names.push(stringify!($linter));
+                            names.extend(self.[< $linter:snake >].merged_linter_child_names());
+                        )*
+
+                        names
+                    }
                 }
             }
         }
