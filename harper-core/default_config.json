@@ -2374,6 +2374,13 @@
 						},
 						{
 							"Bool": {
+								"name": "YourPredicativeAdverb",
+								"state": true,
+								"label": "Your Predicative Adverb"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Yourself",
 								"state": true,
 								"label": "Yourself"
