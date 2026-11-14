@@ -1,0 +1,51 @@
+# For house styles that quote "no" when it names an answer or a button (Click "No" to cancel).
+# Many guides leave it unquoted, or bold a button label instead. Weir can't see formatting, so a
+# bold label ("Click **No**") is flagged too.
+expr verbs [click, clicks, clicked, clicking, press, presses, pressed, pressing, tap, taps, tapped, tapping, select, selects, selected, selecting, reply, replies, replied, replying, respond, responds, responded, responding, answer, answers, answered, answering, vote, votes, voted, voting, text, texts, texted, texting, type, types, typed, typing]
+# Before a noun, an adjective or a comparative, "no" is a determiner (answer no questions,
+# type no longer, reply no further), and before "one" it's a pronoun (text no one reads).
+# A hyphen makes it part of a word (select No-Rush Shipping).
+expr nounPhrase [NOUN, ADJ, more, less, longer, later, sooner, further, one]
+expr main <(@verbs no![-, ( @nounPhrase)]), (no)>
+
+let message "Quote `no` when it names an answer or a button."
+let description "Suggests quotation marks around `no` after a verb like click, answer, reply or vote."
+let kind "Style"
+let becomes ["\"no\"", "'no'", "\“no\”", "‘no’"]
+let strategy "MatchCase"
+
+# True positives
+test "Click No to cancel." "Click \"No\" to cancel."
+test "Press No to keep your changes." "Press \"No\" to keep your changes."
+test "Tap No to stay signed in." "Tap \"No\" to stay signed in."
+test "Select No and continue." "Select \"No\" and continue."
+test "Reply NO to stop these messages." "Reply \"NO\" to stop these messages."
+test "Respond no to cancel." "Respond \"no\" to cancel."
+test "I answered no to both questions." "I answered \"no\" to both questions."
+test "She replies no to every invite." "She replies \"no\" to every invite."
+test "They voted no on the bill." "They voted \"no\" on the bill."
+test "Text NO to opt out." "Text \"NO\" to opt out."
+test "Type no to cancel." "Type \"no\" to cancel."
+test "When asked, click No." "When asked, click \"No\"."
+test "Then click No, not Yes." "Then click \"No\", not Yes."
+
+# True negatives
+allows "Click \"No\" to cancel."
+allows "Click \“No\” to cancel."
+allows "There is no way to cancel."
+allows "Click the No button to cancel."
+allows "I said no to the offer."
+allows "The text no longer fits on the screen."
+allows "This type no longer exists."
+allows "Select no more than three items."
+allows "Select no less than two."
+allows "Type no fewer than eight characters."
+allows "Reply no later than Friday."
+allows "Reply no sooner than Monday."
+allows "Answer no questions about it."
+allows "Select no new items."
+allows "Text no one after midnight."
+allows "Pages of legal text no one reads."
+allows "I will reply no further on this."
+allows "Select No-Rush Shipping at checkout."
+allows "Use the one-click no-signup checkout."

@@ -5,6 +5,7 @@ use lru::LruCache;
 
 use super::ast::AstVariable;
 use super::inc_by_spaces;
+use crate::lexing::is_double_quote;
 use crate::{CharStringExt, Punctuation, Token, TokenKind, TokenStringExt};
 
 use super::expr::parse_seq;
@@ -248,13 +249,29 @@ fn parse_quoted_string(tokens: &[Token], source: &[char]) -> Result<FoundNode<St
 
     let end = end.ok_or(Error::EndOfInput)?;
 
+    let raw = tokens[cursor + 1..end]
+        .span()
+        .unwrap_or_default()
+        .get_content(source);
+
     Ok(FoundNode {
-        node: tokens[cursor + 1..end]
-            .span()
-            .unwrap_or_default()
-            .get_content_string(source),
+        node: unescape(raw),
         next_idx: end + 1,
     })
+}
+
+/// Drop the backslash before an escaped backslash or double quote ([`is_double_quote`]), so
+/// `"say \"no\""` holds `say "no"`. Any other backslash is kept.
+fn unescape(raw: &[char]) -> String {
+    let mut chars = raw.iter().copied().peekable();
+
+    std::iter::from_fn(|| match chars.next()? {
+        '\\' => chars
+            .next_if(|&c| c == '\\' || is_double_quote(c))
+            .or(Some('\\')),
+        c => Some(c),
+    })
+    .collect()
 }
 
 #[cfg(test)]
@@ -264,6 +281,47 @@ mod tests {
     use crate::char_string::char_string;
 
     use super::{AstExprNode, AstStmtNode, AstVariable, parse_str};
+
+    #[test]
+    fn unescapes_quotes_in_strings() {
+        let ast = parse_str(r#"let test "say \"no\" or \“no\” or \\""#, true).unwrap();
+
+        assert_eq!(
+            ast.stmts,
+            vec![AstStmtNode::create_declare_variable(
+                "test",
+                AstVariable::create_string("say \"no\" or “no” or \\")
+            ),]
+        )
+    }
+
+    #[test]
+    fn odd_backslashes_before_a_quote_escape_it() {
+        // `\\` is a backslash and `\"` a quote, so the string doesn't end there.
+        let ast = parse_str(r#"let test "a\\\"b""#, true).unwrap();
+
+        assert_eq!(
+            ast.stmts,
+            vec![AstStmtNode::create_declare_variable(
+                "test",
+                AstVariable::create_string("a\\\"b")
+            ),]
+        )
+    }
+
+    #[test]
+    fn keeps_a_backslash_before_anything_else() {
+        // Single quotes don't end a string, so they need no escape and keep their backslash.
+        let ast = parse_str(r#"let test "a\b \' \’""#, true).unwrap();
+
+        assert_eq!(
+            ast.stmts,
+            vec![AstStmtNode::create_declare_variable(
+                "test",
+                AstVariable::create_string("a\\b \\' \\’")
+            ),]
+        )
+    }
 
     #[test]
     fn parses_single_var_stmt() {

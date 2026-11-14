@@ -61,6 +61,17 @@ Comments are written using a single pound sign (`#`), like so:
  [(G Suite), (G Suit), (Google Apps for Work)]
 ```
 
+## Quotes Inside Strings
+
+A double quote (`"`, `“` or `”`) ends a string, so put a backslash before any that belong to the text.
+A backslash before a quote, before another backslash, or at the end of a string has to be doubled (`\\`).
+This works in every string, including `message`, `becomes` and tests.
+
+```plaintext
+# The text is: He said "no" twice.
+allows "He said \"no\" twice."
+```
+
 ## The Various Kinds of Expressions
 
 As previously stated, Weir's expression language is the heart of the system.
