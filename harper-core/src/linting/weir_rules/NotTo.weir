@@ -1,7 +1,86 @@
-expr main (no to)
+# "no to" is a typo for "not to" before a verb ("try no to laugh"), but correct when "no"
+# is an answer or a noun ("say no to", "a hard no to", "Click No to cancel").
+expr guard [say, says, said, saying, or, and, but, hell, DET, click, clicked, clicking, press, pressed, tap, tapped, tapping, reply, replied, replying, respond, responded, responding, answer, answered, answering, vote, voted, voting, text, texted, texting, type, typed, typing]
+expr verb [VERB, AUX, (ADV VERB), (ADV AUX)]
+# An adjective before "no" makes a noun phrase after a determiner ("a hard no to", "a really
+# strong no to"), and is a typo otherwise ("important no to rush", "quite useful no to have").
+expr afterAdjective [(![DET, ADV] ADJ no to @verb), (!DET ADV ADJ no to @verb)]
+# An "-ing" form after "no to" is a noun use ("say no to adding"); a dropped verb
+# ("I prefer no to.") is a typo.
+# Weir cannot anchor the start of a sentence, so a typo there is missed
+# ("No to be rude, but..."), except "no to mention".
+expr main [<([(![@guard, ADJ] no to @verb), @afterAdjective, (no to mention)]), (no to !PROG), (no to)>, <([(![@guard, ADJ] no to.), (![@guard, ADJ] no to,), (![@guard, ADJ] no to?)]), (no to)>]
 
 let message "Did you mean `not to`?"
-let description "Corrects `no to` to `not to`, ensuring proper negation."
+let description "Corrects `no to` to `not to` before a verb, as in `try no to laugh`."
 let kind "Typo"
 let becomes "not to"
+let scope "Sentence"
 
+# Typos
+test "I decided no to go to the party." "I decided not to go to the party."
+test "It is important no to rush." "It is important not to rush."
+test "Try no to be late." "Try not to be late."
+test "Try no to just copy the code." "Try not to just copy the code."
+test "Try no to ever be late." "Try not to ever be late."
+test "It is fine, no to worry." "It is fine, not to worry."
+test "No to mention the cost." "Not to mention the cost."
+
+# From a Hacker News comment (item 33894399)
+test "you remove/hide them in order no to have issues if police officer stop you" "you remove/hide them in order not to have issues if police officer stop you"
+
+# Verb left out, and after an adverb and adjective
+test "I cannot afford no to." "I cannot afford not to."
+test "There are good reasons no to, even so." "There are good reasons not to, even so."
+test "It is quite useful no to have that." "It is quite useful not to have that."
+test "Why did you decide no to?" "Why did you decide not to?"
+
+# Correct uses
+allows "That is the one thing they said no to."
+allows "Learn to say no to change."
+allows "She says no to change."
+allows "He said no to change."
+allows "Saying no to change is hard."
+allows "Answer yes or no to continue."
+allows "Yes to adding and no to removing."
+allows "Yes to adding, but no to removing."
+allows "Hell no to waiting."
+allows "That is a no to waiting."
+allows "It was a hard no to continuing."
+allows "It was a really strong no to continuing."
+allows "Click No to cancel the order."
+allows "I clicked no to keep the file."
+allows "Press No to keep your changes."
+allows "I pressed no to keep it."
+allows "Tap No to stay signed in."
+allows "I tapped no to continue."
+allows "I am clicking no to cancel it."
+allows "I am tapping no to cancel it."
+allows "I am replying no to cancel it."
+allows "I am responding no to cancel it."
+allows "I am answering no to cancel it."
+allows "I am texting no to cancel it."
+allows "I am typing no to cancel it."
+allows "Reply NO to stop these messages."
+allows "I replied no to stop them."
+allows "Respond NO to cancel."
+allows "I responded no to cancel it."
+allows "Answer No to continue the setup."
+allows "I answered no to continue."
+allows "Vote no to extend the contract."
+allows "They voted no to extend the contract."
+allows "We are voting no to extend it."
+allows "Text NO to opt out."
+allows "I texted no to opt out."
+allows "Type NO to cancel."
+allows "I typed no to cancel."
+allows "The answer is no to both questions."
+allows "Say yes to tolerance and no to racism."
+allows "Yes to some requests and no to others."
+allows "Yes to the trial, but no to sales."
+allows "Hell no to change."
+allows "That is a no to change."
+allows "It was a hard no to change."
+allows "It was a really strong no to change."
+allows "They told them no to training on that data."
+allows "The startup had no to little funding."
