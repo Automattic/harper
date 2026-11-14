@@ -1,0 +1,11 @@
+expr odd_before_wiener [calf, pig]
+expr odd_after_wiener [bull, bulls, cages, calf, calves, cattle, heifer, heifers, lamb, lambs, pig, pigs, sheep, steer, steers]
+
+expr main [<(@odd_before_wiener wiener), wiener>, <(wiener @odd_after_wiener), wiener>]
+
+let message "If you mean \"recently weaned animal\", use `weaner`. A `wiener` is a sausage."
+let description "Flags confusion between `weaner` (recently weaned animal) and `wiener` (sausage)."
+let kind "WordChoice"
+let becomes "weaner"
+
+#test

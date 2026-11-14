@@ -1,0 +1,12 @@
+expr odd_before_weaner [his, my, vienna, your]
+expr odd_after_weaner [dog, dogs, filter, filtering, process, processes, roast, roasts, schnitzel]
+
+expr main [<(@odd_before_weaner weaner), weaner>, <(weaner @odd_after_weaner), weaner>]
+
+let message "If you mean the sausage, use `wiener`. `Weaner` refers to a recently-weaned animal."
+let description "Flags confusion between `weaner` (recently weaned animal) and `wiener` (sausage)."
+let kind "WordChoice"
+let becomes "wiener"
+
+# this is the usage that led me to create this linter, but is it really fixable?
+# test "Don’t be a weaner.  If you don’t like something, just don’t watch." "Don’t be a wiener.  If you don’t like something, just don’t watch."
