@@ -1,0 +1,29 @@
+# Corrects `as part as` -> `as part of`.
+expr main <(as part as !well), (part as), as>
+
+let message "Did you mean `as part of`?"
+let description "Corrects the phrase `as part as` to the intended `as part of`."
+let kind "Grammar"
+let becomes "of"
+let strategy "MatchCase"
+
+# True positives
+
+test "It was used as part as a larger chain." "It was used as part of a larger chain."
+test "It ships as part as the bundle." "It ships as part of the bundle."
+test "Treated as part as the whole." "Treated as part of the whole."
+test "Included as part as our plan." "Included as part of our plan."
+test "Delivered as part as an update." "Delivered as part of an update."
+test "Counted as part as its total." "Counted as part of its total."
+test "As part as the release, we shipped it." "As part of the release, we shipped it."
+test "Shipped as part as one release." "Shipped as part of one release."
+test "It runs as part as a small team." "It runs as part of a small team."
+test "Done as part as this effort." "Done as part of this effort."
+
+# False positives / true negatives
+
+allows "It ships as part of the bundle."
+allows "Regarded as part, as well as the whole."
+allows "Counted as part as well as whole."
+allows "Known as part as well as parcel."
+allows "Seen as part as well as the sum."
