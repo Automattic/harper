@@ -145,7 +145,7 @@ impl<D: Dictionary> ExprLinter for MassPlurals<D> {
 #[cfg(test)]
 mod tests {
     use crate::{
-        Dialect,
+        EnglishDialect,
         linting::{
             LintGroup,
             tests::{assert_lint_count, assert_suggestion_result},
@@ -168,7 +168,7 @@ mod tests {
     fn fix_kind_of_advices() {
         assert_suggestion_result(
             "IMO these kind of advices never matters.",
-            LintGroup::new_curated(FstDictionary::curated(), Dialect::American),
+            LintGroup::new_curated(FstDictionary::curated(), EnglishDialect::American),
             "IMO these kind of advice never matters.",
         );
     }

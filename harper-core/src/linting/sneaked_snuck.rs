@@ -195,12 +195,15 @@ mod tests {
 
     #[test]
     fn by_default_one_must_be_enabled_and_one_must_be_disabled() {
-        use crate::Dialect;
+        use crate::EnglishDialect;
         use crate::spell::FstDictionary;
 
         assert_lint_count(
             "I say 'snuck' but you say 'sneaked'.",
-            crate::linting::LintGroup::new_curated(FstDictionary::curated(), Dialect::American),
+            crate::linting::LintGroup::new_curated(
+                FstDictionary::curated(),
+                EnglishDialect::American,
+            ),
             1,
         );
     }

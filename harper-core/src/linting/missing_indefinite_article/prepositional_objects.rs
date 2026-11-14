@@ -1,12 +1,12 @@
 use super::phrase::{ArticlePhrase, lint_phrases, previous};
 use crate::{
-    CharStringExt, Dialect, Document, Token,
+    CharStringExt, EnglishDialect, Document, Token,
     linting::{Lint, Linter},
 };
 use harper_brill::UPOS;
 
 /// Checks prepositional objects, preserving institutional bare nouns and idioms.
-pub(super) struct PrepositionalObjects(pub Dialect);
+pub(super) struct PrepositionalObjects(pub EnglishDialect);
 
 impl Linter for PrepositionalObjects {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {
