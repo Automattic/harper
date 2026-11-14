@@ -86,6 +86,7 @@ use super::day_and_age::DayAndAge;
 use super::deny_offer::DenyOffer;
 use super::despite_it_is::DespiteItIs;
 use super::despite_of::DespiteOf;
+use super::dialogue_capitalization::DialogueCapitalization;
 use super::did_past::DidPast;
 use super::didnt::Didnt;
 use super::dig_under_the_hood::DigUnderTheHood;
@@ -735,6 +736,7 @@ impl LintGroup {
         insert_expr_rule_with_dict!(DidPast);
         insert_expr_rule!(Didnt);
         insert_expr_rule!(DigUnderTheHood);
+        insert_struct_rule!(DialogueCapitalization);
         insert_struct_rule!(DiscourseMarkers);
         insert_expr_rule_with_dict!(DisjointPrefixes);
         insert_expr_rule!(DoMistake);

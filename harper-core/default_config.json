@@ -1588,6 +1588,13 @@
 						},
 						{
 							"Bool": {
+								"name": "DialogueCapitalization",
+								"state": true,
+								"label": "Dialogue Capitalization"
+							}
+						},
+						{
+							"Bool": {
 								"name": "GoggleBrand",
 								"state": true,
 								"label": "Goggle Brand"

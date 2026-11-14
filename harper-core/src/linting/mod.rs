@@ -86,6 +86,7 @@ mod deny_offer;
 mod despite_it_is;
 mod despite_of;
 mod determiner_without_noun;
+mod dialogue_capitalization;
 mod did_past;
 mod didnt;
 mod dig_under_the_hood;
