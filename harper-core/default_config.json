@@ -6258,6 +6258,13 @@
 						},
 						{
 							"Bool": {
+								"name": "WieldYield",
+								"state": true,
+								"label": "Wield / Yield"
+							}
+						},
+						{
+							"Bool": {
 								"name": "WinPrize",
 								"state": true,
 								"label": "Win Prize"
