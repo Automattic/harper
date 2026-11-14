@@ -6,13 +6,16 @@ pub use oxford_comma::OxfordComma;
 
 #[cfg(test)]
 mod tests {
-    use crate::{Dialect, linting::tests::assert_lint_count, spell::FstDictionary};
+    use crate::{EnglishDialect, linting::tests::assert_lint_count, spell::FstDictionary};
 
     #[test]
     fn by_default_one_must_be_enabled_and_one_must_be_disabled() {
         assert_lint_count(
             "One, two and three. But four, five, and six.",
-            crate::linting::LintGroup::new_curated(FstDictionary::curated(), Dialect::American),
+            crate::linting::LintGroup::new_curated(
+                FstDictionary::curated(),
+                EnglishDialect::American,
+            ),
             1,
         );
     }

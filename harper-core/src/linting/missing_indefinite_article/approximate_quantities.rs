@@ -1,12 +1,12 @@
 use super::phrase::{ArticlePhrase, suggest_article};
 use crate::{
-    CharStringExt, Dialect, Document, TokenStringExt,
+    CharStringExt, Document, EnglishDialect, TokenStringExt,
     linting::{Lint, Linter},
 };
 
 /// Checks an approximate singular scale number, such as `nearly thousand`.
 /// Ordinary noun countability does not apply to this construction.
-pub(super) struct ApproximateQuantities(pub Dialect);
+pub(super) struct ApproximateQuantities(pub EnglishDialect);
 
 impl Linter for ApproximateQuantities {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {

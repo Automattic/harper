@@ -1,16 +1,16 @@
 use crate::{
-    CharStringExt, Dialect, Lint, Token,
+    CharStringExt, EnglishDialect, Lint, Token,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
 };
 
 pub struct TillDate {
     expr: SequenceExpr,
-    dialect: Dialect,
+    dialect: EnglishDialect,
 }
 
 impl TillDate {
-    pub fn new(dialect: Dialect) -> Self {
+    pub fn new(dialect: EnglishDialect) -> Self {
         Self {
             expr: SequenceExpr::word_set(["till", "til", "'til", "til'"])
                 .t_ws()
@@ -30,7 +30,7 @@ impl ExprLinter for TillDate {
         ctx: Option<(&[Token], &[Token])>,
     ) -> Option<Lint> {
         // TODO: It might be better to also have a preference to flag this even in Indian English?
-        if self.dialect == Dialect::Indian {
+        if self.dialect == EnglishDialect::Indian {
             return None;
         }
 
@@ -90,7 +90,7 @@ impl ExprLinter for TillDate {
 #[cfg(test)]
 mod tests {
     use crate::{
-        Dialect,
+        EnglishDialect,
         linting::tests::{assert_no_lints, assert_suggestion_result},
     };
 
@@ -100,7 +100,7 @@ mod tests {
     fn fix_till_date_double_l() {
         assert_suggestion_result(
             "This repository contains all my REXX codes till date.",
-            TillDate::new(Dialect::American),
+            TillDate::new(EnglishDialect::American),
             "This repository contains all my REXX codes to date.",
         );
     }
@@ -109,7 +109,7 @@ mod tests {
     fn fix_till_date_single_l() {
         assert_suggestion_result(
             "streams recorded on the platform from 1930 til date",
-            TillDate::new(Dialect::American),
+            TillDate::new(EnglishDialect::American),
             "streams recorded on the platform from 1930 to date",
         );
     }
@@ -118,7 +118,7 @@ mod tests {
     fn dont_flag_til_date_apostrophe_before_single_l() {
         assert_no_lints(
             "A good 'til date (GTD) order is an instruction to buy or sell an asset that remains open until a future date specified by the trader.",
-            TillDate::new(Dialect::American),
+            TillDate::new(EnglishDialect::American),
         );
     }
 
@@ -126,7 +126,7 @@ mod tests {
     fn dont_flag_good_til_date_apostrophe_after_single_l() {
         assert_no_lints(
             "Can someone give me some information as to what the Good Til' date means in the context of buying shares?",
-            TillDate::new(Dialect::American),
+            TillDate::new(EnglishDialect::American),
         );
     }
 
@@ -134,7 +134,7 @@ mod tests {
     fn dont_flag_good_till_date_double_l_all_caps() {
         assert_no_lints(
             "TERMS AND CONDITIONS FOR GOOD TILL DATE (GTD) ORDERS.",
-            TillDate::new(Dialect::American),
+            TillDate::new(EnglishDialect::American),
         );
     }
 
@@ -142,7 +142,7 @@ mod tests {
     fn dont_flag_valid_till_date() {
         assert_no_lints(
             "The quotation states: \"Good till date (GTD) orders are valid until a specified date.\"",
-            TillDate::new(Dialect::American),
+            TillDate::new(EnglishDialect::American),
         );
     }
 }

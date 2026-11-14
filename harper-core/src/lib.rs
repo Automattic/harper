@@ -45,9 +45,10 @@ pub use case::{Case, CaseIterExt};
 pub use char_string::{CharString, CharStringExt};
 pub use currency::Currency;
 pub use dict_word_metadata::{
-    AdverbData, ConjunctionData, Degree, DeterminerData, Dialect, DialectFlags, DictWordMetadata,
-    NounData, PronounData, VerbData, VerbForm, VerbFormFlags,
+    AdverbData, ConjunctionData, Degree, DeterminerData, DictWordMetadata, NounData, PronounData,
+    VerbData, VerbForm, VerbFormFlags,
 };
+pub use dict_word_metadata::{EnglishDialect, EnglishDialectFlags};
 pub use dict_word_metadata_orthography::{OrthFlags, Orthography};
 pub use document::Document;
 pub use fat_token::{FatStringToken, FatToken};
@@ -55,6 +56,12 @@ pub use ignored_lints::{IgnoredLints, LintContext};
 pub use indefinite_article::{InitialSound, starts_with_vowel};
 pub use irregular_nouns::IrregularNouns;
 pub use irregular_verbs::IrregularVerbs;
+// The old name, so code written for it keeps working.
+pub use dict_word_metadata::EnglishDialectFlags as DialectFlags;
+
+/// The old name of [`EnglishDialect`].
+#[deprecated(note = "renamed to `EnglishDialect`")]
+pub type Dialect = EnglishDialect;
 use linting::Lint;
 pub use mask::{Mask, Masker, RegexMasker};
 pub use number::{Number, OrdinalSuffix};
@@ -212,7 +219,7 @@ mod tests {
     use crate::remove_overlaps_map;
     use crate::spell::FstDictionary;
     use crate::{
-        Dialect, Document, Span,
+        Document, EnglishDialect, Span,
         expr::{AnchorStart, SequenceExpr},
         linting::{LintGroup, Linter},
         remove_lints_overlapping_expr, remove_overlaps,
@@ -221,7 +228,7 @@ mod tests {
     create_test_pool!(
         LintGroup,
         LintGroup,
-        LintGroup::new_curated(FstDictionary::curated(), Dialect::American)
+        LintGroup::new_curated(FstDictionary::curated(), EnglishDialect::American)
     );
 
     #[test]

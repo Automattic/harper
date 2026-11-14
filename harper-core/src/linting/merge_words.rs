@@ -219,7 +219,7 @@ mod tests {
     fn curated_merge_precedes_suffix_spelling_and_following_word_merge() {
         let group = crate::linting::LintGroup::new_curated(
             crate::spell::FstDictionary::curated(),
-            crate::Dialect::American,
+            crate::EnglishDialect::American,
         );
         assert_first_suggestion_result("It 's our family.", group, "It's our family.");
     }

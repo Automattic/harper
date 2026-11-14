@@ -1,5 +1,5 @@
 use crate::{
-    Dialect, Lint, Token, TokenStringExt,
+    EnglishDialect, Lint, Token, TokenStringExt,
     char_string::CharStringExt,
     expr::{Expr, SequenceExpr},
     indefinite_article::{InitialSound, starts_with_vowel},
@@ -11,13 +11,13 @@ use crate::{
 
 struct GonnaGottaWanna {
     expr: SequenceExpr,
-    dialect: Dialect,
+    dialect: EnglishDialect,
     informal: &'static str,
     formal: &'static str,
 }
 
 impl GonnaGottaWanna {
-    fn new(dialect: Dialect, informal: &'static str, formal: &'static str) -> Self {
+    fn new(dialect: EnglishDialect, informal: &'static str, formal: &'static str) -> Self {
         Self {
             expr: SequenceExpr::aco(informal)
                 .then_optional(SequenceExpr::whitespace().t_set(["to", "a"])),
@@ -149,7 +149,7 @@ impl ExprLinter for GonnaGottaWanna {
     }
 }
 
-pub fn lint_group(dialect: Dialect) -> LintGroup {
+pub fn lint_group(dialect: EnglishDialect) -> LintGroup {
     let mut group = LintGroup::empty();
 
     let rules = [
@@ -172,7 +172,7 @@ pub fn lint_group(dialect: Dialect) -> LintGroup {
 #[cfg(test)]
 mod tests {
     use crate::{
-        Dialect,
+        EnglishDialect,
         linting::tests::{
             assert_good_and_bad_suggestions, assert_lint_message, assert_suggestion_result,
         },
@@ -185,7 +185,7 @@ mod tests {
         // We think you're gonna like it here."
         assert_suggestion_result(
             "We think you're gonna like it here.",
-            lint_group(Dialect::American),
+            lint_group(EnglishDialect::American),
             // fix the grammar and the informality
             "We think you're going to like it here.",
         )
@@ -196,7 +196,7 @@ mod tests {
         // "gonna" already means "going to", so adding "to" is redundant
         assert_good_and_bad_suggestions(
             "I am gonna to create the region by clicking and dragging the mouse on waveform but I couldn't find the way to do that.",
-            lint_group(Dialect::American),
+            lint_group(EnglishDialect::American),
             &[
                 // fix the grammar but remain informal
                 "I am gonna create the region by clicking and dragging the mouse on waveform but I couldn't find the way to do that.",
@@ -211,7 +211,7 @@ mod tests {
     fn fix_gotta() {
         assert_suggestion_result(
             "Gotta Hear Them All: Towards Sound Source Aware Audio Generation.",
-            lint_group(Dialect::American),
+            lint_group(EnglishDialect::American),
             "Got to Hear Them All: Towards Sound Source Aware Audio Generation.",
             // What about "have to"?
         )
@@ -223,7 +223,7 @@ mod tests {
         // but adding "a" is also redundant
         assert_suggestion_result(
             "when I try to create a c/c++ database,I gotta a error",
-            lint_group(Dialect::American),
+            lint_group(EnglishDialect::American),
             // fix the grammar and the informality
             "when I try to create a c/c++ database,I got an error",
         )
@@ -235,7 +235,7 @@ mod tests {
         // but adding "a" is also redundant
         assert_suggestion_result(
             "You gotta a 20% OFF coupom.",
-            lint_group(Dialect::American),
+            lint_group(EnglishDialect::American),
             "You got a 20% OFF coupom.",
         )
     }
@@ -246,7 +246,7 @@ mod tests {
         // "gotta" already means "got to", so adding "to" is redundant
         assert_good_and_bad_suggestions(
             "it works well enough for me and gotta to get back working on other stuff",
-            lint_group(Dialect::American),
+            lint_group(EnglishDialect::American),
             &[
                 // fix the grammar but remain informal
                 "it works well enough for me and gotta get back working on other stuff",
@@ -262,7 +262,7 @@ mod tests {
     fn fix_wanna_control() {
         assert_suggestion_result(
             "I wanna control G1 arms while walking using gamepad. But ...",
-            lint_group(Dialect::American),
+            lint_group(EnglishDialect::American),
             "I want to control G1 arms while walking using gamepad. But ...",
         )
     }
@@ -273,7 +273,7 @@ mod tests {
         // Only way to fix fixes both the informality and the grammar goether
         assert_suggestion_result(
             "And then I remember from the beginning I just wanna a very simple array with some simple opreations.",
-            lint_group(Dialect::American),
+            lint_group(EnglishDialect::American),
             "And then I remember from the beginning I just want a very simple array with some simple opreations.",
         )
     }
@@ -283,7 +283,7 @@ mod tests {
         // "wanna" already means "want to", so adding "to" is redundant
         assert_good_and_bad_suggestions(
             "it is stoped but i wanna to continue",
-            lint_group(Dialect::American),
+            lint_group(EnglishDialect::American),
             &[
                 // fix the grammar but remain informal
                 "it is stoped but i wanna continue",
@@ -300,7 +300,7 @@ mod tests {
     fn gonna_none_msg() {
         assert_lint_message(
             "gonna",
-            lint_group(Dialect::American),
+            lint_group(EnglishDialect::American),
             "`gonna` is very informal.",
         )
     }
@@ -309,7 +309,7 @@ mod tests {
     fn gonna_a_msg() {
         assert_lint_message(
             "gonna a",
-            lint_group(Dialect::American),
+            lint_group(EnglishDialect::American),
             "`gonna` is very informal and the final `a` means `to`.",
         )
     }
@@ -318,7 +318,7 @@ mod tests {
     fn gonna_to_msg() {
         assert_lint_message(
             "gonna to",
-            lint_group(Dialect::American),
+            lint_group(EnglishDialect::American),
             "`gonna` is very informal and the final `a` means `to`.",
         )
     }
@@ -327,7 +327,7 @@ mod tests {
     fn gotta_noun_msg() {
         assert_lint_message(
             "gotta",
-            lint_group(Dialect::American),
+            lint_group(EnglishDialect::American),
             "`gotta` is very informal.",
         )
     }
@@ -336,7 +336,7 @@ mod tests {
     fn gotta_a_msg() {
         assert_lint_message(
             "gotta a",
-            lint_group(Dialect::American),
+            lint_group(EnglishDialect::American),
             "`gotta` is very informal and the final `a` means `to`.",
         )
     }
@@ -345,7 +345,7 @@ mod tests {
     fn gotta_to_msg() {
         assert_lint_message(
             "gotta to",
-            lint_group(Dialect::American),
+            lint_group(EnglishDialect::American),
             "`gotta` is very informal and the final `a` means `to`.",
         )
     }
@@ -354,7 +354,7 @@ mod tests {
     fn wanna_none_msg() {
         assert_lint_message(
             "wanna",
-            lint_group(Dialect::American),
+            lint_group(EnglishDialect::American),
             "`wanna` is very informal.",
         )
     }
@@ -363,7 +363,7 @@ mod tests {
     fn wanna_a_msg() {
         assert_lint_message(
             "wanna a",
-            lint_group(Dialect::American),
+            lint_group(EnglishDialect::American),
             "`wanna` is very informal and the final `a` means `to`.",
         )
     }
@@ -372,7 +372,7 @@ mod tests {
     fn wanna_to_msg() {
         assert_lint_message(
             "wanna to",
-            lint_group(Dialect::American),
+            lint_group(EnglishDialect::American),
             "`wanna` is very informal and the final `a` means `to`.",
         )
     }
