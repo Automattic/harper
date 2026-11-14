@@ -3957,6 +3957,12 @@
 								"state": true,
 								"label": "Not Be After Not"
 							}
+						},{
+							"Bool": {
+								"name": "NounAndNounAre",
+								"state": true,
+								"label": "Noun And Noun Are"
+							}
 						},
 						{
 							"Bool": {
