@@ -524,8 +524,8 @@
 #
 >
 #
-> To provide for   calling forth the Militia to execute the Laws   of the Union     ,
-# P  VB      R/C/P Nᴹ/Vg/J R     D   NSg     P  VB      D   NPl/V3 P  D   NPr/VB/J+ .
+> To provide for   calling   forth the Militia to execute the Laws   of the Union     ,
+# P  VB      R/C/P N🅪Sg/Vg/J R     D   NSg     P  VB      D   NPl/V3 P  D   NPr/VB/J+ .
 > suppress Insurrections and  repel Invasions ;
 # VB       NPl           VB/C VB    NPl       .
 >
@@ -714,8 +714,8 @@
 # D+  NSg/J+    N🅪Sg/VB/J+ VXB   NSg/VLXB VP/J   NPr/J/R/P D/P NSg       P  D
 > United States   of America . He       shall hold     his     Office  during the Term     of four
 # VP/J   NPrPl/V3 P  NPr+    . NPr/ISg+ VXB   NSg/VB/J ISg/D$+ NSg/VB+ VB/P   D   NSg/VB/J P  NSg+
-> Years ending  at    noon    on  the 20th day    of January , and  , together with the Vice
-# NPl+  Nᴹ/Vg/J NSg/P NSg/VB+ J/P D   #    NPr🅪Sg P  NPr+    . VB/C . J        P    D+  NSg/J/P+
+> Years ending    at    noon    on  the 20th day    of January , and  , together with the Vice
+# NPl+  N🅪Sg/Vg/J NSg/P NSg/VB+ J/P D   #    NPr🅪Sg P  NPr+    . VB/C . J        P    D+  NSg/J/P+
 > President , chosen   for   the same Term      , be       elected  , as    follows
 # NSg+      . Nᴹ/VPp/J R/C/P D+  I/J+ NSg/VB/J+ . NSg/VLXB NSg/VP/J . R/C/P NPl/V3
 >
