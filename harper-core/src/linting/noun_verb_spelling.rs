@@ -1,16 +1,16 @@
 use crate::{
-    CharStringExt, Dialect, Lint, Token,
+    CharStringExt, EnglishDialect, Lint, Token,
     expr::Expr,
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
     patterns::WordSet,
 };
 use harper_brill::UPOS;
 
-use Dialect::{Australian, British, Canadian, Indian};
+use EnglishDialect::{Australian, British, Canadian, Indian};
 
 /// Nouns and verbs that share a pronunciation but have different spellings in the listed
 /// dialects. Elsewhere, the verb spelling serves for both, as `license` does in American English.
-const NOUN_VERB_PAIRS: &[(&str, &str, &[Dialect])] = &[
+const NOUN_VERB_PAIRS: &[(&str, &str, &[EnglishDialect])] = &[
     (
         "licence",
         "license",
@@ -58,11 +58,11 @@ const OBJECT_START: &[&str] = &[
 pub struct NounVerbSpelling {
     expr: WordSet,
     pairs: Vec<(&'static str, &'static str)>,
-    dialect: Dialect,
+    dialect: EnglishDialect,
 }
 
 impl NounVerbSpelling {
-    pub fn new(dialect: Dialect) -> Self {
+    pub fn new(dialect: EnglishDialect) -> Self {
         let pairs: Vec<_> = NOUN_VERB_PAIRS
             .iter()
             .filter(|(_, _, dialects)| dialects.contains(&dialect))
@@ -153,14 +153,14 @@ impl ExprLinter for NounVerbSpelling {
 #[cfg(test)]
 mod tests {
     use crate::{
-        Dialect,
+        EnglishDialect,
         linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result},
     };
 
     use super::NounVerbSpelling;
 
     fn british() -> NounVerbSpelling {
-        NounVerbSpelling::new(Dialect::British)
+        NounVerbSpelling::new(EnglishDialect::British)
     }
 
     #[test]
@@ -176,7 +176,7 @@ mod tests {
     fn fix_her_license() {
         assert_suggestion_result(
             "She renewed her license yesterday.",
-            NounVerbSpelling::new(Dialect::Australian),
+            NounVerbSpelling::new(EnglishDialect::Australian),
             "She renewed her licence yesterday.",
         );
     }
@@ -203,7 +203,7 @@ mod tests {
     fn fix_plural_licenses() {
         assert_suggestion_result(
             "Both of their licenses expired.",
-            NounVerbSpelling::new(Dialect::Canadian),
+            NounVerbSpelling::new(EnglishDialect::Canadian),
             "Both of their licences expired.",
         );
     }
@@ -248,7 +248,7 @@ mod tests {
     fn fix_i_practice() {
         assert_suggestion_result(
             "I practice the piano daily.",
-            NounVerbSpelling::new(Dialect::Indian),
+            NounVerbSpelling::new(EnglishDialect::Indian),
             "I practise the piano daily.",
         );
     }
@@ -320,7 +320,7 @@ mod tests {
     fn fix_the_tires() {
         assert_suggestion_result(
             "The tires are flat.",
-            NounVerbSpelling::new(Dialect::Australian),
+            NounVerbSpelling::new(EnglishDialect::Australian),
             "The tyres are flat.",
         );
     }
@@ -346,7 +346,7 @@ mod tests {
     fn allow_tire_noun_in_canadian() {
         assert_no_lints(
             "I need a new tire.",
-            NounVerbSpelling::new(Dialect::Canadian),
+            NounVerbSpelling::new(EnglishDialect::Canadian),
         );
     }
 
@@ -354,7 +354,7 @@ mod tests {
     fn allow_american_spellings_in_american() {
         assert_lint_count(
             "I practice daily, have a driving license and need a new tire.",
-            NounVerbSpelling::new(Dialect::American),
+            NounVerbSpelling::new(EnglishDialect::American),
             0,
         );
     }

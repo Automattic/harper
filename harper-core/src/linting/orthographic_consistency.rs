@@ -178,7 +178,7 @@ fn alphabetic_differs(a: &[char], b: &[char]) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use crate::Dialect;
+    use crate::EnglishDialect;
     use crate::linting::LintGroup;
     use crate::linting::tests::{
         assert_good_and_bad_suggestions, assert_lint_count, assert_no_lints,
@@ -189,7 +189,7 @@ mod tests {
     use super::OrthographicConsistency;
 
     fn curated_linter() -> LintGroup {
-        LintGroup::new_curated(FstDictionary::curated(), Dialect::American)
+        LintGroup::new_curated(FstDictionary::curated(), EnglishDialect::American)
     }
 
     #[test]

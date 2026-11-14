@@ -1,5 +1,5 @@
 use crate::{
-    Dialect, Lint, Token,
+    EnglishDialect, Lint, Token,
     expr::{Expr, SequenceExpr},
     indefinite_article::{InitialSound, starts_with_vowel},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
@@ -7,11 +7,11 @@ use crate::{
 
 pub struct HaveAHardTime {
     expr: SequenceExpr,
-    dialect: Dialect,
+    dialect: EnglishDialect,
 }
 
 impl HaveAHardTime {
-    pub fn new(dialect: Dialect) -> Self {
+    pub fn new(dialect: EnglishDialect) -> Self {
         Self {
             expr: SequenceExpr::word_set(["have", "had", "has", "having"])
                 .then_optional(SequenceExpr::whitespace().t_set(["extremely", "real"]))
@@ -61,7 +61,7 @@ impl ExprLinter for HaveAHardTime {
 mod tests {
     use super::HaveAHardTime;
     use crate::{
-        Dialect,
+        EnglishDialect,
         linting::tests::{assert_no_lints, assert_suggestion_result},
     };
 
@@ -69,7 +69,7 @@ mod tests {
     fn had() {
         assert_suggestion_result(
             "I also had hard time to investigate why debug(error) only shows stack traces, but no other visible properties",
-            HaveAHardTime::new(Dialect::American),
+            HaveAHardTime::new(EnglishDialect::American),
             "I also had a hard time to investigate why debug(error) only shows stack traces, but no other visible properties",
         );
     }
@@ -78,7 +78,7 @@ mod tests {
     fn has() {
         assert_suggestion_result(
             "Typescript has hard time finding declaration file for petite-vue",
-            HaveAHardTime::new(Dialect::American),
+            HaveAHardTime::new(EnglishDialect::American),
             "Typescript has a hard time finding declaration file for petite-vue",
         );
     }
@@ -87,7 +87,7 @@ mod tests {
     fn have() {
         assert_suggestion_result(
             "I have hard time running getMeasuringContext(text, optionsopt) function.",
-            HaveAHardTime::new(Dialect::American),
+            HaveAHardTime::new(EnglishDialect::American),
             "I have a hard time running getMeasuringContext(text, optionsopt) function.",
         );
     }
@@ -96,7 +96,7 @@ mod tests {
     fn having() {
         assert_suggestion_result(
             "Instructions for those who are having hard time to install from scratch.",
-            HaveAHardTime::new(Dialect::American),
+            HaveAHardTime::new(EnglishDialect::American),
             "Instructions for those who are having a hard time to install from scratch.",
         );
     }
@@ -105,7 +105,7 @@ mod tests {
     fn having_extremely() {
         assert_suggestion_result(
             "Bug: having extremely hard time converting html",
-            HaveAHardTime::new(Dialect::American),
+            HaveAHardTime::new(EnglishDialect::American),
             "Bug: having an extremely hard time converting html",
         );
     }
@@ -114,7 +114,7 @@ mod tests {
     fn having_real() {
         assert_suggestion_result(
             "I am having real hard time integrating kalidokit (face+body tracking)",
-            HaveAHardTime::new(Dialect::American),
+            HaveAHardTime::new(EnglishDialect::American),
             "I am having a real hard time integrating kalidokit (face+body tracking)",
         );
     }
@@ -125,7 +125,7 @@ mod tests {
     fn dont_flag_an_hard_time() {
         assert_no_lints(
             "This feature will have an hard time working well with the other ...",
-            HaveAHardTime::new(Dialect::American),
+            HaveAHardTime::new(EnglishDialect::American),
         );
     }
 
@@ -133,7 +133,7 @@ mod tests {
     fn dont_flag_some_hard_time() {
         assert_no_lints(
             "we had some hard time finding the right tk because 8.6 has a \"t\" suffix.",
-            HaveAHardTime::new(Dialect::American),
+            HaveAHardTime::new(EnglishDialect::American),
         );
     }
 }

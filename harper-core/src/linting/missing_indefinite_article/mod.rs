@@ -8,7 +8,7 @@ mod such_phrases;
 mod verb_complements;
 
 use crate::{
-    Dialect, Document,
+    Document, EnglishDialect,
     linting::{Lint, LintGroup, Linter},
 };
 use approximate_quantities::ApproximateQuantities;
@@ -25,7 +25,7 @@ pub struct MissingIndefiniteArticle {
 
 impl MissingIndefiniteArticle {
     /// Builds the private group without inheriting curated public-rule defaults.
-    pub fn new(dialect: Dialect) -> Self {
+    pub fn new(dialect: EnglishDialect) -> Self {
         let mut group = LintGroup::empty();
         group.add("VerbComplements", VerbComplements(dialect));
         group.add("PrepositionalObjects", PrepositionalObjects(dialect));
