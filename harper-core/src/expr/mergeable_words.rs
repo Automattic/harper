@@ -40,7 +40,7 @@ impl MergeableWords {
         compound.push(' ');
         compound.extend_from_slice(word_b.get_ch(source));
 
-        self.dict.get_word_metadata(&compound).is_some()
+        self.dict.get_word_metadata_folded(&compound).is_some()
     }
 
     /// Get the merged word from the dictionary if these words can be merged.
