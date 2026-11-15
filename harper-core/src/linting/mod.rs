@@ -85,6 +85,7 @@ mod day_and_age;
 mod deny_offer;
 mod despite_it_is;
 mod despite_of;
+mod despite_subject;
 mod determiner_without_noun;
 mod did_past;
 mod didnt;

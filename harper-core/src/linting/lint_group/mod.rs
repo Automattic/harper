@@ -86,6 +86,7 @@ use super::day_and_age::DayAndAge;
 use super::deny_offer::DenyOffer;
 use super::despite_it_is::DespiteItIs;
 use super::despite_of::DespiteOf;
+use super::despite_subject::DespiteSubject;
 use super::did_past::DidPast;
 use super::didnt::Didnt;
 use super::dig_under_the_hood::DigUnderTheHood;
@@ -732,6 +733,7 @@ impl LintGroup {
         insert_expr_rule!(DenyOffer);
         insert_expr_rule!(DespiteItIs);
         insert_expr_rule!(DespiteOf);
+        insert_expr_rule!(DespiteSubject);
         insert_expr_rule_with_dict!(DidPast);
         insert_expr_rule!(Didnt);
         insert_expr_rule!(DigUnderTheHood);
