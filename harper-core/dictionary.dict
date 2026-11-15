@@ -8526,8 +8526,8 @@ RSI/N
 RSS/NOV             # Really Simple Syndication
 RSV/ON
 RSVP/NOV
-RSVP'd/VtT
-RSVPed/VtT
+RSVP'd/Vj
+RSVPed/Vj
 RTFM/4
 RV/ONSgV
 Ra/4                # Radium
@@ -12046,7 +12046,7 @@ ahistorical/J
 ahoy/VN
 aid/~NwSgVdG
 aide/~NSg
-aided/~VtTU
+aided/~VjU
 aigrette/NgS
 ail/VdGSNJL
 aileron/NSg
@@ -12660,8 +12660,8 @@ annoy/VGdSN
 annoyance/~NwgS
 annoying/~JYVN
 annual/~JYNgS
-annualised/VtT!_₹
-annualized/JVtT
+annualised/Vj!_₹
+annualized/JVj
 annuitant/NSg
 annuity/~NSg
 annul/VSL
@@ -13861,7 +13861,7 @@ backfield/NSg
 backfill/Sg
 backfire/VGdSNg
 backflip/VSNg
-backflipped/VtT
+backflipped/Vj
 backflipping/V6NgJ
 backgammon/NmgV
 background/~J>NgSVZ
@@ -13882,7 +13882,7 @@ backpack/~NgSVGd>Z
 backpacker/NgS
 backpacking/VNmg
 backpedal/VdGSN
-backpedalled/VtT!@_₹
+backpedalled/Vj!@_₹
 backpedalling/V6N!@_₹
 backplane/NSg
 backport/VdGSNg
@@ -14483,7 +14483,7 @@ begetter/NS
 begetting/V6N
 beggar/~NgSVdGY
 beggary/NgJ
-begged/~VtT
+begged/~Vj
 begging/~NV6
 begin/~VbSN
 beginner/~NSg
@@ -14982,7 +14982,7 @@ bitwise/J
 bivalent/JN
 bivalve/NSg
 bivouac/NgSV
-bivouacked/VtT
+bivouacked/Vj
 bivouacking/V6
 biweekly/~JNSg
 biyearly/J
@@ -15151,7 +15151,7 @@ blockhouse/NgS
 blocklist/NgSVdG
 blocky/J
 blog/~NSgV
-blogged/VtT
+blogged/Vj
 blogger/~NgS
 blogging/~NmV6
 blogosphere/NgS
@@ -15655,7 +15655,7 @@ brag/NSgVJ
 braggadocio/NSg
 braggadocious/J
 braggart/NSgJ
-bragged/VtT
+bragged/Vj
 bragger/NgSJ
 bragging/NV6
 braid/~VGdSNgJ
@@ -16051,7 +16051,7 @@ bulkiness/Nmg
 bulky/~J>^p
 bull/~NgSJVdG
 bulldog/~NSgV
-bulldogged/VtT
+bulldogged/Vj
 bulldogging/V6
 bulldoze/VGd>SZ
 bulldozer/NgV
@@ -16075,7 +16075,7 @@ bullpen/~NSg
 bullring/NgS
 bullseye/~N
 bullshit/~NgSJVx
-bullshitted/VtTx
+bullshitted/Vjx
 bullshitter/NSgx
 bullshittery/Ngx
 bullshitting/V6x
@@ -16591,7 +16591,7 @@ cantankerousness/Ng
 cantata/~NgS
 canteen/~NgS
 canter/NgVe
-cantered/VtT
+cantered/Vj
 cantering/V6N
 canticle/NgS
 cantilever/~NgSVdG
@@ -16700,7 +16700,7 @@ carbuncle/NSg
 carbuncular/J
 carburet/VSd
 carburetor/~NSg<
-carburetted/V
+carburetted/Vj
 carburettor/NgS!@_₹
 carby/NgS
 carcass/~NgS
@@ -16972,7 +16972,7 @@ cation/~NgS
 catkin/NgS
 catlike/J
 catnap/NgSV
-catnapped/VtT
+catnapped/Vj
 catnapping/NV6
 catnip/Nmg
 catsuit/NSg
@@ -17694,7 +17694,7 @@ chuckhole/NSg
 chuckle/NgSVGdJ
 chuffed/VtTJ
 chug/NSgV
-chugged/VtT
+chugged/Vj
 chugging/V6N
 chukka/NgS
 chum/~NSgV
@@ -18235,7 +18235,7 @@ cocoon/~NSgVdG
 cocreate/VdSG
 cod/~NSg09JV        # singular and plural, also has a plural in -s
 coda/~NgS
-codded/VtT
+codded/Vj
 codding/V6J
 coddle/VdGSN
 code/~NwSVGd>eZ
@@ -18931,7 +18931,7 @@ conferee/NSg
 conference/~NgSVG
 conferrable/J
 conferral/Ng
-conferred/~VtT
+conferred/~Vj
 conferrer/NgS
 conferring/~V6N
 confessed/~VtTJY
@@ -19433,7 +19433,7 @@ copy editor/NgS
 copy's
 copybook/NSg
 copycat/NgSJV
-copycatted/VtT
+copycatted/Vj
 copycatting/V6
 copyist/NgS
 copyleft/NV
@@ -19607,7 +19607,7 @@ cost/~VbtTdGSNwgYz
 cost cutting/Nmg
 cost-effective/J
 costar/NSgVb
-costarred/VtT
+costarred/Vj
 costarring/V6
 costliness/Ng
 costly/~J^>p
@@ -19681,7 +19681,7 @@ counterclaim/NSgVGd
 counterclockwise/~J
 countercultural/JY
 counterculture/~NSg
-countered/~V
+countered/~Vj
 counterespionage/Ng
 counterexample/NS
 counterfactual/JNS
@@ -19889,7 +19889,7 @@ cranky/J>^p
 cranny/NSgVd
 crap/~NmgSVJ
 crape/NSgV
-crapped/VtT
+crapped/Vj
 crapper/NSJ
 crappie/NSg>^
 crapping/V6
@@ -20492,7 +20492,7 @@ d'Arezzo/g
 d'Estaing/g
 dB/
 dab/~VSNgJ
-dabbed/VtT
+dabbed/Vj
 dabber/NgS
 dabbing/V6N
 dabble/VGd>SNZ
@@ -21096,7 +21096,7 @@ demur/V>SNg^
 demure/JYpV
 demureness/Ng
 demurral/NSg
-demurred/VtT
+demurred/Vj
 demurrer/NSg
 demurring/V6JN
 den/~NgV
@@ -21370,7 +21370,7 @@ determinedly/Ry
 determiner/NSg
 determinism/~Nmg
 deterministic/~JQ
-deterred/VtTU
+deterred/VjU
 deterrence/~Nwg
 deterrent/~JNgS
 deterrer/NgS
@@ -21462,7 +21462,7 @@ diagnostician/NSg
 diagonal/~JYNSg
 diagram/~NSgV
 diagrammatic/JQ
-diagrammed/VtT
+diagrammed/Vj
 diagramming/V6
 dial/~NgSVdGr
 dialect/~NSg
@@ -21761,7 +21761,7 @@ discernible/~Ji
 discernibly/Ry
 discerning/V6JYN
 discernment/Nmg
-discharged/~VtTU
+discharged/~VjU
 disciple/~NSgV
 discipleship/~Ng
 disciplinarian/NSgJ
@@ -22094,7 +22094,7 @@ document/~NgSVGd
 documentarian/NgS
 documentary/~JNSg
 documentation/~Nmg
-documented/~VU
+documented/~VjU
 dodder/VdGSNg
 doddery/J
 doddle/NV
@@ -22495,7 +22495,7 @@ drink/~V>GSNgBzZ
 drinkable/JNU
 drinker/~NgS
 drip/~VSNg
-dripped/VtT
+dripped/Vj
 dripper/NgS
 dripping/~NSgV6
 drippy/J^>
@@ -22802,7 +22802,7 @@ early/~J>^pN
 earmark/VdGSNg
 earmuff/NSg
 earn/~Vd>GSN^Zz
-earned/~VU
+earned/~VjU
 earner/Ng
 earnest/~NSgVJYp
 earnestness/Ng
@@ -24099,7 +24099,7 @@ excavator/NSg
 exceed/~VGSd
 exceeding/~V6JYN
 excel/~VS
-excelled/~VtT
+excelled/~Vj
 excellence/~Ng
 excellency/~NSg
 excellent/~JY
@@ -24927,7 +24927,7 @@ ferrymen/9
 fertile/~Ji
 fertilisation/Ng!_₹
 fertilise/Vd>SGZ!_₹
-fertilised/VU!_₹
+fertilised/VjU!_₹
 fertiliser/Ng!_₹
 fertility/~Ngi
 fertilization/~Ng
@@ -25482,7 +25482,7 @@ flirtatious/JYp
 flirtatiousness/Ng
 flirty/J
 flit/NgSVJ
-flitted/VtT
+flitted/Vj
 flitting/NV6J
 float/~Vd>GSNgZ
 floater/Ng
@@ -25981,7 +25981,7 @@ foxhunt/NSVG
 foxily/Ry
 foxiness/Nmg
 foxtrot/NgSV
-foxtrotted/VtT
+foxtrotted/Vj
 foxtrotting/V6
 foxy/NJ>^p
 foyer/~NSg
@@ -26743,7 +26743,7 @@ genitive/~JNgS
 genitourinary/J
 genius/~NwgSJp
 genlock/NgSVdG
-genned/VtT
+genned/Vj
 genning/V6
 genocidal/~J
 genocide/~NwgSV
@@ -27246,7 +27246,7 @@ goon/~NgSV
 goop/NmgV
 goose/~NSgVdG
 goose-step/VS
-goose-stepped/VtT
+goose-stepped/Vj
 goose-stepping/V6
 gooseberry/NwSg
 goosebumps/N9g
@@ -27833,7 +27833,7 @@ gynecological/J
 gynecologist/NSg
 gynecology/Ng
 gyp/NSgV
-gypped/VtT
+gypped/Vj
 gypper/NSg
 gypping/V6
 gypster/NSg
@@ -28570,7 +28570,7 @@ heptagonal/J
 heptathlon/NSg
 her/~D5Ia3o.        # I~pronoun a~personal 3~person .~singular o~object / D5=determiner+possessive
 herald/~NSgVdG
-heralded/~VU
+heralded/~VjU
 heraldic/~J
 heraldry/~Ng
 herb/~NgS
@@ -29316,7 +29316,7 @@ humiliate/VdSGnX
 humiliating/~JYVN
 humiliation/~Ng
 humility/~Ng
-hummed/VtT
+hummed/Vj
 hummer/~NSg
 humming/V6JN
 hummingbird/~NSg
@@ -30162,7 +30162,7 @@ incur/~VSB
 incurable/JNgS
 incurably/Ry
 incurious/J
-incurred/~VtT
+incurred/~Vj
 incurring/V6
 incursion/~NgS
 ind/~
@@ -30624,7 +30624,7 @@ institutionalization/Ng
 institutionalize/VdSG
 instr/N
 instruct/~VdGSNJv
-instructed/~VtTU
+instructed/~VjU
 instruction/~NwgS
 instructional/~JN
 instructive/JYN
@@ -31345,7 +31345,7 @@ jitney/~NSg
 jitted/VtT
 jitter/NgSVdG
 jitterbug/NgSV
-jitterbugged/VtT
+jitterbugged/Vj
 jitterbugger/Ng
 jitterbugging/V6
 jitters/NgVh
@@ -31764,7 +31764,7 @@ kinswoman/Ng
 kinswomen/9
 kiosk/~NSg
 kip/~NSg09V         # in the currency sense, singular and plural, also has a plural in -s
-kipped/VtT
+kipped/Vj
 kipper/NgSVdGJ
 kipping/V6
 kirsch/NgS
@@ -32554,7 +32554,7 @@ lidded/VtTJ
 lidless/J
 lido/NgS
 lie/~VdSNg
-lied/~NgVtT>
+lied/~NgVj>
 lief/J>^
 liege/~NSgJ
 lien/~NgSV
@@ -34193,7 +34193,7 @@ mentality/~NSg
 menthol/Ng
 mentholated/J
 mention/~NSgVGd
-mentioned/~VtTU
+mentioned/~VjU
 mentor/~NgSVdG
 mentorship/N
 menu/~NgSVG
@@ -34399,7 +34399,7 @@ microbiologist/NgS
 microbiology/~Ng
 microbiome/NSg
 microblog/NgSV
-microblogged/VtT
+microblogged/Vj
 microblogging/NgV6
 microbrewery/NSg
 microchip/NgSV
@@ -34883,7 +34883,7 @@ mistiness/Nmg
 mistletoe/~Ng
 mistook/Vt
 mistral/~NgS
-mistranslated/VtT
+mistranslated/Vj
 mistreat/VdGSL
 mistreatment/~Nmg
 mistress/~NgSV
@@ -35753,7 +35753,7 @@ nadir/NSgV
 nae
 naff/J>^
 nag/~NSgV
-nagged/VtT
+nagged/Vj
 nagger/NgS
 nagging/V6NJ
 nagware/Nmg
@@ -36973,7 +36973,7 @@ observation/~NwSg
 observational/~J
 observatory/~NSg
 observe/~Vd>GSNBZ
-observed/~VtTU
+observed/~VjU
 observer/~NgS
 obsess/VdSGv
 obsession/~NSg
@@ -37834,7 +37834,7 @@ overexpose/VGdS
 overexposure/Nmg
 overextend/VdGS
 overfed/JV
-overfeed/VGS
+overfeed/VbGS
 overfill/VdGSN
 overfit/VS          # one or two past forms?
 overfitted/VtTJ     # is 'overfit' also a past form?
@@ -37879,7 +37879,7 @@ overlaid/~V
 overlain/V
 overland/~JNV
 overlap/~VSNg
-overlapped/~VtT
+overlapped/~Vj
 overlapping/~V6JN
 overlarge/J
 overlay/~VGdSNg
@@ -39399,7 +39399,7 @@ photon/~NgS
 photopolymer/NSg
 photosensitive/J
 photoshop/VS
-photoshopped/VtT
+photoshopped/Vj
 photoshopping/NmV6
 photostat/NSgV
 photostatic/J
@@ -39882,12 +39882,12 @@ plimsoll/NS
 plinth/N0g
 plinths/N9
 plod/NSVb
-plodded/VtT
+plodded/Vj
 plodder/NgS
 plodding/V6SJN
 plonk/NSVd>GZ
 plop/NgSV
-plopped/VtT
+plopped/Vj
 plopping/V6N
 plosive/NSJ
 plot/~NgSV
@@ -41099,7 +41099,7 @@ propagation/~Nmg
 propagator/NSg
 propel/~VS
 propellant/~NwgSJ
-propelled/~VtT
+propelled/~Vj
 propeller/~NSg
 propelling/V6N
 propensity/~NSg
@@ -41662,7 +41662,7 @@ quarantine/~NOSgVGd
 quark/~NgS
 quarrel/~NSgVGd>Z
 quarreler/Ng
-quarrelled/VtT!@_₹
+quarrelled/Vj!@_₹
 quarreller/NgS!@_₹
 quarrelling/V6Nm!@_₹
 quarrelsome/Jp
@@ -42169,7 +42169,7 @@ readily/~Ry
 readiness/~Ng
 reading/~V6NwgS
 readme/NgS
-readmitted/VtT
+readmitted/Vj
 readout/NSg
 ready/~J^>pVdGSN
 reafforestation/Nm
@@ -42682,7 +42682,7 @@ remarked/~VtTJU
 remediable/J
 remedy/~NSgVGd
 remember/~VdG
-remembered/~VtTU
+remembered/~VjU
 remembrance/~NgSV
 remilitarise/VGdS!_₹
 remilitarize/VGdS
@@ -42770,7 +42770,7 @@ repeated/~VJY
 repeater/~Ng
 repeating/~VJNg
 repel/~VS
-repelled/~VtT
+repelled/~Vj
 repellent/JNSg
 repelling/~V6N
 repent/~VSdGJ
@@ -43094,14 +43094,14 @@ rev/~VNgZv
 revamping/NgV6
 revanchist/JNSg
 reveal/~NSVGdz
-revealed/~JVtTU
+revealed/~JVjU
 revealing/~JYV6N
 reveille/Ng
 revel/~NgSVd>GzZ
 revelation/~NSg
 revelatory/J
 reveler/Ng
-revelled/VtT!@_₹
+revelled/Vj!@_₹
 reveller/NSg!@_₹
 revelling/V6SN!@_₹
 revelry/NSg
@@ -43336,7 +43336,7 @@ risque/JNV
 rissole/NSV
 rite/~NgSJ
 ritual/~JYNSg
-ritualised/VtT!_₹
+ritualised/Vj!_₹
 ritualism/Ng
 ritualistic/JQ
 ritualized/VtTJ
@@ -43922,7 +43922,7 @@ sand/~NgSJ>VGdZ
 sandal/~NSg
 sandalwood/Ng
 sandbag/NSgV
-sandbagged/VtT
+sandbagged/Vj
 sandbagger/NSg
 sandbagging/V6N
 sandbank/NgS
@@ -44186,7 +44186,7 @@ scat/NgSV
 scathing/~V6JY
 scatological/J
 scatology/Nmg
-scatted/VtT
+scatted/Vj
 scatter/~VGdSNgz
 scatterbrain/NSgd
 scattering/~V6Ng
@@ -44352,7 +44352,7 @@ scram/VSN
 scramble/~VGdSNU
 scramble's
 scrambler/NgS
-scrammed/VtT
+scrammed/Vj
 scramming/V6
 scrap/~NgSVd>GZz
 scrapbook/NSgV
@@ -44924,7 +44924,7 @@ servery/NS
 service/~NgSVE
 serviceability/Nmg
 serviceable/~J
-serviced/~VtT
+serviced/~Vj
 serviceman/Ng
 servicemen/~9g
 servicewoman/Ng
@@ -45061,7 +45061,7 @@ shameful/~JYp
 shamefulness/Ng
 shameless/~JYp
 shamelessness/Nmg
-shammed/VtT
+shammed/Vj
 shamming/V6
 shampoo/NwgSVGd>Z
 shampooer/Ng
@@ -45420,7 +45420,7 @@ shrub/~NgSV
 shrubbery/NSg
 shrubby/J>^
 shrug/NgSVb
-shrugged/VtT
+shrugged/Vj
 shrugging/V6N
 shrunk/~VJn
 shtick/NgS
@@ -45494,7 +45494,7 @@ sidesaddle/NgS
 sideshow/~NgS
 sidesplitting/J
 sidestep/NgSV
-sidestepped/VtT
+sidestepped/Vj
 sidestepping/V6N
 sidestroke/NSgdG
 sideswipe/NSgVdG
@@ -45683,7 +45683,7 @@ sinusoid/NSg
 sinusoidal/~JN
 sip/~NSgV
 siphon/~NgSVGd
-sipped/VtT
+sipped/Vj
 sipper/NSg
 sipping/V6N
 sir/~NSgVXn
@@ -45846,7 +45846,7 @@ slacker/Ng
 slackness/Nmg
 slacks/N9gVh
 slag/NwgSV
-slagged/VtT
+slagged/Vj
 slagging/V6
 slagheap/NS
 slain/~VTN
@@ -45949,7 +45949,7 @@ slim/~JpNSV
 slime/~NmgV
 sliminess/Nmg
 slimline/J
-slimmed/VtT
+slimmed/Vj
 slimmer/JcNS
 slimmest/Ju
 slimming/JV6Ng
@@ -46157,7 +46157,7 @@ snaky/J>^
 snap/~NSVJU
 snap's
 snapdragon/NSg
-snapped/~VtTU
+snapped/~VjU
 snapper/~NgSV
 snappily/Ry
 snappiness/Nmg
@@ -46236,7 +46236,7 @@ snorer/Ng
 snorkel/NgSVGd>Z
 snorkeler/Ng
 snorkeling/NgV6
-snorkelled/VtT!@_₹
+snorkelled/Vj!@_₹
 snorkelling/NV6!@_₹
 snort/NSgVd>GZ
 snorter/Ng
@@ -46400,7 +46400,7 @@ solemnness/Ng
 solenoid/NgS
 solicit/~VGdSN
 solicitation/NwSg
-solicited/~VtTU
+solicited/~VjU
 solicitor/~NSg
 solicitous/JYp
 solicitousness/Ng
@@ -46513,7 +46513,7 @@ sophistry/NwSg
 sophomore/~JNgS
 sophomoric/J
 soporific/NgSJQ
-sopped/VtT
+sopped/Vj
 sopping/JV6N
 soppy/J>^
 soprano/~NgSV
@@ -46985,7 +46985,7 @@ spray/~NwSVdGr
 spray's
 sprayer/NgS
 spread/~VbtTG>SNwgZB
-spreadeagled/V
+spreadeagled/Vj
 spreader/Ng
 spreadsheet/~NgSV
 spree/~NSgVd
@@ -47064,7 +47064,7 @@ squash/~NgSVGd
 squashy/J^>
 squat/~JpNSgV
 squatness/Nmg
-squatted/VtT
+squatted/Vj
 squatter/NgSJc
 squattest/Ju
 squatting/NV6
@@ -47759,7 +47759,7 @@ strumming/V6N
 strumpet/NgSV
 strung/~VUr
 strut/~VSNgJ
-strutted/VtT
+strutted/Vj
 strutting/V6N
 strychnine/Ng
 stub/~NgSV
@@ -48150,7 +48150,7 @@ summarizer/NgS
 summary/~JNSg
 summat/
 summation/~NgSW
-summed/~VtT
+summed/~Vj
 summer/~NwgSVdG
 summerhouse/NSg
 summertime/~Ng
@@ -48389,7 +48389,7 @@ surmount/VdGSB
 surmountable/Ji
 surname/~NgSV
 surpass/~VGdS
-surpassed/~VtTU
+surpassed/~VjU
 surplice/NgS
 surplus/~NgSJVb
 surplussed/VtT
@@ -48459,11 +48459,11 @@ suzerain/NgS
 suzerainty/~Ng
 svelte/J^>
 swab/NgSV
-swabbed/VtT
+swabbed/Vj
 swabbing/V6N
 swaddle/VdGSN
 swag/VSNg
-swagged/VtT
+swagged/Vj
 swagger/Vd>GSNgJ
 swagging/V6
 swain/~NSg
@@ -48577,7 +48577,7 @@ switchboard/NSg
 switcher/Ng
 switchover/N
 swivel/NgSVdG
-swivelled/VtT!@_₹
+swivelled/Vj!@_₹
 swivelling/V6N!@_₹
 swiz/N
 swizz/NV
@@ -49224,7 +49224,7 @@ tenanted/VU
 tenantry/Ng
 tench/N
 tend/~VbdGSiEW
-tended/~VtTU
+tended/~VjU
 tendency/~NSg
 tendentious/JYp
 tendentiousness/Nmg
@@ -49829,7 +49829,7 @@ tintype/NgSV
 tinware/Nmg
 tiny/~J>^pN
 tip/~NSgV
-tipped/~VtT
+tipped/~Vj
 tipper/NSg
 tippet/NSg
 tippex/VGdSN
@@ -50120,7 +50120,7 @@ totally/R%
 tote/NgSV
 totem/~NSg
 totemic/J
-totted/VtT
+totted/Vj
 totter/VGd>SNgZ
 totterer/Ng
 totting/V6N
@@ -50282,8 +50282,8 @@ tramcar/NS
 tramlines/N9V
 trammed/VtT
 trammel/NSgVGd
-trammeled/VtTU<
-trammelled/VtTU!@_₹
+trammeled/VjU<
+trammelled/VjU!@_₹
 trammelling/V6N!@_₹
 tramming/V6
 tramp/~NSgVGd>Z
@@ -50528,9 +50528,9 @@ triad/~NSg
 triage/NmgVd
 triager/NSg
 trial/~NSgJVr
-trialed/VtT
+trialed/Vj
 trialing/VN6
-trialled/VtT!@_₹
+trialled/Vj!@_₹
 trialling/V6N!@_₹
 triangle/~NSg
 triangular/~JY
@@ -50799,7 +50799,7 @@ tuft/NgSVd>GZ
 tufter/Ng
 tug/~VSNg
 tugboat/~NgS
-tugged/VtT
+tugged/Vj
 tugging/V6N
 tuition/~Ngi
 tularaemia/N!_₹
@@ -51138,7 +51138,7 @@ unauthorized/J
 unavailing/JY
 unaware/~JS
 unban/VS
-unbanned/VtT
+unbanned/Vj
 unbanning/V6
 unbeknown/J!_₹
 unbeknownst/~
@@ -52279,7 +52279,7 @@ victor/~NgS
 victorious/~JY
 victory/~NwSgV
 victual/NSgVdG
-victualled/VtT!@_₹
+victualled/Vj!@_₹
 victualling/V6N!@_₹
 vicuña/NgS
 vicuna/NgS
@@ -52471,7 +52471,7 @@ viz/~JVN
 vizier/~NSg
 vlf
 vlog/NSgVbn
-vlogged/VtT
+vlogged/Vj
 vlogger/NgS
 vlogging/V6Nmg
 vocab/N
@@ -52941,7 +52941,7 @@ weathermen/N9
 weatherperson/N0gS
 weatherproof/JVGSd
 weatherstrip/NSV
-weatherstripped/VtT
+weatherstripped/Vj
 weatherstripping/NgV6
 weave/~Vbd>GSNgZ
 weaver/~Ng
@@ -53081,7 +53081,7 @@ whalebone/Ng
 whaler/Ng
 whaling/~NgV
 wham/~NgSV
-whammed/VtT
+whammed/Vj
 whamming/V6
 whammy/NSg
 wharf/~NgV
@@ -53326,7 +53326,7 @@ wiki/~NgSV
 wild/~JY^>pNgSV
 wildcard/~NgSV
 wildcat/~NgSJV
-wildcatted/VtT
+wildcatted/Vj
 wildcatter/NgS
 wildcatting/V6
 wildebeest/NgS
@@ -53860,7 +53860,7 @@ yachtswoman/Ng
 yachtswomen/9
 yahoo/~NSgV
 yak/~NSgV
-yakked/VtT
+yakked/Vj
 yakking/V6
 yakuza/NgS09        # singular and plural, also has a plural in -s
 yam/~NSgV
@@ -54026,7 +54026,7 @@ zestfulness/Ng
 zesty/J>^
 zeta/~NgS
 zigzag/NSgJV
-zigzagged/VtT
+zigzagged/Vj
 zigzagging/V6JN
 zilch/NgJV
 zillion/NgS
@@ -54207,8 +54207,8 @@ DFA/NgS
 DKIM/NSg
 DLL/NgS             # dynamic link library
 DM/NSgVb
-DM'd/V              # direct message
-DMed/VtT
+DM'd/VJ              # direct message
+DMed/Vj
 DMing/V6
 DNS/OgS             # domain name system
 DOM/NSg             # document object model
@@ -54568,7 +54568,7 @@ SIMD/NSg            # single instruction, multiple data
 SLA/NSg
 SLOC/9              # source lines of code
 SMS/N0gVb
-SMSed/VtT
+SMSed/Vj
 SMSes/N9Vh
 SMSing/V6
 SMTP                # Simple Mail Transfer Protocol

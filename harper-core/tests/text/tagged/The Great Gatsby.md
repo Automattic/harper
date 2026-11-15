@@ -6667,7 +6667,7 @@
 >
 #
 > “ Then      you    ought     to leave  it       alone , ” countered Doctor  Civet .
-# . NSg/J/R/C ISgPl+ NSg/I/VXB P  NSg/VB NSg/ISg+ J     . . VB        NSg/VB+ NSg+  .
+# . NSg/J/R/C ISgPl+ NSg/I/VXB P  NSg/VB NSg/ISg+ J     . . VP        NSg/VB+ NSg+  .
 >
 #
 > “ Speak  for   yourself ! ” cried Miss   Baedeker violently . “ Your hand    shakes . I
