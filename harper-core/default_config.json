@@ -6251,6 +6251,13 @@
 						},
 						{
 							"Bool": {
+								"name": "WeanerWiener",
+								"state": true,
+								"label": "Weaner / Wiener"
+							}
+						},
+						{
+							"Bool": {
 								"name": "WebScraping",
 								"state": true,
 								"label": "Web Scraping"
