@@ -1,10 +1,10 @@
-use itertools::Itertools;
+    use itertools::Itertools;
 
 use crate::{
     char_ext::CharExt,
     expr::{Expr, FirstMatchOf, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
-    spell::Dictionary,
+    spell::{CanonicalWordId, Dictionary},
     {CharStringExt, Lint, Token, TokenStringExt},
 };
 
@@ -34,9 +34,22 @@ impl<D: Dictionary> MoreAdjective<D> {
         }
     }
 
-    fn add_valid_candidate(&self, candidates: &mut Vec<String>, candidate: String) -> bool {
+    fn add_valid_candidate(
+        &self,
+        candidates: &mut Vec<String>,
+        base: CanonicalWordId,
+        candidate: String,
+    ) -> bool {
         if let Some(metadata) = self.dict.get_word_metadata_str(&candidate)
             && (metadata.is_comparative_adjective() || metadata.is_superlative_adjective())
+            // The candidate must actually be derived from the matched
+            // adjective. A word like "cuter" is a valid comparative
+            // adjective, but of "cute"—which doesn't make it a valid
+            // contraction of "more cut". See #3297.
+            //
+            // Inflections with no recorded derivation (like "bigger", which
+            // the affix rules cannot generate) are trusted as curated.
+            && (metadata.derived_from.is_empty() || metadata.derived_from.contains(base))
         {
             candidates.push(candidate);
             true
@@ -88,12 +101,11 @@ impl<D: Dictionary> ExprLinter for MoreAdjective<D> {
         let adj_chars = adj_span.get_content(src);
         let adj_str = adj_span.get_content_string(src);
 
-        if adj_chars.len() < 2 {
-            return None;
-        }
+        // The canonical ID of the matched adjective, lowercased. Used to
+        // verify that suggested inflections are actually derived from it.
+        let base_id = CanonicalWordId::from_word_chars(adj_chars.to_lower().as_ref());
 
-        // "humaner" = "more humane", not "more human"
-        if adj_str == "human" {
+        if adj_chars.len() < 2 {
             return None;
         }
 
@@ -120,19 +132,24 @@ impl<D: Dictionary> ExprLinter for MoreAdjective<D> {
         }
 
         // Just add the ending: smart -> smarter/smartest
-        self.add_valid_candidate(&mut candidates, format!("{}{}", adj_str, ending));
+        self.add_valid_candidate(&mut candidates, base_id, format!("{}{}", adj_str, ending));
 
         // Double consonant: big -> bigger/biggest
         let penult = adj_chars[adj_chars.len() - 2];
         let last = adj_chars[adj_chars.len() - 1];
         if penult.is_vowel() && !last.is_vowel() {
-            self.add_valid_candidate(&mut candidates, format!("{}{}{}", adj_str, last, ending));
+            self.add_valid_candidate(
+                &mut candidates,
+                base_id,
+                format!("{}{}{}", adj_str, last, ending),
+            );
         }
 
         if last == 'y' {
             // smelly -> smellier/smelliest
             self.add_valid_candidate(
                 &mut candidates,
+                base_id,
                 format!(
                     "{}i{}",
                     adj_chars[0..adj_chars.len() - 1].iter().collect::<String>(),
@@ -143,6 +160,7 @@ impl<D: Dictionary> ExprLinter for MoreAdjective<D> {
             // cute -> cuter/cutest
             self.add_valid_candidate(
                 &mut candidates,
+                base_id,
                 format!(
                     "{}{}",
                     adj_chars[0..adj_chars.len() - 1].iter().collect::<String>(),
@@ -331,11 +349,49 @@ mod tests {
     }
 
     #[test]
-    #[ignore = "this problem persists, even after changing the 'cut' and 'cute' annotations"]
     fn dont_correct_more_cut_to_cuter() {
         assert_no_lints(
             "they’re more cut from “one and done” cloth",
             MoreAdjective::new(FstDictionary::curated()),
+        );
+    }
+
+    /// "cutest" is the superlative of "cute", not of "cut". #3297
+    #[test]
+    fn dont_correct_most_cut_to_cutest() {
+        assert_no_lints(
+            "The villain was most cut from the same cloth as his rival.",
+            MoreAdjective::new(FstDictionary::curated()),
+        );
+    }
+
+    /// Suggested inflections must be derived from the matched word even when
+    /// the phrase is capitalized. #3297
+    #[test]
+    fn dont_correct_capitalized_more_cut() {
+        assert_no_lints(
+            "More cut from the same cloth than his rivals, the impostor was easy to spot.",
+            MoreAdjective::new(FstDictionary::curated()),
+        );
+    }
+
+    /// "humanest" derives from "humane", not from "human". #3297
+    #[test]
+    fn dont_correct_most_human_to_humanest() {
+        assert_no_lints(
+            "Of all the crew, the android was most human.",
+            MoreAdjective::new(FstDictionary::curated()),
+        );
+    }
+
+    /// True positive that requires "humaner" to be derived from "humane"
+    /// rather than from "human". #3297
+    #[test]
+    fn most_humane() {
+        assert_suggestion_result(
+            "It was the most humane choice.",
+            MoreAdjective::new(FstDictionary::curated()),
+            "It was the humanest choice.",
         );
     }
 }
