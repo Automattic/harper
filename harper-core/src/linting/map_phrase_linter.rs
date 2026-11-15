@@ -84,6 +84,15 @@ impl MapPhraseLinter {
         phrases: impl IntoIterator<Item = impl AsRef<str>>,
         correct_form: impl ToString,
     ) -> Self {
+        let patterns = LongestMatchOf::new(phrases.into_iter().map(|p| {
+            let expr: Box<dyn Expr> = Box::new(weir_expr_to_expr(p.as_ref()).unwrap());
+            expr
+        }));
+
+        Self::new_closed_compound_expr(Box::new(patterns), correct_form)
+    }
+
+    pub fn new_closed_compound_expr(expr: Box<dyn Expr>, correct_form: impl ToString) -> Self {
         let message = format!(
             "Did you mean the closed compound `{}`?",
             correct_form.to_string()
@@ -94,8 +103,8 @@ impl MapPhraseLinter {
             correct_form.to_string()
         );
 
-        Self::new_fixed_phrases(
-            phrases,
+        Self::new(
+            expr,
             [correct_form],
             message,
             description,
