@@ -74,6 +74,7 @@ fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstE
             }else{
                 let node = match text.as_str() {
                     "PROG" => AstExprNode::Progressive,
+                    "NUMBER" => AstExprNode::Number,
                     _ => AstExprNode::Word(text.chars().collect()),
                 };
 
@@ -462,6 +463,45 @@ mod tests {
             parse_expr_str("PROG", true).unwrap(),
             AstExprNode::Progressive
         )
+    }
+
+    #[test]
+    fn parses_number() {
+        assert_eq!(parse_expr_str("NUMBER", true).unwrap(), AstExprNode::Number);
+        assert_eq!(
+            parse_expr_str("NUMBER", false).unwrap(),
+            AstExprNode::Seq(vec![AstExprNode::Number])
+        );
+    }
+
+    #[test]
+    fn number_keyword_is_case_sensitive() {
+        for word in ["number", "Number", "NUMBERED"] {
+            assert_eq!(
+                parse_expr_str(word, true).unwrap(),
+                AstExprNode::Word(word.chars().collect())
+            );
+        }
+    }
+
+    #[test]
+    fn number_is_distinct_from_num() {
+        for use_optimizer in [false, true] {
+            assert_eq!(
+                parse_expr_str("[NUMBER, NUM]", use_optimizer).unwrap(),
+                if use_optimizer {
+                    AstExprNode::Arr(vec![
+                        AstExprNode::Number,
+                        AstExprNode::UPOSSet(vec![UPOS::NUM]),
+                    ])
+                } else {
+                    AstExprNode::Seq(vec![AstExprNode::Arr(vec![
+                        AstExprNode::Number,
+                        AstExprNode::UPOSSet(vec![UPOS::NUM]),
+                    ])])
+                }
+            );
+        }
     }
 
     #[test]
