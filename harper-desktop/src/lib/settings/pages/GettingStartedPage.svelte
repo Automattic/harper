@@ -2,7 +2,7 @@
 import { isTauri } from '@tauri-apps/api/core';
 import { openUrl } from '@tauri-apps/plugin-opener';
 import { platform } from '@tauri-apps/plugin-os';
-import { Button, SlideDeck } from 'components';
+import { Button, FloatingLettersSlideDeck } from 'components';
 import { onMount } from 'svelte';
 import {
 	type AccessibilityPermissionStatus,
@@ -245,7 +245,7 @@ async function prepareService() {
 </script>
 
 <div class="onboarding-shell">
-  <SlideDeck
+  <FloatingLettersSlideDeck
     title={slides[step].title}
     lede={slides[step].lede}
     slideProgress={step / (slides.length - 1)}
@@ -339,7 +339,7 @@ async function prepareService() {
     {#if onboardingError}
       <p role="alert">{onboardingError}</p>
     {/if}
-  </SlideDeck>
+  </FloatingLettersSlideDeck>
 </div>
 
 <style>

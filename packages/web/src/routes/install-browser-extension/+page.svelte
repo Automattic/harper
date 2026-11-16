@@ -10,7 +10,7 @@ export const frontmatter = {
 
 <script lang="ts">
 import PageMetadata from '$lib/PageMetadata.svelte';
-import { ChevronRightIcon, Link, SlideDeck, Textarea } from 'components';
+import { ChevronRightIcon, FloatingLettersSlideDeck, Link, Textarea } from 'components';
 import AppLogoTile from '$lib/marketing/AppLogoTile.svelte';
 import { marketingLinks } from '$lib/marketing/data';
 
@@ -56,7 +56,7 @@ let demoText =
 	'Ths is an text box you can type in.\n\nany other site on the web will work the the same!';
 </script>
 
-<SlideDeck
+<FloatingLettersSlideDeck
 	title={steps[step].title}
 	lede={steps[step].lede}
 	slideProgress={step / (steps.length - 1)}
@@ -151,4 +151,4 @@ let demoText =
 			</div>
 		{/if}
 	</svelte:fragment>
-</SlideDeck>
+</FloatingLettersSlideDeck>
