@@ -20,7 +20,7 @@ Message: |
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
        8 | In corpus linguistics, part-of-speech tagging (POS tagging or PoS tagging or
          |                                                               ^~~ This word's canonical spelling is all-caps.

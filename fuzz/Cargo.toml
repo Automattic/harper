@@ -1,6 +1,6 @@
 [package]
 name = "fuzz"
-version = "3.1.0"
+version = "3.2.0"
 publish = false
 edition = "2024"
 
@@ -12,7 +12,6 @@ libfuzzer-sys = "0.4"
 
 harper-core = { path = "../harper-core" }
 harper-typst = { path = "../harper-typst" }
-harper-literate-haskell = { path = "../harper-literate-haskell" }
 harper-html = { path = "../harper-html" }
 harper-comments = { path = "../harper-comments" }
 

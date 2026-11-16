@@ -98,7 +98,7 @@ pub fn show_settings_window(app: &tauri::AppHandle) -> tauri::Result<()> {
 
     let window = WebviewWindowBuilder::new(app, "settings", WebviewUrl::App("index.html".into()))
         .title("Harper Settings")
-        .inner_size(920.0, 680.0)
+        .inner_size(1040.0, 800.0)
         .min_inner_size(780.0, 520.0)
         .center()
         .visible(false)

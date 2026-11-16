@@ -3765,7 +3765,7 @@ dependencies = [
 
 [[package]]
 name = "harper-brill"
-version = "3.1.0"
+version = "3.2.0"
 dependencies = [
  "harper-pos-utils",
  "serde_json",
@@ -3773,13 +3773,12 @@ dependencies = [
 
 [[package]]
 name = "harper-core"
-version = "3.1.0"
+version = "3.2.0"
 dependencies = [
  "ammonia",
  "bitflags 2.13.1",
  "blanket",
  "boxcar",
- "cached",
  "foldhash 0.2.0",
  "fst",
  "harper-brill",
@@ -3809,7 +3808,7 @@ dependencies = [
 
 [[package]]
 name = "harper-desktop"
-version = "3.1.0"
+version = "3.2.0"
 dependencies = [
  "accessibility",
  "accessibility-sys",
@@ -3853,7 +3852,7 @@ dependencies = [
 
 [[package]]
 name = "harper-dictionary-wordlist"
-version = "3.1.0"
+version = "3.2.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -3862,7 +3861,7 @@ dependencies = [
 
 [[package]]
 name = "harper-pos-utils"
-version = "3.1.0"
+version = "3.2.0"
 dependencies = [
  "burn",
  "burn-ndarray",
@@ -3878,11 +3877,10 @@ dependencies = [
 
 [[package]]
 name = "harper-thesaurus"
-version = "3.1.0"
+version = "3.2.0"
 dependencies = [
  "hashbrown 0.16.1",
  "indexmap 2.14.2",
- "itertools 0.15.0",
  "ruzstd",
  "zstd",
 ]

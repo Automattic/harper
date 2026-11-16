@@ -109,7 +109,7 @@
 > centre      of the earth      . Let     me       see    : that      would be       four thousand miles  down        , I
 # NSg/VB/Comm P  D+  NPr🅪Sg/VB+ . NSg/VBP NPr/ISg+ NSg/VB . I/C/Ddem+ VXB   NSg/VLXB NSg+ NSg+     NPrPl+ N🅪Sg/VB/J/P . ISg/#r+
 > think  — ” ( for   , you    see    , Alice had learnt several things of this    sort    in        her
-# NSg/VB . . . R/C/P . ISgPl+ NSg/VB . NPr+  VP  VB     J/Dq    NPl    P  I/Ddem+ NSg/VB+ NPr/J/R/P ISg/D$+
+# NSg/VB . . . R/C/P . ISgPl+ NSg/VB . NPr+  VP  VP     J/Dq    NPl    P  I/Ddem+ NSg/VB+ NPr/J/R/P ISg/D$+
 > lessons in        the schoolroom , and  though this    was  not     a   very good     opportunity for
 # NPl/V3+ NPr/J/R/P D   NSg        . VB/C C      I/Ddem+ VLPt NSg/R/C D/P J/R  NPr/VB/J N🅪Sg+       R/C/P
 > showing  off        her     knowledge , as    there was  no       one      to listen to her     , still      it       was
@@ -257,7 +257,7 @@
 > marked ‘ poison   ’ or    not     ” ; for   she  had read    several nice  little     histories about
 # VP/J   . N🅪Sg/VB+ . NPr/C NSg/R/C . . R/C/P ISg+ VP  NSg/VBP J/Dq    NPr/J NPr/I/J/Dq NPl       J/P
 > children who    had got burnt , and  eaten up         by wild     beasts and  other    unpleasant
-# NPl+     NPr/I+ VP  VP  VB/J  . VB/C VPp/J NSg/VB/J/P P  NSg/VB/J NPl/V3 VB/C NSg/VB/J J
+# NPl+     NPr/I+ VP  VP  VP/J  . VB/C VPp/J NSg/VB/J/P P  NSg/VB/J NPl/V3 VB/C NSg/VB/J J
 > things , all          because they would not     remember the simple   rules   their friends   had
 # NPl+   . NSg/I/J/C/Dq C/P     IPl+ VXB   NSg/R/C NSg/VB   D   NSg/VB/J NPl/V3+ D$+   NPrPl/V3+ VP
 > taught them     : such  as    , that     a   red    - hot      poker   will    burn   you    if    you    hold     it       too
@@ -4425,7 +4425,7 @@
 > “ Well       , I       can’t show   it       you    myself , ” the Mock     Turtle  said : “ I’m too stiff    . And
 # . NSg/VB/J/R . ISg/#r+ VXB   NSg/VB NSg/ISg+ ISgPl+ ISg+   . . D   NSg/VB/J NSg/VB+ VP/J . . K   R   NSg/VB/J . VB/C
 > the Gryphon never learnt it       . ”
-# D   ?       R     VB     NSg/ISg+ . .
+# D   ?       R     VP     NSg/ISg+ . .
 >
 #
 > “ Hadn’t time       , ” said the Gryphon : “ I       went to the Classics master    , though . He       was
