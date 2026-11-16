@@ -67,6 +67,7 @@ enum Concept {
     PhotocopierXerox,
     PhotocopyXerox,
     PickupUte,
+    PostalCodePostcodeZipCode,
     PramStroller,
     Prepone,
     SpannerWrench,
@@ -492,6 +493,18 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         concept: PickupUte,
     },
     Term {
+        term: "postal code",
+        flag: UniversalTerm,
+        dialects: &[Canadian, Indian],
+        concept: PostalCodePostcodeZipCode,
+    },
+    Term {
+        term: "postcode",
+        flag: Flag,
+        dialects: &[Australian, British],
+        concept: PostalCodePostcodeZipCode,
+    },
+    Term {
         term: "pram",
         flag: Flag,
         dialects: &[Australian, British],
@@ -666,6 +679,12 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         dialects: &[American, Australian, British, Canadian, Indian],
         concept: NoughtZero,
     },
+    Term {
+        term: "zip code",
+        flag: Flag,
+        dialects: &[American],
+        concept: PostalCodePostcodeZipCode,
+    },
 ];
 
 pub struct Regionalisms {
@@ -762,6 +781,51 @@ impl ExprLinter for Regionalisms {
 mod tests {
     use super::*;
     use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+
+    #[test]
+    fn us_to_uk_zip_code() {
+        assert_suggestion_result(
+            "What is your zip code?",
+            Regionalisms::new(Dialect::British),
+            "What is your postcode?",
+        );
+    }
+
+    #[test]
+    fn uk_to_us_postcode() {
+        assert_suggestion_result(
+            "What is your postcode?",
+            Regionalisms::new(Dialect::American),
+            "What is your zip code?",
+        );
+    }
+
+    #[test]
+    fn us_to_ca_zip_code() {
+        assert_suggestion_result(
+            "What is your zip code?",
+            Regionalisms::new(Dialect::Canadian),
+            "What is your postal code?",
+        );
+    }
+
+    #[test]
+    fn dont_flag_postal_code() {
+        assert_lint_count(
+            "What is your postal code?",
+            Regionalisms::new(Dialect::British),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_zip_code_in_american() {
+        assert_lint_count(
+            "What is your zip code?",
+            Regionalisms::new(Dialect::American),
+            0,
+        );
+    }
 
     #[test]
     fn uk_to_us_food() {

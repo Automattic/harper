@@ -390,8 +390,8 @@
 # N🅪Sg/VB+ . NPl        P  Nᴹ/Vg/J     NSg+     N🅪Sg/VB+ R/C/P D/P Nᴹ/Vg/J+    NSg/VB+
 > argue that     the reliability of computational systems is  investigated in        the same
 # VB    I/C/Ddem D   Nᴹ          P  J             NPl+    VL3 VP/J         NPr/J/R/P D   I/J
-> way    as    bridges   in        civil engineering and  airplanes in        aerospace engineering . They
-# NSg/J+ R/C/P NPrPl/V3+ NPr/J/R/P J     Nᴹ/Vg/J+    VB/C NPl/V3    NPr/J/R/P NSg/J+    Nᴹ/Vg/J+    . IPl+
+> way    as    bridges   in        civil engineering and  airplanes   in        aerospace engineering . They
+# NSg/J+ R/C/P NPrPl/V3+ NPr/J/R/P J     Nᴹ/Vg/J+    VB/C NPl/V3/NoAm NPr/J/R/P NSg/J+    Nᴹ/Vg/J+    . IPl+
 > also argue that     while      empirical sciences observe what   presently exists , computer
 # R/C  VB    I/C/Ddem NSg/VB/C/P NSg/J+    NPl/V3+  NSg/VB  NSg/I+ R         V3     . NSg+
 > science  observes what   is  possible to exist and  while      scientists discover  laws

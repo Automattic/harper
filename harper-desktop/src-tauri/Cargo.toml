@@ -1,6 +1,6 @@
 [package]
 name = "harper-desktop"
-version = "3.1.0"
+version = "3.2.0"
 description = "The language checker for developers."
 edition = "2024"
 publish = false
@@ -55,6 +55,8 @@ objc2-app-kit = { version = "0.3.2", default-features = false, features = [
     "NSApplication",
     "NSImage",
     "NSRunningApplication",
+    "NSView",
+    "NSWindow",
     "NSWorkspace",
 ] }
 objc2-foundation = { version = "0.3.2", default-features = false, features = [
