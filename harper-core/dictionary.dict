@@ -19039,7 +19039,7 @@ conman/N
 conmen/9
 connect/~VdGSNrEv
 connectable/J
-connected/~JVU
+connected/~JVjU
 connection/~NwgSE
 connective/~JNgS
 connectivity/~Ng
@@ -19110,7 +19110,7 @@ consolable/Ji
 consolation/~NgS
 consolatory/JN
 consolidate/~VdSGJXn
-consolidated/~JVU
+consolidated/~JVjU
 consolidation/~Ng
 consolidator/NgS
 consoling/JYVN
@@ -19414,7 +19414,7 @@ coping/~NgV
 copious/~JYp
 copiousness/Ng
 copium/Nmg
-copped/VtTJ
+copped/VjJ
 copper/~NwSgJV
 copperhead/~NSg
 copperplate/NgV
@@ -19537,7 +19537,7 @@ corrective/~JNSg
 correctness/~Ngi
 corrector/NgS
 correlate/~VdGSNgXnv
-correlated/~VtTJU
+correlated/~VjJU
 correlation/~NwgS
 correlational/J
 correlative/JNgS
@@ -20986,7 +20986,7 @@ deity/~NSg
 déjà vu/Nmg
 deja vu/Nmg
 deject/VGdSN
-dejected/JYV
+dejected/JYVj
 dejection/Nmg
 delay/~NVd>Z
 delectable/JN
@@ -22114,7 +22114,7 @@ dog/~NSgVJ
 dogcart/NSg
 dogcatcher/NSg
 doge/~NgS
-dogeared/JV
+dogeared/J
 dogfight/NSgV
 dogfish/NgS09       # singular and plural, also has a plural in -s
 dogfood/NgSVdG
@@ -23227,7 +23227,7 @@ embarrassed/~JVjU
 embarrassing/~V6NJY
 embarrassment/~NwSg
 embassy/~NSg
-embattled/JV
+embattled/JVj
 embed/~VSN
 embeddable/J
 embedded/~VjJ
@@ -25422,7 +25422,7 @@ fleabag/NSg
 fleabite/NS
 fleapit/NS
 fleck/~NSgVGd
-fledged/~JVU
+fledged/~JVjU
 fledgling/~JNgS
 flee/~VS
 fleece/~NgSVGd>Z
@@ -28154,7 +28154,7 @@ hardstand/NSg
 hardtack/~Ng
 hardtop/~NSg
 hardware/~Nmg
-hardwired/JV
+hardwired/JVj
 hardwood/~NSgJ
 hardworking/~J
 hardy/~J^>pN
@@ -30167,7 +30167,7 @@ incurring/V6
 incursion/~NgS
 ind/~
 indeclinable/J
-indebted/~VJp
+indebted/~Jp
 indebtedness/Ng
 indeed/~R%          # also an adverb of affirmation, emphasis, and degree
 indefatigable/J
@@ -30699,7 +30699,7 @@ interact/~VGdSNv
 interaction/~NwSg
 interactive/~JYN
 interactivity/Nmg
-interbred/VtT
+interbred/Vj
 interbreed/VGS
 intercede/VGdS
 intercept/~VGdSNg
@@ -34703,7 +34703,7 @@ miry/J>^
 # mis               # prefixes that are not also words in their own right don't belong in the dictionary
 misaddress/VdSG
 misadventure/NwgS
-misaligned/JV
+misaligned/JVj
 misalignment/Nmg
 misalliance/NgS
 misanthrope/NSg
@@ -37837,7 +37837,7 @@ overfed/JVtT
 overfeed/VbGS
 overfill/VdGSN
 overfit/VS          # one or two past forms?
-overfitted/VtTJ     # is 'overfit' also a past form?
+overfitted/VjJ     # is 'overfit' also a past form?
 overfitting/NgV6
 overflew/V
 overflight/NgS
@@ -37891,7 +37891,7 @@ overlong/J
 overlook/~NgSVGd
 overlord/~NgSV
 overly/~JSG
-overmanned/VtTJ
+overmanned/VjJ
 overmanning/V6
 overmaster/VSdG
 overmatch/VSdG
@@ -37929,7 +37929,7 @@ overreach/VGdSN
 overreact/VSdG
 overreaction/NwSg
 overread/JVbtTSG
-overrefined/VJ
+overrefined/VjJ
 overregulate/VdSGn
 overreliance/Nmg
 overrepresent/VGdS
@@ -37989,7 +37989,7 @@ overstock/VGdSN
 overstretch/VGdSN
 overstrict/J
 overstrung/J
-overstuffed/JVtT
+overstuffed/JVj
 oversubscribe/VdSG
 oversubtle/J
 oversupply/VGdSNw
@@ -40542,7 +40542,7 @@ predatory/~J
 predawn/NJ
 predecease/NSVGd
 predecessor/~NSg
-predefined/~JV
+predefined/~JVj
 predesignate/JVGdS
 predestination/~Ng
 predestine/VdSG
@@ -40616,7 +40616,7 @@ prehistory/~Nmg
 prehuman/JN
 preindustrial/J
 preinstallation/Nmg
-preinstalled/VtT
+preinstalled/Vj
 prejudge/VGdS
 prejudgement/NgS!_₹
 prejudgment/NSg
@@ -47537,7 +47537,7 @@ stonewashed/J
 stonework/~Ng
 stonily/Ry
 stoniness/Ng
-stonkered/VJ
+stonkered/J
 stonking/JV
 stony/~J^>p
 stood/~VtT
@@ -47682,7 +47682,7 @@ strew/VGSdH
 strewn/V
 stria/N0g
 striae/N9
-striated/JV
+striated/J
 striation/NgS
 stricken/~JVT
 strict/~J>Y^p
@@ -51206,7 +51206,7 @@ uncustomised/J!_₹
 uncut/~J
 undaunted/JY
 undead/JN
-undecided/~JNSgV
+undecided/~JNSg
 undefine/VGdS
 undemonstrative/JY
 undeniably/Ry
@@ -51215,7 +51215,7 @@ underachieve/VGd>SLZ
 underachiever/Ng
 underact/VSdG
 underage/~JN
-underappreciated/VtTJ
+underappreciated/VjJ
 underarm/NSgJV
 underbelly/~NSg
 underbid/VbtTdSN
@@ -51239,7 +51239,7 @@ undercut/NSgVJ
 undercutting/V6N
 underdeliver/VSdG
 underdelivery/NgS
-underdeveloped/~JV
+underdeveloped/~J
 underdevelopment/Nmg
 underdog/~NSg
 underdone/J
@@ -51266,10 +51266,10 @@ undergraduate/~NSgJ
 underground/~JNgSV
 undergrowth/Nmg
 underhand/JVN
-underhanded/JYpVN
+underhanded/JYpVjN
 underhandedness/Ng
 underhood/J
-underinflated/V
+underinflated/Vj
 underinsured/J
 underinvest/VGdS
 underlaid/tT
@@ -51280,7 +51280,7 @@ underline/~NgSVGdJ
 underling/NgS
 underlip/NSg
 underlying/~JNV6
-undermanned/VtTJ
+undermanned/VjJ
 undermentioned/J
 undermine/~VGdS
 undermost/J
@@ -51343,9 +51343,9 @@ underthings/Ng
 undertone/NgSV
 undertook/~Vt
 undertow/VSNg
-underused/JV
-underutilised/JV!_₹
-underutilized/JV
+underused/JVj
+underutilised/JVj!_₹
+underutilized/JVj
 undervaluation/Ng
 undervalue/VdGSN
 underwater/~JNV
@@ -51514,7 +51514,7 @@ unkind/J^
 unkindly/J^
 unknowable/JNg
 unknown/~JNSgV
-unleaded/JVNg
+unleaded/JNg
 unless/~C
 unlicense/VGdS
 unlike/~JpPNVB
@@ -51556,7 +51556,7 @@ unofficial/~JY
 unopen/J
 unopened/~J
 unoptimised/J!_₹
-unoptimized/VJ
+unoptimized/J
 unoriginal/JN
 unpause/VdSG
 unpayable/J
@@ -51697,7 +51697,7 @@ unvaccinated/J
 unwarrantable/J
 unwary/J^
 unwavering/J
-unwed/JNV
+unwed/JN
 unwelcome/~JVG
 unwell/J
 unwieldiness/Ng
@@ -52843,7 +52843,7 @@ waterhole/NSg
 wateriness/Ng
 waterlily/NSg
 waterline/NgS
-waterlogged/JV
+waterlogged/JVj
 watermark/NgSVdG
 watermelon/~NwSg
 watermill/~NgS
@@ -53507,7 +53507,7 @@ wives/N9
 wiz/~NVP
 wizard/~NSgJYV
 wizardry/~Nmg
-wizened/VJ
+wizened/J
 wk/NY
 woad/NgV
 wobble/NgSVGd>
