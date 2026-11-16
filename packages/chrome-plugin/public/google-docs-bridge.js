@@ -31,6 +31,8 @@ import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-han
 	const EVENT_REPLACE = 'harper:gdocs:replace';
 	const CARET_DIRECTION_THRESHOLD = 20;
 	const CARET_CHOICE_STALE_MS = 1500;
+	// biome-ignore lint/suspicious/noControlCharactersInRegex: Mapped edits must not replace native structural controls.
+	const GOOGLE_DOCS_CONTROL_CHARACTERS = /[\u0000-\u001f]/u;
 
 	let bridgeNode = /** @type {HTMLElement | null} */ (document.getElementById(BRIDGE_ID));
 	let currentAnnotated = /** @type {AnnotatedText | null} */ (null);
@@ -569,10 +571,7 @@ import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-han
 		}
 
 		if (hits.length === 0) {
-			return {
-				start: normalizedStart,
-				end: normalizedEnd,
-			};
+			return null;
 		}
 
 		hits.sort((left, right) => right.score - left.score);
@@ -644,6 +643,15 @@ import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-han
 		}
 	}
 
+	function isInsideSurrogatePair(text, offset) {
+		return (
+			offset > 0 &&
+			offset < text.length &&
+			/[\ud800-\udbff]/u.test(text[offset - 1]) &&
+			/[\udc00-\udfff]/u.test(text[offset])
+		);
+	}
+
 	async function handleReplaceTextRequest(request) {
 		const getAnnotatedText = getAnnotatedTextApi();
 		if (!getAnnotatedText) {
@@ -658,17 +666,49 @@ import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-han
 		currentAnnotated = annotated;
 		window.__harperGoogleDocsAnnotatedText = annotated;
 
-		const replacementText = String(request.replacementText ?? '');
 		const rawText = annotated.getText?.() ?? '';
 		const currentText = normalizeGoogleDocsText(rawText);
-		const resolvedRange = resolveReplacementRange(
-			currentText,
-			Number(request.start),
-			Number(request.end),
-			String(request.expectedText ?? ''),
-			String(request.beforeContext ?? ''),
-			String(request.afterContext ?? ''),
-		);
+		const expectedText = String(request.expectedText ?? '');
+		const mapped = 'rangeSource' in request || 'nativeSnapshot' in request;
+		// Mapped requests carry an exact local snapshot, not a search hint. Never
+		// downgrade incomplete, stale, or unknown mapping metadata to legacy search.
+		if (
+			mapped &&
+			(request.rangeSource !== 'native-utf16-v1' ||
+				typeof request.replacementText !== 'string' ||
+				typeof request.nativeSnapshot !== 'string' ||
+				request.nativeSnapshot !== currentText ||
+				!Number.isInteger(request.start) ||
+				!Number.isInteger(request.end) ||
+				request.start < 0 ||
+				request.end <= request.start ||
+				request.end > currentText.length ||
+				typeof request.expectedText !== 'string' ||
+				currentText.slice(request.start, request.end) !== request.expectedText ||
+				GOOGLE_DOCS_CONTROL_CHARACTERS.test(request.expectedText) ||
+				isInsideSurrogatePair(currentText, request.start) ||
+				isInsideSurrogatePair(currentText, request.end))
+		) {
+			return { kind: 'replaceText', applied: false };
+		}
+		const replacementText = String(request.replacementText ?? '');
+		const resolvedRange = mapped
+			? { start: request.start, end: request.end }
+			: resolveReplacementRange(
+					currentText,
+					Number(request.start),
+					Number(request.end),
+					expectedText,
+					String(request.beforeContext ?? ''),
+					String(request.afterContext ?? ''),
+				);
+		if (
+			resolvedRange == null ||
+			currentText.slice(resolvedRange.start, resolvedRange.end) !== expectedText
+		) {
+			return { kind: 'replaceText', applied: false };
+		}
+
 		const rawStart = normalizedToRawOffset(rawText, resolvedRange.start);
 		const rawEnd = normalizedToRawOffset(rawText, resolvedRange.end);
 
@@ -689,7 +729,10 @@ import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-han
 
 		const didApplyReplacement = async () => {
 			const nextAnnotated = await getAnnotatedText();
-			return normalizeGoogleDocsText(nextAnnotated?.getText?.()) === expectedNextText;
+			const nextRaw = nextAnnotated?.getText?.();
+			return mapped
+				? nextRaw === rawText.slice(0, rawStart) + replacementText + rawText.slice(rawEnd)
+				: normalizeGoogleDocsText(nextRaw) === expectedNextText;
 		};
 
 		const dataTransfer = new DataTransfer();

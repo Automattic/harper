@@ -1,0 +1,19 @@
+expr modal [can, cannot, can't, could, couldn't, may, might, mightn't, must, mustn't, shall, shan't, shouldn't, will, won't, would, wouldn't]
+expr prev [not]
+expr next [DET, database, ego, index]
+expr main [<(@modal altar), altar>, <(@prev altar), altar>, <(altar @next), altar>]
+
+let message "Did you mean the verb `alter`?"
+let description "Looks for mixing up the noun `altar` with the verb `alter`."
+let kind "WordChoice"
+let becomes "alter"
+
+# modal verb + altar
+test "You can altar the lang file for name changes." "You can alter the lang file for name changes."
+
+# ideally, we'd flag 'to altar'
+# test "I uploaded a blueprint to the workshop and was attempting to altar the main pic used but wasn't able to." "I uploaded a blueprint to the workshop and was attempting to alter the main pic used but wasn't able to."
+# test "which will open a form allowing them to altar that entry's content" "which will open a form allowing them to alter that entry's content"
+
+# why we can't flag 'altar it'
+allows "When right clicking the altar it successfully initiates the crafting process"

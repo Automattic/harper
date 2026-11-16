@@ -12,7 +12,6 @@ export {
 	TableHeadCell,
 } from 'flowbite-svelte';
 
-export { default as Arrow } from './Arrow.svelte';
 export { default as Button } from './Button.svelte';
 export { default as Card } from './Card.svelte';
 export { default as Checkbox } from './Checkbox.svelte';
@@ -22,6 +21,7 @@ export { default as GutterCenter } from './GutterCenter.svelte';
 export { default as IconButton } from './IconButton.svelte';
 export { default as Input } from './Input.svelte';
 export { default as Isolate } from './Isolate.svelte';
+export { default as Arrow } from './icons/Arrow.svelte';
 export { default as BookIcon } from './icons/BookIcon.svelte';
 export { default as CheckIcon } from './icons/CheckIcon.svelte';
 export { default as ChecklistIcon } from './icons/ChecklistIcon.svelte';
@@ -34,12 +34,15 @@ export { default as GearIcon } from './icons/GearIcon.svelte';
 export { default as GridIcon } from './icons/GridIcon.svelte';
 export { default as InfoIcon } from './icons/InfoIcon.svelte';
 export { default as KeyIcon } from './icons/KeyIcon.svelte';
+export { default as MinusIcon } from './icons/MinusIcon.svelte';
 export { default as PackageIcon } from './icons/PackageIcon.svelte';
 export { default as PlayIcon } from './icons/PlayIcon.svelte';
 export { default as PlusIcon } from './icons/PlusIcon.svelte';
 export { default as QuillIcon } from './icons/QuillIcon.svelte';
 export { default as RocketIcon } from './icons/RocketIcon.svelte';
 export { default as SearchIcon } from './icons/SearchIcon.svelte';
+export { default as SendIcon } from './icons/SendIcon.svelte';
+export { default as StarIcon } from './icons/StarIcon.svelte';
 export { default as TrashIcon } from './icons/TrashIcon.svelte';
 export { default as UploadIcon } from './icons/UploadIcon.svelte';
 export { default as Link } from './Link.svelte';

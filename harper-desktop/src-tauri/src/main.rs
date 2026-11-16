@@ -11,7 +11,7 @@ use self::highlighter_service::HighlighterService;
 use self::tray::set_up_tray_menu;
 use crate::args::{Args, Command};
 use crate::communication::{Client, ProtocolError};
-use crate::config::{Config, Integration};
+use crate::config::{Config, Integration, OnboardingState};
 use crate::debounce::{DebounceState, DebounceStatus};
 use clap::Parser;
 use harper_core::{
@@ -38,6 +38,7 @@ use tokio::{
     sync::Mutex,
 };
 
+mod app_restart;
 mod args;
 pub mod color;
 mod commands;
@@ -158,6 +159,7 @@ pub fn run_tauri() {
         }
     };
 
+    let show_onboarding = config.onboarding_state != OnboardingState::Complete;
     let broker = platform_broker(|_| false);
 
     let should_start_highlighter = config.highlighter_service_enabled
@@ -192,7 +194,7 @@ pub fn run_tauri() {
             warm_app_search_cache(app.handle().clone());
             desktop_updater::start_auto_updates(app.handle().clone());
 
-            if is_first_launch {
+            if is_first_launch || show_onboarding {
                 windows::show_settings_window(app.handle())?;
             }
 
@@ -386,7 +388,7 @@ pub fn run_highlighter(has_parent: bool) {
             lint_config,
             integrations: Vec::new(),
             auto_enable_new_apps: false,
-            onboarding_completed: false,
+            onboarding_state: OnboardingState::Welcome,
             debounce_ms: *dictionary_debounce_ms.borrow(),
             auto_update: true,
             last_update_check: None,
@@ -530,7 +532,7 @@ fn fetch_highlighter_config(
             lint_config,
             integrations,
             auto_enable_new_apps,
-            onboarding_completed: false,
+            onboarding_state: OnboardingState::Welcome,
             debounce_ms,
             auto_update: true,
             last_update_check: None,
@@ -548,7 +550,12 @@ fn apply_highlighter_config(
     debounce_ms: &Rc<RefCell<u64>>,
     linter: &Rc<RefCell<LintGroup>>,
 ) {
-    let linter_config = config.create_linter();
+    if config.mutable_dictionary != *user_dictionary.borrow()
+        || config.dialect != *dialect.borrow()
+        || config.lint_config != linter.borrow().config
+    {
+        *linter.borrow_mut() = config.create_linter();
+    }
     *ignored_lints.borrow_mut() = config.ignored_lints;
     *user_dictionary.borrow_mut() = config.mutable_dictionary;
     *dialect.borrow_mut() = config.dialect;
@@ -562,5 +569,4 @@ fn apply_highlighter_config(
         Err(error) => eprintln!("failed to update integrations: {error}"),
     }
     *debounce_ms.borrow_mut() = config.debounce_ms;
-    *linter.borrow_mut() = linter_config;
 }

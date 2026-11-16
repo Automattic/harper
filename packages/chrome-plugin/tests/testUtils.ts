@@ -93,8 +93,9 @@ export async function replaceEditorContent(editorEl: Locator, text: string, soft
 		if (needsCharacterInput) {
 			// Draft.js needs character key events at a normal typing cadence for its selection model.
 			await editorEl.pressSequentially(lines[i], { delay: 200 });
-		} else {
+		} else if (lines[i]) {
 			// Native text input updates the editor model without exposing partial words to linting.
+			// Firefox rejects empty insertText calls; the break key below creates empty lines.
 			await editorEl.page().keyboard.insertText(lines[i]);
 		}
 		if (i < lines.length - 1) {

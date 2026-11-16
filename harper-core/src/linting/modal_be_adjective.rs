@@ -165,4 +165,12 @@ mod tests {
             ModalBeAdjective::default(),
         );
     }
+
+    #[test]
+    fn ignore_would_later() {
+        assert_no_lints(
+            "She would later become president.",
+            ModalBeAdjective::default(),
+        );
+    }
 }

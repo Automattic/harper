@@ -57,7 +57,7 @@ test('Hacker News scrolls correctly', async ({ page }) => {
 	const editor = getTextarea(page);
 	await replaceEditorContent(
 		editor,
-		'This is a test of the the Harper grammar checker, specifically if \n\n\n\n\n\n\n\n\n\n\n\n\nit scrolls beyo nd the height of the buffer.',
+		'This is a test of the the Harper grammar checker, specifically if \n\n\n\n\n\n\n\n\n\n\n\n\nIt scrolls beyo nd the height of the buffer.',
 	);
 
 	await page.waitForTimeout(6000);

@@ -1,8 +1,16 @@
 @font-face {
-	font-family: Domine;
-	src: url("/fonts/domine/Domine.ttf") format("truetype");
+	font-family: "Atkinson Hyperlegible";
+	src: url("/fonts/atkinson/AtkinsonHyperlegible-Regular.ttf") format("truetype");
 	font-style: normal;
-	font-weight: 400 700;
+	font-weight: 400;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Atkinson Hyperlegible";
+	src: url("/fonts/atkinson/AtkinsonHyperlegible-Bold.ttf") format("truetype");
+	font-style: normal;
+	font-weight: 700;
 	font-display: swap;
 }
 
@@ -32,7 +40,7 @@ body.settings-view {
 	overflow: hidden;
 	background: var(--settings-bg-window);
 	color: var(--settings-ink);
-	font-family: Domine, serif;
+	font-family: "Atkinson Hyperlegible", sans-serif;
 	font-size: 13px;
 	-webkit-font-smoothing: antialiased;
 }
@@ -85,7 +93,7 @@ button {
 	--marketing-amber-soft: #d98b3a;
 	--marketing-ink: #1c1a16;
 	--marketing-ink-2: #4a463e;
-	font-family: Domine, serif;
+	font-family: "Atkinson Hyperlegible", sans-serif;
 	overflow-wrap: anywhere;
 }
 

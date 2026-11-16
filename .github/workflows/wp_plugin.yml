@@ -8,6 +8,12 @@ on:
     branches: ["master"]
   merge_group:
 
+# Cancel superseded runs when a PR gets new commits, freeing runners for other
+# jobs. Non-PR runs get a unique group, so they are never queued or cancelled.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
 env:
   CARGO_TERM_COLOR: always
 

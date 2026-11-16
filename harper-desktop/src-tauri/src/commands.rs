@@ -1,7 +1,7 @@
 //! This module centralizes all the Rust commands to be made available to the JavaScript
 //! environment. Use [`application_message_handler`] to load them into the Tauri runtime.
 
-use crate::config::Config;
+use crate::config::{Config, OnboardingState};
 use crate::desktop_updater::{DesktopUpdater, UpdateResult};
 use crate::highlighter_service::HighlighterService;
 use crate::os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker};
@@ -28,8 +28,8 @@ pub fn application_message_handler<R: Runtime>() -> impl Fn(Invoke<R>) -> bool {
         get_current_version,
         get_latest_version,
         update_to_latest,
-        get_onboarding_completed,
-        set_onboarding_completed,
+        get_onboarding_state,
+        set_onboarding_state,
         set_dialect,
         set_lint_config,
         get_dictionary,
@@ -47,6 +47,7 @@ pub fn application_message_handler<R: Runtime>() -> impl Fn(Invoke<R>) -> bool {
         request_accessibility_permission,
         start_highlighter_service,
         stop_highlighter_service,
+        restart_harper,
         launch_app,
         search_apps,
     ]
@@ -127,21 +128,23 @@ async fn update_to_latest<R: Runtime>(
 }
 
 #[tauri::command]
-async fn get_onboarding_completed(config: State<'_, Arc<Mutex<Config>>>) -> Result<bool, String> {
-    Ok(config.lock().await.onboarding_completed)
+async fn get_onboarding_state(
+    config: State<'_, Arc<Mutex<Config>>>,
+) -> Result<OnboardingState, String> {
+    Ok(config.lock().await.onboarding_state)
 }
 
 #[tauri::command]
-async fn set_onboarding_completed(
-    onboarding_completed: bool,
+async fn set_onboarding_state(
+    onboarding_state: OnboardingState,
     config: State<'_, Arc<Mutex<Config>>>,
 ) -> Result<(), String> {
     let mut config = config.lock().await;
-    let previous_value = config.onboarding_completed;
-    config.onboarding_completed = onboarding_completed;
+    let previous_value = config.onboarding_state;
+    config.onboarding_state = onboarding_state;
 
     if let Err(error) = config.save_to_system().await {
-        config.onboarding_completed = previous_value;
+        config.onboarding_state = previous_value;
         return Err(error.to_string());
     }
 
@@ -420,6 +423,28 @@ pub(crate) async fn stop_highlighter_service(
     }
 
     Ok(highlighter_service.stop())
+}
+
+/// Unlike Tauri's infallible restart API, keep the current app alive on spawn failure.
+#[tauri::command]
+async fn restart_harper<R: Runtime>(
+    app: tauri::AppHandle<R>,
+    config: State<'_, Arc<Mutex<Config>>>,
+    highlighter_service: State<'_, HighlighterService>,
+) -> Result<(), String> {
+    config
+        .lock()
+        .await
+        .save_to_system()
+        .await
+        .map_err(|error| format!("Could not save progress: {error}. Retry Restart Harper."))?;
+    let binary = tauri::process::current_binary(&app.env())
+        .map_err(|error| format!("Could not locate Harper: {error}. Quit Harper and open the installed application again."))?;
+    highlighter_service.restart_app(|| {
+        std::process::Command::new(binary).spawn().map(|_| ())
+    }).map_err(|error| format!("Could not restart Harper: {error}. Retry, or quit Harper and open the installed application again."))?;
+    app.exit(0);
+    Ok(())
 }
 
 #[tauri::command]

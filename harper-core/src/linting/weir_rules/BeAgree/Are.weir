@@ -1,0 +1,34 @@
+expr main <([we, you, they] are agree), (are agree)>
+
+let message "`agree` is a verb, so it doesn't need `are`: `we agree`."
+let description "Corrects `we are agree` to `we agree`."
+let kind "Grammar"
+let becomes "agree"
+let strategy "MatchCase"
+
+# real sentences from Hacker News and GitHub issues
+test "But you are agree cron is pretty good so it seems analogy with flying brick does not work here." "But you agree cron is pretty good so it seems analogy with flying brick does not work here."
+test "I only would consider people worthy to discuss if they are agree on this." "I only would consider people worthy to discuss if they agree on this."
+# made-up sentences
+test "We are agree with the plan." "We agree with the plan."
+test "They are agree." "They agree."
+test "I think you are agree with me." "I think you agree with me."
+test "If we are agree, let's ship it." "If we agree, let's ship it."
+test "WE ARE AGREE." "WE AGREE."
+test "So they are agree on the scope?" "So they agree on the scope?"
+
+# correct text
+allows "We agree with the plan."
+allows "We are in agreement."
+allows "Do you agree?"
+allows "They agreed on the scope."
+# real look-alikes that must not be flagged
+allows "Locking without a timeout is indeed in the majority of use-cases a non-starter, we are agreed there."
+allows "We are agreed on that."
+allows "If we are agreed this is a good idea we should do it asap to start benefiting from the simpler landscape this leaves us in."
+# made-up look-alikes
+allows "We are agreed on the scope."
+allows "They are agreeable."
+allows "Are you agreeing to this?"
+allows "We are, agree or not, shipping it."
+allows "These are the terms we are asked to agree to."

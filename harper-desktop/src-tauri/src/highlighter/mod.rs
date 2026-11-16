@@ -1,4 +1,5 @@
 mod error;
+mod fonts;
 mod render_state;
 mod window;
 mod window_manager;

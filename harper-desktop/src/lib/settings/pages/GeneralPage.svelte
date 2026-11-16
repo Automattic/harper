@@ -13,7 +13,6 @@ const DialectValue = {
 	Indian: 4,
 } as const;
 
-let menuBar = true;
 let launchAtStartup = false;
 let autoUpdate = true;
 let dialect = 'american';
@@ -274,20 +273,6 @@ function settingsValueToDialect(value: string): Dialect {
           <div class="eyebrow">General</div>
           <div class="rows">
             <SettingRow top>
-              <strong>Keep Harper in the menu bar</strong>
-              <p>Shows the Harper icon so you can open settings without opening the main app.</p>
-              <Checkbox
-                slot="control"
-                appearance="settings"
-                checked={menuBar}
-                disabled
-                title="Not wired yet"
-              >
-                {#if menuBar}<CheckIcon className="control-icon" />{/if}
-              </Checkbox>
-            </SettingRow>
-
-            <SettingRow>
               <strong>Launch Harper at startup</strong>
               <p>Harper will start silently when you log in.</p>
               <Checkbox
@@ -314,6 +299,17 @@ function settingsValueToDialect(value: string): Dialect {
               <p class="result-summary">
                 Current version: {currentVersion || 'loading...'} · Latest version: {latestVersion || 'loading...'}
               </p>
+              <div class="inline-row">
+                <Button
+                  unstyled
+                  class="button"
+                  type="button"
+                  disabled={isCheckingForUpdates}
+                  on:click={checkForUpdates}
+                >
+                  {isCheckingForUpdates ? 'Checking...' : 'Check for updates'}
+                </Button>
+              </div>
               <Checkbox
                 slot="control"
                 appearance="settings"
@@ -324,17 +320,6 @@ function settingsValueToDialect(value: string): Dialect {
                 {#if autoUpdate}<CheckIcon className="control-icon" />{/if}
               </Checkbox>
             </SettingRow>
-            <div class="inline-row">
-              <Button
-                unstyled
-                class="button"
-                type="button"
-                disabled={isCheckingForUpdates}
-                on:click={checkForUpdates}
-              >
-                {isCheckingForUpdates ? 'Checking...' : 'Check for updates'}
-              </Button>
-            </div>
             {#if isAutoUpdateLoading}
               <p class="result-summary">Loading update setting...</p>
             {:else if autoUpdateError}
