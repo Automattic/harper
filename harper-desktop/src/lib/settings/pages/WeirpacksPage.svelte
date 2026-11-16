@@ -84,7 +84,7 @@ function formatSize(bytes: number) {
 }
 </script>
 
-<section aria-busy={busy}>
+<section class="weirpacks-page" aria-busy={busy}>
     <div class="stanza">
         <div class="eyebrow">Weirpacks</div>
         <p class="section-copy">
@@ -117,10 +117,12 @@ function formatSize(bytes: number) {
                 void installFiles(files);
             }} />
         </label>
-        {#if busy}<p role="status">Loading packs...</p>{/if}
-        {#if error}<p role="alert" style="white-space: pre-line">{error}</p>{/if}
-        {#if status}<p role="status">{status}</p>{/if}
-        <p class="muted">{weirpacks.length} packs installed, {enabledPacks.length} active, {enabledPackRules} extra rules.</p>
+        <div class="pack-summary">
+            {#if busy}<p role="status">Loading packs...</p>{/if}
+            {#if error}<p role="alert" style="white-space: pre-line">{error}</p>{/if}
+            {#if status}<p role="status">{status}</p>{/if}
+            <p class="muted">{weirpacks.length} packs installed, {enabledPacks.length} active, {enabledPackRules} extra rules.</p>
+        </div>
     </div>
     <div class="stanza">
         <div class="eyebrow">Installed packs</div>
@@ -151,8 +153,43 @@ function formatSize(bytes: number) {
                         on:click={() => run(() => Client.updateWeirpack(pack.id, { enabled: !pack.enabled }), 'Pack updated.')} />
                 </div>
             {:else}
-                {#if !busy}<p class="muted">No custom Weirpacks installed.</p>{/if}
+                {#if !busy}<p class="muted empty-state">No custom Weirpacks installed.</p>{/if}
             {/each}
         </Panel>
     </div>
 </section>
+
+<style>
+.weirpacks-page {
+    display: grid;
+    gap: 36px;
+}
+
+.weirpacks-page .stanza {
+    display: grid;
+    gap: 20px;
+    margin-bottom: 0;
+}
+
+.weirpacks-page .eyebrow {
+    margin-bottom: -12px;
+}
+
+.weirpacks-page .section-copy {
+    margin: 0;
+}
+
+.pack-summary {
+    display: grid;
+    gap: 8px;
+}
+
+.pack-summary p {
+    margin: 0;
+}
+
+.empty-state {
+    margin: 0;
+    padding: 24px;
+}
+</style>
