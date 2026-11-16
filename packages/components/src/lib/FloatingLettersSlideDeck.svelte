@@ -348,6 +348,7 @@ function createFloatingLetters(
 
 <script lang="ts">
 import { onMount, tick } from 'svelte';
+import Arrow from './icons/Arrow.svelte';
 
 /**
  * A drop-in SlideDeck alternative with floating letters and a borderless layout.
@@ -465,10 +466,16 @@ function handleKeydown(event: KeyboardEvent) {
 					</div>
 					<nav class="navigation" aria-label="Slide navigation">
 						{#if slideProgress > 0}
-							<button type="button" class="back" onclick={() => changeStep(-1)}>Back</button>
+							<button type="button" class="back" onclick={() => changeStep(-1)}>
+								<span class="back-arrow"><Arrow width="20" height="20" /></span>
+								<span class="back-label">Back</span>
+							</button>
 						{/if}
 						{#if slideProgress < 1}
-							<button type="button" class="next" disabled={nextDisabled} onclick={() => changeStep(1)}>Next</button>
+							<button type="button" class="next" disabled={nextDisabled} onclick={() => changeStep(1)}>
+								<span>Next</span>
+								<Arrow width="20" height="20" />
+							</button>
 						{/if}
 					</nav>
 				</section>
@@ -484,8 +491,6 @@ function handleKeydown(event: KeyboardEvent) {
 	--deck-bg-deep: #f1ede5;
 	--deck-ink: #1c1a16;
 	--deck-ink-soft: #4a463e;
-	--deck-ghost: #ffffff;
-	--deck-line: rgb(28 26 22 / 14%);
 	--deck-track: rgb(28 26 22 / 9%);
 	--deck-focus: #2a6bd8;
 	--floating-letter-color: #4a463e;
@@ -504,8 +509,6 @@ function handleKeydown(event: KeyboardEvent) {
 	--deck-bg-deep: #0c0a09;
 	--deck-ink: #f5f5f4;
 	--deck-ink-soft: #d6d3d1;
-	--deck-ghost: #292524;
-	--deck-line: rgb(255 255 255 / 15%);
 	--deck-track: rgb(255 255 255 / 10%);
 	--deck-focus: #f7be6e;
 	--floating-letter-color: #d6d3d1;
@@ -587,6 +590,13 @@ function handleKeydown(event: KeyboardEvent) {
 	text-wrap: pretty;
 }
 
+.extra {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.extra > :global(*) { max-width: 100%; }
 .extra:empty { display: none; }
 
 .aside {
@@ -605,6 +615,10 @@ function handleKeydown(event: KeyboardEvent) {
 }
 
 .navigation button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.4rem;
 	padding: 0.8rem 1.6rem;
 	border: 1px solid transparent;
 	border-radius: 999px;
@@ -615,10 +629,26 @@ function handleKeydown(event: KeyboardEvent) {
 }
 
 .navigation .back {
-	color: var(--deck-ink);
-	background: var(--deck-ghost);
-	border-color: var(--deck-line);
+	padding-inline: 0.5rem;
+	border: 0;
+	border-radius: 0.25rem;
+	color: var(--deck-ink-soft);
+	background: transparent;
 }
+
+.back-arrow {
+	display: inline-flex;
+	flex-shrink: 0;
+	transform: rotate(180deg);
+}
+
+.back-label {
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+.navigation .back:hover { color: var(--deck-ink); }
+.back:hover .back-label { text-decoration-thickness: 2px; }
 
 .next { color: #ffffff; background: #c1750b; }
 .next:hover:not(:disabled) { background: #915808; }
@@ -637,8 +667,8 @@ function handleKeydown(event: KeyboardEvent) {
 }
 
 @keyframes step-in {
-	from { opacity: 0; transform: translateY(10px); }
-	to { opacity: 1; transform: none; }
+	from { opacity: 0; }
+	to { opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {

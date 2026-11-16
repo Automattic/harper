@@ -40,7 +40,7 @@ let mounted = $state(true);
 		onBack={() => { args.onBack(); step = Math.max(0, step - 1); }}
 		onNext={() => { args.onNext(); step = Math.min(2, step + 1); }}
 	>
-		<div class="mt-6">
+		<div class="mt-6 w-full">
 			<label for="deck-example">Try Harper here</label>
 			<textarea id="deck-example" class="mt-2 block w-full rounded-lg border bg-white p-4 text-stone-900" rows="3">This is an test.</textarea>
 			<button type="button" class="mt-4 underline" aria-expanded={helpOpen} onclick={() => helpOpen = !helpOpen}>Show help</button>
@@ -58,10 +58,19 @@ let mounted = $state(true);
 	play={async ({ canvas, args }) => {
 		await expect(canvas.queryByRole('button', { name: 'Back' })).not.toBeInTheDocument();
 		await expect(canvas.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '0');
-		await userEvent.click(canvas.getByRole('button', { name: 'Next' }));
+		const next = canvas.getByRole('button', { name: 'Next' });
+		await expect(next.querySelector('svg')).toHaveAttribute('aria-hidden', 'true');
+		await expect(getComputedStyle(next).backgroundColor).toBe('rgb(193, 117, 11)');
+		await expect(getComputedStyle(next).borderTopLeftRadius).toBe('999px');
+		await userEvent.click(next);
 		await expect(args.onNext).toHaveBeenCalledTimes(1);
 		await waitFor(() => expect(canvas.getByRole('heading', { name: 'Keep writing' })).toHaveFocus());
 		await expect(canvas.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '50');
+		const back = canvas.getByRole('button', { name: 'Back' });
+		await expect(back.querySelector('svg')).toHaveAttribute('aria-hidden', 'true');
+		await expect(getComputedStyle(back).backgroundColor).toBe('rgba(0, 0, 0, 0)');
+		await expect(getComputedStyle(back).borderTopWidth).toBe('0px');
+		await expect(getComputedStyle(back.querySelector('.back-label')!).textDecorationLine).toBe('underline');
 		await userEvent.keyboard('{ArrowRight}');
 		await waitFor(() => expect(canvas.getByRole('heading', { name: 'All set!' })).toHaveFocus());
 		await expect(canvas.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '100');
@@ -129,6 +138,28 @@ let mounted = $state(true);
 </Story>
 
 <Story name="Last Slide" args={{ title: 'All set!', slideProgress: 1 }} />
+
+<Story
+	name="Centered Content"
+	play={async ({ canvas }) => {
+		const field = canvas.getByRole('textbox');
+		const bounds = field.getBoundingClientRect();
+		const center = bounds.left + bounds.width / 2;
+		for (const element of [canvas.getByRole('button', { name: 'Launch app' }), canvas.getByTestId('centered-card')]) {
+			const rect = element.getBoundingClientRect();
+			await expect(Math.abs(rect.left + rect.width / 2 - center)).toBeLessThan(1);
+		}
+		await expect(bounds.width).toBeGreaterThan(canvas.getByTestId('centered-card').getBoundingClientRect().width);
+	}}
+>
+	{#snippet template(args)}
+		<FloatingLettersSlideDeck {...args}>
+			<button type="button" class="mt-6 rounded bg-primary-600 px-6 py-3 text-white">Launch app</button>
+			<div data-testid="centered-card" class="mt-6 w-40 rounded border p-4">Centered card</div>
+			<textarea aria-label="Full-width editor" class="mt-6 w-full rounded border p-4" rows="2"></textarea>
+		</FloatingLettersSlideDeck>
+	{/snippet}
+</Story>
 
 <Story
 	name="Mount and Unmount"
