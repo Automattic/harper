@@ -1522,6 +1522,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Themselves",
+								"state": true,
+								"label": "Them Selves"
+							}
+						},
+						{
+							"Bool": {
 								"name": "UseToUsedTo",
 								"state": true,
 								"label": "Use To Used To"
@@ -3676,6 +3683,13 @@
 								"name": "CuriousAbout",
 								"state": true,
 								"label": "Curious About"
+							}
+						},
+						{
+							"Bool": {
+								"name": "DespiteSubject",
+								"state": true,
+								"label": "Despite Subject"
 							}
 						},
 						{
