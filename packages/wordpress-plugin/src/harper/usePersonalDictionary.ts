@@ -1,5 +1,6 @@
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useCallback } from 'react';
+import type { PreferencesActions, PreferencesSelectors } from './preferencesStoreTypes';
 
 const KEY = 'personalDictionary';
 
@@ -9,11 +10,11 @@ export default function usePersonalDictionary(): [
 	(updatedDictionary: string[]) => void,
 ] {
 	const personalDictionary = useSelect(
-		(select) => select('core/preferences').get('harper-wp', KEY),
+		(select) => (select('core/preferences') as PreferencesSelectors).get('harper-wp', KEY),
 		[],
 	);
 
-	const { set } = useDispatch('core/preferences');
+	const { set } = useDispatch('core/preferences') as PreferencesActions;
 
 	const updateState = useCallback(
 		(updatedDictionary: string[]) => set('harper-wp', KEY, updatedDictionary),

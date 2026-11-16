@@ -2,6 +2,7 @@
 import {
 	ChromeLogo,
 	CodeLogo,
+	EdgeLogo,
 	EmacsLogo,
 	FirefoxLogo,
 	HelixLogo,
@@ -20,7 +21,7 @@ export let size = 40;
 const baseTileClasses =
 	'inline-flex shrink-0 items-center justify-center shadow-[0_0_0_0.5px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.04)]';
 const desktopTileClasses = `${baseTileClasses} border border-black bg-white text-black shadow-none dark:border-white dark:bg-black dark:text-white`;
-const logoTileClasses = `${baseTileClasses} bg-white dark:bg-white [&_svg]:h-[68%] [&_svg]:w-[68%]`;
+const logoTileClasses = `${baseTileClasses} bg-white dark:bg-white/10 [&_svg]:h-[68%] [&_svg]:w-[68%]`;
 const monogramTileClasses = `${baseTileClasses} bg-[var(--tile-bg)] text-[length:var(--tile-font)] font-extrabold tracking-normal text-[var(--tile-fg)]`;
 
 $: tileStyle = `width: ${size}px; height: ${size}px; border-radius: ${Math.round(size * 0.235)}px;`;
@@ -38,6 +39,10 @@ $: fontSize =
 {:else if integration.id === 'chrome'}
 	<span class={logoTileClasses} style={tileStyle} aria-hidden="true">
 		<ChromeLogo />
+	</span>
+{:else if integration.id === 'edge'}
+	<span class={logoTileClasses} style={tileStyle} aria-hidden="true">
+		<EdgeLogo />
 	</span>
 {:else if integration.id === 'firefox'}
 	<span class={logoTileClasses} style={tileStyle} aria-hidden="true">

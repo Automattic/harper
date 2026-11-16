@@ -1,6 +1,6 @@
 <script lang="ts">
 import { onMount } from 'svelte';
-import { Client } from '$lib/client';
+import { Client, type OnboardingState } from '$lib/client';
 import SettingsSidebar from './SettingsSidebar.svelte';
 import './settings.css';
 import AboutPage from './pages/AboutPage.svelte';
@@ -14,12 +14,13 @@ import WeirpacksPage from './pages/WeirpacksPage.svelte';
 import WritingPage from './pages/WritingPage.svelte';
 import type { SectionId } from './settings-data';
 
-let active: SectionId = 'getting-started';
+let active: SectionId = 'general';
 let contentEl: HTMLElement;
 let isLoadingOnboarding = true;
+let onboardingState: OnboardingState = 'welcome';
+let onboardingError = '';
 
 const titleMap: Record<SectionId, string> = {
-	'getting-started': 'Getting Started',
 	general: 'General',
 	writing: 'Writing',
 	dictionary: 'Dictionary',
@@ -31,14 +32,16 @@ const titleMap: Record<SectionId, string> = {
 };
 
 onMount(() => {
-	void loadInitialSection();
+	void loadOnboardingState();
 });
 
-async function loadInitialSection() {
+async function loadOnboardingState() {
+	isLoadingOnboarding = true;
+	onboardingError = '';
 	try {
-		active = (await Client.getOnboardingCompleted()) ? 'general' : 'getting-started';
+		onboardingState = await Client.getOnboardingState();
 	} catch (error) {
-		console.error('Unable to load onboarding state.', error);
+		onboardingError = `Unable to load onboarding state: ${error}`;
 	} finally {
 		isLoadingOnboarding = false;
 	}
@@ -51,32 +54,43 @@ $: if (contentEl && active) {
 }
 </script>
 
-<div class="settings-shell">
-  {#if !isLoadingOnboarding}
+{#if isLoadingOnboarding}
+  <div class="settings-shell">
+    <main class="content" aria-label="Settings">
+      <p role="status">Loading settings...</p>
+    </main>
+  </div>
+{:else if onboardingError}
+  <div class="settings-shell">
+    <main class="content" aria-label="Settings">
+      <p role="alert">{onboardingError}</p>
+      <button type="button" on:click={loadOnboardingState}>Retry</button>
+    </main>
+  </div>
+{:else if onboardingState !== 'complete'}
+  <GettingStartedPage initialState={onboardingState} onComplete={() => (onboardingState = 'complete')} />
+{:else}
+  <div class="settings-shell">
     <SettingsSidebar bind:active />
-  {/if}
 
-  <main bind:this={contentEl} class="content" aria-label={isLoadingOnboarding ? "Settings" : title}>
-    {#if isLoadingOnboarding}
-      <p>Loading settings...</p>
-    {:else if active === "getting-started"}
-      <GettingStartedPage navigateToSection={(section) => (active = section)} />
-    {:else if active === "general"}
-      <GeneralPage />
-    {:else if active === "writing"}
-      <WritingPage />
-    {:else if active === "dictionary"}
-      <DictionaryPage />
-    {:else if active === "shortcuts"}
-      <ShortcutsPage />
-    {:else if active === "rules"}
-      <RulesPage />
-    {:else if active === "weirpacks"}
-      <WeirpacksPage />
-    {:else if active === "integrations"}
-      <IntegrationsPage />
-    {:else if active === "about"}
-      <AboutPage />
-    {/if}
-  </main>
-</div>
+    <main bind:this={contentEl} class="content" aria-label={title}>
+      {#if active === "general"}
+        <GeneralPage />
+      {:else if active === "writing"}
+        <WritingPage />
+      {:else if active === "dictionary"}
+        <DictionaryPage />
+      {:else if active === "shortcuts"}
+        <ShortcutsPage />
+      {:else if active === "rules"}
+        <RulesPage />
+      {:else if active === "weirpacks"}
+        <WeirpacksPage />
+      {:else if active === "integrations"}
+        <IntegrationsPage />
+      {:else if active === "about"}
+        <AboutPage />
+      {/if}
+    </main>
+  </div>
+{/if}

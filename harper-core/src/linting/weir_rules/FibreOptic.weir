@@ -1,0 +1,12 @@
+expr main <([fibre, fiber][-, ( )]optics [cable, cables, communication, connector, connectors, hardware, network, networks]), optics>
+
+let message "When used as a compound adjective, use `fiber optic` instead of `fiber optics`."
+let description "Corrects `fiber optics` to `fiber optic` when used as a compound adjective."
+let kind "Usage"
+let becomes "optic"
+
+test "It can be implemented with a fiber optics cable with only the transmitter on the secure side" "It can be implemented with a fiber optic cable with only the transmitter on the secure side"
+test "A Fiber Optics connector provides two sets of access points" "A Fiber Optic connector provides two sets of access points"
+test "spontaneous four wave mixing), spatial solitons, fiber optics communication systems, and even higher-order coincidence probabilities" "spontaneous four wave mixing), spatial solitons, fiber optic communication systems, and even higher-order coincidence probabilities"
+test "Oversized fibre optics networks laid out in the late 90s were used for years and may even be in part still used today" "Oversized fibre optic networks laid out in the late 90s were used for years and may even be in part still used today"
+test "Linux patches for sfp, phy and other fibre optics hardware." "Linux patches for sfp, phy and other fibre optic hardware."

@@ -15,14 +15,14 @@ export let onFontFamilyChange: (fontFamily: EditorFontFamily) => void = () => {}
 export let onFontSizeChange: (fontSize: EditorFontSize) => void = () => {};
 
 const fontButtonClass =
-	'inline-flex h-4 min-w-7 items-center justify-center rounded px-2 text-xs leading-none font-medium text-stone-500';
+	'inline-flex h-4 min-w-7 items-center justify-center rounded px-2 text-xs leading-none font-medium text-stone-500 dark:text-stone-400';
 
 $: words = wordCount(text);
 $: chars = text.length;
 </script>
 
 <footer
-	class="flex min-h-[26px] flex-[0_0_26px] items-center gap-3.5 border-t-[0.5px] border-[rgba(28,26,22,0.09)] bg-[#f4f0e7] px-2 pr-2 pl-3.5 text-[11px] whitespace-nowrap text-stone-500 tabular-nums [font-family:'JetBrains_Mono',ui-monospace,'SF_Mono',Menlo,monospace] @max-[760px]:h-auto @max-[760px]:min-h-[30px] @max-[760px]:flex-wrap @max-[760px]:gap-y-1.5 @max-[760px]:py-[5px]"
+	class="flex min-h-[26px] flex-[0_0_26px] items-center gap-3.5 border-t-[0.5px] border-[rgba(28,26,22,0.09)] bg-[#f4f0e7] dark:border-white/10 dark:bg-stone-950 dark:text-stone-400 px-2 pr-2 pl-3.5 text-[11px] whitespace-nowrap text-stone-500 tabular-nums [font-family:'JetBrains_Mono',ui-monospace,'SF_Mono',Menlo,monospace] @max-[760px]:h-auto @max-[760px]:min-h-[30px] @max-[760px]:flex-wrap @max-[760px]:gap-y-1.5 @max-[760px]:py-[5px]"
 	aria-label="Editor status"
 >
 	<div class="inline-flex items-center gap-2">
@@ -40,14 +40,14 @@ $: chars = text.length;
 		</span>
 	</div>
 
-	<span class="h-2.5 w-px bg-[rgba(28,26,22,0.14)]"></span>
+	<span class="h-2.5 w-px bg-[rgba(28,26,22,0.14)] dark:bg-white/15"></span>
 	<span>{words} words</span>
 	<span>{chars} chars</span>
 
 	<span class="flex-1"></span>
 
 	<div
-		class="inline-flex h-[18px] items-center rounded-[5px] border-[0.5px] border-stone-200 bg-stone-200/60 p-px"
+		class="inline-flex h-[18px] items-center rounded-[5px] border-[0.5px] border-stone-200 bg-stone-200/60 p-px dark:border-white/10 dark:bg-white/5"
 		aria-label="Font family"
 	>
 		{#each FONT_OPTIONS as option}
@@ -55,7 +55,7 @@ $: chars = text.length;
 				type="button"
 				class={`${fontButtonClass} ${
 					fontFamily === option.value
-						? 'bg-white font-bold text-stone-950 shadow-sm shadow-stone-950/10'
+						? 'bg-white font-bold text-stone-950 shadow-sm shadow-stone-950/10 dark:bg-stone-700! dark:text-stone-100 dark:shadow-black/30'
 						: ''
 				}`}
 				style={`font-family: ${option.stack}`}
@@ -70,7 +70,7 @@ $: chars = text.length;
 	</div>
 
 	<label
-		class="relative inline-flex h-[18px] items-center rounded-[5px] border-[0.5px] border-stone-200 bg-stone-200/60 pr-[18px] pl-2 text-[11px] font-medium text-stone-950 after:absolute after:top-1/2 after:right-[5px] after:-translate-y-1/2 after:text-[9px] after:leading-none after:text-stone-500 after:content-['v'] after:[font-family:-apple-system,BlinkMacSystemFont,'SF_Pro_Text',sans-serif]"
+		class="relative inline-flex h-[18px] items-center rounded-[5px] border-[0.5px] border-stone-200 bg-stone-200/60 pr-[18px] pl-2 text-[11px] font-medium text-stone-950 dark:border-white/10 dark:bg-white/5 dark:text-stone-100 dark:after:text-stone-400 after:absolute after:top-1/2 after:right-[5px] after:-translate-y-1/2 after:text-[9px] after:leading-none after:text-stone-500 after:content-['v'] after:[font-family:-apple-system,BlinkMacSystemFont,'SF_Pro_Text',sans-serif]"
 	>
 		<span>{fontSize === 'default' ? 'Default' : `${fontSize}px`}</span>
 		<select

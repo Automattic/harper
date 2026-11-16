@@ -16,6 +16,8 @@ impl Integration {
             "com.apple.Notes",
             "com.tinyspeck.slackmacgap",
             "com.hnc.Discord",
+            "ru.keepcoder.Telegram",
+            "com.bloombuilt.dayone-mac",
         ];
 
         #[cfg(target_os = "windows")]
@@ -28,13 +30,26 @@ impl Integration {
             .into_iter()
             .map(|bundle_id| Integration {
                 bundle_id: bundle_id.to_string(),
-                enabled: true,
+                // Onboarding teaches users to enable integrations by enabling TextEdit,
+                // so it starts disabled while the other curated integrations start enabled.
+                enabled: bundle_id != "com.apple.TextEdit",
             })
             .collect()
     }
-    pub fn is_integration_enabled_in(integrations: &[Self], bundle_id: &str) -> bool {
-        integrations
-            .iter()
-            .any(|integration| integration.bundle_id == bundle_id && integration.enabled)
+}
+
+#[cfg(all(test, target_os = "macos"))]
+mod tests {
+    use super::Integration;
+
+    #[test]
+    fn telegram_is_enabled_by_default() {
+        assert!(
+            Integration::curated_integrations()
+                .iter()
+                .any(|integration| {
+                    integration.bundle_id == "ru.keepcoder.Telegram" && integration.enabled
+                })
+        );
     }
 }

@@ -1,30 +1,60 @@
 <script lang="ts">
-import { Button, CheckIcon } from 'components';
+import { isTauri } from '@tauri-apps/api/core';
+import { openUrl } from '@tauri-apps/plugin-opener';
+import { platform } from '@tauri-apps/plugin-os';
+import { Button, SlideDeck } from 'components';
 import { onMount } from 'svelte';
-import { type AccessibilityPermissionStatus, Client, type Integration } from '$lib/client';
+import {
+	type AccessibilityPermissionStatus,
+	Client,
+	type Integration,
+	type OnboardingState,
+} from '$lib/client';
 import AppIcon from '../components/AppIcon.svelte';
-import type { SectionId } from '../settings-data';
 
-type SetupStep = {
-	id: 'accessibility' | 'integration' | 'test-drive';
+/** Slide identities determine setup gates; only the welcome and test drive need no action. */
+type OnboardingSlide = {
+	id: Exclude<OnboardingState, 'complete'>;
 	title: string;
-	desc: string;
-	required: boolean;
-	done: boolean;
-	locked: boolean;
-	actionLabel: string;
-	actionVariant: 'default' | 'primary';
-	action: () => void | Promise<void>;
-	actionDisabled?: boolean;
+	lede: string;
 };
 
-export let navigateToSection: (section: SectionId) => void;
+const allSlides: OnboardingSlide[] = [
+	{
+		id: 'welcome',
+		title: 'Welcome',
+		lede: "Before you can start writing with Harper, we need to do a little housekeeping.\n\nDon't worry, this should only take a minute.",
+	},
+	{
+		id: 'accessibility',
+		title: 'Give Harper Permission',
+		lede: "Harper needs permission to read and write text in your favorite text editors. None of your text will leave your device.\n\nFind Harper in System Settings → Privacy & Security → Device Control and Data Access. Grant the permission in system settings, then come back here. If you've already granted permission and Harper isn't detecting it, try restarting Harper or removing and re-adding it in your permission list.",
+	},
+	{
+		id: 'integration',
+		title: 'Enable TextEdit',
+		lede: 'The Harper community is constantly adding support for new text editors. If we haven\'t marked a text editor as "supported" already, you can override this option yourself.\n\nLet\'s try that now. Go ahead and enable "TextEdit". Once you do, Harper will start checking your grammar in that app.',
+	},
+	{
+		id: 'test-drive',
+		title: 'Try Harper',
+		lede: 'Now that you\'ve enabled TextEdit, go ahead and open it. Write something like, "This is an test."\n\nYou should see Harper jump in to fix that mistake.',
+	},
+	{
+		id: 'ready',
+		title: 'Ready',
+		lede: "Okay! Now we're ready to go.\n\nDon't let your dreams be dreams. Write anything, anywhere and Harper will be there to catch your mistakes.",
+	},
+];
 
+export let initialState: Exclude<OnboardingState, 'complete'>;
+export let onComplete: () => void;
+
+let step = 0;
+let isMacOS = false;
 let accessibilityStatus: AccessibilityPermissionStatus | null = null;
-let accessibilityError = '';
-let isCheckingAccessibility = true;
-let isRequestingAccessibility = false;
-let hasRequestedAccessibility = false;
+let setupError = '';
+let isPreparingService = false;
 let integrations: Integration[] = [];
 let integrationsError = '';
 let isLoadingIntegrations = true;
@@ -33,31 +63,47 @@ let isLaunchingTextEdit = false;
 let testDriveError = '';
 let isCompletingOnboarding = false;
 let onboardingError = '';
+let isRestarting = false;
+let restartError = '';
+let isSavingStep = false;
 
+$: slides = allSlides.filter((slide) => slide.id !== 'accessibility' || isMacOS);
 $: textEditIntegration = integrations.find((item) => item.bundle_id === 'com.apple.TextEdit');
 $: isTextEditEnabled = textEditIntegration?.enabled === true;
-
-$: setupSteps = buildSetupSteps(
-	accessibilityStatus,
-	isCheckingAccessibility,
-	isRequestingAccessibility,
-	hasRequestedAccessibility,
-	isTextEditEnabled,
-	isLoadingIntegrations,
-	isEnablingTextEdit,
-	isLaunchingTextEdit,
-);
-$: requiredSetupSteps = setupSteps.filter((step) => step.required);
-$: setupCompletedCount = requiredSetupSteps.filter((step) => step.done).length;
-$: setupAllDone =
-	!isCheckingAccessibility &&
-	!isLoadingIntegrations &&
-	requiredSetupSteps.every((step) => step.done);
+$: accessibilityReady =
+	(!isMacOS || accessibilityStatus === 'Granted') && !isPreparingService && !setupError;
+$: integrationReady =
+	isTextEditEnabled && !isLoadingIntegrations && !isEnablingTextEdit && !integrationsError;
+$: nextDisabled =
+	isRestarting ||
+	isSavingStep ||
+	isCompletingOnboarding ||
+	!canAdvance(slides[step].id, accessibilityReady, integrationReady, isMacOS);
 
 onMount(() => {
-	void checkAccessibilityPermission();
+	// Use the native platform in Tauri; user-agent detection is only for browser previews.
+	isMacOS = isTauri() ? platform() === 'macos' : navigator.userAgent.includes('Macintosh');
+	const availableSlides = allSlides.filter((slide) => slide.id !== 'accessibility' || isMacOS);
+	// Accessibility is skipped when a config is resumed on a non-macOS platform.
+	const restoredState = initialState === 'accessibility' && !isMacOS ? 'integration' : initialState;
+	step = availableSlides.findIndex((slide) => slide.id === restoredState);
+	void prepareService();
 	void loadIntegrations();
+	const permissionTimer = isMacOS ? setInterval(() => void prepareService(), 2000) : undefined;
+	return () => clearInterval(permissionTimer);
 });
+
+/** Gate service startup on Welcome outside macOS, or on Accessibility on macOS; the trial is optional. */
+function canAdvance(
+	slide: OnboardingSlide['id'],
+	accessReady: boolean,
+	appReady: boolean,
+	needsPermission: boolean,
+) {
+	if (slide === 'welcome') return needsPermission || accessReady;
+	if (slide === 'accessibility') return accessReady;
+	return accessReady && appReady;
+}
 
 async function loadIntegrations() {
 	isLoadingIntegrations = true;
@@ -73,24 +119,17 @@ async function loadIntegrations() {
 }
 
 async function enableTextEditForSetup() {
+	if (!accessibilityReady || isLoadingIntegrations || isEnablingTextEdit) return;
 	isEnablingTextEdit = true;
 	integrationsError = '';
 
 	try {
 		if (textEditIntegration) {
 			await Client.setIntegrationEnabled('com.apple.TextEdit', true);
-			integrations = integrations.map((integration) =>
-				integration.bundle_id === 'com.apple.TextEdit'
-					? { ...integration, enabled: true }
-					: integration,
-			);
 		} else {
 			await Client.addIntegration('com.apple.TextEdit');
-			integrations = [
-				...integrations,
-				{ bundle_id: 'com.apple.TextEdit', enabled: true, display_name: 'TextEdit' },
-			];
 		}
+		await loadIntegrations();
 	} catch (error) {
 		integrationsError = `Unable to enable TextEdit: ${error}`;
 	} finally {
@@ -99,6 +138,7 @@ async function enableTextEditForSetup() {
 }
 
 async function launchTextEditForTestDrive() {
+	if (!accessibilityReady || !integrationReady || isLaunchingTextEdit) return;
 	isLaunchingTextEdit = true;
 	testDriveError = '';
 
@@ -111,13 +151,41 @@ async function launchTextEditForTestDrive() {
 	}
 }
 
+/** Persist navigation before showing the next page so a relaunch restores it. */
+async function changeStep(direction: -1 | 1) {
+	if (isSavingStep || isCompletingOnboarding || isRestarting) return;
+	if (direction === 1 && nextDisabled) return;
+	const nextStep = step + direction;
+	const nextSlide = slides[nextStep];
+	if (!nextSlide) return;
+	isSavingStep = true;
+	onboardingError = '';
+	try {
+		await Client.setOnboardingState(nextSlide.id);
+		step = nextStep;
+	} catch (error) {
+		onboardingError = `Unable to save onboarding progress: ${error}. Please try again.`;
+	} finally {
+		isSavingStep = false;
+	}
+}
+
+/** Leave the deck only after completion has been saved successfully. */
 async function completeOnboarding() {
+	if (
+		!accessibilityReady ||
+		!integrationReady ||
+		isCompletingOnboarding ||
+		isSavingStep ||
+		isRestarting
+	)
+		return;
 	isCompletingOnboarding = true;
 	onboardingError = '';
 
 	try {
-		await Client.setOnboardingCompleted(true);
-		navigateToSection('general');
+		await Client.setOnboardingState('complete');
+		onComplete();
 	} catch (error) {
 		onboardingError = `Unable to complete onboarding: ${error}`;
 	} finally {
@@ -125,302 +193,174 @@ async function completeOnboarding() {
 	}
 }
 
-async function checkAccessibilityPermission() {
-	isCheckingAccessibility = true;
-	accessibilityError = '';
+/** Save the current page before restarting the parent; never restart from a permission check. */
+async function restartHarper() {
+	if (isRestarting || isSavingStep || isCompletingOnboarding) return;
+	isRestarting = true;
+	restartError = '';
+	try {
+		await Client.setOnboardingState(slides[step].id);
+		await Client.restartHarper();
+	} catch (error) {
+		restartError = `Unable to restart Harper: ${error}. If needed, quit Harper and open the installed application again.`;
+		isRestarting = false;
+	}
+}
+
+async function openAccessibilitySettings() {
+	try {
+		await openUrl(
+			'x-apple.systempreferences:com.apple.settings.PrivacySecurity.extension?Privacy_Accessibility',
+		);
+	} catch (error) {
+		setupError = `Unable to open System Settings: ${error}`;
+	}
+}
+
+/** Check permission without overlapping requests; start Harper when access becomes available. */
+async function prepareService() {
+	if (isPreparingService || isRestarting) return;
+	const shouldStartService = accessibilityStatus !== 'Granted' || !!setupError;
+	isPreparingService = true;
+	setupError = '';
 
 	try {
-		accessibilityStatus = await Client.getAccessibilityPermissionStatus();
+		if (isMacOS) {
+			accessibilityStatus = await Client.getAccessibilityPermissionStatus();
+		}
 
-		if (accessibilityStatus === 'Granted') {
-			await Client.startHighlighterService();
+		if (
+			shouldStartService &&
+			(!isMacOS || accessibilityStatus === 'Granted') &&
+			!(await Client.startHighlighterService())
+		) {
+			throw new Error('The Harper service did not start. Please try again.');
 		}
 	} catch (error) {
-		accessibilityError = `Unable to check Accessibility permission: ${error}`;
+		setupError = `Unable to ${isMacOS ? 'set up Accessibility' : 'start Harper'}: ${error}`;
 	} finally {
-		isCheckingAccessibility = false;
+		isPreparingService = false;
 	}
-}
-
-async function requestAccessibilityPermission() {
-	if (hasRequestedAccessibility && accessibilityStatus === 'NotGranted') {
-		await checkAccessibilityPermission();
-		return;
-	}
-
-	isRequestingAccessibility = true;
-	accessibilityError = '';
-
-	try {
-		accessibilityStatus = await Client.requestAccessibilityPermission();
-		hasRequestedAccessibility = true;
-
-		if (accessibilityStatus === 'Granted') {
-			await Client.startHighlighterService();
-		}
-	} catch (error) {
-		accessibilityError = `Unable to request Accessibility permission: ${error}`;
-	} finally {
-		isRequestingAccessibility = false;
-	}
-}
-
-function accessibilityDescription(status: AccessibilityPermissionStatus | null) {
-	if (status === 'Granted') {
-		return 'Harper can access text through the macOS Accessibility system.';
-	}
-
-	if (status === 'Unsupported') {
-		return 'Accessibility setup is only available on macOS right now.';
-	}
-
-	return 'Open system settings and grant Harper access to the Accessibility system.';
-}
-
-function accessibilityActionLabel(
-	status: AccessibilityPermissionStatus | null,
-	isChecking: boolean,
-	isRequesting: boolean,
-	hasRequested: boolean,
-) {
-	if (isChecking) {
-		return 'Checking...';
-	}
-
-	if (isRequesting) {
-		return 'Opening...';
-	}
-
-	if (status === 'Granted') {
-		return 'Granted';
-	}
-
-	if (status === 'Unsupported') {
-		return 'Unsupported';
-	}
-
-	if (hasRequested) {
-		return 'Recheck Permission';
-	}
-
-	return 'Open System Settings';
-}
-
-function buildSetupSteps(
-	currentAccessibilityStatus: AccessibilityPermissionStatus | null,
-	currentIsCheckingAccessibility: boolean,
-	currentIsRequestingAccessibility: boolean,
-	currentHasRequestedAccessibility: boolean,
-	currentIsTextEditEnabled: boolean,
-	currentIsLoadingIntegrations: boolean,
-	currentIsEnablingTextEdit: boolean,
-	currentIsLaunchingTextEdit: boolean,
-): SetupStep[] {
-	const accessibilityDone = currentAccessibilityStatus === 'Granted';
-	const accessibilityReady = accessibilityDone || currentAccessibilityStatus === 'Unsupported';
-	const integrationDone = currentIsTextEditEnabled;
-	const accessibilityActionDisabled =
-		currentIsCheckingAccessibility ||
-		currentIsRequestingAccessibility ||
-		currentAccessibilityStatus === 'Granted' ||
-		currentAccessibilityStatus === 'Unsupported';
-
-	return [
-		{
-			id: 'accessibility',
-			title: 'Grant Accessibility permission',
-			desc: accessibilityDescription(currentAccessibilityStatus),
-			required: currentAccessibilityStatus !== 'Unsupported',
-			done: accessibilityDone,
-			locked: false,
-			actionLabel: accessibilityActionLabel(
-				currentAccessibilityStatus,
-				currentIsCheckingAccessibility,
-				currentIsRequestingAccessibility,
-				currentHasRequestedAccessibility,
-			),
-			actionVariant: accessibilityReady ? 'default' : 'primary',
-			action: requestAccessibilityPermission,
-			actionDisabled: accessibilityActionDisabled,
-		},
-		{
-			id: 'integration',
-			title: 'Pick an app to test',
-			desc: 'Start with TextEdit, then add more apps from Integrations when you are ready.',
-			required: true,
-			done: integrationDone,
-			locked: !accessibilityReady,
-			actionLabel: integrationDone ? 'Manage' : 'Browse apps',
-			actionVariant: 'default',
-			action: () => navigateToSection('integrations'),
-			actionDisabled: currentIsLoadingIntegrations || currentIsEnablingTextEdit,
-		},
-		{
-			id: 'test-drive',
-			title: 'Take a test drive',
-			desc: 'Open TextEdit, type "its not alot of fun", and watch Harper underline the mistakes.',
-			required: false,
-			done: false,
-			locked: !accessibilityReady || !integrationDone,
-			actionLabel: currentIsLaunchingTextEdit ? 'Launching...' : 'Launch TextEdit',
-			actionVariant: 'primary',
-			action: launchTextEditForTestDrive,
-			actionDisabled: currentIsLaunchingTextEdit,
-		},
-	];
 }
 </script>
 
-<section>
-        {#if setupAllDone}
-          <div class="success-banner">
-            <div class="big-mark green">
-              <CheckIcon className="control-icon" />
-            </div>
-            <div class="grow">
-              <h2>You're all set</h2>
-              <p>
-                Harper is ready to check writing in the apps you choose. You can revisit any section
-                from the sidebar.
-              </p>
-              {#if onboardingError}
-                <p>{onboardingError}</p>
-              {/if}
-            </div>
-            <Button unstyled class="button" type="button" disabled={isCompletingOnboarding} on:click={completeOnboarding}>
-              {isCompletingOnboarding ? "Continuing..." : "Continue"}
-            </Button>
-          </div>
-        {:else}
-          {#if accessibilityStatus !== "Granted"}
-            <div class="warning-banner">
-              <div class="big-mark amber">!</div>
-              <div>
-                {#if isCheckingAccessibility}
-                  <strong>Checking Accessibility permission</strong>
-                  <p>Harper needs macOS Accessibility access before it can check other apps.</p>
-                {:else if accessibilityStatus === "Unsupported"}
-                  <strong>Accessibility setup is unavailable</strong>
-                  <p>Harper Desktop app checking is currently only wired for macOS.</p>
-                {:else}
-                  <strong>Harper is not checking anything yet</strong>
-                  <p>Grant Accessibility permission so Harper can find text and surface suggestions.</p>
-                {/if}
-              </div>
-            </div>
+<div class="onboarding-shell">
+  <SlideDeck
+    title={slides[step].title}
+    lede={slides[step].lede}
+    slideProgress={step / (slides.length - 1)}
+    {nextDisabled}
+    onBack={() => void changeStep(-1)}
+    onNext={() => void changeStep(1)}
+  >
+    {#if slides[step].id === 'welcome' && !isMacOS}
+      {#if isPreparingService}
+        <div class="onboarding-actions">
+          <p role="status">Starting Harper...</p>
+        </div>
+      {:else if setupError}
+        <div class="onboarding-actions">
+          <p role="alert">{setupError}</p>
+          <Button on:click={() => prepareService()}>Retry Starting Harper</Button>
+        </div>
+      {/if}
+    {:else if slides[step].id === 'accessibility'}
+      <div class="onboarding-actions">
+        <div class="permission-actions">
+          <Button on:click={openAccessibilitySettings}>Open System Settings</Button>
+          <span role="status">
+            {#if accessibilityStatus === 'Granted'}
+              Permission granted
+            {:else if accessibilityStatus === 'NotGranted'}
+              Permission not granted
+            {:else if accessibilityStatus === 'Unsupported'}
+              Permission check unavailable
+            {:else}
+              Checking permission...
+            {/if}
+          </span>
+          {#if accessibilityStatus === 'NotGranted'}
+            <button type="button" class="restart-link" disabled={isRestarting} on:click={restartHarper}>
+              {isRestarting ? 'Restarting Harper...' : 'Restart Harper'}
+            </button>
           {/if}
-
-          <div class="hero-copy">
-            <div class="eyebrow">Getting started</div>
-            <h1>Let's get Harper up and running.</h1>
-            <div class="progress-row">
-              <div class="progress-track">
-                <div class="progress-fill" style={`width: ${(setupCompletedCount / requiredSetupSteps.length) * 100}%`}></div>
-              </div>
-              <span>{setupCompletedCount} of {requiredSetupSteps.length}</span>
-            </div>
-          </div>
+        </div>
+        {#if restartError}
+          <p role="alert">{restartError}</p>
         {/if}
-
-        <div class="step-list">
-          {#each setupSteps as step, index}
-            <div class:done={step.done} class:locked={step.locked} class="step-row">
-              <div class="step-dot">
-                {#if step.done}
-                  <CheckIcon className="control-icon" />
-                {:else}
-                  {index + 1}
-                {/if}
-              </div>
-              <div class="grow">
-                <div class="step-heading">
-                  <strong>{step.title}</strong>
-                  {#if !step.required && !step.done}
-                    <span class="pill">Optional</span>
-                  {/if}
-                </div>
-                <p>{step.desc}</p>
-
-                {#if step.id === "accessibility" && accessibilityError}
-                  <div class="detected-app">
-                    <div class="big-mark amber">!</div>
-                    <div class="grow">
-                      <strong>Permission check failed</strong>
-                      <p>{accessibilityError}</p>
-                    </div>
-                  </div>
-                {:else if step.id === "accessibility" && hasRequestedAccessibility && accessibilityStatus === "NotGranted"}
-                  <div class="detected-app">
-                    <div class="app-tile" style="--app-tint: #b06a1b">A</div>
-                    <div class="grow">
-                      <strong>Waiting for macOS</strong>
-                      <p>After granting access in System Settings, return here and recheck permission.</p>
-                    </div>
-                  </div>
-                {/if}
-
-                {#if step.id === "test-drive" && testDriveError}
-                  <div class="detected-app">
-                    <div class="big-mark amber">!</div>
-                    <div class="grow">
-                      <strong>TextEdit launch failed</strong>
-                      <p>{testDriveError}</p>
-                    </div>
-                  </div>
-                {/if}
-
-                {#if step.id === "integration" && integrationsError}
-                  <div class="detected-app">
-                    <div class="big-mark amber">!</div>
-                    <div class="grow">
-                      <strong>Integration update failed</strong>
-                      <p>{integrationsError}</p>
-                    </div>
-                  </div>
-                {:else if step.id === "integration" && accessibilityStatus === "Granted" && isLoadingIntegrations}
-                  <div class="detected-app">
-                    <AppIcon bundleId="com.apple.TextEdit" name="TextEdit" />
-                    <div class="grow">
-                      <strong>Checking TextEdit</strong>
-                      <p>Loading integration state...</p>
-                    </div>
-                  </div>
-                {:else if step.id === "integration" && accessibilityStatus === "Granted" && isTextEditEnabled}
-                  <div class="detected-app">
-                    <AppIcon bundleId="com.apple.TextEdit" name="TextEdit" />
-                    <div class="grow">
-                      <strong>TextEdit enabled</strong>
-                      <p>Harper is configured to check TextEdit.</p>
-                    </div>
-                  </div>
-                {:else if step.id === "integration" && accessibilityStatus === "Granted"}
-                  <div class="detected-app">
-                    <AppIcon bundleId="com.apple.TextEdit" name="TextEdit" />
-                    <div class="grow">
-                      <strong>TextEdit detected</strong>
-                      <p>A good starter app for trying Harper.</p>
-                    </div>
-                    <Button unstyled class="button primary" type="button" disabled={isEnablingTextEdit} on:click={enableTextEditForSetup}>
-                      {isEnablingTextEdit ? "Enabling..." : "Enable"}
-                    </Button>
-                  </div>
-                {/if}
-              </div>
-              <Button
-                unstyled
-                class={`button ${step.actionVariant === "primary" ? "primary" : ""}`}
-                type="button"
-                disabled={step.locked || step.actionDisabled}
-                on:click={step.action}
-              >
-                {step.actionLabel}
-              </Button>
-            </div>
-          {/each}
+        {#if setupError}
+          <p role="alert">{setupError}</p>
+        {/if}
+      </div>
+    {:else if slides[step].id === 'integration'}
+      <div class="onboarding-actions">
+        <p role="status">
+          {#if isLoadingIntegrations}
+            Loading integration state...
+          {:else if isEnablingTextEdit}
+            Enabling TextEdit...
+          {:else if integrationReady}
+            TextEdit enabled. Harper will check your writing in this app.
+          {/if}
+        </p>
+        {#if integrationsError}
+          <p role="alert">{integrationsError}</p>
+          <Button color="white" disabled={isLoadingIntegrations || isEnablingTextEdit} on:click={loadIntegrations}>
+            Retry Loading Integrations
+          </Button>
+        {/if}
+        <div class="onboarding-app">
+          <Button
+            disabled={!accessibilityReady || isLoadingIntegrations || isEnablingTextEdit || isTextEditEnabled || !!integrationsError}
+            on:click={enableTextEditForSetup}
+          >
+            {isEnablingTextEdit ? 'Enabling...' : isTextEditEnabled ? 'Enabled' : 'Enable TextEdit'}
+          </Button>
+          <AppIcon bundleId="com.apple.TextEdit" name="TextEdit" />
+          <strong>TextEdit</strong>
         </div>
+      </div>
+    {:else if slides[step].id === 'test-drive'}
+      <div class="onboarding-actions">
+        {#if testDriveError}
+          <p role="alert">{testDriveError}</p>
+        {/if}
+        <Button disabled={isLaunchingTextEdit} on:click={launchTextEditForTestDrive}>
+          {isLaunchingTextEdit ? 'Launching...' : 'Launch TextEdit'}
+        </Button>
+      </div>
+    {:else if slides[step].id === 'ready'}
+      <div class="onboarding-actions">
+        <Button disabled={isCompletingOnboarding || !accessibilityReady || !integrationReady} on:click={completeOnboarding}>
+          {isCompletingOnboarding ? 'Finishing...' : 'Finish'}
+        </Button>
+      </div>
+    {/if}
+    {#if onboardingError}
+      <p role="alert">{onboardingError}</p>
+    {/if}
+  </SlideDeck>
+</div>
 
-        <div class="note-strip">
-          <strong>On-device by default.</strong>
-          <span>Your writing stays on this Mac in this demo surface.</span>
-        </div>
-      </section>
+<style>
+.permission-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.restart-link {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--settings-accent);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.restart-link:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+</style>

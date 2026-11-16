@@ -882,7 +882,7 @@ Message: |
 Suggest:
   - Replace with: “Be”
   - Replace with: “Bi”
-  - Replace with: “BO”
+  - Replace with: “BA”
 
 
 
@@ -967,7 +967,7 @@ Message: |
 Suggest:
   - Replace with: “Do”
   - Replace with: “DA”
-  - Replace with: “Di”
+  - Replace with: “DE”
 
 
 
@@ -1133,7 +1133,7 @@ Message: |
 Suggest:
   - Replace with: “Be”
   - Replace with: “Bi”
-  - Replace with: “BO”
+  - Replace with: “BA”
 
 
 
@@ -2215,7 +2215,7 @@ Message: |
 Suggest:
   - Replace with: “RI”
   - Replace with: “Ra”
-  - Replace with: “Ru”
+  - Replace with: “Re”
 
 
 
@@ -2266,8 +2266,8 @@ Message: |
     1861 | the gravel drive that Mrs. Ulysses Swett’s automobile ran over his right hand.
          |                                    ^~~~~~~ Did you mean to spell `Swett’s` this way?
 Suggest:
-  - Replace with: “Sweat's”
   - Replace with: “Sweet's”
+  - Replace with: “Sweat's”
   - Replace with: “Seth's”
 
 
@@ -2290,7 +2290,7 @@ Message: |
 Suggest:
   - Replace with: “So”
   - Replace with: “SA”
-  - Replace with: “Se”
+  - Replace with: “SE”
 
 
 
@@ -2301,7 +2301,7 @@ Message: |
 Suggest:
   - Replace with: “Be”
   - Replace with: “Bi”
-  - Replace with: “BO”
+  - Replace with: “BA”
 
 
 
@@ -2394,7 +2394,7 @@ Message: |
 Suggest:
   - Replace with: “So”
   - Replace with: “SA”
-  - Replace with: “Se”
+  - Replace with: “SE”
 
 
 
@@ -2440,8 +2440,8 @@ Message: |
          |                              ^~ Did you mean to spell `G.` this way?
 Suggest:
   - Replace with: “Go”
-  - Replace with: “GI”
-  - Replace with: “GU”
+  - Replace with: “GA”
+  - Replace with: “GE”
 
 
 
@@ -2482,6 +2482,7 @@ Suggest:
   - Replace with: “Dab”
   - Replace with: “Dad”
   - Replace with: “Dag”
+  - Replace with: “DA”
 
 
 
@@ -2517,7 +2518,7 @@ Message: |
 Suggest:
   - Replace with: “Lear's”
   - Replace with: “Leger's”
-  - Replace with: “Leer's”
+  - Replace with: “Lego's”
 
 
 
@@ -2529,7 +2530,7 @@ Message: |
 Suggest:
   - Replace with: “Be”
   - Replace with: “Bi”
-  - Replace with: “BO”
+  - Replace with: “BA”
 
 
 
@@ -2541,7 +2542,7 @@ Message: |
 Suggest:
   - Replace with: “Jon's”
   - Replace with: “Jonas”
-  - Replace with: “Jogs”
+  - Replace with: “Jones”
 
 
 
@@ -2692,7 +2693,7 @@ Message: |
 Suggest:
   - Replace with: “So”
   - Replace with: “SA”
-  - Replace with: “Se”
+  - Replace with: “SE”
 
 
 
@@ -2748,9 +2749,9 @@ Message: |
     1882 | and Henry L. Palmetto, who killed himself by jumping in front of a subway train
          |           ^~ Did you mean to spell `L.` this way?
 Suggest:
+  - Replace with: “LA”
   - Replace with: “Le”
   - Replace with: “Li”
-  - Replace with: “Lu”
 
 
 
@@ -2924,8 +2925,8 @@ Message: |
     1982 | de Boulogne.
 Suggest:
   - Replace with: “Boss”
+  - Replace with: “Boas”
   - Replace with: “Boris”
-  - Replace with: “Bios”
 
 
 
@@ -2959,16 +2960,6 @@ Suggest:
   - Replace with: “Order”
   - Replace with: “Orders”
   - Replace with: “Order's”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    2006 | To my astonishment, the thing had an authentic look. “Orderi di Danilo,” ran the
-         |                                                              ^~ This word's canonical spelling is all-caps.
-    2007 | circular legend, “Montenegro, Nicolas Rex.”
-Suggest:
-  - Replace with: “DI”
 
 
 
@@ -3475,16 +3466,6 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
-Message: |
-    2319 | That was nineteen-seventeen. By the next year I had a few beaux myself, and I
-         |                                                           ^~~~~ `beaux` should probably be written as `be aux`.
-    2320 | began to play in tournaments, so I didn’t see Daisy very often. She went with a
-Suggest:
-  - Replace with: “be aux”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     2329 | By the next autumn she was gay again, gay as ever. She had a début after the
@@ -3683,17 +3664,6 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-    2492 | some of the rooms. Let’s go to Coney Island, old sport. In my car.”
-         |                                ^~~~~ Did you mean to spell `Coney` this way?
-Suggest:
-  - Replace with: “Convey”
-  - Replace with: “Conley”
-  - Replace with: “Corey”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
     2526 | “There’s another little thing,” he said uncertainly, and hesitated.
          |                                         ^~~~~~~~~~~ Did you mean to spell `uncertainly` this way?
 Suggest:
@@ -3726,18 +3696,6 @@ Message: |
          |                             ^~~~~~~~~~ Did you mean `connection`?
 Suggest:
   - Replace with: “connection”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    2561 | sleep as I entered my front door. So I don’t know whether or not Gatsby went to
-    2562 | Coney Island, or for how many hours he “glanced into rooms” while his house
-         | ^~~~~ Did you mean to spell `Coney` this way?
-Suggest:
-  - Replace with: “Convey”
-  - Replace with: “Conley”
-  - Replace with: “Corey”
 
 
 
@@ -3781,16 +3739,6 @@ Suggest:
   - Replace with: “blared”
   - Replace with: “bleated”
   - Replace with: “beard”
-
-
-
-Lint:    Typo (31 priority)
-Message: |
-    2607 | Clay’s “Economics,” starting at the Finnish tread that shook the kitchen floor,
-    2608 | and peering toward the bleared windows from time to time as if a series of
-         |                        ^~~~~~~ `bleared` should probably be written as `bl eared`.
-Suggest:
-  - Replace with: “bl eared”
 
 
 
@@ -4072,15 +4020,6 @@ Message: |
 
 
 
-Lint:    Capitalization (31 priority)
-Message: |
-    2905 | “Who’s this?”
-         |  ^~~~~ The canonical dictionary spelling is `who's`.
-Suggest:
-  - Replace with: “who's”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     2940 | “I know what we'll do,” said Gatsby, “we'll have Klipspringer play the piano.”
@@ -4146,15 +4085,6 @@ Suggest:
   - Replace with: “prat”
   - Replace with: “pray”
   - Replace with: “pram”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    3003 | ## CHAPTER VI
-         | ^~~~~~~~~~~~~ Try to use title case in headings.
-Suggest:
-  - Replace with: “## CHAPTER Vi”
 
 
 
@@ -4546,16 +4476,6 @@ Message: |
 Suggest:
   - Replace with: “rhythmic”
   - Replace with: “mythic”
-
-
-
-Lint:    Capitalization (31 priority)
-Message: |
-    3409 | Her glance left me and sought the lighted top of the steps, where “Three o’Clock
-         |                                                                          ^~~~~~~ The canonical dictionary spelling is `o'clock`.
-    3410 | in the Morning,” a neat, sad little waltz of that year, was drifting out the
-Suggest:
-  - Replace with: “o'clock”
 
 
 
@@ -5204,7 +5124,7 @@ Message: |
 Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
-  - Replace with: “Biro's”
+  - Replace with: “Bill's”
 
 
 
@@ -5215,7 +5135,7 @@ Message: |
 Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
-  - Replace with: “Biro's”
+  - Replace with: “Bill's”
 
 
 
@@ -5226,7 +5146,7 @@ Message: |
 Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
-  - Replace with: “Biro's”
+  - Replace with: “Bill's”
 
 
 
@@ -5238,7 +5158,7 @@ Message: |
 Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
-  - Replace with: “Biro's”
+  - Replace with: “Bill's”
 
 
 
@@ -5256,7 +5176,7 @@ Message: |
 Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
-  - Replace with: “Biro's”
+  - Replace with: “Bill's”
 
 
 
@@ -5309,7 +5229,7 @@ Message: |
 Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
-  - Replace with: “Biro's”
+  - Replace with: “Bill's”
 
 
 
@@ -5327,7 +5247,7 @@ Message: |
 Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
-  - Replace with: “Biro's”
+  - Replace with: “Bill's”
 
 
 
@@ -5350,7 +5270,7 @@ Message: |
 Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
-  - Replace with: “Biro's”
+  - Replace with: “Bill's”
 
 
 
@@ -5361,7 +5281,7 @@ Message: |
 Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
-  - Replace with: “Biro's”
+  - Replace with: “Bill's”
 
 
 
@@ -5408,17 +5328,6 @@ Suggest:
   - Replace with: “Kaitlin”
   - Replace with: “Kaposi”
   - Replace with: “Kaolin”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    4265 | Why—there’re things between Daisy and me that you’ll never know, things that
-         |     ^~~~~~~~ Did you mean to spell `there’re` this way?
-Suggest:
-  - Replace with: “there's”
-  - Replace with: “there'd”
-  - Replace with: “there'll”
 
 
 
@@ -5597,15 +5506,6 @@ Suggest:
 
 
 
-Lint:    Style (31 priority)
-Message: |
-    4416 | he heard Mrs. Wilson’s voice, loud and scolding, down-stairs in the garage.
-         |                               ^~~~ An Oxford comma is necessary here.
-Suggest:
-  - Insert “,”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     4426 | the next bend. Mavromichaelis wasn’t even sure of its color—he told the first
@@ -5737,6 +5637,7 @@ Suggest:
   - Replace with: “odd”
   - Replace with: “ode”
   - Replace with: “of”
+  - Replace with: “OD”
 
 
 
@@ -5748,6 +5649,7 @@ Suggest:
   - Replace with: “odd”
   - Replace with: “ode”
   - Replace with: “of”
+  - Replace with: “OD”
 
 
 
@@ -5759,6 +5661,7 @@ Suggest:
   - Replace with: “odd”
   - Replace with: “ode”
   - Replace with: “of”
+  - Replace with: “OD”
 
 
 
@@ -5770,6 +5673,7 @@ Suggest:
   - Replace with: “odd”
   - Replace with: “ode”
   - Replace with: “of”
+  - Replace with: “OD”
 
 
 
@@ -5808,8 +5712,8 @@ Message: |
          |      ^ Did you mean to spell `r` this way?
 Suggest:
   - Replace with: “re”
+  - Replace with: “I”
   - Replace with: “a”
-  - Replace with: “i”
 
 
 
@@ -5819,8 +5723,8 @@ Message: |
          |                                    ^ Did you mean to spell `r` this way?
 Suggest:
   - Replace with: “re”
+  - Replace with: “I”
   - Replace with: “a”
-  - Replace with: “i”
 
 
 
@@ -5850,8 +5754,8 @@ Message: |
          |  ^ Did you mean to spell `r` this way?
 Suggest:
   - Replace with: “re”
+  - Replace with: “I”
   - Replace with: “a”
-  - Replace with: “i”
 
 
 
@@ -6547,6 +6451,7 @@ Suggest:
   - Replace with: “Ha”
   - Replace with: “Ham”
   - Replace with: “He”
+  - Replace with: “HM”
 
 
 
@@ -6688,9 +6593,9 @@ Message: |
     5172 | Roosevelt and then to Gad’s Hill, where he bought a sandwich that he didn’t eat,
          |                       ^~~~~ Did you mean to spell `Gad’s` this way?
 Suggest:
-  - Replace with: “Gab's”
-  - Replace with: “Gag's”
-  - Replace with: “Gal's”
+  - Replace with: “Gap's”
+  - Replace with: “Gay's”
+  - Replace with: “God's”
 
 
 
@@ -6700,9 +6605,9 @@ Message: |
     5174 | reach Gad’s Hill until noon. Thus far there was no difficulty in accounting for
          |       ^~~~~ Did you mean to spell `Gad’s` this way?
 Suggest:
-  - Replace with: “Gab's”
-  - Replace with: “Gag's”
-  - Replace with: “Gal's”
+  - Replace with: “Gap's”
+  - Replace with: “Gay's”
+  - Replace with: “God's”
 
 
 
@@ -6967,9 +6872,9 @@ Message: |
     5341 | “Young Parke’s in trouble,” he said rapidly. “They picked him up when he handed
          |        ^~~~~~~ Did you mean to spell `Parke’s` this way?
 Suggest:
+  - Replace with: “Park's”
   - Replace with: “Parker's”
   - Replace with: “Parks's”
-  - Replace with: “Park's”
 
 
 
@@ -7009,7 +6914,7 @@ Message: |
 Suggest:
   - Replace with: “Co”
   - Replace with: “Cu”
-  - Replace with: “CI”
+  - Replace with: “CA”
 
 
 
@@ -7157,7 +7062,7 @@ Message: |
 Suggest:
   - Replace with: “Be”
   - Replace with: “Bi”
-  - Replace with: “BO”
+  - Replace with: “BA”
 
 
 
@@ -7361,8 +7266,8 @@ Message: |
          |                                            ^~~~~~~~ Did you mean to spell `Hopalong` this way?
 Suggest:
   - Replace with: “Hopping”
+  - Replace with: “Halon”
   - Replace with: “Haling”
-  - Replace with: “Haloing”
 
 
 
@@ -7407,6 +7312,7 @@ Suggest:
   - Replace with: “eat”
   - Replace with: “eh”
   - Replace with: “em”
+  - Replace with: “ET”
 
 
 

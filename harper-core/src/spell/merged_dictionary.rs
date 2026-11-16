@@ -5,7 +5,7 @@ use std::sync::Arc;
 use foldhash::quality::FixedState;
 use itertools::Itertools;
 
-use super::{FstDictionary, FuzzyMatchResult, WordId, dictionary::Dictionary};
+use super::{CanonicalWordId, FstDictionary, FuzzyMatchResult, dictionary::Dictionary};
 use crate::{CharString, DictWordMetadata};
 
 /// A simple wrapper over [`Dictionary`] that allows
@@ -136,6 +136,24 @@ impl Dictionary for MergedDictionary {
         self.get_word_metadata(&chars)
     }
 
+    fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata> {
+        self.children
+            .iter()
+            .find_map(|child| child.get_word_metadata_exact(word))
+    }
+
+    fn get_correct_capitalizations_of(
+        &self,
+        word: &[char],
+    ) -> Box<dyn Iterator<Item = &[char]> + Send + '_> {
+        let matches: Vec<_> = self
+            .children
+            .iter()
+            .map(|child| child.get_correct_capitalizations_of(word))
+            .collect();
+        Box::new(matches.into_iter().flatten())
+    }
+
     fn fuzzy_match(
         &'_ self,
         word: &[char],
@@ -172,7 +190,7 @@ impl Dictionary for MergedDictionary {
         self.children.iter().map(|d| d.word_count()).sum()
     }
 
-    fn get_word_from_id(&self, id: &WordId) -> Option<&[char]> {
+    fn get_word_from_id(&self, id: &CanonicalWordId) -> Option<&[char]> {
         self.children
             .iter()
             .find_map(|dict| dict.get_word_from_id(id))

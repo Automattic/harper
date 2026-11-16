@@ -1,6 +1,9 @@
 ---
 title: Language Server
+description: Install and configure harper-ls, including dictionaries, grammar rules, and editor integrations.
 ---
+
+# Language Server
 
 `harper-ls` is the [Language Server Protocol](https://microsoft.github.io/language-server-protocol/) frontend for Harper.
 Out of the box, it has built-in support for parsing the comments of most programming languages, as well as any and all Markdown files.
@@ -305,6 +308,7 @@ These configs are under the `markdown` key:
 | PowerShell          |         `powershell`          |            ✅ |
 | Plain Text          |      `plaintext`/`text`       |               |
 | Python              |           `python`            |            ✅ |
+| R                   |              `r`              |            ✅ |
 | Ruby                |            `ruby`             |            ✅ |
 | Rust                |            `rust`             |            ✅ |
 | Scala               |            `scala`            |            ✅ |

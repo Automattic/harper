@@ -1,0 +1,9 @@
+expr main (ad nausea)
+
+let message "The correct Latin phrase is `ad nauseam`. `Ad nausea` is a common eggcorn."
+let description "Corrects the eggcorn `ad nausea` to the standard Latin phrase `ad nauseam`."
+let kind "Eggcorn"
+let becomes "ad nauseam"
+
+test "U dont get why folks repeat this shit ad nausea, its technically not possible and no amount of progress will change that." "U dont get why folks repeat this shit ad nauseam, its technically not possible and no amount of progress will change that."
+test "then typing the next character, then clicking right after it, etc., etc., ad nausea" "then typing the next character, then clicking right after it, etc., etc., ad nauseam"

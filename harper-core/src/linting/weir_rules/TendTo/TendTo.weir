@@ -1,0 +1,32 @@
+expr main [<(tent to [agree, focus, have, think, use]), tent>, <([i, people, they, we, will, would, you] tent to), tent>]
+
+let message "Did you mean `tend to`?"
+let description "Flags `tent to` when it's likely a mistake for `tend to`."
+let kind "Spelling"
+let becomes "tend"
+
+# real-world examples
+
+test "I tent to think this is the sky." "I tend to think this is the sky."
+test "I tent to agree that this is inconvenient." "I tend to agree that this is inconvenient."
+test "some people tent to write else if even it's early breaking statement" "some people tend to write else if even it's early breaking statement"
+test "We tent to use multiple params and I was wondering if it is possible" "We tend to use multiple params and I was wondering if it is possible"
+test "The best startup ideas tent to have three things in common" "The best startup ideas tend to have three things in common"
+test "We tent to use multiple params and I was wondering if it is possible" "We tend to use multiple params and I was wondering if it is possible"
+test "I tent to believe that it might be some of your local issues." "I tend to believe that it might be some of your local issues."
+test "I would tent to use the less abundant isotopes" "I would tend to use the less abundant isotopes"
+test "the distribution of rtp locations is not something people tent to focus much on" "the distribution of rtp locations is not something people tend to focus much on"
+test "you tent to complicate things in order to go and buy your genius one click solution" "you tend to complicate things in order to go and buy your genius one click solution"
+test "he will tent to feel that its not generic" "he will tend to feel that its not generic"
+test "I would tent to keep the current config." "I would tend to keep the current config."
+test "and they tent to record the classes and pass it on to the students" "and they tend to record the classes and pass it on to the students"
+
+# contrived examples
+
+allows "I have a tent to sell."
+allows "Campster has a new tent to distribute."
+allows "I couldn't decide which tent to buy."
+allows "I took that tent to the mountain."
+allows "The company decided this is the tent to produce for next season."
+allows "He told me this is the best tent to get."
+allows "tips for attaching and securing the rooftop tent to your vehicle"

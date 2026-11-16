@@ -1,6 +1,9 @@
 ---
 title: Reviewing Pull Requests
+description: Download Harper build artifacts and test proposed changes locally when reviewing pull requests.
 ---
+
+# Reviewing Pull Requests
 
 There are a lot of individual components and artifacts that make up Harper.
 How a patch gets reviewed depends significantly on which component or artifact it affects.

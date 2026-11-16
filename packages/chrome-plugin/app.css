@@ -77,7 +77,7 @@ a {
 }
 
 #app {
-	@apply min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors duration-150;
+	@apply bg-white text-black dark:bg-black dark:text-white transition-colors duration-150;
 
 	font-family:
 		Atkinson Hyperlegible,

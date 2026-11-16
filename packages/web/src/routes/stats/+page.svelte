@@ -65,5 +65,5 @@ $effect(() => {
     {/if}
 {:else}
   <p> Upload your `stats.txt` file to start reflecting on your authorship. </p>
-  <Fileupload bind:files={files}/>
+  <Fileupload bind:files={files} class="dark:border-(--docs-border) dark:bg-(--docs-panel) dark:text-(--docs-muted) dark:file:bg-white/10 dark:file:text-(--docs-heading) dark:hover:file:bg-white/15"/>
 {/if}
