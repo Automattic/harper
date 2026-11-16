@@ -359,7 +359,7 @@
 >
 #
 >              Unsupervised taggers
-# HeadingStart VB/J         NPl
+# HeadingStart J            NPl
 >
 #
 > The methods already discussed involve working from a    pre       - existing corpus to
@@ -367,7 +367,7 @@
 > learn  tag     probabilities . It       is  , however , also possible to bootstrap using
 # NSg/VB NSg/VB+ NPl+          . NSg/ISg+ VL3 . C       . R/C  NSg/J    P  NSg/VB    Nᴹ/Vg/J
 > " unsupervised " tagging . Unsupervised tagging techniques use     an  untagged corpus
-# . VB/J         . NSg/Vg  . VB/J         NSg/Vg  NPl+       N🅪Sg/VB D/P VP/J     NSg+
+# . J            . NSg/Vg  . J            NSg/Vg  NPl+       N🅪Sg/VB D/P VP/J     NSg+
 > for   their training data  and  produce the tagset by induction . That      is  , they
 # R/C/P D$+   Nᴹ/Vg/J+ N🅪Pl+ VB/C Nᴹ/VB   D   NSg    P  N🅪Sg      . I/C/Ddem+ VL3 . IPl+
 > observe patterns in        word    use     , and  derive part      - of - speech   categories themselves .
