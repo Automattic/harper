@@ -8717,7 +8717,7 @@
 >
 #
 > After a    moment Tom     got up         and  began wrapping the unopened bottle of whiskey in
-# P     D/P+ NSg+   NPr/VB+ VP  NSg/VB/J/P VB/C VPt   N🅪Sg/Vg+ D   VB/J     NSg/VB P  N🅪Sg    NPr/J/R/P
+# P     D/P+ NSg+   NPr/VB+ VP  NSg/VB/J/P VB/C VPt   N🅪Sg/Vg+ D   J        NSg/VB P  N🅪Sg    NPr/J/R/P
 > the towel   .
 # D   NSg/VB+ .
 >
