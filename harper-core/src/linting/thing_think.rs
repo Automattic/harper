@@ -50,6 +50,10 @@ impl Default for ThingThink {
             "won't",
         ]);
 
+        let auxiliary_do =
+            SequenceExpr::word_set(["do", "does", "did", "don't", "doesn't", "didn't"])
+                .then_optional(SequenceExpr::whitespace().t_aco("not"));
+
         let adverb_of_frequency =
             WordSet::new(["always", "sometimes", "often", "usually", "never"]);
 
@@ -57,6 +61,7 @@ impl Default for ThingThink {
             Box::new(pronoun) as Box<dyn Expr>,
             Box::new(verb_to),
             Box::new(modal),
+            Box::new(auxiliary_do),
             Box::new(adverb_of_frequency),
         ]);
 
@@ -97,9 +102,79 @@ impl ExprLinter for ThingThink {
 mod tests {
     use super::ThingThink;
     use crate::linting::pooled_linter::for_tests::create_test_pool;
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
     create_test_pool!(ThingThink, ThingThink, ThingThink::default());
+
+    #[test]
+    fn fix_do_thing_in_reported_example() {
+        assert_suggestion_result(
+            "While I do thing it's cool that you didn't go with an LFSR, I don't really understand how it works.",
+            test_linter(),
+            "While I do think it's cool that you didn't go with an LFSR, I don't really understand how it works.",
+        );
+    }
+
+    #[test]
+    fn fix_auxiliary_do_thing() {
+        for prefix in [
+            "I do",
+            "She does",
+            "They did",
+            "I don't",
+            "She doesn't",
+            "They didn't",
+            "I do not",
+            "She does not",
+            "They did not",
+        ] {
+            assert_suggestion_result(
+                &format!("{prefix} thing so."),
+                test_linter(),
+                &format!("{prefix} think so."),
+            );
+        }
+    }
+
+    #[test]
+    fn fix_auxiliary_do_thing_case_and_whitespace() {
+        for (text, expected) in [
+            ("DO THING about it.", "DO THINK about it."),
+            ("I do Thing so.", "I do Think so."),
+            ("I do  thing so.", "I do  think so."),
+            ("I do\tthing so.", "I do\tthink so."),
+        ] {
+            assert_suggestion_result(text, test_linter(), expected);
+        }
+    }
+
+    #[test]
+    fn allow_thing_as_a_noun_after_do() {
+        for text in [
+            "Do the right thing.",
+            "Do one thing at a time.",
+            "She does her own thing.",
+            "They did that thing yesterday.",
+            "I don't do such a thing.",
+            "The thing I did was useful.",
+            "Doing the same thing again will not help.",
+        ] {
+            assert_no_lints(text, test_linter());
+        }
+    }
+
+    #[test]
+    fn allow_doing_things() {
+        for text in [
+            "I do things differently.",
+            "She does things carefully.",
+            "They did things in the right order.",
+            "Don't do things in a hurry.",
+            "I like doing things my own way.",
+        ] {
+            assert_no_lints(text, test_linter());
+        }
+    }
 
     // Pronouns
 
