@@ -47,6 +47,8 @@ jobs:
         with:
           node-version-file: ".node-version"
       - name: Install Tauri Linux dependencies
+        # Only the jobs that build Harper Desktop need these.
+        if: contains(fromJSON('["check-rust", "test-rust", "check-desktop"]'), matrix.task)
         run: >-
           .github/scripts/apt-install.sh
           libayatana-appindicator3-dev
