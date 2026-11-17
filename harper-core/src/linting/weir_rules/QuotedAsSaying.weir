@@ -1,8 +1,4 @@
-expr main <([quoted, (quoted in [(the press)])] of [saying, asking, claiming, reporting, stating]), of>
-
-# TODO - I can't get this to match `NUM` against `1977`
-#expr main <([quoted, (quoted in [(the press), NUM])] of [saying, asking, claiming, reporting, stating]), of>
-#expr main <(quoted in NUM of saying), of>
+expr main <([quoted, (quoted in [(the press), NUMBER])] of [saying, asking, claiming, reporting, stating]), of>
 
 let message "This construction requires the word `as`, not `of`."
 let description "Corrects misconstructions like `quoted of saying` to `quoted as saying`."
@@ -29,6 +25,4 @@ test "He's quoted in the press of saying that the Grey Goose brand has the numbe
 
 # with optional year
 
-# TODO - I can't get this to match `NUM` against `1977`
-#test "Ken Olsen, one of the early pioneers of computers, was quoted in 1977 of saying \"There is no reason for any individual to have a computer\"" "Ken Olsen, one of the early pioneers of computers, was quoted in 1977 as saying \"There is no reason for any individual to have a computer\""
-#test "was quoted in 1977 of saying" "was quoted in 1977 as saying"
+test "Ken Olsen, one of the early pioneers of computers, was quoted in 1977 of saying \"There is no reason for any individual to have a computer\"" "Ken Olsen, one of the early pioneers of computers, was quoted in 1977 as saying \"There is no reason for any individual to have a computer\""
