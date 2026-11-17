@@ -260,6 +260,28 @@ ALWAYS run extensive bullet tests with `cargo run --bin harper-cli --release -- 
 
 Write a Weir rule to a new file with a name of your choosing, including `expr main`, `let` fields, and tests. Make sure it has the extension `.weir`.
 
+## Writing or Enhancing Rules in Rust
+
+When a rule cannot be expressed in Weir—or when an existing Rust linter already covers the category—implement or extend it in `harper-core/src/linting/`:
+
+- **Check existing subdirectories first:** Complex rules and rule families live in subdirectories under `harper-core/src/linting/`:
+  - **Split-context `LintGroup`s** (e.g., `to_two_too/`, `plural_decades/`): Combine focused sub-linters in a `mod.rs` under one config setting when different contexts need distinct disambiguation logic. Add a new sub-linter file there rather than creating a standalone rule.
+  - **Macro-generated rule families** (e.g., `compound_nouns/`): Generate distinct configurable rules from shared logic; extend those rather than duplicating boilerplate.
+  - **Multi-way / mutually exclusive rules** (e.g., `oxford_commas/`): Group opposing style preferences under a single multi-way config setting.
+- **`ExprLinter` (default for new standalone rules):** Matches token sequences using regex-like `Expr` combinators.
+- **`Linter` (procedural fallback):** Implement directly only when matching logic cannot be expressed cleanly as an `Expr`.
+- **Registration & testing:** Register new standalone rules or groups in `LintGroup::new_curated` and `harper-core/default_config.json`. Include at least 15 unit tests (true/false positives and negatives) and run `just test-rust` to check snapshots.
+
+## Rust Coding & Zero-Allocation Guidelines
+
+Linters run on every keystroke; avoid heap allocations in hot paths:
+
+- **Avoid `.to_lower()` and `.to_string()`:** Calling `.to_lower()` allocates a new `Vec<char>`. Use the zero-allocation iterator methods on `CharStringExt` (`CharString` / `&[char]`) in `harper-core/src/char_string.rs`.
+- **Put the token/slice on the left-hand side:** Invert standard comparisons so `CharString`/`&[char]` is the receiver (e.g., `chars.eq_str("their")` or `chars.eq_any_ignore_ascii_case_str(&["a", "an"])`).
+- **Assume lowercase ASCII on the right-hand side:** Standard helpers (`.eq_str()`, `.eq_ch()`, `*_ignore_ascii_case_*`) only lowercase the left-hand side and `debug_assert!` that the right-hand side is already lowercase ASCII. Use `_lenient` variants (e.g., `.eq_str_lenient()`, `.eq_ch_lenient()`) when comparing dynamic slices.
+- **Shortened helpers are case-insensitive:** Common short-named methods (`.eq_ch()`, `.eq_str()`, `.get_ch()`, `.get_str()`) across `char_string.rs`, `token_string_ext.rs`, `token.rs`, and `linting/lint.rs` are case-insensitive—document this explicitly if adding or updating them.
+- **Add missing permutations on demand:** `CharStringExt` only implements `_str`, `_chars`, `_any_`, and `_lenient` variants as needed. Add missing zero-allocation variants there when required.
+
 ## Tips
 
 Before finishing your turn, run `just format` or `cargo fmt` if you have made any changes. This can help diffs if a human decides to make a commit.
