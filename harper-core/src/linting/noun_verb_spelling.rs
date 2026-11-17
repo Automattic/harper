@@ -6,12 +6,34 @@ use crate::{
 };
 use harper_brill::UPOS;
 
-/// Outside American English, these nouns take a `c` and their verbs take an `s`.
-const NOUN_VERB_PAIRS: &[(&str, &str)] = &[
-    ("licence", "license"),
-    ("licences", "licenses"),
-    ("practice", "practise"),
-    ("practices", "practises"),
+use Dialect::{Australian, British, Canadian, Indian};
+
+/// Nouns and verbs that share a pronunciation but have different spellings in the listed
+/// dialects. Elsewhere, the verb spelling serves for both, as `license` does in American English.
+const NOUN_VERB_PAIRS: &[(&str, &str, &[Dialect])] = &[
+    (
+        "licence",
+        "license",
+        &[Australian, British, Canadian, Indian],
+    ),
+    (
+        "licences",
+        "licenses",
+        &[Australian, British, Canadian, Indian],
+    ),
+    (
+        "practice",
+        "practise",
+        &[Australian, British, Canadian, Indian],
+    ),
+    (
+        "practices",
+        "practises",
+        &[Australian, British, Canadian, Indian],
+    ),
+    // Canadian English uses `tire` for both.
+    ("tyre", "tire", &[Australian, British, Indian]),
+    ("tyres", "tires", &[Australian, British, Indian]),
 ];
 
 /// Words that come before a noun but not a verb.
@@ -30,23 +52,31 @@ const BEFORE_VERB: &[&str] = &[
 /// Words that start the object of a verb, so `to` before the noun spelling marks an infinitive.
 const OBJECT_START: &[&str] = &[
     "a", "an", "the", "this", "that", "my", "your", "his", "her", "its", "our", "their", "it",
-    "them", "him", "us",
+    "them", "him", "us", "me", "you",
 ];
 
 pub struct NounVerbSpelling {
     expr: WordSet,
+    pairs: Vec<(&'static str, &'static str)>,
     dialect: Dialect,
 }
 
 impl NounVerbSpelling {
     pub fn new(dialect: Dialect) -> Self {
+        let pairs: Vec<_> = NOUN_VERB_PAIRS
+            .iter()
+            .filter(|(_, _, dialects)| dialects.contains(&dialect))
+            .map(|&(noun, verb, _)| (noun, verb))
+            .collect();
+
         Self {
             expr: WordSet::new(
-                NOUN_VERB_PAIRS
+                pairs
                     .iter()
                     .flat_map(|&(noun, verb)| [noun, verb])
                     .collect::<Vec<_>>(),
             ),
+            pairs,
             dialect,
         }
     }
@@ -67,10 +97,6 @@ impl ExprLinter for NounVerbSpelling {
         src: &[char],
         ctx: Option<(&[Token], &[Token])>,
     ) -> Option<Lint> {
-        if self.dialect == Dialect::American {
-            return None;
-        }
-
         let tok = toks.first()?;
         let text = tok.get_str(src).to_lowercase();
         let (before, after) = ctx.unwrap_or_default();
@@ -82,7 +108,7 @@ impl ExprLinter for NounVerbSpelling {
         let next = nearest_word(after.iter());
 
         let (replacement, part) =
-            if let Some(&(noun, _)) = NOUN_VERB_PAIRS.iter().find(|(_, verb)| *verb == text) {
+            if let Some(&(noun, _)) = self.pairs.iter().find(|(_, verb)| *verb == text) {
                 // The tagger can read a verb after a noun subject as part of a compound noun,
                 // as in "The firm licenses its patents", so an object after it means a verb.
                 let used_as_noun = is_any(prev, BEFORE_NOUN)
@@ -92,7 +118,7 @@ impl ExprLinter for NounVerbSpelling {
                         && !is_any(next, OBJECT_START));
                 (used_as_noun.then_some(noun)?, "noun")
             } else {
-                let &(_, verb) = NOUN_VERB_PAIRS.iter().find(|(noun, _)| *noun == text)?;
+                let &(_, verb) = self.pairs.iter().find(|(noun, _)| *noun == text)?;
                 let used_as_verb = is_any(prev, BEFORE_VERB)
                     || (is_any(prev, &["to"]) && is_any(next, OBJECT_START))
                     // After `to`, only the object test above can tell an infinitive from
@@ -123,7 +149,7 @@ impl ExprLinter for NounVerbSpelling {
     }
 
     fn description(&self) -> &str {
-        "Outside American English, nouns such as `licence` and `practice` are spelled with a `c`, and their verbs `license` and `practise` with an `s`."
+        "Outside American English, some nouns and verbs that sound alike are spelled differently, such as the noun `licence` and the verb `license`, `practice` and `practise`, or `tyre` and `tire`."
     }
 }
 
@@ -289,9 +315,48 @@ mod tests {
     }
 
     #[test]
+    fn fix_new_tire() {
+        assert_suggestion_result("I need a new tire.", british(), "I need a new tyre.");
+    }
+
+    #[test]
+    fn fix_the_tires() {
+        assert_suggestion_result(
+            "The tires are flat.",
+            NounVerbSpelling::new(Dialect::Australian),
+            "The tyres are flat.",
+        );
+    }
+
+    #[test]
+    fn fix_tyre_as_verb() {
+        assert_suggestion_result(
+            "I tyre easily on long walks.",
+            british(),
+            "I tire easily on long walks.",
+        );
+    }
+
+    #[test]
+    fn allow_tire_as_verb() {
+        assert_no_lints(
+            "Long walks tire me out, and she tires quickly too.",
+            british(),
+        );
+    }
+
+    #[test]
+    fn allow_tire_noun_in_canadian() {
+        assert_no_lints(
+            "I need a new tire.",
+            NounVerbSpelling::new(Dialect::Canadian),
+        );
+    }
+
+    #[test]
     fn allow_american_spellings_in_american() {
         assert_lint_count(
-            "I practice daily and have a driving license.",
+            "I practice daily, have a driving license and need a new tire.",
             NounVerbSpelling::new(Dialect::American),
             0,
         );
