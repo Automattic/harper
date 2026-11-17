@@ -22,7 +22,7 @@ pub fn is_likely_english(toks: &[Token], source: &[char], dict: &impl Dictionary
                 total_words += 1;
 
                 let word_content = token.get_ch(source);
-                if dict.contains_word(word_content) {
+                if dict.contains_folded_word(word_content) {
                     valid_words += 1;
                 }
             }

@@ -91,7 +91,7 @@ impl Default for MutableDictionary {
 }
 
 impl Dictionary for MutableDictionary {
-    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
+    fn get_word_metadata_folded(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
         let mut found_words = self.word_map.get_case_folded_chars(word);
         let first = &found_words.next()?.metadata;
 
@@ -107,19 +107,17 @@ impl Dictionary for MutableDictionary {
         }
     }
 
-    fn contains_word(&self, word: &[char]) -> bool {
+    fn contains_folded_word(&self, word: &[char]) -> bool {
         self.word_map
             .contains_case_folded(CaseFoldedWordId::from_word_chars(word).0)
     }
 
-    fn contains_word_str(&self, word: &str) -> bool {
-        let chars: CharString = word.chars().collect();
-        self.contains_word(&chars)
+    fn contains_folded_word_str(&self, word: &str) -> bool {
+        self.contains_folded_word(&word.chars().collect::<CharString>())
     }
 
-    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
-        let chars: CharString = word.chars().collect();
-        self.get_word_metadata(&chars)
+    fn get_word_metadata_folded_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
+        self.get_word_metadata_folded(&word.chars().collect::<CharString>())
     }
 
     fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&'_ [char]> {
@@ -147,6 +145,10 @@ impl Dictionary for MutableDictionary {
         self.word_map
             .get_canonical(CanonicalWordId::from_word_chars(word))
             .map(|entry| &entry.metadata)
+    }
+
+    fn get_word_metadata_exact_str(&self, word: &str) -> Option<&DictWordMetadata> {
+        self.get_word_metadata_exact(&word.chars().collect::<CharString>())
     }
 
     fn fuzzy_match(
@@ -302,8 +304,8 @@ mod tests {
     #[test]
     fn curated_matches_capitalized() {
         let dict = MutableDictionary::curated();
-        assert!(dict.contains_word_str("this"));
-        assert!(dict.contains_word_str("This"));
+        assert!(dict.contains_folded_word_str("this"));
+        assert!(dict.contains_folded_word_str("This"));
     }
 
     // "This" is a determiner when used similarly to "the"
@@ -312,15 +314,23 @@ mod tests {
     #[test]
     fn this_is_determiner() {
         let dict = MutableDictionary::curated();
-        assert!(dict.get_word_metadata_str("this").unwrap().is_determiner());
-        assert!(dict.get_word_metadata_str("This").unwrap().is_determiner());
+        assert!(
+            dict.get_word_metadata_folded_str("this")
+                .unwrap()
+                .is_determiner()
+        );
+        assert!(
+            dict.get_word_metadata_folded_str("This")
+                .unwrap()
+                .is_determiner()
+        );
     }
 
     #[test]
     fn several_is_quantifier() {
         let dict = MutableDictionary::curated();
         assert!(
-            dict.get_word_metadata_str("several")
+            dict.get_word_metadata_folded_str("several")
                 .unwrap()
                 .is_quantifier()
         );
@@ -329,39 +339,63 @@ mod tests {
     #[test]
     fn few_is_quantifier() {
         let dict = MutableDictionary::curated();
-        assert!(dict.get_word_metadata_str("few").unwrap().is_quantifier());
+        assert!(
+            dict.get_word_metadata_folded_str("few")
+                .unwrap()
+                .is_quantifier()
+        );
     }
 
     #[test]
     fn fewer_is_quantifier() {
         let dict = MutableDictionary::curated();
-        assert!(dict.get_word_metadata_str("fewer").unwrap().is_quantifier());
+        assert!(
+            dict.get_word_metadata_folded_str("fewer")
+                .unwrap()
+                .is_quantifier()
+        );
     }
 
     #[test]
     fn than_is_conjunction() {
         let dict = MutableDictionary::curated();
-        assert!(dict.get_word_metadata_str("than").unwrap().is_conjunction());
-        assert!(dict.get_word_metadata_str("Than").unwrap().is_conjunction());
+        assert!(
+            dict.get_word_metadata_folded_str("than")
+                .unwrap()
+                .is_conjunction()
+        );
+        assert!(
+            dict.get_word_metadata_folded_str("Than")
+                .unwrap()
+                .is_conjunction()
+        );
     }
 
     #[test]
     fn herself_is_pronoun() {
         let dict = MutableDictionary::curated();
-        assert!(dict.get_word_metadata_str("herself").unwrap().is_pronoun());
-        assert!(dict.get_word_metadata_str("Herself").unwrap().is_pronoun());
+        assert!(
+            dict.get_word_metadata_folded_str("herself")
+                .unwrap()
+                .is_pronoun()
+        );
+        assert!(
+            dict.get_word_metadata_folded_str("Herself")
+                .unwrap()
+                .is_pronoun()
+        );
     }
 
     #[test]
     fn discussion_171() {
         let dict = MutableDictionary::curated();
-        assert!(dict.contains_word_str("natively"));
+        assert!(dict.contains_folded_word_str("natively"));
     }
 
     #[test]
     fn im_is_common() {
         let dict = MutableDictionary::curated();
-        assert!(dict.get_word_metadata_str("I'm").unwrap().common);
+        assert!(dict.get_word_metadata_folded_str("I'm").unwrap().common);
     }
 
     #[test]
@@ -382,34 +416,44 @@ mod tests {
     fn there_is_not_a_pronoun() {
         let dict = MutableDictionary::curated();
 
-        assert!(!dict.get_word_metadata_str("there").unwrap().is_nominal());
-        assert!(!dict.get_word_metadata_str("there").unwrap().is_pronoun());
+        assert!(
+            !dict
+                .get_word_metadata_folded_str("there")
+                .unwrap()
+                .is_nominal()
+        );
+        assert!(
+            !dict
+                .get_word_metadata_folded_str("there")
+                .unwrap()
+                .is_pronoun()
+        );
     }
 
     #[test]
     fn expanded_contains_giants() {
-        assert!(MutableDictionary::curated().contains_word_str("giants"));
+        assert!(MutableDictionary::curated().contains_folded_word_str("giants"));
     }
 
     #[test]
     fn expanded_contains_deallocate() {
-        assert!(MutableDictionary::curated().contains_word_str("deallocate"));
+        assert!(MutableDictionary::curated().contains_folded_word_str("deallocate"));
     }
 
     #[test]
     fn curated_contains_repo() {
         let dict = MutableDictionary::curated();
 
-        assert!(dict.contains_word_str("repo"));
-        assert!(dict.contains_word_str("repos"));
-        assert!(dict.contains_word_str("repo's"));
+        assert!(dict.contains_folded_word_str("repo"));
+        assert!(dict.contains_folded_word_str("repos"));
+        assert!(dict.contains_folded_word_str("repo's"));
     }
 
     #[test]
     fn curated_contains_possessive_abandonment() {
         assert!(
             MutableDictionary::curated()
-                .get_word_metadata_str("abandonment's")
+                .get_word_metadata_folded_str("abandonment's")
                 .unwrap()
                 .is_possessive_noun()
         )
@@ -417,14 +461,14 @@ mod tests {
 
     #[test]
     fn contains_inexperienced() {
-        assert!(MutableDictionary::curated().contains_word_str("inexperienced"))
+        assert!(MutableDictionary::curated().contains_folded_word_str("inexperienced"))
     }
 
     #[test]
     fn has_is_not_a_nominal() {
         let dict = MutableDictionary::curated();
 
-        let has = dict.get_word_metadata_str("has");
+        let has = dict.get_word_metadata_folded_str("has");
         assert!(has.is_some());
 
         assert!(!has.unwrap().is_nominal())
@@ -434,7 +478,7 @@ mod tests {
     fn is_is_linking_verb() {
         let dict = MutableDictionary::curated();
 
-        let is = dict.get_word_metadata_str("is");
+        let is = dict.get_word_metadata_folded_str("is");
 
         assert!(is.is_some());
         assert!(is.unwrap().is_linking_verb());
@@ -458,14 +502,19 @@ mod tests {
     fn apart_is_not_noun() {
         let dict = MutableDictionary::curated();
 
-        assert!(!dict.get_word_metadata_str("apart").unwrap().is_noun());
+        assert!(
+            !dict
+                .get_word_metadata_folded_str("apart")
+                .unwrap()
+                .is_noun()
+        );
     }
 
     #[test]
     fn be_is_verb_lemma() {
         let dict = MutableDictionary::curated();
 
-        let is = dict.get_word_metadata_str("be");
+        let is = dict.get_word_metadata_folded_str("be");
 
         assert!(is.is_some());
         assert!(is.unwrap().is_verb_lemma());
@@ -475,8 +524,8 @@ mod tests {
     fn trilemma_in_curated_dictionary() {
         let dict = MutableDictionary::curated();
 
-        assert!(dict.contains_word_str("trilemma"));
-        assert!(dict.contains_word_str("trilemmas"));
+        assert!(dict.contains_folded_word_str("trilemma"));
+        assert!(dict.contains_folded_word_str("trilemmas"));
     }
 
     #[test]

@@ -35,12 +35,12 @@ impl<D: Dictionary> TrieDictionary<D> {
 }
 
 impl<D: Dictionary> Dictionary for TrieDictionary<D> {
-    fn contains_word(&self, word: &[char]) -> bool {
-        self.inner.contains_word(word)
+    fn contains_folded_word(&self, word: &[char]) -> bool {
+        self.inner.contains_folded_word(word)
     }
 
-    fn contains_word_str(&self, word: &str) -> bool {
-        self.inner.contains_word_str(word)
+    fn contains_folded_word_str(&self, word: &str) -> bool {
+        self.inner.contains_folded_word_str(word)
     }
 
     fn contains_exact_word(&self, word: &[char]) -> bool {
@@ -73,12 +73,27 @@ impl<D: Dictionary> Dictionary for TrieDictionary<D> {
         self.inner.get_correct_capitalization_of(word)
     }
 
-    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
-        self.inner.get_word_metadata(word)
+    fn get_correct_capitalizations_of(
+        &self,
+        word: &[char],
+    ) -> Box<dyn Iterator<Item = &[char]> + Send + '_> {
+        self.inner.get_correct_capitalizations_of(word)
     }
 
-    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
-        self.inner.get_word_metadata_str(word)
+    fn get_word_metadata_folded(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
+        self.inner.get_word_metadata_folded(word)
+    }
+
+    fn get_word_metadata_folded_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
+        self.inner.get_word_metadata_folded_str(word)
+    }
+
+    fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata> {
+        self.inner.get_word_metadata_exact(word)
+    }
+
+    fn get_word_metadata_exact_str(&self, word: &str) -> Option<&DictWordMetadata> {
+        self.inner.get_word_metadata_exact_str(word)
     }
 
     fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
@@ -91,17 +106,6 @@ impl<D: Dictionary> Dictionary for TrieDictionary<D> {
 
     fn get_word_from_id(&self, id: &CanonicalWordId) -> Option<&[char]> {
         self.inner.get_word_from_id(id)
-    }
-
-    fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata> {
-        self.inner.get_word_metadata_exact(word)
-    }
-
-    fn get_correct_capitalizations_of(
-        &self,
-        word: &[char],
-    ) -> Box<dyn Iterator<Item = &[char]> + Send + '_> {
-        self.inner.get_correct_capitalizations_of(word)
     }
 
     fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {

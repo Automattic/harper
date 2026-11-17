@@ -123,31 +123,20 @@ fn merge_best_distances(
 }
 
 impl Dictionary for FstDictionary {
-    fn contains_word(&self, word: &[char]) -> bool {
-        self.mutable_dict.contains_word(word)
+    fn contains_folded_word(&self, word: &[char]) -> bool {
+        self.mutable_dict.contains_folded_word(word)
     }
 
-    fn contains_word_str(&self, word: &str) -> bool {
-        self.mutable_dict.contains_word_str(word)
+    fn contains_folded_word_str(&self, word: &str) -> bool {
+        self.mutable_dict.contains_folded_word_str(word)
     }
 
-    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
-        self.mutable_dict.get_word_metadata(word)
+    fn contains_exact_word(&self, word: &[char]) -> bool {
+        self.mutable_dict.contains_exact_word(word)
     }
 
-    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
-        self.mutable_dict.get_word_metadata_str(word)
-    }
-
-    fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata> {
-        self.mutable_dict.get_word_metadata_exact(word)
-    }
-
-    fn get_correct_capitalizations_of(
-        &self,
-        word: &[char],
-    ) -> Box<dyn Iterator<Item = &[char]> + Send + '_> {
-        self.mutable_dict.get_correct_capitalizations_of(word)
+    fn contains_exact_word_str(&self, word: &str) -> bool {
+        self.mutable_dict.contains_exact_word_str(word)
     }
 
     fn fuzzy_match(
@@ -221,24 +210,39 @@ impl Dictionary for FstDictionary {
         )
     }
 
+    fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&'_ [char]> {
+        self.mutable_dict.get_correct_capitalization_of(word)
+    }
+
+    fn get_correct_capitalizations_of(
+        &self,
+        word: &[char],
+    ) -> Box<dyn Iterator<Item = &[char]> + Send + '_> {
+        self.mutable_dict.get_correct_capitalizations_of(word)
+    }
+
+    fn get_word_metadata_folded(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
+        self.mutable_dict.get_word_metadata_folded(word)
+    }
+
+    fn get_word_metadata_folded_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
+        self.mutable_dict.get_word_metadata_folded_str(word)
+    }
+
+    fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata> {
+        self.mutable_dict.get_word_metadata_exact(word)
+    }
+
+    fn get_word_metadata_exact_str(&self, word: &str) -> Option<&DictWordMetadata> {
+        self.mutable_dict.get_word_metadata_exact_str(word)
+    }
+
     fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
         self.mutable_dict.words_iter()
     }
 
     fn word_count(&self) -> usize {
         self.mutable_dict.word_count()
-    }
-
-    fn contains_exact_word(&self, word: &[char]) -> bool {
-        self.mutable_dict.contains_exact_word(word)
-    }
-
-    fn contains_exact_word_str(&self, word: &str) -> bool {
-        self.mutable_dict.contains_exact_word_str(word)
-    }
-
-    fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&'_ [char]> {
-        self.mutable_dict.get_correct_capitalization_of(word)
     }
 
     fn get_word_from_id(&self, id: &CanonicalWordId) -> Option<&[char]> {
@@ -337,7 +341,7 @@ mod tests {
         let misspelled_word = misspelled_normalized.to_string();
         let misspelled_lower = misspelled_normalized.to_lower().to_string();
 
-        assert!(dict.contains_word(&misspelled_normalized));
+        assert!(dict.contains_folded_word(&misspelled_normalized));
         assert!(
             dict.word_map.contains_key(misspelled_lower)
                 || dict.word_map.contains_key(misspelled_word)
@@ -348,19 +352,28 @@ mod tests {
     fn on_is_not_nominal() {
         let dict = FstDictionary::curated();
 
-        assert!(!dict.get_word_metadata_str("on").unwrap().is_nominal());
+        assert!(
+            !dict
+                .get_word_metadata_folded_str("on")
+                .unwrap()
+                .is_nominal()
+        );
     }
 
     #[test]
     fn dickens_is_not_a_swear_1656() {
         let dict = FstDictionary::curated();
-        let metadata = dict.get_word_metadata_str("Dickens").unwrap();
+        let metadata = dict.get_word_metadata_folded_str("Dickens").unwrap();
 
         assert!(metadata.is_proper_noun());
         assert!(!metadata.is_swear());
         assert!(metadata.derived_from.is_none());
         assert!(dict.contains_exact_word_str("dickens"));
-        assert!(dict.get_word_metadata_str("dick").unwrap().is_swear());
+        assert!(
+            dict.get_word_metadata_folded_str("dick")
+                .unwrap()
+                .is_swear()
+        );
     }
 
     #[test]
@@ -386,7 +399,7 @@ mod tests {
         for contraction in contractions {
             dbg!(contraction);
             assert!(
-                dict.get_word_metadata_str(contraction)
+                dict.get_word_metadata_folded_str(contraction)
                     .unwrap()
                     .derived_from
                     .is_none()
@@ -399,7 +412,7 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert!(
-            dict.get_word_metadata_str("llamas")
+            dict.get_word_metadata_folded_str("llamas")
                 .unwrap()
                 .derived_from
                 .contains(CanonicalWordId::from_word_str("llama"))
@@ -411,7 +424,7 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert!(
-            dict.get_word_metadata_str("cats")
+            dict.get_word_metadata_folded_str("cats")
                 .unwrap()
                 .derived_from
                 .contains(CanonicalWordId::from_word_str("cat"))
@@ -423,7 +436,7 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert!(
-            dict.get_word_metadata_str("unhappy")
+            dict.get_word_metadata_folded_str("unhappy")
                 .unwrap()
                 .derived_from
                 .contains(CanonicalWordId::from_word_str("happy"))
@@ -435,7 +448,7 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert!(
-            dict.get_word_metadata_str("quickly")
+            dict.get_word_metadata_folded_str("quickly")
                 .unwrap()
                 .derived_from
                 .contains(CanonicalWordId::from_word_str("quick"))

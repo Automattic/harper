@@ -91,7 +91,7 @@ impl<D: Dictionary> ExprLinter for WillNonLemma<D> {
             && let Some(lemma) = IrregularVerbs::curated().get_lemma_for_preterite(&verb_str)
             && self
                 .dict
-                .get_word_metadata_str(lemma)
+                .get_word_metadata_folded_str(lemma)
                 .is_some_and(|m| m.is_verb_lemma())
         {
             suggestions.push(suggest(&format!("will {}", lemma)));
@@ -101,7 +101,7 @@ impl<D: Dictionary> ExprLinter for WillNonLemma<D> {
             let candidate = &verb_str[..verb_str.len() - 1];
             if self
                 .dict
-                .get_word_metadata_str(candidate)
+                .get_word_metadata_folded_str(candidate)
                 .is_some_and(|m| m.is_verb_lemma())
             {
                 suggestions.push(suggest(&format!("will {}", candidate)));
@@ -118,7 +118,7 @@ impl<D: Dictionary> ExprLinter for WillNonLemma<D> {
                 // Check regular form (e.g., 'walking' -> 'walk')
                 if self
                     .dict
-                    .get_word_metadata_str(stem)
+                    .get_word_metadata_folded_str(stem)
                     .is_some_and(|m| m.is_verb_lemma())
                 {
                     suggestions.push(Suggestion::replace_with_match_case(
@@ -131,7 +131,7 @@ impl<D: Dictionary> ExprLinter for WillNonLemma<D> {
                 let stem_with_e = format!("{}e", stem);
                 if self
                     .dict
-                    .get_word_metadata_str(&stem_with_e)
+                    .get_word_metadata_folded_str(&stem_with_e)
                     .is_some_and(|m| m.is_verb_lemma())
                 {
                     suggestions.push(Suggestion::replace_with_match_case(

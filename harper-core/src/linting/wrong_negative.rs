@@ -56,7 +56,7 @@ impl<D: Dictionary + 'static> ExprLinter for WrongNegative<D> {
                         let new_neg: Vec<char> =
                             new_prefix.chars().chain(rest.iter().copied()).collect();
 
-                        self.dict.contains_word(&new_neg).then_some(new_neg)
+                        self.dict.contains_folded_word(&new_neg).then_some(new_neg)
                     })
             })
             .collect();

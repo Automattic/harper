@@ -40,7 +40,7 @@ impl MergeableWords {
         compound.push(' ');
         compound.extend_from_slice(word_b.get_ch(source));
 
-        self.dict.get_word_metadata(&compound).is_some()
+        self.dict.get_word_metadata_folded(&compound).is_some()
     }
 
     /// Get the merged word from the dictionary if these words can be merged.
@@ -58,11 +58,11 @@ impl MergeableWords {
         let mut compound = a_chars.clone();
         compound.push(' ');
         compound.extend_from_slice(&b_chars);
-        let meta_open = self.dict.get_word_metadata(&compound);
+        let meta_open = self.dict.get_word_metadata_folded(&compound);
 
         // Then check if the closed compound exists in the dictionary
         compound.remove(a_chars.len());
-        let meta_closed = self.dict.get_word_metadata(&compound);
+        let meta_closed = self.dict.get_word_metadata_folded(&compound);
 
         if (self.predicate)(meta_closed.as_deref(), meta_open.as_deref()) {
             return Some(compound);

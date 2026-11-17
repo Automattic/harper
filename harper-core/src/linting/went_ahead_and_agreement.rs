@@ -80,7 +80,7 @@ impl<D: Dictionary> ExprLinter for WentAheadAndAgreement<D> {
         };
 
         for candidate in candidates {
-            if let Some(md) = self.dict.get_word_metadata(&candidate)
+            if let Some(md) = self.dict.get_word_metadata_folded(&candidate)
                 && is_valid_tense(&md)
             {
                 past_verbs.push(candidate);

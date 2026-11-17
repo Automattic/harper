@@ -76,12 +76,16 @@ impl<D: Dictionary + 'static> ExprLinter for TransposedSpace<D> {
         let mut values = Vec::new();
 
         // "thec" "at" -> "the cat"
-        if self.dict.contains_word(w1_start) && self.dict.contains_word(&w1_last_plus_w2) {
+        if self.dict.contains_folded_word(w1_start)
+            && self.dict.contains_folded_word(&w1_last_plus_w2)
+        {
             keep_unique(&mut values, w1_start, &w1_last_plus_w2);
         }
 
         // "th" "ecat" -> "the cat"
-        if self.dict.contains_word(&w1_plus_w2_first) && self.dict.contains_word(w2_end) {
+        if self.dict.contains_folded_word(&w1_plus_w2_first)
+            && self.dict.contains_folded_word(w2_end)
+        {
             keep_unique(&mut values, &w1_plus_w2_first, w2_end);
         }
 
