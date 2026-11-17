@@ -98,17 +98,17 @@ impl ExprLinter for NounVerbSpelling {
         ctx: Option<(&[Token], &[Token])>,
     ) -> Option<Lint> {
         let tok = toks.first()?;
-        let text = tok.get_str(src).to_lowercase();
+        let word = tok.get_ch(src);
         let (before, after) = ctx.unwrap_or_default();
 
-        let is_any = |word: Option<&Token>, list: &[&str]| {
-            word.is_some_and(|word| word.get_ch(src).eq_any_ignore_ascii_case_str(list))
+        let is_any = |tok: Option<&Token>, list: &[&str]| {
+            tok.is_some_and(|tok| tok.get_ch(src).eq_any_ignore_ascii_case_str(list))
         };
         let prev = nearest_word(before.iter().rev());
         let next = nearest_word(after.iter());
 
         let (replacement, part) =
-            if let Some(&(noun, _)) = self.pairs.iter().find(|(_, verb)| *verb == text) {
+            if let Some(&(noun, _)) = self.pairs.iter().find(|(_, verb)| word.eq_str(verb)) {
                 // The tagger can read a verb after a noun subject as part of a compound noun,
                 // as in "The firm licenses its patents", so an object after it means a verb.
                 let used_as_noun = is_any(prev, BEFORE_NOUN)
@@ -118,7 +118,7 @@ impl ExprLinter for NounVerbSpelling {
                         && !is_any(next, OBJECT_START));
                 (used_as_noun.then_some(noun)?, "noun")
             } else {
-                let &(_, verb) = self.pairs.iter().find(|(noun, _)| *noun == text)?;
+                let &(_, verb) = self.pairs.iter().find(|(noun, _)| word.eq_str(noun))?;
                 let used_as_verb = is_any(prev, BEFORE_VERB)
                     || (is_any(prev, &["to"]) && is_any(next, OBJECT_START))
                     // After `to`, only the object test above can tell an infinitive from
@@ -132,10 +132,7 @@ impl ExprLinter for NounVerbSpelling {
         Some(Lint {
             span: tok.span,
             lint_kind: LintKind::Spelling,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                replacement,
-                tok.get_ch(src),
-            )],
+            suggestions: vec![Suggestion::replace_with_match_case_str(replacement, word)],
             message: format!(
                 "In {} English, the {part} is spelled `{replacement}`.",
                 self.dialect
