@@ -46,7 +46,7 @@ impl ExprLinter for ToteTout {
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let span = find_the_only_token_matching(toks, src, |t, _| {
             let ch = t.get_ch(src);
-            ch.eq_any_ignore_ascii_case_str(TOTE) || ch.eq_any_ignore_ascii_case_str(TOUT)
+            ch.eq_any_ignore_ascii_case_str(TOTE.iter().chain(TOUT.iter()))
         })?
         .span;
         let ch = span.get_content(src);
