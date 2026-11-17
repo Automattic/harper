@@ -48,6 +48,17 @@ impl Default for ThingThink {
             "shouldn't",
             "will",
             "won't",
+            "would",
+            "wouldn't",
+        ]);
+
+        let auxiliary = WordSet::new([
+            "do",
+            "don't",
+            "does",
+            "doesn't",
+            "did",
+            "didn't",
         ]);
 
         let adverb_of_frequency =
@@ -57,6 +68,7 @@ impl Default for ThingThink {
             Box::new(pronoun) as Box<dyn Expr>,
             Box::new(verb_to),
             Box::new(modal),
+            Box::new(auxiliary),
             Box::new(adverb_of_frequency),
         ]);
 
@@ -394,6 +406,64 @@ mod tests {
             "And the order of that relationship might be reversed from what one might usually thing.",
             test_linter(),
             "And the order of that relationship might be reversed from what one might usually think.",
+        );
+    }
+
+    // Modal verbs: would / wouldn't
+
+    #[test]
+    fn fix_would_thing() {
+        assert_suggestion_result(
+            "I would thing that this is the cleanest solution.",
+            test_linter(),
+            "I would think that this is the cleanest solution.",
+        );
+    }
+
+    #[test]
+    fn fix_wouldnt_thing() {
+        assert_suggestion_result(
+            "One wouldn't thing so at first glance.",
+            test_linter(),
+            "One wouldn't think so at first glance.",
+        );
+    }
+
+    // Auxiliary verbs: do / don't / does / doesn't / did / didn't
+
+    #[test]
+    fn fix_do_thing() {
+        assert_suggestion_result(
+            "While I do thing it's cool that you didn't go with an LFSR, I don't really understand how it works.",
+            test_linter(),
+            "While I do think it's cool that you didn't go with an LFSR, I don't really understand how it works.",
+        );
+    }
+
+    #[test]
+    fn fix_dont_thing() {
+        assert_suggestion_result(
+            "I don't thing this will work as expected.",
+            test_linter(),
+            "I don't think this will work as expected.",
+        );
+    }
+
+    #[test]
+    fn fix_doesnt_thing() {
+        assert_suggestion_result(
+            "He doesn't thing it makes sense in this context.",
+            test_linter(),
+            "He doesn't think it makes sense in this context.",
+        );
+    }
+
+    #[test]
+    fn fix_didnt_thing() {
+        assert_suggestion_result(
+            "We didn't thing of that edge case initially.",
+            test_linter(),
+            "We didn't think of that edge case initially.",
         );
     }
 }
