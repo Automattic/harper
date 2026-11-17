@@ -1342,6 +1342,15 @@ pub mod tests {
         use crate::dict_word_metadata::tests::md;
 
         #[test]
+        fn ing_noun_plurals_are_not_verbs() {
+            for word in ["bearings", "findings", "hearings", "openings", "rulings"] {
+                let md = md(word);
+                assert!(md.is_plural_noun_only(), "{word}");
+                assert!(!md.is_verb(), "{word}");
+            }
+        }
+
+        #[test]
         fn puppy_is_noun() {
             assert!(md("puppy").is_noun());
         }

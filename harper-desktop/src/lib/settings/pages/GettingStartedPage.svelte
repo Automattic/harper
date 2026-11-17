@@ -1,14 +1,20 @@
 <script lang="ts">
 import { isTauri } from '@tauri-apps/api/core';
+import { openUrl } from '@tauri-apps/plugin-opener';
 import { platform } from '@tauri-apps/plugin-os';
-import { Button, SlideDeck } from 'components';
+import { Button, CheckIcon, FloatingLettersSlideDeck } from 'components';
 import { onMount } from 'svelte';
-import { type AccessibilityPermissionStatus, Client, type Integration } from '$lib/client';
+import {
+	type AccessibilityPermissionStatus,
+	Client,
+	type Integration,
+	type OnboardingState,
+} from '$lib/client';
 import AppIcon from '../components/AppIcon.svelte';
 
 /** Slide identities determine setup gates; only the welcome and test drive need no action. */
 type OnboardingSlide = {
-	id: 'welcome' | 'accessibility' | 'integration' | 'test-drive' | 'ready';
+	id: Exclude<OnboardingState, 'complete'>;
 	title: string;
 	lede: string;
 };
@@ -17,38 +23,38 @@ const allSlides: OnboardingSlide[] = [
 	{
 		id: 'welcome',
 		title: 'Welcome',
-		lede: "Before you can start writing with Harper, we need to do a little housekeeping.\n\nDon't worry, this should only take a minute.",
+		lede: 'Before you can start writing with Harper, we need to do a little housekeeping.\n\nDon’t worry, this should only take a minute.',
 	},
 	{
 		id: 'accessibility',
-		title: 'Accessibility',
-		lede: 'To be able to read and write text to your favorite text editors, you need to grant Harper the permission to do so.\n\nNone of your text will leave your device.',
+		title: 'Give Harper Permission',
+		lede: 'Harper needs permission to check and correct your writing. Your text stays on your device.',
 	},
 	{
 		id: 'integration',
 		title: 'Enable TextEdit',
-		lede: 'The Harper community is constantly adding support for new text editors. If we haven\'t marked a text editor as "supported" already, you can override this option yourself.\n\nLet\'s try that now. Go ahead and enable "TextEdit". Once you do, Harper will start checking your grammar in that app.',
+		lede: 'The Harper community is constantly adding support for new text editors. If we haven’t marked a text editor as “supported” already, you can override this option yourself.\n\nLet’s try that now. Go ahead and enable “TextEdit”. Once you do, Harper will start checking your grammar in that app.',
 	},
 	{
 		id: 'test-drive',
 		title: 'Try Harper',
-		lede: 'Now that you\'ve enabled TextEdit, go ahead and open it. Write something like, "This is an test."\n\nYou should see Harper jump in to fix that mistake.',
+		lede: 'Now that you’ve enabled TextEdit, go ahead and open it. Write something like, “This is an test.”\n\nYou should see Harper jump in to fix that mistake.',
 	},
 	{
 		id: 'ready',
 		title: 'Ready',
-		lede: "Okay! Now we're ready to go.\n\nDon't let your dreams be dreams. Write anything, anywhere and Harper will be there to catch your mistakes.",
+		lede: 'Okay! Now we’re ready to go.\n\nDon’t let your dreams be dreams. Write anything, anywhere and Harper will be there to catch your mistakes.',
 	},
 ];
 
+export let initialState: Exclude<OnboardingState, 'complete'>;
 export let onComplete: () => void;
 
 let step = 0;
 let isMacOS = false;
 let accessibilityStatus: AccessibilityPermissionStatus | null = null;
 let setupError = '';
-let isPreparingService = true;
-let hasRequestedAccessibility = false;
+let isPreparingService = false;
 let integrations: Integration[] = [];
 let integrationsError = '';
 let isLoadingIntegrations = true;
@@ -57,6 +63,9 @@ let isLaunchingTextEdit = false;
 let testDriveError = '';
 let isCompletingOnboarding = false;
 let onboardingError = '';
+let isRestarting = false;
+let restartError = '';
+let isSavingStep = false;
 
 $: slides = allSlides.filter((slide) => slide.id !== 'accessibility' || isMacOS);
 $: textEditIntegration = integrations.find((item) => item.bundle_id === 'com.apple.TextEdit');
@@ -65,13 +74,23 @@ $: accessibilityReady =
 	(!isMacOS || accessibilityStatus === 'Granted') && !isPreparingService && !setupError;
 $: integrationReady =
 	isTextEditEnabled && !isLoadingIntegrations && !isEnablingTextEdit && !integrationsError;
-$: nextDisabled = !canAdvance(slides[step].id, accessibilityReady, integrationReady, isMacOS);
+$: nextDisabled =
+	isRestarting ||
+	isSavingStep ||
+	isCompletingOnboarding ||
+	!canAdvance(slides[step].id, accessibilityReady, integrationReady, isMacOS);
 
 onMount(() => {
 	// Use the native platform in Tauri; user-agent detection is only for browser previews.
 	isMacOS = isTauri() ? platform() === 'macos' : navigator.userAgent.includes('Macintosh');
+	const availableSlides = allSlides.filter((slide) => slide.id !== 'accessibility' || isMacOS);
+	// Accessibility is skipped when a config is resumed on a non-macOS platform.
+	const restoredState = initialState === 'accessibility' && !isMacOS ? 'integration' : initialState;
+	step = availableSlides.findIndex((slide) => slide.id === restoredState);
 	void prepareService();
 	void loadIntegrations();
+	const permissionTimer = isMacOS ? setInterval(() => void prepareService(), 2000) : undefined;
+	return () => clearInterval(permissionTimer);
 });
 
 /** Gate service startup on Welcome outside macOS, or on Accessibility on macOS; the trial is optional. */
@@ -132,14 +151,40 @@ async function launchTextEditForTestDrive() {
 	}
 }
 
-/** Persist completion only after mandatory setup; leave the deck only when the save succeeds. */
+/** Persist navigation before showing the next page so a relaunch restores it. */
+async function changeStep(direction: -1 | 1) {
+	if (isSavingStep || isCompletingOnboarding || isRestarting) return;
+	if (direction === 1 && nextDisabled) return;
+	const nextStep = step + direction;
+	const nextSlide = slides[nextStep];
+	if (!nextSlide) return;
+	isSavingStep = true;
+	onboardingError = '';
+	try {
+		await Client.setOnboardingState(nextSlide.id);
+		step = nextStep;
+	} catch (error) {
+		onboardingError = `Unable to save onboarding progress: ${error}. Please try again.`;
+	} finally {
+		isSavingStep = false;
+	}
+}
+
+/** Leave the deck only after completion has been saved successfully. */
 async function completeOnboarding() {
-	if (!accessibilityReady || !integrationReady || isCompletingOnboarding) return;
+	if (
+		!accessibilityReady ||
+		!integrationReady ||
+		isCompletingOnboarding ||
+		isSavingStep ||
+		isRestarting
+	)
+		return;
 	isCompletingOnboarding = true;
 	onboardingError = '';
 
 	try {
-		await Client.setOnboardingCompleted(true);
+		await Client.setOnboardingState('complete');
 		onComplete();
 	} catch (error) {
 		onboardingError = `Unable to complete onboarding: ${error}`;
@@ -148,23 +193,44 @@ async function completeOnboarding() {
 	}
 }
 
-/** Start Harper on every platform, checking or requesting Accessibility permission only on macOS. */
-async function prepareService(request = false) {
+/** Save the current page before restarting the parent; never restart from a permission check. */
+async function restartHarper() {
+	if (isRestarting || isSavingStep || isCompletingOnboarding) return;
+	isRestarting = true;
+	restartError = '';
+	try {
+		await Client.setOnboardingState(slides[step].id);
+		await Client.restartHarper();
+	} catch (error) {
+		restartError = `Unable to restart Harper: ${error}. If needed, quit Harper and open the installed application again.`;
+		isRestarting = false;
+	}
+}
+
+async function openAccessibilitySettings() {
+	try {
+		await openUrl(
+			'x-apple.systempreferences:com.apple.settings.PrivacySecurity.extension?Privacy_Accessibility',
+		);
+	} catch (error) {
+		setupError = `Unable to open System Settings: ${error}`;
+	}
+}
+
+/** Check permission without overlapping requests; start Harper when access becomes available. */
+async function prepareService() {
+	if (isPreparingService || isRestarting) return;
+	const shouldStartService = accessibilityStatus !== 'Granted' || !!setupError;
 	isPreparingService = true;
 	setupError = '';
-	accessibilityStatus = null;
 
 	try {
 		if (isMacOS) {
-			if (request) {
-				accessibilityStatus = await Client.requestAccessibilityPermission();
-				hasRequestedAccessibility = true;
-			} else {
-				accessibilityStatus = await Client.getAccessibilityPermissionStatus();
-			}
+			accessibilityStatus = await Client.getAccessibilityPermissionStatus();
 		}
 
 		if (
+			shouldStartService &&
 			(!isMacOS || accessibilityStatus === 'Granted') &&
 			!(await Client.startHighlighterService())
 		) {
@@ -179,15 +245,13 @@ async function prepareService(request = false) {
 </script>
 
 <div class="onboarding-shell">
-  <SlideDeck
+  <FloatingLettersSlideDeck
     title={slides[step].title}
     lede={slides[step].lede}
     slideProgress={step / (slides.length - 1)}
     {nextDisabled}
-    onBack={() => {
-      if (!isCompletingOnboarding) step--;
-    }}
-    onNext={() => step++}
+    onBack={() => void changeStep(-1)}
+    onNext={() => void changeStep(1)}
   >
     {#if slides[step].id === 'welcome' && !isMacOS}
       {#if isPreparingService}
@@ -202,36 +266,39 @@ async function prepareService(request = false) {
       {/if}
     {:else if slides[step].id === 'accessibility'}
       <div class="onboarding-actions">
-        <p role="status">
-          {#if isPreparingService}
-            Checking Accessibility access...
-          {:else if accessibilityReady}
-            Accessibility access granted. Harper is ready to check your writing.
+        <ol class="permission-steps">
+          <li>Open System Settings (or use the button below).</li>
+          <li>Go to <strong>Privacy &amp; Security → Device Control and Data Access</strong> and enable Harper.</li>
+          <li>Come back here to continue.</li>
+        </ol>
+        <Button color="white" on:click={openAccessibilitySettings}>Open System Settings</Button>
+        <span role="status" class="inline-flex items-center justify-center gap-1.5">
+          {#if accessibilityStatus === 'Granted'}
+            <CheckIcon className="size-5 shrink-0 text-green-700 dark:text-green-400" />
+            Permission granted
+          {:else if accessibilityStatus === 'NotGranted'}
+            Waiting for permission…
           {:else if accessibilityStatus === 'Unsupported'}
-            Accessibility setup is unavailable on this platform. Setup cannot continue here.
-          {:else if hasRequestedAccessibility && accessibilityStatus === 'NotGranted'}
-            Enable Harper in System Settings → Privacy &amp; Security → Accessibility, then recheck permission.
+            Permission check unavailable
+          {:else}
+            Checking permission…
           {/if}
-        </p>
+        </span>
+        <details class="permission-help">
+          <summary>Having trouble?</summary>
+          <p>If you’ve already granted permission and Harper isn’t detecting it, try restarting Harper. If that doesn’t help, remove Harper from the permission list and add it again.</p>
+          {#if accessibilityStatus === 'NotGranted'}
+            <button type="button" class="restart-link" disabled={isRestarting} on:click={restartHarper}>
+              {isRestarting ? 'Restarting Harper…' : 'Restart Harper'}
+            </button>
+          {/if}
+        </details>
+        {#if restartError}
+          <p role="alert">{restartError}</p>
+        {/if}
         {#if setupError}
           <p role="alert">{setupError}</p>
         {/if}
-        <Button
-          disabled={isPreparingService || accessibilityReady || accessibilityStatus === 'Unsupported'}
-          on:click={() => prepareService(!hasRequestedAccessibility && accessibilityStatus !== 'Granted')}
-        >
-          {#if isPreparingService}
-            Checking...
-          {:else if accessibilityReady}
-            Granted
-          {:else if accessibilityStatus === 'Unsupported'}
-            Unavailable
-          {:else if hasRequestedAccessibility || accessibilityStatus === 'Granted'}
-            Recheck Permission
-          {:else}
-            Open System Settings
-          {/if}
-        </Button>
       </div>
     {:else if slides[step].id === 'integration'}
       <div class="onboarding-actions">
@@ -272,13 +339,62 @@ async function prepareService(request = false) {
       </div>
     {:else if slides[step].id === 'ready'}
       <div class="onboarding-actions">
-        {#if onboardingError}
-          <p role="alert">{onboardingError}</p>
-        {/if}
         <Button disabled={isCompletingOnboarding || !accessibilityReady || !integrationReady} on:click={completeOnboarding}>
-          {isCompletingOnboarding ? 'Finishing...' : 'Finish'}
+          {isCompletingOnboarding ? 'Finishing...' : 'Let’s go'}
         </Button>
       </div>
     {/if}
-  </SlideDeck>
+    {#if onboardingError}
+      <p role="alert">{onboardingError}</p>
+    {/if}
+  </FloatingLettersSlideDeck>
 </div>
+
+<style>
+.permission-steps {
+  max-width: 30rem;
+  margin: 0;
+  padding-left: 1.5rem;
+  list-style: decimal;
+  text-align: left;
+  line-height: 1.5;
+}
+
+.permission-steps li + li {
+  margin-top: 0.5rem;
+}
+
+.permission-help {
+  width: 100%;
+  max-width: 30rem;
+}
+
+.permission-help summary {
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.permission-help summary:focus-visible {
+  outline: 2px solid var(--settings-accent, #2a6bd8);
+  outline-offset: 3px;
+}
+
+.permission-help p {
+  margin: 0.75rem 0;
+}
+
+.restart-link {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--settings-accent);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.restart-link:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+</style>
