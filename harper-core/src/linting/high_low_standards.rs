@@ -25,7 +25,7 @@ impl Default for HighLowStandards {
                     Box::new(SequenceExpr::whitespace().then(|t: &Token, s: &[char]| {
                         (t.kind.is_preposition() && !t.get_ch(s).eq_str("of"))
                             || t.get_ch(s)
-                                .eq_any_ignore_ascii_case_str(&["and", "even", "when"])
+                                .eq_any_ignore_ascii_case_str(["and", "even", "when"])
                     })),
                 ]),
         }

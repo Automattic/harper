@@ -14,7 +14,7 @@ fn looks_negative_but_oov(token: &Token, source: &[char]) -> bool {
             .starts_with_any_ignore_ascii_case_str(NEGATIVE_PREFIXES)
         && !token
             .get_ch(source)
-            .eq_any_ignore_ascii_case_str(&["defo", "deus"])
+            .eq_any_ignore_ascii_case_str(["defo", "deus"])
 }
 
 pub struct WrongNegative<D: Dictionary + 'static> {

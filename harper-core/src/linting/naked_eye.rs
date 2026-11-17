@@ -65,7 +65,7 @@ impl ExprLinter for NakedEye {
         match (
             verb.is_some(),
             prepch.eq_ch(&['f', 'r', 'o', 'm']),
-            prepch.eq_any_ignore_ascii_case_str(&["to", "with", "by"]),
+            prepch.eq_any_ignore_ascii_case_str(["to", "with", "by"]),
         ) {
             (_, _, true) => return None,    // known good preposition
             (true, true, _) => return None, // hide from

@@ -49,7 +49,7 @@ impl ExprLinter for SummarySummery {
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let span = find_the_only_token_matching(toks, src, |t, s| {
             t.get_ch(s)
-                .eq_any_ignore_ascii_case_str(&["summary", "summery"])
+                .eq_any_ignore_ascii_case_str(["summary", "summery"])
         })?
         .span;
 

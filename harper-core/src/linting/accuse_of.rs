@@ -38,7 +38,7 @@ impl ExprLinter for AccuseOf {
             && ws2.kind.is_whitespace()
             && (nth.kind.is_ordinal_number()
                 || nth.kind.is_word()
-                    && nth.get_ch(src).eq_any_ignore_ascii_case_str(&[
+                    && nth.get_ch(src).eq_any_ignore_ascii_case_str([
                         "first", "second", "third", "fourth", "fifth", "sixth", "seventh",
                         "eighth", "ninth", "tenth",
                     ]))

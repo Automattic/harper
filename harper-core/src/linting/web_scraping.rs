@@ -63,7 +63,7 @@ impl Default for WebScraping {
         let scrap_the_web = SequenceExpr::word_set(scrap_verbs)
             .t_ws()
             .then_zero_or_more(
-                SequenceExpr::with(|t: &Token, s: &[char]| {
+                SequenceExpr::with(move |t: &Token, s: &[char]| {
                     t.kind.is_word() && !t.get_ch(s).eq_any_ignore_ascii_case_str(scrapables)
                 })
                 .t_ws(),

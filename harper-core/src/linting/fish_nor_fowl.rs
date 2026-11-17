@@ -28,7 +28,7 @@ impl ExprLinter for FishNorFowl {
 
         let (lint_kind, message) = if last_token
             .get_ch(src)
-            .starts_with_any_ignore_ascii_case_str(&["f"])
+            .starts_with_any_ignore_ascii_case_str(["f"])
         {
             (
                 LintKind::Spelling,

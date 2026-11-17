@@ -34,7 +34,7 @@ impl ExprLinter for ExceptOf {
 
         let (span, replacement, msg) = if preceded_by_word(ctx, |t| {
             t.get_ch(src)
-                .eq_any_ignore_ascii_case_str(&["the", "notable", "possible"])
+                .eq_any_ignore_ascii_case_str(["the", "notable", "possible"])
         }) {
             (
                 toks[0].span,

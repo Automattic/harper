@@ -94,7 +94,7 @@ impl ExprLinter for ChickenAndEgg {
             && toks[0].get_ch(src).eq_str("chicken")
             && toks[2]
                 .get_ch(src)
-                .eq_any_ignore_ascii_case_str(&["and", "&"])
+                .eq_any_ignore_ascii_case_str(["and", "&"])
             && toks[4].get_ch(src).eq_str("egg")
         {
             return None;

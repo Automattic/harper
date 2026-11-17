@@ -47,7 +47,7 @@ impl ExprLinter for OverPlus {
         if followed_by_hyphen(ctx)
             || followed_by_word(ctx, |t| {
                 t.get_ch(src)
-                    .eq_any_ignore_ascii_case_str(&["innings", "size"])
+                    .eq_any_ignore_ascii_case_str(["innings", "size"])
             })
         {
             return None;

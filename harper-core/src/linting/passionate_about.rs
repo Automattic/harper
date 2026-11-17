@@ -83,7 +83,7 @@ impl ExprLinter for PassionateAbout {
                 if toks.first()?.get_ch(src).eq_str("of")
                     && toks.last()?.get_ch(src).eq_str("about")
                     && preceded_by_word(ctx, |t| {
-                        t.get_ch(src).eq_any_ignore_ascii_case_str(&["all", "both"])
+                        t.get_ch(src).eq_any_ignore_ascii_case_str(["all", "both"])
                     })
                 {
                     return None;

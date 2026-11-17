@@ -106,7 +106,7 @@ mod tests {
 
     #[test]
     fn fruit() {
-        let set = WordSet::new(&["banana", "apple", "orange"]);
+        let set = WordSet::new(["banana", "apple", "orange"]);
 
         let doc = Document::new_markdown_default_curated("I ate a banana and an apple today.");
 
@@ -117,7 +117,7 @@ mod tests {
 
     #[test]
     fn fruit_whack_capitalization() {
-        let set = WordSet::new(&["banana", "apple", "orange"]);
+        let set = WordSet::new(["banana", "apple", "orange"]);
 
         let doc = Document::new_markdown_default_curated("I Ate A bAnaNa And aN apPlE today.");
 
@@ -128,7 +128,7 @@ mod tests {
 
     #[test]
     fn supports_typographic_apostrophes() {
-        let set = WordSet::new(&["They're"]);
+        let set = WordSet::new(["They're"]);
 
         let doc = Document::new_markdown_default_curated("They’re");
 

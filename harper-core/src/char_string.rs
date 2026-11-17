@@ -46,11 +46,17 @@ pub trait CharStringExt: private::Sealed {
 
     /// Case-insensitive comparison with any of a list of string slices, assuming the right-hand side is lowercase ASCII.
     /// Only normalizes the left side to lowercase and avoids allocations.
-    fn eq_any_ignore_ascii_case_str(&self, others: &[&str]) -> bool;
+    fn eq_any_ignore_ascii_case_str(
+        &self,
+        others: impl IntoIterator<Item = impl AsRef<str>>,
+    ) -> bool;
 
     /// Case-insensitive comparison with any of a list of character slices, assuming the right-hand side is lowercase ASCII.
     /// Only normalizes the left side to lowercase and avoids allocations.
-    fn eq_any_ignore_ascii_case_chars(&self, others: &[&[char]]) -> bool;
+    fn eq_any_ignore_ascii_case_chars(
+        &self,
+        others: impl IntoIterator<Item = impl AsRef<[char]>>,
+    ) -> bool;
 
     /// Case-insensitive check if the string starts with the given ASCII prefix.
     /// The prefix is assumed to be lowercase.
@@ -58,7 +64,10 @@ pub trait CharStringExt: private::Sealed {
 
     /// Case-insensitive check if the string starts with any of the given ASCII prefixes.
     /// The prefixes are assumed to be lowercase.
-    fn starts_with_any_ignore_ascii_case_str(&self, prefixes: &[&str]) -> bool;
+    fn starts_with_any_ignore_ascii_case_str(
+        &self,
+        prefixes: impl IntoIterator<Item = impl AsRef<str>>,
+    ) -> bool;
 
     /// Case-insensitive check if the string ends with the given ASCII suffix.
     /// The suffix is assumed to be lowercase.
@@ -70,7 +79,10 @@ pub trait CharStringExt: private::Sealed {
 
     /// Case-insensitive check if the string ends with any of the given ASCII suffixes.
     /// The suffixes are assumed to be lowercase.
-    fn ends_with_any_ignore_ascii_case_chars(&self, suffixes: &[&[char]]) -> bool;
+    fn ends_with_any_ignore_ascii_case_chars(
+        &self,
+        suffixes: impl IntoIterator<Item = impl AsRef<[char]>>,
+    ) -> bool;
 
     /// Check if the string contains any vowels
     fn contains_vowel(&self) -> bool;
@@ -182,12 +194,18 @@ impl CharStringExt for [char] {
                 .all(|(a, b)| a.eq_ignore_ascii_case(b))
     }
 
-    fn eq_any_ignore_ascii_case_str(&self, others: &[&str]) -> bool {
-        others.iter().any(|str| self.eq_str(str))
+    fn eq_any_ignore_ascii_case_str(
+        &self,
+        others: impl IntoIterator<Item = impl AsRef<str>>,
+    ) -> bool {
+        others.into_iter().any(|str| self.eq_str(str.as_ref()))
     }
 
-    fn eq_any_ignore_ascii_case_chars(&self, others: &[&[char]]) -> bool {
-        others.iter().any(|chars| self.eq_ch(chars))
+    fn eq_any_ignore_ascii_case_chars(
+        &self,
+        others: impl IntoIterator<Item = impl AsRef<[char]>>,
+    ) -> bool {
+        others.into_iter().any(|chars| self.eq_ch(chars.as_ref()))
     }
 
     fn starts_with_ignore_ascii_case_str(&self, prefix: &str) -> bool {
@@ -201,10 +219,13 @@ impl CharStringExt for [char] {
             .all(|(a, b)| a.to_ascii_lowercase() == b)
     }
 
-    fn starts_with_any_ignore_ascii_case_str(&self, prefixes: &[&str]) -> bool {
+    fn starts_with_any_ignore_ascii_case_str(
+        &self,
+        prefixes: impl IntoIterator<Item = impl AsRef<str>>,
+    ) -> bool {
         prefixes
-            .iter()
-            .any(|prefix| self.starts_with_ignore_ascii_case_str(prefix))
+            .into_iter()
+            .any(|prefix| self.starts_with_ignore_ascii_case_str(prefix.as_ref()))
     }
 
     fn ends_with_ignore_ascii_case_str(&self, suffix: &str) -> bool {
@@ -233,10 +254,13 @@ impl CharStringExt for [char] {
             .all(|(a, b)| a.to_ascii_lowercase() == *b)
     }
 
-    fn ends_with_any_ignore_ascii_case_chars(&self, suffixes: &[&[char]]) -> bool {
+    fn ends_with_any_ignore_ascii_case_chars(
+        &self,
+        suffixes: impl IntoIterator<Item = impl AsRef<[char]>>,
+    ) -> bool {
         suffixes
-            .iter()
-            .any(|suffix| self.ends_with_ignore_ascii_case_chars(suffix))
+            .into_iter()
+            .any(|suffix| self.ends_with_ignore_ascii_case_chars(suffix.as_ref()))
     }
 
     fn contains_vowel(&self) -> bool {

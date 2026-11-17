@@ -91,13 +91,13 @@ pub fn match_to_lint_two_digits(
                 }
                 // Windows 10's / Xcode 10's
                 if decade.eq_str("10")
-                    && matches!(tok2, Tok::Word(w) if w.eq_any_ignore_ascii_case_str(&["windows", "xcode", "android"]))
+                    && matches!(tok2, Tok::Word(w) if w.eq_any_ignore_ascii_case_str(["windows", "xcode", "android"]))
                 {
                     return UsageJudgment::NotMistake;
                 }
             }
             // early_20's / late-80's
-            if matches!(tok1, Tok::Whitespace | Tok::Hyphen) && get_tok(before, -2).is_some_and(|t| matches!(t, Tok::Word(w) if w.eq_any_ignore_ascii_case_str(&["early", "mid", "late"]))) {
+            if matches!(tok1, Tok::Whitespace | Tok::Hyphen) && get_tok(before, -2).is_some_and(|t| matches!(t, Tok::Word(w) if w.eq_any_ignore_ascii_case_str(["early", "mid", "late"]))) {
                 // my early_20s
                 if get_tok(before, -3).is_some_and(|t| matches!(t, Tok::Whitespace)) && get_kind(before, -4).is_some_and(|k| k.is_possessive_determiner()) {
                     return UsageJudgment::IsMistakeForAgeRange;

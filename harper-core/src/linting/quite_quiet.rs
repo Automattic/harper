@@ -22,7 +22,7 @@ impl Default for QuiteQuiet {
                         && !k.is_noun()
                         && !k.is_preposition()
                         && !k.is_conjunction()
-                        && !tok.get_ch(src).eq_any_ignore_ascii_case_str(&[
+                        && !tok.get_ch(src).eq_any_ignore_ascii_case_str([
                             "here", "there", "too", "already", "lately",
                         ])
                 });
@@ -32,7 +32,7 @@ impl Default for QuiteQuiet {
                 return false;
             }
             tok.get_ch(src)
-                .ends_with_any_ignore_ascii_case_chars(&[&['n', '\'', 't'], &['n', '’', 't']])
+                .ends_with_any_ignore_ascii_case_chars([&['n', '\'', 't'], &['n', '’', 't']])
         })
         .t_ws()
         .t_aco("quiet");

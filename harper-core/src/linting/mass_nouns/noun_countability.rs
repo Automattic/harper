@@ -240,7 +240,7 @@ fn is_nominal_chain_boundary(tok: &Token, src: &[char]) -> bool {
     tok.kind.is_preposition()
         || tok.kind.is_determiner()
         || tok.kind.is_conjunction()
-        || tok.get_ch(src).eq_any_ignore_ascii_case_str(&[
+        || tok.get_ch(src).eq_any_ignore_ascii_case_str([
             "about", "after", "as", "at", "before", "by", "for", "from", "in", "into", "of", "on",
             "through", "to", "under", "with",
         ])

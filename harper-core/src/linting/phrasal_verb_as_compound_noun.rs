@@ -85,7 +85,7 @@ impl PhrasalVerbAsCompoundNoun {
         }
 
         // * Must not be in the set of known false positives.
-        if noun_chars.eq_any_ignore_ascii_case_chars(&[
+        if noun_chars.eq_any_ignore_ascii_case_chars([
             &['g', 'a', 'l', 'l', 'o', 'n'],
             &['d', 'r', 'a', 'g', 'o', 'n'],
         ]) {
@@ -195,7 +195,7 @@ impl PhrasalVerbAsCompoundNoun {
         // "That" or "which" can follow a noun as relative pronouns.
         if let Some(next_tok) = maybe_next_tok
             && next_tok.kind.is_pronoun()
-            && next_tok.get_ch(source).eq_any_ignore_ascii_case_chars(&[
+            && next_tok.get_ch(source).eq_any_ignore_ascii_case_chars([
                 &['t', 'h', 'a', 't'][..],
                 &['w', 'h', 'i', 'c', 'h'][..],
             ])
@@ -208,7 +208,7 @@ impl PhrasalVerbAsCompoundNoun {
         // verb ending a clause: "people that don't clean up can and will be banned".
         if maybe_prev_tok.is_none()
             && let Some(next_tok) = maybe_next_tok
-            && next_tok.get_ch(source).eq_any_ignore_ascii_case_str(&[
+            && next_tok.get_ch(source).eq_any_ignore_ascii_case_str([
                 "can", "could", "may", "might", "must", "shall", "should", "will", "would",
             ])
         {

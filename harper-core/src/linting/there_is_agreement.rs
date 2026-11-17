@@ -18,7 +18,7 @@ enum Mismatch {
 
 impl Mismatch {
     fn from_be(be: &[char]) -> Self {
-        if be.eq_any_ignore_ascii_case_str(&["are", "were"]) {
+        if be.eq_any_ignore_ascii_case_str(["are", "were"]) {
             PluralBeSingularNoun
         } else {
             SingularBePluralNoun
@@ -57,8 +57,10 @@ impl<D: Dictionary> ThereIsAgreement<D> {
             FirstMatchOf::new([
                 Box::new(|t: &Token, s: &[char]| {
                     t.kind.is_adjective()
-                        || t.get_ch(s)
-                            .eq_any_ignore_ascii_case_chars(&[&['n', 'o'], &['n', 'o', 't']])
+                        || t.get_ch(s).eq_any_ignore_ascii_case_chars([
+                            &['n', 'o'] as &[char],
+                            &['n', 'o', 't'],
+                        ])
                 }) as Box<dyn Expr>,
                 Box::new(SpelledNumberExpr),
             ]),
@@ -234,9 +236,9 @@ fn handle_statement<D: Dictionary>(
             && !t.kind.is_verb_progressive_form()
             && !t
                 .get_ch(src)
-                .eq_any_ignore_ascii_case_str(&["but", "in", "like"]))
+                .eq_any_ignore_ascii_case_str(["but", "in", "like"]))
             // to allow "there are bug in ..." to be corrected
-            || t.get_ch(src).eq_any_ignore_ascii_case_str(&["and", "or"])
+            || t.get_ch(src).eq_any_ignore_ascii_case_str(["and", "or"])
     }) {
         return None;
     }
@@ -398,7 +400,7 @@ fn handle_question<D: Dictionary>(
     if followed_by_word(ctx, |t| {
         t.kind.is_noun()
             && !t.kind.is_verb_progressive_form()
-            && !t.get_ch(src).eq_any_ignore_ascii_case_str(&["in", "or"])
+            && !t.get_ch(src).eq_any_ignore_ascii_case_str(["in", "or"])
     }) {
         return None;
     }

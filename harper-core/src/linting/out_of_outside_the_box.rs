@@ -47,7 +47,7 @@ impl ExprLinter for OutOfOutsideTheBox {
         if toks.get(2)?.get_ch(src).eq_ch(&['o', 'f'])
             && preceded_by_word(ctx, |t| {
                 t.get_ch(src)
-                    .eq_any_ignore_ascii_case_str(&["think", "thinking", "thinks", "thought"])
+                    .eq_any_ignore_ascii_case_str(["think", "thinking", "thinks", "thought"])
             })
         {
             let span = toks.get(0..=2)?.span()?;
@@ -66,7 +66,7 @@ impl ExprLinter for OutOfOutsideTheBox {
         }
 
         if preceded_by_word(ctx, |t| {
-            t.get_ch(src).eq_any_ignore_ascii_case_str(&[
+            t.get_ch(src).eq_any_ignore_ascii_case_str([
                 "right", "straight", "work", "worked", "working", "works",
             ])
         }) {
