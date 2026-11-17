@@ -15,7 +15,7 @@ interface Sprite {
 	height: number;
 }
 
-/** One depth-sorted particle and its cached gray, white, and introductory blurred glyphs. */
+/** One depth-sorted particle and its cached gray, text-blended, and introductory blurred glyphs. */
 interface Letter {
 	character: string;
 	x: number;
@@ -29,7 +29,7 @@ interface Letter {
 	phase: number;
 	delay: number;
 	highlight: number;
-	white: number;
+	textBlend: number;
 	sprites: Sprite[];
 }
 
@@ -57,6 +57,7 @@ function createFloatingLetters(
 	let dpr = 1;
 	let letters: Letter[] = [];
 	let color = '';
+	let blendColor = '';
 	let frameId = 0;
 	let disposed = false;
 	let started = false;
@@ -117,7 +118,7 @@ function createFloatingLetters(
 		const blur = (1 - letter.depth) * 1.2;
 		letter.sprites = [
 			makeSprite(letter, color, blur),
-			makeSprite(letter, '#ffffff', blur),
+			makeSprite(letter, blendColor, blur),
 			makeSprite(letter, color, INTRO_BLUR),
 		];
 	}
@@ -138,7 +139,7 @@ function createFloatingLetters(
 				phase: random(0, Math.PI * 2),
 				delay: Math.random() * INTRO_SPREAD,
 				highlight: 0,
-				white: 0,
+				textBlend: 0,
 				sprites: [],
 			};
 			buildSprites(letter);
@@ -227,23 +228,26 @@ function createFloatingLetters(
 
 			const highlight = distance < CURSOR_RADIUS ? smooth(1 - distance / CURSOR_RADIUS) : 0;
 			const textDistance = distanceToText(letter.x, letter.y);
-			const white = textDistance < TEXT_FADE_RANGE ? smooth(1 - textDistance / TEXT_FADE_RANGE) : 0;
+			const textBlend =
+				textDistance < TEXT_FADE_RANGE ? smooth(1 - textDistance / TEXT_FADE_RANGE) : 0;
 			letter.highlight = motion.matches
 				? 0
 				: letter.highlight +
 					(highlight - letter.highlight) * (highlight > letter.highlight ? 0.14 : 0.05) * dt;
-			letter.white = motion.matches ? white : letter.white + (white - letter.white) * 0.06 * dt;
+			letter.textBlend = motion.matches
+				? textBlend
+				: letter.textBlend + (textBlend - letter.textBlend) * 0.06 * dt;
 			const restAlpha = 0.12 + letter.depth * 0.38;
 			let alpha = (restAlpha + (0.92 - restAlpha) * letter.highlight) * ease;
-			alpha += (Math.max(alpha, 0.7 * ease) - alpha) * letter.white;
+			alpha += (Math.max(alpha, 0.7 * ease) - alpha) * letter.textBlend;
 			const scale = 0.4 + 0.6 * ease;
 			const y = letter.y + (1 - ease) * RISE_DISTANCE * (0.5 + letter.depth);
 			const cos = Math.cos(letter.rotation) * scale;
 			const sin = Math.sin(letter.rotation) * scale;
 			const sharp = p >= 1 ? 1 : ease * ease;
 			if (sharp < 1) stamp(letter.sprites[2], cos, sin, letter.x, y, alpha * (1 - sharp));
-			stamp(letter.sprites[0], cos, sin, letter.x, y, alpha * (1 - letter.white) * sharp);
-			stamp(letter.sprites[1], cos, sin, letter.x, y, alpha * letter.white * sharp);
+			stamp(letter.sprites[0], cos, sin, letter.x, y, alpha * (1 - letter.textBlend) * sharp);
+			stamp(letter.sprites[1], cos, sin, letter.x, y, alpha * letter.textBlend * sharp);
 		}
 		if (!motion.matches) requestDraw();
 	}
@@ -269,9 +273,13 @@ function createFloatingLetters(
 	}
 
 	function refreshTheme() {
-		const nextColor = getComputedStyle(canvas).getPropertyValue('--floating-letter-color').trim();
-		if (nextColor === color) return;
-		color = nextColor || '#4a463e';
+		const style = getComputedStyle(canvas);
+		const nextColor = style.getPropertyValue('--floating-letter-color').trim() || '#4a463e';
+		const nextBlendColor =
+			style.getPropertyValue('--floating-letter-blend-color').trim() || '#ffffff';
+		if (nextColor === color && nextBlendColor === blendColor) return;
+		color = nextColor;
+		blendColor = nextBlendColor;
 		letters.forEach(buildSprites);
 		requestDraw();
 	}
@@ -494,6 +502,7 @@ function handleKeydown(event: KeyboardEvent) {
 	--deck-track: rgb(28 26 22 / 9%);
 	--deck-focus: #2a6bd8;
 	--floating-letter-color: #4a463e;
+	--floating-letter-blend-color: #ffffff;
 	position: relative;
 	isolation: isolate;
 	height: 100dvh;
@@ -512,6 +521,7 @@ function handleKeydown(event: KeyboardEvent) {
 	--deck-track: rgb(255 255 255 / 10%);
 	--deck-focus: #f7be6e;
 	--floating-letter-color: #d6d3d1;
+	--floating-letter-blend-color: #0c0a09;
 	color-scheme: dark;
 }
 
