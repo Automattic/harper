@@ -10,7 +10,7 @@ export const frontmatter = {
 
 <script lang="ts">
 import PageMetadata from '$lib/PageMetadata.svelte';
-import { ChevronRightIcon, Link, SlideDeck, Textarea } from 'components';
+import { ChevronRightIcon, FloatingLettersSlideDeck, Link, Textarea } from 'components';
 import AppLogoTile from '$lib/marketing/AppLogoTile.svelte';
 import { marketingLinks } from '$lib/marketing/data';
 
@@ -29,7 +29,7 @@ const steps = [
 	},
 	{
 		title: 'Review & Accept',
-		lede: "Click on any underlined text to review Harper's suggestions.",
+		lede: 'Click on any underlined text to review Harper’s suggestions.',
 	},
 	{
 		title: 'Give It a Whirl!',
@@ -38,6 +38,10 @@ const steps = [
 	{
 		title: 'Join Us',
 		lede: 'Harper is a community effort. If you encounter a bug or want to request a feature, you can do so by opening an issue on GitHub or joining our Discord server.',
+	},
+	{
+		title: 'All Set!',
+		lede: 'You should be good to go. Feel free to close this tab and continue your normal work. Harper will check it as you go.',
 	},
 ];
 
@@ -52,7 +56,7 @@ let demoText =
 	'Ths is an text box you can type in.\n\nany other site on the web will work the the same!';
 </script>
 
-<SlideDeck
+<FloatingLettersSlideDeck
 	title={steps[step].title}
 	lede={steps[step].lede}
 	slideProgress={step / (steps.length - 1)}
@@ -90,32 +94,32 @@ let demoText =
 			aria-label="Try Harper here"
 		/>
 
-		<div class="mt-[1.2rem] overflow-hidden rounded-[6px] border-[0.5px] border-[rgba(28,26,22,0.09)] bg-[#faf8f3] text-[var(--marketing-ink)] dark:border-white/15 dark:bg-stone-900 dark:text-stone-100">
+		<div class="mt-[1.2rem] w-full overflow-hidden rounded-[6px] border-[0.5px] border-[rgba(28,26,22,0.09)] bg-[#faf8f3] text-[var(--marketing-ink)] dark:border-white/15 dark:bg-stone-900 dark:text-stone-100">
 			<button
 				type="button"
 				id="troubleshooting-toggle"
-				class="flex w-full cursor-pointer items-center justify-between gap-4 px-[0.9rem] py-3 text-left text-[0.92rem] font-bold focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-solid focus-visible:outline-[#2a6bd8]"
+				class="relative flex w-full cursor-pointer items-center justify-center px-10 py-3 text-center text-[0.92rem] font-bold focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-solid focus-visible:outline-[#2a6bd8]"
 				aria-expanded={drawerOpen}
 				aria-controls="troubleshooting-body"
 				on:click={() => (drawerOpen = !drawerOpen)}
 			>
-				<span class="whitespace-nowrap">Nothing is Happening?</span>
-				<span class="font-[family-name:JetBrains_Mono,monospace] text-[0.95rem] font-normal text-[var(--marketing-amber)] dark:text-primary-300" aria-hidden="true">{drawerOpen ? '−' : '+'}</span>
+				<span>Nothing is Happening?</span>
+				<span class="absolute right-[0.9rem] font-[family-name:JetBrains_Mono,monospace] text-[0.95rem] font-normal text-[var(--marketing-amber)] dark:text-primary-300" aria-hidden="true">{drawerOpen ? '−' : '+'}</span>
 			</button>
 		</div>
 	{:else if step === 5}
-		<div class="mt-8 flex flex-col gap-3">
+		<div class="mt-8 flex w-full flex-wrap justify-center gap-3">
 			{#each communityLinks as link}
 				<Link
 					href={link.href}
 					target="_blank"
 					rel="noopener noreferrer"
 					aria-label={`${link.label} (opens in a new tab)`}
-					class="flex items-center gap-3 rounded-[6px] border-[0.5px] border-[rgba(28,26,22,0.09)] bg-[#faf8f3] px-4 py-3 text-base font-bold text-[var(--marketing-ink)]! transition-colors hover:bg-[#f1ede5] hover:no-underline! focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-solid focus-visible:outline-[#2a6bd8] motion-reduce:transition-none [&>span:first-child]:bg-[#fff]! dark:border-white/15 dark:bg-stone-900 dark:text-stone-100! dark:hover:bg-stone-800"
+					class="inline-flex items-center justify-center gap-3 rounded-[6px] border-[0.5px] border-[rgba(28,26,22,0.09)] bg-[#faf8f3] px-4 py-3 text-base font-bold text-[var(--marketing-ink)]! transition-colors hover:bg-[#f1ede5] hover:no-underline! focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-solid focus-visible:outline-[#2a6bd8] motion-reduce:transition-none [&>span:first-child]:bg-[#fff]! dark:border-white/15 dark:bg-stone-900 dark:text-stone-100! dark:hover:bg-stone-800"
 				>
 					<AppLogoTile id={link.id} size={36} />
 					<span>{link.label}</span>
-					<ChevronRightIcon className="ml-auto size-4 shrink-0 text-[var(--marketing-amber)]" />
+					<ChevronRightIcon className="size-4 shrink-0 text-[var(--marketing-amber)]" />
 				</Link>
 			{/each}
 		</div>
@@ -128,18 +132,18 @@ let demoText =
 					<div
 						role="region"
 						aria-labelledby="troubleshooting-toggle"
-						class="grid items-start gap-5 rounded-[6px] border-[0.5px] border-[rgba(28,26,22,0.09)] bg-[#fff] p-[0.9rem] sm:grid-cols-[minmax(0,1fr)_minmax(10rem,13rem)] dark:border-white/15 dark:bg-stone-900"
+						class="grid items-center gap-5 rounded-[6px] border-[0.5px] border-[rgba(28,26,22,0.09)] bg-[#fff] p-[0.9rem] sm:grid-cols-[minmax(0,1fr)_minmax(10rem,13rem)] dark:border-white/15 dark:bg-stone-900"
 					>
 						<p class="m-0! text-[0.9rem] leading-[1.6]! text-[var(--marketing-ink-2)] dark:text-stone-300">
-							Harper will only enable itself automatically on sites we've tested before.
+							Harper will only enable itself automatically on sites we’ve tested before.
 							<br /><br />
-							If you work somewhere that isn't on our list of supported sites, you can enable the extension anyway by opening the Harper extension popup and clicking the power button.
+							If you work somewhere that isn’t on our list of supported sites, you can enable the extension anyway by opening the Harper extension popup and clicking the power button.
 							<br /><br />
-							Alternatively, <Link class="text-primary-700! hover:text-[var(--marketing-ink)]! dark:text-primary-300! dark:hover:text-primary-200!" href="/request-browser-support">let us know</Link> which sites you want us to support and we'll add it as soon as we can.
+							Alternatively, <Link class="text-primary-700! hover:text-[var(--marketing-ink)]! dark:text-primary-300! dark:hover:text-primary-200!" href="/request-browser-support">let us know</Link> which sites you want us to support and we’ll add it as soon as we can.
 						</p>
 						<img
 							src="/images/chrome_extension_popup.png"
-							alt="The Chrome extension's popup page"
+							alt="The Chrome extension’s popup page"
 							class="h-auto w-full rounded-[6px] border-[0.5px] border-[rgba(28,26,22,0.14)] object-contain dark:border-white/15"
 						/>
 					</div>
@@ -147,4 +151,4 @@ let demoText =
 			</div>
 		{/if}
 	</svelte:fragment>
-</SlideDeck>
+</FloatingLettersSlideDeck>

@@ -251,7 +251,7 @@
 > the ACM — turingineer , turologist , flow    - charts  - man     , applied meta  - mathematician ,
 # D   NSg . ?           . ?          . NSg/VB+ . NPl/V3+ . NPr/VB+ . VP/J    NSg/J . NSg+          .
 > and  applied epistemologist . Three months later in        the same journal   , comptologist
-# VB/C VP/J    NSg            . NSg+  NPl+   JC    NPr/J/R/P D+  I/J+ NSg/VB/J+ . ?
+# VB/C VP/J    NSg            . NSg+  NPl+   JC/R  NPr/J/R/P D+  I/J+ NSg/VB/J+ . ?
 > was  suggested , followed next    year by hypologist . The term      computics has also
 # VLPt VP/J      . VP/J     NSg/J/P NSg+ P  ?          . D+  NSg/VB/J+ ?         V3  R/C
 > been   suggested . In        Europe , terms   derived from contracted translations of the
@@ -317,7 +317,7 @@
 > The relationship between computer science and  software engineering is  a
 # D   NSg          NSg/P   NSg+     N🅪Sg/VB VB/C Nᴹ+      Nᴹ/Vg/J+    VL3 D/P
 > contentious issue  , which is  further muddied by disputes over    what   the term
-# J           NSg/VB . I/C+  VL3 VB/JC   VP/J    P  NPl/V3+  NSg/J/P NSg/I+ D   NSg/VB/J+
+# J           NSg/VB . I/C+  VL3 VB/JC/R VP/J    P  NPl/V3+  NSg/J/P NSg/I+ D   NSg/VB/J+
 > " software engineering " means  , and  how   computer science  is  defined . David Parnas ,
 # . Nᴹ+      Nᴹ/Vg/J+    . NPl/V3 . VB/C NSg/C NSg+     N🅪Sg/VB+ VL3 VP/J    . NPr+  ?      .
 > taking   a   cue     from the relationship between other    engineering and  science
@@ -390,8 +390,8 @@
 # N🅪Sg/VB+ . NPl        P  Nᴹ/Vg/J     NSg+     N🅪Sg/VB+ R/C/P D/P Nᴹ/Vg/J+    NSg/VB+
 > argue that     the reliability of computational systems is  investigated in        the same
 # VB    I/C/Ddem D   Nᴹ          P  J             NPl+    VL3 VP/J         NPr/J/R/P D   I/J
-> way    as    bridges   in        civil engineering and  airplanes in        aerospace engineering . They
-# NSg/J+ R/C/P NPrPl/V3+ NPr/J/R/P J     Nᴹ/Vg/J+    VB/C NPl/V3    NPr/J/R/P NSg/J+    Nᴹ/Vg/J+    . IPl+
+> way    as    bridges   in        civil engineering and  airplanes   in        aerospace engineering . They
+# NSg/J+ R/C/P NPrPl/V3+ NPr/J/R/P J     Nᴹ/Vg/J+    VB/C NPl/V3/NoAm NPr/J/R/P NSg/J+    Nᴹ/Vg/J+    . IPl+
 > also argue that     while      empirical sciences observe what   presently exists , computer
 # R/C  VB    I/C/Ddem NSg/VB/C/P NSg/J+    NPl/V3+  NSg/VB  NSg/I+ R         V3     . NSg+
 > science  observes what   is  possible to exist and  while      scientists discover  laws
@@ -967,7 +967,7 @@
 > repetition : WHILE      such  - and  - such  is  the case      , DO  this    . The three rules  of
 # N🅪Sg/VB+   . NSg/VB/C/P NSg/I . VB/C . NSg/I VL3 D   NPr🅪Sg/VB . VXB I/Ddem+ . D   NSg   NPl/V3 P
 > Boehm's and  Jacopini's insight can     be       further simplified with the use      of
-# ?       VB/C ?          N🅪Sg+   NPr/VXB NSg/VLXB VB/JC   VP/J       P    D   N🅪Sg/VB+ P
+# ?       VB/C ?          N🅪Sg+   NPr/VXB NSg/VLXB VB/JC/R VP/J       P    D   N🅪Sg/VB+ P
 > goto ( which means  it       is  more         elementary than structured programming ) .
 # ?    . I/C+  NPl/V3 NSg/ISg+ VL3 NPr/I/J/R/Dq NSg/J      C/P  VP/J       Nᴹ/Vg/J+    . .
 >

@@ -109,7 +109,7 @@
 > centre      of the earth      . Let     me       see    : that      would be       four thousand miles  down        , I
 # NSg/VB/Comm P  D+  NPr🅪Sg/VB+ . NSg/VBP NPr/ISg+ NSg/VB . I/C/Ddem+ VXB   NSg/VLXB NSg+ NSg+     NPrPl+ N🅪Sg/VB/J/P . ISg/#r+
 > think  — ” ( for   , you    see    , Alice had learnt several things of this    sort    in        her
-# NSg/VB . . . R/C/P . ISgPl+ NSg/VB . NPr+  VP  VB     J/Dq    NPl    P  I/Ddem+ NSg/VB+ NPr/J/R/P ISg/D$+
+# NSg/VB . . . R/C/P . ISgPl+ NSg/VB . NPr+  VP  VP     J/Dq    NPl    P  I/Ddem+ NSg/VB+ NPr/J/R/P ISg/D$+
 > lessons in        the schoolroom , and  though this    was  not     a   very good     opportunity for
 # NPl/V3+ NPr/J/R/P D   NSg        . VB/C C      I/Ddem+ VLPt NSg/R/C D/P J/R  NPr/VB/J N🅪Sg+       R/C/P
 > showing  off        her     knowledge , as    there was  no       one      to listen to her     , still      it       was
@@ -257,7 +257,7 @@
 > marked ‘ poison   ’ or    not     ” ; for   she  had read    several nice  little     histories about
 # VP/J   . N🅪Sg/VB+ . NPr/C NSg/R/C . . R/C/P ISg+ VP  NSg/VBP J/Dq    NPr/J NPr/I/J/Dq NPl       J/P
 > children who    had got burnt , and  eaten up         by wild     beasts and  other    unpleasant
-# NPl+     NPr/I+ VP  VP  VB/J  . VB/C VPp/J NSg/VB/J/P P  NSg/VB/J NPl/V3 VB/C NSg/VB/J J
+# NPl+     NPr/I+ VP  VP  VP/J  . VB/C VPp/J NSg/VB/J/P P  NSg/VB/J NPl/V3 VB/C NSg/VB/J J
 > things , all          because they would not     remember the simple   rules   their friends   had
 # NPl+   . NSg/I/J/C/Dq C/P     IPl+ VXB   NSg/R/C NSg/VB   D   NSg/VB/J NPl/V3+ D$+   NPrPl/V3+ VP
 > taught them     : such  as    , that     a   red    - hot      poker   will    burn   you    if    you    hold     it       too
@@ -267,7 +267,7 @@
 > bleeds ; and  she  had never forgotten that      , if    you    drink   much         from a   bottle  marked
 # NPl/V3 . VB/C ISg+ VP  R     NSg/VPp/J I/C/Ddem+ . NSg/C ISgPl+ NSg/VB+ NSg/I/J/R/Dq P    D/P NSg/VB+ VP/J
 > “ poison   , ” it       is  almost certain to disagree with you    , sooner or    later .
-# . N🅪Sg/VB+ . . NSg/ISg+ VL3 R      I/J     P  VB       P    ISgPl+ . JC     NPr/C JC    .
+# . N🅪Sg/VB+ . . NSg/ISg+ VL3 R      I/J     P  VB       P    ISgPl+ . JC     NPr/C JC/R  .
 >
 #
 > However , this    bottle  was  not     marked “ poison   , ” so          Alice ventured to taste    it       , and
@@ -291,7 +291,7 @@
 > door    into that     lovely garden    . First , however , she  waited for   a    few       minutes to
 # NSg/VB+ P    I/C/Ddem NSg/J  NSg/VB/J+ . NSg/J . C       . ISg+ VP/J   R/C/P D/P+ NSg/I/Dq+ NPl/V3+ P
 > see    if    she  was  going   to shrink any    further : she  felt      a   little     nervous about
-# NSg/VB NSg/C ISg+ VLPt Nᴹ/Vg/J P  NSg/VB I/R/Dq VB/JC   . ISg+ N🅪Sg/VP/J D/P NPr/I/J/Dq J       J/P
+# NSg/VB NSg/C ISg+ VLPt Nᴹ/Vg/J P  NSg/VB I/R/Dq VB/JC/R . ISg+ N🅪Sg/VP/J D/P NPr/I/J/Dq J       J/P
 > this    ; “ for   it       might    end     , you    know , ” said Alice to herself , “ in        my  going   out
 # I/Ddem+ . . R/C/P NSg/ISg+ Nᴹ/VXB/J NSg/VB+ . ISgPl+ VB   . . VP/J NPr+  P  ISg+    . . NPr/J/R/P D$+ Nᴹ/Vg/J NSg/VB/J/R/P
 > altogether , like         a    candle  . I       wonder  what   I       should be       like         then      ? ” And  she  tried
@@ -413,7 +413,7 @@
 >
 #
 > Just then      her     head      struck against the roof   of the hall : in        fact she  was  now       more
-# J/R  NSg/J/R/C ISg/D$+ NPr/VB/J+ VB     C/P     D   NSg/VB P  D+  NPr+ . NPr/J/R/P NSg+ ISg+ VLPt NSg/J/R/C NPr/I/J/R/Dq
+# J/R  NSg/J/R/C ISg/D$+ NPr/VB/J+ VP     C/P     D   NSg/VB P  D+  NPr+ . NPr/J/R/P NSg+ ISg+ VLPt NSg/J/R/C NPr/I/J/R/Dq
 > than nine feet high       , and  she  at    once  took up         the little     golden   key      and  hurried
 # C/P  NSg+ NPl+ NSg/VB/J/R . VB/C ISg+ NSg/P NSg/C VPt  NSg/VB/J/P D   NPr/I/J/Dq NPr/VB/J NPr/VB/J VB/C VP/J
 > off        to the garden    door    .
@@ -1911,7 +1911,7 @@
 > right    - hand    bit      to try      the effect  : the next    moment she  felt      a   violent  blow
 # NPr/VB/J . NSg/VB+ NSg/VPt+ P  NSg/VB/J D   NSg/VB+ . D   NSg/J/P NSg+   ISg+ N🅪Sg/VP/J D/P NSg/VB/J NSg/VB/J+
 > underneath her     chin    : it       had struck her     foot    !
-# NSg/J/P    ISg/D$+ NPr/VB+ . NSg/ISg+ VP  VB     ISg/D$+ NSg/VB+ .
+# NSg/J/P    ISg/D$+ NPr/VB+ . NSg/ISg+ VP  VP     ISg/D$+ NSg/VB+ .
 >
 #
 > She  was  a   good     deal     frightened by this   very sudden change  , but     she  felt      that
@@ -2499,7 +2499,7 @@
 > about it       : it       was  neither more         nor   less    than a    pig     , and  she  felt      that     it       would be
 # J/P   NSg/ISg+ . NSg/ISg+ VLPt I/C     NPr/I/J/R/Dq NSg/C J/R/C/P C/P  D/P+ NSg/VB+ . VB/C ISg+ N🅪Sg/VP/J I/C/Ddem NSg/ISg+ VXB   NSg/VLXB
 > quite absurd for   her     to carry  it       further .
-# R     NSg/J  R/C/P ISg/D$+ P  NSg/VB NSg/ISg+ VB/JC   .
+# R     NSg/J  R/C/P ISg/D$+ P  NSg/VB NSg/ISg+ VB/JC/R .
 >
 #
 > So          she  set       the little      creature down        , and  felt      quite relieved to see    it       trot    away
@@ -4425,7 +4425,7 @@
 > “ Well       , I       can’t show   it       you    myself , ” the Mock     Turtle  said : “ I’m too stiff    . And
 # . NSg/VB/J/R . ISg/#r+ VXB   NSg/VB NSg/ISg+ ISgPl+ ISg+   . . D   NSg/VB/J NSg/VB+ VP/J . . K   R   NSg/VB/J . VB/C
 > the Gryphon never learnt it       . ”
-# D   ?       R     VB     NSg/ISg+ . .
+# D   ?       R     VP     NSg/ISg+ . .
 >
 #
 > “ Hadn’t time       , ” said the Gryphon : “ I       went to the Classics master    , though . He       was
@@ -4641,7 +4641,7 @@
 > “ What   matters it       how   far      we   go       ? ” his     scaly  friend    replied . “ There is  another
 # . NSg/I+ NPl/V3+ NSg/ISg+ NSg/C NSg/VB/J IPl+ NSg/VB/J . . ISg/D$+ NSg/J+ NPr/VB/J+ VP/J    . . R+    VL3 I/D+
 > shore   , you    know , upon the other     side      . The further off        from England the nearer
-# NSg/VB+ . ISgPl+ VB   . P    D+  NSg/VB/J+ NSg/VB/J+ . D   VB/JC   NSg/VB/J/P P    NPr+    D   NSg/JC
+# NSg/VB+ . ISgPl+ VB   . P    D+  NSg/VB/J+ NSg/VB/J+ . D   VB/JC/R NSg/VB/J/P P    NPr+    D   NSg/JC
 > is  to France — Then      turn   not     pale     , beloved  snail  , but     come       and  join   the dance    .
 # VL3 P  NPr+   . NSg/J/R/C NSg/VB NSg/R/C NSg/VB/J . NSg/VB/J NSg/VB . NSg/C/P NSg/VBPp/P VB/C NSg/VB D   N🅪Sg/VB+ .
 > Will    you    , won’t you    , will    you    , won’t you    , will    you    join   the dance    ? Will    you    ,
@@ -4857,7 +4857,7 @@
 >
 #
 > ( later editions continued as    follows When    the sands   are all          dry      , he       is  gay      as
-# . JC    NPl      VP/J      R/C/P NPl/V3  NSg/I/C D   NPl/V3+ VLB NSg/I/J/C/Dq NSg/VB/J . NPr/ISg+ VL3 NPr/VB/J R/C/P
+# . JC/R  NPl      VP/J      R/C/P NPl/V3  NSg/I/C D   NPl/V3+ VLB NSg/I/J/C/Dq NSg/VB/J . NPr/ISg+ VL3 NPr/VB/J R/C/P
 > a   lark   , And  will    talk    in        contemptuous tones  of the Shark   , But     , when    the tide
 # D/P NSg/VB . VB/C NPr/VXB N🅪Sg/VB NPr/J/R/P J            NPl/V3 P  D   NSg/VB+ . NSg/C/P . NSg/I/C D   NSg/VB+
 > rises   and  sharks are around , His     voice   has a   timid and  tremulous sound      . )
@@ -4919,7 +4919,7 @@
 >
 #
 > ( later editions continued as    follows The Panther took pie      - crust    , and  gravy    ,
-# . JC    NPl      VP/J      R/C/P NPl/V3  D   NSg     VPt  N🅪Sg/VB+ . N🅪Sg/VB+ . VB/C N🅪Sg/VB+ .
+# . JC/R  NPl      VP/J      R/C/P NPl/V3  D   NSg     VPt  N🅪Sg/VB+ . N🅪Sg/VB+ . VB/C N🅪Sg/VB+ .
 > and  meat  , While      the Owl     had the dish    as    its     share  of the treat   . When    the pie
 # VB/C N🅪Sg+ . NSg/VB/C/P D   NSg/VB+ VP  D   NSg/VB+ R/C/P ISg/D$+ NSg/VB P  D   NSg/VB+ . NSg/I/C D+  N🅪Sg/VB+
 > was  all          finished , the Owl     , as    a   boon  , Was  kindly permitted to pocket   the

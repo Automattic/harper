@@ -215,7 +215,7 @@
 >
 #
 > Judgment in        Cases   of impeachment shall not     extend further than to removal from
-# NSg+     NPr/J/R/P NPl/V3+ P  N🅪Sg        VXB   NSg/R/C NSg/VB VB/JC   C/P  P  NSg     P
+# NSg+     NPr/J/R/P NPl/V3+ P  N🅪Sg        VXB   NSg/R/C NSg/VB VB/JC/R C/P  P  NSg     P
 > Office  , and  disqualification to hold     and  enjoy any    Office of honor       , Trust     or
 # NSg/VB+ . VB/C N🅪Sg             P  NSg/VB/J VB/C VB    I/R/Dq NSg/VB P  N🅪Sg/VB/Am+ . N🅪Sg/VB/J NPr/C
 > Profit      under   the United States    : but     the Party     convicted shall nevertheless be
@@ -1199,7 +1199,7 @@
 > in        the land      or    naval forces  , or    in        the militia , when    in        actual service in        time
 # NPr/J/R/P D   NPr🅪Sg/VB NPr/C J     NPl/V3+ . NPr/C NPr/J/R/P D   NSg     . NSg/I/C NPr/J/R/P NSg/J  NSg/VB+ NPr/J/R/P N🅪Sg/VB/J
 > of war     or    public  danger      ; nor   shall any    person  be       subject  for   the same offense
-# P  N🅪Sg/VB NPr/C Nᴹ/VB/J N🅪Sg/VB/JC+ . NSg/C VXB   I/R/Dq NSg/VB+ NSg/VLXB NSg/VB/J R/C/P D   I/J  N🅪Sg+
+# P  N🅪Sg/VB NPr/C Nᴹ/VB/J N🅪Sg/VB/JC+ . NSg/C VXB   I/R/Dq NSg/VB+ NSg/VLXB NSg/VB/J R/C/P D   I/J  N🅪Sg/Am+
 > to be       twice put     in        jeopardy of life    or    limb    ; nor   shall be       compelled in        any
 # P  NSg/VLXB R     NSg/VBP NPr/J/R/P NSg/VB   P  N🅪Sg/VB NPr/C NSg/VB+ . NSg/C VXB   NSg/VLXB VP/J      NPr/J/R/P I/R/Dq
 > criminal case       to be       a   witness against himself , nor   be       deprived of life     ,

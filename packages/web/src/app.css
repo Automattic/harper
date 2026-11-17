@@ -1,6 +1,13 @@
-@import "tailwindcss";
+@layer theme, base, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
 @import "components/components.css";
 @import "harper-editor/style.css";
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@source "../../components/src/lib/**/*.{svelte,ts}";
+@source "../../harper-editor/src/lib/**/*.{svelte,ts}";
 
 @custom-variant dark (&:where(.dark, .dark *));
 

@@ -32,7 +32,7 @@ export default defineConfig({
 	},
 	build: {
 		lib: {
-			entry: resolve(import.meta.dirname, 'src/lib/bundle.ts'),
+			entry: { index: resolve(import.meta.dirname, 'src/lib/bundle.ts') },
 			formats: ['es'],
 			fileName: () => 'index',
 			cssFileName: 'harper-editor',
@@ -40,12 +40,13 @@ export default defineConfig({
 		rolldownOptions: {
 			external: ['svelte', /^svelte\//, /^harper\.js(\/.*)?$/],
 			output: {
+				preserveModules: true,
 				assetFileNames: (assetInfo) =>
 					assetInfo.names.includes('harper-editor.css')
 						? 'harper-editor.css'
 						: 'assets/[name]-[hash][extname]',
 				chunkFileNames: 'chunks/[name]-[hash].js',
-				entryFileNames: () => 'index.js',
+				entryFileNames: '[name].js',
 			},
 		},
 	},

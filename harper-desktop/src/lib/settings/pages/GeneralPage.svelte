@@ -5,6 +5,8 @@ import { onMount } from 'svelte';
 import { Client } from '$lib/client';
 import { DIALECT_OPTIONS } from '../settings-data';
 
+export let onRestartOnboarding: () => void;
+
 const DialectValue = {
 	American: 0,
 	British: 1,
@@ -299,6 +301,17 @@ function settingsValueToDialect(value: string): Dialect {
               <p class="result-summary">
                 Current version: {currentVersion || 'loading...'} · Latest version: {latestVersion || 'loading...'}
               </p>
+              <div class="inline-row">
+                <Button
+                  unstyled
+                  class="button"
+                  type="button"
+                  disabled={isCheckingForUpdates}
+                  on:click={checkForUpdates}
+                >
+                  {isCheckingForUpdates ? 'Checking...' : 'Check for updates'}
+                </Button>
+              </div>
               <Checkbox
                 slot="control"
                 appearance="settings"
@@ -309,17 +322,6 @@ function settingsValueToDialect(value: string): Dialect {
                 {#if autoUpdate}<CheckIcon className="control-icon" />{/if}
               </Checkbox>
             </SettingRow>
-            <div class="inline-row">
-              <Button
-                unstyled
-                class="button"
-                type="button"
-                disabled={isCheckingForUpdates}
-                on:click={checkForUpdates}
-              >
-                {isCheckingForUpdates ? 'Checking...' : 'Check for updates'}
-              </Button>
-            </div>
             {#if isAutoUpdateLoading}
               <p class="result-summary">Loading update setting...</p>
             {:else if autoUpdateError}
@@ -330,6 +332,20 @@ function settingsValueToDialect(value: string): Dialect {
               <p class="result-summary">{updateStatus}</p>
             {/if}
           </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="stanza">
+          <SettingRow top>
+            <div class="eyebrow">Restart Onboarding from the Beginning</div>
+            <p class="section-copy">
+              Useful to give Harper accessibility permission again or to learn how Harper works.
+            </p>
+            <Button slot="control" unstyled class="button" type="button" on:click={onRestartOnboarding}>
+              Restart onboarding
+            </Button>
+          </SettingRow>
         </div>
 
         <div class="divider"></div>

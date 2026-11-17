@@ -14,6 +14,7 @@ const PATTERNS: &[(&[&str], &str, &[&str])] = &[
     (&["flash", "flashes"], "in the", &["pan"]),
     (&["flash", "flashes"], "in-the", &["pan"]),
     (&["line"], "of", &["code"]),
+    (&["moment"], "of", &["truth"]),
     (&["part"], "of", &["speech", "speeches"]),
     (&["point"], "of", &["view"]),
     (&["proof"], "of", &["concept"]),
@@ -282,6 +283,26 @@ mod tests {
             "I wrote about my love of throwaway prototypes; those little proof-of-concepts that exist purely to get an idea out of your head",
             PluralWrongWordOfPhrase::default(),
             "I wrote about my love of throwaway prototypes; those little proofs-of-concept that exist purely to get an idea out of your head",
+        );
+    }
+
+    // MomentOfTruth
+
+    #[test]
+    fn correct_moments_of_truths() {
+        assert_suggestion_result(
+            "He does seem like a good-ish guy at the most crucial moments of truths.",
+            PluralWrongWordOfPhrase::default(),
+            "He does seem like a good-ish guy at the most crucial moments of truth.",
+        );
+    }
+
+    #[test]
+    fn correct_moment_of_truths() {
+        assert_suggestion_result(
+            "Being aware of the moment of truths and prepared to interact with your potential customers",
+            PluralWrongWordOfPhrase::default(),
+            "Being aware of the moments of truth and prepared to interact with your potential customers",
         );
     }
 }

@@ -1,9 +1,8 @@
-use crate::linting::expr_linter::Chunk;
 use crate::{
-    Token,
+    Token, TokenKind,
     expr::{All, Expr, FirstMatchOf, SequenceExpr},
     irregular_verbs::IrregularVerbs,
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
     patterns::{InflectionOfBe, WordSet},
 };
 
@@ -35,7 +34,10 @@ impl Default for SimplePastToPastParticiple {
                         ])),
                     ])
                     .t_ws()
-                    .then_verb_simple_past_form(),
+                    .then_kind_is_but_is_not(
+                        TokenKind::is_verb_simple_past_form,
+                        TokenKind::is_verb_past_participle_form,
+                    ),
                 ),
                 // negative: exceptions
                 Box::new(SequenceExpr::unless(FirstMatchOf::new(vec![
@@ -526,5 +528,18 @@ mod tests {
     #[test]
     fn dont_flag_has_lost() {
         assert_no_lints("He has lost his keys.", test_linter());
+    }
+
+    #[test]
+    fn alice() {
+        assert_no_lints("it had struck her foot!", test_linter());
+    }
+
+    #[test]
+    fn gatsby() {
+        assert_no_lints(
+            "the tuning-fork that had been struck upon a star",
+            test_linter(),
+        );
     }
 }

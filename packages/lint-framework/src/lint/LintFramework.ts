@@ -4,6 +4,7 @@ import { isGoogleDocsTarget } from './computeLintBoxes/googleDocsUtilities';
 import computeLintBoxes from './computeLintBoxes/index';
 import { isHeading, isVisible } from './domUtils';
 import { getCaretPosition, getCMRoot } from './editorUtils';
+import { getGoogleDocsLintWindows, MAX_LINT_TEXT_LENGTH } from './googleDocsLintWindows';
 import Highlights from './Highlights';
 import PopupHandler from './PopupHandler';
 import { remapLintToCurrentSource } from './spanMapping';
@@ -46,13 +47,18 @@ const PAGE_EVENTS = [
 export default class LintFramework {
 	private highlights: Highlights;
 	private popupHandler: PopupHandler;
-	private targets: Set<Node>;
+	/** Maps registered nodes to their current registration records and observers. */
+	private targets: Map<Node, { observer?: MutationObserver }>;
 	private scrollableAncestors: Set<HTMLElement>;
 	private lintRequest: Promise<unknown> | null = null;
 	private renderRequested = false;
 	private lintDelayTimer: number | null = null;
 	private lastInputAt = 0;
-	private lastLints: { target: HTMLElement; lints: UnpackedLintGroups }[] = [];
+	private lastLints: {
+		target: HTMLElement;
+		targetIdentity: object;
+		lints: UnpackedLintGroups;
+	}[] = [];
 	private lastBoxes: IgnorableLintBox[] = [];
 	private lastLintBoxes: IgnorableLintBox[] = [];
 
@@ -86,7 +92,7 @@ export default class LintFramework {
 			reportError: actions.reportError,
 			setRuleEnabled: actions.setRuleEnabled,
 		});
-		this.targets = new Set();
+		this.targets = new Map();
 		this.scrollableAncestors = new Set();
 		this.lastLints = [];
 
@@ -106,11 +112,16 @@ export default class LintFramework {
 		this.attachWindowListeners();
 	}
 
+	/** Enable optional hover activation without changing click or keyboard activation. */
+	public setOpenSuggestionsOnHover(enabled: boolean): void {
+		this.popupHandler.setOpenSuggestionsOnHover(enabled);
+	}
+
 	/** Returns the currents targets that are visible on-screen. */
 	onScreenTargets(): Node[] {
 		const onScreen = [] as Node[];
 
-		for (const target of this.targets) {
+		for (const target of this.targets.keys()) {
 			if (isVisible(target)) {
 				onScreen.push(target);
 			}
@@ -170,13 +181,43 @@ export default class LintFramework {
 						return { target: null as HTMLElement | null, lints: {} };
 					}
 
+					const targetIdentity = this.targets.get(target)!;
 					const { text, isCM, newLineIndices } = this.getTargetText(target);
 
-					if (!text || text.length > 120000) {
+					if (!text) {
 						return { target: null as HTMLElement | null, lints: {} };
 					}
 
 					const language = getTargetLanguage(target);
+					if (text.length > MAX_LINT_TEXT_LENGTH) {
+						const windows =
+							target instanceof HTMLElement ? getGoogleDocsLintWindows(target, text) : [];
+						if (windows.length === 0) {
+							return { target: null as HTMLElement | null, lints: {} };
+						}
+						const lintsBySource: UnpackedLintGroups = {};
+						for (const span of windows) {
+							const windowText = text.slice(span.start, span.end);
+							// Providers can cache their objects. Keep their window-local spans/source
+							// intact, and bind our copy to the full projection captured before await.
+							const groups = window.structuredClone(
+								await this.lintProvider(windowText, window.location.hostname, {
+									forceAllHeadings: isHeading(target),
+									language,
+								}),
+							);
+							for (const [rule, lints] of Object.entries(groups)) {
+								for (const lint of lints) {
+									lint.span.start += span.start;
+									lint.span.end += span.start;
+									lint.source = text;
+								}
+								lintsBySource[rule] ??= [];
+								lintsBySource[rule].push(...lints);
+							}
+						}
+						return { target: target as HTMLElement, targetIdentity, lints: lintsBySource };
+					}
 					let lintsBySource = await this.lintProvider(text, window.location.hostname, {
 						forceAllHeadings: isHeading(target),
 						language,
@@ -197,7 +238,7 @@ export default class LintFramework {
 						}
 					}
 
-					return { target: target as HTMLElement, lints: lintsBySource };
+					return { target: target as HTMLElement, targetIdentity, lints: lintsBySource };
 				}),
 			);
 
@@ -259,22 +300,32 @@ export default class LintFramework {
 		);
 	}
 
+	public hasTarget(target: Node): boolean {
+		return this.targets.has(target);
+	}
+
 	public async addTarget(target: Node) {
 		if (!this.targets.has(target)) {
-			this.targets.add(target);
+			this.targets.set(target, {});
 			this.update();
 			this.attachTargetListeners(target);
 		}
 	}
 
 	public async removeTarget(target: HTMLElement) {
-		if (this.targets.has(target)) {
+		const registration = this.targets.get(target);
+		if (registration) {
 			this.targets.delete(target);
 			this.update();
 			this.detachTargetListeners(target);
+			registration.observer?.disconnect();
 		} else {
 			throw new Error('HTMLElement not added.');
 		}
+	}
+
+	private isCurrentTarget(target: Node, identity: object): boolean {
+		return this.targets.get(target) === identity;
 	}
 
 	/** Return the last known ignorable lint boxes rendered on-screen. */
@@ -288,6 +339,7 @@ export default class LintFramework {
 		}
 
 		const observer = new MutationObserver(this.updateEventCallback);
+		this.targets.get(target)!.observer = observer;
 		const config = { subtree: true, characterData: true };
 
 		if ((target as any).tagName == undefined) {
@@ -367,10 +419,11 @@ export default class LintFramework {
 		this.renderRequested = true;
 
 		requestAnimationFrame(() => {
-			const boxes = this.lastLints.flatMap(({ target, lints }) => {
-				if (!target) {
+			const boxes = this.lastLints.flatMap(({ target, targetIdentity, lints }) => {
+				if (!target || !this.isCurrentTarget(target, targetIdentity)) {
 					return [];
 				}
+				const mapped = isGoogleDocsTarget(target);
 
 				const { text, isCM } = this.getTargetText(target);
 				if (text == null) {
@@ -379,16 +432,17 @@ export default class LintFramework {
 
 				return Object.entries(lints).flatMap(([ruleName, ls]) =>
 					ls.flatMap((lint) => {
-						const currentLint = isCM
-							? lint.source === text
-								? lint
-								: null
-							: remapLintToCurrentSource(lint, text);
+						const currentLint =
+							isCM || mapped
+								? lint.source === text
+									? lint
+									: null
+								: remapLintToCurrentSource(lint, text);
 						if (currentLint == null) {
 							return [];
 						}
 
-						return computeLintBoxes(target, currentLint, ruleName, {
+						const lintBoxes = computeLintBoxes(target, currentLint, ruleName, {
 							ignoreLint: this.actions.ignoreLint
 								? async (hash: string) => {
 										await this.actions.ignoreLint?.(hash);
@@ -396,6 +450,15 @@ export default class LintFramework {
 									}
 								: undefined,
 						});
+						for (const box of lintBoxes) {
+							const applySuggestion = box.applySuggestion;
+							box.applySuggestion = (suggestion) => {
+								if (this.isCurrentTarget(target, targetIdentity)) {
+									return applySuggestion(suggestion);
+								}
+							};
+						}
+						return lintBoxes;
 					}),
 				);
 			});

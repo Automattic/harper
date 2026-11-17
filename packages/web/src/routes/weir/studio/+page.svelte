@@ -400,6 +400,7 @@ onMount(async () => {
 		import('brace/mode/typescript'),
 		import('brace/mode/yaml'),
 		import('brace/theme/chrome'),
+		import('brace/theme/tomorrow_night'),
 	]);
 
 	const newLinter = new LocalLinter({ binary });
@@ -414,8 +415,8 @@ setInterval(saveWeirpackToStorage, 5000);
 </script>
 
 <Isolate>
-	<div class="relative flex h-screen w-screen overflow-hidden bg-[#fef4e7] text-black">
-		<div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(244,168,62,0.25),transparent_55%)]"></div>
+	<div class="relative flex h-screen w-screen overflow-hidden bg-[#fef4e7] text-black dark:bg-black dark:text-white">
+		<div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(244,168,62,0.25),transparent_55%)] dark:opacity-40"></div>
 
 		<WeirStudioWorkspace
 			{drawerOpen}

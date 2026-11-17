@@ -37,6 +37,11 @@ const fw = new LintFramework(
 	},
 );
 
+// Read once at startup; changes to this preference require a page reload.
+ProtocolClient.getOpenSuggestionsOnHover()
+	.then((enabled) => fw.setOpenSuggestionsOnHover(enabled))
+	.catch((error) => console.error('Failed to load suggestion hover setting:', error));
+
 const syncGoogleDocsBridge = createGoogleDocsBridgeSync(fw);
 
 function padWithContext(source: string, start: number, end: number, contextLength: number): string {
@@ -225,6 +230,16 @@ function scan() {
 			}
 
 			fw.addTarget(blockContainer);
+		}
+
+		// An empty editor can be its own target before the host inserts paragraphs.
+		// Stop linting that ancestor once all its leaves belong to closer blocks.
+		if (
+			!element.matches('textarea, input') &&
+			!seenBlockContainers.has(element) &&
+			fw.hasTarget(element)
+		) {
+			void fw.removeTarget(element as HTMLElement);
 		}
 	});
 }
