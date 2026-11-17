@@ -52,14 +52,7 @@ impl Default for ThingThink {
             "wouldn't",
         ]);
 
-        let auxiliary = WordSet::new([
-            "do",
-            "don't",
-            "does",
-            "doesn't",
-            "did",
-            "didn't",
-        ]);
+        let auxiliary = WordSet::new(["do", "don't", "does", "doesn't", "did", "didn't"]);
 
         let adverb_of_frequency =
             WordSet::new(["always", "sometimes", "often", "usually", "never"]);
