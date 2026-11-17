@@ -875,6 +875,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Whenever",
+								"state": true,
+								"label": "Whenever"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Whereupon",
 								"state": true,
 								"label": "Whereupon"
@@ -5876,6 +5883,13 @@
 								"name": "QuiteMany",
 								"state": true,
 								"label": "Quite Many"
+							}
+						},
+						{
+							"Bool": {
+								"name": "QuotedAsSaying",
+								"state": true,
+								"label": "Quoted as Saying"
 							}
 						},
 						{

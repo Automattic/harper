@@ -174,6 +174,19 @@ expr main DET NOUN
 
 This will match against "the word", "a banana", "an apple", among others.
 
+### Numbers
+
+Use the uppercase keyword `NUMBER` to match a single numeric token, such as `42`, `3.14`, or `1st`:
+
+```plaintext
+expr main NUMBER items
+```
+
+This matches "42 items", but not "two items".
+`NUMBER` uses Harper's `TokenKind::is_number()` predicate, not the `NUM` part-of-speech tag.
+Use `NUM` when you want to match tokens tagged as numerals, including spelled-out numbers.
+The expressions `number` and `Number` remain case-insensitive literal word matches.
+
 ### Progressive Verbs
 
 You can require that a token be a progressive verb with the keyword PROG.

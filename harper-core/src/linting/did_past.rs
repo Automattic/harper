@@ -329,4 +329,13 @@ mod tests {
             DidPast::new(FstDictionary::curated()),
         );
     }
+
+    #[test]
+    fn issue_did_not_matched() {
+        assert_suggestion_result(
+            "like in my case golang packages did not matched Rust crates. Bun did file by file.",
+            DidPast::new(FstDictionary::curated()),
+            "like in my case golang packages did not match Rust crates. Bun did file by file.",
+        );
+    }
 }

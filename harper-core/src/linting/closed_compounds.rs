@@ -87,6 +87,7 @@ pub fn lint_group() -> LintGroup {
         "Upset"           => (&["up set"][..], "upset"),
         "Upward"          => (&["up ward"][..], "upward"),
         "Whatsoever"      => (&["what so ever", "what-so-ever", "whatso ever", "whatso-ever", "what soever", "what-soever"][..], "whatsoever"),
+        "Whenever"        => (&["when ever", "when-ever"][..], "whenever"),
         "Whereupon"       => (&["where upon"][..], "whereupon"),
         "Widespread"      => (&["wide spread"][..], "widespread"),
         "Without"         => (&["with out"][..], "without"),
@@ -110,6 +111,16 @@ mod tests {
         let test_sentence = "The project, it self, was quite challenging.";
         let expected = "The project, itself, was quite challenging.";
         assert_suggestion_result(test_sentence, lint_group(), expected);
+    }
+
+    #[test]
+    fn no_it_self_before_hyphenated_compound() {
+        assert_no_lints("it self-levels itself", lint_group());
+    }
+
+    #[test]
+    fn no_my_self_before_hyphenated_compound() {
+        assert_no_lints("I worked on my self-esteem.", lint_group());
     }
 
     #[test]
@@ -524,6 +535,24 @@ mod tests {
             "Also I get no errors whatso-ever which makes this even more confusing.",
             lint_group(),
             "Also I get no errors whatsoever which makes this even more confusing.",
+        );
+    }
+
+    #[test]
+    fn when_space_ever() {
+        assert_suggestion_result(
+            "When ever I read comments like this it always makes me think the poster has led a much more charmed life than I have.",
+            lint_group(),
+            "Whenever I read comments like this it always makes me think the poster has led a much more charmed life than I have.",
+        );
+    }
+
+    #[test]
+    fn when_hyphen_ever() {
+        assert_suggestion_result(
+            "You can use this tool when-ever you need to check your spelling.",
+            lint_group(),
+            "You can use this tool whenever you need to check your spelling.",
         );
     }
 }
