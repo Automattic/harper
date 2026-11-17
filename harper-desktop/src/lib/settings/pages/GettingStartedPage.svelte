@@ -2,7 +2,7 @@
 import { isTauri } from '@tauri-apps/api/core';
 import { openUrl } from '@tauri-apps/plugin-opener';
 import { platform } from '@tauri-apps/plugin-os';
-import { Button, SlideDeck } from 'components';
+import { Button, CheckIcon, FloatingLettersSlideDeck } from 'components';
 import { onMount } from 'svelte';
 import {
 	type AccessibilityPermissionStatus,
@@ -23,27 +23,27 @@ const allSlides: OnboardingSlide[] = [
 	{
 		id: 'welcome',
 		title: 'Welcome',
-		lede: "Before you can start writing with Harper, we need to do a little housekeeping.\n\nDon't worry, this should only take a minute.",
+		lede: 'Before you can start writing with Harper, we need to do a little housekeeping.\n\nDon’t worry, this should only take a minute.',
 	},
 	{
 		id: 'accessibility',
 		title: 'Give Harper Permission',
-		lede: "Harper needs permission to read and write text in your favorite text editors. None of your text will leave your device.\n\nFind Harper in System Settings → Privacy & Security → Device Control and Data Access. Grant the permission in system settings, then come back here. If you've already granted permission and Harper isn't detecting it, try restarting Harper or removing and re-adding it in your permission list.",
+		lede: 'Harper needs permission to check and correct your writing. Your text stays on your device.',
 	},
 	{
 		id: 'integration',
 		title: 'Enable TextEdit',
-		lede: 'The Harper community is constantly adding support for new text editors. If we haven\'t marked a text editor as "supported" already, you can override this option yourself.\n\nLet\'s try that now. Go ahead and enable "TextEdit". Once you do, Harper will start checking your grammar in that app.',
+		lede: 'The Harper community is constantly adding support for new text editors. If we haven’t marked a text editor as “supported” already, you can override this option yourself.\n\nLet’s try that now. Go ahead and enable “TextEdit”. Once you do, Harper will start checking your grammar in that app.',
 	},
 	{
 		id: 'test-drive',
 		title: 'Try Harper',
-		lede: 'Now that you\'ve enabled TextEdit, go ahead and open it. Write something like, "This is an test."\n\nYou should see Harper jump in to fix that mistake.',
+		lede: 'Now that you’ve enabled TextEdit, go ahead and open it. Write something like, “This is an test.”\n\nYou should see Harper jump in to fix that mistake.',
 	},
 	{
 		id: 'ready',
 		title: 'Ready',
-		lede: "Okay! Now we're ready to go.\n\nDon't let your dreams be dreams. Write anything, anywhere and Harper will be there to catch your mistakes.",
+		lede: 'Okay! Now we’re ready to go.\n\nDon’t let your dreams be dreams. Write anything, anywhere and Harper will be there to catch your mistakes.',
 	},
 ];
 
@@ -245,7 +245,7 @@ async function prepareService() {
 </script>
 
 <div class="onboarding-shell">
-  <SlideDeck
+  <FloatingLettersSlideDeck
     title={slides[step].title}
     lede={slides[step].lede}
     slideProgress={step / (slides.length - 1)}
@@ -266,25 +266,33 @@ async function prepareService() {
       {/if}
     {:else if slides[step].id === 'accessibility'}
       <div class="onboarding-actions">
-        <div class="permission-actions">
-          <Button on:click={openAccessibilitySettings}>Open System Settings</Button>
-          <span role="status">
-            {#if accessibilityStatus === 'Granted'}
-              Permission granted
-            {:else if accessibilityStatus === 'NotGranted'}
-              Permission not granted
-            {:else if accessibilityStatus === 'Unsupported'}
-              Permission check unavailable
-            {:else}
-              Checking permission...
-            {/if}
-          </span>
+        <ol class="permission-steps">
+          <li>Open System Settings (or use the button below).</li>
+          <li>Go to <strong>Privacy &amp; Security → Device Control and Data Access</strong> and enable Harper.</li>
+          <li>Come back here to continue.</li>
+        </ol>
+        <Button color="white" on:click={openAccessibilitySettings}>Open System Settings</Button>
+        <span role="status" class="inline-flex items-center justify-center gap-1.5">
+          {#if accessibilityStatus === 'Granted'}
+            <CheckIcon className="size-5 shrink-0 text-green-700 dark:text-green-400" />
+            Permission granted
+          {:else if accessibilityStatus === 'NotGranted'}
+            Waiting for permission…
+          {:else if accessibilityStatus === 'Unsupported'}
+            Permission check unavailable
+          {:else}
+            Checking permission…
+          {/if}
+        </span>
+        <details class="permission-help">
+          <summary>Having trouble?</summary>
+          <p>If you’ve already granted permission and Harper isn’t detecting it, try restarting Harper. If that doesn’t help, remove Harper from the permission list and add it again.</p>
           {#if accessibilityStatus === 'NotGranted'}
             <button type="button" class="restart-link" disabled={isRestarting} on:click={restartHarper}>
-              {isRestarting ? 'Restarting Harper...' : 'Restart Harper'}
+              {isRestarting ? 'Restarting Harper…' : 'Restart Harper'}
             </button>
           {/if}
-        </div>
+        </details>
         {#if restartError}
           <p role="alert">{restartError}</p>
         {/if}
@@ -332,22 +340,48 @@ async function prepareService() {
     {:else if slides[step].id === 'ready'}
       <div class="onboarding-actions">
         <Button disabled={isCompletingOnboarding || !accessibilityReady || !integrationReady} on:click={completeOnboarding}>
-          {isCompletingOnboarding ? 'Finishing...' : 'Finish'}
+          {isCompletingOnboarding ? 'Finishing...' : 'Let’s go'}
         </Button>
       </div>
     {/if}
     {#if onboardingError}
       <p role="alert">{onboardingError}</p>
     {/if}
-  </SlideDeck>
+  </FloatingLettersSlideDeck>
 </div>
 
 <style>
-.permission-actions {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
+.permission-steps {
+  max-width: 30rem;
+  margin: 0;
+  padding-left: 1.5rem;
+  list-style: decimal;
+  text-align: left;
+  line-height: 1.5;
+}
+
+.permission-steps li + li {
+  margin-top: 0.5rem;
+}
+
+.permission-help {
+  width: 100%;
+  max-width: 30rem;
+}
+
+.permission-help summary {
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.permission-help summary:focus-visible {
+  outline: 2px solid var(--settings-accent, #2a6bd8);
+  outline-offset: 3px;
+}
+
+.permission-help p {
+  margin: 0.75rem 0;
 }
 
 .restart-link {
