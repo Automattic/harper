@@ -875,6 +875,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Whenever",
+								"state": true,
+								"label": "Whenever"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Whereupon",
 								"state": true,
 								"label": "Whereupon"
