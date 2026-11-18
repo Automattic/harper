@@ -1,4 +1,8 @@
-expr main [(in the grand scale of things), (on the grand scale of things), (on the grand scheme of things)]
+expr main [
+    (in the grand scale of things),
+    (on the grand scale of things),
+    (on the grand scheme of things)
+]
 
 let message "Did you mean `in the grand scheme of things`?"
 let description "Corrects nonstandard variants of `in the grand scheme of things`."

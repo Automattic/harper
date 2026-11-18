@@ -103,21 +103,21 @@ impl ExprLinter for SplitWords {
             let remainder = &chars[split_pos..];
 
             // Both parts must be valid common words
-            let Some(cand_meta) = self.dict.get_word_metadata(candidate) else {
+            let Some(cand_meta) = self.dict.get_word_metadata_exact(candidate) else {
                 continue;
             };
             if !cand_meta.common {
                 continue;
             }
 
-            let Some(rem_meta) = self.dict.get_word_metadata(remainder) else {
+            let Some(rem_meta) = self.dict.get_word_metadata_exact(remainder) else {
                 continue;
             };
             if !rem_meta.common {
                 continue;
             }
 
-            if is_anchor_split(&cand_meta) || is_anchor_split(&rem_meta) {
+            if is_anchor_split(cand_meta) || is_anchor_split(rem_meta) {
                 has_anchor_split = true;
             }
 
@@ -161,7 +161,7 @@ impl ExprLinter for SplitWords {
                 lint_kind: LintKind::Typo,
                 suggestions,
                 message: message?,
-                priority: 31,
+                priority: 33,
             });
         }
 

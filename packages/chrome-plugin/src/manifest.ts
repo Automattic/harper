@@ -38,7 +38,7 @@ export function makeExtensionCSP(isDev: boolean): string {
 }
 
 export default defineManifest({
-	name: `Private Grammar Checker - Harper${isDev ? ' ➡️ Dev' : ''}`,
+	name: `Private Grammar & Spell Checker - Harper${isDev ? ' ➡️ Dev' : ''}`,
 	description: packageData.description,
 	version: packageData.version,
 	manifest_version: 3,

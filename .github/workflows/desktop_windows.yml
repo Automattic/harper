@@ -7,6 +7,12 @@ on:
     branches: ["master"]
   merge_group:
 
+# Cancel superseded runs when a PR gets new commits, freeing runners for other
+# jobs. Non-PR runs get a unique group, so they are never queued or cancelled.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
 env:
   CARGO_TERM_COLOR: always
 
@@ -35,6 +41,9 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
       - uses: actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659 # v1.17.0
+        with:
+          # The Rust Cache step below already caches the build.
+          cache: false
       - name: Install Node.js
         uses: actions/setup-node@v7
         with:
@@ -42,15 +51,14 @@ jobs:
       - name: Enable Corepack
         run: corepack enable
       - name: Install Tauri and cross-compilation dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            libayatana-appindicator3-dev \
-            librsvg2-dev \
-            libwebkit2gtk-4.1-dev \
-            libxdo-dev \
-            llvm \
-            nsis
+        run: >-
+          .github/scripts/apt-install.sh
+          libayatana-appindicator3-dev
+          librsvg2-dev
+          libwebkit2gtk-4.1-dev
+          libxdo-dev
+          llvm
+          nsis
       - name: Verify Windows build tools
         run: command -v clang-cl llvm-lib makensis
       - name: Rust Cache
@@ -66,6 +74,13 @@ jobs:
         run: cargo binstall wasm-pack --force --no-confirm
       - name: Install `cargo-xwin`
         run: cargo binstall cargo-xwin --force --no-confirm
+      # cargo-xwin otherwise downloads the MSVC CRT and Windows SDK on every
+      # run, which takes 5 to 11 minutes.
+      - name: Cache MSVC CRT
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/cargo-xwin
+          key: cargo-xwin-${{ runner.os }}
       - name: Build Harper Desktop for Windows
         run: just build-desktop-windows
       - name: Upload artifacts

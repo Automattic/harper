@@ -226,6 +226,17 @@ pub fn lint_group() -> LintGroup {
             "Tries to correct typos of `dose` to `does`.",
             LintKind::Typo
         ),
+        "DoubleDown" => (
+            &[
+                ("dabble down", "double down"),
+                ("dabbled down", "doubled down"),
+                ("dabbles down", "doubles down"),
+                ("dabbling down", "doubling down"),
+            ],
+            "Did you mean `double down`?",
+            "Corrects `dabble down` to `double down`.",
+            LintKind::Style
+        ),
         "ExpandAlgorithm" => (
             &[
                 ("algo", "algorithm"),
@@ -523,17 +534,6 @@ pub fn lint_group() -> LintGroup {
             LintKind::Style
         ),
 
-        "LookForwardTo" => (
-            &[
-                ("look forward for", "look forward to"),
-                ("looked forward for", "looked forward to"),
-                ("looks forward for", "looks forward to"),
-                ("looking forward for", "looking forward to")
-            ],
-            "The correct preposition in this phrase is `to`.",
-            "Corrects `look forward for` to `look forward to`.",
-            LintKind::Usage
-        ),
         "MakeDoWith" => (
             &[
                 ("make due with", "make do with"),
@@ -740,6 +740,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects `take control over` to `take control of`.",
             LintKind::Usage
         ),
+        "Themselves" => (
+            &[
+                ("them self", "themself"),
+                ("them selves", "themselves"),
+            ],
+            "Use `themselves` instead of `themself`.",
+            "Corrects `themself` to `themselves`.",
+            LintKind::Usage
+        ),
         "UseToUsedTo" => (
             &[
                 // "be" verbs + "use to" -> "used to" (accustomed to)
@@ -830,6 +839,21 @@ pub fn lint_group() -> LintGroup {
             "The correct spelling is `backhanded`.",
             "Corrects `backhand compliment` to `backhanded compliment`.",
             LintKind::Spelling
+        ),
+        "BackwardEngineer" => (
+            &[
+                (&["backward engineer",    "backwards engineer"],    &["reverse engineer"]),
+                (&["backward engineers",   "backwards engineers"],   &["reverse engineers"]),
+                (&["backward-engineer",    "backwards-engineer"],    &["reverse-engineer"]),
+                (&["backward-engineers",   "backwards-engineers"],   &["reverse-engineers"]),
+                (&["backward engineering", "backwards engineering"], &["reverse engineering"]),
+                (&["backward-engineering", "backwards-engineering"], &["reverse-engineering"]),
+                (&["backward engineered",  "backwards engineered"],  &["reverse engineered"]),
+                (&["backward-engineered",  "backwards-engineered"],  &["reverse-engineered"]),
+            ],
+            "The much more common term is `reverse engineer`.",
+            "Suggests changing the less common `backward/backwards engineer` to the more usual `reverse engineer`.",
+            LintKind::WordChoice
         ),
         "BainBane" => (
             &[
@@ -1027,6 +1051,17 @@ pub fn lint_group() -> LintGroup {
             "Use `look alike` or `look-alike` instead of `look-a-like`.",
             "Corrects `look-a-like` to `look alike` or `look-alike`.",
             LintKind::Spelling
+        ),
+        "LookForwardTo" => (
+            &[
+                (&["look forward for", "look forwards to"], &["look forward to"]),
+                (&["looked forward for", "looked forwards to"], &["looked forward to"]),
+                (&["looks forward for", "looks forwards to"], &["looks forward to"]),
+                (&["looking forward for", "looking forwards to"], &["looking forward to"])
+            ],
+            "The correct preposition in this phrase is `to`.",
+            "Corrects `look forward for` to `look forward to`.",
+            LintKind::Usage
         ),
         "MakeItSeem" => (
             &[
@@ -1241,6 +1276,7 @@ pub fn lint_group() -> LintGroup {
                 (&["worst than"], &["worse than"]),
                 // worse -> worst
                 (&["at worse"], &["at worst"]),
+                (&["the worse thing"], &["the worst thing"]),
                 (&["worse case scenario", "worse-case scenario", "worse-case-scenario"], &["worst-case scenario"]),
                 (&["worse ever"], &["worst ever"]),
             ],

@@ -49,6 +49,12 @@ impl Default for RedundantSelf {
                     "identified",
                     "identifies",
                     "identifying",
+                    "level",
+                    "leveled",
+                    "leveling",
+                    "levelled",
+                    "levelling",
+                    "levels",
                     "medicate",
                     "medicated",
                     "medicates",
@@ -786,6 +792,15 @@ mod tests {
             "I'm on dudes side, the person that self defended himself",
             test_linter(),
             "I'm on dudes side, the person that defended himself",
+        );
+    }
+
+    #[test]
+    fn fix_self_levels_itself() {
+        assert_suggestion_result(
+            "That's going to stop the fuel coming out of this tank and into the other two tanks because the fuel self-levels itself to keep the boat nice and flat.",
+            test_linter(),
+            "That's going to stop the fuel coming out of this tank and into the other two tanks because the fuel self-levels to keep the boat nice and flat.",
         );
     }
 }

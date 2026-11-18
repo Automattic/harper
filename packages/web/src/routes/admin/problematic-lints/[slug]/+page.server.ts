@@ -29,5 +29,6 @@ export const load = async ({ params }) => {
 	return {
 		counts,
 		prevCounts,
+		timePeriod: slug,
 	};
 };

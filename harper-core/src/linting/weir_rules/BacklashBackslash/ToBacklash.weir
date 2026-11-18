@@ -1,0 +1,14 @@
+expr main <[([conservative, cultural, gear, political, public, violent] backslash), (backslash [adjustment, against, gear, gears])], backslash>
+
+let message "Did you mean `backlash`?"
+let description "Corrects `backslash` to `backlash` when it looks like a typo."
+let kind "Typo"
+let becomes "backlash"
+
+test "Citizens' Assembly Sparks Art World Criticism and Conservative Backslash." "Citizens' Assembly Sparks Art World Criticism and Conservative Backlash."
+test "adopt AI, despite inevitable public backslash" "adopt AI, despite inevitable public backlash"
+test "The attacks triggered a violent backslash against the Muslim community" "The attacks triggered a violent backlash against the Muslim community"
+test "calibration errors,gear backslash" "calibration errors,gear backlash"
+test "Backslash adjustment in Takahashi mounts" "Backlash adjustment in Takahashi mounts"
+test "Miniature zero-backslash gears and actuators for precision positioning applications." "Miniature zero-backlash gears and actuators for precision positioning applications."
+test "Cultural Backslash: Trump, Brexit and the Rise of Authoritarian Populism" "Cultural Backlash: Trump, Brexit and the Rise of Authoritarian Populism"

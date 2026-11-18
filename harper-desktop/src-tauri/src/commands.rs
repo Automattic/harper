@@ -1,7 +1,7 @@
 //! This module centralizes all the Rust commands to be made available to the JavaScript
 //! environment. Use [`application_message_handler`] to load them into the Tauri runtime.
 
-use crate::config::Config;
+use crate::config::{Config, InstalledWeirpack, OnboardingState};
 use crate::desktop_updater::{DesktopUpdater, UpdateResult};
 use crate::highlighter_service::HighlighterService;
 use crate::os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker};
@@ -14,11 +14,15 @@ use harper_core::{
 };
 use std::sync::{Arc, RwLock};
 use tauri::ipc::Invoke;
-use tauri::{Manager, Runtime, State};
+use tauri::{Emitter, Manager, Runtime, State};
 use tokio::sync::Mutex;
 
 pub fn application_message_handler<R: Runtime>() -> impl Fn(Invoke<R>) -> bool {
     tauri::generate_handler![
+        get_weirpacks,
+        install_weirpack,
+        remove_weirpack,
+        update_weirpack,
         get_lint_config,
         get_dialect,
         get_debounce_ms,
@@ -28,8 +32,8 @@ pub fn application_message_handler<R: Runtime>() -> impl Fn(Invoke<R>) -> bool {
         get_current_version,
         get_latest_version,
         update_to_latest,
-        get_onboarding_completed,
-        set_onboarding_completed,
+        get_onboarding_state,
+        set_onboarding_state,
         set_dialect,
         set_lint_config,
         get_dictionary,
@@ -47,9 +51,103 @@ pub fn application_message_handler<R: Runtime>() -> impl Fn(Invoke<R>) -> bool {
         request_accessibility_permission,
         start_highlighter_service,
         stop_highlighter_service,
+        restart_harper,
         launch_app,
         search_apps,
     ]
+}
+
+#[tauri::command]
+async fn get_weirpacks(
+    config: State<'_, Arc<Mutex<Config>>>,
+) -> Result<Vec<InstalledWeirpack>, String> {
+    Ok(config.lock().await.weirpacks.clone())
+}
+
+/// Validate before acquiring the settings lock; publish changes only after a successful save.
+#[tauri::command]
+async fn install_weirpack<R: Runtime>(
+    filename: String,
+    bytes: Vec<u8>,
+    config: State<'_, Arc<Mutex<Config>>>,
+    app: tauri::AppHandle<R>,
+) -> Result<(), String> {
+    let pack =
+        tauri::async_runtime::spawn_blocking(move || InstalledWeirpack::install(filename, bytes))
+            .await
+            .map_err(|error| error.to_string())??;
+    let mut config = config.lock().await;
+    let packs = config
+        .weirpacks
+        .iter()
+        .cloned()
+        .chain(std::iter::once(pack))
+        .collect();
+    config
+        .save_weirpacks(packs)
+        .await
+        .map_err(|error| error.to_string())?;
+    let _ = app.emit("weirpacks-changed", ());
+    Ok(())
+}
+
+#[tauri::command]
+async fn remove_weirpack<R: Runtime>(
+    id: String,
+    config: State<'_, Arc<Mutex<Config>>>,
+    app: tauri::AppHandle<R>,
+) -> Result<(), String> {
+    let mut config = config.lock().await;
+    let packs = config
+        .weirpacks
+        .iter()
+        .filter(|pack| pack.id != id)
+        .cloned()
+        .collect();
+    config
+        .save_weirpacks(packs)
+        .await
+        .map_err(|error| error.to_string())?;
+    let _ = app.emit("weirpacks-changed", ());
+    Ok(())
+}
+
+#[tauri::command]
+async fn update_weirpack<R: Runtime>(
+    id: String,
+    name: Option<String>,
+    enabled: Option<bool>,
+    config: State<'_, Arc<Mutex<Config>>>,
+    app: tauri::AppHandle<R>,
+) -> Result<(), String> {
+    let mut config = config.lock().await;
+    if !config.weirpacks.iter().any(|pack| pack.id == id) {
+        return Err("Weirpack not found.".into());
+    }
+    let name = name.map(|name| name.trim().to_owned());
+    if name.as_ref().is_some_and(|name| name.is_empty()) {
+        return Err("A pack name cannot be empty.".into());
+    }
+    let packs = config
+        .weirpacks
+        .iter()
+        .map(|pack| {
+            if pack.id != id {
+                return pack.clone();
+            }
+            InstalledWeirpack {
+                name: name.clone().unwrap_or_else(|| pack.name.clone()),
+                enabled: enabled.unwrap_or(pack.enabled),
+                ..pack.clone()
+            }
+        })
+        .collect();
+    config
+        .save_weirpacks(packs)
+        .await
+        .map_err(|error| error.to_string())?;
+    let _ = app.emit("weirpacks-changed", ());
+    Ok(())
 }
 
 #[tauri::command]
@@ -127,21 +225,23 @@ async fn update_to_latest<R: Runtime>(
 }
 
 #[tauri::command]
-async fn get_onboarding_completed(config: State<'_, Arc<Mutex<Config>>>) -> Result<bool, String> {
-    Ok(config.lock().await.onboarding_completed)
+async fn get_onboarding_state(
+    config: State<'_, Arc<Mutex<Config>>>,
+) -> Result<OnboardingState, String> {
+    Ok(config.lock().await.onboarding_state)
 }
 
 #[tauri::command]
-async fn set_onboarding_completed(
-    onboarding_completed: bool,
+async fn set_onboarding_state(
+    onboarding_state: OnboardingState,
     config: State<'_, Arc<Mutex<Config>>>,
 ) -> Result<(), String> {
     let mut config = config.lock().await;
-    let previous_value = config.onboarding_completed;
-    config.onboarding_completed = onboarding_completed;
+    let previous_value = config.onboarding_state;
+    config.onboarding_state = onboarding_state;
 
     if let Err(error) = config.save_to_system().await {
-        config.onboarding_completed = previous_value;
+        config.onboarding_state = previous_value;
         return Err(error.to_string());
     }
 
@@ -420,6 +520,28 @@ pub(crate) async fn stop_highlighter_service(
     }
 
     Ok(highlighter_service.stop())
+}
+
+/// Unlike Tauri's infallible restart API, keep the current app alive on spawn failure.
+#[tauri::command]
+async fn restart_harper<R: Runtime>(
+    app: tauri::AppHandle<R>,
+    config: State<'_, Arc<Mutex<Config>>>,
+    highlighter_service: State<'_, HighlighterService>,
+) -> Result<(), String> {
+    config
+        .lock()
+        .await
+        .save_to_system()
+        .await
+        .map_err(|error| format!("Could not save progress: {error}. Retry Restart Harper."))?;
+    let binary = tauri::process::current_binary(&app.env())
+        .map_err(|error| format!("Could not locate Harper: {error}. Quit Harper and open the installed application again."))?;
+    highlighter_service.restart_app(|| {
+        std::process::Command::new(binary).spawn().map(|_| ())
+    }).map_err(|error| format!("Could not restart Harper: {error}. Retry, or quit Harper and open the installed application again."))?;
+    app.exit(0);
+    Ok(())
 }
 
 #[tauri::command]

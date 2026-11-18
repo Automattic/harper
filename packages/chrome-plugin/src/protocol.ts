@@ -11,9 +11,14 @@ export type Request =
 	| GetDialectRequest
 	| GetIsolateEnglishRequest
 	| SetIsolateEnglishRequest
+	| GetOpenSuggestionsOnHoverRequest
+	| SetOpenSuggestionsOnHoverRequest
 	| GetDelayRequest
 	| SetDelayRequest
 	| SetDomainStatusRequest
+	| GetConfiguredDomainsRequest
+	| SetDefaultDomainsStatusRequest
+	| ResetDomainRequest
 	| SetDefaultStatusRequest
 	| GetDomainStatusRequest
 	| GetDefaultStatusRequest
@@ -21,6 +26,7 @@ export type Request =
 	| AddToUserDictionaryRequest
 	| SetUserDictionaryRequest
 	| IgnoreLintRequest
+	| ClearIgnoredLintsRequest
 	| GetUserDictionaryRequest
 	| GetActivationKeyRequest
 	| SetActivationKeyRequest
@@ -41,11 +47,15 @@ export type Response =
 	| GetConfigResponse
 	| GetStructuredConfigResponse
 	| UnitResponse
+	| ClearIgnoredLintsResponse
 	| GetLintDescriptionsResponse
 	| GetDialectResponse
 	| GetIsolateEnglishResponse
+	| GetOpenSuggestionsOnHoverResponse
 	| GetDelayResponse
 	| GetDomainStatusResponse
+	| SetDomainStatusResponse
+	| GetConfiguredDomainsResponse
 	| GetDefaultStatusResponse
 	| GetEnabledDomainsResponse
 	| GetUserDictionaryResponse
@@ -94,6 +104,20 @@ export type SetConfigRequest = {
 export type SetDialectRequest = {
 	kind: 'setDialect';
 	dialect: Dialect;
+};
+
+export type GetOpenSuggestionsOnHoverRequest = {
+	kind: 'getOpenSuggestionsOnHover';
+};
+
+export type SetOpenSuggestionsOnHoverRequest = {
+	kind: 'setOpenSuggestionsOnHover';
+	enabled: boolean;
+};
+
+export type GetOpenSuggestionsOnHoverResponse = {
+	kind: 'getOpenSuggestionsOnHover';
+	enabled: boolean;
 };
 
 export type GetDelayRequest = {
@@ -153,6 +177,21 @@ export type GetDomainStatusResponse = {
 	enabled: boolean;
 };
 
+export type DomainStatus = {
+	domain: string;
+	enabled: boolean;
+	isDefault: boolean;
+};
+
+export type GetConfiguredDomainsRequest = {
+	kind: 'getConfiguredDomains';
+};
+
+export type GetConfiguredDomainsResponse = {
+	kind: 'getConfiguredDomains';
+	domains: DomainStatus[];
+};
+
 export type GetDefaultStatusRequest = {
 	kind: 'getDefaultStatus';
 };
@@ -177,6 +216,22 @@ export type SetDomainStatusRequest = {
 	enabled: boolean;
 	/** Dictates whether this should override a previous setting. */
 	overrideValue: boolean;
+};
+
+export type SetDomainStatusResponse = {
+	kind: 'setDomainStatus';
+	/** Whether the effective enable/disable state actually changed. */
+	changed: boolean;
+};
+
+export type SetDefaultDomainsStatusRequest = {
+	kind: 'setDefaultDomainsStatus';
+	enabled: boolean;
+};
+
+export type ResetDomainRequest = {
+	kind: 'resetDomain';
+	domain: string;
 };
 
 export type SetDefaultStatusRequest = {
@@ -224,6 +279,16 @@ export type GetReviewedResponse = {
 export type SetReviewedRequest = {
 	kind: 'setReviewed';
 	reviewed: boolean;
+};
+
+/** Clear ignored suggestions across all websites without changing other settings. */
+export type ClearIgnoredLintsRequest = {
+	kind: 'clearIgnoredLints';
+};
+
+export type ClearIgnoredLintsResponse = {
+	kind: 'clearIgnoredLints';
+	success: boolean;
 };
 
 export type IgnoreLintRequest = {

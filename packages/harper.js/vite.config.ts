@@ -2,8 +2,9 @@ import { playwright } from '@vitest/browser-playwright';
 import type { Plugin } from 'vite';
 import dts from 'vite-plugin-dts';
 import { defineConfig } from 'vitest/config';
-import apiExtractorConfig from './api-extractor.json';
+import apiExtractorConfig from './api-extractor.json' with { type: 'json' };
 
+/** Remove duplicate worker WASM assets; the public binary entries own these files. */
 function removeAssetsPlugin(options: { test: RegExp }): Plugin {
 	return {
 		name: 'remove-wasm',
@@ -31,7 +32,7 @@ export default defineConfig({
 		},
 		minify: false,
 		assetsInlineLimit: 0,
-		rollupOptions: {
+		rolldownOptions: {
 			external: [/^node:/, 'fs'],
 			output: {
 				minifyInternalExports: false,
@@ -54,9 +55,9 @@ export default defineConfig({
 	worker: {
 		format: 'es',
 		plugins: () => [removeAssetsPlugin({ test: /\.wasm$/ })],
-		rollupOptions: {
+		rolldownOptions: {
 			output: {
-				inlineDynamicImports: true,
+				codeSplitting: false,
 			},
 		},
 	},

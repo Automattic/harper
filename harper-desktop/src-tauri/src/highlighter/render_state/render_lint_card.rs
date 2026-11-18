@@ -1,10 +1,11 @@
 //! Renders the lint card and defines its shared drawing and hit-test geometry.
 
-use std::hash::Hash;
+use std::{hash::Hash, sync::Arc};
 
 use egui_commonmark::{CommonMarkCache, CommonMarkViewer};
 use harper_core::linting::{Lint, LintKind, Suggestion};
 
+use super::super::fonts;
 use super::lint_kind_color32;
 use super::popup_layout::{PopupLayout, UNBOUNDED_VIEWPORT, popup_layout};
 use crate::rect::Rect;
@@ -31,6 +32,12 @@ pub const FIRST_ROW_OFFSET: f32 = BORDER_WIDTH + LIST_PADDING_Y;
 const KIND_HEADER_HEIGHT: f32 = 34.0;
 const DISABLE_ROW_HEIGHT: f32 = 33.0;
 const BUTTON_MIN_HEIGHT: f32 = 24.0;
+const TIP_PADDING: f32 = 10.0;
+const TIP_TITLE_GAP: f32 = 6.0;
+const TIP_ICON_SIZE: f32 = 14.0;
+const TIP_ICON_GAP: f32 = 6.0;
+const TIP_FONT_SIZE: f32 = 13.0;
+const TIP_BACKGROUND: egui::Color32 = egui::Color32::from_rgb(0xf6, 0xf8, 0xfa);
 
 const POPUP_BACKGROUND: egui::Color32 = egui::Color32::from_rgb(0xff, 0xff, 0xff);
 const POPUP_BORDER: egui::Color32 = egui::Color32::from_rgb(0xd0, 0xd7, 0xde);
@@ -43,6 +50,63 @@ const SUBTLE_TEXT_COLOR: egui::Color32 = egui::Color32::from_rgb(0x8b, 0x94, 0x9
 const DISMISS_BACKGROUND: egui::Color32 = egui::Color32::from_rgb(0xe5, 0xe5, 0xe5);
 const BUTTON_BACKGROUND: egui::Color32 = egui::Color32::from_rgb(0xef, 0xef, 0xef);
 const BUTTON_TEXT_COLOR: egui::Color32 = egui::Color32::from_rgb(0x00, 0x00, 0x00);
+
+/// Measured heading and wrapped body shared by tip painting and popup hit-testing.
+///
+/// Measure with the active egui painter before computing the card bounds. Retaining these galleys
+/// avoids wrapping the text differently when drawing and lets shorter tips shrink naturally.
+/// The heading reserves space for a decorative bulb; the body retains the full content width.
+pub struct TipLayout {
+    title: Arc<egui::Galley>,
+    body: Arc<egui::Galley>,
+}
+
+impl TipLayout {
+    pub fn new(painter: &egui::Painter, tip: &str) -> Self {
+        let font = egui::FontId::proportional(TIP_FONT_SIZE);
+        let width = LIST_WIDTH - 2.0 * TIP_PADDING;
+        Self {
+            title: painter.layout(
+                "Tip".to_owned(),
+                fonts::bold(TIP_FONT_SIZE),
+                TEXT_COLOR,
+                width - TIP_ICON_SIZE - TIP_ICON_GAP,
+            ),
+            body: painter.layout(tip.to_owned(), font, MUTED_TEXT_COLOR, width),
+        }
+    }
+
+    /// Fits both the measured label and the icon without changing the body text's width.
+    fn heading_height(&self) -> f32 {
+        self.title.size().y.max(TIP_ICON_SIZE)
+    }
+
+    /// Places the decorative icon and label on a shared vertical center, separated by a fixed gap.
+    fn heading_rects(&self, origin: egui::Pos2) -> (egui::Rect, egui::Rect) {
+        let center_y = origin.y + self.heading_height() / 2.0;
+        let icon = egui::Rect::from_min_size(
+            egui::pos2(origin.x, center_y - TIP_ICON_SIZE / 2.0),
+            egui::Vec2::splat(TIP_ICON_SIZE),
+        );
+        let title = egui::Rect::from_min_size(
+            egui::pos2(
+                icon.right() + TIP_ICON_GAP,
+                center_y - self.title.size().y / 2.0,
+            ),
+            self.title.size(),
+        );
+        (icon, title)
+    }
+
+    fn body_offset(&self) -> f32 {
+        DIVIDER_WIDTH + TIP_PADDING + self.heading_height() + TIP_TITLE_GAP
+    }
+
+    /// Includes the divider, measured text, heading gap, and top/bottom padding, in egui points.
+    pub fn height(&self) -> f32 {
+        self.body_offset() + self.body.size().y + TIP_PADDING
+    }
+}
 
 /// An action selected in the lint card, returned for `RenderState` to apply.
 ///
@@ -76,21 +140,20 @@ enum ButtonContent<'a> {
 /// Renders the suggestion popup and returns the action the user picked, if any.
 ///
 /// The layout copies the Chrome extension's suggestion popup: the suggestion list and the lint
-/// explanation are two separate floating cards. [`popup_layout_for_lint`] places them, so
-/// hit-testing and drawing agree without measuring the popup.
+/// explanation are two separate floating cards. The caller supplies the same layout computed by
+/// [`popup_layout_for_lint`] for hit-testing, including any tip drawer space.
 ///
-/// `sidebar_position` is the flyout card's current offset from the list card's top. The caller
-/// animates it toward [`sidebar_target`]. `shown_suggestion` only selects the highlighted row.
+/// `shown_suggestion` only selects the highlighted row. `tip` is the session's retained decision;
+/// rendering never selects or rotates tips.
 pub fn render_lint_card(
     ui: &mut egui::Ui,
-    rect: &Rect,
+    layout: PopupLayout,
     lint: &Lint,
     source_text: &str,
     shown_suggestion: Option<usize>,
-    sidebar_position: f32,
+    tip: Option<&TipLayout>,
     markdown_cache: &mut CommonMarkCache,
 ) -> Option<LintCardAction> {
-    let layout = popup_layout_for_lint(rect, lint, sidebar_position);
     let problem_text = problem_text(lint, source_text);
     let span = (lint.span.start, lint.span.end);
 
@@ -101,6 +164,7 @@ pub fn render_lint_card(
             lint,
             &problem_text,
             shown_suggestion.unwrap_or(0),
+            tip,
             &mut action,
         );
         action
@@ -171,7 +235,7 @@ fn card_frame() -> egui::Frame {
         })
 }
 
-/// Renders the list card: one row for each suggestion, then the footer.
+/// Renders the list card: one row for each suggestion, then the footer and optional tip.
 ///
 /// Clicking a row applies its suggestion. Hovering a row reports its index, so the flyout card can
 /// align with it. When the lint has no suggestions, one "No replacements" row takes their place,
@@ -184,6 +248,7 @@ fn render_suggestion_list(
     lint: &Lint,
     problem_text: &str,
     selected: usize,
+    tip: Option<&TipLayout>,
     action: &mut Option<LintCardAction>,
 ) {
     ui.add_space(LIST_PADDING_Y);
@@ -218,7 +283,52 @@ fn render_suggestion_list(
     }
 
     render_list_footer(ui, action);
+    if let Some(tip) = tip {
+        render_tip_drawer(ui, tip);
+    }
     ui.add_space(LIST_PADDING_Y);
+}
+
+/// Draws a passive note using the same measured text and height as the popup's hit-test bounds.
+/// Tall content remains inside the list's existing scroll area without taking keyboard focus.
+fn render_tip_drawer(ui: &mut egui::Ui, tip: &TipLayout) {
+    let (rect, _) =
+        ui.allocate_exact_size(egui::vec2(LIST_WIDTH, tip.height()), egui::Sense::hover());
+    let painter = ui.painter();
+    painter.rect_filled(rect, 0.0, TIP_BACKGROUND);
+    painter.hline(
+        rect.x_range(),
+        rect.top() + DIVIDER_WIDTH / 2.0,
+        egui::Stroke::new(DIVIDER_WIDTH, DIVIDER_COLOR),
+    );
+    let (icon_rect, title_rect) =
+        tip.heading_rects(rect.min + egui::vec2(TIP_PADDING, DIVIDER_WIDTH + TIP_PADDING));
+    draw_lightbulb_icon(painter, icon_rect, TEXT_COLOR);
+    painter.galley(title_rect.min, tip.title.clone(), TEXT_COLOR);
+    painter.galley(
+        rect.min + egui::vec2(TIP_PADDING, tip.body_offset()),
+        tip.body.clone(),
+        MUTED_TEXT_COLOR,
+    );
+}
+
+/// Draws a decorative lightbulb outline in a 24-unit coordinate system scaled into `rect`.
+/// Painter primitives avoid font/emoji dependencies; the icon has no independent hit target.
+fn draw_lightbulb_icon(painter: &egui::Painter, rect: egui::Rect, color: egui::Color32) {
+    let scale = rect.width().min(rect.height()) / 24.0;
+    let origin = rect.center() - egui::Vec2::splat(12.0 * scale);
+    let point = |x: f32, y: f32| origin + egui::vec2(x, y) * scale;
+    let stroke = egui::Stroke::new(1.75 * scale, color);
+
+    let mut bulb = vec![point(9.0, 18.0), point(9.0, 16.0)];
+    // The open bottom of the circular bulb tapers into its neck.
+    bulb.extend((0..=32).map(|step| {
+        let angle = (126.0 + 288.0 * step as f32 / 32.0).to_radians();
+        point(12.0 + 6.0 * angle.cos(), 8.0 + 6.0 * angle.sin())
+    }));
+    bulb.extend([point(15.0, 16.0), point(15.0, 18.0)]);
+    painter.add(egui::Shape::closed_line(bulb, stroke));
+    painter.line_segment([point(10.0, 21.0), point(14.0, 21.0)], stroke);
 }
 
 /// Renders one suggestion row: a swatch in the lint color, the label, and a chevron.
@@ -745,17 +855,26 @@ fn problem_text(lint: &Lint, source_text: &str) -> String {
 /// Defines popup geometry ahead of rendering so the transparent overlay can enable or disable native
 /// hit-testing based on our intended layout, not a previous frame's measured egui output.
 ///
-/// The list card's size comes from its fixed row geometry. The flyout card's content is markdown,
+/// The list card combines fixed row geometry with the measured tip height. The flyout is markdown,
 /// so its bounds always have the maximum size. A flyout with less content is drawn smaller, and the
 /// overlay catches clicks on the transparent space below it instead of the editor.
 ///
 /// `sidebar_position` is the flyout card's current offset from the list card's top, not its target,
-/// so hit-testing follows the card while it moves.
-pub fn popup_layout_for_lint(rect: &Rect, lint: &Lint, sidebar_position: f32) -> PopupLayout {
+/// so hit-testing follows the card while it moves. `tip_height` is zero without a measured tip;
+/// otherwise it comes from `TipLayout`. The card remains capped at `CARD_HEIGHT`.
+pub fn popup_layout_for_lint(
+    rect: &Rect,
+    lint: &Lint,
+    sidebar_position: f32,
+    tip_height: f32,
+) -> PopupLayout {
     popup_layout(
         rect,
         UNBOUNDED_VIEWPORT,
-        egui::vec2(LIST_CARD_WIDTH, list_card_height(row_count(lint))),
+        egui::vec2(
+            LIST_CARD_WIDTH,
+            list_card_height(row_count(lint), tip_height),
+        ),
         egui::vec2(FLYOUT_CARD_WIDTH, CARD_HEIGHT),
         sidebar_position,
     )
@@ -765,7 +884,7 @@ pub fn popup_layout_for_lint(rect: &Rect, lint: &Lint, sidebar_position: f32) ->
 ///
 /// The sidebar moves toward this value on each frame, but does not jump to it.
 pub fn sidebar_target(lint: &Lint, shown_suggestion: Option<usize>) -> f32 {
-    row_offset(shown_suggestion, list_card_height(row_count(lint)))
+    row_offset(shown_suggestion, list_card_height(row_count(lint), 0.0))
 }
 
 /// Counts the list card's suggestion rows, including the "No replacements" row.
@@ -773,9 +892,11 @@ pub fn row_count(lint: &Lint) -> usize {
     lint.suggestions.len().max(1)
 }
 
-/// Computes the list card's height from its fixed row and footer heights.
-fn list_card_height(row_count: usize) -> f32 {
-    let content = 2.0 * LIST_PADDING_Y + row_count as f32 * ROW_HEIGHT + LIST_FOOTER_HEIGHT;
+/// Computes shared drawing/hit-test height from the rows, footer, and optional tip drawer.
+/// No-tip popups retain their original dimensions; overflowing content scrolls inside the cap.
+fn list_card_height(row_count: usize, tip_height: f32) -> f32 {
+    let content =
+        2.0 * LIST_PADDING_Y + row_count as f32 * ROW_HEIGHT + LIST_FOOTER_HEIGHT + tip_height;
 
     (2.0 * BORDER_WIDTH + content).min(CARD_HEIGHT)
 }
@@ -804,18 +925,18 @@ mod tests {
 
     #[test]
     fn list_card_height_counts_rows_and_footer() {
-        assert_eq!(list_card_height(1), 2.0 + 8.0 + 30.0 + 37.0);
-        assert_eq!(list_card_height(3), 2.0 + 8.0 + 90.0 + 37.0);
+        assert_eq!(list_card_height(1, 0.0), 2.0 + 8.0 + 30.0 + 37.0);
+        assert_eq!(list_card_height(3, 0.0), 2.0 + 8.0 + 90.0 + 37.0);
     }
 
     #[test]
     fn list_card_height_caps_at_max() {
-        assert_eq!(list_card_height(100), CARD_HEIGHT);
+        assert_eq!(list_card_height(100, 0.0), CARD_HEIGHT);
     }
 
     #[test]
     fn row_offset_starts_at_first_row() {
-        let list_height = list_card_height(3);
+        let list_height = list_card_height(3, 0.0);
 
         assert_eq!(row_offset(None, list_height), FIRST_ROW_OFFSET);
         assert_eq!(
@@ -826,7 +947,7 @@ mod tests {
 
     #[test]
     fn row_offset_steps_by_row_height() {
-        let list_height = list_card_height(3);
+        let list_height = list_card_height(3, 0.0);
 
         assert_eq!(
             row_offset(Some(2), list_height),
@@ -836,7 +957,7 @@ mod tests {
 
     #[test]
     fn row_offset_stays_inside_scrolled_list() {
-        let list_height = list_card_height(100);
+        let list_height = list_card_height(100, 0.0);
 
         assert_eq!(
             row_offset(Some(99), list_height),
