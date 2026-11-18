@@ -1,4 +1,4 @@
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
        3 | BY F. SCOTT FITZGERALD
          |    ^~ Did you mean to spell `F.` this way?
@@ -29,7 +29,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       10 | “Whenever you feel like criticising any one,” he told me, “just remember that
          |                         ^~~~~~~~~~~ Did you mean `criticizing`?
@@ -76,7 +76,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       27 | snobbishly repeat, a sense of the fundamental decencies is parcelled out
          |                                                            ^~~~~~~~~ Did you mean `parceled`?
@@ -155,7 +155,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       50 | three generations. The Carraways are something of a clan, and we have a
          |                        ^~~~~~~~~ Did you mean to spell `Carraways` this way?
@@ -203,7 +203,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       72 | sounded like a great idea. He found the house, a weatherbeaten cardboard
          |                                                  ^~~~~~~~~~~~~ Did you mean `weather-beaten`?
@@ -288,7 +288,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      119 | thousand a season. The one on my right was a colossal affair by any standard—it
      120 | was a factual imitation of some Hôtel de Ville in Normandy, with a tower on one
@@ -300,7 +300,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      120 | was a factual imitation of some Hôtel de Ville in Normandy, with a tower on one
          |                                          ^~~~~ Did you mean to spell `Ville` this way?
@@ -335,7 +335,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      131 | drove over there to have dinner with the Tom Buchanans. Daisy was my second
          |                                              ^~~~~~~~~ Did you mean to spell `Buchanans` this way?
@@ -551,7 +551,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      464 | “It couldn’t be helped!” cried Daisy with tense gayety.
          |                                                 ^~~~~~ Did you mean to spell `gayety` this way?
@@ -572,7 +572,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      479 | thinking, but I doubt if even Miss Baker, who seemed to have mastered a certain
      480 | hardy scepticism, was able utterly to put this fifth guest’s shrill metallic
@@ -605,7 +605,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      529 | the whole evening had been a trick of some sort to exact a contributary emotion
          |                                                            ^~~~~~~~~~~~ Did you mean to spell `contributary` this way?
@@ -628,7 +628,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      565 | “I will. Good night, Mr. Carraway. See you anon.”
          |                          ^~~~~~~~ Did you mean to spell `Carraway` this way?
@@ -678,7 +678,7 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (33 priority)
 Message: |
      628 | Already it was deep summer on roadhouse roofs and in front of wayside garages,
      629 | where new red gaspumps sat out in pools of light, and when I reached my estate
@@ -754,7 +754,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      664 | it, you perceive, after a moment, the eyes of Doctor T. J. Eckleburg. The eyes
          |                                                      ^~ Did you mean to spell `T.` this way?
@@ -765,7 +765,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      664 | it, you perceive, after a moment, the eyes of Doctor T. J. Eckleburg. The eyes
          |                                                         ^~ Did you mean to spell `J.` this way?
@@ -787,7 +787,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      664 | it, you perceive, after a moment, the eyes of Doctor T. J. Eckleburg. The eyes
      665 | of Doctor T. J. Eckleburg are blue and gigantic—their retinas are one yard high.
@@ -799,7 +799,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      665 | of Doctor T. J. Eckleburg are blue and gigantic—their retinas are one yard high.
          |              ^~ Did you mean to spell `J.` this way?
@@ -844,7 +844,7 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (33 priority)
 Message: |
      683 | up to New York with Tom on the train one afternoon, and when we stopped by the
      684 | ashheaps he jumped to his feet and, taking hold of my elbow, literally forced me
@@ -875,7 +875,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      699 | garage—Repairs. George B. Wilson. Cars bought and sold.—and I followed Tom
          |                        ^~ Did you mean to spell `B.` this way?
@@ -916,7 +916,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      730 | beauty, but there was an immediately perceptible vitality about her as if the
      731 | nerves of her body were continually smouldering. She smiled slowly and, walking
@@ -939,7 +939,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      768 | together, for Mrs. Wilson sat discreetly in another car. Tom deferred that much
      769 | to the sensibilities of those East Eggers who might be on the train.
@@ -960,7 +960,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      784 | We backed up to a gray old man who bore an absurd resemblance to John D.
          |                                                                       ^~ Did you mean to spell `D.` this way?
@@ -990,7 +990,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      838 | “I’m going to have the McKees come up,” she announced as we rose in the
          |                        ^~~~~~ Did you mean to spell `McKees` this way?
@@ -1057,7 +1057,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      900 | last week to look at my feet, and when she gave me the bill you’d of thought she
      901 | had my appendicitus out.”
@@ -1078,7 +1078,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      923 | “I should change the light,” he said after a moment. “I’d like to bring out the
      924 | modelling of the features. And I’d try to get hold of all the back hair.”
@@ -1090,7 +1090,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      931 | “You McKees have something to drink,” he said. “Get some more ice and mineral
          |      ^~~~~~ Did you mean to spell `McKees` this way?
@@ -1125,7 +1125,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      989 | studies of him.” His lips moved silently for a moment as he invented. “‘George
      990 | B. Wilson at the Gasoline Pump,’ or something like that.”
@@ -1137,7 +1137,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1029 | over twelve hundred dollars when we started, but we got gyped out of it all in
          |                                                         ^~~~~ Did you mean to spell `gyped` this way?
@@ -1149,7 +1149,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1037 | “I almost made a mistake, too,” she declared vigorously. “I almost married a
     1038 | little kyke who’d been after me for years. I knew he was below me. Everybody
@@ -1192,7 +1192,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1122 | Daisy! Dai———”
          |        ^~~ Did you mean to spell `Dai` this way?
@@ -1303,7 +1303,7 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (33 priority)
 Message: |
     1172 | York—every Monday these same oranges and lemons left his back door in a pyramid
     1173 | of pulpless halves. There was a machine in the kitchen which could extract the
@@ -1313,7 +1313,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1179 | enormous garden. On buffet tables, garnished with glistening hors-d’œuvre,
          |                                                              ^~~~ Did you mean to spell `hors` this way?
@@ -1336,7 +1336,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1186 | By seven o’clock the orchestra has arrived, no thin five-piece affair, but a
     1187 | whole pitful of oboes and trombones and saxophones and viols and cornets and
@@ -1373,7 +1373,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1191 | colors, and hair bobbed in strange new ways, and shawls beyond the dreams of
     1192 | Castile. The bar is in full swing, and floating rounds of cocktails permeate the
@@ -1519,7 +1519,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1310 | “I don’t think it’s so much that,” argued Lucille sceptically; “it’s more that
          |                                                   ^~~~~~~~~~~ Did you mean to spell `sceptically` this way?
@@ -1530,7 +1530,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1336 | West Egg, and carefully on guard against its spectroscopic gayety.
          |                                                            ^~~~~~ Did you mean to spell `gayety` this way?
@@ -1541,7 +1541,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1347 | chance we tried an important-looking door, and walked into a high Gothic
     1348 | library, panelled with carved English oak, and probably transported complete
@@ -1553,7 +1553,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1373 | Taking our scepticism for granted, he rushed to the bookcases and returned with
          |            ^~~~~~~~~~ Did you mean to spell `scepticism` this way?
@@ -1575,7 +1575,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1376 | “See!” he cried triumphantly. “It’s a bona-fide piece of printed matter. It
          |                                       ^~~~ Did you mean to spell `bona` this way?
@@ -1586,7 +1586,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1376 | “See!” he cried triumphantly. “It’s a bona-fide piece of printed matter. It
          |                                            ^~~~ Did you mean to spell `fide` this way?
@@ -1597,7 +1597,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1377 | fooled me. This fella’s a regular Belasco. It’s a triumph. What thoroughness!
          |                 ^~~~~~~ Did you mean to spell `fella’s` this way?
@@ -1619,7 +1619,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1389 | “I was brought by a woman named Roosevelt,” he continued. “Mrs. Claud Roosevelt.
          |                                                                 ^~~~~ Did you mean to spell `Claud` this way?
@@ -1653,7 +1653,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1413 | trembling a little to the stiff, tinny drip of the banjoes on the lawn.
          |                                                    ^~~~~~~ Did you mean to spell `banjoes` this way?
@@ -1708,7 +1708,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1515 | play for you Mr. Vladmir Tostoff’s latest work, which attracted so much
          |                  ^~~~~~~ Did you mean `Vladimir`?
@@ -1726,7 +1726,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1520 | “The piece is known,” he concluded lustily, “as ‘Vladmir Tostoff’s Jazz History
          |                                                  ^~~~~~~ Did you mean `Vladimir`?
@@ -1838,7 +1838,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1642 | scene. In the ditch beside the road, right side up, but violently shorn of one
          |                                                                   ^~~~~ Did you mean to spell `shorn` this way?
@@ -1850,7 +1850,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1642 | scene. In the ditch beside the road, right side up, but violently shorn of one
     1643 | wheel, rested a new coupé which had left Gatsby’s drive not two minutes before.
@@ -1862,7 +1862,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1683 | The shock that followed this declaration found voice in a sustained “Ah-h-h!” as
     1684 | the door of the coupé swung slowly open. The crowd—it was now a crowd—stepped
@@ -1885,7 +1885,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1693 | “Wha’s matter?” he inquired calmly. “Did we run outa gas?”
          |                                                 ^~~~ Did you mean to spell `outa` this way?
@@ -1896,7 +1896,7 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (33 priority)
 Message: |
     1693 | “Wha’s matter?” he inquired calmly. “Did we run outa gas?”
          |                                                 ^~~~ `outa` should possibly be written as `out a`.
@@ -1923,7 +1923,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1710 | “Wonder’ff tell me where there’s a gas’line station?”
          |                                    ^~~~~~~~ Did you mean to spell `gas’line` this way?
@@ -1984,7 +1984,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1768 | unintelligible circles inside. Imagining that I, too, was hurrying toward gayety
          |                                                                           ^~~~~~ Did you mean to spell `gayety` this way?
@@ -2061,7 +2061,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1837 | cocktails and his flowers. “One time he killed a man who had found out that he
     1838 | was nephew to Von Hindenburg and second cousin to the devil. Reach me a rose,
@@ -2082,7 +2082,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1848 | From East Egg, then, came the Chester Beckers and the Leeches, and a man named
          |                                       ^~~~~~~ Did you mean to spell `Beckers` this way?
@@ -2094,7 +2094,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1850 | summer up in Maine. And the Hornbeams and the Willie Voltaires, and a whole clan
          |                             ^~~~~~~~~ Did you mean to spell `Hornbeams` this way?
@@ -2104,7 +2104,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1850 | summer up in Maine. And the Hornbeams and the Willie Voltaires, and a whole clan
          |                                                      ^~~~~~~~~ Did you mean to spell `Voltaires` this way?
@@ -2174,7 +2174,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1857 | knickerbockers, and had a fight with a bum named Etty in the garden. From
          |                                                  ^~~~ Did you mean to spell `Etty` this way?
@@ -2197,7 +2197,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                     ^~ Did you mean to spell `O.` this way?
@@ -2208,7 +2208,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                        ^~ Did you mean to spell `R.` this way?
@@ -2219,7 +2219,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                           ^~ Did you mean to spell `P.` this way?
@@ -2250,7 +2250,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1859 | Stonewall Jackson Abrams of Georgia, and the Fishguards and the Ripley Snells.
          |                                                                        ^~~~~~ Did you mean to spell `Snells` this way?
@@ -2272,7 +2272,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1862 | The Dancies came, too, and S. B. Whitebait, who was well over sixty, and Maurice
          |     ^~~~~~~ Did you mean to spell `Dancies` this way?
@@ -2283,7 +2283,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1862 | The Dancies came, too, and S. B. Whitebait, who was well over sixty, and Maurice
          |                            ^~ Did you mean to spell `S.` this way?
@@ -2294,7 +2294,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1862 | The Dancies came, too, and S. B. Whitebait, who was well over sixty, and Maurice
          |                               ^~ Did you mean to spell `B.` this way?
@@ -2305,7 +2305,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1862 | The Dancies came, too, and S. B. Whitebait, who was well over sixty, and Maurice
     1863 | A. Flink, and the Hammerheads, and Beluga the tobacco importer, and Beluga’s
@@ -2317,7 +2317,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1863 | A. Flink, and the Hammerheads, and Beluga the tobacco importer, and Beluga’s
          |    ^~~~~ Did you mean to spell `Flink` this way?
@@ -2387,7 +2387,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1868 | Excellence, and Eckhaust and Clyde Cohen and Don S. Schwartze (the son) and
          |                                                  ^~ Did you mean to spell `S.` this way?
@@ -2398,7 +2398,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1868 | Excellence, and Eckhaust and Clyde Cohen and Don S. Schwartze (the son) and
          |                                                     ^~~~~~~~~ Did you mean to spell `Schwartze` this way?
@@ -2433,7 +2433,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1869 | Arthur McCarty, all connected with the movies in one way or another. And the
     1870 | Catlips and the Bembergs and G. Earl Muldoon, brother to that Muldoon who
@@ -2474,7 +2474,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1871 | afterward strangled his wife. Da Fontano the promoter came there, and Ed Legros
          |                               ^~ Did you mean to spell `Da` this way?
@@ -2522,7 +2522,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1871 | afterward strangled his wife. Da Fontano the promoter came there, and Ed Legros
     1872 | and James B. (“Rot-Gut”) Ferret and the De Jongs and Ernest Lilly—they came to
@@ -2534,7 +2534,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1872 | and James B. (“Rot-Gut”) Ferret and the De Jongs and Ernest Lilly—they came to
          |                                            ^~~~~ Did you mean to spell `Jongs` this way?
@@ -2566,7 +2566,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1877 | “the boarder”—I doubt if he had any other home. Of theatrical people there were
     1878 | Gus Waize and Horace O’Donavan and Lester Myer and George Duckweed and Francis
@@ -2588,7 +2588,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1878 | Gus Waize and Horace O’Donavan and Lester Myer and George Duckweed and Francis
          |                                           ^~~~ Did you mean to spell `Myer` this way?
@@ -2661,7 +2661,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1880 | and Russel Betty and the Corrigans and the Kellehers and the Dewars and the
          |                                                              ^~~~~~ Did you mean to spell `Dewars` this way?
@@ -2673,7 +2673,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1880 | and Russel Betty and the Corrigans and the Kellehers and the Dewars and the
     1881 | Scullys and S. W. Belcher and the Smirkes and the young Quinns, divorced now,
@@ -2685,7 +2685,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1880 | and Russel Betty and the Corrigans and the Kellehers and the Dewars and the
     1881 | Scullys and S. W. Belcher and the Smirkes and the young Quinns, divorced now,
@@ -2697,7 +2697,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1881 | Scullys and S. W. Belcher and the Smirkes and the young Quinns, divorced now,
          |                ^~ Did you mean to spell `W.` this way?
@@ -2708,7 +2708,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1881 | Scullys and S. W. Belcher and the Smirkes and the young Quinns, divorced now,
          |                   ^~~~~~~ Did you mean to spell `Belcher` this way?
@@ -2719,7 +2719,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1881 | Scullys and S. W. Belcher and the Smirkes and the young Quinns, divorced now,
          |                                   ^~~~~~~ Did you mean to spell `Smirkes` this way?
@@ -2731,7 +2731,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1881 | Scullys and S. W. Belcher and the Smirkes and the young Quinns, divorced now,
          |                                                         ^~~~~~ Did you mean to spell `Quinns` this way?
@@ -2743,7 +2743,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1881 | Scullys and S. W. Belcher and the Smirkes and the young Quinns, divorced now,
     1882 | and Henry L. Palmetto, who killed himself by jumping in front of a subway train
@@ -2779,7 +2779,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1887 | inevitably seemed they had been there before. I have forgotten their
     1888 | names—Jaqueline, I think, or else Consuela, or Gloria or Judy or June, and their
@@ -2790,7 +2790,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1887 | inevitably seemed they had been there before. I have forgotten their
     1888 | names—Jaqueline, I think, or else Consuela, or Gloria or Judy or June, and their
@@ -2822,7 +2822,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1895 | the war, and Mr. Albrucksburger and Miss Haag, his fiancée, and Ardita
          |                                          ^~~~ Did you mean to spell `Haag` this way?
@@ -2834,7 +2834,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1895 | the war, and Mr. Albrucksburger and Miss Haag, his fiancée, and Ardita
          |                                                    ^~~~~~~ Did you mean to spell `fiancée` this way?
@@ -2858,7 +2858,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1895 | the war, and Mr. Albrucksburger and Miss Haag, his fiancée, and Ardita
     1896 | Fitz-Peters and Mr. P. Jewett, once head of the American Legion, and Miss
@@ -2870,7 +2870,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1896 | Fitz-Peters and Mr. P. Jewett, once head of the American Legion, and Miss
          |                     ^~ Did you mean to spell `P.` this way?
@@ -2918,7 +2918,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1981 | “character” leaking sawdust at every pore as he pursued a tiger through the Bois
          |                                                                             ^~~~ Did you mean to spell `Bois` this way?
@@ -2951,7 +2951,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2006 | To my astonishment, the thing had an authentic look. “Orderi di Danilo,” ran the
          |                                                       ^~~~~~ Did you mean to spell `Orderi` this way?
@@ -2963,7 +2963,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2006 | To my astonishment, the thing had an authentic look. “Orderi di Danilo,” ran the
          |                                                              ^~ Did you mean to spell `di` this way?
@@ -2987,7 +2987,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2011 | “Major Jay Gatsby,” I read, “For Valour Extraordinary.”
          |                                  ^~~~~~ Did you mean to spell `Valour` this way?
@@ -3008,7 +3008,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2021 | Grand Canal; I saw him opening a chest of rubies to ease, with their
     2022 | crimson-lighted depths, the gnawings of his broken heart.
@@ -3020,7 +3020,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2047 | ships, and sped along a cobbled slum lined with the dark, undeserted saloons of
          |                                                           ^~~~~~~~~~ Did you mean to spell `undeserted` this way?
@@ -3075,7 +3075,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2078 | driven by a white chauffeur, in which sat three modish negroes, two bucks and a
          |                                                        ^~~~~~~ Did you mean to spell `negroes` this way?
@@ -3087,7 +3087,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2091 | “Mr. Carraway, this is my friend Mr. Wolfshiem.”
          |      ^~~~~~~~ Did you mean to spell `Carraway` this way?
@@ -3135,7 +3135,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2105 | “I handed the money to Katspaugh and I sid: ‘All right, Katspaugh, don’t pay him
          |                                        ^~~ Did you mean to spell `sid` this way?
@@ -3454,7 +3454,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2319 | That was nineteen-seventeen. By the next year I had a few beaux myself, and I
          |                                                           ^~~~~ Did you mean to spell `beaux` this way?
@@ -3466,7 +3466,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2329 | By the next autumn she was gay again, gay as ever. She had a début after the
          |                                                              ^~~~~ Did you mean to spell `début` this way?
@@ -3503,7 +3503,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2339 | dress—and as drunk as a monkey. She had a bottle of Sauterne in one hand and a
          |                                                     ^~~~~~~~ Did you mean to spell `Sauterne` this way?
@@ -3515,7 +3515,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2342 | “’Gratulate me,” she muttered. “Never had a drink before, but oh how I do enjoy
          |   ^~~~~~~~~ Did you mean to spell `Gratulate` this way?
@@ -3526,7 +3526,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2349 | “Here, deares’.” She groped around in a wastebasket she had with her on the bed
          |        ^~~~~~ Did you mean to spell `deares` this way?
@@ -3565,7 +3565,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2373 | week after I left Santa Barbara Tom ran into a wagon on the Ventura road one
          |                                                             ^~~~~~~ Did you mean to spell `Ventura` this way?
@@ -3597,7 +3597,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2395 | When Jordan Baker had finished telling all this we had left the Plaza for half
     2396 | an hour and were driving in a victoria through Central Park. The sun had gone
@@ -3609,7 +3609,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2401 | > “I’m the Sheik of Araby. Your love belongs to me. At night when you’re asleep
          |            ^~~~~ Did you mean to spell `Sheik` this way?
@@ -3635,7 +3635,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2455 | hard, limited person, who dealt in universal scepticism, and who leaned back
          |                                              ^~~~~~~~~~ Did you mean to spell `scepticism` this way?
@@ -3662,7 +3662,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2526 | “There’s another little thing,” he said uncertainly, and hesitated.
          |                                         ^~~~~~~~~~~ Did you mean to spell `uncertainly` this way?
@@ -3730,7 +3730,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2607 | Clay’s “Economics,” starting at the Finnish tread that shook the kitchen floor,
     2608 | and peering toward the bleared windows from time to time as if a series of
@@ -3872,7 +3872,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2826 | Instead of taking the short cut along the Sound we went down to the road and
     2827 | entered by the big postern. With enchanting murmurs Daisy admired this aspect or
@@ -3927,7 +3927,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2842 | sunken baths—intruding into one chamber where a dishevelled man in pajamas was
          |                                                 ^~~~~~~~~~~ Did you mean `disheveled`?
@@ -3998,7 +3998,7 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (33 priority)
 Message: |
     2878 | brought more and the soft rich heap mounted higher—shirts with stripes and
     2879 | scrolls and plaids in coral and applegreen and lavender and faint orange, with
@@ -4056,7 +4056,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2955 | “I don’t play well. I don’t—I hardly play at all. I’m all out of prac———”
          |                                                                  ^~~~ Did you mean to spell `prac` this way?
@@ -4076,7 +4076,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2968 | “I’m all out of practice, you see. I told you I couldn’t play. I’m all out of
     2969 | prac—”
@@ -4101,7 +4101,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3023 | moved secretly up and down the Long Island shore. Just why these inventions were
     3024 | a source of satisfaction to James Gatz of North Dakota, isn’t easy to say.
@@ -4113,7 +4113,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3026 | James Gatz—that was really, or at least legally, his name. He had changed it at
          |       ^~~~ Did you mean to spell `Gatz` this way?
@@ -4137,7 +4137,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3029 | on Lake Superior. It was James Gatz who had been loafing along the beach that
          |                                ^~~~ Did you mean to spell `Gatz` this way?
@@ -4160,7 +4160,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3048 | were ignorant, of the others because they were hysterical about things which in
     3049 | his overwhelming self-absorbtion he took for granted.
@@ -4206,7 +4206,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3079 | To young Gatz, resting on his oars and looking up at the railed deck, that yacht
          |          ^~~~ Did you mean to spell `Gatz` this way?
@@ -4242,7 +4242,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3089 | in turn steward, mate, skipper, secretary, and even jailor, for Dan Cody sober
          |                                                     ^~~~~~ Did you mean to spell `jailor` this way?
@@ -4254,7 +4254,7 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (33 priority)
 Message: |
     3089 | in turn steward, mate, skipper, secretary, and even jailor, for Dan Cody sober
          |                                                     ^~~~~~ `jailor` should probably be written as `jail or`.
@@ -4351,7 +4351,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3180 | “Be ver’ nice,” said Mr. Sloane, without gratitude. “Well—think ought to be
          |     ^~~ Did you mean to spell `ver` this way?
@@ -4390,7 +4390,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3254 | “I’m looking around. I’m having a marvellous—”
          |                                   ^~~~~~~~~~ Did you mean `marvelous`?
@@ -4424,7 +4424,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3316 | “Wha’?”
          |  ^~~ Did you mean to spell `Wha` this way?
@@ -4435,7 +4435,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3319 | at the local club to-morrow, spoke in Miss Baedeker’s defence:
          |                                                       ^~~~~~~ Did you mean to spell `defence` this way?
@@ -4468,7 +4468,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3389 | Daisy began to sing with the music in a husky, rythmic whisper, bringing out a
          |                                                ^~~~~~~ Did you mean to spell `rythmic` this way?
@@ -4492,7 +4492,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3414 | dim, incalculable hours? Perhaps some unbelievable guest would arrive, a person
     3415 | infinitely rare and to be marvelled at, some authentically radiant young girl
@@ -4552,7 +4552,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3507 | “I hadn’t seen him around, and I was rather worried. Tell him Mr. Carraway came
          |                                                                   ^~~~~~~~ Did you mean to spell `Carraway` this way?
@@ -4564,7 +4564,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3512 | “Carraway.”
          |  ^~~~~~~~ Did you mean to spell `Carraway` this way?
@@ -4575,7 +4575,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3514 | “Carraway. All right, I'll tell him.”
          |  ^~~~~~~~ Did you mean to spell `Carraway` this way?
@@ -4653,7 +4653,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3572 | . . . Through the hall of the Buchanans’ house blew a faint wind, carrying the
          |                               ^~~~~~~~~ Did you mean to spell `Buchanans` this way?
@@ -4711,7 +4711,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3612 | “No, he’s not,” I assured her. “It’s a bona-fide deal. I happen to know about
          |                                        ^~~~ Did you mean to spell `bona` this way?
@@ -4722,7 +4722,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3612 | “No, he’s not,” I assured her. “It’s a bona-fide deal. I happen to know about
          |                                             ^~~~ Did you mean to spell `fide` this way?
@@ -4733,7 +4733,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3640 | “Bles-sed pre-cious,” she crooned, holding out her arms. “Come to your own
          |  ^~~~ Did you mean to spell `Bles` this way?
@@ -4755,7 +4755,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3646 | “The bles-sed pre-cious! Did mother get powder on your old yellowy hair? Stand
          |      ^~~~ Did you mean to spell `bles` this way?
@@ -4777,7 +4777,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3672 | “Come, Pammy.”
          |        ^~~~~ Did you mean to spell `Pammy` this way?
@@ -4788,7 +4788,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3677 | hand and was pulled out the door, just as Tom came back, preceding four gin
     3678 | rickeys that clicked full of ice.
@@ -4817,7 +4817,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3709 | We had luncheon in the dining-room, darkened too against the heat, and drank
     3710 | down nervous gayety with the cold ale.
@@ -4856,7 +4856,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3809 | “Well, you take my coupé and let me drive your car to town.”
          |                    ^~~~~ Did you mean to spell `coupé` this way?
@@ -4867,7 +4867,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3828 | “You take Nick and Jordan. We’ll follow you in the coupé.”
          |                                                    ^~~~~ Did you mean to spell `coupé` this way?
@@ -4897,7 +4897,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3874 | while in silence. Then as Doctor T. J. Eckleburg’s faded eyes came into sight
          |                                  ^~ Did you mean to spell `T.` this way?
@@ -4908,7 +4908,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3874 | while in silence. Then as Doctor T. J. Eckleburg’s faded eyes came into sight
          |                                     ^~ Did you mean to spell `J.` this way?
@@ -4931,7 +4931,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3923 | The coupé flashed by us with a flurry of dust and the flash of a waving hand.
          |     ^~~~~ Did you mean to spell `coupé` this way?
@@ -4966,7 +4966,7 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (33 priority)
 Message: |
     3948 | behind. Over the ashheaps the giant eyes of Doctor T. J. Eckleburg kept their
          |                  ^~~~~~~~ `ashheaps` should probably be written as `ash heaps`.
@@ -4975,7 +4975,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3948 | behind. Over the ashheaps the giant eyes of Doctor T. J. Eckleburg kept their
          |                                                    ^~ Did you mean to spell `T.` this way?
@@ -4986,7 +4986,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3948 | behind. Over the ashheaps the giant eyes of Doctor T. J. Eckleburg kept their
          |                                                       ^~ Did you mean to spell `J.` this way?
@@ -5039,7 +5039,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3966 | until, among the spidery girders of the elevated, we came in sight of the
     3967 | easy-going blue coupé.
@@ -5051,7 +5051,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3974 | The word “sensuous” had the effect of further disquieting Tom, but before he
     3975 | could invent a protest the coupé came to a stop, and Daisy signalled us to draw
@@ -5063,7 +5063,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     3975 | could invent a protest the coupé came to a stop, and Daisy signalled us to draw
          |                                                            ^~~~~~~~~ Did you mean to spell `signalled` this way?
@@ -5106,7 +5106,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4016 | “Well, we’d better telephone for an axe———”
          |                                     ^~~ Did you mean to spell `axe` this way?
@@ -5189,7 +5189,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4070 | the window, followed by intermittent cries of “Yea—ea—ea!” and finally by a
          |                                                    ^~ Did you mean to spell `ea` this way?
@@ -5200,7 +5200,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4070 | the window, followed by intermittent cries of “Yea—ea—ea!” and finally by a
          |                                                       ^~ Did you mean to spell `ea` this way?
@@ -5211,7 +5211,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4073 | “We're getting old,” said Daisy. “lf we were young we’d rise and dance.”
          |                                   ^~ Did you mean to spell `lf` this way?
@@ -5251,7 +5251,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4083 | “Well, he said he knew you. He said he was raised in Louisville. Asa Bird
          |                                                                  ^~~ Did you mean to spell `Asa` this way?
@@ -5415,7 +5415,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4377 | It was seven o’clock when we got into the coupé with him and started for Long
          |                                           ^~~~~ Did you mean to spell `coupé` this way?
@@ -5427,7 +5427,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4391 | The young Greek, Michaelis, who ran the coffee joint beside the ashheaps was the
          |                  ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
@@ -5450,7 +5450,7 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (33 priority)
 Message: |
     4391 | The young Greek, Michaelis, who ran the coffee joint beside the ashheaps was the
          |                                                                 ^~~~~~~~ `ashheaps` should probably be written as `ash heaps`.
@@ -5460,7 +5460,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4394 | office—really sick, pale as his own pale hair and shaking all over. Michaelis
          |                                                                     ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
@@ -5472,7 +5472,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4402 | Michaelis was astonished; they had been neighbors for four years, and Wilson had
          | ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
@@ -5483,7 +5483,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4409 | So naturally Michaelis tried to find out what had happened, but Wilson wouldn’t
          |              ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
@@ -5494,7 +5494,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4412 | latter was getting uneasy, some workmen came past the door bound for his
     4413 | restaurant, and Michaelis took the opportunity to get away, intending to come
@@ -5538,7 +5538,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4432 | Michaelis and this man reached her first, but when they had torn open her
          | ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
@@ -5571,7 +5571,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4451 | garage, a sound which as we got out of the coupé and walked toward the door
          |                                            ^~~~~ Did you mean to spell `coupé` this way?
@@ -5607,7 +5607,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4470 | a little book. At first I couldn’t find the source of the high, groaning words
     4471 | that echoed clamorously through the bare garage—then I saw Wilson standing on
@@ -5619,7 +5619,7 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (33 priority)
 Message: |
     4470 | a little book. At first I couldn’t find the source of the high, groaning words
     4471 | that echoed clamorously through the bare garage—then I saw Wilson standing on
@@ -5629,7 +5629,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |            ^~ Did you mean to spell `od` this way?
@@ -5641,7 +5641,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |                          ^~ Did you mean to spell `od` this way?
@@ -5653,7 +5653,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |                                     ^~ Did you mean to spell `od` this way?
@@ -5665,7 +5665,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |                                                   ^~ Did you mean to spell `od` this way?
@@ -5686,7 +5686,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4484 | “M-a-v—” the policeman was saying, “—o———”
          |                                      ^ Did you mean to spell `o` this way?
@@ -5706,7 +5706,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4486 | “No, r—” corrected the man, “M-a-v-r-o———”
          |      ^ Did you mean to spell `r` this way?
@@ -5717,7 +5717,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4486 | “No, r—” corrected the man, “M-a-v-r-o———”
          |                                    ^ Did you mean to spell `r` this way?
@@ -5728,7 +5728,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4486 | “No, r—” corrected the man, “M-a-v-r-o———”
          |                                      ^ Did you mean to spell `o` this way?
@@ -5748,7 +5748,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4490 | “r—” said the policeman, “o———”
          |  ^ Did you mean to spell `r` this way?
@@ -5768,7 +5768,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4490 | “r—” said the policeman, “o———”
          |                           ^ Did you mean to spell `o` this way?
@@ -5779,7 +5779,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4499 | “Auto hit her. Ins’antly killed.”
          |                ^~~~~~~~~ Did you mean to spell `Ins’antly` this way?
@@ -5798,7 +5798,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4503 | “She ran out ina road. Son-of-a-bitch didn’t even stopus car.”
          |              ^~~ Did you mean to spell `ina` this way?
@@ -5809,7 +5809,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4503 | “She ran out ina road. Son-of-a-bitch didn’t even stopus car.”
          |                                                   ^~~~~~ Did you mean to spell `stopus` this way?
@@ -5820,7 +5820,7 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (33 priority)
 Message: |
     4503 | “She ran out ina road. Son-of-a-bitch didn’t even stopus car.”
          |                                                   ^~~~~~ `stopus` should probably be written as `stop us`.
@@ -5829,7 +5829,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4505 | “There was two cars,” said Michaelis, “one comin’, one goin’, see?”
          |                            ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
@@ -5840,7 +5840,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4505 | “There was two cars,” said Michaelis, “one comin’, one goin’, see?”
          |                                            ^~~~~ Did you mean to spell `comin` this way?
@@ -5851,7 +5851,7 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (33 priority)
 Message: |
     4505 | “There was two cars,” said Michaelis, “one comin’, one goin’, see?”
          |                                            ^~~~~ `comin` has a missing space between words.
@@ -5861,7 +5861,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4505 | “There was two cars,” said Michaelis, “one comin’, one goin’, see?”
          |                                                        ^~~~ Did you mean to spell `goin` this way?
@@ -5872,7 +5872,7 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (33 priority)
 Message: |
     4505 | “There was two cars,” said Michaelis, “one comin’, one goin’, see?”
          |                                                        ^~~~ `goin` should probably be written as `go in`.
@@ -5881,7 +5881,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4509 | “One goin’ each way. Well, she”—his hand rose toward the blankets but stopped
          |      ^~~~ Did you mean to spell `goin` this way?
@@ -5892,7 +5892,7 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (33 priority)
 Message: |
     4509 | “One goin’ each way. Well, she”—his hand rose toward the blankets but stopped
          |      ^~~~ `goin` should probably be written as `go in`.
@@ -5911,7 +5911,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4510 | half way and fell to his side—“she ran out there an’ the one comin’ from N’York
          |                                                              ^~~~~ Did you mean to spell `comin` this way?
@@ -5923,7 +5923,7 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (33 priority)
 Message: |
     4510 | half way and fell to his side—“she ran out there an’ the one comin’ from N’York
          |                                                              ^~~~~ `comin` has a missing space between words.
@@ -5944,7 +5944,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4510 | half way and fell to his side—“she ran out there an’ the one comin’ from N’York
     4511 | knock right into her, goin’ thirty or forty miles an hour.”
@@ -5956,7 +5956,7 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (33 priority)
 Message: |
     4510 | half way and fell to his side—“she ran out there an’ the one comin’ from N’York
     4511 | knock right into her, goin’ thirty or forty miles an hour.”
@@ -5977,7 +5977,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4544 | New York. I was bringing you that coupé we’ve been talking about. That yellow
          |                                   ^~~~~ Did you mean to spell `coupé` this way?
@@ -5988,7 +5988,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4560 | “It’s a blue car, a coupé.”
          |                     ^~~~~ Did you mean to spell `coupé` this way?
@@ -6017,7 +6017,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4582 | Tom drove slowly until we were beyond the bend—then his foot came down hard, and
     4583 | the coupé raced along through the night. In a little while I heard a low husky
@@ -6029,7 +6029,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4588 | The Buchanans’ house floated suddenly toward us through the dark rustling trees.
          |     ^~~~~~~~~ Did you mean to spell `Buchanans` this way?
@@ -6167,7 +6167,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     4850 | saxophones wailed the hopeless comment of the “Beale Street Blues” while a
          |                                                ^~~~~ Did you mean to spell `Beale` this way?
@@ -6244,7 +6244,7 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (33 priority)
 Message: |
     5015 | When I passed the ashheaps on the train that morning I had crossed deliberately
          |                   ^~~~~~~~ `ashheaps` should probably be written as `ash heaps`.
@@ -6297,7 +6297,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5034 | and closed the door. Michaelis and several other men were with him; first, four
          |                      ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
@@ -6318,7 +6318,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5035 | or five men, later two or three men. Still later Michaelis had to ask the last
          |                                                  ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
@@ -6343,7 +6343,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5047 | again in his groaning voice. Michaelis made a clumsy attempt to distract him.
          |                              ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
@@ -6354,7 +6354,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5057 | The hard brown beetles kept thudding against the dull light, and whenever
     5058 | Michaelis heard a car go tearing along the road outside it sounded to him like
@@ -6410,7 +6410,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5087 | Michaelis opened the drawer nearest his hand. There was nothing in it but a
          | ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
@@ -6421,7 +6421,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5102 | Michaelis didn’t see anything odd in that, and he gave Wilson a dozen reasons
          | ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
@@ -6442,7 +6442,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5121 | Wilson shook his head. His eyes narrowed and his mouth widened slightly with the
     5122 | ghost of a superior “Hm!”
@@ -6455,7 +6455,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5128 | Michaelis had seen this too, but it hadn’t occurred to him that there was any
          | ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
@@ -6466,7 +6466,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5136 | He began to rock again, and Michaelis stood twisting the leash in his hand.
          |                             ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
@@ -6489,7 +6489,7 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (33 priority)
 Message: |
     5146 | Wilson’s glazed eyes turned out to the ashheaps, where small gray clouds took on
          |                                        ^~~~~~~~ `ashheaps` should probably be written as `ash heaps`.
@@ -6499,7 +6499,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5155 | Standing behind him, Michaelis saw with a shock that he was looking at the eyes
          |                      ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
@@ -6510,7 +6510,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5155 | Standing behind him, Michaelis saw with a shock that he was looking at the eyes
     5156 | of Doctor T. J. Eckleburg, which had just emerged, pale and enormous, from the
@@ -6522,7 +6522,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5156 | of Doctor T. J. Eckleburg, which had just emerged, pale and enormous, from the
          |              ^~ Did you mean to spell `J.` this way?
@@ -6544,7 +6544,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5161 | “That’s an advertisement,” Michaelis assured him. Something made him turn away
          |                            ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
@@ -6565,7 +6565,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5165 | By six o’clock Michaelis was worn out, and grateful for the sound of a car
          |                ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
@@ -6576,7 +6576,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5168 | man ate together. Wilson was quieter now, and Michaelis went home to sleep; when
          |                                               ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
@@ -6611,7 +6611,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5177 | hours he disappeared from view. The police, on the strength of what he said to
     5178 | Michaelis, that he “had a way of finding out,” supposed that he spent that time
@@ -6815,7 +6815,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5313 | Dear Mr. Carraway. This has been one of the most terrible shocks of my life to
          |          ^~~~~~~~ Did you mean to spell `Carraway` this way?
@@ -6836,7 +6836,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5327 | Let me know about the funeral etc do not know his family at all.
          |                               ^~~ Did you mean to spell `etc` this way?
@@ -6907,7 +6907,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5352 | I think it was on the third day that a telegram signed Henry C. Gatz arrived
          |                                                              ^~ Did you mean to spell `C.` this way?
@@ -6918,7 +6918,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5352 | I think it was on the third day that a telegram signed Henry C. Gatz arrived
          |                                                                 ^~~~ Did you mean to spell `Gatz` this way?
@@ -6940,7 +6940,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5377 | “Carraway.”
          |  ^~~~~~~~ Did you mean to spell `Carraway` this way?
@@ -6951,7 +6951,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5385 | After a little while Mr. Gatz opened the door and came out, his mouth ajar, his
          |                          ^~~~ Did you mean to spell `Gatz` this way?
@@ -6995,7 +6995,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5396 | “Gatz is my name.”
          |  ^~~~ Did you mean to spell `Gatz` this way?
@@ -7006,7 +7006,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5398 | “—Mr. Gatz. I thought you might want to take the body West.”
          |       ^~~~ Did you mean to spell `Gatz` this way?
@@ -7024,7 +7024,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5412 | “If he’d of lived, he’d of been a great man. A man like James J. Hill. He’d of
          |                                                               ^~ Did you mean to spell `J.` this way?
@@ -7035,7 +7035,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5423 | “This is Mr. Carraway,” I said.
          |              ^~~~~~~~ Did you mean to spell `Carraway` this way?
@@ -7055,7 +7055,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5455 | and I’m sort of helpless without them. My address is care of B. F.———”
          |                                                              ^~ Did you mean to spell `B.` this way?
@@ -7066,7 +7066,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5455 | and I’m sort of helpless without them. My address is care of B. F.———”
          |                                                                 ^~ Did you mean to spell `F.` this way?
@@ -7107,7 +7107,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5477 | “Please say that Mr. Carraway wants to see him.”
          |                      ^~~~~~~~ Did you mean to spell `Carraway` this way?
@@ -7176,7 +7176,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5508 | Street and asked for a job. He hadn’t eat anything for a couple of days. ‘Come
     5509 | on have some lunch with me,’ I sid. He ate more than four dollars’ worth of food
@@ -7209,7 +7209,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5559 | drizzle. After changing my clothes I went next door and found Mr. Gatz walking
          |                                                                   ^~~~ Did you mean to spell `Gatz` this way?
@@ -7271,7 +7271,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5601 | >
     5602 | > No wasting time at Shafters or [a name, indecipherable] No more smokeing or
@@ -7283,7 +7283,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5602 | > No wasting time at Shafters or [a name, indecipherable] No more smokeing or
          |                                                                   ^~~~~~~~ Did you mean to spell `smokeing` this way?
@@ -7304,7 +7304,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5613 | great for that. He told me I et like a hog once, and I beat him for it.”
          |                              ^~ Did you mean to spell `et` this way?
@@ -7316,7 +7316,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5629 | then Mr. Gatz and the minister and I in the limousine, and a little later four
          |          ^~~~ Did you mean to spell `Gatz` this way?
@@ -7347,7 +7347,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5633 | looked around. It was the man with owl-eyed glasses whom I had found marvelling
          |                                                                      ^~~~~~~~~~ Did you mean `marveling`?
@@ -7424,7 +7424,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5665 | we caught sight of old acquaintances, and the matchings of invitations: “Are you
          |                                               ^~~~~~~~~ Did you mean to spell `matchings` this way?
@@ -7447,7 +7447,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5666 | going to the Ordways’? the Herseys’? the Schultzes’?” and the long green tickets
          |                            ^~~~~~~ Did you mean to spell `Herseys` this way?
@@ -7458,7 +7458,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5666 | going to the Ordways’? the Herseys’? the Schultzes’?” and the long green tickets
          |                                          ^~~~~~~~~ Did you mean to spell `Schultzes` this way?
@@ -7505,7 +7505,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5682 | long winters, a little complacent from growing up in the Carraway house in a
          |                                                          ^~~~~~~~ Did you mean to spell `Carraway` this way?
@@ -7563,7 +7563,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5692 | figures in my more fantastic dreams. I see it as a night scene by El Greco: a
          |                                                                   ^~ Did you mean to spell `El` this way?
@@ -7615,7 +7615,7 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (33 priority)
 Message: |
     5714 | leaf, her face the same brown tint as the fingerless glove on her knee. When I
          |                                           ^~~~~~~~~~ `fingerless` should probably be written as `finger less`.
@@ -7770,7 +7770,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5817 | breath in the presence of this continent, compelled into an esthetic
          |                                                             ^~~~~~~~ Did you mean to spell `esthetic` this way?
@@ -7782,7 +7782,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     5828 | Gatsby believed in the green light, the orgastic future that year by year
          |                                         ^~~~~~~~ Did you mean to spell `orgastic` this way?
