@@ -3736,6 +3736,13 @@
 						},
 						{
 							"Bool": {
+								"name": "FewLittleIfAny",
+								"state": true,
+								"label": "Few/Little If Any"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ForNoun",
 								"state": true,
 								"label": "For Noun"
