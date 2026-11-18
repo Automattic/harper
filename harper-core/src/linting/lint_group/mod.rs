@@ -246,6 +246,7 @@ use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 use super::pique_interest::PiqueInterest;
 use super::pleaded_pled::{PreferPleaded, PreferPled};
 use super::plural_decades::PluralDecades;
+use super::plural_subject_seems::PluralSubjectSeems;
 use super::plural_wrong_word_of_phrase::PluralWrongWordOfPhrase;
 use super::possessive_noun::PossessiveNoun;
 use super::possessive_your::PossessiveYour;
@@ -892,6 +893,7 @@ impl LintGroup {
         insert_expr_rule!(PayForPrice);
         insert_struct_rule!(PhrasalVerbAsCompoundNoun);
         insert_expr_rule!(PiqueInterest);
+        insert_expr_rule!(PluralSubjectSeems);
         insert_expr_rule!(PluralWrongWordOfPhrase);
         insert_struct_rule_with_dict!(PossessiveNoun);
         insert_expr_rule!(PossessiveYour);
