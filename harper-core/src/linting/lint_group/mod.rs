@@ -18,6 +18,7 @@ use super::adjective_of_a::AdjectiveOfA;
 use super::after_later::AfterLater;
 use super::ajar::Ajar;
 use super::akimbo::Akimbo;
+use super::akin_to::AkinTo;
 use super::all_hell_break_loose::AllHellBreakLoose;
 use super::all_intents_and_purposes::AllIntentsAndPurposes;
 use super::all_thats_are::AllThatsAre;
@@ -669,6 +670,7 @@ impl LintGroup {
         insert_expr_rule!(AfterLater);
         insert_expr_rule!(Ajar);
         insert_expr_rule!(Akimbo);
+        insert_expr_rule!(AkinTo);
         insert_expr_rule!(AllHellBreakLoose);
         insert_expr_rule!(AllIntentsAndPurposes);
         insert_expr_rule!(AllowTo);
