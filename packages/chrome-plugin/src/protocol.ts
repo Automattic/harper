@@ -16,6 +16,9 @@ export type Request =
 	| GetDelayRequest
 	| SetDelayRequest
 	| SetDomainStatusRequest
+	| GetConfiguredDomainsRequest
+	| SetDefaultDomainsStatusRequest
+	| ResetDomainRequest
 	| SetDefaultStatusRequest
 	| GetDomainStatusRequest
 	| GetDefaultStatusRequest
@@ -51,6 +54,8 @@ export type Response =
 	| GetOpenSuggestionsOnHoverResponse
 	| GetDelayResponse
 	| GetDomainStatusResponse
+	| SetDomainStatusResponse
+	| GetConfiguredDomainsResponse
 	| GetDefaultStatusResponse
 	| GetEnabledDomainsResponse
 	| GetUserDictionaryResponse
@@ -172,6 +177,21 @@ export type GetDomainStatusResponse = {
 	enabled: boolean;
 };
 
+export type DomainStatus = {
+	domain: string;
+	enabled: boolean;
+	isDefault: boolean;
+};
+
+export type GetConfiguredDomainsRequest = {
+	kind: 'getConfiguredDomains';
+};
+
+export type GetConfiguredDomainsResponse = {
+	kind: 'getConfiguredDomains';
+	domains: DomainStatus[];
+};
+
 export type GetDefaultStatusRequest = {
 	kind: 'getDefaultStatus';
 };
@@ -196,6 +216,22 @@ export type SetDomainStatusRequest = {
 	enabled: boolean;
 	/** Dictates whether this should override a previous setting. */
 	overrideValue: boolean;
+};
+
+export type SetDomainStatusResponse = {
+	kind: 'setDomainStatus';
+	/** Whether the effective enable/disable state actually changed. */
+	changed: boolean;
+};
+
+export type SetDefaultDomainsStatusRequest = {
+	kind: 'setDefaultDomainsStatus';
+	enabled: boolean;
+};
+
+export type ResetDomainRequest = {
+	kind: 'resetDomain';
+	domain: string;
 };
 
 export type SetDefaultStatusRequest = {
