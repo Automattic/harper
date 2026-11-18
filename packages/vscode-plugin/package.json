@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "3.2.0",
+	"version": "3.3.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -335,6 +335,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `a kimbo` to `akimbo`."
+				},
+				"harper.linters.AkinTo": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `akin of` to `akin to`."
 				},
 				"harper.linters.Albeit": {
 					"scope": "resource",
@@ -1360,7 +1366,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Attempts to detect when `convenient store` is mistake for `convenience store`."
+					"description": "Attempts to detect when `convenient store` is mistaken for `convenience store`."
 				},
 				"harper.linters.CoolCalmCollected": {
 					"scope": "resource",
@@ -1535,6 +1541,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects the misuse of `despite of` and suggests the proper alternatives `despite` or `in spite of`."
+				},
+				"harper.linters.DespiteSubject": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Flags incorrect usage of the preposition `despite` when it is mistakenly used as a conjunction introducing a subjective clause (e.g., `despite I tried` instead of `although I tried`, `despite trying`, or `despite the fact that I tried`)."
 				},
 				"harper.linters.Devops": {
 					"scope": "resource",
@@ -2058,6 +2070,12 @@
 					"default": true,
 					"description": "Expands an initialism."
 				},
+				"harper.linters.ExplainMe": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "A collection of linters that can be run as one."
+				},
 				"harper.linters.ExplanationMark": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2567,6 +2585,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `henceforth`."
+				},
+				"harper.linters.HereAreACollection": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Enforces singular verb agreement for collective noun phrases like `a list of` or `a bunch of`."
 				},
 				"harper.linters.Hereby": {
 					"scope": "resource",
@@ -3480,6 +3504,12 @@
 					"default": true,
 					"description": "Detects likely missing determiners in common request phrases and offers to insert one where necessary."
 				},
+				"harper.linters.MissingIndefiniteArticle": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": false,
+					"description": "Suggests missing `a` or `an` before singular count noun phrases in subjects, verb complements, and prepositional objects. Skips mass nouns, plurals, proper nouns, and common bare roles."
+				},
 				"harper.linters.MissingPreposition": {
 					"scope": "resource",
 					"type": "boolean",
@@ -3808,7 +3838,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Corrects `no to` to `not to`, ensuring proper negation."
+					"description": "Corrects `no to` to `not to` before a verb, as in `try no to laugh`."
 				},
 				"harper.linters.NotablePlaces": {
 					"scope": "resource",
@@ -3833,6 +3863,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Handles common confusions between related nouns and verbs (e.g., 'advice/advise', 'breath/breathe')"
+				},
+				"harper.linters.NounVerbSpelling": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Outside American English, some nouns and verbs that sound alike are spelled differently, such as the noun `licence` and the verb `license`, `practice` and `practise`, or `tyre` and `tire`."
 				},
 				"harper.linters.NowKnownAs": {
 					"scope": "resource",
@@ -4260,6 +4296,12 @@
 					"default": true,
 					"description": "Flags plural decades erroneously using an apostrophe before the `s`"
 				},
+				"harper.linters.PluralSubjectSeems": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Ensures plural subjects agree with the verb `seem`."
+				},
 				"harper.linters.PluralWrongWordOfPhrase": {
 					"scope": "resource",
 					"type": "boolean",
@@ -4445,6 +4487,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Checks that quotation marks are preceded or succeeded by whitespace."
+				},
+				"harper.linters.QuotedAsSaying": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects misconstructions like `quoted of saying` to `quoted as saying`."
 				},
 				"harper.linters.RackOnesBrain": {
 					"scope": "resource",
@@ -4992,6 +5040,12 @@
 					"default": true,
 					"description": "Detects incorrect usage of `strike of luck` and suggests `stroke of luck` as the correct phrase."
 				},
+				"harper.linters.StriveFor": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `strive to` to `strive for` when not followed by a verb."
+				},
 				"harper.linters.SubjectAndObjectPronoun": {
 					"scope": "resource",
 					"type": "boolean",
@@ -5196,6 +5250,12 @@
 					"default": true,
 					"description": "Checks for redundant `the` before possessive proper noun such as `The London's population`."
 				},
+				"harper.linters.TheSame": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Fixes `he` when it's a typo of `the`."
+				},
 				"harper.linters.TheTheToThatThe": {
 					"scope": "resource",
 					"type": "boolean",
@@ -5225,6 +5285,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `their self` and `their selves` to `themself` and `themselves`."
+				},
+				"harper.linters.Themselves": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `themself` to `themselves`."
 				},
 				"harper.linters.ThenThan": {
 					"scope": "resource",
@@ -5814,6 +5880,12 @@
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `whatsoever`."
 				},
+				"harper.linters.Whenever": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for incorrect spacing inside the closed compound `whenever`."
+				},
 				"harper.linters.Whereas": {
 					"scope": "resource",
 					"type": "boolean",
@@ -6005,6 +6077,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Catches cases where a predicate adjective follows `your`, `yr`, `ur`, or `ya` and suggests the proper contraction so the sentence states how someone is feeling or behaving."
+				},
+				"harper.linters.YourPredicativeAdverb": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Catches cases where an intensifying adverb and a predicate adjective follow `your`, `yr`, `ur`, or `ya` (for example `your probably right`) and suggests the proper contraction. Intensifiers are a closed list of sentence adverbs; attributive uses that need a following noun (for example `your probably best option`) are out of scope of this list."
 				},
 				"harper.linters.Yourself": {
 					"scope": "resource",
