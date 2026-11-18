@@ -202,7 +202,7 @@ Suggest:
 
 
 
-Lint:    Spelling (32 priority)
+Lint:    Spelling (63 priority)
 Message: |
      310 | Ponsonby-Smythe hit a thumping on drive.
          |          ^~~~~~ Did you mean to spell `Smythe` this way?

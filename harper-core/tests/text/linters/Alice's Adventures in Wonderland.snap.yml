@@ -111,7 +111,7 @@ Suggest:
 
 
 
-Lint:    Spelling (32 priority)
+Lint:    Spelling (63 priority)
 Message: |
       68 | this New Zealand or Australia?” (and she tried to curtsey as she spoke—fancy
          |                                                   ^~~~~~~ Did you mean to spell `curtsey` this way?
@@ -460,7 +460,7 @@ Message: |
 
 
 
-Lint:    Spelling (32 priority)
+Lint:    Spelling (63 priority)
 Message: |
      229 | “If you please, sir—” The Rabbit started violently, dropped the white kid gloves
      230 | and the fan, and skurried away into the darkness as hard as he could go.
@@ -1039,7 +1039,7 @@ Message: |
 
 
 
-Lint:    Spelling (32 priority)
+Lint:    Spelling (63 priority)
 Message: |
      668 | “Sure, it’s an arm, yer honour!” (He pronounced it “arrum.”)
          |                                                     ^~~~~ Did you mean to spell `arrum` this way?
@@ -1724,7 +1724,7 @@ Message: |
 
 
 
-Lint:    Spelling (32 priority)
+Lint:    Spelling (63 priority)
 Message: |
     1555 | great hurry; “and their names were Elsie, Lacie, and Tillie; and they lived at
          |                                           ^~~~~ Did you mean to spell `Lacie` this way?

@@ -228,7 +228,7 @@ Message: |
 
 
 
-Lint:    Spelling (32 priority)
+Lint:    Spelling (63 priority)
 Message: |
      105 | article in Communications of the ACM, in which Louis Fein argues for the
          |                                                      ^~~~ Did you mean to spell `Fein` this way?
@@ -249,7 +249,7 @@ Suggest:
 
 
 
-Lint:    Spelling (32 priority)
+Lint:    Spelling (63 priority)
 Message: |
      115 | computing science, to emphasize precisely that difference. Danish scientist
      116 | Peter Naur suggested the term datalogy, to reflect the fact that the scientific
@@ -285,7 +285,7 @@ Suggest:
 
 
 
-Lint:    Spelling (32 priority)
+Lint:    Spelling (63 priority)
 Message: |
      119 | Department of Datalogy at the University of Copenhagen, founded in 1969, with
      120 | Peter Naur being the first professor in datalogy. The term is used mainly in the
@@ -309,7 +309,7 @@ Suggest:
 
 
 
-Lint:    Spelling (32 priority)
+Lint:    Spelling (63 priority)
 Message: |
      121 | Scandinavian countries. An alternative term, also proposed by Naur, is data
          |                                                               ^~~~ Did you mean to spell `Naur` this way?
@@ -502,7 +502,7 @@ Message: |
 
 
 
-Lint:    Spelling (32 priority)
+Lint:    Spelling (63 priority)
 Message: |
      140 | A folkloric quotation, often attributed to—but almost certainly not first
      141 | formulated by—Edsger Dijkstra, states that "computer science is no more about
@@ -561,7 +561,7 @@ Suggest:
 
 
 
-Lint:    Spelling (32 priority)
+Lint:    Spelling (63 priority)
 Message: |
      155 | influenced by the work of mathematicians such as Kurt Gödel, Alan Turing, John
      156 | von Neumann, Rózsa Péter and Alonzo Church and there continues to be a useful
@@ -590,7 +590,7 @@ Message: |
 
 
 
-Lint:    Spelling (32 priority)
+Lint:    Spelling (63 priority)
 Message: |
      162 | "software engineering" means, and how computer science is defined. David Parnas,
          |                                                                          ^~~~~~ Did you mean to spell `Parnas` this way?
@@ -611,7 +611,7 @@ Suggest:
 
 
 
-Lint:    Spelling (32 priority)
+Lint:    Spelling (63 priority)
 Message: |
      181 | computer science is a discipline of science, mathematics, or engineering. Allen
      182 | Newell and Herbert A. Simon argued in 1975,
@@ -665,7 +665,7 @@ Message: |
 
 
 
-Lint:    Spelling (32 priority)
+Lint:    Spelling (63 priority)
 Message: |
      207 | Computer scientists Edsger W. Dijkstra and Tony Hoare regard instructions for
          |                     ^~~~~~ Did you mean to spell `Edsger` this way?
@@ -687,7 +687,7 @@ Suggest:
 
 
 
-Lint:    Spelling (32 priority)
+Lint:    Spelling (63 priority)
 Message: |
      207 | Computer scientists Edsger W. Dijkstra and Tony Hoare regard instructions for
          |                                                 ^~~~~ Did you mean to spell `Hoare` this way?
@@ -1133,7 +1133,7 @@ Suggest:
 
 
 
-Lint:    Spelling (32 priority)
+Lint:    Spelling (63 priority)
 Message: |
      401 | mathematical models have been developed for general concurrent computation
      402 | including Petri nets, process calculi and the parallel random access machine
