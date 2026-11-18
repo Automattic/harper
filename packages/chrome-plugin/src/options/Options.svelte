@@ -725,7 +725,7 @@ async function removeWeirpack(id: string) {
                     </Button>
                     <Button
                       size="sm"
-                      color="light"
+                      color="white"
                       disabled={defaultDomainsBusy || configuredDomains.length === 0}
                       on:click={resetAllToDefaults}
                     >
@@ -752,7 +752,7 @@ async function removeWeirpack(id: string) {
                         {#if !domain.isDefault}
                           <Button
                             size="xs"
-                            color="light"
+                            color="white"
                             disabled={defaultDomainsBusy}
                             aria-label={`Remove ${domain.domain}`}
                             on:click={() => resetDomain(domain.domain)}

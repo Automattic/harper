@@ -892,12 +892,11 @@ async function getStoredDomainStatuses(): Promise<Array<{ domain: string; enable
 }
 
 /**
- * Try the canonical `www.`-stripped key first so legacy full-hostname keys
- * can never shadow a newer override.
+ * Try the canonical key first, then the legacy `www.` key, for either hostname.
  */
 function getDomainLookupCandidates(domain: string): string[] {
-	const withoutWww = domain.replace(/^www\./, '');
-	return withoutWww === domain ? [domain] : [withoutWww, domain];
+	const bare = stripWww(domain);
+	return [bare, `www.${bare}`];
 }
 
 /** True if the domain is a bundled default or a `www.`-stripped alias of one. */
