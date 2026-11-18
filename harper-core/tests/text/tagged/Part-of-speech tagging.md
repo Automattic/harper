@@ -174,8 +174,8 @@
 # NSg/J/P+ . #d    . NSg/ISg+ NPl/V3   P  J/P   # . #   . #   NPl/V3 P  Nᴹ/Vg/J/P NPr🅪Sg/VB/J+ Nᴹ/VB N🅪Sg/VB+ .
 > made up         of 500 samples from randomly chosen   publications . Each sample  is  2 , 000
 # VP   NSg/VB/J/P P  #   NPl/V3+ P    R        Nᴹ/VPp/J NPl+         . Dq+  NSg/VB+ VL3 # . #
-> or    more         words   ( ending  at    the first sentence - end     after 2 , 000 words   , so          that     the
-# NPr/C NPr/I/J/R/Dq NPl/V3+ . Nᴹ/Vg/J NSg/P D   NSg/J NSg/VB+  . NSg/VB+ P     # . #   NPl/V3+ . NSg/I/J/R/C I/C/Ddem D
+> or    more         words   ( ending    at    the first sentence - end     after 2 , 000 words   , so          that     the
+# NPr/C NPr/I/J/R/Dq NPl/V3+ . N🅪Sg/Vg/J NSg/P D   NSg/J NSg/VB+  . NSg/VB+ P     # . #   NPl/V3+ . NSg/I/J/R/C I/C/Ddem D
 > corpus contains only  complete sentences ) .
 # NSg+   V3       J/R/C NSg/VB/J NPl/V3+   . .
 >
@@ -335,7 +335,7 @@
 >
 #
 > These   findings were surprisingly disruptive to the field  of natural language
-# I/Ddem+ NSg+     VLPt R            J          P  D   NSg/VB P  NSg/J+  N🅪Sg+
+# I/Ddem+ NPl+     VLPt R            J          P  D   NSg/VB P  NSg/J+  N🅪Sg+
 > processing . The accuracy reported was  higher than the typical accuracy of very
 # Nᴹ/Vg/J+   . D+  N🅪Sg+    VP/J     VLPt NSg/JC C/P  D   NSg/J   N🅪Sg     P  J/R
 > sophisticated algorithms that      integrated part     of speech   choice  with many       higher
@@ -359,7 +359,7 @@
 >
 #
 >              Unsupervised taggers
-# HeadingStart VB/J         NPl
+# HeadingStart J            NPl
 >
 #
 > The methods already discussed involve working from a    pre       - existing corpus to
@@ -367,7 +367,7 @@
 > learn  tag     probabilities . It       is  , however , also possible to bootstrap using
 # NSg/VB NSg/VB+ NPl+          . NSg/ISg+ VL3 . C       . R/C  NSg/J    P  NSg/VB    Nᴹ/Vg/J
 > " unsupervised " tagging . Unsupervised tagging techniques use     an  untagged corpus
-# . VB/J         . NSg/Vg  . VB/J         NSg/Vg  NPl+       N🅪Sg/VB D/P VP/J     NSg+
+# . J            . NSg/Vg  . J            NSg/Vg  NPl+       N🅪Sg/VB D/P VP/J     NSg+
 > for   their training data  and  produce the tagset by induction . That      is  , they
 # R/C/P D$+   Nᴹ/Vg/J+ N🅪Pl+ VB/C Nᴹ/VB   D   NSg    P  N🅪Sg      . I/C/Ddem+ VL3 . IPl+
 > observe patterns in        word    use     , and  derive part      - of - speech   categories themselves .

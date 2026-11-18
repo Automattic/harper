@@ -3,7 +3,7 @@ use std::time::{Duration, Instant};
 use objc2_app_kit::NSRunningApplication;
 use objc2_foundation::ns_string;
 
-const SCREENSHOT_POLL_INTERVAL: Duration = Duration::from_millis(500);
+const SCREENSHOT_POLL_INTERVAL: Duration = Duration::from_millis(50);
 
 /// Cache Screenshot's process state between polls, including while overlays are hidden.
 pub struct ScreenshotPoll {
@@ -58,7 +58,7 @@ mod tests {
         let mut poll = ScreenshotPoll::new(now);
         assert!(!poll.poll(now, || false));
 
-        for millis in [1, 16, 250, 499] {
+        for millis in [1, 16, 25, 49] {
             assert!(!poll.poll(now + Duration::from_millis(millis), || {
                 panic!("process query ran before its deadline")
             }));
@@ -66,7 +66,7 @@ mod tests {
         }
 
         assert!(poll.poll(now + SCREENSHOT_POLL_INTERVAL, || true));
-        assert!(poll.poll(now + Duration::from_millis(501), || {
+        assert!(poll.poll(now + Duration::from_millis(51), || {
             panic!("cached running state should be retained")
         }));
     }
