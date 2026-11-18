@@ -1,0 +1,9 @@
+expr main (a lots of)
+
+let message "Are you confusing `a lot` and `lots`?"
+let description "Corrects `a lots of` to `a lot of` or `lots of`."
+let kind "Usage"
+let becomes ["a lot of", "lots of"]
+
+test "I found a lots of compiler errors." "I found a lot of compiler errors."
+test "I found a lots of compiler errors." "I found lots of compiler errors."

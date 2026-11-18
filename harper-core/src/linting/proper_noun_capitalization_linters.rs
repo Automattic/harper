@@ -1,4 +1,4 @@
-use crate::expr::{Expr, ExprMap, FixedPhrase};
+use crate::expr::{Expr, ExprMap, FixedPhrase, LongestMatchOf};
 use hashbrown::HashMap;
 use serde::{Deserialize, Serialize};
 
@@ -113,6 +113,19 @@ pub fn lint_group() -> LintGroup {
     lint_group_from_json(include_str!("../../proper_noun_rules.json"))
 }
 
+/// Matches every proper noun in `proper_noun_rules.json`, in any capitalization.
+pub(super) fn proper_nouns_expr() -> LongestMatchOf {
+    let rules: HashMap<String, RuleEntry> =
+        serde_json::from_str(include_str!("../../proper_noun_rules.json")).unwrap();
+
+    LongestMatchOf::new(
+        rules
+            .into_values()
+            .flat_map(|rule| rule.canonical)
+            .map(|name| Box::new(FixedPhrase::from_phrase(&name)) as Box<dyn Expr>),
+    )
+}
+
 #[cfg(test)]
 mod tests {
     use super::lint_group;
@@ -121,6 +134,25 @@ mod tests {
     use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     create_test_pool!(LintGroup, LintGroup, lint_group());
+
+    #[test]
+    fn name_with_american_spelling_lowercase() {
+        assert_suggestion_result("pearl harbor", test_linter(), "Pearl Harbor");
+    }
+
+    #[test]
+    fn world_health_organization_lowercase() {
+        assert_suggestion_result(
+            "world health organization",
+            test_linter(),
+            "World Health Organization",
+        );
+    }
+
+    #[test]
+    fn name_with_british_spelling_lowercase() {
+        assert_suggestion_result("ministry of defence", test_linter(), "Ministry of Defence");
+    }
 
     #[test]
     fn americas_lowercase() {
@@ -417,5 +449,23 @@ mod tests {
     #[test]
     fn browser_extension_not_flagged() {
         assert_lint_count("browser extension", test_linter(), 0);
+    }
+
+    #[test]
+    fn fix_baton_rogue() {
+        assert_suggestion_result(
+            "The programs know you dont care about the bronx or baton rouge, you just want a spot",
+            test_linter(),
+            "The programs know you dont care about the bronx or Baton Rouge, you just want a spot",
+        );
+    }
+
+    #[test]
+    fn fix_khmer_rouge() {
+        assert_suggestion_result(
+            "I read that the khmer rouge still existed as a group after vietnam invaded cambodia and they still had a seat in the UN until 1993.",
+            test_linter(),
+            "I read that the Khmer Rouge still existed as a group after vietnam invaded cambodia and they still had a seat in the UN until 1993.",
+        );
     }
 }

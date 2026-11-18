@@ -13,7 +13,7 @@ pub struct WellEducated {
 
 impl Default for WellEducated {
     fn default() -> Self {
-        let combined = WordSet::new(&["good-educated"]);
+        let combined = WordSet::new(["good-educated"]);
 
         let separated = SequenceExpr::default()
             .t_aco("good")

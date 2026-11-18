@@ -129,9 +129,9 @@ export class HarperSettingTab extends PluginSettingTab {
 				'Use a straight underline with a background color instead of the default squiggly underline.',
 			)
 			.addToggle((toggle) =>
-				toggle.setValue(this.settings.useWebStyleLints ?? false).onChange(async (value) => {
-					this.settings.useWebStyleLints = value;
-					await this.state?.initializeFromSettings(this.settings);
+				toggle.setValue(settings.useWebStyleLints ?? false).onChange(async (value) => {
+					settings.useWebStyleLints = value;
+					await this.state?.initializeFromSettings(settings);
 				}),
 			);
 
@@ -282,10 +282,10 @@ export class HarperSettingTab extends PluginSettingTab {
 	}
 
 	async renderLintSettingsToId(searchQuery: string, id: string) {
-		const el = document.getElementById(id);
+		const el = this.containerEl.querySelector<HTMLElement>(`#${id}`);
 		if (!el) return;
 		const effective = await this.state?.getEffectiveLintConfig();
-		this.renderLintSettings(searchQuery, el, effective);
+		this.renderLintSettings(searchQuery, el, effective ?? {});
 	}
 
 	private renderLintSettings(
@@ -585,10 +585,13 @@ export class HarperSettingTab extends PluginSettingTab {
 					.addOption('disable', offLabel)
 					.setValue(effective ? 'enable' : 'disable')
 					.onChange(async (v) => {
+						const settings = this.settings;
+						if (!settings) return;
+
 						// The structured config only organizes rules for display.
 						// Persist changes through the flat lint config keyed by rule name.
-						this.settings.lintSettings[setting] = v === 'enable';
-						await this.state?.initializeFromSettings(this.settings);
+						settings.lintSettings[setting] = v === 'enable';
+						await this.state?.initializeFromSettings(settings);
 						this.settings = await this.state?.getSettings();
 						this.renderLintSettingsToId(this.currentRuleSearchQuery, LintSettingId);
 						this.updateToggleAllRulesButton();
@@ -618,13 +621,16 @@ export class HarperSettingTab extends PluginSettingTab {
 			}
 
 			dropdown.setValue(currentName).onChange(async (selected) => {
+				const settings = this.settings;
+				if (!settings) return;
+
 				// The structured config only organizes rules for display.
 				// Persist changes through the flat lint config keyed by rule name.
 				for (const name of setting.names) {
-					this.settings.lintSettings[name] = name === selected;
+					settings.lintSettings[name] = name === selected;
 				}
 
-				await this.state?.initializeFromSettings(this.settings);
+				await this.state?.initializeFromSettings(settings);
 				this.settings = await this.state?.getSettings();
 				this.renderLintSettingsToId(this.currentRuleSearchQuery, LintSettingId);
 				this.updateToggleAllRulesButton();

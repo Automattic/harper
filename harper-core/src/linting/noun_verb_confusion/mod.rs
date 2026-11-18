@@ -10,6 +10,7 @@ pub(crate) const NOUN_VERB_PAIRS: &[(&str, &str)] = &[
     ("advice", "advise"),
     ("belief", "believe"),
     ("breath", "breathe"),
+    ("descent", "descend"),
     ("effect", "affect"), // "Effect" is also a verb meaning "to bring about". "Affect" is a noun in psychology.
     ("emphasis", "emphasize"), // TODO how to handle "emphasise" as well as "emphasize"?
     ("intent", "intend"),
@@ -1429,6 +1430,34 @@ mod tests {
             "Would an unfreed reference in the script side affect the other side somehow?",
             test_linter(),
             0,
+        );
+    }
+
+    #[test]
+    fn fix_before_i_descent() {
+        assert_suggestion_result(
+            "Before I descent into further details, lets understand what are standard and universal Mach-O binaries.",
+            test_linter(),
+            "Before I descend into further details, lets understand what are standard and universal Mach-O binaries.",
+        );
+    }
+
+    #[test]
+    fn fix_but_should_descent() {
+        assert_suggestion_result(
+            "But we need to calculate how fast we should descent to maintain the glideslope profile.",
+            test_linter(),
+            "But we need to calculate how fast we should descend to maintain the glideslope profile.",
+        );
+    }
+
+    #[test]
+    #[ignore = "this context is not yet flagged"]
+    fn fix_stop_a_descend() {
+        assert_suggestion_result(
+            "But in case of low throttle margin you might not be able to stop a descend due to yaw control.",
+            test_linter(),
+            "But in case of low throttle margin you might not be able to stop a descent due to yaw control.",
         );
     }
 }

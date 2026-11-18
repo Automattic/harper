@@ -1,0 +1,9 @@
+expr main (legit)
+
+let message "Use `legitimate` instead of `legit`"
+let description "Expands the abbreviation `legit` to the full word `legitimate` for clarity."
+let kind "Style"
+let becomes "legitimate"
+
+test "A library for generating safe, legit and random URL-compat IDs." "A library for generating safe, legitimate and random URL-compat IDs."
+test "Yes it is legit. We use it to protect stackoverflow.com user cookies from third parties." "Yes it is legitimate. We use it to protect stackoverflow.com user cookies from third parties."

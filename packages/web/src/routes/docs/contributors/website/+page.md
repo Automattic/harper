@@ -1,6 +1,9 @@
 ---
 title: Website
+description: Develop the Harper website locally with SvelteKit and SveltePress, and find its source files and build commands.
 ---
+
+# Website
 
 This page describes how to develop [writewithharper.com](https://writewithharper.com) locally.
 Make sure you read the [introduction to contributing](./introduction) and [committing](./committing) guides before opening a pull request.
@@ -27,6 +30,10 @@ Documentation sidebar entries are defined in `packages/web/vite.config.ts`. When
 ## Updating the Documentation
 
 The Harper documentation (available on this site) is in `web/src/routes/docs`. It is written in Markdown.
+
+Markdown typography is defined in `packages/web/src/lib/docs/MarkdownLayout.svelte`.
+Wrap embedded Svelte components in `<div data-docs-embed>...</div>` to keep documentation styles and table-of-contents entries out of the component's UI.
+The `docs-prose` Tailwind variant in `packages/web/src/app.css` excludes this wrapper and all its descendants.
 
 ## Running the Site
 

@@ -75,10 +75,10 @@ pub trait ExprLinter: LSend {
     fn description(&self) -> &str;
 }
 
-/// Helper function to find the only occurrence of a token matching a predicate
+/// Helper function to find the only occurrence of a token matching a predicate.
+/// Avoids edge cases when a second part of a pattern coicincidentally also matches a desired key word.
 ///
 /// Returns `Some(token)` if exactly one token matches the predicate, `None` otherwise.
-/// TODO: This can be used in the [`ThenThan`] linter when #1819 is merged.
 pub fn find_the_only_token_matching<'a, F>(
     tokens: &'a [Token],
     source: &[char],
@@ -212,8 +212,7 @@ pub fn preceded_by_word(
     predicate: impl Fn(&Token) -> bool,
 ) -> bool {
     if let Some((before, _)) = context
-        && let [.., word, ws] = before
-        && ws.kind.is_whitespace()
+        && let Some(word) = before.iter().rev().find(|t| !t.kind.is_whitespace())
     {
         return predicate(word);
     }

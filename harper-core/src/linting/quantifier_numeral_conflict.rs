@@ -23,12 +23,8 @@ impl Default for QuantifierNumeralConflict {
                         ]),
                 ),
                 Box::new(SequenceExpr::unless(SequenceExpr::any_of([
-                    Box::new(WordSet::new(&["all", "any", "every", "no"])) as Box<dyn Expr>,
-                    Box::new(
-                        SequenceExpr::word_set(&["each", "some"])
-                            .t_ws()
-                            .t_aco("one"),
-                    ),
+                    Box::new(WordSet::new(["all", "any", "every", "no"])) as Box<dyn Expr>,
+                    Box::new(SequenceExpr::word_set(["each", "some"]).t_ws().t_aco("one")),
                 ]))),
             ]),
         }

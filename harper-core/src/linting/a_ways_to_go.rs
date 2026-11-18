@@ -16,7 +16,7 @@ impl Default for AWaysToGo {
         let prolog = SequenceExpr::aco("still").t_ws();
 
         let core = Lrc::new(
-            SequenceExpr::word_set(&["have", "had", "has", "having"])
+            SequenceExpr::word_set(["have", "had", "has", "having"])
                 .t_ws()
                 .then_word_seq(&["ways", "to", "go"]),
         );
@@ -24,7 +24,7 @@ impl Default for AWaysToGo {
         let epilog = FirstMatchOf::new([
             Box::new(AnchorEnd) as Box<dyn Expr>,
             Box::new(SequenceExpr::whitespace().then_any_of([
-                Box::new(SequenceExpr::word_set(&["before", "but", "though"])),
+                Box::new(SequenceExpr::word_set(["before", "but", "though"])),
                 Box::new(SequenceExpr::word_seq(&["in", "order", "to"])),
                 Box::new(SequenceExpr::word_seq(&["to", "be"])),
             ])),

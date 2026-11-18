@@ -12,7 +12,7 @@ pub struct TillDate {
 impl TillDate {
     pub fn new(dialect: Dialect) -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["till", "til", "'til", "til'"])
+            expr: SequenceExpr::word_set(["till", "til", "'til", "til'"])
                 .t_ws()
                 .t_aco("date"),
             dialect,

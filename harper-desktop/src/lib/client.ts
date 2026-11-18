@@ -34,6 +34,19 @@ function getConfigLinter(): Promise<LocalLinterType> {
 	return configLinterPromise;
 }
 
+/** Persisted pack metadata and original archive, shared with Rust and the highlighter. */
+export interface InstalledWeirpack {
+	id: string;
+	name: string;
+	filename: string;
+	version: string;
+	size: number;
+	ruleCount: number;
+	addedAt: number;
+	enabled: boolean;
+	bytesBase64: string;
+}
+
 export interface Integration {
 	bundle_id: string;
 	enabled: boolean;
@@ -45,11 +58,82 @@ export interface AppSearchResult {
 	bundle_id: string;
 }
 
+export type OnboardingState =
+	| 'welcome'
+	| 'accessibility'
+	| 'integration'
+	| 'test-drive'
+	| 'ready'
+	| 'complete';
+
 export type AccessibilityPermissionStatus = 'Granted' | 'NotGranted' | 'Unsupported';
+
+/** Serializable Rust updater outcome; an installed update may still require a restart. */
+export interface UpdateResult {
+	status: 'up-to-date' | 'updated' | 'error';
+	currentVersion: string | null;
+	latestVersion: string | null;
+	message: string;
+	error: string | null;
+}
 
 /** Provides an easy-to-use interface for interacting with the main Rust Tauri process.
  * Relevant because that is where the canonical state is stored. */
 export class Client {
+	/** Rebuild the editor engine from canonical settings. A fresh engine removes disabled pack rules and words. */
+	static async createEditorLinter(): Promise<Linter> {
+		const [{ WorkerLinter }, { slimBinaryInlined }, packs, dialect, words, config] =
+			await Promise.all([
+				import('harper.js'),
+				import('harper.js/slimBinaryInlined'),
+				Client.getWeirpacks(),
+				Client.getDialect(),
+				Client.getDictionary(),
+				Client.getLintConfig(),
+			]);
+		const linter = new WorkerLinter({ binary: slimBinaryInlined, dialect });
+		try {
+			await linter.setup();
+			await linter.importWords(words);
+			for (const pack of packs.filter((pack) => pack.enabled)) {
+				const bytes = Uint8Array.from(atob(pack.bytesBase64), (character) =>
+					character.charCodeAt(0),
+				);
+				const failures = await linter.loadWeirpackFromBytes(bytes);
+				if (failures && Object.keys(failures).length)
+					throw new Error(`Tests failed in ${pack.name}.`);
+			}
+			await linter.setLintConfig({
+				...(await linter.getLintConfig()),
+				...Object.fromEntries(Object.entries(config).filter(([, value]) => value != null)),
+			});
+			return linter;
+		} catch (error) {
+			await linter.dispose();
+			throw error;
+		}
+	}
+
+	static async getWeirpacks(): Promise<InstalledWeirpack[]> {
+		return invoke('get_weirpacks');
+	}
+
+	/** Rust validates rules, tests, and dictionaries before saving and notifying open editors. */
+	static async installWeirpack(filename: string, bytes: Uint8Array): Promise<void> {
+		await invoke('install_weirpack', { filename, bytes: Array.from(bytes) });
+	}
+
+	static async removeWeirpack(id: string): Promise<void> {
+		await invoke('remove_weirpack', { id });
+	}
+
+	static async updateWeirpack(
+		id: string,
+		patch: { name?: string; enabled?: boolean },
+	): Promise<void> {
+		await invoke('update_weirpack', { id, ...patch });
+	}
+
 	static async getLintConfig(): Promise<LintConfig> {
 		return await invoke<LintConfig>('get_lint_config');
 	}
@@ -84,28 +168,38 @@ export class Client {
 		await invoke('set_debounce_ms', { debounceMs });
 	}
 
+	/** Check if the app is configured to auto update. */
 	static async getAutoUpdate(): Promise<boolean> {
 		return await invoke<boolean>('get_auto_update');
 	}
 
+	/** Configure the app to auto update. */
 	static async setAutoUpdate(autoUpdate: boolean): Promise<void> {
 		await invoke('set_auto_update', { autoUpdate });
 	}
 
-	static async getLastUpdateCheck(): Promise<number | null> {
-		return await invoke<number | null>('get_last_update_check');
+	static async getCurrentVersion(): Promise<string> {
+		return await invoke<string>('get_current_version');
 	}
 
-	static async setLastUpdateCheck(lastUpdateCheck: number | null): Promise<void> {
-		await invoke('set_last_update_check', { lastUpdateCheck });
+	static async getLatestVersion(): Promise<string> {
+		return await invoke<string>('get_latest_version');
 	}
 
-	static async getOnboardingCompleted(): Promise<boolean> {
-		return await invoke<boolean>('get_onboarding_completed');
+	static async updateToLatest(): Promise<UpdateResult> {
+		return await invoke<UpdateResult>('update_to_latest');
 	}
 
-	static async setOnboardingCompleted(onboardingCompleted: boolean): Promise<void> {
-		await invoke('set_onboarding_completed', { onboardingCompleted });
+	static async restartHarper(): Promise<void> {
+		await invoke('restart_harper');
+	}
+
+	static async getOnboardingState(): Promise<OnboardingState> {
+		return await invoke<OnboardingState>('get_onboarding_state');
+	}
+
+	static async setOnboardingState(onboardingState: OnboardingState): Promise<void> {
+		await invoke('set_onboarding_state', { onboardingState });
 	}
 
 	static async getLaunchAtStartup(): Promise<boolean> {
@@ -154,6 +248,14 @@ export class Client {
 
 	static async getIntegrations(): Promise<Integration[]> {
 		return await invoke<Integration[]>('get_integrations');
+	}
+
+	static async getAutoEnableNewApps(): Promise<boolean> {
+		return await invoke<boolean>('get_auto_enable_new_apps');
+	}
+
+	static async setAutoEnableNewApps(autoEnableNewApps: boolean): Promise<void> {
+		await invoke('set_auto_enable_new_apps', { autoEnableNewApps });
 	}
 
 	static async addIntegration(bundleId: string): Promise<void> {

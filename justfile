@@ -7,8 +7,9 @@ soft-clean:
   #!/usr/bin/env bash
   set -eo pipefail
 
-  # Clean target + all harper-* directories as they all have a rust backend and build into target
+  # Clean both the root workspace and standalone Desktop build artifacts.
   cargo clean
+  (cd "{{justfile_directory()}}/harper-desktop/src-tauri" && cargo clean)
 
   # Handle packages/*
 
@@ -21,7 +22,7 @@ soft-clean:
   rm -rf "{{justfile_directory()}}"/packages/lint-framework/{dist}
   rm -rf "{{justfile_directory()}}"/packages/obsidian-plugin/{harper-obsidian-plugin.zip,main.js}
   rm -rf "{{justfile_directory()}}"/packages/vscode-plugin/{.vscode-test,bin,build}
-  rm -rf "{{justfile_directory()}}"/packages/web/{.svelte-kit,.sveltepress,build}
+  rm -rf "{{justfile_directory()}}"/packages/web/{.svelte-kit,build}
   rm -rf "{{justfile_directory()}}"/packages/wordpress-plugin/{build,harper.zip}
   rm -rf "{{justfile_directory()}}"/harper-desktop/{.svelte-kit,build,package}
   rm -rf "{{justfile_directory()}}"/harper-wasm/pkg
@@ -40,6 +41,7 @@ hard-clean: soft-clean
 alias fmt := format
 format:
   cargo fmt
+  cd "{{justfile_directory()}}/harper-desktop/src-tauri" && cargo fmt
   pnpm format
 
 # Build the shared component library
@@ -108,7 +110,7 @@ test-harperjs: build-harperjs
 
   pnpm install
   cd "{{justfile_directory()}}/packages/harper.js"
-  pnpm playwright install
+  pnpm playwright install chromium firefox
   pnpm test
 
   # Test runnable examples
@@ -121,7 +123,7 @@ test-obsidian: build-obsidian
 
   pnpm install
   cd "{{justfile_directory()}}/packages/obsidian-plugin"
-  pnpm playwright install
+  pnpm playwright install chromium
   pnpm test
 
 alias dev-wordpress := dev-wp
@@ -178,7 +180,8 @@ dev-desktop-highlighter:
   #!/usr/bin/env bash
   set -eo pipefail
 
-  cargo run -p harper-desktop -- highlighter
+  cd "{{justfile_directory()}}/harper-desktop/src-tauri"
+  cargo run -- highlighter
 
 # Check Harper Desktop frontend and Rust targets.
 check-desktop: build-harperjs build-lint-framework build-components build-harper-editor
@@ -188,9 +191,16 @@ check-desktop: build-harperjs build-lint-framework build-components build-harper
   cd "{{justfile_directory()}}/harper-desktop"
   pnpm install
   pnpm check
+  just check-desktop-rust
 
-  cd "{{justfile_directory()}}"
-  cargo check -p harper-desktop --all-targets
+# Check formatting and lint all standalone Desktop Rust targets.
+check-desktop-rust:
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/harper-desktop/src-tauri"
+  cargo fmt -- --check
+  cargo clippy --all-targets -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
 
 # Build Harper Desktop Linux bundles.
 build-desktop-linux: build-harperjs build-lint-framework build-components build-harper-editor
@@ -200,6 +210,30 @@ build-desktop-linux: build-harperjs build-lint-framework build-components build-
   cd "{{justfile_directory()}}/harper-desktop"
   pnpm install
   pnpm tauri build -b deb,rpm,appimage
+
+# Build Harper Desktop Windows bundles.
+build-desktop-windows: build-harperjs build-lint-framework build-components build-harper-editor
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  rustup target add x86_64-pc-windows-msvc
+
+  cd "{{justfile_directory()}}/harper-desktop"
+  pnpm install
+  pnpm tauri build --runner cargo-xwin --target x86_64-pc-windows-msvc -b nsis --config '{"bundle":{"createUpdaterArtifacts":false}}'
+
+# Build native Windows bundles using a CI-generated Azure signing config.
+build-desktop-windows-signed signing_config: build-harperjs build-lint-framework build-components build-harper-editor
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/harper-desktop"
+  pnpm install
+  pnpm tauri build --target x86_64-pc-windows-msvc -b nsis --config {{quote(signing_config)}}
+
+# Test desktop signing and release scripts without CI credentials.
+test-desktop-release:
+  node --test .buildkite/commands/*.test.cjs
 
 # Build Harper Desktop for Apple Silicon only — faster than the universal recipe below.
 build-desktop-macos-arm64: build-harperjs build-lint-framework build-components build-harper-editor
@@ -296,7 +330,7 @@ test-chrome-plugin: build-chrome-plugin
 
   pnpm install
   cd "{{justfile_directory()}}/packages/chrome-plugin"
-  pnpm playwright install
+  pnpm playwright install chromium
 
   # For environments without displays like CI servers or containers
   if [[ "$(uname)" == "Linux" ]]; then
@@ -315,15 +349,12 @@ test-firefox-plugin: build-firefox-plugin
 
   pnpm install
   cd "{{justfile_directory()}}/packages/chrome-plugin"
-  pnpm playwright install
+  pnpm playwright install firefox
 
-  # For environments without displays like CI servers or containers
-  if [[ "$(uname)" == "Linux" ]]; then
-    env -u WAYLAND_DISPLAY XDG_SESSION_TYPE=x11 \
-    xvfb-run --auto-servernum pnpm test --project firefox 
-  else
-    pnpm test --project firefox 
-  fi
+  # Run Firefox headless: `pnpm test` passes `--headed`, which Chromium needs for extensions
+  # but Firefox doesn't. On a virtual display every headed window opens in the same place,
+  # and Firefox stops drawing frames for windows that are covered, which stalls the tests.
+  pnpm exec playwright test --project firefox
 
 # Run VSCode plugin unit and integration tests.
 alias test-vscode-extension := test-vscode
@@ -442,6 +473,7 @@ check-rust: audit-dictionary
   cargo clippy -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
 
   cargo hack check --each-feature
+  just check-desktop-rust
 
 # Perform format and type checking.
 check: check-rust check-js
@@ -453,7 +485,21 @@ check-js: build-harperjs build-lint-framework build-components build-harper-edit
   pnpm install
   pnpm check
 
-  # Needed because Svelte has special linters
+  cd "{{justfile_directory()}}/packages/chrome-plugin"
+  pnpm check
+
+  cd "{{justfile_directory()}}/packages/obsidian-plugin"
+  pnpm check
+
+  cd "{{justfile_directory()}}/packages/wordpress-plugin"
+  pnpm check
+
+  cd "{{justfile_directory()}}/packages/components"
+  pnpm check
+
+  cd "{{justfile_directory()}}/packages/harper-editor"
+  pnpm check
+
   cd "{{justfile_directory()}}/packages/web"
   ENABLE_ADMIN_ROUTES=false pnpm check
 
@@ -494,6 +540,7 @@ dogfood:
 test-rust:
   echo Running all Rust tests
   cargo test -q
+  cd "{{justfile_directory()}}/harper-desktop/src-tauri" && cargo test -q
 
 # Test everything.
 test: test-rust test-harperjs test-vscode test-obsidian test-chrome-plugin test-firefox-plugin
@@ -602,7 +649,8 @@ bump-versions: update-vscode-linters
   #!/usr/bin/env bash
   set -eo pipefail
 
-  cargo ws version --no-git-push --no-git-tag --force '*'
+  # Include private workspace crates; standalone Desktop is updated below.
+  cargo ws version --all --no-git-push --no-git-tag --force '*'
 
   HARPER_VERSION=$(tq --raw --file harper-core/Cargo.toml .package.version)
 
@@ -632,6 +680,10 @@ bump-versions: update-vscode-linters
   mv package.json.edited package.json
 
   cd "{{justfile_directory()}}/harper-desktop/src-tauri"
+
+  # Desktop is outside the workspace, so synchronize its crate and lockfile explicitly.
+  HARPER_VERSION="$HARPER_VERSION" perl -pi -e 's/^version = "[^"]+"$/version = "$ENV{HARPER_VERSION}"/' Cargo.toml
+  cargo update --workspace
 
   cat tauri.conf.json | jq ".version = \"$HARPER_VERSION\"" > tauri.conf.json.edited
   mv tauri.conf.json.edited tauri.conf.json

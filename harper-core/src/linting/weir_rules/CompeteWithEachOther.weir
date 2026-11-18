@@ -1,0 +1,18 @@
+expr main <([compete, competed, competes, competing] over [(each other), eachother]), over>
+let message "Avoid `compete over each other`; use `compete with each other` instead."
+let description "Corrects `compete over each other` to `compete with each other`"
+let kind "Usage"
+let becomes ["with", "against"]
+
+# each other
+test "This is where multiple threads running small amounts of data from the same cache file would compete over each other for memory references." "This is where multiple threads running small amounts of data from the same cache file would compete with each other for memory references."
+test "Vendors competed over each other about tea and idlis." "Vendors competed with each other about tea and idlis."
+test "Nothing competes over each other and allows for the vocals and message to take center stage." "Nothing competes with each other and allows for the vocals and message to take center stage."
+test "The short car ride home consists mostly of voices competing over each other." "The short car ride home consists mostly of voices competing with each other."
+
+# eachother (which is a separate mistake)
+test "something like this that makes it seem like teammates should compete over eachother" "something like this that makes it seem like teammates should compete with eachother"
+test "crashing because those two softwares were competing over eachother" "crashing because those two softwares were competing with eachother"
+
+# don't flag legit use with possessives
+allows "the two end up competing over each other's former love interests"

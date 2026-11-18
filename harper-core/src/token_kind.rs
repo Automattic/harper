@@ -68,7 +68,9 @@ impl TokenKind {
         is_possessive_nominal,
         is_non_plural_nominal,
         is_singular_noun,
+        is_singular_noun_only,
         is_plural_noun,
+        is_plural_noun_only,
         is_non_plural_noun,
         is_non_possessive_noun,
         is_countable_noun,
@@ -99,7 +101,7 @@ impl TokenKind {
         is_linking_verb,
         is_verb_lemma,
         is_verb_past_form,
-        is_verb_regular_past_form,
+        is_verb_preterite_and_participle_form,
         is_verb_simple_past_form,
         is_verb_past_participle_form,
         is_verb_simple_past_only,
@@ -132,6 +134,7 @@ impl TokenKind {
 
         // Generic word methods
         is_swear,
+        is_abbreviation,
         is_likely_homograph,
 
         // Orthography methods
@@ -477,7 +480,7 @@ mod tests {
     fn thought_is_regular_past_form() {
         let doc = Document::new_plain_english_curated("thought");
         let tk = &doc.tokens().next().unwrap().kind;
-        assert!(tk.is_verb_regular_past_form());
+        assert!(tk.is_verb_preterite_and_participle_form());
     }
 
     #[test]

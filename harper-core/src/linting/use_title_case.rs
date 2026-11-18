@@ -125,4 +125,17 @@ mod tests {
             UseTitleCase::new(FstDictionary::curated()),
         );
     }
+
+    #[test]
+    fn does_not_capitalize_standalone_x_between_words() {
+        assert_no_lints(
+            "# Project 1 x Project 2",
+            UseTitleCase::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn capitalizes_standalone_x_when_last_word() {
+        assert_no_lints("# Project X", UseTitleCase::new(FstDictionary::curated()));
+    }
 }

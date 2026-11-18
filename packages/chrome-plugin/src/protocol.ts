@@ -11,6 +11,8 @@ export type Request =
 	| GetDialectRequest
 	| GetIsolateEnglishRequest
 	| SetIsolateEnglishRequest
+	| GetOpenSuggestionsOnHoverRequest
+	| SetOpenSuggestionsOnHoverRequest
 	| GetDelayRequest
 	| SetDelayRequest
 	| SetDomainStatusRequest
@@ -24,6 +26,7 @@ export type Request =
 	| AddToUserDictionaryRequest
 	| SetUserDictionaryRequest
 	| IgnoreLintRequest
+	| ClearIgnoredLintsRequest
 	| GetUserDictionaryRequest
 	| GetActivationKeyRequest
 	| SetActivationKeyRequest
@@ -44,9 +47,11 @@ export type Response =
 	| GetConfigResponse
 	| GetStructuredConfigResponse
 	| UnitResponse
+	| ClearIgnoredLintsResponse
 	| GetLintDescriptionsResponse
 	| GetDialectResponse
 	| GetIsolateEnglishResponse
+	| GetOpenSuggestionsOnHoverResponse
 	| GetDelayResponse
 	| GetDomainStatusResponse
 	| SetDomainStatusResponse
@@ -99,6 +104,20 @@ export type SetConfigRequest = {
 export type SetDialectRequest = {
 	kind: 'setDialect';
 	dialect: Dialect;
+};
+
+export type GetOpenSuggestionsOnHoverRequest = {
+	kind: 'getOpenSuggestionsOnHover';
+};
+
+export type SetOpenSuggestionsOnHoverRequest = {
+	kind: 'setOpenSuggestionsOnHover';
+	enabled: boolean;
+};
+
+export type GetOpenSuggestionsOnHoverResponse = {
+	kind: 'getOpenSuggestionsOnHover';
+	enabled: boolean;
 };
 
 export type GetDelayRequest = {
@@ -260,6 +279,16 @@ export type GetReviewedResponse = {
 export type SetReviewedRequest = {
 	kind: 'setReviewed';
 	reviewed: boolean;
+};
+
+/** Clear ignored suggestions across all websites without changing other settings. */
+export type ClearIgnoredLintsRequest = {
+	kind: 'clearIgnoredLints';
+};
+
+export type ClearIgnoredLintsResponse = {
+	kind: 'clearIgnoredLints';
+	success: boolean;
 };
 
 export type IgnoreLintRequest = {

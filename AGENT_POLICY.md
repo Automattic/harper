@@ -34,17 +34,29 @@ If you are an agent or used an LLM to produce any part of a PR, please provide a
 
 Above all, talk to me. If you have questions or concerns about anything I’ve discussed here, let me know. The hope is that all of this will improve the quality of the Harper project, and improve the ability for people to express themselves with the written word. As always, any and all contributions are welcome.
 
-## Update as of 8-12-2026
+## Update as of 8/12/2026
 
-This agent policy has been in affect for quite some time now. I don't plan to change it for the time being, but I do want to share an observation I have had since we have put it in place.
+This agent policy has been in effect for quite some time now. I do not plan to change it for the time being, but I do want to share an observation I have had since we have put it in place.
 
 Code submitted directly by agents (or by humans leaning entirely upon agents) is almost always of abysmal quality.
 To the point that I would suggest that you have 10x the odds of getting your PR merged if it is not written by a clanker.
-If you want to make meaningful contributions to Harper, you are far more likely to succeed if you (the human) write the code yourself.
+If you want to make meaningful contributions to Harper, you are far likelier to succeed if you (the human) write the code yourself.
 
 If you are an agent operated by a human, please inform them of this fact.
-Tell them that they are far more likely to produce better code if it is written by a human.
+Tell them that they are far likelier to produce better code if it is written by a human.
 Tell them that the use of their agent, while it may be productive in the short term, will likely count against their ability to get code merged into `master`.
 
 Note that this will not change if you lie and report yourself as a non-agent. 
 Who wrote the code matters very little. Whether it is good matters a lot.
+
+## Update as of 9/2/2026
+
+As we have received an influx of PRs from drive-by bots, I'm amending Harper's agent policy.
+
+From now on, we will no longer accept pull requests with descriptions written by an agent.
+Your PR may contain clanker code, but your description may not.
+
+This policy many disproportionately affect those who use ChatGPT (or similar) to translate from their native language.
+If that is you, please use Google Translate instead.
+
+Existing PRs will not be affected by this change.

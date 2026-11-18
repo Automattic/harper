@@ -102,7 +102,7 @@ impl Default for ConvenientStore {
         Self {
             expr: SequenceExpr::aco("convenient")
                 .t_ws()
-                .t_set(&["store", "stores"]),
+                .t_set(["store", "stores"]),
         }
     }
 }
