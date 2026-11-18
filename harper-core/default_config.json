@@ -3743,6 +3743,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ExplainMe",
+								"state": true,
+								"label": "Explain Me"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ForNoun",
 								"state": true,
 								"label": "For Noun"
@@ -6079,6 +6086,13 @@
 								"name": "StatuteOfLimitations",
 								"state": true,
 								"label": "Statute of Limitations"
+							}
+						},
+						{
+							"Bool": {
+								"name": "StriveFor",
+								"state": true,
+								"label": "Strive for"
 							}
 						},
 						{
