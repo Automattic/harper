@@ -1,4 +1,8 @@
-expr main [<(past away), past>, <([law, laws] past), past>, <(past [pawn, pawns]), past>]
+expr main [
+    <(past away), past>, 
+    <([law, laws] past), past>, 
+    <(past [pawn, pawns]), past>
+]
 
 let message "Did you mean `passed`?"
 let description "Corrects `past` to `passed`."

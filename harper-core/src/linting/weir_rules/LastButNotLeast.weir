@@ -1,4 +1,9 @@
-expr main [(last but not the least), (last, but not the least), (last but, not least), (last but not last)]
+expr main [
+    (last but not the least),
+    (last, but not the least),
+    (last but, not least),
+    (last but not last)
+]
 
 let message "Use the more idiomatic phrasing."
 let description "Corrects common errors in the phrase `last but not least`."

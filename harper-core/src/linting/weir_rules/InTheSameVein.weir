@@ -1,4 +1,11 @@
-expr main [(in the same vain), (in the same vane), (in the same veins), (in same vein), (in same vain), (on the same vein)]
+expr main [
+    (in the same vain),
+    (in the same vane),
+    (in the same veins),
+    (in same vein),
+    (in same vain),
+    (on the same vein)
+]
 
 let message "This idiom requires the definite article `the` and the correct word `vein`, meaning blood vessel."
 let description "Corrects wrong variants of `in the same vein`."

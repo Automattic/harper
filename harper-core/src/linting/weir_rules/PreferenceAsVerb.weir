@@ -2,7 +2,10 @@ expr subjPron [i, we, you, he, she, it, they]
 expr modal [cannot, could, may, might, must, shall, should, will, would, can't, couldn't, mightn't, mustn't, shan't, shouldn't, won't, wouldn't]
 expr toVerb [begin, began, begun, beginning, begins, have, had, has, having, like, liked, liking, likes, need, needed, needing, needs, start, started, starting, starts, try, tried, tries, trying, want, wanted, wanting, wants]
 
-expr main [<([@subjPron, @modal] preference), preference>, <(@toVerb to preference), preference>]
+expr main [
+    <([@subjPron, @modal] preference), preference>, 
+    <(@toVerb to preference), preference>
+]
 
 let message "Did you mean `prefer`?"
 let description "Corrects `preference` to `prefer`."
