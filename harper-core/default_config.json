@@ -4030,6 +4030,13 @@
 						},
 						{
 							"Bool": {
+								"name": "PluralSubjectSeems",
+								"state": true,
+								"label": "Plural Subject Seems"
+							}
+						},
+						{
+							"Bool": {
 								"name": "PluralWrongWordOfPhrase",
 								"state": true,
 								"label": "Plural Wrong Word Of Phrase"
