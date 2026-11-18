@@ -178,8 +178,11 @@ impl ContextRanker {
 
     /// The candidate positions, best first.
     ///
-    /// Each candidate is a lowercase word and its spelling score. The spelling score is the score
-    /// that `harper-core`'s spell checker gives the candidate. Lower spelling scores are better.
+    /// Each candidate is a lowercase word and its spelling score. `harper-core`'s spell checker
+    /// gives this score from the misspelled word alone. It rates how likely the candidate is the
+    /// intended word: common words and typical typos give lower scores. The ranker
+    /// weighs it against how well the candidate fits the surrounding words.
+    /// Lower spelling scores are better.
     /// The order stays the same when the radius holds no known word.
     pub fn rank(
         &self,

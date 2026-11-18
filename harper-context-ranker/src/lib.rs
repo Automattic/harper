@@ -24,10 +24,13 @@ static RANKER: LazyLock<ranker::ContextRanker> = LazyLock::new(|| {
     )
 });
 
-/// Candidate positions, best first. Words are lowercase.
+/// Candidate positions, best first.
 ///
-/// A spelling score is the score that `harper-core`'s spell checker gives a candidate. Lower
-/// spelling scores are better.
+/// Each candidate is a lowercase word and its spelling score. `harper-core`'s spell checker
+/// gives this score from the misspelled word alone. It rates how likely the candidate is the
+/// intended word: common words and typical typos give lower scores. The ranker
+/// weighs it against how well the candidate fits the surrounding words.
+/// Lower spelling scores are better.
 pub fn rank(left: &[String], right: &[String], candidates: &[(String, i32)]) -> Vec<usize> {
     RANKER.rank(left, right, candidates)
 }
