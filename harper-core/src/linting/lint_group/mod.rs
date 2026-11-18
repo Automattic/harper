@@ -6,6 +6,7 @@ use std::{collections::BTreeMap, hash::BuildHasher, num::NonZero, sync::Arc};
 use {foldhash::quality::RandomState, hashbrown::HashMap, lru::LruCache};
 
 // Individual Linters
+use super::a_bit_of_plural::ABitOfPlural;
 use super::a_part::APart;
 use super::a_some_time::ASomeTime;
 use super::a_ways_to_go::AWaysToGo;
@@ -17,12 +18,15 @@ use super::adjective_of_a::AdjectiveOfA;
 use super::after_later::AfterLater;
 use super::ajar::Ajar;
 use super::akimbo::Akimbo;
+use super::akin_to::AkinTo;
 use super::all_hell_break_loose::AllHellBreakLoose;
 use super::all_intents_and_purposes::AllIntentsAndPurposes;
+use super::all_thats_are::AllThatsAre;
 use super::allow_to::AllowTo;
 use super::am_in_the_morning::AmInTheMorning;
 use super::amounts_for::AmountsFor;
 use super::an_a::AnA;
+use super::an_arm_and_a_leg::AnArmAndALeg;
 use super::analog_acoustic_bike::AnalogAcousticBike;
 use super::and_the_like::AndTheLike;
 use super::another_thing_coming::AnotherThingComing;
@@ -31,6 +35,7 @@ use super::apart_from::ApartFrom;
 use super::arrive_to::ArriveTo;
 use super::as_how::AsHow;
 use super::as_to_interrogative::AsToInterrogative;
+use super::asap::AsSoonAsPossible;
 use super::ask_no_preposition::AskNoPreposition;
 use super::aspire_to::AspireTo;
 use super::avoid_contractions::AvoidContractions;
@@ -62,6 +67,7 @@ use super::chicken_and_egg::ChickenAndEgg;
 use super::chock_full::ChockFull;
 use super::claim_to_fame::ClaimToFame;
 use super::close_tight_knit::CloseTightKnit;
+use super::cloud_ones_judgement::CloudOnesJudgement;
 use super::code_in_write_in::CodeInWriteIn;
 use super::comfortable_with::ComfortableWith;
 use super::comma_fixes::CommaFixes;
@@ -70,6 +76,7 @@ use super::compound_nouns::CompoundNouns;
 use super::compound_subject_i::CompoundSubjectI;
 use super::confident::Confident;
 use super::convenient_store::ConvenientStore;
+use super::cool_calm_collected::CoolCalmCollected;
 use super::correct_number_suffix::CorrectNumberSuffix;
 use super::crave_for::CraveFor;
 use super::criteria_phenomena::CriteriaPhenomena;
@@ -80,6 +87,7 @@ use super::day_and_age::DayAndAge;
 use super::deny_offer::DenyOffer;
 use super::despite_it_is::DespiteItIs;
 use super::despite_of::DespiteOf;
+use super::despite_subject::DespiteSubject;
 use super::did_past::DidPast;
 use super::didnt::Didnt;
 use super::dig_under_the_hood::DigUnderTheHood;
@@ -90,6 +98,7 @@ use super::do_mistake::DoMistake;
 use super::dot_initialisms::DotInitialisms;
 use super::double_click::DoubleClick;
 use super::double_modal::DoubleModal;
+use super::double_possessive_noun_phrase::DoublePossessiveNounPhrase;
 use super::ellipsis_length::EllipsisLength;
 use super::else_possessive::ElsePossessive;
 use super::ever_every::EverEvery;
@@ -97,6 +106,7 @@ use super::ever_pronoun_rel_pronoun::EverPronounRelPronoun;
 use super::everyday::Everyday;
 use super::except_of::ExceptOf;
 use super::expand_favourite::ExpandFavourite;
+use super::expand_ime::ExpandIme;
 use super::expand_memory_shorthands::ExpandMemoryShorthands;
 use super::expand_people::ExpandPeople;
 use super::expand_time_shorthands::ExpandTimeShorthands;
@@ -120,6 +130,7 @@ use super::for_the_nth_time::ForTheNthTime;
 use super::free_predicate::FreePredicate;
 use super::friend_of_me::FriendOfMe;
 use super::full_to_the_brim::FullToTheBrim;
+use super::get_access_at::GetAccessAt;
 use super::get_pass_go_pass::GetPassGoPass;
 use super::go_missing::GoMissing;
 use super::go_so_far_as_to::GoSoFarAsTo;
@@ -134,6 +145,7 @@ use super::have_take_a_look::HaveTakeALook;
 use super::hedging::Hedging;
 use super::hello_greeting::HelloGreeting;
 use super::helped_past::HelpedPast;
+use super::here_are_a_collection::HereAreACollection;
 use super::hereby::Hereby;
 use super::high_low_standards::HighLowStandards;
 use super::hop_hope::HopHope;
@@ -146,10 +158,12 @@ use super::implement_in::ImplementIn;
 use super::in_demand_in_depth::InDemandInDepth;
 use super::in_favour_of_doing::InFavourOfDoing;
 use super::in_on_the_cards::InOnTheCards;
+use super::in_ones_defense::InOnesDefense;
 use super::in_stock::InStock;
 use super::in_time_from_now::InTimeFromNow;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
 use super::interested_in::InterestedIn;
+use super::it_are_the_one::ItAreTheOne;
 use super::it_looks_like_that::ItLooksLikeThat;
 use super::its_contraction::ItsContraction;
 use super::its_possessive::ItsPossessive;
@@ -164,6 +178,7 @@ use super::let_to_do::LetToDo;
 use super::lets_confusion::LetsConfusion;
 use super::likewise::Likewise;
 use super::little_known::LittleKnown;
+use super::little_to_no::LittleToNo;
 use super::long_sentences::LongSentences;
 use super::long_time_ago::LongTimeAgo;
 use super::look_down_ones_nose::LookDownOnesNose;
@@ -171,6 +186,7 @@ use super::looking_forward_to::LookingForwardTo;
 use super::mass_nouns::MassNouns;
 use super::means_a_lot_to::MeansALotTo;
 use super::merge_words::MergeWords;
+use super::missing_indefinite_article::MissingIndefiniteArticle;
 use super::missing_preposition::MissingPreposition;
 use super::missing_to::MissingTo;
 use super::misspell::Misspell;
@@ -194,11 +210,13 @@ use super::no_harm_no_foul::NoHarmNoFoul;
 use super::no_longer::NoLonger;
 use super::no_longer_pronoun::NoLongerPronoun;
 use super::no_match_for::NoMatchFor;
+use super::nobel_noble::NobelNoble;
 use super::nobody::Nobody;
 use super::nominal_wants::NominalWants;
 use super::nor_modal_pronoun::NorModalPronoun;
 use super::not_only_inversion::NotOnlyInversion;
 use super::noun_verb_confusion::NounVerbConfusion;
+use super::noun_verb_spelling::NounVerbSpelling;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
 use super::numeric_range_en_dash::NumericRangeEnDash;
 use super::obsess_preposition::ObsessPreposition;
@@ -215,7 +233,9 @@ use super::open_compounds::OpenCompounds;
 use super::open_the_light::OpenTheLight;
 use super::orthographic_consistency::OrthographicConsistency;
 use super::ought_to_be::OughtToBe;
+use super::out_of_curiosity::OutOfCuriosity;
 use super::out_of_date::OutOfDate;
+use super::out_of_outside_the_box::OutOfOutsideTheBox;
 use super::out_of_the_window::OutOfTheWindow;
 use super::over_plus::OverPlus;
 use super::oxford_commas::{NoOxfordComma, OxfordComma};
@@ -227,6 +247,7 @@ use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 use super::pique_interest::PiqueInterest;
 use super::pleaded_pled::{PreferPleaded, PreferPled};
 use super::plural_decades::PluralDecades;
+use super::plural_subject_seems::PluralSubjectSeems;
 use super::plural_wrong_word_of_phrase::PluralWrongWordOfPhrase;
 use super::possessive_noun::PossessiveNoun;
 use super::possessive_your::PossessiveYour;
@@ -240,6 +261,7 @@ use super::quantifier_needs_of::QuantifierNeedsOf;
 use super::quantifier_numeral_conflict::QuantifierNumeralConflict;
 use super::quite_quiet::QuiteQuiet;
 use super::quote_spacing::QuoteSpacing;
+use super::rack_ones_brain::RackOnesBrain;
 use super::reason_for_doing::ReasonForDoing;
 use super::redundant_acronyms::RedundantAcronyms;
 use super::redundant_additive_adverbs::RedundantAdditiveAdverbs;
@@ -259,6 +281,7 @@ use super::roller_skated::RollerSkated;
 use super::run_into_problems_or_trouble::RunIntoProblemsOrTrouble;
 use super::safe_to_save::SafeToSave;
 use super::save_to_safe::SaveToSafe;
+use super::seems_like_adjective::SeemsLikeAdjective;
 use super::sentence_capitalization::SentenceCapitalization;
 use super::shoot_oneself_in_the_foot::ShootOneselfInTheFoot;
 use super::show_case::ShowCase;
@@ -275,6 +298,7 @@ use super::spaces::Spaces;
 use super::spell_check::SpellCheck;
 use super::spelled_numbers::SpelledNumbers;
 use super::split_words::SplitWords;
+use super::strive_for::StriveFor;
 use super::subject_pronoun::SubjectPronoun;
 use super::such_shame::SuchShame;
 use super::summary_summery::SummarySummery;
@@ -326,6 +350,7 @@ use super::vicious_loop::{ViciousCircle, ViciousCircleOrCycle, ViciousCycle};
 use super::waist_waste::WaistWaste;
 use super::was_aloud::WasAloud;
 use super::way_too_adjective::WayTooAdjective;
+use super::we_see_us::WeSeeUs;
 use super::web_scraping::WebScraping;
 use super::well_educated::WellEducated;
 use super::went_ahead_and_agreement::WentAheadAndAgreement;
@@ -346,6 +371,7 @@ use super::wrong_negative::WrongNegative;
 // Modules that create multiple linters each
 use super::be_adjective_confusions;
 use super::closed_compounds;
+use super::gonna_gotta_wanna;
 use super::initialisms;
 use super::phrase_set_corrections;
 use super::proper_noun_capitalization_linters;
@@ -631,10 +657,12 @@ impl LintGroup {
         out.merge_from(closed_compounds::lint_group());
         out.merge_from(initialisms::lint_group());
         out.merge_from(be_adjective_confusions::lint_group());
+        out.merge_from(gonna_gotta_wanna::lint_group(dialect));
 
         // Add all the more complex rules to the group.
         // Please maintain alphabetical order.
         // On *nix you can maintain sort order with `sort -t'(' -k2`
+        insert_expr_rule!(ABitOfPlural);
         insert_expr_rule!(APart);
         insert_expr_rule!(ASomeTime);
         insert_expr_rule!(AWaysToGo);
@@ -646,12 +674,15 @@ impl LintGroup {
         insert_expr_rule!(AfterLater);
         insert_expr_rule!(Ajar);
         insert_expr_rule!(Akimbo);
+        insert_expr_rule!(AkinTo);
         insert_expr_rule!(AllHellBreakLoose);
         insert_expr_rule!(AllIntentsAndPurposes);
         insert_expr_rule!(AllowTo);
+        insert_expr_rule!(AllThatsAre);
         insert_expr_rule!(AmInTheMorning);
         insert_expr_rule!(AmountsFor);
         insert_struct_rule_with_dialect!(AnA);
+        insert_expr_rule!(AnArmAndALeg);
         insert_expr_rule_with_dialect!(AnalogAcousticBike);
         insert_expr_rule!(AndTheLike);
         insert_expr_rule!(AnotherThingComing);
@@ -659,6 +690,7 @@ impl LintGroup {
         insert_expr_rule!(ApartFrom);
         insert_expr_rule!(ArriveTo);
         insert_expr_rule!(AsHow);
+        insert_expr_rule!(AsSoonAsPossible);
         insert_expr_rule!(AsToInterrogative);
         insert_expr_rule!(AskNoPreposition);
         insert_expr_rule!(AvoidContractions);
@@ -690,6 +722,7 @@ impl LintGroup {
         insert_expr_rule!(ChockFull);
         insert_expr_rule!(ClaimToFame);
         insert_expr_rule!(CloseTightKnit);
+        insert_expr_rule!(CloudOnesJudgement);
         insert_expr_rule!(CodeInWriteIn);
         insert_expr_rule!(ComfortableWith);
         insert_struct_rule!(CommaFixes);
@@ -707,6 +740,7 @@ impl LintGroup {
         insert_expr_rule!(DenyOffer);
         insert_expr_rule!(DespiteItIs);
         insert_expr_rule!(DespiteOf);
+        insert_expr_rule!(DespiteSubject);
         insert_expr_rule_with_dict!(DidPast);
         insert_expr_rule!(Didnt);
         insert_expr_rule!(DigUnderTheHood);
@@ -716,6 +750,7 @@ impl LintGroup {
         insert_expr_rule!(DotInitialisms);
         insert_expr_rule!(DoubleClick);
         insert_expr_rule!(DoubleModal);
+        insert_expr_rule!(DoublePossessiveNounPhrase);
         insert_struct_rule!(EllipsisLength);
         insert_expr_rule!(ElsePossessive);
         insert_expr_rule!(EverEvery);
@@ -723,6 +758,7 @@ impl LintGroup {
         insert_expr_rule!(Everyday);
         insert_expr_rule!(ExceptOf);
         insert_expr_rule_with_dialect!(ExpandFavourite);
+        insert_expr_rule!(ExpandIme);
         insert_expr_rule!(ExpandMemoryShorthands);
         insert_expr_rule!(ExpandPeople);
         insert_expr_rule!(ExpandTimeShorthands);
@@ -746,6 +782,7 @@ impl LintGroup {
         insert_expr_rule!(FreePredicate);
         insert_expr_rule!(FriendOfMe);
         insert_expr_rule!(FullToTheBrim);
+        insert_expr_rule!(GetAccessAt);
         insert_expr_rule!(GetPassGoPass);
         insert_expr_rule!(GoMissing);
         insert_expr_rule!(GoSoFarAsTo);
@@ -760,6 +797,7 @@ impl LintGroup {
         insert_expr_rule!(Hedging);
         insert_expr_rule!(HelloGreeting);
         insert_expr_rule_with_dict!(HelpedPast);
+        insert_expr_rule!(HereAreACollection);
         insert_expr_rule!(Hereby);
         insert_expr_rule!(HighLowStandards);
         insert_struct_rule!(HopHope);
@@ -772,10 +810,12 @@ impl LintGroup {
         insert_expr_rule!(InDemandInDepth);
         insert_expr_rule!(InFavourOfDoing);
         insert_struct_rule_with_dialect!(InOnTheCards);
+        insert_expr_rule!(InOnesDefense);
         insert_expr_rule!(InStock);
         insert_expr_rule!(InTimeFromNow);
         insert_struct_rule_with_dict!(InflectedVerbAfterTo);
         insert_expr_rule!(InterestedIn);
+        insert_expr_rule!(ItAreTheOne);
         insert_expr_rule!(ItLooksLikeThat);
         insert_struct_rule!(ItsContraction);
         insert_expr_rule!(ItsPossessive);
@@ -790,6 +830,7 @@ impl LintGroup {
         insert_struct_rule!(LetsConfusion);
         insert_expr_rule!(Likewise);
         insert_struct_rule!(LittleKnown);
+        insert_struct_rule!(LittleToNo);
         insert_struct_rule!(LongSentences);
         insert_expr_rule!(LongTimeAgo);
         insert_expr_rule!(LookDownOnesNose);
@@ -797,6 +838,7 @@ impl LintGroup {
         insert_struct_rule_with_dict!(MassNouns);
         insert_expr_rule!(MeansALotTo);
         insert_struct_rule!(MergeWords);
+        insert_struct_rule_with_dialect!(MissingIndefiniteArticle);
         insert_expr_rule!(MissingPreposition);
         insert_expr_rule!(MissingTo);
         insert_expr_rule!(Misspell);
@@ -819,11 +861,13 @@ impl LintGroup {
         insert_expr_rule!(NoLongerPronoun);
         insert_expr_rule!(NoMatchFor);
         insert_struct_rule!(NoOxfordComma);
+        insert_expr_rule!(NobelNoble);
         insert_expr_rule!(Nobody);
         insert_expr_rule!(NominalWants);
         insert_expr_rule!(NorModalPronoun);
         insert_expr_rule!(NotOnlyInversion);
         insert_struct_rule!(NounVerbConfusion);
+        insert_expr_rule_with_dialect!(NounVerbSpelling);
         insert_struct_rule!(NumberSuffixCapitalization);
         insert_expr_rule!(NumericRangeEnDash);
         insert_expr_rule!(ObsessPreposition);
@@ -841,6 +885,7 @@ impl LintGroup {
         insert_expr_rule!(OrthographicConsistency);
         insert_expr_rule!(OughtToBe);
         insert_expr_rule!(OutOfDate);
+        insert_expr_rule!(OutOfOutsideTheBox);
         insert_expr_rule_with_dialect!(OutOfTheWindow);
         insert_expr_rule!(OverPlus);
         insert_struct_rule!(OxfordComma);
@@ -850,6 +895,7 @@ impl LintGroup {
         insert_expr_rule!(PayForPrice);
         insert_struct_rule!(PhrasalVerbAsCompoundNoun);
         insert_expr_rule!(PiqueInterest);
+        insert_expr_rule!(PluralSubjectSeems);
         insert_expr_rule!(PluralWrongWordOfPhrase);
         insert_struct_rule_with_dict!(PossessiveNoun);
         insert_expr_rule!(PossessiveYour);
@@ -867,6 +913,7 @@ impl LintGroup {
         insert_expr_rule!(QuantifierNumeralConflict);
         insert_expr_rule!(QuiteQuiet);
         insert_struct_rule!(QuoteSpacing);
+        insert_expr_rule!(RackOnesBrain);
         insert_expr_rule!(ReasonForDoing);
         insert_expr_rule!(RedundantAcronyms);
         insert_expr_rule!(RedundantAdditiveAdverbs);
@@ -886,6 +933,7 @@ impl LintGroup {
         insert_expr_rule!(RunIntoProblemsOrTrouble);
         insert_expr_rule!(SafeToSave);
         insert_expr_rule!(SaveToSafe);
+        insert_expr_rule!(SeemsLikeAdjective);
         insert_struct_rule_with_dict!(SentenceCapitalization);
         insert_expr_rule!(ShootOneselfInTheFoot);
         insert_expr_rule!(ShowCase);
@@ -900,6 +948,7 @@ impl LintGroup {
         insert_struct_rule!(Spaces);
         insert_struct_rule!(SpelledNumbers);
         insert_expr_rule!(SplitWords);
+        insert_expr_rule!(StriveFor);
         insert_struct_rule!(SubjectPronoun);
         insert_expr_rule!(SuchShame);
         insert_expr_rule!(SummarySummery);
@@ -918,8 +967,8 @@ impl LintGroup {
         insert_expr_rule!(Themself);
         insert_expr_rule!(ThenThan);
         insert_expr_rule!(ThereOwn);
-        insert_expr_rule!(Theres);
         insert_expr_rule!(Therein);
+        insert_expr_rule!(Theres);
         insert_expr_rule!(ThesesThese);
         insert_struct_rule!(TheyreConfusions);
         insert_expr_rule!(ThingThink);
@@ -952,6 +1001,7 @@ impl LintGroup {
         insert_expr_rule!(WaistWaste);
         insert_expr_rule!(WasAloud);
         insert_expr_rule!(WayTooAdjective);
+        insert_expr_rule!(WeSeeUs);
         insert_expr_rule!(WellEducated);
         insert_expr_rule_with_dict!(WentAheadAndAgreement);
         insert_expr_rule!(Whereas);
@@ -973,6 +1023,9 @@ impl LintGroup {
         out.add("ConvenientStore", ConvenientStore::default());
 
         // Uses Sentence rather than Chunk
+        out.add("CoolCalmCollected", CoolCalmCollected::default());
+
+        // Uses Sentence rather than Chunk
         out.add("Damages", Damages::default());
 
         // Uses Sentence rather than Chunk
@@ -986,6 +1039,9 @@ impl LintGroup {
 
         // Uses Sentence rather than Chunk
         out.add("NoHarmNoFoul", NoHarmNoFoul::default());
+
+        // Uses Sentence rather than Chunk
+        out.add("OutOfCuriosity", OutOfCuriosity::default());
 
         // Uses Sentence rather than Chunk
         out.add("PluralDecades", PluralDecades::default());
@@ -1373,8 +1429,7 @@ mod tests {
                 lints.retain(|l| l.lint_kind != LintKind::Style);
 
                 if !lints.is_empty() {
-                    dbg!(lints);
-                    panic!();
+                    panic!("🚨 Lint description for '{}' contains errors", lint_name);
                 }
             });
     }

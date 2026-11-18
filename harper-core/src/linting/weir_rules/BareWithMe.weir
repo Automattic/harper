@@ -1,0 +1,8 @@
+expr main <(bare with [me, us, him, her, them]), bare>
+let message "Use the verb `bear` for expressions meaning `be patient with`."
+let description "Corrects `bare with` to `bear with`."
+let becomes "bear"
+
+test "I am fully aware that this is probably the most niche/strange issue that anyone has ever raised, so bare with me." "I am fully aware that this is probably the most niche/strange issue that anyone has ever raised, so bear with me."
+test "Please bare with him if it takes a little longer." "Please bear with him if it takes a little longer."
+test "In the meantime, Oxen's team are working on refactoring/reworking u bare with them while they work on it and keep patience" "In the meantime, Oxen's team are working on refactoring/reworking u bear with them while they work on it and keep patience"

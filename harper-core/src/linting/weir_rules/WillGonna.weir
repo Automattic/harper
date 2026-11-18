@@ -1,0 +1,14 @@
+expr main [(will gonna), (will going to)]
+
+let message "`Will` already marks the future, so `gonna` or `going to` is redundant here."
+let description "Corrects the redundant `will gonna` and `will going to` to `will`."
+let kind "Redundancy"
+let becomes "will"
+
+test "If it was urlencoded to put '%7c' instead of '|', it will gonna be ok." "If it was urlencoded to put '%7c' instead of '|', it will be ok."
+test "When I change my category it will gonna submit my query instantly." "When I change my category it will submit my query instantly."
+test "so once you press on the text/button near it, the app will gonna open the tab" "so once you press on the text/button near it, the app will open the tab"
+test "We will going to develop multiple long running workflow for employees to request a vacation" "We will develop multiple long running workflow for employees to request a vacation"
+test "on launch time it will going to crash" "on launch time it will crash"
+allows "It is going to rain, and it will rain tomorrow too."
+allows "I'm gonna say it will work."

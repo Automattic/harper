@@ -14,7 +14,12 @@
 
 expr preps [of, between, around, with, on]
 
-expr main [<(boarder @preps), boarder>, <(boarders @preps), boarders>, <(cross the boarder), boarder>, <(cross the boarders), boarders>]
+expr main [
+    <(boarder @preps), boarder>,
+    <(boarders @preps), boarders>,
+    <(cross the boarder), boarder>,
+    <(cross the boarders), boarders>
+]
 
 let message "Did you mean `border`?"
 let description "Flags the eggcorn `boarder` (a lodger) where `border` (an edge/boundary) is intended."

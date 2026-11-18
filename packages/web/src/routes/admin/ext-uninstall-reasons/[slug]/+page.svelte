@@ -11,4 +11,4 @@ let links = {
 };
 </script>
 
-<AnalyticsPage data={data.counts} prevPeriodData={data.prevCounts} title="Most Common Reasons to Uninstall the Chrome Ext" {links}/>
+<AnalyticsPage data={data.counts} prevPeriodData={data.prevCounts} title="Most Common Reasons to Uninstall the Chrome Ext" {links} keyLabel="Reason" keyLinkGenerator={(key) => `/admin/ext-uninstall-reasons/${data.timePeriod}/${encodeURIComponent(key)}`}/>

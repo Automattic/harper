@@ -1,6 +1,9 @@
 ---
 title: Sublime Text
+description: Set up the Harper language server in Sublime Text with LSP and customize its grammar checking configuration.
 ---
+
+# Sublime Text
 
 Our [Sublime Text](https://www.sublimetext.com/) integration is powered by [`harper-ls`](./language-server).
 

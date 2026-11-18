@@ -784,6 +784,44 @@ fn corrects_why_dose() {
 
 // Note: no false positive detected for 'why does'. Only true positives.
 
+// DoubleDown
+
+#[test]
+fn corrects_dabble_down() {
+    assert_suggestion_result(
+        "The MCU need to dabble down on jerk Xavier.",
+        test_linter(),
+        "The MCU need to double down on jerk Xavier.",
+    );
+}
+
+#[test]
+fn corrects_dabbled_down() {
+    assert_suggestion_result(
+        "it really was the perfect pose and everybody dabbled down on that when they did switch from heel",
+        test_linter(),
+        "it really was the perfect pose and everybody doubled down on that when they did switch from heel",
+    );
+}
+
+#[test]
+fn corrects_dabbles_down() {
+    assert_suggestion_result(
+        "I already loved but this game really dabbles down on the obscurity",
+        test_linter(),
+        "I already loved but this game really doubles down on the obscurity",
+    );
+}
+
+#[test]
+fn corrects_dabbling_down() {
+    assert_suggestion_result(
+        "learn how to respond with clarity, not dabbling down on your price",
+        test_linter(),
+        "learn how to respond with clarity, not doubling down on your price",
+    );
+}
+
 // ExpandAlgorithm
 
 #[test]
@@ -1078,6 +1116,24 @@ fn correct_to_an_extend() {
         "It mimics (to an extend) the way in which Chrome requests SSO cookies with the Windows 10 accounts extension.",
         test_linter(),
         "It mimics (to an extent) the way in which Chrome requests SSO cookies with the Windows 10 accounts extension.",
+    );
+}
+
+#[test]
+fn correct_lesser_extend() {
+    assert_suggestion_result(
+        "Unlike the US (and to a lesser extend, Europe), Chinese do not have a majority of their wealth invested in stocks.",
+        test_linter(),
+        "Unlike the US (and to a lesser extent, Europe), Chinese do not have a majority of their wealth invested in stocks.",
+    );
+}
+
+#[test]
+fn correct_greater_extend() {
+    assert_suggestion_result(
+        "which seems to lead to columns being loaded to a greater extend than necessary",
+        test_linter(),
+        "which seems to lead to columns being loaded to a greater extent than necessary",
     );
 }
 
@@ -1585,44 +1641,6 @@ fn litotes_more_preferable() {
         "Is it more preferable to use process.env.variable or env.parsed.variable?",
         test_linter(),
         "Is it preferable to use process.env.variable or env.parsed.variable?",
-    );
-}
-
-// LookForwardTo
-
-#[test]
-fn fix_look_forward_for() {
-    assert_suggestion_result(
-        "I will mark this issue as an enhancement and will look forward for enrolling it.",
-        test_linter(),
-        "I will mark this issue as an enhancement and will look forward to enrolling it.",
-    );
-}
-
-#[test]
-fn fix_looked_forward_for() {
-    assert_suggestion_result(
-        "Looked forward for standalone components so much, please fix this.",
-        test_linter(),
-        "Looked forward to standalone components so much, please fix this.",
-    );
-}
-
-#[test]
-fn fix_looking_forward_for() {
-    assert_suggestion_result(
-        "Looking forward for Typed version of this stack navigation",
-        test_linter(),
-        "Looking forward to Typed version of this stack navigation",
-    );
-}
-
-#[test]
-fn fix_looks_forward_for() {
-    assert_suggestion_result(
-        "Please take this words as from one of your fans who looks forward for a great and interesting project :)",
-        test_linter(),
-        "Please take this words as from one of your fans who looks forward to a great and interesting project :)",
     );
 }
 
@@ -2212,6 +2230,26 @@ fn fix_sets_up_a_bad_example() {
     )
 }
 
+// Skyrocket
+
+#[test]
+fn sky_rockeeted() {
+    assert_suggestion_result(
+        "i can hear the audio but the firefox disk usage sky rocketed after that",
+        test_linter(),
+        "i can hear the audio but the firefox disk usage skyrocketed after that",
+    );
+}
+
+#[test]
+fn sky_rocketing() {
+    assert_suggestion_result(
+        "With the rising abilities of agents, expectations are sky rocketing in terms of productivity.",
+        test_linter(),
+        "With the rising abilities of agents, expectations are skyrocketing in terms of productivity.",
+    );
+}
+
 // SubjectAndObjectPronoun
 
 #[test]
@@ -2397,6 +2435,26 @@ fn took() {
         "Noted drone was NOT stoping and manually took control over it to stop it.",
         test_linter(),
         "Noted drone was NOT stoping and manually took control of it to stop it.",
+    );
+}
+
+// Themself
+
+#[test]
+fn them_selves() {
+    assert_suggestion_result(
+        "apparently a multi bilion dollar corporation can't be bothered to do it them selves",
+        test_linter(),
+        "apparently a multi bilion dollar corporation can't be bothered to do it themselves",
+    );
+}
+
+#[test]
+fn them_self() {
+    assert_suggestion_result(
+        "What happened too much security checks, my agents cant run by them self",
+        test_linter(),
+        "What happened too much security checks, my agents cant run by themself",
     );
 }
 

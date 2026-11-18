@@ -43,8 +43,12 @@ where
 
     async fn handle_request(&self, request: &Request) -> Response {
         match request {
+            Request::OpenSettings => Response::Ack,
             Request::GetLintConfig => Response::GetLintConfig {
                 config: self.config.lock().await.lint_config.clone(),
+            },
+            Request::GetWeirpacks => Response::GetWeirpacks {
+                packs: self.config.lock().await.weirpacks.clone(),
             },
             Request::GetDictionary => Response::GetDictionary {
                 words: self

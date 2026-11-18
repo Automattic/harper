@@ -34,6 +34,13 @@ impl Default for WereWhere {
             .t_ws()
             .then(UPOSSet::new(&[UPOS::VERB, UPOS::AUX, UPOS::ADJ]));
 
+        // "if I/we/they/you where to ..." can be a typo for "if I/we/they/you were to ..."
+        let if_pronoun_where_to = SequenceExpr::aco("if")
+            .t_ws()
+            .then_subject_pronoun()
+            .t_ws()
+            .then_word_seq(&["where", "to"]);
+
         // === were → where ===
 
         // A verb of cognition or motion followed directly by "were" and then a
@@ -56,6 +63,7 @@ impl Default for WereWhere {
                 Box::new(unambiguous_pronoun_where),
                 Box::new(you_where_verb),
                 Box::new(where_you_verb),
+                Box::new(if_pronoun_where_to),
                 Box::new(verb_were_clause),
             ]),
         }
@@ -441,6 +449,42 @@ mod tests {
             "He showed me were the exit was.",
             test_linter(),
             "He showed me where the exit was.",
+        );
+    }
+
+    #[test]
+    fn fix_if_i_where_to() {
+        assert_suggestion_result(
+            "If I where to have raw image data would I be able to convert that",
+            test_linter(),
+            "If I were to have raw image data would I be able to convert that",
+        );
+    }
+
+    #[test]
+    fn fix_if_we_where_to() {
+        assert_suggestion_result(
+            "If we where to choose GraphQL, i don't think we'd be even near finished yet.",
+            test_linter(),
+            "If we were to choose GraphQL, i don't think we'd be even near finished yet.",
+        );
+    }
+
+    #[test]
+    fn fix_if_you_where_to() {
+        assert_suggestion_result(
+            "If you where to change jobs, what kind of company would you rather work for",
+            test_linter(),
+            "If you were to change jobs, what kind of company would you rather work for",
+        );
+    }
+
+    #[test]
+    fn fix_if_it_where_to() {
+        assert_suggestion_result(
+            "If it where to return after the P-statement, the value of the semaphore does not get decreased",
+            test_linter(),
+            "If it were to return after the P-statement, the value of the semaphore does not get decreased",
         );
     }
 }

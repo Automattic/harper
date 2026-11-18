@@ -1,0 +1,10 @@
+expr prev [great, high, main]
+expr next [boy, boys]
+expr main [<(@prev alter), alter>, <(alter @next), alter>]
+
+let message "Did you mean the noun `altar`?"
+let description "Looks for mixing up the noun `altar` with the verb `alter`."
+let kind "WordChoice"
+let becomes "altar"
+
+test "When I was that age I was a devoted alter boy with ideas of eventually becoming a priest." "When I was that age I was a devoted altar boy with ideas of eventually becoming a priest."

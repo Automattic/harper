@@ -1,6 +1,13 @@
 ---
 title: Chrome Extension
+description: Explore the Harper browser extension architecture, including its content script, options page, and popup.
 ---
+
+<script lang="ts">
+import bootstrapSource from '../../../../../../chrome-plugin/src/contentScript/googleDocsBootstrap.js?raw';
+</script>
+
+# Chrome Extension
 
 Harper's Chrome extension is still in its infancy.
 At a high level, there are just three components: the content script, the options page and the popup "page".
@@ -86,7 +93,7 @@ At a high level, Harper uses three pieces:
 That's the purpose of the `googleDocsBootstrap.js` content script.
 It's short, sweet, and to the point:
 
-@code(../../../../../../chrome-plugin/src/contentScript/googleDocsBootstrap.js)
+<pre><code>{bootstrapSource}</code></pre>
 
 After that, Harper injects `google-docs-bridge.js` into the page's main world.
 We need that because the normal extension content script runs in an isolated world and cannot directly use the Google Docs APIs we rely on.

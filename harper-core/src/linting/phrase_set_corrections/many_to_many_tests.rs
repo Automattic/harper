@@ -71,6 +71,71 @@ fn correct_awaited_for() {
     );
 }
 
+// BackwardEngineer
+
+#[test]
+fn backward_space_engineer() {
+    assert_suggestion_result(
+        "The idea would be to backward engineer such \"creation process\" to the extent given by tools and abilities.",
+        test_linter(),
+        "The idea would be to reverse engineer such \"creation process\" to the extent given by tools and abilities.",
+    );
+}
+
+#[test]
+fn backward_hyphen_engineer() {
+    assert_suggestion_result(
+        "Use Assignment 5 screenshots and R Manual to backward-engineer Motor Trend Car Road Tests data",
+        test_linter(),
+        "Use Assignment 5 screenshots and R Manual to reverse-engineer Motor Trend Car Road Tests data",
+    );
+}
+
+#[test]
+fn backward_hyphen_engineering() {
+    assert_suggestion_result(
+        "For the backward-engineering to work, I realize that the power spectra we have saved were done using these super high-accuracy settings",
+        test_linter(),
+        "For the reverse-engineering to work, I realize that the power spectra we have saved were done using these super high-accuracy settings",
+    );
+}
+
+#[test]
+fn backward_space_engineering() {
+    assert_suggestion_result(
+        "Note though, that CS is \"forward\" engineering, while Brain Science is backward engineering.",
+        test_linter(),
+        "Note though, that CS is \"forward\" engineering, while Brain Science is reverse engineering.",
+    );
+}
+
+#[test]
+fn backwards_hyphen_engineer() {
+    assert_suggestion_result(
+        "After leaving this talk, you'll be able to backwards-engineer these 'internal' APIs and replicate any trivial flow",
+        test_linter(),
+        "After leaving this talk, you'll be able to reverse-engineer these 'internal' APIs and replicate any trivial flow",
+    );
+}
+
+#[test]
+fn backwards_space_engineer() {
+    assert_suggestion_result(
+        "do this and you can backwards engineer what you should be getting",
+        test_linter(),
+        "do this and you can reverse engineer what you should be getting",
+    );
+}
+
+#[test]
+fn backwards_space_engineering() {
+    assert_suggestion_result(
+        "This chapter gives an overview the first assessment, the backwards engineering report along with the files you will need and some helpful hints.",
+        test_linter(),
+        "This chapter gives an overview the first assessment, the reverse engineering report along with the files you will need and some helpful hints.",
+    );
+}
+
 // BackhandedCompliment
 
 #[test]
@@ -949,6 +1014,80 @@ fn corrects_look_a_likes() {
             "Attempt at using AWS facial recognition to find look-alikes in the Rijksmuseum's art collection.",
         ],
         &[],
+    );
+}
+
+// LookForwardTo
+
+#[test]
+fn fix_look_forward_for() {
+    assert_suggestion_result(
+        "I will mark this issue as an enhancement and will look forward for enrolling it.",
+        test_linter(),
+        "I will mark this issue as an enhancement and will look forward to enrolling it.",
+    );
+}
+
+#[test]
+fn fix_looked_forward_for() {
+    assert_suggestion_result(
+        "Looked forward for standalone components so much, please fix this.",
+        test_linter(),
+        "Looked forward to standalone components so much, please fix this.",
+    );
+}
+
+#[test]
+fn fix_looking_forward_for() {
+    assert_suggestion_result(
+        "Looking forward for Typed version of this stack navigation",
+        test_linter(),
+        "Looking forward to Typed version of this stack navigation",
+    );
+}
+
+#[test]
+fn fix_looks_forward_for() {
+    assert_suggestion_result(
+        "Please take this words as from one of your fans who looks forward for a great and interesting project :)",
+        test_linter(),
+        "Please take this words as from one of your fans who looks forward to a great and interesting project :)",
+    );
+}
+
+#[test]
+fn corrects_look_forwards_to() {
+    assert_suggestion_result(
+        "I look forwards to getting to make use of this in 2040!",
+        test_linter(),
+        "I look forward to getting to make use of this in 2040!",
+    );
+}
+
+#[test]
+fn corrects_looking_forwards_to() {
+    assert_suggestion_result(
+        "I am looking forwards to digging in to this a bit more and figuring out how this compares to Istio.",
+        test_linter(),
+        "I am looking forward to digging in to this a bit more and figuring out how this compares to Istio.",
+    );
+}
+
+#[test]
+fn corrects_looks_forwards_to() {
+    assert_suggestion_result(
+        "in a recession, the optimist looks forwards to the next bull run",
+        test_linter(),
+        "in a recession, the optimist looks forward to the next bull run",
+    );
+}
+
+#[test]
+fn corrects_looked_forwards_to() {
+    assert_suggestion_result(
+        "I looked forwards to reading his updates and it looks like he stopped a while ago…",
+        test_linter(),
+        "I looked forward to reading his updates and it looks like he stopped a while ago…",
     );
 }
 
@@ -2100,6 +2239,16 @@ fn detect_at_worst_atomic() {
         "Partial moving of core objects to interpreter state is incorrect at best, unsafe at worse.",
         test_linter(),
         "Partial moving of core objects to interpreter state is incorrect at best, unsafe at worst.",
+    );
+}
+
+// -the worst thing-
+#[test]
+fn detect_the_worse_thing() {
+    assert_suggestion_result(
+        "A 16-32 decoder is pretty simple, a 16-32-48 isn't the worse thing in the world",
+        test_linter(),
+        "A 16-32 decoder is pretty simple, a 16-32-48 isn't the worst thing in the world",
     );
 }
 

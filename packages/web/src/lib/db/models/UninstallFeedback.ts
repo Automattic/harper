@@ -1,5 +1,6 @@
 import { and, gte, lte } from 'drizzle-orm';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
+import { countReportsByDay } from '$lib/adminUtils';
 import { db } from '..';
 import { uninstallFeedbackTable } from '../schema';
 
@@ -24,6 +25,25 @@ export default class UninstallFeedback {
 			.select()
 			.from(uninstallFeedbackTable)
 			.where(gte(uninstallFeedbackTable.timestamp, date));
+	}
+
+	/**
+	 * Count one uninstall reason's reports by UTC day, including zero-count days.
+	 * Start is inclusive and end is exclusive; both must be UTC midnight.
+	 * A null start uses the first matching report's day, or returns no points if none exist.
+	 */
+	public static async getDailyReportCounts(
+		reason: string,
+		start: Date | null,
+		end: Date,
+	): Promise<{ date: Date; value: number }[]> {
+		const endTime = end.getTime();
+		const reports = await this.getAllBetween(start ?? new Date(0), new Date(endTime - 1));
+		return countReportsByDay(
+			reports.filter((report) => (report.feedback ?? 'OTHER') === reason),
+			start,
+			end,
+		);
 	}
 
 	public static async getAllBetween(start: Date, end: Date) {

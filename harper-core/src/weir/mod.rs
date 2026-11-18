@@ -603,6 +603,77 @@ pub mod tests {
     }
 
     #[test]
+    fn number_tokens() {
+        let source = r#"
+            expr main NUMBER
+            let message ""
+            let description "Match numeric tokens, not numeral words."
+            let kind "Miscellaneous"
+            let becomes "value"
+            let strategy "Exact"
+
+            test "0" "value"
+            test "42" "value"
+            test "123456" "value"
+            test "3.14" "value"
+            test "0.5" "value"
+            test "1st" "value"
+            test "2nd" "value"
+            test "3rd" "value"
+            test "4th" "value"
+            test "There are 42 items." "There are value items."
+            test "(42)" "(value)"
+            test "12 34" "value value"
+
+            allows ""
+            allows " "
+            allows "!"
+            allows "number"
+            allows "NUMBER"
+            allows "one"
+            allows "two"
+            allows "first"
+            allows "I have two apples."
+        "#;
+
+        let mut linter = WeirLinter::new(source).unwrap();
+        assert_passes_all(&mut linter);
+    }
+
+    #[test]
+    fn number_composes_with_other_expressions() {
+        for (main, input, expected) in [
+            ("NUMBER items", "42 items", "replacement"),
+            ("[NUMBER, several] items", "42 items", "replacement"),
+            ("[NUMBER, several] items", "several items", "replacement"),
+            ("<(NUMBER items), NUMBER>", "42 items", "replacement items"),
+            ("!NUMBER items", "several items", "replacement"),
+            ("!NUMBER items", "42 items", "42 items"),
+            ("@numeric items", "42 items", "replacement"),
+            ("NUM apples", "I have two apples.", "I have replacement."),
+            ("NUMBER apples", "I have two apples.", "I have two apples."),
+            ("number", "NUMBER", "replacement"),
+        ] {
+            let source = format!(
+                r#"
+                expr numeric NUMBER
+                expr main {main}
+                let message ""
+                let description "Test number expression composition."
+                let kind "Miscellaneous"
+                let becomes "replacement"
+                let strategy "Exact"
+
+                test "{input}" "{expected}"
+                "#
+            );
+
+            let mut linter = WeirLinter::new(&source).unwrap();
+            assert_passes_all(&mut linter);
+        }
+    }
+
+    #[test]
     fn wildcard() {
         let source = r#"
             expr main <(NOUN * NOUN), (* NOUN), *>

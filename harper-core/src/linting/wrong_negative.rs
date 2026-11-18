@@ -12,7 +12,9 @@ fn looks_negative_but_oov(token: &Token, source: &[char]) -> bool {
         && token
             .get_ch(source)
             .starts_with_any_ignore_ascii_case_str(NEGATIVE_PREFIXES)
-        && !token.get_ch(source).eq_ch(&['d', 'e', 'f', 'o'])
+        && !token
+            .get_ch(source)
+            .eq_any_ignore_ascii_case_str(&["defo", "deus"])
 }
 
 pub struct WrongNegative<D: Dictionary + 'static> {
@@ -78,8 +80,7 @@ impl<D: Dictionary + 'static> ExprLinter for WrongNegative<D> {
             }
             .to_string(),
             suggestions,
-            // higher priority (lower number) than spell check
-            priority: 62,
+            priority: 31,
         })
     }
 
@@ -177,6 +178,14 @@ mod tests {
     fn dont_flag_defo() {
         assert_no_lints(
             "I defo used MSVC back then too",
+            WrongNegative::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn dont_flag_deus() {
+        assert_no_lints(
+            "That deus ex machine stuff seems like enormous cope to me",
             WrongNegative::new(FstDictionary::curated()),
         );
     }
