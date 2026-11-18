@@ -71,6 +71,21 @@ async function clickChildHighlight(page: Page) {
 	await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
 }
 
+/**
+ * Click the iframe's highlight until its popup shows.
+ *
+ * A popup closes when its window loses focus. The cross-origin iframe doesn't appear to get
+ * Playwright's focus emulation, so when another test's browser window takes focus on the shared
+ * virtual display, the iframe can lose focus and close the popup straight after it opens. These
+ * tests check that Harper runs in the iframe, not how popups are dismissed.
+ */
+async function openChildPopup(page: Page) {
+	await expect(async () => {
+		await clickChildHighlight(page);
+		await expect(getChildPopup(page)).toBeVisible({ timeout: 2000 });
+	}).toPass({ timeout: 20000 });
+}
+
 async function expectNoChildHighlights(page: Page) {
 	await page.waitForTimeout(3000);
 	await expect(getChildHighlights(page)).toHaveCount(0);
@@ -91,9 +106,7 @@ test.describe('parent-origin inheritance', () => {
 
 		await page.goto(TEST_PAGE_URL);
 		await typeLintableText(page);
-		await clickChildHighlight(page);
-
-		await expect(getChildPopup(page)).toBeVisible();
+		await openChildPopup(page);
 	});
 
 	test('inherits when the parent is `www.` but the stored key follows the popup pattern', async ({
@@ -105,9 +118,7 @@ test.describe('parent-origin inheritance', () => {
 
 		await page.goto(TEST_PAGE_WWW_URL);
 		await typeLintableText(page);
-		await clickChildHighlight(page);
-
-		await expect(getChildPopup(page)).toBeVisible();
+		await openChildPopup(page);
 	});
 
 	test('preserves an explicit iframe opt-out when the parent is enabled', async ({
@@ -154,8 +165,6 @@ test.describe('parent-origin inheritance', () => {
 
 		// This precedence is intentional for now because explicit user overrides should win.
 		// Confirm it with maintainers if the project wants parent-level disablement to dominate.
-		await clickChildHighlight(page);
-
-		await expect(getChildPopup(page)).toBeVisible();
+		await openChildPopup(page);
 	});
 });

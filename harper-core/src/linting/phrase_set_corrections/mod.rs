@@ -226,6 +226,17 @@ pub fn lint_group() -> LintGroup {
             "Tries to correct typos of `dose` to `does`.",
             LintKind::Typo
         ),
+        "DoubleDown" => (
+            &[
+                ("dabble down", "double down"),
+                ("dabbled down", "doubled down"),
+                ("dabbles down", "doubles down"),
+                ("dabbling down", "doubling down"),
+            ],
+            "Did you mean `double down`?",
+            "Corrects `dabble down` to `double down`.",
+            LintKind::Style
+        ),
         "ExpandAlgorithm" => (
             &[
                 ("algo", "algorithm"),
@@ -332,7 +343,9 @@ pub fn lint_group() -> LintGroup {
                 ("a certain extend", "a certain extent"),
                 ("to an extend", "to an extent"),
                 ("to some extend", "to some extent"),
-                ("to the extend that", "to the extent that")
+                ("to the extend that", "to the extent that"),
+                ("greater extend", "greater extent"),
+                ("lesser extend", "lesser extent")
             ],
             "Use `extent` for the noun and `extend` for the verb.",
             "Corrects `extend` to `extent` when the context is a noun.",
@@ -521,17 +534,6 @@ pub fn lint_group() -> LintGroup {
             LintKind::Style
         ),
 
-        "LookForwardTo" => (
-            &[
-                ("look forward for", "look forward to"),
-                ("looked forward for", "looked forward to"),
-                ("looks forward for", "looks forward to"),
-                ("looking forward for", "looking forward to")
-            ],
-            "The correct preposition in this phrase is `to`.",
-            "Corrects `look forward for` to `look forward to`.",
-            LintKind::Usage
-        ),
         "MakeDoWith" => (
             &[
                 ("make due with", "make do with"),
@@ -679,6 +681,36 @@ pub fn lint_group() -> LintGroup {
             "Corrects `seam` to `seem` when used as a verb meaning `to appear` or `to give the impression`.",
             LintKind::Spelling
         ),
+        "SetABadExample" => (
+            &[
+                ("set up a bad example", "set a bad example"),
+                ("sets up a bad example", "sets a bad example"),
+                ("setting up a bad example", "setting a bad example"),
+            ],
+            "Are you confusing `set up` and `set a bad example`? The latter does not use the word `up`.",
+            "Corrects `set up a bad example` to `set a bad example`.",
+            LintKind::Usage
+        ),
+        "Skyrocket" => (
+            &[
+                ("sky rocketed", "skyrocketed"),
+                ("sky rocketing", "skyrocketing"),
+            ],
+            "Did you mean the closed compound `skyrocket`?",
+            "Looks for incorrect spacing inside the closed compound `skyrocket`.",
+            LintKind::Miscellaneous
+        ),
+        "SubjectAndObjectPronoun" => (
+            &[
+                ("subjective pronoun", "subject pronoun"),
+                ("subjective pronouns", "subject pronouns"),
+                ("objective pronoun", "object pronoun"),
+                ("objective pronouns", "object pronouns"),
+            ],
+            "`Subject -` and `object pronoun` are much more common than `subjective -` and `objective -`.",
+            "Standardizes `subjective pronoun` and `objective pronoun` to the more common `subject -` and `object -`.",
+            LintKind::Usage
+        ),
         "SubjunctiveWasToWere" => (
             &[
                 ("if only there was", "if only there were"),
@@ -706,6 +738,15 @@ pub fn lint_group() -> LintGroup {
             ],
             "Use `take control of` instead of `take control over`.",
             "Corrects `take control over` to `take control of`.",
+            LintKind::Usage
+        ),
+        "Themselves" => (
+            &[
+                ("them self", "themself"),
+                ("them selves", "themselves"),
+            ],
+            "Use `themselves` instead of `themself`.",
+            "Corrects `themself` to `themselves`.",
             LintKind::Usage
         ),
         "UseToUsedTo" => (
@@ -798,6 +839,21 @@ pub fn lint_group() -> LintGroup {
             "The correct spelling is `backhanded`.",
             "Corrects `backhand compliment` to `backhanded compliment`.",
             LintKind::Spelling
+        ),
+        "BackwardEngineer" => (
+            &[
+                (&["backward engineer",    "backwards engineer"],    &["reverse engineer"]),
+                (&["backward engineers",   "backwards engineers"],   &["reverse engineers"]),
+                (&["backward-engineer",    "backwards-engineer"],    &["reverse-engineer"]),
+                (&["backward-engineers",   "backwards-engineers"],   &["reverse-engineers"]),
+                (&["backward engineering", "backwards engineering"], &["reverse engineering"]),
+                (&["backward-engineering", "backwards-engineering"], &["reverse-engineering"]),
+                (&["backward engineered",  "backwards engineered"],  &["reverse engineered"]),
+                (&["backward-engineered",  "backwards-engineered"],  &["reverse-engineered"]),
+            ],
+            "The much more common term is `reverse engineer`.",
+            "Suggests changing the less common `backward/backwards engineer` to the more usual `reverse engineer`.",
+            LintKind::WordChoice
         ),
         "BainBane" => (
             &[
@@ -925,6 +981,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects common misspellings of the idiom `get rid of`.",
             LintKind::Typo
         ),
+        "Hallucination" => (
+            &[
+                (&["hallucinisation", "hallucinization"], &["hallucination"]),
+                (&["hallucinisations", "hallucinizations"], &["hallucinations"]),
+            ],
+            "The correct spelling is `hallucination`.",
+            "Corrects the misspelling `hallucinization`/`hallucinisation`.",
+            LintKind::Spelling
+        ),
         "Hijack" => (
             &[
                 // "hi jack" would result in false positives
@@ -986,6 +1051,17 @@ pub fn lint_group() -> LintGroup {
             "Use `look alike` or `look-alike` instead of `look-a-like`.",
             "Corrects `look-a-like` to `look alike` or `look-alike`.",
             LintKind::Spelling
+        ),
+        "LookForwardTo" => (
+            &[
+                (&["look forward for", "look forwards to"], &["look forward to"]),
+                (&["looked forward for", "looked forwards to"], &["looked forward to"]),
+                (&["looks forward for", "looks forwards to"], &["looks forward to"]),
+                (&["looking forward for", "looking forwards to"], &["looking forward to"])
+            ],
+            "The correct preposition in this phrase is `to`.",
+            "Corrects `look forward for` to `look forward to`.",
+            LintKind::Usage
         ),
         "MakeItSeem" => (
             &[
@@ -1098,6 +1174,17 @@ pub fn lint_group() -> LintGroup {
             "Corrects `rise the question` to `raise the question`.",
             LintKind::Grammar
         ),
+        "SeizeControlOf" => (
+            &[
+                (&["seize control over", "sieze control over"], &["seize control of"]),
+                (&["seized control over", "siezed control over"], &["seized control of"]),
+                (&["seizes control over", "siezes control over"], &["seizes control of"]),
+                (&["seizing control over", "siezing control over"], &["seizing control of"]),
+            ],
+            "The standard preposition with the verb `seize` is `of`.",
+            "Corrects `seize control over` to `seize control of`.",
+            LintKind::Usage
+        ),
         "SideTangent" => (
             &[
                 (&["a side tangent"], &["a tangent", "an aside"]),
@@ -1189,6 +1276,7 @@ pub fn lint_group() -> LintGroup {
                 (&["worst than"], &["worse than"]),
                 // worse -> worst
                 (&["at worse"], &["at worst"]),
+                (&["the worse thing"], &["the worst thing"]),
                 (&["worse case scenario", "worse-case scenario", "worse-case-scenario"], &["worst-case scenario"]),
                 (&["worse ever"], &["worst ever"]),
             ],

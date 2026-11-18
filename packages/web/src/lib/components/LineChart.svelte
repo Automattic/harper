@@ -11,7 +11,7 @@ import type { Point } from 'chart.js';
 import Chart from 'chart.js/auto';
 import { onMount } from 'svelte';
 
-/** Props for a single-series chart. Dates are displayed in the viewer's local timezone. */
+/** Props for a single-series chart. Dates are displayed in UTC. */
 interface Props {
 	/** Observations in any order; defaults to empty. Invalid dates and nonfinite values are omitted. */
 	data?: TimeSeriesPoint[];
@@ -27,6 +27,7 @@ let points = $derived(toChartPoints(data));
 const dateFormatter = new Intl.DateTimeFormat(undefined, {
 	dateStyle: 'short',
 	timeStyle: 'short',
+	timeZone: 'UTC',
 });
 
 /** Convert dates to milliseconds and sort chronologically without mutating input or merging duplicates. */

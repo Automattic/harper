@@ -1,0 +1,8 @@
+expr main <(but to no veil), (veil)>
+
+let message "Use the correct phrase for being ineffective."
+let description "Corrects wrong variants of `to no avail`, meaning `without success`."
+let kind "WordChoice"
+let becomes "avail"
+
+test "I have spent quite a lot time searching, but to no veil." "I have spent quite a lot time searching, but to no avail."

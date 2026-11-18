@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CodeMirror Test</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 2rem;
+      }
+      #editor {
+        border: 1px solid #ccc;
+        max-width: 600px;
+      }
+      .cm-content {
+        min-height: 150px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CodeMirror Editor</h1>
+    <p id="status" role="status">Loading CodeMirror…</p>
+    <div id="editor"></div>
+
+    <!--
+      Real CodeMirror 6 fixture, standing in for the Typst web app, which uses CodeMirror 6.
+      Only @codemirror/view is loaded so that a single copy of @codemirror/state is used;
+      the keymap below covers the commands the tests need.
+    -->
+    <script type="module">
+      const status = document.getElementById('status');
+
+      try {
+        const { EditorView, keymap } = await import(
+          'https://cdn.jsdelivr.net/npm/@codemirror/view@6.43.15/+esm'
+        );
+
+        const replaceSelection = (text) => (view) => {
+          view.dispatch(view.state.replaceSelection(text));
+          return true;
+        };
+
+        const deleteBackward = (view) => {
+          const { from, to } = view.state.selection.main;
+          if (from === to && from === 0) return true;
+          view.dispatch({
+            changes: { from: from === to ? from - 1 : from, to },
+            selection: { anchor: from === to ? from - 1 : from },
+          });
+          return true;
+        };
+
+        const selectAll = (view) => {
+          view.dispatch({ selection: { anchor: 0, head: view.state.doc.length } });
+          return true;
+        };
+
+        new EditorView({
+          parent: document.getElementById('editor'),
+          extensions: [
+            EditorView.lineWrapping,
+            // Harper only lints CodeMirror editors on typst.app or ones marked as Typst.
+            EditorView.contentAttributes.of({ 'data-language': 'typst' }),
+            keymap.of([
+              { key: 'Enter', run: replaceSelection('\n') },
+              { key: 'Backspace', run: deleteBackward },
+              { key: 'Mod-a', run: selectAll },
+            ]),
+          ],
+        });
+        status.textContent = 'Ready';
+      } catch (error) {
+        status.textContent = `CodeMirror initialization failed: ${error.message}`;
+        throw error;
+      }
+    </script>
+  </body>
+</html>

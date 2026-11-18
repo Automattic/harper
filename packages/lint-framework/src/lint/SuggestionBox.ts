@@ -152,7 +152,7 @@ function popupHook(props: Parameters<typeof SuggestionBox>[0], refocusClose: () 
 		const frame = requestAnimationFrame(() => {
 			if (!node.isConnected) return;
 			measure();
-			if (!node.dataset.autofocused) {
+			if (props.autofocus && !node.dataset.autofocused) {
 				saveCursorState();
 				node.dataset.autofocused = 'true';
 				focusRow(node, props.selectedIndex);
@@ -502,6 +502,8 @@ function styleTag(kind: LintKind) {
 export default function SuggestionBox(props: {
 	box: IgnorableLintBox;
 	selectedIndex: number;
+	/** Move focus to the selected row when the popup opens. */
+	autofocus: boolean;
 	onSelect: (index: number) => void;
 	/** Optional consumer capabilities; the popup never persists configuration itself. */
 	actions: {

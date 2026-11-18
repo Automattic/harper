@@ -92,10 +92,8 @@ impl AutomationService {
                     let result = job(&automation, arguments);
 
                     // Stop the thread if the other side of the channel has been closed (or dropped).
-                    if let Err(err) = result_sender.try_send(result) {
-                        if let TrySendError::Disconnected(_) = err {
-                            break;
-                        }
+                    if let Err(TrySendError::Disconnected(_)) = result_sender.try_send(result) {
+                        break;
                     }
                 }
 

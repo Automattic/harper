@@ -29,11 +29,26 @@ where
         }
     }
 
+    pub async fn open_settings(&mut self) -> Result<(), ProtocolError> {
+        self.send_ack_request(Request::OpenSettings).await
+    }
+
     pub async fn get_lint_config(&mut self) -> Result<FlatConfig, ProtocolError> {
         match self.send_request(Request::GetLintConfig).await? {
             Response::GetLintConfig { config } => Ok(config),
             _ => Err(ProtocolError::UnexpectedResponse {
                 expected: "GetLintConfig",
+            }),
+        }
+    }
+
+    pub async fn get_weirpacks(
+        &mut self,
+    ) -> Result<Vec<crate::config::InstalledWeirpack>, ProtocolError> {
+        match self.send_request(Request::GetWeirpacks).await? {
+            Response::GetWeirpacks { packs } => Ok(packs),
+            _ => Err(ProtocolError::UnexpectedResponse {
+                expected: "GetWeirpacks",
             }),
         }
     }

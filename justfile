@@ -22,7 +22,7 @@ soft-clean:
   rm -rf "{{justfile_directory()}}"/packages/lint-framework/{dist}
   rm -rf "{{justfile_directory()}}"/packages/obsidian-plugin/{harper-obsidian-plugin.zip,main.js}
   rm -rf "{{justfile_directory()}}"/packages/vscode-plugin/{.vscode-test,bin,build}
-  rm -rf "{{justfile_directory()}}"/packages/web/{.svelte-kit,.sveltepress,build}
+  rm -rf "{{justfile_directory()}}"/packages/web/{.svelte-kit,build}
   rm -rf "{{justfile_directory()}}"/packages/wordpress-plugin/{build,harper.zip}
   rm -rf "{{justfile_directory()}}"/harper-desktop/{.svelte-kit,build,package}
   rm -rf "{{justfile_directory()}}"/harper-wasm/pkg
@@ -222,6 +222,19 @@ build-desktop-windows: build-harperjs build-lint-framework build-components buil
   pnpm install
   pnpm tauri build --runner cargo-xwin --target x86_64-pc-windows-msvc -b nsis --config '{"bundle":{"createUpdaterArtifacts":false}}'
 
+# Build native Windows bundles using a CI-generated Azure signing config.
+build-desktop-windows-signed signing_config: build-harperjs build-lint-framework build-components build-harper-editor
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/harper-desktop"
+  pnpm install
+  pnpm tauri build --target x86_64-pc-windows-msvc -b nsis --config {{quote(signing_config)}}
+
+# Test desktop signing and release scripts without CI credentials.
+test-desktop-release:
+  node --test .buildkite/commands/*.test.cjs
+
 # Build Harper Desktop for Apple Silicon only — faster than the universal recipe below.
 build-desktop-macos-arm64: build-harperjs build-lint-framework build-components build-harper-editor
   #!/usr/bin/env bash
@@ -338,13 +351,10 @@ test-firefox-plugin: build-firefox-plugin
   cd "{{justfile_directory()}}/packages/chrome-plugin"
   pnpm playwright install
 
-  # For environments without displays like CI servers or containers
-  if [[ "$(uname)" == "Linux" ]]; then
-    env -u WAYLAND_DISPLAY XDG_SESSION_TYPE=x11 \
-    xvfb-run --auto-servernum pnpm test --project firefox 
-  else
-    pnpm test --project firefox 
-  fi
+  # Run Firefox headless: `pnpm test` passes `--headed`, which Chromium needs for extensions
+  # but Firefox doesn't. On a virtual display every headed window opens in the same place,
+  # and Firefox stops drawing frames for windows that are covered, which stalls the tests.
+  pnpm exec playwright test --project firefox
 
 # Run VSCode plugin unit and integration tests.
 alias test-vscode-extension := test-vscode
@@ -476,6 +486,12 @@ check-js: build-harperjs build-lint-framework build-components build-harper-edit
   pnpm check
 
   cd "{{justfile_directory()}}/packages/chrome-plugin"
+  pnpm check
+
+  cd "{{justfile_directory()}}/packages/obsidian-plugin"
+  pnpm check
+
+  cd "{{justfile_directory()}}/packages/wordpress-plugin"
   pnpm check
 
   cd "{{justfile_directory()}}/packages/components"

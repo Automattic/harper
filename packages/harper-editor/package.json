@@ -12,7 +12,10 @@
 		"prepare": "svelte-kit sync || echo ''",
 		"prepack": "pnpm run build:bundle && pnpm run build:types && publint",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"storybook": "storybook dev -p 6006",
+		"build-storybook": "storybook build",
+		"test:storybook": "vitest run --project storybook"
 	},
 	"files": [
 		"dist",
@@ -37,25 +40,37 @@
 	},
 	"peerDependencies": {
 		"harper.js": "^2.0.0",
-		"svelte": "^5.0.0"
+		"svelte": "^5.57.3"
 	},
 	"devDependencies": {
+		"@chromatic-com/storybook": "latest",
+		"@storybook/addon-a11y": "^10.6.3",
+		"@storybook/addon-docs": "^10.6.3",
+		"@storybook/addon-svelte-csf": "latest",
+		"@storybook/addon-vitest": "^10.6.3",
+		"@storybook/sveltekit": "^10.6.3",
+		"@vitest/browser": "4.1.12",
+		"@vitest/browser-playwright": "4.1.12",
+		"@vueless/storybook-dark-mode": "^10.0.8",
 		"@sveltejs/adapter-auto": "^7.0.0",
-		"@sveltejs/kit": "^2.47.1",
+		"@sveltejs/kit": "^2.65.1",
 		"@sveltejs/package": "^2.5.4",
-		"@sveltejs/vite-plugin-svelte": "^6.2.1",
+		"@sveltejs/vite-plugin-svelte": "^7.3.1",
 		"@tailwindcss/cli": "^4.1.16",
-		"@tailwindcss/vite": "^4.1.14",
+		"@tailwindcss/vite": "^4.3.3",
 		"components": "workspace:*",
 		"harper.js": "workspace:*",
 		"lint-framework": "workspace:*",
+		"playwright": "1.65.0",
 		"publint": "^0.3.14",
+		"storybook": "^10.6.3",
 		"quill": "^2.0.3",
-		"svelte": "^5.41.0",
+		"svelte": "^5.57.3",
 		"svelte-check": "^4.3.3",
 		"tailwindcss": "^4.1.14",
 		"typescript": "catalog:",
-		"vite": "^7.1.10"
+		"vite": "^8.3.5",
+		"vitest": "4.1.12"
 	},
 	"keywords": [
 		"svelte"

@@ -1,4 +1,7 @@
-expr main [<(their [AUX, (supposed to), (allowed to), (invited to), (going to), (trying to), (coming over), (coming tonight), (leaving in), (moving to), (planning a), (waiting for), (answering any), (wondering where), (running behind), (running through), (far too), even, (already here), (in the), (on the), (at the), (a lot), an, two, offline, (ADV [PROG, AUX]), (ADV VERB), (PART [PROG, VERB, ADJ, AUX]), (ready to), (always [late, early]), the]), their>, <(there [(moving next), (planning a)]), there>]
+expr main [
+    <(their [AUX, (supposed to), (allowed to), (invited to), (going to), (trying to), (coming over), (coming tonight), (leaving in), (moving to), (planning a), (waiting for), (answering any), (wondering where), (running behind), (running through), (far too), even, (already here), (in the), (on the), (at the), (a lot), an, two, offline, (ADV [PROG, AUX]), (ADV VERB), (PART [PROG, VERB, ADJ, AUX]), (ready to), (always [late, early]), the]), their>,
+    <(there [(moving next), (planning a)]), there>
+]
 
 let message "Did you mean `they're`?"
 let description "Corrects `their` when the intended meaning is `they're`."

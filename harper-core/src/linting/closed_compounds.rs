@@ -35,7 +35,9 @@ pub fn lint_group() -> LintGroup {
         "Everybody"       => (&["every body"][..], "everybody"),
         "Everyone"        => (&["every one"][..], "everyone"),
         "Everywhere"      => (&["every where"][..], "everywhere"),
+        "Fanfare"         => (&["fan fare", "fan-fare"][..], "fanfare"),
         "Furthermore"     => (&["further more"][..], "furthermore"),
+        "Guesswork"       => (&["guess work"][..], "guesswork"),
         "Henceforth"      => (&["hence forth"][..], "henceforth"),
         "However"         => (&["how ever"][..], "however"),
         "Insofar"         => (&["in so far"][..], "insofar"),
@@ -45,6 +47,7 @@ pub fn lint_group() -> LintGroup {
         "Keystroke"       => (&["key stoke", "key stroke"][..], "keystroke"),
         "Keystrokes"      => (&["key stokes", "key strokes"][..], "keystrokes"),
         "Laptop"          => (&["lap top"][..], "laptop"),
+        "Lifetime"        => (&["life time"][..], "lifetime"),
         "Middleware"      => (&["middle ware"][..], "middleware"),
         "Meanwhile"       => (&["mean while"][..], "meanwhile"),
         "Misunderstand"   => (&["miss understand"][..], "misunderstand"),
@@ -59,6 +62,7 @@ pub fn lint_group() -> LintGroup {
         "Nothing"         => (&["no thing"][..], "nothing"),
         "Notwithstanding" => (&["not with standing"][..], "notwithstanding"),
         "Nowhere"         => (&["no where"][..], "nowhere"),
+        "Oftentimes"      => (&["often times"][..], "oftentimes"),
         "Overall"         => (&["over all"][..], "overall"),
         "Overclocking"    => (&["over clocking"][..], "overclocking"),
         "Overload"        => (&["over load"][..], "overload"),
@@ -66,6 +70,7 @@ pub fn lint_group() -> LintGroup {
         "Postpone"        => (&["post pone"][..], "postpone"),
         "Proofread"       => (&["proof read"][..], "proofread"),
         "Regardless"      => (&["regard less"][..], "regardless"),
+        "Roundabout"      => (&["round about"][..], "roundabout"),
         "Shortcoming"     => (&["short coming"][..], "shortcoming"),
         "Shortcomings"    => (&["short comings"][..], "shortcomings"),
         "Somebody"        => (&["some body"][..], "somebody"),
@@ -77,9 +82,12 @@ pub fn lint_group() -> LintGroup {
         "There"           => (&["the re"][..], "there"),
         "Therefore"       => (&["there fore"][..], "therefore"),
         "Thereupon"       => (&["there upon"][..], "thereupon"),
+        "Tradeoff"        => (&["trade off"][..], "tradeoff"),
         "Underclock"      => (&["under clock"][..], "underclock"),
         "Upset"           => (&["up set"][..], "upset"),
         "Upward"          => (&["up ward"][..], "upward"),
+        "Whatsoever"      => (&["what so ever", "what-so-ever", "whatso ever", "whatso-ever", "what soever", "what-soever"][..], "whatsoever"),
+        "Whenever"        => (&["when ever", "when-ever"][..], "whenever"),
         "Whereupon"       => (&["where upon"][..], "whereupon"),
         "Widespread"      => (&["wide spread"][..], "widespread"),
         "Without"         => (&["with out"][..], "without"),
@@ -106,10 +114,44 @@ mod tests {
     }
 
     #[test]
+    fn no_it_self_before_hyphenated_compound() {
+        assert_no_lints("it self-levels itself", lint_group());
+    }
+
+    #[test]
+    fn no_my_self_before_hyphenated_compound() {
+        assert_no_lints("I worked on my self-esteem.", lint_group());
+    }
+
+    #[test]
     fn my_self() {
         let test_sentence = "He treated my self with respect.";
         let expected = "He treated myself with respect.";
         assert_suggestion_result(test_sentence, lint_group(), expected);
+    }
+
+    #[test]
+    fn dont_flag_the_re_acronym_issue_4580() {
+        assert_no_lints("The RE process was slow.", lint_group());
+    }
+
+    #[test]
+    fn dont_flag_the_re_acronym_mid_sentence() {
+        assert_no_lints("We did the RE work on the binary.", lint_group());
+    }
+
+    #[test]
+    fn still_flags_the_re_in_all_caps() {
+        assert_suggestion_result("THE RE IS A CAT.", lint_group(), "THERE IS A CAT.");
+    }
+
+    #[test]
+    fn still_flags_the_re_in_lowercase() {
+        assert_suggestion_result(
+            "I think the re is a cat.",
+            lint_group(),
+            "I think there is a cat.",
+        );
     }
 
     #[test]
@@ -377,5 +419,140 @@ mod tests {
             lint_group(),
             "This new vulnerability has a somewhat straightforward path to exploitation and prints funds out of thin air.",
         )
+    }
+
+    #[test]
+    fn lifetime() {
+        assert_suggestion_result(
+            "In a life time it's gone up by more than 10 fold.",
+            lint_group(),
+            "In a lifetime it's gone up by more than 10 fold.",
+        );
+    }
+
+    #[test]
+    fn tradeoff() {
+        assert_suggestion_result(
+            "But the trade off was that specific details about the invention, how it worked and how it's made were entered openly for anyone to look up.",
+            lint_group(),
+            "But the tradeoff was that specific details about the invention, how it worked and how it's made were entered openly for anyone to look up.",
+        );
+    }
+
+    #[test]
+    fn guesswork() {
+        assert_suggestion_result(
+            "Yes this is guess work and we need more evidence of the dangers but at the same time we need evidence of safety.",
+            lint_group(),
+            "Yes this is guesswork and we need more evidence of the dangers but at the same time we need evidence of safety.",
+        );
+    }
+
+    #[test]
+    fn oftentimes() {
+        assert_suggestion_result(
+            "the rust compiler is fast, but often times it has to perform a lot of unnecessary checks because crates contain more stuff than needed",
+            lint_group(),
+            "the rust compiler is fast, but oftentimes it has to perform a lot of unnecessary checks because crates contain more stuff than needed",
+        );
+    }
+
+    #[test]
+    fn fan_space_fare() {
+        assert_suggestion_result(
+            "There was much fan fare over all the technology Bill Gates put into his house.",
+            lint_group(),
+            "There was much fanfare over all the technology Bill Gates put into his house.",
+        );
+    }
+
+    #[test]
+    fn fan_hyphen_fare() {
+        assert_suggestion_result(
+            "Indeed, most users will experience major version updates with absolutely zero fan-fare.",
+            lint_group(),
+            "Indeed, most users will experience major version updates with absolutely zero fanfare.",
+        );
+    }
+
+    #[test]
+    fn round_about() {
+        assert_suggestion_result(
+            "This might be a very round about way to sort right to repair.",
+            lint_group(),
+            "This might be a very roundabout way to sort right to repair.",
+        );
+    }
+
+    #[test]
+    fn what_sp_so_sp_ever() {
+        assert_suggestion_result(
+            "You can literally just apply to be an ATC with zero experience what so ever.",
+            lint_group(),
+            "You can literally just apply to be an ATC with zero experience whatsoever.",
+        );
+    }
+
+    #[test]
+    fn what_hy_so_hy_ever() {
+        assert_suggestion_result(
+            "React doesn't have this \"pure function\" feature what-so-ever.",
+            lint_group(),
+            "React doesn't have this \"pure function\" feature whatsoever.",
+        );
+    }
+
+    #[test]
+    fn what_sp_soever() {
+        assert_suggestion_result(
+            "No problems what soever in the almost two years, they have been running",
+            lint_group(),
+            "No problems whatsoever in the almost two years, they have been running",
+        );
+    }
+
+    #[test]
+    fn what_hy_soever() {
+        assert_suggestion_result(
+            "and literally not couching it with any reasoning what-soever when we try to dig in",
+            lint_group(),
+            "and literally not couching it with any reasoning whatsoever when we try to dig in",
+        );
+    }
+
+    #[test]
+    fn whatso_sp_ever() {
+        assert_suggestion_result(
+            "At one point in time the engine would refuse to create sites, but not give any errors whatso ever.",
+            lint_group(),
+            "At one point in time the engine would refuse to create sites, but not give any errors whatsoever.",
+        );
+    }
+
+    #[test]
+    fn whatso_hy_ever() {
+        assert_suggestion_result(
+            "Also I get no errors whatso-ever which makes this even more confusing.",
+            lint_group(),
+            "Also I get no errors whatsoever which makes this even more confusing.",
+        );
+    }
+
+    #[test]
+    fn when_space_ever() {
+        assert_suggestion_result(
+            "When ever I read comments like this it always makes me think the poster has led a much more charmed life than I have.",
+            lint_group(),
+            "Whenever I read comments like this it always makes me think the poster has led a much more charmed life than I have.",
+        );
+    }
+
+    #[test]
+    fn when_hyphen_ever() {
+        assert_suggestion_result(
+            "You can use this tool when-ever you need to check your spelling.",
+            lint_group(),
+            "You can use this tool whenever you need to check your spelling.",
+        );
     }
 }
