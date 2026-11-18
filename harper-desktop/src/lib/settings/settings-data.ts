@@ -31,6 +31,11 @@ export const MAIN_NAV_ITEMS: NavItem[] = [
 		gradient: 'linear-gradient(180deg, #4cc28b 0%, #1f8f5c 100%)',
 	},
 	{
+		id: 'weirpacks',
+		label: 'Weirpacks',
+		gradient: 'linear-gradient(180deg, #a78bfa 0%, #7c3aed 100%)',
+	},
+	{
 		id: 'integrations',
 		label: 'Integrations',
 		gradient: 'linear-gradient(180deg, #6b6f78 0%, #3b3f48 100%)',
@@ -76,17 +81,6 @@ export interface RuleGroup {
 	rules: RuleItem[];
 }
 
-export interface Weirpack {
-	id: string;
-	name: string;
-	filename: string;
-	size: number;
-	enabled: boolean;
-	ruleCount: number;
-	addedAt: string;
-	installState: 'installed' | 'installing' | 'failed';
-}
-
 export interface AppIntegration {
 	id: string;
 	name: string;
@@ -115,7 +109,6 @@ export interface SettingsState {
 	autoIntegrate: boolean;
 	customApps: AppIntegration[];
 	removedBuiltins: string[];
-	weirpacks: Weirpack[];
 }
 
 export const DIALECT_OPTIONS = [
@@ -290,37 +283,5 @@ export function createInitialSettingsState(): SettingsState {
 		autoIntegrate: false,
 		customApps: [],
 		removedBuiltins: [],
-		weirpacks: [
-			{
-				id: 'pack-001',
-				name: 'Internal Style Guide',
-				filename: 'automattic-style.weirpack',
-				size: 18420,
-				enabled: true,
-				ruleCount: 47,
-				addedAt: '2026-02-12T00:00:00Z',
-				installState: 'installed',
-			},
-			{
-				id: 'pack-002',
-				name: 'Plain English',
-				filename: 'plain-english.weirpack',
-				size: 9120,
-				enabled: true,
-				ruleCount: 23,
-				addedAt: '2026-03-04T00:00:00Z',
-				installState: 'installed',
-			},
-			{
-				id: 'pack-003',
-				name: 'Legalese Killer',
-				filename: 'legalese-killer.weirpack',
-				size: 31580,
-				enabled: false,
-				ruleCount: 62,
-				addedAt: '2026-04-18T00:00:00Z',
-				installState: 'installed',
-			},
-		],
 	};
 }

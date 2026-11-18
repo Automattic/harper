@@ -136,6 +136,18 @@ Importantly, we can refactor this into just two sequences, by moving the arrays 
 expr main [(low[-, ( )]hanging fruits), (low hanging fruit)]
 ```
 
+Line breaks are treated as whitespace inside the alternative brackets `[]`. This allows you to spread long or complex alternative expressions across multiple lines for better readability:
+
+```plaintext
+expr main [
+    (low hanging fruit), 
+    (low hanging fruits), 
+    (low-hanging fruits)
+]
+```
+
+Note that this capability is currently limited to the contents of alternative brackets. Line breaks cannot yet be used as arbitrary whitespace in other areas of a Weir rule.
+
 ### Filters
 
 Filters in Weir allow you to locate an expression, then narrow down the search to a shorter segment of that same expression.
@@ -173,6 +185,19 @@ expr main DET NOUN
 ```
 
 This will match against "the word", "a banana", "an apple", among others.
+
+### Numbers
+
+Use the uppercase keyword `NUMBER` to match a single numeric token, such as `42`, `3.14`, or `1st`:
+
+```plaintext
+expr main NUMBER items
+```
+
+This matches "42 items", but not "two items".
+`NUMBER` uses Harper's `TokenKind::is_number()` predicate, not the `NUM` part-of-speech tag.
+Use `NUM` when you want to match tokens tagged as numerals, including spelled-out numbers.
+The expressions `number` and `Number` remain case-insensitive literal word matches.
 
 ### Progressive Verbs
 

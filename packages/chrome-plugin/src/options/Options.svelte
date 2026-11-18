@@ -9,7 +9,7 @@ import {
 import { tick } from 'svelte';
 import logo from '/logo.png';
 import ProtocolClient from '../ProtocolClient';
-import type { Hotkey, Modifier, WeirpackMeta } from '../protocol';
+import type { DomainStatus, Hotkey, Modifier, WeirpackMeta } from '../protocol';
 import { ActivationKey } from '../protocol';
 import StructuredRuleSettings from './StructuredRuleSettings.svelte';
 
@@ -51,6 +51,23 @@ let openSuggestionsOnHover = $state(false);
 let delay = $state(0);
 let delayLoaded = $state(false);
 let defaultEnabled = $state(false);
+let configuredDomains: DomainStatus[] = $state([]);
+let siteSearch = $state('');
+let siteSearchLower = $derived(siteSearch.trim().toLowerCase());
+let defaultDomainsBusy = $state(false);
+let filteredConfiguredDomains = $derived(
+	configuredDomains.filter((domain) => domain.domain.includes(siteSearchLower)),
+);
+let anyDefaultDomainsEnabled = $derived(
+	configuredDomains.some((domain) => domain.isDefault && domain.enabled),
+);
+let sitePreferencesOpen = $state(false);
+
+$effect(() => {
+	if (siteSearchLower) {
+		sitePreferencesOpen = true;
+	}
+});
 let activationKey: ActivationKey = $state(ActivationKey.Off);
 let userDict = $state('');
 let hotkey: Hotkey = $state({ modifiers: ['Ctrl'], key: 'E' });
@@ -152,6 +169,12 @@ Promise.all([
 		loaded = true;
 	},
 );
+
+ProtocolClient.getConfiguredDomains()
+	.then((domains) => {
+		configuredDomains = domains;
+	})
+	.catch((error) => console.error('Failed to load site preferences:', error));
 
 /** Converts the content of a text area to viable dictionary values. */
 export function stringToDict(s: string): string[] {
@@ -304,6 +327,75 @@ async function exportEnabledDomainsCSV() {
 		URL.revokeObjectURL(url);
 	} catch (e) {
 		console.error('Failed to export enabled domains JSON:', e);
+	}
+}
+
+async function setDefaultDomainsEnabled(enabled: boolean) {
+	defaultDomainsBusy = true;
+	try {
+		await ProtocolClient.setDefaultDomainsEnabled(enabled);
+		configuredDomains = configuredDomains.map((domain) =>
+			domain.isDefault ? { ...domain, enabled } : domain,
+		);
+	} catch (error) {
+		console.error('Failed to update default sites:', error);
+		configuredDomains = await ProtocolClient.getConfiguredDomains();
+	} finally {
+		defaultDomainsBusy = false;
+	}
+}
+
+async function toggleDefaultDomains(): Promise<void> {
+	await setDefaultDomainsEnabled(!anyDefaultDomainsEnabled);
+}
+
+async function setSiteEnabled(domainName: string, enabled: boolean) {
+	try {
+		await ProtocolClient.setDomainEnabled(domainName, enabled);
+		configuredDomains = configuredDomains.map((domain) =>
+			domain.domain === domainName ? { ...domain, enabled } : domain,
+		);
+	} catch (error) {
+		console.error('Failed to update site preference:', error);
+		configuredDomains = await ProtocolClient.getConfiguredDomains();
+	}
+}
+
+async function resetDomain(domainName: string) {
+	try {
+		await ProtocolClient.resetDomain(domainName);
+		configuredDomains = configuredDomains
+			.map((domain) => {
+				if (domain.domain !== domainName) {
+					return domain;
+				}
+				// Defaults reset to enabled; custom sites leave the list.
+				return domain.isDefault ? { ...domain, enabled: true } : null;
+			})
+			.filter((domain): domain is DomainStatus => domain !== null);
+	} catch (error) {
+		console.error('Failed to reset site preference:', error);
+		configuredDomains = await ProtocolClient.getConfiguredDomains();
+	}
+}
+
+async function resetAllToDefaults(): Promise<void> {
+	if (!confirm('Reset all site preferences to defaults? Custom sites will be removed.')) {
+		return;
+	}
+	defaultDomainsBusy = true;
+	try {
+		await ProtocolClient.setDefaultDomainsEnabled(true);
+		const fresh = await ProtocolClient.getConfiguredDomains();
+		for (const custom of fresh.filter((domain) => !domain.isDefault)) {
+			await ProtocolClient.resetDomain(custom.domain);
+		}
+		configuredDomains = await ProtocolClient.getConfiguredDomains();
+	} catch (error) {
+		console.error('Failed to reset all sites:', error);
+		configuredDomains = await ProtocolClient.getConfiguredDomains();
+	} finally {
+		defaultDomainsBusy = false;
 	}
 }
 
@@ -606,6 +698,77 @@ async function removeWeirpack(id: string) {
                   </div>
                 </div>
               </div>
+
+              <section class="py-3.5">
+                <details bind:open={sitePreferencesOpen} class="space-y-4">
+                  <summary class="cursor-pointer text-base font-semibold">
+                    Site Preferences ({filteredConfiguredDomains.length})
+                  </summary>
+                  <p class="text-xs text-gray-600 dark:text-[#d1d5db]!">
+                    Harper starts on the bundled sites by default. Use the checklist to enable or disable
+                    individual sites, or turn the defaults off and enable them from the popup as you visit
+                    each site. Sites marked Default are bundled; anything else is an explicit setting.
+                  </p>
+                  <Input
+                    bind:value={siteSearch}
+                    aria-label="Search site preferences"
+                    placeholder="Search sites"
+                    size="sm"
+                  />
+                  <div class="flex flex-wrap gap-3">
+                    <Button
+                      size="sm"
+                      disabled={defaultDomainsBusy || configuredDomains.length === 0}
+                      on:click={toggleDefaultDomains}
+                    >
+                      {anyDefaultDomainsEnabled ? 'Disable All Default Sites' : 'Enable All Default Sites'}
+                    </Button>
+                    <Button
+                      size="sm"
+                      color="white"
+                      disabled={defaultDomainsBusy || configuredDomains.length === 0}
+                      on:click={resetAllToDefaults}
+                    >
+                      Reset All to Defaults
+                    </Button>
+                  </div>
+                  <div class="grid max-h-72 grid-cols-1 gap-2 overflow-y-auto pr-3 xl:grid-cols-2">
+                    {#each filteredConfiguredDomains as domain}
+                      <div class="flex items-center justify-between gap-2">
+                        <label class="flex min-w-0 items-center gap-2 text-sm">
+                          <input
+                            type="checkbox"
+                            checked={domain.enabled}
+                            disabled={defaultDomainsBusy}
+                            onchange={(event) =>
+                              setSiteEnabled(domain.domain, (event.currentTarget as HTMLInputElement).checked)}
+                            class="h-4 w-4"
+                          />
+                          <span class="truncate">{domain.domain}</span>
+                          {#if domain.isDefault}
+                            <span class="shrink-0 text-xs text-gray-400 dark:text-gray-500">Default</span>
+                          {/if}
+                        </label>
+                        {#if !domain.isDefault}
+                          <Button
+                            size="xs"
+                            color="white"
+                            disabled={defaultDomainsBusy}
+                            aria-label={`Remove ${domain.domain}`}
+                            on:click={() => resetDomain(domain.domain)}
+                          >
+                            Remove
+                          </Button>
+                        {/if}
+                      </div>
+                    {:else}
+                      <p class="text-xs text-gray-600 dark:text-[#d1d5db]!">
+                        No site preferences match your search.
+                      </p>
+                    {/each}
+                  </div>
+                </details>
+              </section>
 
               <!-- Delay -->
               <div class="flex items-center justify-between gap-4 py-3.5">

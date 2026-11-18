@@ -39,7 +39,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       46 | calculator in 1623. In 1673, Gottfried Leibniz demonstrated a digital mechanical
       47 | calculator, called the Stepped Reckoner. Leibniz may be considered the first
@@ -51,7 +51,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       49 | including the fact that he documented the binary number system. In 1820, Thomas
       50 | de Colmar launched the mechanical calculator industry[note 1] when he invented
@@ -228,7 +228,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      105 | article in Communications of the ACM, in which Louis Fein argues for the
          |                                                      ^~~~ Did you mean to spell `Fein` this way?
@@ -249,7 +249,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      115 | computing science, to emphasize precisely that difference. Danish scientist
      116 | Peter Naur suggested the term datalogy, to reflect the fact that the scientific
@@ -285,7 +285,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      119 | Department of Datalogy at the University of Copenhagen, founded in 1969, with
      120 | Peter Naur being the first professor in datalogy. The term is used mainly in the
@@ -309,7 +309,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      121 | Scandinavian countries. An alternative term, also proposed by Naur, is data
          |                                                               ^~~~ Did you mean to spell `Naur` this way?
@@ -416,7 +416,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      131 | expression "automatic information" (e.g. "informazione automatica" in Italian)
          |                                                        ^~~~~~~~~~ Did you mean to spell `automatica` this way?
@@ -428,7 +428,7 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (33 priority)
 Message: |
      131 | expression "automatic information" (e.g. "informazione automatica" in Italian)
          |                                                        ^~~~~~~~~~ `automatica` should possibly be written as `automatic a`.
@@ -460,7 +460,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      132 | or "information and mathematics" are often used, e.g. informatique (French),
      133 | Informatik (German), informatica (Italian, Dutch), informática (Spanish,
@@ -502,7 +502,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      140 | A folkloric quotation, often attributed to—but almost certainly not first
      141 | formulated by—Edsger Dijkstra, states that "computer science is no more about
@@ -529,7 +529,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      155 | influenced by the work of mathematicians such as Kurt Gödel, Alan Turing, John
      156 | von Neumann, Rózsa Péter and Alonzo Church and there continues to be a useful
@@ -561,7 +561,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      155 | influenced by the work of mathematicians such as Kurt Gödel, Alan Turing, John
      156 | von Neumann, Rózsa Péter and Alonzo Church and there continues to be a useful
@@ -590,7 +590,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      162 | "software engineering" means, and how computer science is defined. David Parnas,
          |                                                                          ^~~~~~ Did you mean to spell `Parnas` this way?
@@ -611,7 +611,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      181 | computer science is a discipline of science, mathematics, or engineering. Allen
      182 | Newell and Herbert A. Simon argued in 1975,
@@ -623,7 +623,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      181 | computer science is a discipline of science, mathematics, or engineering. Allen
      182 | Newell and Herbert A. Simon argued in 1975,
@@ -665,7 +665,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      207 | Computer scientists Edsger W. Dijkstra and Tony Hoare regard instructions for
          |                     ^~~~~~ Did you mean to spell `Edsger` this way?
@@ -676,7 +676,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      207 | Computer scientists Edsger W. Dijkstra and Tony Hoare regard instructions for
          |                            ^~ Did you mean to spell `W.` this way?
@@ -687,7 +687,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      207 | Computer scientists Edsger W. Dijkstra and Tony Hoare regard instructions for
          |                                                 ^~~~~ Did you mean to spell `Hoare` this way?
@@ -708,7 +708,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      214 | separate paradigms in computer science. Peter Wegner argued that those paradigms
          |                                               ^~~~~~ Did you mean to spell `Wegner` this way?
@@ -732,7 +732,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      216 | that they are theory, abstraction (modeling), and design. Amnon H. Eden
          |                                                           ^~~~~ Did you mean to spell `Amnon` this way?
@@ -764,7 +764,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      216 | that they are theory, abstraction (modeling), and design. Amnon H. Eden
          |                                                                 ^~ Did you mean to spell `H.` this way?
@@ -868,7 +868,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      252 | According to Peter Denning, the fundamental question underlying computer science
          |                    ^~~~~~~ Did you mean to spell `Denning` this way?
@@ -1102,7 +1102,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      393 | term "architecture" in computer literature can be traced to the work of Lyle R.
          |                                                                              ^~ Did you mean to spell `R.` this way?
@@ -1113,7 +1113,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      394 | Johnson and Frederick P. Brooks Jr., members of the Machine Organization
          |                       ^~ Did you mean to spell `P.` this way?
@@ -1133,7 +1133,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      401 | mathematical models have been developed for general concurrent computation
      402 | including Petri nets, process calculi and the parallel random access machine
@@ -1191,7 +1191,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      436 | The philosopher of computing Bill Rapaport noted three Great Insights of
          |                                   ^~~~~~~~ Did you mean to spell `Rapaport` this way?
@@ -1304,7 +1304,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      468 |     Boehm's and Jacopini's insight can be further simplified with the use of
      469 |     goto (which means it is more elementary than structured programming).
@@ -1316,7 +1316,7 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (33 priority)
 Message: |
      468 |     Boehm's and Jacopini's insight can be further simplified with the use of
      469 |     goto (which means it is more elementary than structured programming).

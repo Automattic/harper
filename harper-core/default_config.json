@@ -875,6 +875,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Whenever",
+								"state": true,
+								"label": "Whenever"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Whereupon",
 								"state": true,
 								"label": "Whereupon"
@@ -1518,6 +1525,13 @@
 								"name": "SubjunctiveWasToWere",
 								"state": true,
 								"label": "Subjunctive Was To Were"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Themselves",
+								"state": true,
+								"label": "Them Selves"
 							}
 						},
 						{
@@ -2968,6 +2982,13 @@
 						},
 						{
 							"Bool": {
+								"name": "TheSame",
+								"state": true,
+								"label": "The Same"
+							}
+						},
+						{
+							"Bool": {
 								"name": "TheTheToThatThe",
 								"state": true,
 								"label": "The The To That The"
@@ -3680,6 +3701,13 @@
 						},
 						{
 							"Bool": {
+								"name": "DespiteSubject",
+								"state": true,
+								"label": "Despite Subject"
+							}
+						},
+						{
+							"Bool": {
 								"name": "DoIAdjective",
 								"state": true,
 								"label": "Do I Adjective"
@@ -4350,6 +4378,13 @@
 								"name": "Akimbo",
 								"state": true,
 								"label": "Akimbo"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AkinTo",
+								"state": true,
+								"label": "Akin to"
 							}
 						},
 						{
@@ -5866,6 +5901,13 @@
 						},
 						{
 							"Bool": {
+								"name": "QuotedAsSaying",
+								"state": true,
+								"label": "Quoted as Saying"
+							}
+						},
+						{
+							"Bool": {
 								"name": "RackOnesBrain",
 								"state": true,
 								"label": "Rack One's Brain"
@@ -6301,6 +6343,13 @@
 				"description": "Groups dialect-sensitive wording and regional usage that may not fit the selected audience.",
 				"child": {
 					"settings": [
+						{
+							"Bool": {
+								"name": "NounVerbSpelling",
+								"state": true,
+								"label": "Noun and Verb Spelling"
+							}
+						},
 						{
 							"Bool": {
 								"name": "OutOfTheWindow",

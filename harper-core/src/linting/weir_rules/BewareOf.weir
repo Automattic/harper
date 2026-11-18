@@ -1,4 +1,17 @@
-expr main [(beware with regard to), (beware about), (beware with), (beware regarding), (beware concerning), (beware against), (beware for), (beware in), (beware on), (beware at), (beware among), (beware between)]
+expr main [
+    (beware with regard to),
+    (beware about),
+    (beware with),
+    (beware regarding),
+    (beware concerning),
+    (beware against),
+    (beware for), 
+    (beware in), 
+    (beware on),
+    (beware at),
+    (beware among),
+    (beware between)
+]
 
 let message "Use `beware of` when naming the object you want readers to avoid."
 let description "The verb `beware` naturally pairs with `of` before the noun being warned about, so swap other prepositions for clarity."

@@ -1,5 +1,6 @@
 use std::num::NonZeroU32;
 use std::sync::Arc;
+use std::time::Duration;
 
 use egui_wgpu::wgpu::PresentMode;
 use egui_wgpu::winit::Painter;
@@ -38,21 +39,27 @@ impl Window {
         let context = super::fonts::context();
         let position = monitor.position();
         let size = monitor.size();
-        let window = Arc::new(
-            event_loop.create_window(
-                WinitWindow::default_attributes()
-                    .with_title("Harper")
-                    .with_inner_size(size)
-                    .with_position(position)
-                    .with_resizable(false)
-                    .with_enabled_buttons(WindowButtons::empty())
-                    .with_decorations(false)
-                    .with_transparent(true)
-                    .with_window_level(WindowLevel::AlwaysOnTop)
-                    .with_visible(visible)
-                    .with_active(false),
-            )?,
-        );
+        let attributes = WinitWindow::default_attributes()
+            .with_title("Harper")
+            .with_inner_size(size)
+            .with_position(position)
+            .with_resizable(false)
+            .with_enabled_buttons(WindowButtons::empty())
+            .with_decorations(false)
+            .with_transparent(true)
+            .with_window_level(WindowLevel::AlwaysOnTop)
+            .with_visible(visible)
+            .with_active(false);
+
+        // DWM blur-behind alone leaves the Win32 redirection surface opaque white, hiding the
+        // transparent wgpu swapchain. Skipping the redirection bitmap lets its alpha composite.
+        #[cfg(target_os = "windows")]
+        let attributes = {
+            use winit::platform::windows::WindowAttributesExtWindows;
+            attributes.with_no_redirection_bitmap(true)
+        };
+
+        let window = Arc::new(event_loop.create_window(attributes)?);
 
         window.set_outer_position(PhysicalPosition::new(position.x, position.y));
         let _ = window.request_inner_size(PhysicalSize::new(size.width, size.height));
@@ -140,7 +147,9 @@ impl Window {
     pub fn handle_event(&mut self, event: &WindowEvent) {
         let response = self.egui_state.on_window_event(&self.inner, event);
 
-        if response.repaint {
+        // RedrawRequested is already being serviced. Egui marks it as repaint-worthy too;
+        // forwarding that response would perpetually submit frames even with no UI changes.
+        if response.repaint && !matches!(event, WindowEvent::RedrawRequested) {
             self.inner.request_redraw();
         }
 
@@ -172,17 +181,25 @@ impl Window {
     }
 
     /// Draws `render_state` into this window, which is `screen_rects[index]`.
+    ///
+    /// Returns egui's next repaint delay for this viewport. `Duration::MAX` means there is no
+    /// scheduled repaint; input and OS invalidation can still request a frame independently.
     pub fn render(
         &mut self,
         render_state: &mut RenderState,
         screen_rects: &[egui::Rect],
         index: usize,
-    ) {
+    ) -> Duration {
         let context = self.egui_state.egui_ctx().clone();
         let input = self.egui_state.take_egui_input(&self.inner);
         let output = context.run_ui(input, |ui| {
             render_state.render(ui, screen_rects, index);
         });
+
+        let repaint_delay = output
+            .viewport_output
+            .get(&self.viewport_id)
+            .map_or(Duration::MAX, |viewport| viewport.repaint_delay);
 
         self.egui_state
             .handle_platform_output(&self.inner, output.platform_output);
@@ -196,5 +213,7 @@ impl Window {
             &output.textures_delta,
             Vec::new(),
         );
+
+        repaint_delay
     }
 }

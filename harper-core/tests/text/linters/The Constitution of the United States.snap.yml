@@ -22,7 +22,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
        6 | establish Justice, insure domestic Tranquility, provide for the common defence,
          |                                                                        ^~~~~~~ Did you mean to spell `defence` this way?
@@ -45,7 +45,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       11 | ## Article. I.
          |             ^~ Did you mean to spell `I.` this way?
@@ -169,7 +169,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       63 | one Representative; and until such enumeration shall be made, the State of New
       64 | Hampshire shall be entitled to chuse three, Massachusetts eight, Rhode-Island
@@ -181,7 +181,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       72 | The House of Representatives shall chuse their Speaker and other Officers; and
          |                                    ^~~~~ Did you mean to spell `chuse` this way?
@@ -226,7 +226,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      103 | The Senate shall chuse their other Officers, and also a President pro tempore,
          |                  ^~~~~ Did you mean to spell `chuse` this way?
@@ -259,7 +259,7 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (33 priority)
 Message: |
      103 | The Senate shall chuse their other Officers, and also a President pro tempore,
          |                                                                       ^~~~~~~ `tempore` should probably be written as `temp ore`.
@@ -326,7 +326,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      124 | thereof; but the Congress may at any time by Law make or alter such
      125 | Regulations, except as to the Places of chusing Senators.
@@ -363,7 +363,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      139 | Each House may determine the Rules of its Proceedings, punish its Members for
      140 | disorderly Behaviour, and, with the Concurrence of two thirds, expel a Member.
@@ -427,7 +427,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      163 | which shall have been created, or the Emoluments whereof shall have been
      164 | encreased during such time; and no Person holding any Office under the United
@@ -567,7 +567,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      203 | Imposts and Excises, to pay the Debts and provide for the common Defence and
          |                                                                  ^~~~~~~ Did you mean to spell `Defence` this way?
@@ -609,7 +609,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      229 | 9. To define and punish Piracies and Felonies committed on the high Seas, and
      230 | Offences against the Law of Nations;
@@ -712,7 +712,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      274 | No Bill of Attainder or ex post facto Law shall be passed.
          |                                 ^~~~~ Did you mean to spell `facto` this way?
@@ -777,7 +777,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      308 | pass any Bill of Attainder, ex post facto Law, or Law impairing the Obligation
          |                                     ^~~~~ Did you mean to spell `facto` this way?
@@ -816,7 +816,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      315 | United States; and all such Laws shall be subject to the Revision and Controul
          |                                                                       ^~~~~~~~ Did you mean to spell `Controul` this way?
@@ -974,7 +974,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      383 | The Congress may determine the Time of chusing the Electors, and the Day on
          |                                        ^~~~~~~ Did you mean to spell `chusing` this way?
@@ -1058,7 +1058,7 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (33 priority)
 Message: |
      415 | Whenever the President transmits to the President pro tempore of the Senate and
          |                                                       ^~~~~~~ `tempore` should probably be written as `temp ore`.
@@ -1097,7 +1097,7 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (33 priority)
 Message: |
      422 | the executive departments or of such other body as Congress may by law provide,
      423 | transmit to the President pro tempore of the Senate and the Speaker of the
@@ -1140,7 +1140,7 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (33 priority)
 Message: |
      428 | Thereafter, when the President transmits to the President pro tempore of the
          |                                                               ^~~~~~~ `tempore` should probably be written as `temp ore`.
@@ -1162,7 +1162,7 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (33 priority)
 Message: |
      433 | transmit within four days to the President pro tempore of the Senate and the
          |                                                ^~~~~~~ `tempore` should probably be written as `temp ore`.
@@ -1206,7 +1206,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      449 | Services, a Compensation, which shall neither be encreased nor diminished
          |                                                  ^~~~~~~~~ Did you mean to spell `encreased` this way?
@@ -1302,7 +1302,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      481 | have Power to grant Reprieves and Pardons for Offences against the United
          |                                               ^~~~~~~~ Did you mean to spell `Offences` this way?
@@ -1369,7 +1369,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      525 | time ordain and establish. The Judges, both of the supreme and inferior Courts,
      526 | shall hold their Offices during good Behaviour, and shall, at stated Times,
@@ -1569,7 +1569,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      627 | States, or any place subject to their jurisdiction. No Person held to Service
      628 | or Labour in one State, under the Laws thereof, escaping into another, shall,
@@ -1581,7 +1581,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      629 | in Consequence of any Law or Regulation therein, be discharged from such
      630 | Service or Labour, but shall be delivered up on Claim of the Party to whom such
@@ -1593,7 +1593,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      630 | Service or Labour, but shall be delivered up on Claim of the Party to whom such
      631 | Service or Labour may be due.
@@ -1680,7 +1680,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      663 | ## Article. V.
          |             ^~ Did you mean to spell `V.` this way?
@@ -1761,7 +1761,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      714 | first Page, The Word "Thirty" being partly written on an Erazure in the
          |                                                          ^~~~~~~ Did you mean to spell `Erazure` this way?

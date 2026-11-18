@@ -8,6 +8,7 @@ use crate::spell::surrounding_words;
 use crate::{
     CharString, CharStringExt, Dialect, TokenStringExt,
     document::Document,
+    edit_distance::edit_distance,
     expr::{Filter, LongestMatchOf, SequenceExpr},
     linting::{
         Lint, LintKind, Linter, Suggestion, informal_laughter::is_informal_laughter,
@@ -197,7 +198,15 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
                 lint_kind: LintKind::Spelling,
                 suggestions,
                 message,
-                priority: 63,
+                priority: if possibilities.first().is_some_and(|candidate| {
+                    word_chars.len() < 255
+                        && candidate.len() < 255
+                        && edit_distance(word_chars, candidate) == 1
+                }) {
+                    32
+                } else {
+                    63
+                },
             })
         }
 
@@ -236,6 +245,17 @@ mod tests {
         SpellCheck<Arc<FstDictionary>>,
         SpellCheck::new(FstDictionary::curated(), Dialect::American)
     );
+
+    #[test]
+    fn close_spelling_guesses_have_priority_over_generic_splits() {
+        let mut linter = SpellCheck::new(FstDictionary::curated(), Dialect::American);
+        for (source, priority) in [("coresponding", 32), ("worthchecking", 63)] {
+            let document = Document::new_plain_english_curated(source);
+            let lints = linter.lint(&document);
+            assert_eq!(lints.len(), 1);
+            assert_eq!(lints[0].priority, priority, "{source}");
+        }
+    }
 
     // Capitalization tests
 

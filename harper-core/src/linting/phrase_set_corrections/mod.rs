@@ -740,6 +740,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects `take control over` to `take control of`.",
             LintKind::Usage
         ),
+        "Themselves" => (
+            &[
+                ("them self", "themself"),
+                ("them selves", "themselves"),
+            ],
+            "Use `themselves` instead of `themself`.",
+            "Corrects `themself` to `themselves`.",
+            LintKind::Usage
+        ),
         "UseToUsedTo" => (
             &[
                 // "be" verbs + "use to" -> "used to" (accustomed to)

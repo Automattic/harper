@@ -1,4 +1,4 @@
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
        7 | My favourite color is blu.
          |    ^~~~~~~~~ Did you mean to spell `favourite` this way?
@@ -17,7 +17,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
        7 | My favourite color is blu.
          |                       ^~~ Did you mean to spell `blu` this way?
@@ -28,7 +28,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
        8 | I must defend my honour!
          |                  ^~~~~~ Did you mean to spell `honour` this way?
@@ -39,7 +39,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
        9 | I recognize that you recognise me.
          |                      ^~~~~~~~~ Did you mean to spell `recognise` this way?
@@ -50,7 +50,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       11 | I analyse how you infantilise me.
          |   ^~~~~~~ Did you mean to spell `analyse` this way?
@@ -61,7 +61,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       11 | I analyse how you infantilise me.
          |                   ^~~~~~~~~~~ Did you mean to spell `infantilise` this way?
@@ -72,7 +72,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       12 | Careful, traveller!
          |          ^~~~~~~~~ Did you mean to spell `traveller` this way?
