@@ -12,7 +12,22 @@ expr overTimeClaim <(over time claim), ( )>
 expr overTimeClaims <(over time claims), ( )>
 expr overTimeApproval <(over time approval), ( )>
 expr overTimeApprovals <(over time approvals), ( )>
-expr main [@overTimePay, @overTimeRate, @overTimeRates, @overTimeWage, @overTimeWages, @overTimeHour, @overTimeHours, @overTimeShift, @overTimeShifts, @overTimeDetails, @overTimeClaim, @overTimeClaims, @overTimeApproval, @overTimeApprovals]
+expr main [
+    @overTimePay, 
+    @overTimeRate, 
+    @overTimeRates, 
+    @overTimeWage, 
+    @overTimeWages, 
+    @overTimeHour, 
+    @overTimeHours, 
+    @overTimeShift, 
+    @overTimeShifts, 
+    @overTimeDetails, 
+    @overTimeClaim, 
+    @overTimeClaims, 
+    @overTimeApproval, 
+    @overTimeApprovals
+]
 
 let message "Use `overtime` as one word when referring to extra paid work hours."
 let description "Finds job-hours contexts where the split form appears and joins it into the standard compound."

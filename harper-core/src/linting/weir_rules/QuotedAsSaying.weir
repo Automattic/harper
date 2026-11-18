@@ -1,0 +1,28 @@
+expr main <([quoted, (quoted in [(the press), NUMBER])] of [saying, asking, claiming, reporting, stating]), of>
+
+let message "This construction requires the word `as`, not `of`."
+let description "Corrects misconstructions like `quoted of saying` to `quoted as saying`."
+let kind "Usage"
+let becomes "as"
+
+# without optional location
+
+## saying
+
+test "Butch Vig producer of Nevermind is quoted of saying \“He had a kind of primal instinct for playing the guitar\”." "Butch Vig producer of Nevermind is quoted as saying \“He had a kind of primal instinct for playing the guitar\”."
+
+## other verbs
+
+test "Takeshi Kitano was quoted of claiming that Korea was a country that disputed facts for money" "Takeshi Kitano was quoted as claiming that Korea was a country that disputed facts for money"
+
+test "By the end of January 2017, the United Nations was quoted of reporting influx of 65,000 new Rohingya refugees" "By the end of January 2017, the United Nations was quoted as reporting influx of 65,000 new Rohingya refugees"
+
+test "One of the prosecutors of the French army is quoted of stating \“In Paris, everyone is guilty\”." "One of the prosecutors of the French army is quoted as stating \“In Paris, everyone is guilty\”."
+
+# with optional location
+
+test "He's quoted in the press of saying that the Grey Goose brand has the number one thing that makes it what it is, the name." "He's quoted in the press as saying that the Grey Goose brand has the number one thing that makes it what it is, the name."
+
+# with optional year
+
+test "Ken Olsen, one of the early pioneers of computers, was quoted in 1977 of saying \"There is no reason for any individual to have a computer\"" "Ken Olsen, one of the early pioneers of computers, was quoted in 1977 as saying \"There is no reason for any individual to have a computer\""

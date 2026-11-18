@@ -80,8 +80,7 @@ impl<D: Dictionary + 'static> ExprLinter for WrongNegative<D> {
             }
             .to_string(),
             suggestions,
-            // higher priority (lower number) than spell check
-            priority: 62,
+            priority: 31,
         })
     }
 

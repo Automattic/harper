@@ -1,4 +1,7 @@
-expr main [<(tent to [agree, focus, have, think, use]), tent>, <([i, people, they, we, will, would, you] tent to), tent>]
+expr main [
+    <(tent to [agree, focus, have, think, use]), tent>, 
+    <([i, people, they, we, will, would, you] tent to), tent>
+]
 
 let message "Did you mean `tend to`?"
 let description "Flags `tent to` when it's likely a mistake for `tend to`."

@@ -226,6 +226,17 @@ pub fn lint_group() -> LintGroup {
             "Tries to correct typos of `dose` to `does`.",
             LintKind::Typo
         ),
+        "DoubleDown" => (
+            &[
+                ("dabble down", "double down"),
+                ("dabbled down", "doubled down"),
+                ("dabbles down", "doubles down"),
+                ("dabbling down", "doubling down"),
+            ],
+            "Did you mean `double down`?",
+            "Corrects `dabble down` to `double down`.",
+            LintKind::Style
+        ),
         "ExpandAlgorithm" => (
             &[
                 ("algo", "algorithm"),
@@ -523,17 +534,6 @@ pub fn lint_group() -> LintGroup {
             LintKind::Style
         ),
 
-        "LookForwardTo" => (
-            &[
-                ("look forward for", "look forward to"),
-                ("looked forward for", "looked forward to"),
-                ("looks forward for", "looks forward to"),
-                ("looking forward for", "looking forward to")
-            ],
-            "The correct preposition in this phrase is `to`.",
-            "Corrects `look forward for` to `look forward to`.",
-            LintKind::Usage
-        ),
         "MakeDoWith" => (
             &[
                 ("make due with", "make do with"),
@@ -738,6 +738,15 @@ pub fn lint_group() -> LintGroup {
             ],
             "Use `take control of` instead of `take control over`.",
             "Corrects `take control over` to `take control of`.",
+            LintKind::Usage
+        ),
+        "Themselves" => (
+            &[
+                ("them self", "themself"),
+                ("them selves", "themselves"),
+            ],
+            "Use `themselves` instead of `themself`.",
+            "Corrects `themself` to `themselves`.",
             LintKind::Usage
         ),
         "UseToUsedTo" => (
@@ -1042,6 +1051,17 @@ pub fn lint_group() -> LintGroup {
             "Use `look alike` or `look-alike` instead of `look-a-like`.",
             "Corrects `look-a-like` to `look alike` or `look-alike`.",
             LintKind::Spelling
+        ),
+        "LookForwardTo" => (
+            &[
+                (&["look forward for", "look forwards to"], &["look forward to"]),
+                (&["looked forward for", "looked forwards to"], &["looked forward to"]),
+                (&["looks forward for", "looks forwards to"], &["looks forward to"]),
+                (&["looking forward for", "looking forwards to"], &["looking forward to"])
+            ],
+            "The correct preposition in this phrase is `to`.",
+            "Corrects `look forward for` to `look forward to`.",
+            LintKind::Usage
         ),
         "MakeItSeem" => (
             &[

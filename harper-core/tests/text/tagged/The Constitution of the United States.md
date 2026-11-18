@@ -524,8 +524,8 @@
 #
 >
 #
-> To provide for   calling forth the Militia to execute the Laws   of the Union     ,
-# P  VB      R/C/P Nᴹ/Vg/J R     D   NSg     P  VB      D   NPl/V3 P  D   NPr/VB/J+ .
+> To provide for   calling   forth the Militia to execute the Laws   of the Union     ,
+# P  VB      R/C/P N🅪Sg/Vg/J R     D   NSg     P  VB      D   NPl/V3 P  D   NPr/VB/J+ .
 > suppress Insurrections and  repel Invasions ;
 # VB       NPl           VB/C VB    NPl       .
 >
@@ -714,8 +714,8 @@
 # D+  NSg/J+    N🅪Sg/VB/J+ VXB   NSg/VLXB VP/J   NPr/J/R/P D/P NSg       P  D
 > United States   of America . He       shall hold     his     Office  during the Term     of four
 # VP/J   NPrPl/V3 P  NPr+    . NPr/ISg+ VXB   NSg/VB/J ISg/D$+ NSg/VB+ VB/P   D   NSg/VB/J P  NSg+
-> Years ending  at    noon    on  the 20th day    of January , and  , together with the Vice
-# NPl+  Nᴹ/Vg/J NSg/P NSg/VB+ J/P D   #    NPr🅪Sg P  NPr+    . VB/C . J        P    D+  NSg/J/P+
+> Years ending    at    noon    on  the 20th day    of January , and  , together with the Vice
+# NPl+  N🅪Sg/Vg/J NSg/P NSg/VB+ J/P D   #    NPr🅪Sg P  NPr+    . VB/C . J        P    D+  NSg/J/P+
 > President , chosen   for   the same Term      , be       elected  , as    follows
 # NSg+      . Nᴹ/VPp/J R/C/P D+  I/J+ NSg/VB/J+ . NSg/VLXB NSg/VP/J . R/C/P NPl/V3
 >
@@ -1199,7 +1199,7 @@
 > in        the land      or    naval forces  , or    in        the militia , when    in        actual service in        time
 # NPr/J/R/P D   NPr🅪Sg/VB NPr/C J     NPl/V3+ . NPr/C NPr/J/R/P D   NSg     . NSg/I/C NPr/J/R/P NSg/J  NSg/VB+ NPr/J/R/P N🅪Sg/VB/J
 > of war     or    public  danger      ; nor   shall any    person  be       subject  for   the same offense
-# P  N🅪Sg/VB NPr/C Nᴹ/VB/J N🅪Sg/VB/JC+ . NSg/C VXB   I/R/Dq NSg/VB+ NSg/VLXB NSg/VB/J R/C/P D   I/J  N🅪Sg+
+# P  N🅪Sg/VB NPr/C Nᴹ/VB/J N🅪Sg/VB/JC+ . NSg/C VXB   I/R/Dq NSg/VB+ NSg/VLXB NSg/VB/J R/C/P D   I/J  N🅪Sg/Am+
 > to be       twice put     in        jeopardy of life    or    limb    ; nor   shall be       compelled in        any
 # P  NSg/VLXB R     NSg/VBP NPr/J/R/P NSg/VB   P  N🅪Sg/VB NPr/C NSg/VB+ . NSg/C VXB   NSg/VLXB VP/J      NPr/J/R/P I/R/Dq
 > criminal case       to be       a   witness against himself , nor   be       deprived of life     ,

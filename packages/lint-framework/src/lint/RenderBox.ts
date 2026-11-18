@@ -2,6 +2,7 @@ import type { VNode } from 'virtual-dom';
 import createElement from 'virtual-dom/create-element';
 import diff from 'virtual-dom/diff';
 import patch from 'virtual-dom/patch';
+import { adoptedSheets, constructedSheet, isStyleBlocked, setAdoptedSheets } from './cspStyles';
 
 type ParentResolver = () => Node;
 
@@ -42,6 +43,29 @@ export default class RenderBox {
 			this.virtualRoot = patch(this.virtualRoot, patches);
 		}
 		this.virtualTree = node;
+		this.adoptBlockedStyles();
+	}
+
+	/**
+	 * Apply the CSS of `<style>` elements the page's Content Security Policy blocked as constructed
+	 * stylesheets. The shadow root is ours, so its adopted sheets always mirror the blocked styles.
+	 */
+	private adoptBlockedStyles() {
+		const root = this.getShadowRoot();
+		const wanted: CSSStyleSheet[] = [];
+
+		for (const style of root.querySelectorAll('style')) {
+			if (!isStyleBlocked(style)) continue;
+			const sheet = constructedSheet(style.textContent ?? '');
+			if (sheet != null) wanted.push(sheet);
+		}
+
+		const current = adoptedSheets(root);
+		if (current.length === wanted.length && current.every((sheet, i) => sheet === wanted[i])) {
+			return;
+		}
+
+		setAdoptedSheets(root, wanted);
 	}
 
 	/**

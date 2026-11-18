@@ -583,4 +583,36 @@ mod tests {
             NounCountability::default(),
         );
     }
+
+    #[test]
+    fn dont_flag_an_opening() {
+        assert_no_lints(
+            "It suggested that a volcano be defined as 'an opening on a planet or moon's surface'.",
+            NounCountability::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_a_proliferation() {
+        assert_no_lints(
+            "These have allowed for a proliferation of specialized designs.",
+            NounCountability::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_a_hearing_or_a_ruling() {
+        assert_no_lints(
+            "There was a hearing on Monday and a ruling on Friday.",
+            NounCountability::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_a_prayer() {
+        assert_no_lints(
+            "A prayer recorded on a slip of paper was found in the tomb.",
+            NounCountability::default(),
+        );
+    }
 }

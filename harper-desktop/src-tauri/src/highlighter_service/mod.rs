@@ -5,7 +5,10 @@ use crate::config::Config;
 use highlighter_worker::HighlighterWorker;
 use std::{
     io,
-    sync::{Arc, Mutex as StdMutex},
+    sync::{
+        Arc, Mutex as StdMutex,
+        atomic::{AtomicBool, Ordering},
+    },
 };
 use tokio::sync::Mutex;
 
@@ -16,6 +19,7 @@ pub struct HighlighterService {
     config: Arc<Mutex<Config>>,
     app: tauri::AppHandle,
     worker: StdMutex<Option<HighlighterWorker>>,
+    restarting: AtomicBool,
 }
 
 impl HighlighterService {
@@ -27,6 +31,7 @@ impl HighlighterService {
             config,
             app,
             worker: StdMutex::new(None),
+            restarting: AtomicBool::new(false),
         }
     }
 
@@ -38,6 +43,9 @@ impl HighlighterService {
             .worker
             .lock()
             .expect("highlighter service lock poisoned");
+        if self.restarting.load(Ordering::SeqCst) {
+            return Ok(false);
+        }
         if worker.is_some() {
             return Ok(true);
         }
@@ -50,15 +58,26 @@ impl HighlighterService {
         Ok(true)
     }
 
+    /// Stop and reap the child before launching a replacement parent. Block service starts
+    /// until exit, but allow another attempt if launching fails.
+    pub fn restart_app(&self, launch: impl FnOnce() -> io::Result<()>) -> io::Result<()> {
+        crate::app_restart::restart_once(
+            &self.restarting,
+            || {
+                self.stop();
+            },
+            launch,
+        )
+    }
+
     /// Stops the highlighter worker if one is running.
     pub fn stop(&self) -> bool {
-        let worker = self
+        let mut worker = self
             .worker
             .lock()
-            .expect("highlighter service lock poisoned")
-            .take();
+            .expect("highlighter service lock poisoned");
 
-        if let Some(mut worker) = worker {
+        if let Some(mut worker) = worker.take() {
             worker.stop();
         }
 
