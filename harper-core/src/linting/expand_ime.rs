@@ -19,7 +19,7 @@ impl Default for ExpandIme {
 impl ExprLinter for ExpandIme {
     type Unit = Chunk;
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
         let span = matched_tokens.span()?;
 
         Some(Lint {

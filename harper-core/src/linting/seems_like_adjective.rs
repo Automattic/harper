@@ -26,7 +26,7 @@ impl Default for SeemsLikeAdjective {
 impl ExprLinter for SeemsLikeAdjective {
     type Unit = Chunk;
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
         let span = toks[1..=2].span()?;
 
         Some(Lint {
