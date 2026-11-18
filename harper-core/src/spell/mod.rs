@@ -382,14 +382,16 @@ fn score_suggestion(misspelled_word: &[char], sug: &FuzzyMatchResult) -> i32 {
     score
 }
 
-/// Order the suggestions to be shown to the user.
+/// Order the suggestions to be shown to the user, each with its score. Lower scores are better.
 fn order_suggestions<'b>(
     misspelled_word: &[char],
-    mut matches: Vec<FuzzyMatchResult<'b>>,
-) -> Vec<&'b [char]> {
-    matches.sort_by_cached_key(|v| score_suggestion(misspelled_word, v));
-
-    matches.into_iter().map(|v| v.word).collect()
+    matches: Vec<FuzzyMatchResult<'b>>,
+) -> Vec<(&'b [char], i32)> {
+    matches
+        .into_iter()
+        .map(|v| (v.word, score_suggestion(misspelled_word, &v)))
+        .sorted_by_key(|(_, score)| *score)
+        .collect()
 }
 
 /// Get the closest matches in the provided [`Dictionary`] and rank them
@@ -406,28 +408,10 @@ pub fn suggest_correct_spelling<'a>(
         .collect();
 
     order_suggestions(misspelled_word, matches)
-}
-
-/// Get the closest matches in the provided [`Dictionary`], each with the score that orders it.
-/// Lower scores are better.
-pub fn scored_suggestions<'a>(
-    misspelled_word: &[char],
-    result_limit: usize,
-    max_edit_dist: u8,
-    dictionary: &'a impl Dictionary,
-) -> Vec<(&'a [char], i32)> {
-    let mut scored: Vec<_> = dictionary
-        .fuzzy_match(misspelled_word, max_edit_dist, result_limit)
         .into_iter()
-        .map(|sug| (sug.word, score_suggestion(misspelled_word, &sug)))
-        .collect();
-
-    scored.sort_by_key(|(_, score)| *score);
-    scored
+        .map(|(word, _)| word)
+        .collect()
 }
-
-/// The maximum number of candidates the context ranker considers for one word.
-pub const MAX_RANKED_CANDIDATES: usize = 64;
 
 /// Spelling candidates for a misspelled word with their scores, in Harper's spelling order.
 ///
@@ -440,7 +424,7 @@ pub fn spelling_candidates(
 ) -> Vec<(CharString, i32)> {
     (2..5)
         .map(|dist| {
-            scored_suggestions(word, 200, dist, dictionary)
+            order_suggestions(word, dictionary.fuzzy_match(word, dist, 200))
                 .into_iter()
                 .filter(|(candidate, _)| {
                     dictionary

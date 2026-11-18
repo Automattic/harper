@@ -13,7 +13,10 @@ pub const SPECIAL_WORDS: [&str; 4] = ["<PAD>", "<UNK>", "<TARGET>", "<NUM>"];
 /// The maximum number of words the ranker reads on each side of a misspelled word.
 pub const CONTEXT_RADIUS: usize = 8;
 
-pub(crate) const CONTEXT_SLOTS: usize = CONTEXT_RADIUS * 2;
+/// The maximum number of spelling candidates the ranker considers for one word.
+pub const MAX_CANDIDATES: usize = 64;
+
+pub const CONTEXT_SLOTS: usize = CONTEXT_RADIUS * 2;
 
 // `table.bin` holds the quantization limit, the slot weights, the word weights, then the `i8` rows.
 const SLOT_WEIGHTS_AT: usize = size_of::<f32>();
@@ -26,12 +29,12 @@ pub struct ContextRankerConfig {
     pub spelling_weight: f32,
 }
 
-pub(crate) fn is_known_word(id: u16) -> bool {
+pub fn is_known_word(id: u16) -> bool {
     id as usize != PAD_IDX && id as usize != UNK_IDX
 }
 
 /// The score that orders a candidate. Higher is better.
-pub(crate) fn combined_score(fit: f32, spelling_score: i32, spelling_weight: f32) -> f32 {
+pub fn combined_score(fit: f32, spelling_score: i32, spelling_weight: f32) -> f32 {
     fit - spelling_weight * spelling_score as f32
 }
 
@@ -43,7 +46,7 @@ pub struct ContextRanker {
 }
 
 impl ContextRanker {
-    pub(crate) fn from_parts(
+    pub fn from_parts(
         words: &[String],
         table: Cow<'static, [u8]>,
         config: ContextRankerConfig,
@@ -142,7 +145,7 @@ impl ContextRanker {
     }
 
     /// How well each candidate fits the context. Higher is better.
-    pub(crate) fn fits(
+    pub fn fits(
         &self,
         context: &[u16; CONTEXT_SLOTS],
         candidates: impl Iterator<Item = u16>,
@@ -175,7 +178,8 @@ impl ContextRanker {
 
     /// The candidate positions, best first.
     ///
-    /// Each candidate is a lowercase word and its spelling score. Lower spelling scores are better.
+    /// Each candidate is a lowercase word and its spelling score. The spelling score is the score
+    /// that `harper-core`'s spell checker gives the candidate. Lower spelling scores are better.
     /// The order stays the same when the radius holds no known word.
     pub fn rank(
         &self,

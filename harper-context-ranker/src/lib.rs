@@ -12,7 +12,7 @@ use std::sync::LazyLock;
 
 #[cfg(feature = "training")]
 pub use prepare::{SentenceWord, Speller, prepare};
-pub use ranker::CONTEXT_RADIUS;
+pub use ranker::{CONTEXT_RADIUS, MAX_CANDIDATES};
 #[cfg(feature = "training")]
 pub use training::{TrainingOptions, train};
 
@@ -24,7 +24,10 @@ static RANKER: LazyLock<ranker::ContextRanker> = LazyLock::new(|| {
     )
 });
 
-/// Candidate positions, best first. Words are lowercase, and lower spelling scores are better.
+/// Candidate positions, best first. Words are lowercase.
+///
+/// A spelling score is the score that `harper-core`'s spell checker gives a candidate. Lower
+/// spelling scores are better.
 pub fn rank(left: &[String], right: &[String], candidates: &[(String, i32)]) -> Vec<usize> {
     RANKER.rank(left, right, candidates)
 }

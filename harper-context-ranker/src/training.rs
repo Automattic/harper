@@ -115,12 +115,12 @@ impl RankerExample {
     }
 }
 
-pub(crate) fn read_vocabulary(path: impl AsRef<Path>) -> io::Result<Vec<String>> {
+pub fn read_vocabulary(path: impl AsRef<Path>) -> io::Result<Vec<String>> {
     Ok(serde_json::from_slice(&std::fs::read(path)?)?)
 }
 
 /// Read every `.bin` shard in a directory, in file name order.
-pub(crate) fn read_examples(dir: impl AsRef<Path>) -> io::Result<Vec<RankerExample>> {
+pub fn read_examples(dir: impl AsRef<Path>) -> io::Result<Vec<RankerExample>> {
     let mut shards: Vec<PathBuf> = std::fs::read_dir(dir)?
         .map(|entry| entry.map(|e| e.path()))
         .collect::<Result<_, _>>()?;

@@ -2,12 +2,10 @@
 
 use std::sync::Arc;
 
-use harper_context_ranker::{SentenceWord, Speller};
+use harper_context_ranker::{MAX_CANDIDATES, SentenceWord, Speller};
 use harper_core::language_detection::is_likely_english;
 use harper_core::parsers::{Parser, PlainEnglish};
-use harper_core::spell::{
-    Dictionary, FstDictionary, MAX_RANKED_CANDIDATES, context_word, spelling_candidates,
-};
+use harper_core::spell::{Dictionary, FstDictionary, context_word, spelling_candidates};
 use harper_core::{CharStringExt, Dialect, TokenStringExt};
 
 pub struct CuratedSpeller {
@@ -57,7 +55,7 @@ impl Speller for CuratedSpeller {
             typo,
             self.dictionary.as_ref(),
             Dialect::American,
-            MAX_RANKED_CANDIDATES,
+            MAX_CANDIDATES,
         )
         .into_iter()
         .map(|(word, score)| (word.to_lower().iter().collect(), score))
@@ -67,9 +65,9 @@ impl Speller for CuratedSpeller {
 
 #[cfg(test)]
 mod tests {
-    use harper_context_ranker::{CONTEXT_RADIUS, SentenceWord, Speller};
+    use harper_context_ranker::{CONTEXT_RADIUS, MAX_CANDIDATES, SentenceWord, Speller};
     use harper_core::Document;
-    use harper_core::spell::{MAX_RANKED_CANDIDATES, context_word, surrounding_words};
+    use harper_core::spell::{context_word, surrounding_words};
 
     use super::CuratedSpeller;
 
@@ -152,7 +150,7 @@ mod tests {
 
         assert_eq!(words[..3], ["fife", "file", "fine"]);
         assert!(words.contains(&"five"));
-        assert!(words.len() <= MAX_RANKED_CANDIDATES);
+        assert!(words.len() <= MAX_CANDIDATES);
         assert!(words.iter().all(|word| *word == word.to_lowercase()));
         assert!(candidates.windows(2).all(|pair| pair[0].1 <= pair[1].1));
     }
