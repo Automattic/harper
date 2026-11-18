@@ -46,11 +46,15 @@ jobs:
       - uses: actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659 # v1.17.0
         with:
           components: rustfmt,clippy
+          # The Rust Cache step below already caches the build.
+          cache: false
       - name: Install Node.js
         uses: actions/setup-node@v7
         with:
           node-version-file: ".node-version"
       - name: Install Tauri Linux dependencies
+        # Only the jobs that build Harper Desktop need these.
+        if: contains(fromJSON('["check-rust", "test-rust", "check-desktop"]'), matrix.task)
         run: >-
           .github/scripts/apt-install.sh
           libayatana-appindicator3-dev
