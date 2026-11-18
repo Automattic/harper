@@ -22,9 +22,9 @@ Message: |
        7 | My favourite color is blu.
          |                       ^~~ Did you mean to spell `blu` this way?
 Suggest:
-  - Replace with: “bl”
   - Replace with: “blue”
   - Replace with: “blur”
+  - Replace with: “box”
 
 
 
@@ -35,7 +35,7 @@ Message: |
 Suggest:
   - Replace with: “honor”
   - Replace with: “hour”
-  - Replace with: “honer”
+  - Replace with: “honors”
 
 
 
@@ -46,7 +46,7 @@ Message: |
 Suggest:
   - Replace with: “recognize”
   - Replace with: “recognized”
-  - Replace with: “recognizer”
+  - Replace with: “recognizes”
 
 
 
@@ -57,7 +57,7 @@ Message: |
 Suggest:
   - Replace with: “analyze”
   - Replace with: “analyst”
-  - Replace with: “analyte”
+  - Replace with: “analysis”
 
 
 
@@ -89,8 +89,8 @@ Message: |
          |        ^~~~~~ Did you mean to spell `centre` this way?
 Suggest:
   - Replace with: “center”
-  - Replace with: “cent's”
-  - Replace with: “censure”
+  - Replace with: “central”
+  - Replace with: “century”
 
 
 
@@ -100,8 +100,8 @@ Message: |
          |                      ^~~~~~~ Did you mean to spell `theatre` this way?
 Suggest:
   - Replace with: “theater”
-  - Replace with: “they're”
   - Replace with: “there”
+  - Replace with: “they're”
 
 
 
@@ -111,8 +111,8 @@ Message: |
          |                                          ^~~~~ Did you mean to spell `litre` this way?
 Suggest:
   - Replace with: “liter”
-  - Replace with: “lithe”
-  - Replace with: “lire”
+  - Replace with: “little”
+  - Replace with: “like”
 
 
 
