@@ -16,8 +16,12 @@ export default defineConfig({
 	forbidOnly: !!process.env.CI,
 	/** Extremely important to avoid flaky tests. DO NOT CHANGE or I will kill you. */
 	retries: 0,
-	/** Extremely important to avoid flaky tests. DO NOT CHANGE or I will kill you. */
-	repeatEach: 3,
+	/**
+	 * Extremely important to avoid flaky tests. Each test runs three times in the merge queue, on
+	 * master and locally, and every copy has to pass: that's what stops flaky tests reaching master.
+	 * Pull requests run each test once, so an unrelated flaky test doesn't hold up their authors.
+	 */
+	repeatEach: process.env.GITHUB_EVENT_NAME === 'pull_request' ? 1 : 3,
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
 	reporter: 'html',
 	use: {
