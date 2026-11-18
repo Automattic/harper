@@ -40,7 +40,7 @@ impl ExprLinter for AkinTo {
     }
 
     fn description(&self) -> &str {
-        "A linter skeleton for contributors to copy into `harper_core/src/linting/` and rename."
+        "Corrects `akin of` to `akin to`."
     }
 }
 
