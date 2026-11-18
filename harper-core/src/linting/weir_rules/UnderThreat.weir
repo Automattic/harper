@@ -1,0 +1,41 @@
+expr okBeforeInThreat [change, changes, decrease, differences, increase, reduction, shift, surge]
+
+expr main <(![@okBeforeInThreat] (in threat) ![-, NOUN]), in>
+
+let message "Did you mean `under threat`?"
+let description "Corrects `in threat` to `under threat` for standard idiomatic usage."
+let kind "Usage"
+let becomes "under"
+
+# To fix
+
+test "Grand Theft Auto 6 right now, is effectively in threat in threat of a vast wave of piracy." "Grand Theft Auto 6 right now, is effectively under threat under threat of a vast wave of piracy."
+test "Is humanity really in threat due to AI?" "Is humanity really under threat due to AI?"
+test "zeroinfl() was taken over from pscl, which was in threat of being archived on CRAN." "zeroinfl() was taken over from pscl, which was under threat of being archived on CRAN."
+test "Orban, is now in threat of loosing next elections." "Orban, is now under threat of loosing next elections."
+test "If its accessible, then the page would be in threat because a user could change the userID manually" "If its accessible, then the page would be under threat because a user could change the userID manually"
+
+# See #4841
+# test "most of the developers read it as \"all average developers\" are going to be in threat." "most of the developers read it as \"all average developers\" are going to be under threat."
+
+# To avoid flagging
+
+# Followed by hyphen means not an error
+
+allows "Threat assessment in threat-informed defense involves systematically evaluating and prioritizing the specific threat actors"
+allows "The exact trust boundaries, including what validation cannot establish, are in THREAT-MODEL.md"
+
+# Followed by noun means not an error
+
+allows "How can we help in Threat Analysis?"
+allows "The aim of this book is to compile the best practices in threat intelligence analysis."
+allows "Architecture decomposition in threat modeling is the process of breaking down a system into its key components"
+allows "One of the missing data options I have right now in threat dragon is to add the security controls"
+
+# Preceded by certain words means not an error
+
+allows "The organisations that respond best to a change in threat are the ones that put steps in place now"
+allows "the increase in humor should be associated with a decrease in threat (as the event is transformed"
+allows "The post highlights that this increase in threat is a review of these measures and allows the government to implement measures"
+allows "every unit reduction in threat is beneficial"
+allows "The surge in threat in 2021 will cascade and continue into 2022."

@@ -1,0 +1,31 @@
+expr explain [explain, explains, explained, explaining]
+# "How would you explain us to a newcomer?" is correct: `us` is what gets explained.
+expr main <[(@explain us ![to, NOUN, PROG]), (@explain us,)], us>
+
+let message "Use `explain to us`, or put the thing first: `explain it to us`."
+let description "Corrects `explain us` to `explain to us`."
+let kind "Grammar"
+let scope "Sentence"
+let becomes "to us"
+let strategy "MatchCase"
+
+# real sentences from Hacker News
+test "So could you explain us why you pick ABP over uBlock?" "So could you explain to us why you pick ABP over uBlock?"
+test "It would be a valid argument if you could explain us what subjective experience and agency are." "It would be a valid argument if you could explain to us what subjective experience and agency are."
+# made-up sentences
+test "She explained us how the rollout works." "She explained to us how the rollout works."
+test "Please explain us what happened." "Please explain to us what happened."
+test "They keep explaining us the same thing." "They keep explaining to us the same thing."
+test "CAN YOU EXPLAIN US THE PROCESS?" "CAN YOU EXPLAIN TO US THE PROCESS?"
+test "Could you explain us, briefly, the plan?" "Could you explain to us, briefly, the plan?"
+
+# correct text
+allows "Can you explain the process to us?"
+allows "Could you explain to us why it failed?"
+allows "She explained it to us."
+allows "Let us explain."
+# made-up look-alikes
+allows "How would you explain us to a newcomer?"
+allows "Explain us to them, please."
+allows "They asked us to explain."
+allows "Nobody could explain us being here."

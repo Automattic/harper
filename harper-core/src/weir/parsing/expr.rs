@@ -47,6 +47,7 @@ fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstE
 
     match tok.kind {
         TokenKind::Space(_) => Ok(FoundNode::new(AstExprNode::Whitespace, 1)),
+        TokenKind::Newline(_) => Ok(FoundNode::new(AstExprNode::Whitespace, 1)),
         // The expr ref notation
         TokenKind::Punctuation(Punctuation::At) => {
             let name_tok = tokens.get(1).ok_or(Error::EndOfInput)?;
@@ -74,6 +75,7 @@ fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstE
             }else{
                 let node = match text.as_str() {
                     "PROG" => AstExprNode::Progressive,
+                    "NUMBER" => AstExprNode::Number,
                     _ => AstExprNode::Word(text.chars().collect()),
                 };
 
@@ -465,6 +467,45 @@ mod tests {
     }
 
     #[test]
+    fn parses_number() {
+        assert_eq!(parse_expr_str("NUMBER", true).unwrap(), AstExprNode::Number);
+        assert_eq!(
+            parse_expr_str("NUMBER", false).unwrap(),
+            AstExprNode::Seq(vec![AstExprNode::Number])
+        );
+    }
+
+    #[test]
+    fn number_keyword_is_case_sensitive() {
+        for word in ["number", "Number", "NUMBERED"] {
+            assert_eq!(
+                parse_expr_str(word, true).unwrap(),
+                AstExprNode::Word(word.chars().collect())
+            );
+        }
+    }
+
+    #[test]
+    fn number_is_distinct_from_num() {
+        for use_optimizer in [false, true] {
+            assert_eq!(
+                parse_expr_str("[NUMBER, NUM]", use_optimizer).unwrap(),
+                if use_optimizer {
+                    AstExprNode::Arr(vec![
+                        AstExprNode::Number,
+                        AstExprNode::UPOSSet(vec![UPOS::NUM]),
+                    ])
+                } else {
+                    AstExprNode::Seq(vec![AstExprNode::Arr(vec![
+                        AstExprNode::Number,
+                        AstExprNode::UPOSSet(vec![UPOS::NUM]),
+                    ])])
+                }
+            );
+        }
+    }
+
+    #[test]
     fn parses_expr_ref() {
         assert_eq!(
             parse_expr_str("@test", true).unwrap(),
@@ -499,6 +540,46 @@ mod tests {
                 AstExprNode::Anything,
                 AstExprNode::Whitespace,
                 AstExprNode::Anything,
+            ])
+        )
+    }
+
+    #[test]
+    fn parses_array_with_newlines() {
+        assert_eq!(
+            parse_expr_str("[\na,\nb,\nc\n]", true).unwrap(),
+            AstExprNode::Arr(vec![
+                AstExprNode::Word(char_string!("a")),
+                AstExprNode::Word(char_string!("b")),
+                AstExprNode::Word(char_string!("c"))
+            ])
+        )
+    }
+
+    #[test]
+    fn parses_filter_with_newlines() {
+        assert_eq!(
+            parse_expr_str("<\na,\nb,\nc\n>", true).unwrap(),
+            AstExprNode::Filter(vec![
+                AstExprNode::Word(char_string!("a")),
+                AstExprNode::Word(char_string!("b")),
+                AstExprNode::Word(char_string!("c")),
+            ])
+        )
+    }
+
+    #[test]
+    fn parses_seq_with_newlines() {
+        assert_eq!(
+            parse_expr_str("(\na\nb\nc\n)", true).unwrap(),
+            AstExprNode::Seq(vec![
+                AstExprNode::Whitespace,
+                AstExprNode::Word(char_string!("a")),
+                AstExprNode::Whitespace,
+                AstExprNode::Word(char_string!("b")),
+                AstExprNode::Whitespace,
+                AstExprNode::Word(char_string!("c")),
+                AstExprNode::Whitespace,
             ])
         )
     }

@@ -3,12 +3,13 @@ import {
 	getTextarea,
 	openHarperPopupFromEditorPointerDown,
 	replaceEditorContent,
-	waitForHarperHighlightCenter,
+	waitForHighlightsToSettle,
 } from './testUtils';
 
 const TEST_PAGE_URL = 'http://localhost:8081/popup_reconnect.html';
 
 test('Reconnects the popup host before opening the popover', async ({ page }) => {
+	test.slow();
 	const pageErrors: string[] = [];
 	const consoleErrors: string[] = [];
 
@@ -26,7 +27,9 @@ test('Reconnects the popup host before opening the popover', async ({ page }) =>
 	const editor = getTextarea(page);
 	await replaceEditorContent(editor, 'This is an test');
 
-	expect(await waitForHarperHighlightCenter(page, 12000)).not.toBeNull();
+	// Finish linting before disconnecting the popup host. Do not wait for a render
+	// after replacing the body: the pointer handler must reconnect the host itself.
+	await waitForHighlightsToSettle(page);
 
 	await page.evaluate(() => {
 		(
@@ -38,6 +41,7 @@ test('Reconnects the popup host before opening the popover', async ({ page }) =>
 
 	const opened = await openHarperPopupFromEditorPointerDown(page, editor);
 	expect(opened).toBe(true);
+	await expect(page.getByTitle('Click to replace "an" with "a"')).toBeVisible();
 
 	const errors = [...pageErrors, ...consoleErrors].join('\n');
 	expect(errors).not.toContain("Failed to execute 'showPopover'");

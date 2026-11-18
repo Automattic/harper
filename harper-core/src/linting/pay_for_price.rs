@@ -143,7 +143,7 @@ mod tests {
         );
     }
 
-    // Edge cases / False positives / Not yet handlec
+    // Edge cases / False positives / Not yet handled
 
     #[test]
     #[ignore = "Detecting this pattery will require more thought"]

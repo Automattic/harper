@@ -85,6 +85,8 @@ pub enum AstExprNode {
     Whitespace,
     /// A progressive verb.
     Progressive,
+    /// A numeric token, matched using [`crate::TokenKind::is_number`] rather than a UPOS tag.
+    Number,
     UPOSSet(Vec<UPOS>),
     Word(CharString),
     DerivativeOf(CharString),
@@ -110,6 +112,7 @@ impl AstExprNode {
             AstExprNode::Progressive => Ok(Box::new(|tok: &Token, _: &[char]| {
                 tok.kind.is_verb_progressive_form()
             })),
+            AstExprNode::Number => Ok(Box::new(|tok: &Token, _: &[char]| tok.kind.is_number())),
             AstExprNode::UPOSSet(upos) => Ok(Box::new(UPOSSet::new(upos))),
             AstExprNode::Whitespace => Ok(Box::new(WhitespacePattern)),
             AstExprNode::Word(word) => Ok(Box::new(Word::from_chars(word))),

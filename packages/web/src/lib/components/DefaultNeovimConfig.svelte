@@ -1,9 +1,5 @@
 <script>
 import { Button } from 'components';
-import { LocalLinter } from 'harper.js';
-import { binary } from 'harper.js/binary';
-
-let linter = new LocalLinter({ binary });
 
 let head = `lspconfig.harper_ls.setup {
   settings = {
@@ -17,7 +13,9 @@ let tail = `      }
 }`;
 
 async function generateConfig() {
-	let default_config = await linter.getDefaultLintConfig();
+	// This function runs only from the browser's copy-button handler.
+	const { binary } = await import('harper.js/binary');
+	let default_config = await binary.getDefaultLintConfig();
 
 	let rows = Object.entries(default_config)
 		.map(([key, value]) => `\t\t\t${key} = ${value},`)

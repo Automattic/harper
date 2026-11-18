@@ -1,0 +1,8 @@
+expr main (with one fell swoop)
+
+let message "Use the correct preposition with this idiom for something happening suddenly."
+let description "Corrects the idiom `one fell swoop` used with the incorrect preposition `with` to the usual `in` or the traditional `at`."
+let kind "Usage"
+let becomes ["in one fell swoop", "at one fell swoop"]
+
+test "AI will never be able to \"destroy humanity\" with one fell swoop" "AI will never be able to \"destroy humanity\" in one fell swoop"

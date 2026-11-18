@@ -1,21 +1,71 @@
 use harper_core::parsers::{self, Markdown, MarkdownOptions, Parser};
-use harper_core::{Token, TokenKind};
+use harper_core::{Mask, Masker, Span, Token, TokenKind};
 use harper_tree_sitter::TreeSitterMasker;
 use tree_sitter::Node;
 
 pub struct GitCommitParser {
-    inner: parsers::Mask<TreeSitterMasker, Markdown>,
+    inner: parsers::Mask<GitCommitMasker, Markdown>,
+}
+
+struct GitCommitMasker {
+    content: TreeSitterMasker,
+    prefixes: TreeSitterMasker,
+}
+
+impl Masker for GitCommitMasker {
+    fn create_mask(&self, source: &[char]) -> Mask {
+        let content = self.content.create_mask(source);
+        let prefixes = self.prefixes.create_mask(source);
+        let Some((prefix, _)) = prefixes.iter_allowed(source).next() else {
+            return content;
+        };
+
+        // Keep the original Git classification, including subjects starting with '#'.
+        let mut mask = Mask::new_blank();
+        for (span, _) in content.iter_allowed(source) {
+            if !span.overlaps_with(prefix) {
+                mask.push_allowed(span);
+                continue;
+            }
+
+            if span.start < prefix.start {
+                mask.push_allowed(Span::new(span.start, prefix.start));
+            }
+
+            let mut start = prefix.end;
+            while start < span.end && matches!(source[start], ' ' | '\t') {
+                start += 1;
+            }
+            if start < span.end {
+                mask.push_allowed(Span::new(start, span.end));
+            }
+        }
+
+        mask
+    }
 }
 
 impl GitCommitParser {
-    fn node_condition(n: &Node) -> bool {
-        matches!(n.kind(), "subject" | "message_line" | "breaking_change")
-    }
-
     pub fn new(markdown_options: MarkdownOptions) -> Self {
         Self {
             inner: parsers::Mask::new(
-                TreeSitterMasker::new(tree_sitter_gitcommit::LANGUAGE.into(), Self::node_condition),
+                GitCommitMasker {
+                    content: TreeSitterMasker::new(
+                        tree_sitter_gitcommit::LANGUAGE.into(),
+                        |node: &Node| {
+                            matches!(node.kind(), "subject" | "message_line" | "breaking_change")
+                        },
+                    ),
+                    prefixes: TreeSitterMasker::new(
+                        tree_sitter_gitcommit::LANGUAGE.into(),
+                        |node| {
+                            node.kind() == "prefix"
+                                && node
+                                    .parent()
+                                    .is_some_and(|parent| parent.kind() == "subject")
+                        },
+                    ),
+                },
                 Markdown::new(markdown_options),
             ),
         }

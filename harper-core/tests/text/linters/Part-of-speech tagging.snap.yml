@@ -20,7 +20,7 @@ Message: |
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
        8 | In corpus linguistics, part-of-speech tagging (POS tagging or PoS tagging or
          |                                                               ^~~ This word's canonical spelling is all-caps.
@@ -30,7 +30,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
        8 | In corpus linguistics, part-of-speech tagging (POS tagging or PoS tagging or
          |                                                               ^~~ Did you mean to spell `PoS` this way?
@@ -42,7 +42,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       18 | two distinctive groups: rule-based and stochastic. E. Brill's tagger, one of the
          |                                                    ^~ Did you mean to spell `E.` this way?
@@ -53,14 +53,14 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       18 | two distinctive groups: rule-based and stochastic. E. Brill's tagger, one of the
          |                                                       ^~~~~~~ Did you mean to spell `Brill's` this way?
       19 | first and most widely used English POS-taggers, employs rule-based algorithms.
 Suggest:
-  - Replace with: “Brillo's”
   - Replace with: “Bill's”
+  - Replace with: “Brillo's”
   - Replace with: “Drill's”
 
 
@@ -98,7 +98,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       49 | tags. For example, NN for singular common nouns, NNS for plural common nouns, NP
          |                    ^~ Did you mean to spell `NN` this way?
@@ -109,7 +109,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       49 | tags. For example, NN for singular common nouns, NNS for plural common nouns, NP
          |                                                  ^~~ Did you mean to spell `NNS` this way?
@@ -121,19 +121,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-      49 | tags. For example, NN for singular common nouns, NNS for plural common nouns, NP
-         |                                                                               ^~ Did you mean to spell `NP` this way?
-      50 | for singular proper nouns (see the POS tags used in the Brown Corpus). Other
-Suggest:
-  - Replace with: “Nap”
-  - Replace with: “Nip”
-  - Replace with: “No”
-
-
-
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       55 | 150 separate parts of speech for English. Work on stochastic methods for tagging
       56 | Koine Greek (DeRose 1990) has used over 1,000 parts of speech and found that
@@ -145,7 +133,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       55 | 150 separate parts of speech for English. Work on stochastic methods for tagging
       56 | Koine Greek (DeRose 1990) has used over 1,000 parts of speech and found that
@@ -210,7 +198,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       75 | as Inuit languages may be virtually impossible. At the other extreme, Petrov et
          |                                                                       ^~~~~~ Did you mean to spell `Petrov` this way?
@@ -222,7 +210,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       75 | as Inuit languages may be virtually impossible. At the other extreme, Petrov et
          |                                                                              ^~~
@@ -245,7 +233,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       87 | developed at Brown University by Henry Kučera and W. Nelson Francis, in the
          |                                                   ^~ Did you mean to spell `W.` this way?
@@ -256,7 +244,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       98 | and corrected by hand, and later users sent in errata so that by the late 70s
          |                                                                             ^ Did you mean to spell `s` this way?
@@ -426,7 +414,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      159 | In 1987, Steven DeRose and Kenneth W. Church independently developed dynamic
          |                 ^~~~~~ Did you mean to spell `DeRose` this way?
@@ -437,7 +425,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      159 | In 1987, Steven DeRose and Kenneth W. Church independently developed dynamic
          |                                    ^~ Did you mean to spell `W.` this way?
@@ -460,7 +448,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      162 | fields. DeRose used a table of pairs, while Church used a table of triples and a
          |         ^~~~~~ Did you mean to spell `DeRose` this way?
@@ -496,7 +484,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      166 | dissertation at Brown University included analyses of the specific error types,
          |                                           ^~~~~~~~ Did you mean to spell `analyses` this way?
@@ -575,7 +563,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      201 | algorithm, Brill tagger, Constraint Grammar, and the Baum-Welch algorithm (also
          |                                                           ^~~~~ Did you mean to spell `Welch` this way?
@@ -605,7 +593,7 @@ Message: |
 Suggest:
   - Replace with: “Sim”
   - Replace with: “Sum”
-  - Replace with: “SCM”
+  - Replace with: “SAM”
 
 
 

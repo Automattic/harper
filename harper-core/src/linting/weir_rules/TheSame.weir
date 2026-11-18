@@ -1,0 +1,10 @@
+expr main <(he same), he>
+
+let message "Is this a typo for `the`?"
+let description "Fixes `he` when it's a typo of `the`."
+let kind "Typo"
+let becomes "the"
+
+test "Why does it take more time when I use two models at he same time?" "Why does it take more time when I use two models at the same time?"
+test "AutoGTP got hung up in a loop doing he same thing over and over again after a while" "AutoGTP got hung up in a loop doing the same thing over and over again after a while"
+test "invalidate the session in servlet and redirect the user to he same url" "invalidate the session in servlet and redirect the user to the same url"
