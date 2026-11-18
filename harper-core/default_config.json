@@ -2982,6 +2982,13 @@
 						},
 						{
 							"Bool": {
+								"name": "TheSame",
+								"state": true,
+								"label": "The Same"
+							}
+						},
+						{
+							"Bool": {
 								"name": "TheTheToThatThe",
 								"state": true,
 								"label": "The The To That The"
