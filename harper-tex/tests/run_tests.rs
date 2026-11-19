@@ -45,3 +45,7 @@ create_test!(many_more_tags.tex, 11);
 create_test!(em_dash.tex, 0);
 create_test!(issue_2835.tex, 3);
 create_test!(issue_3791.tex, 2);
+create_test!(arxiv_2404_19737.tex, 14);
+create_test!(arxiv_2105_13857.tex, 18);
+create_test!(arxiv_2307_14310.tex, 15);
+create_test!(arxiv_2404_19737_stray_dollar.tex, 9);
