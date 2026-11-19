@@ -3,8 +3,6 @@ use crate::UPOS;
 mod brill_chunker;
 mod burn_chunker;
 mod cached_chunker;
-#[cfg(feature = "training")]
-mod np_extraction;
 mod upos_freq_dict;
 
 pub use brill_chunker::BrillChunker;

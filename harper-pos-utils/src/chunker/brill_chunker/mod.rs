@@ -124,44 +124,17 @@ impl BrillChunker {
         let mut sentences_flagged: Vec<CandidateArgs> = Vec::new();
 
         for sent in &sentences {
-            use hashbrown::HashSet;
+            use crate::conllu_utils::{TrainingRecord, sentence_to_training_record};
 
-            use crate::chunker::np_extraction::locate_noun_phrases_in_sent;
+            // Merged surface tokens, tags, and NP mask — multiword-token and
+            // contraction aware (see `sentence_to_training_record`).
+            let TrainingRecord {
+                tokens,
+                tags,
+                np_mask,
+            } = sentence_to_training_record(sent);
 
-            let mut toks: Vec<String> = Vec::new();
-            let mut tags = Vec::new();
-
-            for token in &sent.tokens {
-                let form = token.form.clone();
-                if let Some(last) = toks.last_mut() {
-                    match form.as_str() {
-                        "sn't" | "n't" | "'ll" | "'ve" | "'re" | "'d" | "'m" | "'s" => {
-                            last.push_str(&form);
-                            continue;
-                        }
-                        _ => {}
-                    }
-                }
-                toks.push(form);
-                tags.push(token.upos.and_then(UPOS::from_conllu));
-            }
-
-            let actual = locate_noun_phrases_in_sent(sent);
-            let actual_flat = actual.into_iter().fold(HashSet::new(), |mut a, b| {
-                a.extend(b.into_iter());
-                a
-            });
-
-            let mut actual_seq = Vec::new();
-
-            for el in actual_flat {
-                if el >= actual_seq.len() {
-                    actual_seq.resize(el + 1, false);
-                }
-                actual_seq[el] = true;
-            }
-
-            sentences_flagged.push((toks, tags, actual_seq));
+            sentences_flagged.push((tokens, tags, np_mask));
         }
 
         let mut relevant_words = WordCounter::default();
