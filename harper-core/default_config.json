@@ -1319,6 +1319,13 @@
 						},
 						{
 							"Bool": {
+								"name": "HolyGrail",
+								"state": true,
+								"label": "Holy Grail"
+							}
+						},
+						{
+							"Bool": {
 								"name": "HolyWar",
 								"state": true,
 								"label": "Holy War"
