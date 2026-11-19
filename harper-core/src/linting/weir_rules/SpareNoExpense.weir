@@ -1,0 +1,12 @@
+expr main <[([spare, spared, spares, sparing] no expenses), (spare-no-expenses)], expenses>
+
+let message "This idiom uses the singular `expense`."
+let description "Corrects `spare no expenses` to `spare no expense`."
+let kind "Usage"
+let becomes "expense"
+
+test "people say Apple is using a huge \"spare no expenses\" core" "people say Apple is using a huge \"spare no expense\" core"
+test "He spared no expenses, on showy stuff, not necessarily on technically important aspects." "He spared no expense, on showy stuff, not necessarily on technically important aspects."
+test "US forces China to find alternative, China spares no expenses" "US forces China to find alternative, China spares no expense"
+test "... sending firemen and police to rescue horses and deer, sparing no expenses" "... sending firemen and police to rescue horses and deer, sparing no expense"
+test "no spare-no-expenses crash development programs arose" "no spare-no-expense crash development programs arose"

@@ -15,6 +15,8 @@ import Panel from './Panel.svelte';
  * `nextDisabled` blocks forward navigation through both the button and keyboard
  * shortcuts without preventing users from going back. Forward navigation plays a
  * diagonal flash across the slide content unless the user prefers reduced motion.
+ * The deck switches to its dark palette under a `.dark` ancestor through
+ * Tailwind `dark:` variants.
  */
 export let title: string;
 export let lede: string;
@@ -90,12 +92,12 @@ function handleKeydown(event: KeyboardEvent) {
 }
 </script>
 
-<main class="grid h-dvh grid-cols-1 place-items-center overflow-y-auto bg-[#f1ede5] px-6 py-6 text-[var(--marketing-ink)] scheme-light [scrollbar-gutter:stable_both-edges] sm:py-12">
+<main class="grid h-dvh grid-cols-1 place-items-center overflow-y-auto bg-[#f1ede5] px-6 py-6 text-[var(--marketing-ink)] scheme-light [scrollbar-gutter:stable_both-edges] sm:py-12 dark:bg-stone-950 dark:text-stone-100 dark:scheme-dark">
 	<!-- Viewport-based width keeps the panel unchanged when reserving scrollbar gutters. -->
 	<div class="relative w-[calc(100vw-3rem)] max-w-[64rem]">
-		<div class="overflow-hidden rounded-lg border border-black/15 bg-[#fbfaf7] shadow-sm">
+		<div class="overflow-hidden rounded-lg border border-black/15 bg-[#fbfaf7] shadow-sm dark:border-white/15 dark:bg-stone-900">
 			<div
-				class="h-1 bg-black/5"
+				class="h-1 bg-black/5 dark:bg-white/10"
 				role="progressbar"
 				aria-label="Slide deck progress"
 				aria-valuemin={0}
@@ -109,7 +111,7 @@ function handleKeydown(event: KeyboardEvent) {
 			</div>
 
 			<div class="relative overflow-hidden p-3 sm:p-6">
-				<Panel class="border-black/10! shadow-sm">
+				<Panel class="border-black/10! shadow-sm dark:border-white/10! dark:bg-stone-800!">
 					<div class="grid min-h-112 p-6 sm:p-10">
 						{#key slideProgress}
 							<div class={showAside ? 'grid items-center gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,16rem)]' : ''}>
@@ -123,7 +125,7 @@ function handleKeydown(event: KeyboardEvent) {
 									>
 										{title}
 									</svelte:element>
-									<p class="mx-0! mb-0! font-[family-name:Domine,serif] font-medium leading-relaxed! text-pretty text-[var(--marketing-ink-2)] max-w-2xl text-lg sm:text-xl mt-6!">{lede}</p>
+									<p class="mx-0! mb-0! font-[family-name:Domine,serif] font-medium leading-relaxed! text-pretty text-[var(--marketing-ink-2)] max-w-2xl dark:text-stone-300 text-lg sm:text-xl mt-6!">{lede}</p>
 									<slot />
 								</div>
 								{#if showAside}
@@ -143,9 +145,9 @@ function handleKeydown(event: KeyboardEvent) {
 				{/key}
 			</div>
 
-			<div class="flex items-center justify-end gap-2 border-t border-black/10 bg-[#fbfaf7] px-6 pt-3 pb-4">
+			<div class="flex items-center justify-end gap-2 border-t border-black/10 bg-[#fbfaf7] px-6 pt-3 pb-4 dark:border-white/10 dark:bg-stone-900">
 				{#if slideProgress > 0}
-					<Button size="md" color="white" class="bg-white! text-gray-900! hover:bg-gray-100! motion-reduce:transition-none" aria-label="Back" on:click={() => changeStep(-1)}>
+					<Button size="md" color="white" class="bg-white! text-gray-900! hover:bg-gray-100! motion-reduce:transition-none dark:border-white/15! dark:bg-stone-800! dark:text-stone-100! dark:hover:bg-stone-700!" aria-label="Back" on:click={() => changeStep(-1)}>
 						<ChevronLeftIcon className="size-4" />
 					</Button>
 				{/if}

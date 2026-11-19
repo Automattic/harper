@@ -1,6 +1,9 @@
 ---
 title: Helix
+description: Connect Helix to harper-ls and configure English grammar diagnostics and rule settings.
 ---
+
+# Helix
 
 Our Helix integration is powered by [`harper-ls`](./language-server).
 
@@ -69,9 +72,9 @@ ForceStable = false
 IgnoreLinkTitle = false
 ```
 
-:::note
-This example only contains some of the available linters, check out our [rules page](../rules) to view the full list.
-:::
+> **Note**
+>
+> This example only contains some of the available linters, check out our [rules page](../rules) to view the full list.
 
 For more information on what each of these configs do, you can head over to the [configuration section](./language-server#Configuration) of our `harper-ls` documentation.
 

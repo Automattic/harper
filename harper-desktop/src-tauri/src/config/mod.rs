@@ -1,5 +1,7 @@
 mod error;
 mod integration;
+mod weirpack;
+pub use weirpack::InstalledWeirpack;
 
 use crate::{PlatformBroker, os_broker::OsBroker};
 pub use error::Error;
@@ -13,15 +15,28 @@ pub use integration::Integration;
 use serde::de::{DeserializeOwned, Error as _};
 use std::{fs, io, path::PathBuf, sync::Arc};
 
+/// Persisted setup page, or completion once the user finishes onboarding.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "kebab-case")]
+pub enum OnboardingState {
+    Welcome,
+    Accessibility,
+    Integration,
+    TestDrive,
+    Ready,
+    Complete,
+}
+
 /// User-controlled app state needed by Tauri commands and the highlighter process.
 pub struct Config {
+    pub weirpacks: Vec<InstalledWeirpack>,
     pub mutable_dictionary: MutableDictionary,
     pub dialect: Dialect,
     pub ignored_lints: IgnoredLints,
     pub lint_config: FlatConfig,
     pub integrations: Vec<Integration>,
     pub auto_enable_new_apps: bool,
-    pub onboarding_completed: bool,
+    pub onboarding_state: OnboardingState,
     pub debounce_ms: u64,
     /// Whether the main process may check for and install updates automatically.
     pub auto_update: bool,
@@ -34,13 +49,14 @@ pub struct Config {
 impl Config {
     pub fn new() -> Self {
         Self {
+            weirpacks: Vec::new(),
             mutable_dictionary: MutableDictionary::new(),
             dialect: Self::detect_system_dialect(),
             ignored_lints: IgnoredLints::new(),
             lint_config: FlatConfig::new_curated(),
             integrations: Integration::curated_integrations(),
             auto_enable_new_apps: false,
-            onboarding_completed: false,
+            onboarding_state: OnboardingState::Welcome,
             debounce_ms: 0,
             auto_update: true,
             last_update_check: None,
@@ -161,13 +177,66 @@ impl Config {
         Arc::new(dictionary)
     }
 
-    fn create_dictionary(&self) -> Arc<MergedDictionary> {
-        Self::dictionary_from_user_dictionary(self.mutable_dictionary.clone())
+    /// Build the dictionary used by both document parsing and the linter, including enabled packs.
+    pub fn create_dictionary(&self) -> Arc<MergedDictionary> {
+        let mut dictionary = MergedDictionary::new();
+        dictionary.add_dictionary(Self::dictionary_from_user_dictionary(
+            self.mutable_dictionary.clone(),
+        ));
+        for pack in self.weirpacks.iter().filter(|pack| pack.enabled) {
+            match pack
+                .unpack()
+                .and_then(|pack| pack.load_dictionary().map_err(|error| error.to_string()))
+            {
+                Ok(Some(pack_dictionary)) => dictionary.add_dictionary(Arc::new(pack_dictionary)),
+                Ok(None) => {}
+                Err(error) => eprintln!("Failed to load dictionary from {}: {error}", pack.name),
+            }
+        }
+        Arc::new(dictionary)
     }
 
+    /// Rebuild from enabled packs so removed rules cannot remain active. Explicit rule settings win.
     pub fn create_linter(&self) -> LintGroup {
-        LintGroup::new_curated(self.create_dictionary(), self.dialect)
-            .with_lint_config(self.lint_config.clone())
+        let mut linter = LintGroup::new_curated(self.create_dictionary(), self.dialect);
+        for pack in self.weirpacks.iter().filter(|pack| pack.enabled) {
+            match pack
+                .unpack()
+                .and_then(|pack| pack.to_lint_group().map_err(|error| error.to_string()))
+            {
+                Ok(group) => linter.merge_from(group),
+                Err(error) => eprintln!("Failed to load rules from {}: {error}", pack.name),
+            }
+        }
+        linter.config.merge_from(self.lint_config.clone());
+        linter
+    }
+
+    /// Persist a replacement pack list, restoring in-memory state if persistence fails.
+    pub async fn save_weirpacks(&mut self, packs: Vec<InstalledWeirpack>) -> Result<(), Error> {
+        let path = Self::main_path().ok_or(Error::ConfigDirUnavailable)?;
+        self.save_weirpacks_to(packs, &path)
+    }
+
+    fn save_weirpacks_to(
+        &mut self,
+        packs: Vec<InstalledWeirpack>,
+        path: &std::path::Path,
+    ) -> Result<(), Error> {
+        let previous = std::mem::replace(&mut self.weirpacks, packs);
+        let result = (|| {
+            if let Some(parent) = path.parent() {
+                fs::create_dir_all(parent)?;
+            }
+            let temporary = path.with_extension("json.tmp");
+            fs::write(&temporary, self.serialize_main()?)?;
+            fs::rename(temporary, path)?;
+            Ok(())
+        })();
+        if result.is_err() {
+            self.weirpacks = previous;
+        }
+        result
     }
 
     #[allow(dead_code)]
@@ -188,12 +257,13 @@ impl Config {
     #[allow(dead_code)]
     fn serialize_main(&self) -> serde_json::Result<String> {
         serde_json::to_string(&serde_json::json!({
+            "weirpacks": &self.weirpacks,
             "dialect": &self.dialect,
             "ignored_lints": &self.ignored_lints,
             "lint_config": &self.lint_config,
             "integrations": &self.integrations,
             "auto_enable_new_apps": self.auto_enable_new_apps,
-            "onboarding_completed": self.onboarding_completed,
+            "onboarding_state": self.onboarding_state,
             "debounce_ms": self.debounce_ms,
             "auto_update": self.auto_update,
             "last_update_check": self.last_update_check,
@@ -209,6 +279,7 @@ impl Config {
             .ok_or_else(|| serde_json::Error::custom("config must be a JSON object"))?;
 
         Ok(Self {
+            weirpacks: deserialize_optional_field(object, "weirpacks")?.unwrap_or_default(),
             mutable_dictionary: MutableDictionary::new(),
             dialect: deserialize_field(object, "dialect")?,
             ignored_lints: deserialize_field(object, "ignored_lints")?,
@@ -217,8 +288,14 @@ impl Config {
                 .unwrap_or_else(Integration::curated_integrations),
             auto_enable_new_apps: deserialize_optional_field(object, "auto_enable_new_apps")?
                 .unwrap_or(false),
-            onboarding_completed: deserialize_optional_field(object, "onboarding_completed")?
-                .unwrap_or(true),
+            onboarding_state: match deserialize_optional_field(object, "onboarding_state")? {
+                Some(state) => state,
+                None => match deserialize_optional_field(object, "onboarding_completed")? {
+                    Some(false) => OnboardingState::Welcome,
+                    // Configs from before onboarding existed belong to established users.
+                    Some(true) | None => OnboardingState::Complete,
+                },
+            },
             debounce_ms: deserialize_optional_field(object, "debounce_ms")?.unwrap_or(0),
             auto_update: deserialize_optional_field(object, "auto_update")?.unwrap_or(true),
             last_update_check: deserialize_optional_field::<Option<u64>>(
@@ -273,8 +350,77 @@ impl Default for Config {
 
 #[cfg(test)]
 mod tests {
-    use super::{Config, Integration};
+    use super::{Config, Integration, OnboardingState};
     use harper_core::DictWordMetadata;
+
+    #[test]
+    fn onboarding_states_round_trip_as_strings() {
+        for (state, name) in [
+            (OnboardingState::Welcome, "welcome"),
+            (OnboardingState::Accessibility, "accessibility"),
+            (OnboardingState::Integration, "integration"),
+            (OnboardingState::TestDrive, "test-drive"),
+            (OnboardingState::Ready, "ready"),
+            (OnboardingState::Complete, "complete"),
+        ] {
+            let mut config = Config::new();
+            config.onboarding_state = state;
+            let serialized = config.serialize_main().unwrap();
+            let value: serde_json::Value = serde_json::from_str(&serialized).unwrap();
+            assert_eq!(value["onboarding_state"], name);
+            assert!(value.get("onboarding_completed").is_none());
+            assert_eq!(
+                Config::deserialize_main(&serialized)
+                    .unwrap()
+                    .onboarding_state,
+                state
+            );
+        }
+    }
+
+    #[test]
+    fn onboarding_migrates_legacy_completion_flag() {
+        for (legacy, expected) in [
+            (Some(false), OnboardingState::Welcome),
+            (Some(true), OnboardingState::Complete),
+            (None, OnboardingState::Complete),
+        ] {
+            let mut value: serde_json::Value =
+                serde_json::from_str(&Config::new().serialize_main().unwrap()).unwrap();
+            value.as_object_mut().unwrap().remove("onboarding_state");
+            if let Some(completed) = legacy {
+                value["onboarding_completed"] = completed.into();
+            }
+            assert_eq!(
+                Config::deserialize_main(&value.to_string())
+                    .unwrap()
+                    .onboarding_state,
+                expected
+            );
+        }
+    }
+
+    #[test]
+    fn onboarding_state_takes_precedence_over_legacy_flag() {
+        let mut value: serde_json::Value =
+            serde_json::from_str(&Config::new().serialize_main().unwrap()).unwrap();
+        value["onboarding_state"] = "accessibility".into();
+        value["onboarding_completed"] = true.into();
+        assert_eq!(
+            Config::deserialize_main(&value.to_string())
+                .unwrap()
+                .onboarding_state,
+            OnboardingState::Accessibility
+        );
+    }
+
+    #[test]
+    fn onboarding_rejects_unknown_states() {
+        let mut value: serde_json::Value =
+            serde_json::from_str(&Config::new().serialize_main().unwrap()).unwrap();
+        value["onboarding_state"] = "unknown".into();
+        assert!(Config::deserialize_main(&value.to_string()).is_err());
+    }
 
     #[test]
     fn serialize_main_excludes_dictionary_word_list() {
@@ -291,7 +437,7 @@ mod tests {
         assert!(serialized.contains("ignored_lints"));
         assert!(serialized.contains("lint_config"));
         assert!(serialized.contains("integrations"));
-        assert!(serialized.contains("onboarding_completed"));
+        assert!(serialized.contains("onboarding_state"));
         assert!(serialized.contains("debounce_ms"));
         assert!(serialized.contains("auto_update"));
         assert!(serialized.contains("last_update_check"));
@@ -311,10 +457,7 @@ mod tests {
         assert_eq!(deserialized.dialect, config.dialect);
         assert_eq!(deserialized.lint_config, config.lint_config);
         assert_eq!(deserialized.integrations, config.integrations);
-        assert_eq!(
-            deserialized.onboarding_completed,
-            config.onboarding_completed
-        );
+        assert_eq!(deserialized.onboarding_state, config.onboarding_state);
         assert_eq!(deserialized.debounce_ms, config.debounce_ms);
         assert_eq!(deserialized.auto_update, config.auto_update);
         assert_eq!(deserialized.last_update_check, config.last_update_check);

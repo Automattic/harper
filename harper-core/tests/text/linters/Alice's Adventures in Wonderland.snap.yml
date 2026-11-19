@@ -117,13 +117,13 @@ Message: |
          |                                                   ^~~~~~~ Did you mean to spell `curtsey` this way?
       69 | curtseying as you’re falling through the air! Do you think you could manage it?)
 Suggest:
-  - Replace with: “curtsy”
   - Replace with: “courtesy”
   - Replace with: “curse”
+  - Replace with: “cursed”
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
       68 | this New Zealand or Australia?” (and she tried to curtsey as she spoke—fancy
       69 | curtseying as you’re falling through the air! Do you think you could manage it?)
@@ -385,8 +385,8 @@ Message: |
          |  ^~~~~~~~~ Did you mean to spell `Curiouser` this way?
 Suggest:
   - Replace with: “Curious”
-  - Replace with: “Carouser”
   - Replace with: “Curiously”
+  - Replace with: “Carouser”
 
 
 
@@ -396,8 +396,8 @@ Message: |
          |                ^~~~~~~~~ Did you mean to spell `curiouser` this way?
 Suggest:
   - Replace with: “curious”
-  - Replace with: “carouser”
   - Replace with: “curiously”
+  - Replace with: “carouser”
 
 
 
@@ -466,9 +466,9 @@ Message: |
      230 | and the fan, and skurried away into the darkness as hard as he could go.
          |                  ^~~~~~~~ Did you mean to spell `skurried` this way?
 Suggest:
-  - Replace with: “scurried”
   - Replace with: “spurred”
-  - Replace with: “scurries”
+  - Replace with: “hurried”
+  - Replace with: “curried”
 
 
 
@@ -614,25 +614,25 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      320 | she began again: “Où est ma chatte?” which was the first sentence in her French
          |                   ^~ Did you mean to spell `Où` this way?
 Suggest:
-  - Replace with: “Of”
-  - Replace with: “Oh”
-  - Replace with: “Oi”
+  - Replace with: “OK”
+  - Replace with: “OT”
+  - Replace with: “O”
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      320 | she began again: “Où est ma chatte?” which was the first sentence in her French
          |                             ^~~~~~ Did you mean to spell `chatte` this way?
 Suggest:
-  - Replace with: “chaste”
   - Replace with: “chatted”
-  - Replace with: “chattel”
+  - Replace with: “chatter”
+  - Replace with: “chapter”
 
 
 
@@ -686,27 +686,27 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      362 | and animals that had fallen into it: there were a Duck and a Dodo, a Lory and an
          |                                                                      ^~~~ Did you mean to spell `Lory` this way?
      363 | Eaglet, and several other curious creatures. Alice led the way, and the whole
 Suggest:
-  - Replace with: “Lord”
-  - Replace with: “Lore”
   - Replace with: “Lorry”
+  - Replace with: “Lori”
+  - Replace with: “Lord”
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      368 | They were indeed a queer-looking party that assembled on the bank—the birds with
      369 | draggled feathers, the animals with their fur clinging close to them, and all
          | ^~~~~~~~ Did you mean to spell `draggled` this way?
 Suggest:
   - Replace with: “dragged”
+  - Replace with: “ragged”
   - Replace with: “drugged”
-  - Replace with: “dangled”
 
 
 
@@ -734,38 +734,38 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      375 | Indeed, she had quite a long argument with the Lory, who at last turned sulky,
          |                                                ^~~~ Did you mean to spell `Lory` this way?
      376 | and would only say, “I am older than you, and must know better;” and this Alice
 Suggest:
   - Replace with: “Lord”
-  - Replace with: “Lore”
-  - Replace with: “Lorry”
+  - Replace with: “Lori”
+  - Replace with: “Long”
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      377 | would not allow without knowing how old it was, and, as the Lory positively
          |                                                             ^~~~ Did you mean to spell `Lory` this way?
      378 | refused to tell its age, there was no more to be said.
 Suggest:
+  - Replace with: “Lori”
   - Replace with: “Lord”
-  - Replace with: “Lore”
   - Replace with: “Lorry”
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      390 | Edwin and Morcar, the earls of Mercia and Northumbria—’”
          |           ^~~~~~ Did you mean to spell `Morcar` this way?
 Suggest:
   - Replace with: “Mortar”
-  - Replace with: “Mercer”
-  - Replace with: “Molar”
+  - Replace with: “Mortal”
+  - Replace with: “Moral”
 
 
 
@@ -776,37 +776,37 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      392 | “Ugh!” said the Lory, with a shiver.
          |                 ^~~~ Did you mean to spell `Lory` this way?
 Suggest:
+  - Replace with: “Lorry”
   - Replace with: “Lord”
   - Replace with: “Lore”
-  - Replace with: “Lorry”
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      397 | “Not I!” said the Lory hastily.
          |                   ^~~~ Did you mean to spell `Lory` this way?
 Suggest:
   - Replace with: “Lord”
-  - Replace with: “Lore”
-  - Replace with: “Lorry”
+  - Replace with: “Lori”
+  - Replace with: “Lara”
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      399 | “I thought you did,” said the Mouse. “—I proceed. ‘Edwin and Morcar, the earls
          |                                                              ^~~~~~ Did you mean to spell `Morcar` this way?
      400 | of Mercia and Northumbria, declared for him: and even Stigand, the patriotic
 Suggest:
   - Replace with: “Mortar”
-  - Replace with: “Mercer”
-  - Replace with: “Molar”
+  - Replace with: “Mortal”
+  - Replace with: “Moral”
 
 
 
@@ -837,8 +837,8 @@ Message: |
          |                            ^~~~~~~~ Did you mean to spell `Atheling` this way?
 Suggest:
   - Replace with: “Adhering”
-  - Replace with: “Fathering”
   - Replace with: “Gathering”
+  - Replace with: “Fathering”
 
 
 
@@ -883,19 +883,19 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      527 | “What a pity it wouldn’t stay!” sighed the Lory, as soon as it was quite out of
          |                                            ^~~~ Did you mean to spell `Lory` this way?
      528 | sight; and an old Crab took the opportunity of saying to her daughter “Ah, my
 Suggest:
   - Replace with: “Lord”
-  - Replace with: “Lore”
+  - Replace with: “Lori”
   - Replace with: “Lorry”
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      536 | “And who is Dinah, if I might venture to ask the question?” said the Lory.
          |                                                                      ^~~~ Did you mean to spell `Lory` this way?
@@ -943,14 +943,14 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      579 | little house, on the door of which was a bright brass plate with the name “W.
          |                                                                            ^~ Did you mean to spell `W.` this way?
 Suggest:
-  - Replace with: “We”
-  - Replace with: “WA”
   - Replace with: “WI”
+  - Replace with: “AZ”
+  - Replace with: “We”
 
 
 
@@ -1044,9 +1044,9 @@ Message: |
      668 | “Sure, it’s an arm, yer honour!” (He pronounced it “arrum.”)
          |                                                     ^~~~~ Did you mean to spell `arrum` this way?
 Suggest:
-  - Replace with: “arum”
+  - Replace with: “argue”
   - Replace with: “album”
-  - Replace with: “alum”
+  - Replace with: “array”
 
 
 
@@ -1207,15 +1207,15 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      777 | “And yet what a dear little puppy it was!” said Alice, as she leant against a
          |                                                               ^~~~~ Did you mean to spell `leant` this way?
      778 | buttercup to rest herself, and fanned herself with one of the leaves: “I should
 Suggest:
-  - Replace with: “lean”
-  - Replace with: “learnt”
-  - Replace with: “least”
+  - Replace with: “leans”
+  - Replace with: “lent”
+  - Replace with: “meant”
 
 
 
@@ -1306,7 +1306,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
      961 | her foot, that there was hardly room to open her mouth; but she did it at last,
      962 | and managed to swallow a morsel of the lefthand bit.
@@ -1414,7 +1414,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1055 | this size: why, I should frighten them out of their wits!” So she began nibbling
     1056 | at the righthand bit again, and did not venture to go near the house till she
@@ -1587,14 +1587,14 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1260 | The Cat only grinned when it saw Alice. It looked good-natured, she thought:
          |                                                        ^~~~~~~ Did you mean to spell `natured` this way?
 Suggest:
   - Replace with: “nature”
-  - Replace with: “natures”
-  - Replace with: “nature's”
+  - Replace with: “natural”
+  - Replace with: “nurtured”
 
 
 
@@ -1622,7 +1622,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1349 | did not like to go nearer till she had nibbled some more of the lefthand bit of
          |                                                                 ^~~~~~~~ Did you mean to spell `lefthand` this way?
@@ -1729,9 +1729,9 @@ Message: |
     1555 | great hurry; “and their names were Elsie, Lacie, and Tillie; and they lived at
          |                                           ^~~~~ Did you mean to spell `Lacie` this way?
 Suggest:
-  - Replace with: “Lace”
-  - Replace with: “Lacier”
-  - Replace with: “Lac's”
+  - Replace with: “Lucia”
+  - Replace with: “Lance”
+  - Replace with: “Laid”
 
 
 
@@ -1740,9 +1740,9 @@ Message: |
     1555 | great hurry; “and their names were Elsie, Lacie, and Tillie; and they lived at
          |                                                      ^~~~~~ Did you mean to spell `Tillie` this way?
 Suggest:
-  - Replace with: “Till's”
-  - Replace with: “Tile”
   - Replace with: “Till”
+  - Replace with: “Title”
+  - Replace with: “Willie”
 
 
 
@@ -2090,7 +2090,7 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1962 | pleased at having found out a new kind of rule, “and vinegar that makes them
     1963 | sour—and camomile that makes them bitter—and—and barley-sugar and such things
@@ -2101,38 +2101,38 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1985 | “’Tis so,” said the Duchess: “and the moral of that is—‘Oh, ’tis love, ’tis
          |   ^~~ Did you mean to spell `Tis` this way?
 Suggest:
   - Replace with: “This”
-  - Replace with: “T's”
-  - Replace with: “Ti's”
+  - Replace with: “TVs”
+  - Replace with: “Tips”
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1985 | “’Tis so,” said the Duchess: “and the moral of that is—‘Oh, ’tis love, ’tis
          |                                                              ^~~ Did you mean to spell `tis` this way?
     1986 | love, that makes the world go round!’”
 Suggest:
   - Replace with: “this”
-  - Replace with: “ti's”
-  - Replace with: “tic”
+  - Replace with: “tips”
+  - Replace with: “tip”
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     1985 | “’Tis so,” said the Duchess: “and the moral of that is—‘Oh, ’tis love, ’tis
          |                                                                         ^~~ Did you mean to spell `tis` this way?
     1986 | love, that makes the world go round!’”
 Suggest:
   - Replace with: “this”
-  - Replace with: “ti's”
-  - Replace with: “tic”
+  - Replace with: “his”
+  - Replace with: “tips”
 
 
 
@@ -2288,9 +2288,9 @@ Message: |
     2134 | exclamation of “Hjckrrh!” from the Gryphon, and the constant heavy sobbing of
          |                 ^~~~~~~ Did you mean to spell `Hjckrrh` this way?
 Suggest:
-  - Replace with: “Hickory”
-  - Replace with: “Hacker”
   - Replace with: “Hackers”
+  - Replace with: “Hacker”
+  - Replace with: “Hickory”
 
 
 
@@ -2357,9 +2357,9 @@ Message: |
     2195 | uglifying!” it exclaimed. “You know what to beautify is, I suppose?”
          | ^~~~~~~~~ Did you mean to spell `uglifying` this way?
 Suggest:
-  - Replace with: “unifying”
   - Replace with: “uplifting”
-  - Replace with: “nullifying”
+  - Replace with: “unifying”
+  - Replace with: “qualifying”
 
 
 
@@ -2378,9 +2378,9 @@ Message: |
          |                                                               ^~~~~~ Did you mean to spell `uglify` this way?
     2200 | a simpleton.”
 Suggest:
+  - Replace with: “uplift”
   - Replace with: “ugly”
   - Replace with: “unify”
-  - Replace with: “uplift”
 
 
 
@@ -2412,9 +2412,9 @@ Message: |
     2206 | his flappers, “—Mystery, ancient and modern, with Seaography: then Drawling—the
          |                                                   ^~~~~~~~~~ Did you mean to spell `Seaography` this way?
 Suggest:
-  - Replace with: “Scenography”
-  - Replace with: “Stenography”
+  - Replace with: “Geography”
   - Replace with: “Demography”
+  - Replace with: “Scenography”
 
 
 
@@ -2609,25 +2609,25 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2333 | “Yes,” said Alice, “I’ve often seen them at dinn—” she checked herself hastily.
          |                                             ^~~~ Did you mean to spell `dinn` this way?
 Suggest:
-  - Replace with: “din”
   - Replace with: “dine”
-  - Replace with: “ding”
+  - Replace with: “down”
+  - Replace with: “done”
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2335 | “I don’t know where Dinn may be,” said the Mock Turtle, “but if you’ve seen them
          |                     ^~~~ Did you mean to spell `Dinn` this way?
 Suggest:
-  - Replace with: “Din”
-  - Replace with: “Dine”
-  - Replace with: “Diann”
+  - Replace with: “Dunn”
+  - Replace with: “Dino”
+  - Replace with: “Did”
 
 
 
@@ -2747,14 +2747,14 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2418 | “Stand up and repeat ‘’Tis the voice of the sluggard,’” said the Gryphon.
          |                        ^~~ Did you mean to spell `Tis` this way?
 Suggest:
   - Replace with: “This”
-  - Replace with: “T's”
-  - Replace with: “Ti's”
+  - Replace with: “Tip”
+  - Replace with: “TVs”
 
 
 
@@ -2774,14 +2774,14 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2425 | > “’Tis the voice of the Lobster; I heard him declare, “You have baked me too
          |     ^~~ Did you mean to spell `Tis` this way?
 Suggest:
   - Replace with: “This”
-  - Replace with: “T's”
-  - Replace with: “Ti's”
+  - Replace with: “Tip”
+  - Replace with: “TVs”
 
 
 
@@ -2869,14 +2869,15 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2477 | eagerly that the Gryphon said, in a rather offended tone, “Hm! No accounting for
          |                                                            ^~ Did you mean to spell `Hm` this way?
 Suggest:
-  - Replace with: “Ha”
-  - Replace with: “Ham”
+  - Replace with: “Hum”
+  - Replace with: “Him”
   - Replace with: “He”
+  - Replace with: “HM”
 
 
 
@@ -2892,24 +2893,24 @@ Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                 ^~~~~~~ Did you mean to spell `ootiful` this way?
 Suggest:
-  - Replace with: “dutiful”
   - Replace with: “pitiful”
+  - Replace with: “dutiful”
   - Replace with: “potful”
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                         ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “So”
-  - Replace with: “Soc”
-  - Replace with: “Sod”
+  - Replace with: “Son”
+  - Replace with: “Solo”
+  - Replace with: “Soon”
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                             ^~~ This word's canonical spelling is all-caps.
@@ -2918,14 +2919,14 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                             ^~~ Did you mean to spell `oop` this way?
 Suggest:
   - Replace with: “oops”
-  - Replace with: “op”
   - Replace with: “opp”
+  - Replace with: “ooh”
 
 
 
@@ -2934,24 +2935,24 @@ Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                                       ^~~~~~~ Did you mean to spell `ootiful` this way?
 Suggest:
-  - Replace with: “dutiful”
   - Replace with: “pitiful”
+  - Replace with: “dutiful”
   - Replace with: “potful”
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                                               ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “So”
-  - Replace with: “Soc”
-  - Replace with: “Sod”
+  - Replace with: “Son”
+  - Replace with: “Solo”
+  - Replace with: “Soon”
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                                                   ^~~ This word's canonical spelling is all-caps.
@@ -2960,30 +2961,30 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                                                   ^~~ Did you mean to spell `oop` this way?
 Suggest:
   - Replace with: “oops”
-  - Replace with: “op”
   - Replace with: “opp”
+  - Replace with: “ooh”
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                                                        ^~~ Did you mean to spell `Soo` this way?
     2486 | > of the e—e—evening, Beautiful, beautiful Soup!
 Suggest:
-  - Replace with: “So”
-  - Replace with: “Soc”
-  - Replace with: “Sod”
+  - Replace with: “Son”
+  - Replace with: “Solo”
+  - Replace with: “Soon”
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                                                            ^~~ This word's canonical spelling is all-caps.
@@ -2993,15 +2994,15 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                                                            ^~~ Did you mean to spell `oop` this way?
     2486 | > of the e—e—evening, Beautiful, beautiful Soup!
 Suggest:
+  - Replace with: “top”
+  - Replace with: “ooh”
   - Replace with: “oops”
-  - Replace with: “op”
-  - Replace with: “opp”
 
 
 
@@ -3015,7 +3016,7 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2488 | > “Beautiful Soup! Who cares for fish, Game, or any other dish? Who would not
     2489 | > give all else for two p ennyworth only of beautiful Soup? Pennyworth only of
@@ -3030,24 +3031,24 @@ Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                        ^~~~~~~ Did you mean to spell `ootiful` this way?
 Suggest:
-  - Replace with: “dutiful”
   - Replace with: “pitiful”
+  - Replace with: “dutiful”
   - Replace with: “potful”
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “So”
-  - Replace with: “Soc”
-  - Replace with: “Sod”
+  - Replace with: “Son”
+  - Replace with: “Solo”
+  - Replace with: “Soon”
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                    ^~~ This word's canonical spelling is all-caps.
@@ -3056,14 +3057,14 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                    ^~~ Did you mean to spell `oop` this way?
 Suggest:
   - Replace with: “oops”
-  - Replace with: “op”
   - Replace with: “opp”
+  - Replace with: “ooh”
 
 
 
@@ -3072,24 +3073,24 @@ Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                              ^~~~~~~ Did you mean to spell `ootiful` this way?
 Suggest:
-  - Replace with: “dutiful”
   - Replace with: “pitiful”
+  - Replace with: “dutiful”
   - Replace with: “potful”
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                                      ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “So”
-  - Replace with: “Soc”
-  - Replace with: “Sod”
+  - Replace with: “Son”
+  - Replace with: “Solo”
+  - Replace with: “Soon”
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                                          ^~~ This word's canonical spelling is all-caps.
@@ -3098,30 +3099,30 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                                          ^~~ Did you mean to spell `oop` this way?
 Suggest:
   - Replace with: “oops”
-  - Replace with: “op”
   - Replace with: “opp”
+  - Replace with: “ooh”
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                                               ^~~ Did you mean to spell `Soo` this way?
     2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
 Suggest:
-  - Replace with: “So”
-  - Replace with: “Soc”
-  - Replace with: “Sod”
+  - Replace with: “Son”
+  - Replace with: “Solo”
+  - Replace with: “Soon”
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                                                   ^~~ This word's canonical spelling is all-caps.
@@ -3131,27 +3132,27 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                                                   ^~~ Did you mean to spell `oop` this way?
     2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
 Suggest:
+  - Replace with: “top”
+  - Replace with: “ooh”
   - Replace with: “oops”
-  - Replace with: “op”
-  - Replace with: “opp”
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
     2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
          |                           ^~~~~~ Did you mean to spell `beauti` this way?
 Suggest:
   - Replace with: “beauty”
-  - Replace with: “beaut”
-  - Replace with: “beauts”
+  - Replace with: “beauties”
+  - Replace with: “beast”
 
 
 
@@ -3162,8 +3163,8 @@ Message: |
          |                                  ^~~ Did you mean to spell `FUL` this way?
 Suggest:
   - Replace with: “Full”
-  - Replace with: “Flu”
-  - Replace with: “Fol”
+  - Replace with: “Fuel”
+  - Replace with: “Fun”
 
 
 
@@ -3195,18 +3196,18 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2503 | > “Soo—oop of the e—e—evening, Beautiful, beautiful Soup!”
          |    ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “So”
-  - Replace with: “Soc”
-  - Replace with: “Sod”
+  - Replace with: “Son”
+  - Replace with: “Solo”
+  - Replace with: “Soon”
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
     2503 | > “Soo—oop of the e—e—evening, Beautiful, beautiful Soup!”
          |        ^~~ This word's canonical spelling is all-caps.
@@ -3215,14 +3216,14 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Spelling (32 priority)
 Message: |
     2503 | > “Soo—oop of the e—e—evening, Beautiful, beautiful Soup!”
          |        ^~~ Did you mean to spell `oop` this way?
 Suggest:
+  - Replace with: “top”
+  - Replace with: “ooh”
   - Replace with: “oops”
-  - Replace with: “op”
-  - Replace with: “opp”
 
 
 
@@ -3391,16 +3392,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2724 | sight, he said in a deep voice, “What are tarts made of?”
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 42 words long.
-
-
-
-Lint:    Grammar (31 priority)
-Message: |
-    2741 | to see what the next witness would be like, “—for they haven’t got much evidence
-         |                                                   ^~~~ Use `them` when the pronoun follows a preposition or transitive verb.
-    2742 | yet,” she said to herself. Imagine her surprise, when the White Rabbit read out,
-Suggest:
-  - Replace with: “them”
 
 
 

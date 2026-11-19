@@ -25,7 +25,6 @@
 			"!**/harper-wasm/pkg",
 			"!**/.vscode-test",
 			"!**/.svelte-kit",
-			"!**/.sveltepress",
 			"!**/packages/obsidian-plugin/main.js",
 			"!**/pnpm-lock.yaml",
 			"!**/package-lock.json",

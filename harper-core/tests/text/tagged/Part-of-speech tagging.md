@@ -17,7 +17,7 @@
 > text     ( corpus ) as    corresponding to a   particular part     of speech   , based on  both   its
 # N🅪Sg/VB+ . NSg+   . R/C/P Nᴹ/Vg/J       P  D/P NSg/J      NSg/VB/J P  N🅪Sg/VB+ . VP/J  J/P I/C/Dq ISg/D$+
 > definition and  its     context  . A   simplified form    of this    is  commonly taught to
-# NSg        VB/C ISg/D$+ N🅪Sg/VB+ . D/P VP/J       N🅪Sg/VB P  I/Ddem+ VL3 R        VP     P
+# N🅪Sg       VB/C ISg/D$+ N🅪Sg/VB+ . D/P VP/J       N🅪Sg/VB P  I/Ddem+ VL3 R        VP     P
 > school  - age      children , in        the identification of words   as    nouns  , verbs   , adjectives ,
 # N🅪Sg/VB . N🅪Sg/VB+ NPl+     . NPr/J/R/P D   Nᴹ             P  NPl/V3+ R/C/P NPl/V3 . NPl/V3+ . NPl/V3     .
 > adverbs , etc.
@@ -174,8 +174,8 @@
 # NSg/J/P+ . #d    . NSg/ISg+ NPl/V3   P  J/P   # . #   . #   NPl/V3 P  Nᴹ/Vg/J/P NPr🅪Sg/VB/J+ Nᴹ/VB N🅪Sg/VB+ .
 > made up         of 500 samples from randomly chosen   publications . Each sample  is  2 , 000
 # VP   NSg/VB/J/P P  #   NPl/V3+ P    R        Nᴹ/VPp/J NPl+         . Dq+  NSg/VB+ VL3 # . #
-> or    more         words   ( ending  at    the first sentence - end     after 2 , 000 words   , so          that     the
-# NPr/C NPr/I/J/R/Dq NPl/V3+ . Nᴹ/Vg/J NSg/P D   NSg/J NSg/VB+  . NSg/VB+ P     # . #   NPl/V3+ . NSg/I/J/R/C I/C/Ddem D
+> or    more         words   ( ending    at    the first sentence - end     after 2 , 000 words   , so          that     the
+# NPr/C NPr/I/J/R/Dq NPl/V3+ . N🅪Sg/Vg/J NSg/P D   NSg/J NSg/VB+  . NSg/VB+ P     # . #   NPl/V3+ . NSg/I/J/R/C I/C/Ddem D
 > corpus contains only  complete sentences ) .
 # NSg+   V3       J/R/C NSg/VB/J NPl/V3+   . .
 >
@@ -191,7 +191,7 @@
 > cannot  . The program got about 70 % correct  . Its     results were repeatedly reviewed
 # NSg/VXB . D+  NPr/VB+ VP  J/P   #  . NSg/VB/J . ISg/D$+ NPl/V3+ VLPt R          VP/J
 > and  corrected by hand    , and  later users sent   in        errata so          that      by the late  70 s
-# VB/C VP/J      P  NSg/VB+ . VB/C JC    NPl+  NSg/VP NPr/J/R/P NSg    NSg/I/J/R/C I/C/Ddem+ P  D   NSg/J #  ?
+# VB/C VP/J      P  NSg/VB+ . VB/C JC/R  NPl+  NSg/VP NPr/J/R/P NSg    NSg/I/J/R/C I/C/Ddem+ P  D   NSg/J #  ?
 > the tagging was  nearly perfect  ( allowing for   some     cases   on  which even       human
 # D   NSg/Vg  VLPt R      NSg/VB/J . Nᴹ/Vg/J  R/C/P I/J/R/Dq NPl/V3+ J/P I/C+  NSg/VB/J/R NSg/J+
 > speakers might    not     agree ) .
@@ -199,13 +199,13 @@
 >
 #
 > This    corpus has been   used for   innumerable studies of word    - frequency and  of
-# I/Ddem+ NSg+   V3  VLPp/B VP/J R/C/P J           NPl/V3  P  NSg/VB+ . NSg       VB/C P
+# I/Ddem+ NSg+   V3  VLPp/B VP/J R/C/P J           NPl/V3  P  NSg/VB+ . N🅪Sg      VB/C P
 > part      - of - speech   and  inspired the development of similar " tagged " corpora in        many
 # NSg/VB/J+ . P  . N🅪Sg/VB+ VB/C VP/J     D   N🅪Sg        P  NSg/J   . VP/J   . NPl+    NPr/J/R/P NSg/I/J/Dq
 > other    languages . Statistics derived by analyzing it       formed the basis for   most
 # NSg/VB/J NPl+      . NPl/V3+    VP/J    P  Nᴹ/Vg/J   NSg/ISg+ VP/J   D+  NSg+  R/C/P NSg/I/J/R/Dq
 > later part      - of - speech   tagging systems , such  as    CLAWS   and  VOLSUNGA . However , by
-# JC    NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg  NPl+    . NSg/I R/C/P NPl/V3+ VB/C ?        . C       . P
+# JC/R  NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg  NPl+    . NSg/I R/C/P NPl/V3+ VB/C ?        . C       . P
 > this    time       ( 2005 ) it       has been   superseded by larger corpora such  as    the 100
 # I/Ddem+ N🅪Sg/VB/J+ . #    . NSg/ISg+ V3  VLPp/B VP/J       P  JC     NPl+    NSg/I R/C/P D   #
 > million word    British National Corpus , even       though larger corpora are rarely so
@@ -247,7 +247,7 @@
 > program can     decide that      " can     " in        " the can     " is  far      more         likely to be       a   noun   than
 # NPr/VB+ NPr/VXB VB     I/C/Ddem+ . NPr/VXB . NPr/J/R/P . D+  NPr/VXB . VL3 NSg/VB/J NPr/I/J/R/Dq NSg/J  P  NSg/VLXB D/P NSg/VB C/P
 > a    verb    or    a   modal . The same method can     , of course  , be       used to benefit from
-# D/P+ NSg/VB+ NPr/C D/P NSg/J . D+  I/J+ NSg+   NPr/VXB . P  NSg/VB+ . NSg/VLXB VP/J P  NSg/VB  P
+# D/P+ NSg/VB+ NPr/C D/P NSg/J . D+  I/J+ NSg+   NPr/VXB . P  NSg/VB+ . NSg/VLXB VP/J P  N🅪Sg/VB P
 > knowledge about the following   words   .
 # Nᴹ+       J/P   D+  N🅪Sg/Vg/J/P NPl/V3+ .
 >
@@ -293,7 +293,7 @@
 > expensive since it       enumerated all          possibilities . It       sometimes had to resort to
 # J         C/P   NSg/ISg+ VP/J       NSg/I/J/C/Dq NPl+          . NSg/ISg+ R         VP  P  NSg/VB P
 > backup methods when    there were simply too many       options ( the Brown        Corpus
-# NSg/J  NPl+    NSg/I/C R+    VLPt R      R   NSg/I/J/Dq NPl/V3  . D+  NPr🅪Sg/VB/J+ NSg+
+# N🅪Sg/J NPl+    NSg/I/C R+    VLPt R      R   NSg/I/J/Dq NPl/V3  . D+  NPr🅪Sg/VB/J+ NSg+
 > contains a   case       with 17 ambiguous words  in        a    row     , and  there are words   such  as
 # V3       D/P NPr🅪Sg/VB+ P    #  J         NPl/V3 NPr/J/R/P D/P+ NSg/VB+ . VB/C R+    VLB NPl/V3+ NSg/I R/C/P
 > " still      " that      can     represent as    many       as    7 distinct parts  of speech   .
@@ -326,8 +326,8 @@
 # NPr🅪Sg/VB/J NSg+   . D/P NSg/J  N🅪Sg        P  NSg/VB/J NPl+          VXB   NSg/VB  D/P NSg/I/J/R/Dq
 > larger corpus ) . Both   methods achieved an  accuracy of over    95 % . DeRose's 1990
 # JC     NSg+   . . I/C/Dq NPl+    VP/J     D/P N🅪Sg+    P  NSg/J/P #  . . ?        #
-> dissertation at    Brown       University included analyses     of the specific error   types   ,
-# NSg+         NSg/P NPr🅪Sg/VB/J NSg+       VP/J     NPl/V3/Au/Br P  D   NSg/J    NSg/VB+ NPl/V3+ .
+> dissertation at    Brown       University included analyses     of the specific error    types   ,
+# NSg+         NSg/P NPr🅪Sg/VB/J NSg+       VP/J     NPl/V3/Au/Br P  D   NSg/J    N🅪Sg/VB+ NPl/V3+ .
 > probabilities , and  other    related data  , and  replicated his     work     for   Greek    , where
 # NPl+          . VB/C NSg/VB/J J       N🅪Pl+ . VB/C VP/J       ISg/D$+ N🅪Sg/VB+ R/C/P NPr/VB/J . NSg/R/C
 > it       proved similarly effective .
@@ -335,7 +335,7 @@
 >
 #
 > These   findings were surprisingly disruptive to the field  of natural language
-# I/Ddem+ NSg+     VLPt R            J          P  D   NSg/VB P  NSg/J+  N🅪Sg+
+# I/Ddem+ NPl+     VLPt R            J          P  D   NSg/VB P  NSg/J+  N🅪Sg+
 > processing . The accuracy reported was  higher than the typical accuracy of very
 # Nᴹ/Vg/J+   . D+  N🅪Sg+    VP/J     VLPt NSg/JC C/P  D   NSg/J   N🅪Sg     P  J/R
 > sophisticated algorithms that      integrated part     of speech   choice  with many       higher
@@ -355,11 +355,11 @@
 > separate other    pieces  as    well       . Markov Models  became the standard method for   the
 # NSg/VB/J NSg/VB/J NPl/V3+ R/C/P NSg/VB/J/R . NPr    NPl/V3+ VPt    D   NSg/J    NSg+   R/C/P D
 > part      - of - speech   assignment .
-# NSg/VB/J+ . P  . N🅪Sg/VB+ NSg+       .
+# NSg/VB/J+ . P  . N🅪Sg/VB+ N🅪Sg+      .
 >
 #
 >              Unsupervised taggers
-# HeadingStart VB/J         NPl
+# HeadingStart J            NPl
 >
 #
 > The methods already discussed involve working from a    pre       - existing corpus to
@@ -367,7 +367,7 @@
 > learn  tag     probabilities . It       is  , however , also possible to bootstrap using
 # NSg/VB NSg/VB+ NPl+          . NSg/ISg+ VL3 . C       . R/C  NSg/J    P  NSg/VB    Nᴹ/Vg/J
 > " unsupervised " tagging . Unsupervised tagging techniques use     an  untagged corpus
-# . VB/J         . NSg/Vg  . VB/J         NSg/Vg  NPl+       N🅪Sg/VB D/P VP/J     NSg+
+# . J            . NSg/Vg  . J            NSg/Vg  NPl+       N🅪Sg/VB D/P VP/J     NSg+
 > for   their training data  and  produce the tagset by induction . That      is  , they
 # R/C/P D$+   Nᴹ/Vg/J+ N🅪Pl+ VB/C Nᴹ/VB   D   NSg    P  N🅪Sg      . I/C/Ddem+ VL3 . IPl+
 > observe patterns in        word    use     , and  derive part      - of - speech   categories themselves .
@@ -385,7 +385,7 @@
 >
 #
 > These   two  categories can     be       further subdivided into rule    - based , stochastic , and
-# I/Ddem+ NSg+ NPl+       NPr/VXB NSg/VLXB VB/JC   VP/J       P    NSg/VB+ . VP/J  . J          . VB/C
+# I/Ddem+ NSg+ NPl+       NPr/VXB NSg/VLXB VB/JC/R VP/J       P    NSg/VB+ . VP/J  . J          . VB/C
 > neural approaches .
 # J      NPl/V3+    .
 >

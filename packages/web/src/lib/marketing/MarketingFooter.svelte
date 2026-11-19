@@ -2,7 +2,9 @@
 import { marketingLinks } from './data';
 import HarperMark from './HarperMark.svelte';
 
-export let chromeHref = marketingLinks.chrome;
+const chromeUrl = new URL(marketingLinks.chrome);
+chromeUrl.searchParams.set('utm_source', 'harper-footer');
+const chromeHref = chromeUrl.toString();
 
 const currentYear = new Date().getFullYear();
 </script>
@@ -25,7 +27,7 @@ const currentYear = new Date().getFullYear();
 		</div>
 
 		<div class="flex flex-col gap-2.5">
-			<h2 class='!m-0 py-0 text-[0.66rem] font-extrabold tracking-[0.14em] text-primary uppercase dark:text-primary-300 [font-family:"JetBrains_Mono",monospace]'>
+			<h2 class='!m-0 py-0 !text-[0.66rem] font-extrabold tracking-[0.14em] !text-[#f1920e] uppercase dark:!text-[#f7be6e] [font-family:"JetBrains_Mono",monospace]'>
 				Get Harper
 			</h2>
 			<a class="!text-black/70 no-underline hover:!text-black hover:no-underline dark:!text-white/70 dark:hover:!text-white" href="/desktop">Harper Desktop</a>
@@ -36,7 +38,7 @@ const currentYear = new Date().getFullYear();
 		</div>
 
 		<div class="flex flex-col gap-2.5">
-			<h2 class='!m-0 py-0 text-[0.66rem] font-extrabold tracking-[0.14em] text-primary uppercase dark:text-primary-300 [font-family:"JetBrains_Mono",monospace]'>
+			<h2 class='!m-0 py-0 !text-[0.66rem] font-extrabold tracking-[0.14em] !text-[#f1920e] uppercase dark:!text-[#f7be6e] [font-family:"JetBrains_Mono",monospace]'>
 				Resources
 			</h2>
 			<a class="!text-black/70 no-underline hover:!text-black hover:no-underline dark:!text-white/70 dark:hover:!text-white" href="/docs/about">Documentation</a>
@@ -47,7 +49,7 @@ const currentYear = new Date().getFullYear();
 		</div>
 
 		<div class="flex flex-col gap-2.5">
-			<h2 class='!m-0 py-0 text-[0.66rem] font-extrabold tracking-[0.14em] text-primary uppercase dark:text-primary-300 [font-family:"JetBrains_Mono",monospace]'>
+			<h2 class='!m-0 py-0 !text-[0.66rem] font-extrabold tracking-[0.14em] !text-[#f1920e] uppercase dark:!text-[#f7be6e] [font-family:"JetBrains_Mono",monospace]'>
 				Community
 			</h2>
 			<a class="!text-black/70 no-underline hover:!text-black hover:no-underline dark:!text-white/70 dark:hover:!text-white" href={marketingLinks.github}>GitHub</a>

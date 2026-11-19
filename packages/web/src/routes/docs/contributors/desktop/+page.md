@@ -1,6 +1,9 @@
 ---
 title: Harper Desktop
+description: Explore the Harper Desktop code structure, its processes, and the separation of platform-specific behavior.
 ---
+
+# Harper Desktop
 
 Harper Desktop supports macOS and Windows, and we hope to add Linux support in the future.
 The code separates platform-specific behavior from the parts shared across operating systems to make adding new platforms easier.

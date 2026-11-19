@@ -1,4 +1,8 @@
-expr main [(more than what meets the eye), (more that meets the eye), (more that what meets the eye)]
+expr main [
+    (more than what meets the eye),
+    (more that meets the eye),
+    (more that what meets the eye)
+]
 
 let message "For something that has hidden complexity or depth, `more than meets the eye` is the most idiomatic and most standard."
 let description "Corrects nonstandard and less idiomatic variants of `more than meets the eye`."

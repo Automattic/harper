@@ -12,6 +12,12 @@
 	--harper-editor-font-size: inherit;
 }
 
+/* Dark mode starts under a `.dark` ancestor, the same as the Tailwind `dark:` variant. */
+.dark .harper-editor,
+.dark.harper-editor {
+	color-scheme: dark;
+}
+
 .harper-editor *,
 .harper-editor *::before,
 .harper-editor *::after {
@@ -36,6 +42,11 @@
 .harper-editor select:focus-visible {
 	outline: 2px solid var(--color-blue-600);
 	outline-offset: 2px;
+}
+
+.dark .harper-editor button:focus-visible,
+.dark .harper-editor select:focus-visible {
+	outline-color: var(--color-blue-400);
 }
 
 .harper-editor-quill-container {
@@ -78,6 +89,10 @@
 	color: var(--color-stone-500);
 	content: attr(data-placeholder);
 	pointer-events: none;
+}
+
+.dark .harper-editor-surface.ql-editor.ql-blank::before {
+	color: var(--color-stone-400);
 }
 
 .harper-editor-surface p,

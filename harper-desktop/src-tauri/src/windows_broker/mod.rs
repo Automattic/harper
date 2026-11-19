@@ -67,6 +67,10 @@ impl WindowsBroker {
 }
 
 impl OsBroker for WindowsBroker {
+    fn should_hide_overlay(&mut self) -> bool {
+        false
+    }
+
     fn is_harper_desktop(app_id: &str) -> bool {
         let Ok(executable) = std::env::current_exe()
             .and_then(std::fs::canonicalize)

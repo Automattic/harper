@@ -12,7 +12,7 @@ export const load: PageServerLoad = async ({ params }) => {
 	}
 
 	const end = new Date();
-	end.setUTCHours(0, 0, 0, 0);
+	end.setUTCHours(24, 0, 0, 0);
 	const start = slug === 'all' ? null : new Date(end.getTime() - duration);
 
 	return {

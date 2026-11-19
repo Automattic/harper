@@ -4,7 +4,7 @@ import ProblematicLints from '$lib/db/models/ProblematicLints';
 import type { PageServerLoad } from './$types';
 
 /**
- * Load one lint ID's counts for complete UTC days, ending with yesterday.
+ * Load one lint ID's UTC daily counts, including today's partial total.
  * All-time data starts at its first report's day and is empty if none exist.
  */
 export const load: PageServerLoad = async ({ params }) => {
@@ -16,7 +16,7 @@ export const load: PageServerLoad = async ({ params }) => {
 	}
 
 	const end = new Date();
-	end.setUTCHours(0, 0, 0, 0);
+	end.setUTCHours(24, 0, 0, 0);
 	const start = slug === 'all' ? null : new Date(end.getTime() - duration);
 
 	return {

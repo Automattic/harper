@@ -17,6 +17,8 @@ use hashbrown::HashMap;
 use serde::Serialize;
 use serde_json::Value;
 
+#[cfg(feature = "training")]
+use harper_context_ranker::TrainingOptions;
 use harper_core::{
     CharStringExt, Dialect, DictWordMetadata, OrthFlags, Span, TokenKind, TokenStringExt,
     linting::LintGroup,
@@ -29,6 +31,8 @@ use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
 use harper_stats::Stats;
 
 mod annotate;
+#[cfg(feature = "training")]
+mod context_ranker_data;
 mod input;
 mod lint;
 mod lint_engine;
@@ -196,6 +200,46 @@ enum Args {
         test_file: PathBuf,
         #[arg(num_args = 1..)]
         datasets: Vec<PathBuf>,
+    },
+    /// Turn the corpus into context ranker examples and a vocabulary.
+    #[cfg(feature = "training")]
+    PrepareRankerData {
+        /// The directory that holds the files in `harper-context-ranker/data/corpus-manifest.json`.
+        #[arg(long, value_hint = ValueHint::DirPath)]
+        corpus: PathBuf,
+        /// The directory to write the examples and the vocabulary to.
+        #[arg(short, long, value_hint = ValueHint::DirPath)]
+        output: PathBuf,
+        /// Multiplies the amount of text drawn from each group.
+        #[arg(long, default_value_t = 1.0)]
+        scale: f64,
+        #[arg(long, default_value_t = 33_000)]
+        vocab_size: usize,
+        #[arg(long, default_value_t = 1)]
+        seed: u64,
+    },
+    /// Train the context ranker on prepared examples.
+    #[cfg(feature = "training")]
+    TrainContextRanker {
+        /// The directory that `prepare-ranker-data` wrote.
+        #[arg(long, value_hint = ValueHint::DirPath)]
+        data: PathBuf,
+        /// The directory to write the table to.
+        #[arg(short, long, value_hint = ValueHint::DirPath)]
+        output: PathBuf,
+        /// The number of values in the vector of each word.
+        #[arg(long, default_value_t = 64)]
+        dimensions: usize,
+        #[arg(short, long, default_value_t = 3)]
+        epochs: usize,
+        #[arg(short, long, default_value_t = 0.002)]
+        lr: f64,
+        #[arg(long, default_value_t = 2048)]
+        batch_size: usize,
+        #[arg(long, default_value_t = 16)]
+        candidates: usize,
+        #[arg(long, default_value_t = 1)]
+        seed: u64,
     },
     /// Print harper-core version.
     CoreVersion,
@@ -621,6 +665,43 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
+        #[cfg(feature = "training")]
+        Args::PrepareRankerData {
+            corpus,
+            output,
+            scale,
+            vocab_size,
+            seed,
+        } => Ok(harper_context_ranker::prepare(
+            &corpus,
+            &output,
+            &context_ranker_data::CuratedSpeller::curated(),
+            scale,
+            vocab_size,
+            seed,
+        )?),
+        #[cfg(feature = "training")]
+        Args::TrainContextRanker {
+            data,
+            output,
+            dimensions,
+            epochs,
+            lr,
+            batch_size,
+            candidates,
+            seed,
+        } => Ok(harper_context_ranker::train(
+            &data,
+            &output,
+            dimensions,
+            &TrainingOptions {
+                epochs,
+                learning_rate: lr,
+                batch_size,
+                candidates_per_example: candidates,
+                seed,
+            },
+        )?),
         Args::RenameFlag { old, new, dir } => {
             let dict_path = dir.join("dictionary.dict");
             let affixes_path = dir.join("annotations.json");

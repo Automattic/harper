@@ -1,23 +1,31 @@
 use std::num::NonZero;
 
-use itertools::Itertools;
 use lru::LruCache;
 use smallvec::ToSmallVec;
 
-use super::{Lint, LintKind, Linter};
-use super::{Suggestion, informal_laughter::is_informal_laughter};
-use crate::document::Document;
-use crate::expr::{Filter, SequenceExpr};
-use crate::spell::{Dictionary, suggest_correct_spelling};
-use crate::{CharString, CharStringExt, Dialect, TokenStringExt, remove_lints_overlapping_expr};
+#[cfg(feature = "context-ranking")]
+use crate::spell::surrounding_words;
+use crate::{
+    CharString, CharStringExt, Dialect, TokenStringExt,
+    document::Document,
+    edit_distance::edit_distance,
+    expr::{Filter, LongestMatchOf, SequenceExpr},
+    linting::{
+        Lint, LintKind, Linter, Suggestion, informal_laughter::is_informal_laughter,
+        proper_noun_capitalization_linters::proper_nouns_expr,
+    },
+    remove_lints_overlapping_expr,
+    spell::{Dictionary, spelling_candidates},
+};
 
 pub struct SpellCheck<T>
 where
     T: Dictionary,
 {
     dictionary: T,
-    suggestion_cache: LruCache<CharString, Vec<CharString>>,
+    suggestion_cache: LruCache<CharString, Vec<(CharString, i32)>>,
     dialect: Dialect,
+    proper_nouns: LongestMatchOf,
 }
 
 impl<T: Dictionary> SpellCheck<T> {
@@ -26,47 +34,66 @@ impl<T: Dictionary> SpellCheck<T> {
             dictionary,
             suggestion_cache: LruCache::new(NonZero::new(10000).unwrap()),
             dialect,
+            proper_nouns: proper_nouns_expr(),
         }
     }
 
     const MAX_SUGGESTIONS: usize = 3;
 
-    fn suggest_correct_spelling(&mut self, word: &[char]) -> Vec<CharString> {
+    #[cfg(feature = "context-ranking")]
+    const CACHED_CANDIDATES: usize = harper_context_ranker::MAX_CANDIDATES;
+    #[cfg(not(feature = "context-ranking"))]
+    const CACHED_CANDIDATES: usize = Self::MAX_SUGGESTIONS;
+
+    fn suggest_correct_spelling(&mut self, word: &[char]) -> Vec<(CharString, i32)> {
         if let Some(hit) = self.suggestion_cache.get(word) {
             hit.clone()
         } else {
-            let suggestions = self.uncached_suggest_correct_spelling(word);
+            let suggestions = spelling_candidates(
+                word,
+                &self.dictionary,
+                self.dialect,
+                Self::CACHED_CANDIDATES,
+            );
             self.suggestion_cache.put(word.into(), suggestions.clone());
             suggestions
         }
     }
-    fn uncached_suggest_correct_spelling(&self, word: &[char]) -> Vec<CharString> {
-        // Back off until we find a match.
-        for dist in 2..5 {
-            let suggestions: Vec<CharString> =
-                suggest_correct_spelling(word, 200, dist, &self.dictionary)
-                    .into_iter()
-                    .filter(|v| {
-                        // Ignore entries outside the configured dialect
-                        self.dictionary
-                            .get_word_metadata(v)
-                            .unwrap()
-                            .dialects
-                            .is_dialect_enabled(self.dialect)
-                    })
-                    .unique_by(|v| v.to_lower())
-                    .map(|v| v.to_smallvec())
-                    .take(Self::MAX_SUGGESTIONS)
-                    .collect();
+}
 
-            if !suggestions.is_empty() {
-                return suggestions;
-            }
-        }
+#[cfg(feature = "context-ranking")]
+fn order_by_context(
+    candidates: Vec<(CharString, i32)>,
+    document: &Document,
+    index: usize,
+) -> Vec<CharString> {
+    let (left, right) = surrounding_words(
+        document.get_tokens(),
+        document.get_source(),
+        index,
+        harper_context_ranker::CONTEXT_RADIUS,
+    );
+    let lowered: Vec<(String, i32)> = candidates
+        .iter()
+        .map(|(candidate, score)| (candidate.to_lower().iter().collect(), *score))
+        .collect();
 
-        // no suggestions found
-        Vec::new()
-    }
+    harper_context_ranker::rank(&left, &right, &lowered)
+        .into_iter()
+        .map(|position| candidates[position].0.clone())
+        .collect()
+}
+
+#[cfg(not(feature = "context-ranking"))]
+fn order_by_context(
+    candidates: Vec<(CharString, i32)>,
+    _document: &Document,
+    _index: usize,
+) -> Vec<CharString> {
+    candidates
+        .into_iter()
+        .map(|(candidate, _)| candidate)
+        .collect()
 }
 
 fn parenthetical_plural_s_expr() -> Filter {
@@ -92,14 +119,15 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {
         let mut lints = Vec::new();
 
-        for word in document.iter_words() {
+        for word_index in document.iter_word_indices() {
+            let word = &document.get_tokens()[word_index];
             let word_chars = document.get_span_content(&word.span);
 
             if is_informal_laughter(word_chars) {
                 continue;
             }
 
-            if let Some(metadata) = word.kind.as_word().unwrap()
+            if let Some(Some(metadata)) = word.kind.as_word()
                 && metadata.dialects.is_dialect_enabled(self.dialect)
                 && (self.dictionary.contains_exact_word(word_chars)
                     || self
@@ -112,7 +140,12 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
                 continue;
             };
 
-            let mut possibilities = self.suggest_correct_spelling(word_chars);
+            let candidates = self.suggest_correct_spelling(word_chars);
+            let mut possibilities: Vec<CharString> =
+                order_by_context(candidates, document, word_index)
+                    .into_iter()
+                    .take(Self::MAX_SUGGESTIONS)
+                    .collect();
 
             // If the misspelled word is capitalized, capitalize the results too.
             if let Some(mis_f) = word_chars.first()
@@ -127,8 +160,19 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
                         .then_some(w.first_mut())
                         .flatten()
                 }) {
-                    *sug_f = sug_f.to_uppercase().next().unwrap();
+                    if let Some(upper_c) = sug_f.to_uppercase().next() {
+                        *sug_f = upper_c;
+                    }
                 }
+            }
+
+            // `OrthographicConsistency` leaves two-letter words to us, since they're often typos.
+            // Offer the all-caps form last, so that `uk` can still become `UK`.
+            if word_chars.len() == 2
+                && let Some(canonical) = self.dictionary.get_correct_capitalization_of(word_chars)
+                && canonical.iter().all(|c| c.is_uppercase())
+            {
+                possibilities.push(canonical.to_smallvec());
             }
 
             let suggestions: Vec<_> = possibilities
@@ -154,11 +198,22 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
                 lint_kind: LintKind::Spelling,
                 suggestions,
                 message,
-                priority: 63,
+                priority: if possibilities.first().is_some_and(|candidate| {
+                    word_chars.len() < 255
+                        && candidate.len() < 255
+                        && edit_distance(word_chars, candidate) == 1
+                }) {
+                    32
+                } else {
+                    63
+                },
             })
         }
 
         remove_lints_overlapping_expr(&parenthetical_plural_s_expr(), document, &mut lints);
+        // Names keep their official spelling in every dialect, such as `Pearl Harbor` in British
+        // English. Their capitalization is handled by `ProperNounCapitalizationLinter`.
+        remove_lints_overlapping_expr(&self.proper_nouns, document, &mut lints);
 
         lints
     }
@@ -176,7 +231,7 @@ mod tests {
     use crate::dict_word_metadata::DialectFlags;
     use crate::linting::Linter;
     use crate::linting::pooled_linter::for_tests::create_test_pool;
-    use crate::linting::tests::assert_no_lints;
+    use crate::linting::tests::{assert_good_and_bad_suggestions, assert_no_lints};
     use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
     use crate::{
         Dialect,
@@ -190,6 +245,17 @@ mod tests {
         SpellCheck<Arc<FstDictionary>>,
         SpellCheck::new(FstDictionary::curated(), Dialect::American)
     );
+
+    #[test]
+    fn close_spelling_guesses_have_priority_over_generic_splits() {
+        let mut linter = SpellCheck::new(FstDictionary::curated(), Dialect::American);
+        for (source, priority) in [("coresponding", 32), ("worthchecking", 63)] {
+            let document = Document::new_plain_english_curated(source);
+            let lints = linter.lint(&document);
+            assert_eq!(lints.len(), 1);
+            assert_eq!(lints[0].priority, priority, "{source}");
+        }
+    }
 
     // Capitalization tests
 
@@ -215,6 +281,71 @@ mod tests {
             "Do you like the color?",
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
             1,
+        );
+    }
+
+    #[test]
+    fn lowercase_uk_suggests_all_caps() {
+        assert_good_and_bad_suggestions(
+            "We flew to the uk.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            &["We flew to the UK."],
+            &[],
+        );
+    }
+
+    #[test]
+    fn american_spelling_in_name_in_british_dialect() {
+        assert_lint_count(
+            "The attack on Pearl Harbor came before Labor Day.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            0,
+        );
+    }
+
+    #[test]
+    fn title_case_nz_suggests_all_caps() {
+        assert_good_and_bad_suggestions(
+            "We flew to Nz.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            &["We flew to NZ."],
+            &[],
+        );
+    }
+
+    #[test]
+    fn british_spelling_in_name_in_american_dialect() {
+        assert_lint_count(
+            "The Ministry of Defence met the Labour Party.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            0,
+        );
+    }
+
+    #[test]
+    fn american_spelling_outside_name_in_british_dialect() {
+        assert_lint_count(
+            "The ship left the harbor near Pearl Harbor.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            1,
+        );
+    }
+
+    #[test]
+    fn british_ise_words_in_british_dialect() {
+        assert_lint_count(
+            "We anonymise it with the customisable tokeniser, then we synthesised the results.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            0,
+        );
+    }
+
+    #[test]
+    fn british_ise_words_in_american_dialect() {
+        assert_lint_count(
+            "We anonymise it with the customisable tokeniser, then we synthesised the results.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            4,
         );
     }
 
@@ -993,6 +1124,179 @@ mod tests {
         assert_no_lints(
             "They were surveilling the premises.",
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
+        );
+    }
+}
+
+#[cfg(test)]
+mod test_context_ranking {
+    use super::SpellCheck;
+    use crate::linting::{Linter, Suggestion};
+    use crate::spell::FstDictionary;
+    use crate::{Dialect, Document};
+
+    fn suggestions(text: &str) -> Vec<String> {
+        SpellCheck::new(FstDictionary::curated(), Dialect::American)
+            .lint(&Document::new_plain_english_curated(text))
+            .into_iter()
+            .next()
+            .map(|lint| {
+                lint.suggestions
+                    .iter()
+                    .map(|suggestion| match suggestion {
+                        Suggestion::ReplaceWith(word) => word.iter().collect(),
+                        _ => String::new(),
+                    })
+                    .collect()
+            })
+            .unwrap_or_default()
+    }
+
+    fn lowercase(words: &[String]) -> Vec<String> {
+        words.iter().map(|word| word.to_lowercase()).collect()
+    }
+
+    #[cfg(feature = "context-ranking")]
+    fn assert_first_suggestions(examples: &[(&str, &str)]) {
+        let wrong: Vec<_> = examples
+            .iter()
+            .map(|(text, expected)| (*text, *expected, lowercase(&suggestions(text))))
+            .filter(|(_, expected, found)| found.first().map(String::as_str) != Some(*expected))
+            .collect();
+
+        assert!(wrong.is_empty(), "wrong first suggestion: {wrong:#?}");
+    }
+
+    #[test]
+    #[cfg(feature = "context-ranking")]
+    fn context_picks_the_first_suggestion() {
+        assert_first_suggestions(&[
+            ("one two tree four fibe", "five"),
+            ("one two three four fibe", "five"),
+            ("The house caught fibe", "fire"),
+            ("I wark at Automattic", "work"),
+            ("The colors have a strong contrat", "contrast"),
+            ("She drank a glass of waer", "water"),
+            ("The teacher wrote on the boird", "board"),
+            ("Add salt and peper to taste", "pepper"),
+            ("Save the fike to your desktop", "file"),
+            ("Please shut the winow", "window"),
+            ("My whole bady hurts", "body"),
+            ("The early bird catches the wrom", "worm"),
+            ("It is raning outside today", "raining"),
+            ("He told me a funny sotry", "story"),
+            ("We need to sove this problem", "solve"),
+        ]);
+    }
+
+    #[test]
+    #[cfg(feature = "context-ranking")]
+    fn the_same_typo_gets_the_word_that_fits_each_sentence() {
+        assert_first_suggestions(&[
+            ("We ate luch at noon", "lunch"),
+            ("Good luch with the exam", "luck"),
+            ("I will see you next weel", "week"),
+            ("The car lost a front weel", "wheel"),
+            ("People all over the worls", "world"),
+            ("Say a few worls to the crowd", "words"),
+            ("Please be quet in the library", "quiet"),
+            ("He will quet his job tomorrow", "quit"),
+            ("That story is ture", "true"),
+            ("Ture left at the light", "turn"),
+        ]);
+    }
+
+    #[test]
+    #[cfg(feature = "context-ranking")]
+    fn context_finds_words_beyond_the_spelling_top_three() {
+        use crate::spell::spelling_candidates;
+
+        let dictionary = FstDictionary::curated();
+        let examples = [
+            ("one two three four fibe", "fibe", "five"),
+            ("I wark at Automattic", "wark", "work"),
+            ("We ate luch at noon", "luch", "lunch"),
+            ("The car lost a front weel", "weel", "wheel"),
+            ("People all over the worls", "worls", "world"),
+            ("She drank a glass of waer", "waer", "water"),
+            ("My whole bady hurts", "bady", "body"),
+        ];
+
+        for (text, typo, expected) in examples {
+            let typo: Vec<char> = typo.chars().collect();
+            let spelling_top_three: Vec<String> =
+                spelling_candidates(&typo, dictionary.as_ref(), Dialect::American, 3)
+                    .into_iter()
+                    .map(|(word, _)| word.iter().collect())
+                    .collect();
+
+            assert!(!spelling_top_three.iter().any(|word| word == expected));
+            assert_eq!(suggestions(text)[0], expected, "{text}");
+        }
+    }
+
+    #[test]
+    #[cfg(feature = "context-ranking")]
+    #[ignore = "The 64d table puts another word first in these sentences."]
+    fn context_picks_the_first_suggestion_known_misses() {
+        assert_first_suggestions(&[
+            ("The fibe is corrupt", "file"),
+            ("We wark to the park", "walk"),
+            ("Legal reviewed the contrat", "contract"),
+            ("Please pay the invoce", "invoice"),
+            ("The bady cried all night", "baby"),
+            ("He rode a hoyse across the field", "horse"),
+            ("The fish swam in the lke", "lake"),
+        ]);
+    }
+
+    #[test]
+    #[cfg(not(feature = "context-ranking"))]
+    fn without_the_feature_the_spelling_order_stays() {
+        assert_eq!(
+            suggestions("one two three four fibe"),
+            ["fife", "file", "fine"]
+        );
+        assert_eq!(suggestions("We ate luch at noon"), ["lush", "lech", "luck"]);
+    }
+
+    #[test]
+    fn no_surrounding_text_keeps_the_spelling_order() {
+        assert_eq!(suggestions("fibe"), ["fife", "file", "fine"]);
+    }
+
+    #[test]
+    fn the_previous_sentence_does_not_count() {
+        assert_eq!(
+            lowercase(&suggestions("One two three four. Fibe")),
+            ["fife", "file", "fine"]
+        );
+    }
+
+    #[test]
+    fn there_are_at_most_three_suggestions() {
+        for text in [
+            "one two three four fibe",
+            "We ate luch at noon",
+            "The car lost a front weel",
+            "It is raning outside today",
+        ] {
+            let found = suggestions(text);
+            assert!(!found.is_empty() && found.len() <= 3, "{text}: {found:?}");
+        }
+    }
+
+    #[test]
+    fn valid_words_stay_unflagged() {
+        assert!(suggestions("one two tree four five").is_empty());
+    }
+
+    #[test]
+    fn a_capitalized_typo_gets_capitalized_suggestions() {
+        assert!(
+            suggestions("Fibe people came")
+                .iter()
+                .all(|word| word.starts_with(char::is_uppercase))
         );
     }
 }

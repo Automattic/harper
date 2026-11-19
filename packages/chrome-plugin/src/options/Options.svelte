@@ -9,11 +9,35 @@ import {
 import { tick } from 'svelte';
 import logo from '/logo.png';
 import ProtocolClient from '../ProtocolClient';
-import type { Hotkey, Modifier, WeirpackMeta } from '../protocol';
+import type { DomainStatus, Hotkey, Modifier, WeirpackMeta } from '../protocol';
 import { ActivationKey } from '../protocol';
 import StructuredRuleSettings from './StructuredRuleSettings.svelte';
 
 let loaded = $state(false);
+let clearingIgnoredSuggestions = $state(false);
+let ignoredSuggestionsStatus = $state('');
+
+/** Confirm a global reset and report completion or failure without changing other settings. */
+async function clearIgnoredSuggestions(): Promise<void> {
+	if (
+		!window.confirm(
+			'Clear ignored suggestions across all websites? Custom dictionary words and disabled rules will not change.',
+		)
+	) {
+		return;
+	}
+	clearingIgnoredSuggestions = true;
+	ignoredSuggestionsStatus = '';
+	try {
+		await ProtocolClient.clearIgnoredLints();
+		ignoredSuggestionsStatus =
+			'Ignored suggestions cleared. Reload open pages to show suggestions again.';
+	} catch {
+		ignoredSuggestionsStatus = 'Could not clear ignored suggestions. Please try again.';
+	} finally {
+		clearingIgnoredSuggestions = false;
+	}
+}
 
 let lintConfig: LintConfig = $state({});
 let structuredLintConfig: StructuredLintConfig = $state({ settings: [] });
@@ -23,9 +47,27 @@ let searchQueryLower = $derived(searchQuery.toLowerCase());
 let expandedGroups: Record<string, boolean> = $state({});
 let dialect = $state(Dialect.American);
 let isolateEnglish = $state(false);
+let openSuggestionsOnHover = $state(false);
 let delay = $state(0);
 let delayLoaded = $state(false);
 let defaultEnabled = $state(false);
+let configuredDomains: DomainStatus[] = $state([]);
+let siteSearch = $state('');
+let siteSearchLower = $derived(siteSearch.trim().toLowerCase());
+let defaultDomainsBusy = $state(false);
+let filteredConfiguredDomains = $derived(
+	configuredDomains.filter((domain) => domain.domain.includes(siteSearchLower)),
+);
+let anyDefaultDomainsEnabled = $derived(
+	configuredDomains.some((domain) => domain.isDefault && domain.enabled),
+);
+let sitePreferencesOpen = $state(false);
+
+$effect(() => {
+	if (siteSearchLower) {
+		sitePreferencesOpen = true;
+	}
+});
 let activationKey: ActivationKey = $state(ActivationKey.Off);
 let userDict = $state('');
 let hotkey: Hotkey = $state({ modifiers: ['Ctrl'], key: 'E' });
@@ -72,6 +114,11 @@ $effect(() => {
 	ProtocolClient.setUserDictionary(stringToDict(userDict));
 });
 
+$effect(() => {
+	if (!loaded) return;
+	ProtocolClient.setOpenSuggestionsOnHover(openSuggestionsOnHover);
+});
+
 // Load all initial state before displaying settings to prevent flash of defaults
 Promise.all([
 	ProtocolClient.getLintConfig(),
@@ -80,6 +127,7 @@ Promise.all([
 	ProtocolClient.getDialect(),
 	ProtocolClient.getIsolateEnglish(),
 	ProtocolClient.getDelay(),
+	ProtocolClient.getOpenSuggestionsOnHover(),
 	ProtocolClient.getDefaultEnabled(),
 	ProtocolClient.getActivationKey(),
 	ProtocolClient.getHotkey(),
@@ -93,6 +141,7 @@ Promise.all([
 		nextDialect,
 		nextIsolateEnglish,
 		nextDelay,
+		nextOpenSuggestionsOnHover,
 		nextDefaultEnabled,
 		nextActivationKey,
 		nextHotkey,
@@ -105,6 +154,7 @@ Promise.all([
 		dialect = nextDialect;
 		isolateEnglish = nextIsolateEnglish;
 		delay = nextDelay;
+		openSuggestionsOnHover = nextOpenSuggestionsOnHover;
 		delayLoaded = true;
 		defaultEnabled = nextDefaultEnabled;
 		activationKey = nextActivationKey;
@@ -119,6 +169,12 @@ Promise.all([
 		loaded = true;
 	},
 );
+
+ProtocolClient.getConfiguredDomains()
+	.then((domains) => {
+		configuredDomains = domains;
+	})
+	.catch((error) => console.error('Failed to load site preferences:', error));
 
 /** Converts the content of a text area to viable dictionary values. */
 export function stringToDict(s: string): string[] {
@@ -271,6 +327,75 @@ async function exportEnabledDomainsCSV() {
 		URL.revokeObjectURL(url);
 	} catch (e) {
 		console.error('Failed to export enabled domains JSON:', e);
+	}
+}
+
+async function setDefaultDomainsEnabled(enabled: boolean) {
+	defaultDomainsBusy = true;
+	try {
+		await ProtocolClient.setDefaultDomainsEnabled(enabled);
+		configuredDomains = configuredDomains.map((domain) =>
+			domain.isDefault ? { ...domain, enabled } : domain,
+		);
+	} catch (error) {
+		console.error('Failed to update default sites:', error);
+		configuredDomains = await ProtocolClient.getConfiguredDomains();
+	} finally {
+		defaultDomainsBusy = false;
+	}
+}
+
+async function toggleDefaultDomains(): Promise<void> {
+	await setDefaultDomainsEnabled(!anyDefaultDomainsEnabled);
+}
+
+async function setSiteEnabled(domainName: string, enabled: boolean) {
+	try {
+		await ProtocolClient.setDomainEnabled(domainName, enabled);
+		configuredDomains = configuredDomains.map((domain) =>
+			domain.domain === domainName ? { ...domain, enabled } : domain,
+		);
+	} catch (error) {
+		console.error('Failed to update site preference:', error);
+		configuredDomains = await ProtocolClient.getConfiguredDomains();
+	}
+}
+
+async function resetDomain(domainName: string) {
+	try {
+		await ProtocolClient.resetDomain(domainName);
+		configuredDomains = configuredDomains
+			.map((domain) => {
+				if (domain.domain !== domainName) {
+					return domain;
+				}
+				// Defaults reset to enabled; custom sites leave the list.
+				return domain.isDefault ? { ...domain, enabled: true } : null;
+			})
+			.filter((domain): domain is DomainStatus => domain !== null);
+	} catch (error) {
+		console.error('Failed to reset site preference:', error);
+		configuredDomains = await ProtocolClient.getConfiguredDomains();
+	}
+}
+
+async function resetAllToDefaults(): Promise<void> {
+	if (!confirm('Reset all site preferences to defaults? Custom sites will be removed.')) {
+		return;
+	}
+	defaultDomainsBusy = true;
+	try {
+		await ProtocolClient.setDefaultDomainsEnabled(true);
+		const fresh = await ProtocolClient.getConfiguredDomains();
+		for (const custom of fresh.filter((domain) => !domain.isDefault)) {
+			await ProtocolClient.resetDomain(custom.domain);
+		}
+		configuredDomains = await ProtocolClient.getConfiguredDomains();
+	} catch (error) {
+		console.error('Failed to reset all sites:', error);
+		configuredDomains = await ProtocolClient.getConfiguredDomains();
+	} finally {
+		defaultDomainsBusy = false;
 	}
 }
 
@@ -487,8 +612,8 @@ async function removeWeirpack(id: string) {
               <!-- Ignore Non-English Text -->
               <div class="flex items-center justify-between gap-4 py-3.5">
                 <div class="flex flex-col">
-                  <h3 id="isolate-label" class="text-base font-semibold">Ignore Non-English Text</h3>
-                  <p id="isolate-desc" class="text-xs text-gray-600 dark:text-[#d1d5db]!">Skip text that Harper detects as not English.</p>
+                  <h3 id="isolate-label" class="text-base font-semibold">Ignore Non-English Text (Beta)</h3>
+                  <p id="isolate-desc" class="text-xs text-gray-600 dark:text-[#d1d5db]!">Skip text that Harper detects as not English. This feature is in beta and is unlikely to work reliably.</p>
                 </div>
 
                 <div class="h-9 w-48 shrink-0 rounded-lg border border-gray-200 p-1 dark:border-slate-700 dark:bg-slate-900">
@@ -574,6 +699,77 @@ async function removeWeirpack(id: string) {
                 </div>
               </div>
 
+              <section class="py-3.5">
+                <details bind:open={sitePreferencesOpen} class="space-y-4">
+                  <summary class="cursor-pointer text-base font-semibold">
+                    Site Preferences ({filteredConfiguredDomains.length})
+                  </summary>
+                  <p class="text-xs text-gray-600 dark:text-[#d1d5db]!">
+                    Harper starts on the bundled sites by default. Use the checklist to enable or disable
+                    individual sites, or turn the defaults off and enable them from the popup as you visit
+                    each site. Sites marked Default are bundled; anything else is an explicit setting.
+                  </p>
+                  <Input
+                    bind:value={siteSearch}
+                    aria-label="Search site preferences"
+                    placeholder="Search sites"
+                    size="sm"
+                  />
+                  <div class="flex flex-wrap gap-3">
+                    <Button
+                      size="sm"
+                      disabled={defaultDomainsBusy || configuredDomains.length === 0}
+                      on:click={toggleDefaultDomains}
+                    >
+                      {anyDefaultDomainsEnabled ? 'Disable All Default Sites' : 'Enable All Default Sites'}
+                    </Button>
+                    <Button
+                      size="sm"
+                      color="white"
+                      disabled={defaultDomainsBusy || configuredDomains.length === 0}
+                      on:click={resetAllToDefaults}
+                    >
+                      Reset All to Defaults
+                    </Button>
+                  </div>
+                  <div class="grid max-h-72 grid-cols-1 gap-2 overflow-y-auto pr-3 xl:grid-cols-2">
+                    {#each filteredConfiguredDomains as domain}
+                      <div class="flex items-center justify-between gap-2">
+                        <label class="flex min-w-0 items-center gap-2 text-sm">
+                          <input
+                            type="checkbox"
+                            checked={domain.enabled}
+                            disabled={defaultDomainsBusy}
+                            onchange={(event) =>
+                              setSiteEnabled(domain.domain, (event.currentTarget as HTMLInputElement).checked)}
+                            class="h-4 w-4"
+                          />
+                          <span class="truncate">{domain.domain}</span>
+                          {#if domain.isDefault}
+                            <span class="shrink-0 text-xs text-gray-400 dark:text-gray-500">Default</span>
+                          {/if}
+                        </label>
+                        {#if !domain.isDefault}
+                          <Button
+                            size="xs"
+                            color="white"
+                            disabled={defaultDomainsBusy}
+                            aria-label={`Remove ${domain.domain}`}
+                            on:click={() => resetDomain(domain.domain)}
+                          >
+                            Remove
+                          </Button>
+                        {/if}
+                      </div>
+                    {:else}
+                      <p class="text-xs text-gray-600 dark:text-[#d1d5db]!">
+                        No site preferences match your search.
+                      </p>
+                    {/each}
+                  </div>
+                </details>
+              </section>
+
               <!-- Delay -->
               <div class="flex items-center justify-between gap-4 py-3.5">
                 <div class="flex flex-col">
@@ -597,6 +793,46 @@ async function removeWeirpack(id: string) {
                   <p id="export-desc" class="text-xs text-gray-600 dark:text-[#d1d5db]!">Downloads a JSON list of domains explicitly enabled.</p>
                 </div>
                 <Button size="sm" class="h-9 w-48 shrink-0 cursor-pointer text-xs font-semibold bg-primary! text-black! hover:bg-primary/85! outline-none! focus:outline-none! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!" aria-describedby="export-desc" on:click={exportEnabledDomainsCSV}>Export JSON</Button>
+              </div>
+
+              <!-- Suggestion Hover Activation -->
+              <div class="flex items-center justify-between gap-4 py-3.5">
+                <div class="flex flex-col">
+                  <h3 id="hover-label" class="text-base font-semibold">Open suggestions on hover</h3>
+                  <p id="hover-desc" class="text-xs text-gray-600 dark:text-[#d1d5db]!">Open suggestions after hovering over an underlined error for 200 ms. Reload open pages after changing this setting. Click and keyboard activation remain available.</p>
+                </div>
+
+                <div class="h-9 w-48 shrink-0 rounded-lg border border-gray-200 p-1 dark:border-slate-700 dark:bg-slate-900">
+                  <div class="relative flex h-full w-full" role="radiogroup" aria-labelledby="hover-label" aria-describedby="hover-desc">
+                    <div
+                      class="absolute inset-y-0 left-0 w-1/2 rounded-md bg-primary transition-transform duration-300 ease-out motion-reduce:transition-none"
+                      class:translate-x-0={openSuggestionsOnHover}
+                      class:translate-x-full={!openSuggestionsOnHover}
+                    ></div>
+                    <button
+                      type="button"
+                      role="radio"
+                      aria-checked={openSuggestionsOnHover}
+                      tabindex={openSuggestionsOnHover ? 0 : -1}
+                      onkeydown={(e) => handleRadioKeydown(e, (v) => (openSuggestionsOnHover = v))}
+                      class="relative z-10 flex-1 cursor-pointer rounded-md py-1 text-center text-xs font-semibold transition-colors duration-200 motion-reduce:transition-none {openSuggestionsOnHover ? 'text-black' : 'text-gray-500 hover:text-gray-900 dark:text-[#d1d5db]! dark:hover:text-white!'}"
+                      onclick={() => (openSuggestionsOnHover = true)}
+                    >
+                      On
+                    </button>
+                    <button
+                      type="button"
+                      role="radio"
+                      aria-checked={!openSuggestionsOnHover}
+                      tabindex={!openSuggestionsOnHover ? 0 : -1}
+                      onkeydown={(e) => handleRadioKeydown(e, (v) => (openSuggestionsOnHover = v))}
+                      class="relative z-10 flex-1 cursor-pointer rounded-md py-1 text-center text-xs font-semibold transition-colors duration-200 motion-reduce:transition-none {!openSuggestionsOnHover ? 'text-black' : 'text-gray-500 hover:text-gray-900 dark:text-[#d1d5db]! dark:hover:text-white!'}"
+                      onclick={() => (openSuggestionsOnHover = false)}
+                    >
+                      Off
+                    </button>
+                  </div>
+                </div>
               </div>
 
               <!-- Activation Key -->
@@ -636,6 +872,22 @@ async function removeWeirpack(id: string) {
                     {isCapturingHotkey ? 'Cancel' : 'Modify'}
                   </Button>
                 </div>
+              </div>
+
+              <div class="flex flex-col gap-2 py-3.5">
+                <h3 class="text-base font-semibold">Ignored suggestions</h3>
+                <p id="ignored-suggestions-desc" class="text-xs text-gray-600 dark:text-[#d1d5db]!">
+                  Clear ignored suggestions across all websites. Custom dictionary words and disabled rules will not change.
+                </p>
+                <Button
+                  size="sm"
+                  disabled={clearingIgnoredSuggestions}
+                  aria-describedby="ignored-suggestions-desc"
+                  on:click={clearIgnoredSuggestions}
+                >
+                  {clearingIgnoredSuggestions ? 'Clearing…' : 'Clear ignored suggestions'}
+                </Button>
+                <p role="status" class="text-xs">{ignoredSuggestionsStatus}</p>
               </div>
 
               <!-- User Dictionary -->

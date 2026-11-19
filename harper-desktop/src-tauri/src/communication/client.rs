@@ -42,6 +42,17 @@ where
         }
     }
 
+    pub async fn get_weirpacks(
+        &mut self,
+    ) -> Result<Vec<crate::config::InstalledWeirpack>, ProtocolError> {
+        match self.send_request(Request::GetWeirpacks).await? {
+            Response::GetWeirpacks { packs } => Ok(packs),
+            _ => Err(ProtocolError::UnexpectedResponse {
+                expected: "GetWeirpacks",
+            }),
+        }
+    }
+
     pub async fn get_dictionary(&mut self) -> Result<MutableDictionary, ProtocolError> {
         match self.send_request(Request::GetDictionary).await? {
             Response::GetDictionary { words } => {

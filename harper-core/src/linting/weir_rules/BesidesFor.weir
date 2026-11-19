@@ -1,0 +1,16 @@
+expr main <([besides, beside] for ![fun, loop]), ([besides, beside] for)>
+
+let message "Avoid the redundant `for` after `besides`."
+let description "Replaces nonstandard `besides for` or `beside for` with `besides`, `except for`, or `other than`."
+let kind "Redundancy"
+let becomes ["besides", "except for", "other than"]
+
+test "Besides for multilevel verbosity you usually do -vv or -vvv, which won't work for Nettacker" "Besides multilevel verbosity you usually do -vv or -vvv, which won't work for Nettacker"
+test "Not sure if this is benchmarkable besides for the own person deciding which one they like more." "Not sure if this is benchmarkable besides the own person deciding which one they like more."
+test "besides for training future models, is this really such a big deal?" "besides training future models, is this really such a big deal?"
+test "items for a dropdown merge together, besides for the last (which is placed at index 1 instead of 0 in the dropdown)" "items for a dropdown merge together, besides the last (which is placed at index 1 instead of 0 in the dropdown)"
+test "Place labels above the input for vertical forms, beside for horizontal" "Place labels above the input for vertical forms, besides horizontal"
+test "Beside for the side-by-side reading it is named for." "Besides the side-by-side reading it is named for."
+
+allows "Do people build their own networking layers above SQLite (besides for fun)?"
+allows "Besides for loop there are other iteration tools in python such as list comprehension, map, zip etc."
