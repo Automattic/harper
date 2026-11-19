@@ -85,6 +85,7 @@ export default defineManifest({
 				'google-docs-protocol.js',
 				'google-docs-bridge-request-handler.js',
 			],
+			use_dynamic_url: true,
 		},
 	],
 	icons: {
