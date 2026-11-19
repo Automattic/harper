@@ -50,9 +50,9 @@ impl Default for ThingThink {
             "won't",
         ]);
 
-        let auxiliary_do =
-            SequenceExpr::word_set(["do", "does", "did", "don't", "doesn't", "didn't"])
-                .then_optional(SequenceExpr::whitespace().t_aco("not"));
+        let uncontracted_do = SequenceExpr::word_set(["do", "does", "did"])
+            .then_optional(SequenceExpr::whitespace().t_aco("not"));
+        let contracted_do = WordSet::new(["don't", "doesn't", "didn't"]);
 
         let adverb_of_frequency =
             WordSet::new(["always", "sometimes", "often", "usually", "never"]);
@@ -61,7 +61,8 @@ impl Default for ThingThink {
             Box::new(pronoun) as Box<dyn Expr>,
             Box::new(verb_to),
             Box::new(modal),
-            Box::new(auxiliary_do),
+            Box::new(uncontracted_do),
+            Box::new(contracted_do),
             Box::new(adverb_of_frequency),
         ]);
 
@@ -133,6 +134,17 @@ mod tests {
                 test_linter(),
                 &format!("{prefix} think so."),
             );
+        }
+    }
+
+    #[test]
+    fn ignore_thing_after_contracted_do_and_not() {
+        for text in [
+            "I don't not thing so.",
+            "She doesn't not thing so.",
+            "They didn't not thing so.",
+        ] {
+            assert_no_lints(text, test_linter());
         }
     }
 
