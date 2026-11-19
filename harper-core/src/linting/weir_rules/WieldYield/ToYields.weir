@@ -1,0 +1,10 @@
+expr beforeYields [average, bond, corn, crop, grain, high, higher, in, investment, of, on, quantum, sediment, this, water]
+ 
+expr main <(@beforeYields wields), wields>
+
+let message "Are you confusing ‘wield’ and ‘yield’?"
+let description "Looks for ‘weild’ used where ‘yield’ is intended, or vice versa."
+let kind "Eggcorn"
+let becomes "yields"
+
+test "does this farm get decent corn wields" "does this farm get decent corn yields"
