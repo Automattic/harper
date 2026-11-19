@@ -110,7 +110,7 @@ test-harperjs: build-harperjs
 
   pnpm install
   cd "{{justfile_directory()}}/packages/harper.js"
-  pnpm playwright install
+  pnpm playwright install chromium firefox
   pnpm test
 
   # Test runnable examples
@@ -123,7 +123,7 @@ test-obsidian: build-obsidian
 
   pnpm install
   cd "{{justfile_directory()}}/packages/obsidian-plugin"
-  pnpm playwright install
+  pnpm playwright install chromium
   pnpm test
 
 alias dev-wordpress := dev-wp
@@ -330,7 +330,7 @@ test-chrome-plugin: build-chrome-plugin
 
   pnpm install
   cd "{{justfile_directory()}}/packages/chrome-plugin"
-  pnpm playwright install
+  pnpm playwright install chromium
 
   # For environments without displays like CI servers or containers
   if [[ "$(uname)" == "Linux" ]]; then
@@ -349,7 +349,7 @@ test-firefox-plugin: build-firefox-plugin
 
   pnpm install
   cd "{{justfile_directory()}}/packages/chrome-plugin"
-  pnpm playwright install
+  pnpm playwright install firefox
 
   # Run Firefox headless: `pnpm test` passes `--headed`, which Chromium needs for extensions
   # but Firefox doesn't. On a virtual display every headed window opens in the same place,

@@ -742,6 +742,15 @@ mod tests {
     }
 
     #[test]
+    fn ignores_greenhouse_effect_causes() {
+        assert_lint_count(
+            "The greenhouse effect causes the planet to warm.",
+            test_linter(),
+            0,
+        );
+    }
+
+    #[test]
     fn corrects_tariff_effect_import_prices() {
         assert_suggestion_result(
             "The new tariff will effect import prices next quarter.",

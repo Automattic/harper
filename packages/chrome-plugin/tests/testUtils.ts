@@ -33,6 +33,12 @@ export async function openExtensionPage(
 	await page.goto(`chrome-extension://${extensionId}/${path}`);
 }
 
+/** Open the options page and expand a `<details>` section (e.g. "Supported Sites"). */
+export async function openOptionsSection(context: BrowserContext, page: Page, section: string) {
+	await openExtensionPage(context, page, 'options.html');
+	await page.locator('details').filter({ hasText: section }).locator('summary').click();
+}
+
 export async function getStoredLintConfig(context: BrowserContext): Promise<LintConfig> {
 	const background = await getBackground(context);
 	return await background.evaluate(async () => {
@@ -47,6 +53,33 @@ export async function getStoredDelay(context: BrowserContext): Promise<number> {
 		const value = await chrome.storage.local.get({ delay: 0 });
 		return typeof value.delay === 'number' ? value.delay : 0;
 	});
+}
+
+/** Read the stored `domainStatus <domain>` override, or `undefined` when none exists. */
+export async function getStoredDomainStatus(
+	context: BrowserContext,
+	domain: string,
+): Promise<boolean | undefined> {
+	const background = await getBackground(context);
+	const key = `domainStatus ${domain}`;
+	return await background.evaluate(async (key) => {
+		return (await chrome.storage.local.get(key))[key];
+	}, key);
+}
+
+export async function setStoredDomainStatus(
+	context: BrowserContext,
+	domain: string,
+	enabled: boolean,
+): Promise<void> {
+	const background = await getBackground(context);
+	const key = `domainStatus ${domain}`;
+	await background.evaluate(
+		async ({ key, enabled }) => {
+			await chrome.storage.local.set({ [key]: enabled });
+		},
+		{ key, enabled },
+	);
 }
 
 /** Locate the [`Slate`](https://www.slatejs.org/examples/richtext) editor on the page.  */

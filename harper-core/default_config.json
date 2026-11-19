@@ -2388,6 +2388,13 @@
 						},
 						{
 							"Bool": {
+								"name": "YourPredicativeAdverb",
+								"state": true,
+								"label": "Your Predicative Adverb"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Yourself",
 								"state": true,
 								"label": "Yourself"
@@ -2978,6 +2985,13 @@
 								"name": "The",
 								"state": true,
 								"label": "The"
+							}
+						},
+						{
+							"Bool": {
+								"name": "TheSame",
+								"state": true,
+								"label": "The Same"
 							}
 						},
 						{
@@ -3736,6 +3750,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ExplainMe",
+								"state": true,
+								"label": "Explain Me"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ForNoun",
 								"state": true,
 								"label": "For Noun"
@@ -3781,6 +3802,13 @@
 								"name": "HelpedPast",
 								"state": true,
 								"label": "Helped Past"
+							}
+						},
+						{
+							"Bool": {
+								"name": "HereAreACollection",
+								"state": true,
+								"label": "Here Are A Collection"
 							}
 						},
 						{
@@ -3911,6 +3939,13 @@
 						},
 						{
 							"Bool": {
+								"name": "MissingIndefiniteArticle",
+								"state": false,
+								"label": "Missing Indefinite Article"
+							}
+						},
+						{
+							"Bool": {
 								"name": "MissingPreposition",
 								"state": true,
 								"label": "Missing Preposition"
@@ -4019,6 +4054,13 @@
 								"name": "PartsOfSpeech",
 								"state": true,
 								"label": "Parts Of Speech"
+							}
+						},
+						{
+							"Bool": {
+								"name": "PluralSubjectSeems",
+								"state": true,
+								"label": "Plural Subject Seems"
 							}
 						},
 						{
@@ -4371,6 +4413,13 @@
 								"name": "Akimbo",
 								"state": true,
 								"label": "Akimbo"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AkinTo",
+								"state": true,
+								"label": "Akin to"
 							}
 						},
 						{
@@ -6062,6 +6111,13 @@
 						},
 						{
 							"Bool": {
+								"name": "StriveFor",
+								"state": true,
+								"label": "Strive for"
+							}
+						},
+						{
+							"Bool": {
 								"name": "SubjectAndObjectPronoun",
 								"state": true,
 								"label": "SubjectAndObjectPronoun"
@@ -6329,6 +6385,13 @@
 				"description": "Groups dialect-sensitive wording and regional usage that may not fit the selected audience.",
 				"child": {
 					"settings": [
+						{
+							"Bool": {
+								"name": "NounVerbSpelling",
+								"state": true,
+								"label": "Noun and Verb Spelling"
+							}
+						},
 						{
 							"Bool": {
 								"name": "OutOfTheWindow",
