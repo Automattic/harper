@@ -2388,6 +2388,13 @@
 						},
 						{
 							"Bool": {
+								"name": "YourPredicativeAdverb",
+								"state": true,
+								"label": "Your Predicative Adverb"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Yourself",
 								"state": true,
 								"label": "Yourself"
@@ -3799,6 +3806,13 @@
 						},
 						{
 							"Bool": {
+								"name": "HereAreACollection",
+								"state": true,
+								"label": "Here Are A Collection"
+							}
+						},
+						{
+							"Bool": {
 								"name": "HowTo",
 								"state": true,
 								"label": "How To"
@@ -3925,6 +3939,13 @@
 						},
 						{
 							"Bool": {
+								"name": "MissingIndefiniteArticle",
+								"state": false,
+								"label": "Missing Indefinite Article"
+							}
+						},
+						{
+							"Bool": {
 								"name": "MissingPreposition",
 								"state": true,
 								"label": "Missing Preposition"
@@ -4033,6 +4054,13 @@
 								"name": "PartsOfSpeech",
 								"state": true,
 								"label": "Parts Of Speech"
+							}
+						},
+						{
+							"Bool": {
+								"name": "PluralSubjectSeems",
+								"state": true,
+								"label": "Plural Subject Seems"
 							}
 						},
 						{

@@ -30,7 +30,7 @@ Message: |
 Suggest:
   - Replace with: “defense”
   - Replace with: “decency”
-  - Replace with: “defect”
+  - Replace with: “define”
 
 
 
@@ -175,9 +175,9 @@ Message: |
       64 | Hampshire shall be entitled to chuse three, Massachusetts eight, Rhode-Island
          |                                ^~~~~ Did you mean to spell `chuse` this way?
 Suggest:
-  - Replace with: “cause”
   - Replace with: “chase”
   - Replace with: “chose”
+  - Replace with: “chosen”
 
 
 
@@ -187,7 +187,7 @@ Message: |
          |                                    ^~~~~ Did you mean to spell `chuse` this way?
 Suggest:
   - Replace with: “cause”
-  - Replace with: “chase”
+  - Replace with: “course”
   - Replace with: “chose”
 
 
@@ -232,8 +232,8 @@ Message: |
          |                  ^~~~~ Did you mean to spell `chuse` this way?
 Suggest:
   - Replace with: “cause”
-  - Replace with: “chase”
   - Replace with: “chose”
+  - Replace with: “clause”
 
 
 
@@ -253,8 +253,8 @@ Message: |
          |                                                                       ^~~~~~~ Did you mean to spell `tempore` this way?
      104 | in the Absence of the Vice President, or when he shall exercise the Office of
 Suggest:
-  - Replace with: “tempo's”
   - Replace with: “temple”
+  - Replace with: “temper”
   - Replace with: “tempo”
 
 
@@ -334,7 +334,7 @@ Message: |
 Suggest:
   - Replace with: “causing”
   - Replace with: “chasing”
-  - Replace with: “cousin”
+  - Replace with: “churning”
 
 
 
@@ -434,8 +434,8 @@ Message: |
          | ^~~~~~~~~ Did you mean to spell `encreased` this way?
 Suggest:
   - Replace with: “increased”
-  - Replace with: “encased”
-  - Replace with: “entreated”
+  - Replace with: “decreased”
+  - Replace with: “increase”
 
 
 
@@ -538,9 +538,9 @@ Message: |
      197 | be repassed by two thirds of the Senate and House of Representatives, according
          |    ^~~~~~~~ Did you mean to spell `repassed` this way?
 Suggest:
-  - Replace with: “rebased”
-  - Replace with: “recessed”
-  - Replace with: “rehashed”
+  - Replace with: “repaired”
+  - Replace with: “repressed”
+  - Replace with: “passed”
 
 
 
@@ -575,7 +575,7 @@ Message: |
 Suggest:
   - Replace with: “Defense”
   - Replace with: “Decency”
-  - Replace with: “Defect”
+  - Replace with: “Define”
 
 
 
@@ -603,9 +603,9 @@ Message: |
      229 | 9. To define and punish Piracies and Felonies committed on the high Seas, and
          |                         ^~~~~~~~ Did you mean to spell `Piracies` this way?
 Suggest:
-  - Replace with: “Piracy's”
-  - Replace with: “Papacies”
   - Replace with: “Pirates”
+  - Replace with: “Miracles”
+  - Replace with: “Piracy's”
 
 
 
@@ -616,8 +616,8 @@ Message: |
          | ^~~~~~~~ Did you mean to spell `Offences` this way?
 Suggest:
   - Replace with: “Offenses”
-  - Replace with: “Offense's”
   - Replace with: “Offenders”
+  - Replace with: “Offices”
 
 
 
@@ -706,9 +706,9 @@ Message: |
      271 | The Privilege of the Writ of Habeas Corpus shall not be suspended, unless when
          |                              ^~~~~~ Did you mean to spell `Habeas` this way?
 Suggest:
-  - Replace with: “Haber's”
-  - Replace with: “Hale's”
-  - Replace with: “Hebe's”
+  - Replace with: “Hamas”
+  - Replace with: “Areas”
+  - Replace with: “Hayes”
 
 
 
@@ -717,9 +717,9 @@ Message: |
      274 | No Bill of Attainder or ex post facto Law shall be passed.
          |                                 ^~~~~ Did you mean to spell `facto` this way?
 Suggest:
-  - Replace with: “fact”
-  - Replace with: “factor”
   - Replace with: “facts”
+  - Replace with: “faith”
+  - Replace with: “fact”
 
 
 
@@ -783,9 +783,9 @@ Message: |
          |                                     ^~~~~ Did you mean to spell `facto` this way?
      309 | of Contracts, or grant any Title of Nobility.
 Suggest:
-  - Replace with: “fact”
-  - Replace with: “factor”
   - Replace with: “facts”
+  - Replace with: “faith”
+  - Replace with: “fact”
 
 
 
@@ -823,8 +823,8 @@ Message: |
      316 | of the Congress.
 Suggest:
   - Replace with: “Control”
+  - Replace with: “Controls”
   - Replace with: “Contour”
-  - Replace with: “Contrail”
 
 
 
@@ -982,7 +982,7 @@ Message: |
 Suggest:
   - Replace with: “causing”
   - Replace with: “chasing”
-  - Replace with: “cousin”
+  - Replace with: “churning”
 
 
 
@@ -1052,9 +1052,9 @@ Message: |
          |                                                       ^~~~~~~ Did you mean to spell `tempore` this way?
      416 | the Speaker of the House of Representatives his written declaration that he is
 Suggest:
-  - Replace with: “tempo's”
+  - Replace with: “temporal”
   - Replace with: “temple”
-  - Replace with: “tempo”
+  - Replace with: “temper”
 
 
 
@@ -1091,9 +1091,9 @@ Message: |
      423 | transmit to the President pro tempore of the Senate and the Speaker of the
          |                               ^~~~~~~ Did you mean to spell `tempore` this way?
 Suggest:
-  - Replace with: “tempo's”
+  - Replace with: “temporal”
   - Replace with: “temple”
-  - Replace with: “tempo”
+  - Replace with: “temper”
 
 
 
@@ -1134,9 +1134,9 @@ Message: |
          |                                                               ^~~~~~~ Did you mean to spell `tempore` this way?
      429 | Senate and the Speaker of the House of Representatives his written declaration
 Suggest:
-  - Replace with: “tempo's”
+  - Replace with: “temporal”
   - Replace with: “temple”
-  - Replace with: “tempo”
+  - Replace with: “temper”
 
 
 
@@ -1156,9 +1156,9 @@ Message: |
          |                                                ^~~~~~~ Did you mean to spell `tempore` this way?
      434 | Speaker of the House of Representatives their written declaration that the
 Suggest:
-  - Replace with: “tempo's”
+  - Replace with: “temporal”
   - Replace with: “temple”
-  - Replace with: “tempo”
+  - Replace with: “temper”
 
 
 
@@ -1213,8 +1213,8 @@ Message: |
      450 | during the Period for which he shall have been elected, and he shall not
 Suggest:
   - Replace with: “increased”
-  - Replace with: “encased”
-  - Replace with: “entreated”
+  - Replace with: “increase”
+  - Replace with: “decreased”
 
 
 
@@ -1309,8 +1309,8 @@ Message: |
      482 | States, except in Cases of Impeachment.
 Suggest:
   - Replace with: “Offenses”
-  - Replace with: “Offense's”
   - Replace with: “Offenders”
+  - Replace with: “Offices”
 
 
 
@@ -1577,7 +1577,7 @@ Message: |
 Suggest:
   - Replace with: “Labor”
   - Replace with: “Layout”
-  - Replace with: “Labium”
+  - Replace with: “About”
 
 
 
@@ -1589,7 +1589,7 @@ Message: |
 Suggest:
   - Replace with: “Labor”
   - Replace with: “Layout”
-  - Replace with: “Labium”
+  - Replace with: “About”
 
 
 
@@ -1601,7 +1601,7 @@ Message: |
 Suggest:
   - Replace with: “Labor”
   - Replace with: “Layout”
-  - Replace with: “Labium”
+  - Replace with: “Laborer”
 
 
 
@@ -1768,8 +1768,8 @@ Message: |
      715 | fifteenth Line of the first Page. The Words "is tried" being interlined between
 Suggest:
   - Replace with: “Erasure”
-  - Replace with: “Erasures”
   - Replace with: “Azure”
+  - Replace with: “Erasures”
 
 
 
