@@ -72,6 +72,7 @@ use super::code_in_write_in::CodeInWriteIn;
 use super::comfortable_with::ComfortableWith;
 use super::comma_fixes::CommaFixes;
 use super::complain_as_noun::ComplainAsNoun;
+use super::compose_compost::ComposeCompost;
 use super::compound_nouns::CompoundNouns;
 use super::compound_subject_i::CompoundSubjectI;
 use super::confident::Confident;
@@ -677,8 +678,8 @@ impl LintGroup {
         insert_expr_rule!(AkinTo);
         insert_expr_rule!(AllHellBreakLoose);
         insert_expr_rule!(AllIntentsAndPurposes);
-        insert_expr_rule!(AllowTo);
         insert_expr_rule!(AllThatsAre);
+        insert_expr_rule!(AllowTo);
         insert_expr_rule!(AmInTheMorning);
         insert_expr_rule!(AmountsFor);
         insert_struct_rule_with_dialect!(AnA);
@@ -727,6 +728,7 @@ impl LintGroup {
         insert_expr_rule!(ComfortableWith);
         insert_struct_rule!(CommaFixes);
         insert_expr_rule!(ComplainAsNoun);
+        insert_struct_rule!(ComposeCompost);
         insert_struct_rule!(CompoundNouns);
         insert_expr_rule!(CompoundSubjectI);
         insert_expr_rule!(Confident);
