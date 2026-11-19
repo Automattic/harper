@@ -21,8 +21,20 @@ impl Default for ThatThan {
             .t_ws()
             .then_word_except(&["way"]);
 
+        let less_adjective_that_noun = SequenceExpr::word_set(&["less"])
+            .t_ws()
+            .then_kind_where(|kind| kind.is_adjective())
+            .t_ws()
+            .t_aco("that")
+            .t_ws()
+            .then_word_except(&[
+                "way", "is", "was", "were", "would", "had", "has", "can", "could", "did", "does",
+                "do", "should", "it", "they", "he", "she", "we", "you", "i", "those", "these",
+                "users", "the", "a", "an",
+            ]);
+
         Self {
-            expr: adjective_er_that_nextword,
+            expr: adjective_er_that_nextword.or_longest(less_adjective_that_noun),
         }
     }
 }
@@ -35,11 +47,11 @@ impl ExprLinter for ThatThan {
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
-        if toks.len() != 5 {
-            return None;
-        }
-
-        let that_tok = &toks[2];
+        let that_tok = match toks.len() {
+            5 => &toks[2],
+            7 => &toks[4],
+            _ => return None,
+        };
 
         Some(Lint {
             span: that_tok.span,
@@ -197,6 +209,24 @@ mod tests {
         assert_no_lints(
             "Make it more clear that users need to download the VS tooling installer for .NET Core in VS.",
             ThatThan::default(),
+        );
+    }
+
+    #[test]
+    fn fix_way_less_common_that() {
+        assert_suggestion_result(
+            "Format is way less common that mp3 format.",
+            ThatThan::default(),
+            "Format is way less common than mp3 format.",
+        );
+    }
+
+    #[test]
+    fn fix_less_frequent_that() {
+        assert_suggestion_result(
+            "Errors are less frequent that expected.",
+            ThatThan::default(),
+            "Errors are less frequent than expected.",
         );
     }
 
