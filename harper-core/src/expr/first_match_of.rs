@@ -1,5 +1,7 @@
-use super::{AsBoxedExpr, Expr};
-use crate::{Span, Token};
+use crate::{
+    Span, Token,
+    expr::{AsBoxedExpr, Expr, SequenceExpr},
+};
 
 /// A naive expr collection that naively iterates through a list of patterns,
 /// returning the first one that matches.
@@ -14,6 +16,15 @@ impl FirstMatchOf {
     pub fn new(exprs: impl IntoIterator<Item = impl AsBoxedExpr>) -> Self {
         Self {
             exprs: exprs.into_iter().map(|e| e.into_boxed_expr()).collect(),
+        }
+    }
+
+    pub fn from_phrases(phrases: &'static [&'static [&'static str]]) -> Self {
+        Self {
+            exprs: phrases
+                .iter()
+                .map(|p| Box::new(SequenceExpr::from_words(p.to_vec())) as Box<dyn Expr>)
+                .collect(),
         }
     }
 
