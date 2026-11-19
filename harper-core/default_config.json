@@ -6848,6 +6848,13 @@
 						},
 						{
 							"Bool": {
+								"name": "LessenLesson",
+								"state": true,
+								"label": "Lessen Lesson"
+							}
+						},
+						{
+							"Bool": {
 								"name": "LetsConfusion",
 								"state": true,
 								"label": "Lets Confusion"
