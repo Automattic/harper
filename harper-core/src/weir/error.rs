@@ -35,7 +35,7 @@ pub enum Error {
 impl Error {
     /// Attach the line and column of the character at `offset` in `source`.
     /// Errors that already carry a location are returned unchanged.
-    pub(crate) fn located(self, offset: usize, source: &[char]) -> Self {
+    pub fn located(self, offset: usize, source: &[char]) -> Self {
         if matches!(self, Self::Located { .. }) {
             return self;
         }
