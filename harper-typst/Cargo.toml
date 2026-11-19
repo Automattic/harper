@@ -8,7 +8,7 @@ repository = "https://github.com/automattic/harper"
 
 [dependencies]
 harper-core = { path = "../harper-core", version = "3.0.0" }
-typst-syntax = { version = "0.14.2" }
+typst-syntax = { version = "0.15.1" }
 ordered-float = { version = "5.3.0", features = ["serde"] }
 itertools = "0.15.0"
 paste = "1.0.14"
