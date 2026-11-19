@@ -4893,6 +4893,13 @@
 						},
 						{
 							"Bool": {
+								"name": "CommandLine",
+								"state": true,
+								"label": "Command Line"
+							}
+						},
+						{
+							"Bool": {
 								"name": "CompeteWithEachOther",
 								"state": true,
 								"label": "Compete with each other"
