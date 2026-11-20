@@ -98,11 +98,21 @@ pub fn lint_to_code_actions<'a>(
             Some(vec![orig.clone().into(), uri.to_string().into()]),
         )));
 
-        results.push(CodeActionOrCommand::Command(Command::new(
-            format!("Add \"{orig}\" to the workspace dictionary."),
-            "HarperAddToWSDict".to_string(),
-            Some(vec![orig.clone().into(), uri.to_string().into()]),
-        )));
+        let title = format!("Add \"{orig}\" to the workspace dictionary.");
+        results.push(CodeActionOrCommand::CodeAction(CodeAction {
+            title: title.clone(),
+            kind: Some(CodeActionKind::QUICKFIX),
+            diagnostics: None,
+            edit: None,
+            command: Some(Command::new(
+                title,
+                "HarperAddToWSDict".to_string(),
+                Some(vec![orig.clone().into(), uri.to_string().into()]),
+            )),
+            is_preferred: None,
+            disabled: None,
+            data: None,
+        }));
 
         results.push(CodeActionOrCommand::Command(Command::new(
             format!("Add \"{orig}\" to the file dictionary."),
