@@ -85,9 +85,22 @@ impl ExprLinter for CurrentlyTheseDays {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::tests::{assert_good_and_bad_suggestions, assert_suggestion_result};
 
     use super::CurrentlyTheseDays;
+
+    #[test]
+    fn holotype() {
+        assert_good_and_bad_suggestions(
+            "Now this app is called Floorplan, and it's an open source project and is currently getting a lot of traction these days.",
+            CurrentlyTheseDays::default(),
+            &[
+                "Now this app is called Floorplan, and it's an open source project and is currently getting a lot of traction.",
+                "Now this app is called Floorplan, and it's an open source project and is getting a lot of traction these days.",
+            ],
+            &[],
+        );
+    }
 
     #[test]
     fn c_td() {
