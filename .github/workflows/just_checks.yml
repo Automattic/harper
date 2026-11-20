@@ -20,9 +20,14 @@ env:
   # Plugin and Build Web checks still build it with wasm-opt, as shipped.
   DISABLE_WASM_OPT: 1
 
+# Grant each job only the token permissions it needs.
+permissions: {}
+
 jobs:
   just-checks:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read # To check out the repository.
     name: just ${{ matrix.task }}
     strategy:
       matrix:

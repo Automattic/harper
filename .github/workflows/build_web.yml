@@ -13,9 +13,14 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
   cancel-in-progress: true
 
+# Grant each job only the token permissions it needs.
+permissions: {}
+
 jobs:
   build-web:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read # To check out the repository.
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Setup node

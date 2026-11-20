@@ -5,6 +5,9 @@ on:
     branches: ["master"]
     tags: ["v*"]
 
+# Grant each job only the token permissions it needs.
+permissions: {}
+
 jobs:
   binaries:
     name: ${{ matrix.platform.project }} - ${{ matrix.platform.release_for }}
@@ -113,6 +116,8 @@ jobs:
             command: build
 
     runs-on: ${{ matrix.platform.os }}
+    permissions:
+      contents: write # Only needed on tag pushes, to attach the built files to the draft release.
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
