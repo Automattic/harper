@@ -32,5 +32,6 @@ jobs:
             Dockerfile
           build-args: |
             NODE_VERSION=${{ steps.nodenv.outputs.node-version }}-slim
+            DISABLE_WASM_OPT=${{ github.event_name == 'pull_request' && '1' || '0' }}
           extra-args: |
             --ulimit nofile=65536:65536
