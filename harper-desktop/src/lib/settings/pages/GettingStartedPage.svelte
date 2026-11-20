@@ -27,8 +27,8 @@ const allSlides: OnboardingSlide[] = [
 	},
 	{
 		id: 'accessibility',
-		title: 'Your text stays on your device',
-		lede: 'To check and correct your writing in other apps, Harper needs Accessibility permission.',
+		title: 'Nothing leaves your device',
+		lede: 'However, Harper needs Accessibility permission to check and correct your writing in other apps.',
 	},
 	{
 		id: 'integration',
