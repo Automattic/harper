@@ -39,7 +39,7 @@ jobs:
             check-desktop,
           ]
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4.0.0
       - name: Install pnpm
         uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
@@ -49,7 +49,7 @@ jobs:
           # The Rust Cache step below already caches the build.
           cache: false
       - name: Install Node.js
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version-file: ".node-version"
       - name: Install Tauri Linux dependencies
@@ -70,7 +70,7 @@ jobs:
           workspaces: |
             . -> target
             harper-desktop/src-tauri -> target
-      - uses: cargo-bins/cargo-binstall@b874e25ea559687bec77e281e9b271aa1367b624 # main
+      - uses: cargo-bins/cargo-binstall@b874e25ea559687bec77e281e9b271aa1367b624 # v1.23.0
       - name: Install `wasm-pack`
         run: cargo binstall wasm-pack --force --no-confirm
       - name: Install `cargo hack`
