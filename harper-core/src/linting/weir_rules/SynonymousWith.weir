@@ -1,0 +1,33 @@
+expr main <(synonymous for !many), for>
+
+let message "`Did you mean `synonymous with`?"
+let description "Corrects `synonymous for` to `synonymous with`"
+let kind "Usage"
+let becomes "with"
+
+test "Lester was synonymous for injecting muscle into heavily modified XJS's." "Lester was synonymous with injecting muscle into heavily modified XJS's."
+test "That's just the initials given in quality control, which more and more people began using as synonymous for having good quality." "That's just the initials given in quality control, which more and more people began using as synonymous with having good quality."
+test "when the `flex-direction` is `column`, `justify-content` becomes synonymous for \"vertical alignment\"" "when the `flex-direction` is `column`, `justify-content` becomes synonymous with \"vertical alignment\""
+test "This leaves the perl5 tag largely unused and synonymous for perl." "This leaves the perl5 tag largely unused and synonymous with perl."
+test "When refresh_rate is set to non-positive, it is synonymous for GLFW." "When refresh_rate is set to non-positive, it is synonymous with GLFW."
+
+# Handled edge cases
+
+allows "Patrick Stewart, synonymous for many with Captain Picard..."
+allows "They are synonymous, for they denote the same thing."
+
+# Unhandled edge cases
+
+# 1. Should allow, but not yet handled
+
+#allows "Efficiency and performance are synonymous for CPUs."
+#allows "It is expected though might be a bit surprising given both extensions are largely synonymous for C/C++"
+
+# 2. Different errors involving "synonymous" are not handled by this linter:
+
+# Word2vec is unlikely an appropriate technology to find synonymous for words. -> "synonyms"
+# Is the word "algorithm" synonymous for "model" in the context of statistics?" -> "a synonym"
+# do you know which Mondo term is synonymous for Transthyretin Amyloid Cardiomyopathy? -> "a synonym"
+# Nope, string is a synonymous for String -> "synonym"
+# I'd suggest to merge lodash-es into tag lodash, or at least make it a synonymous for it. -> "synonym"
+# Is \"full seek\" a synonymous for worst case time to reach a position occurring less than 1% of working time? -> s/a synonymous for/synonymous with/
