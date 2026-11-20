@@ -18,6 +18,7 @@ impl Integration {
             "com.hnc.Discord",
             "ru.keepcoder.Telegram",
             "com.bloombuilt.dayone-mac",
+            "app.coffee.mac",
         ];
 
         #[cfg(target_os = "windows")]
