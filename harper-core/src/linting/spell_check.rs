@@ -350,6 +350,31 @@ mod tests {
     }
 
     #[test]
+    fn ize_words_in_british_dialect() {
+        assert_lint_count(
+            "We realize the organization will capitalize on it, so analyze it.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            4,
+        );
+    }
+
+    #[test]
+    fn ize_words_outside_british_dialect() {
+        for dialect in [
+            Dialect::American,
+            Dialect::Canadian,
+            Dialect::Australian,
+            Dialect::Indian,
+        ] {
+            assert_lint_count(
+                "We realize the organization will capitalize on it, so analyze it.",
+                SpellCheck::new(FstDictionary::curated(), dialect),
+                0,
+            );
+        }
+    }
+
+    #[test]
     fn canadian_words_in_australian_dialect() {
         assert_lint_count(
             "Does your mom like yogourt?",

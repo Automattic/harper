@@ -258,8 +258,8 @@
 # NPl            P  ISg/D$+ NSg/VB/J+ NPl/V3+ . VB/C D/P NSg      P  Dq+  VXB   NSg/VB     D/P
 > Quorum to do  Business ; but     a   smaller Number      may     adjourn from day     to day    , and
 # NSg    P  VXB N🅪Sg/J+  . NSg/C/P D/P NSg/JC  N🅪Sg/VB/JC+ NPr/VXB VB      P    NPr🅪Sg+ P  NPr🅪Sg . VB/C
-> may     be       authorized to compel the Attendance of absent     Members , in        such  Manner ,
-# NPr/VXB NSg/VLXB VP/J       P  VB     D   N🅪Sg       P  NSg/VB/J/P NPl/V3+ . NPr/J/R/P NSg/I NSg+   .
+> may     be       authorized   to compel the Attendance of absent     Members , in        such  Manner ,
+# NPr/VXB NSg/VLXB VP/J/NoAm/Au P  VB     D   N🅪Sg       P  NSg/VB/J/P NPl/V3+ . NPr/J/R/P NSg/I NSg+   .
 > and  under   such  Penalties as    each House   may     provide .
 # VB/C NSg/J/P NSg/I NPl+      R/C/P Dq   NPr/VB+ NPr/VXB VB      .
 >
@@ -421,7 +421,7 @@
 >
 #
 > To establish an  uniform  Rule   of Naturalization , and  uniform  Laws    on  the subject
-# P  VB        D/P NSg/VB/J NSg/VB P  Nᴹ             . VB/C NSg/VB/J NPl/V3+ J/P D   NSg/VB/J
+# P  VB        D/P NSg/VB/J NSg/VB P  Nᴹ/NoAm/Au     . VB/C NSg/VB/J NPl/V3+ J/P D   NSg/VB/J
 > of Bankruptcies throughout the United States    ;
 # P  NPl+         P          D   VP/J   NPrPl/V3+ .
 >
@@ -534,8 +534,8 @@
 #
 >
 #
-> To provide for   organizing , arming  , and  disciplining , the Militia , and  for
-# P  VB      R/C/P Nᴹ/Vg/J    . Nᴹ/Vg/J . VB/C Nᴹ/Vg/J      . D   NSg     . VB/C R/C/P
+> To provide for   organizing      , arming  , and  disciplining , the Militia , and  for
+# P  VB      R/C/P Nᴹ/Vg/J/NoAm/Au . Nᴹ/Vg/J . VB/C Nᴹ/Vg/J      . D   NSg     . VB/C R/C/P
 > governing such  Part     of them     as    may     be       employed in        the Service of the United
 # Nᴹ/Vg/J   NSg/I NSg/VB/J P  NSg/IPl+ R/C/P NPr/VXB NSg/VLXB VP/J     NPr/J/R/P D   N🅪Sg/VB P  D   VP/J
 > States    , reserving to the States    respectively , the Appointment of the Officers ,
@@ -1264,8 +1264,8 @@
 # HeadingStart NSg/VB+ . # .
 >
 #
-> All           persons born     or    naturalized in        the United States    , and
-# NSg/I/J/C/Dq+ NPl/V3+ NPr/VB/J NPr/C VP/J        NPr/J/R/P D   VP/J   NPrPl/V3+ . VB/C
+> All           persons born     or    naturalized  in        the United States    , and
+# NSg/I/J/C/Dq+ NPl/V3+ NPr/VB/J NPr/C VP/J/NoAm/Au NPr/J/R/P D   VP/J   NPrPl/V3+ . VB/C
 > subject   to the jurisdiction thereof , are citizens of the United States    and  of
 # NSg/VB/J+ P  D   N🅪Sg+        R       . VLB NPl      P  D   VP/J   NPrPl/V3+ VB/C P
 > the State    wherein they reside   . No        State    shall make   or    enforce any     law      which
@@ -1360,8 +1360,8 @@
 #
 > The validity of the public  debt of the United States    ,
 # D   NSg      P  D   Nᴹ/VB/J N🅪Sg P  D+  VP/J   NPrPl/V3+ .
-> authorized by law      , including debts incurred for   payment of pensions and
-# VP/J       P  N🅪Sg/VB+ . Nᴹ/Vg/J   NPl+  VP       R/C/P N🅪Sg    P  NPl/V3   VB/C
+> authorized   by law      , including debts incurred for   payment of pensions and
+# VP/J/NoAm/Au P  N🅪Sg/VB+ . Nᴹ/Vg/J   NPl+  VP       R/C/P N🅪Sg    P  NPl/V3   VB/C
 > bounties for   services in        suppressing insurrection or    rebellion , shall not     be
 # NPl/V3   R/C/P NPl/V3+  NPr/J/R/P Nᴹ/Vg/J     N🅪Sg         NPr/C N🅪Sg+     . VXB   NSg/R/C NSg/VLXB
 > questioned . But     neither the United States    nor   any     State    shall assume or    pay      any

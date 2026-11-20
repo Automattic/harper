@@ -240,8 +240,8 @@
 # D+  N🅪Sg/VB+ VL3 R/C/P NPr/VB VB/C NPr$    NSg+        .
 > This    medicine is  for   your cough   .
 # I/Ddem+ N🅪Sg/VB+ VL3 R/C/P D$+  NSg/VB+ .
-> He       wouldn't apologize ; and  just for   that      , she  refused to help   him  .
-# NPr/ISg+ VXB      VB        . VB/C J/R  R/C/P I/C/Ddem+ . ISg+ VP/J    P  NSg/VB ISg+ .
+> He       wouldn't apologize  ; and  just for   that      , she  refused to help   him  .
+# NPr/ISg+ VXB      VB/NoAm/Au . VB/C J/R  R/C/P I/C/Ddem+ . ISg+ VP/J    P  NSg/VB ISg+ .
 > He       looks  better     for   having  lost weight   . ( UK   usage )
 # NPr/ISg+ NPl/V3 NSg/VXB/JC R/C/P Nᴹ/Vg/J VP/J N🅪Sg/VB+ . . NPr+ N🅪Sg+ .
 > She  was  the worse     for   drink   .

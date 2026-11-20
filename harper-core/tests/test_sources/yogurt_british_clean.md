@@ -1,6 +1,6 @@
 The following essay should produce no errors when Harper is set to British English.
 
-Yoghurt, a simple yet remarkably versatile food, has a rich history that stretches back thousands of years. Originating from the ancient civilizations of the Middle East and Central Asia, yoghurt has transcended geographical boundaries, becoming a staple in diets around the globe.
+Yoghurt, a simple yet remarkably versatile food, has a rich history that stretches back thousands of years. Originating from the ancient civilisations of the Middle East and Central Asia, yoghurt has transcended geographical boundaries, becoming a staple in diets around the globe.
 
 Historically, yoghurt was discovered by chance, likely from milk stored in warm climates naturally turning into a cultured product. This process, involving beneficial bacteria, not only preserves milk but also enhances its nutritional value, digestibility, and flavour. Over centuries, yoghurt evolved from a basic dietary component into a diverse food enjoyed in numerous culinary traditions.
 

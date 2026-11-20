@@ -202,8 +202,8 @@
 # I/Ddem+ NSg+   V3  VLPp/B VP/J R/C/P J           NPl/V3  P  NSg/VB+ . N🅪Sg      VB/C P
 > part      - of - speech   and  inspired the development of similar " tagged " corpora in        many
 # NSg/VB/J+ . P  . N🅪Sg/VB+ VB/C VP/J     D   N🅪Sg        P  NSg/J   . VP/J   . NPl+    NPr/J/R/P NSg/I/J/Dq
-> other    languages . Statistics derived by analyzing it       formed the basis for   most
-# NSg/VB/J NPl+      . NPl/V3+    VP/J    P  Nᴹ/Vg/J   NSg/ISg+ VP/J   D+  NSg+  R/C/P NSg/I/J/R/Dq
+> other    languages . Statistics derived by analyzing       it       formed the basis for   most
+# NSg/VB/J NPl+      . NPl/V3+    VP/J    P  Nᴹ/Vg/J/NoAm/Au NSg/ISg+ VP/J   D+  NSg+  R/C/P NSg/I/J/R/Dq
 > later part      - of - speech   tagging systems , such  as    CLAWS   and  VOLSUNGA . However , by
 # JC/R  NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg  NPl+    . NSg/I R/C/P NPl/V3+ VB/C ?        . C       . P
 > this    time       ( 2005 ) it       has been   superseded by larger corpora such  as    the 100
@@ -222,8 +222,8 @@
 # NSg/VB/J P  N🅪Sg/VB+ NSg/VXB NSg/VLXB NSg/VP/J C/P     N🅪Sg/Vg/J+    D   NPl+      NPr/C NSg/VB/J/R D
 > pragmatics of the context  . This    is  extremely expensive , especially because
 # NPl        P  D   N🅪Sg/VB+ . I/Ddem+ VL3 R         J         . R          C/P
-> analyzing the higher  levels  is  much         harder when    multiple part     - of - speech
-# Nᴹ/Vg/J   D+  NSg/JC+ NPl/V3+ VL3 NSg/I/J/R/Dq JC     NSg/I/C NSg/J/Dq NSg/VB/J . P  . N🅪Sg/VB+
+> analyzing       the higher  levels  is  much         harder when    multiple part     - of - speech
+# Nᴹ/Vg/J/NoAm/Au D+  NSg/JC+ NPl/V3+ VL3 NSg/I/J/R/Dq JC     NSg/I/C NSg/J/Dq NSg/VB/J . P  . N🅪Sg/VB+
 > possibilities must    be       considered for   each word    .
 # NPl+          NSg/VXB NSg/VLXB VP/J       R/C/P Dq+  NSg/VB+ .
 >
@@ -351,7 +351,7 @@
 > levels of processing ; this    , in        turn   , simplified the theory and  practice of
 # NPl/V3 P  Nᴹ/Vg/J+   . I/Ddem+ . NPr/J/R/P NSg/VB . VP/J       D   N🅪Sg   VB/C NSg/VB   P
 > computerized language analysis and  encouraged researchers to find   ways to
-# VP/J         N🅪Sg+    N🅪Sg+    VB/C VP/J       NPl+        P  NSg/VB NPl+ P
+# VP/J/NoAm/Au N🅪Sg+    N🅪Sg+    VB/C VP/J       NPl+        P  NSg/VB NPl+ P
 > separate other    pieces  as    well       . Markov Models  became the standard method for   the
 # NSg/VB/J NSg/VB/J NPl/V3+ R/C/P NSg/VB/J/R . NPr    NPl/V3+ VPt    D   NSg/J    NSg+   R/C/P D
 > part      - of - speech   assignment .
@@ -404,8 +404,8 @@
 # NSg/VB/J+ NPl     NPr/VXB I/C/Dq NSg/VLXB VP/J        Nᴹ/Vg/J D   ?       NSg       . D+
 > rule    - based Brill tagger is  unusual in        that     it       learns a   set       of rule    patterns , and
 # NSg/VB+ . VP/J  NSg/J NSg    VL3 NSg/J   NPr/J/R/P I/C/Ddem NSg/ISg+ NPl/V3 D/P NPr/VBP/J P  NSg/VB+ NPl/V3+  . VB/C
-> then      applies those  patterns rather than optimizing a   statistical quantity .
-# NSg/J/R/C V3      I/Ddem NPl/V3+  NPr/R  C/P  Nᴹ/Vg/J    D/P J           N🅪Sg+    .
+> then      applies those  patterns rather than optimizing      a   statistical quantity .
+# NSg/J/R/C V3      I/Ddem NPl/V3+  NPr/R  C/P  Nᴹ/Vg/J/NoAm/Au D/P J           N🅪Sg+    .
 >
 #
 > Many        machine learning methods have    also been   applied to the problem of POS
@@ -435,6 +435,6 @@
 >
 #
 > In        2014 , a    paper      reporting using   the structure regularization method for
-# NPr/J/R/P #    . D/P+ N🅪Sg/VB/J+ Nᴹ/Vg/J   Nᴹ/Vg/J D   N🅪Sg/VB+  N🅪Sg           NSg    R/C/P
+# NPr/J/R/P #    . D/P+ N🅪Sg/VB/J+ Nᴹ/Vg/J   Nᴹ/Vg/J D   N🅪Sg/VB+  N🅪Sg/NoAm/Au   NSg    R/C/P
 > part      - of - speech   tagging , achieving 97.36 % on  a   standard benchmark dataset .
 # NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg  . Nᴹ/Vg/J   #     . J/P D/P NSg/J    NSg/VB    NSg     .

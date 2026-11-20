@@ -14,10 +14,10 @@
 # D$+ NSg/VB/J/Comm+ N🅪Sg/VB/J/Am+ VL3 W?  .
 > I       must    defend my  honour        !
 # ISg/#r+ NSg/VXB NSg/VB D$+ N🅪Sg/VB/Comm+ .
-> I       recognize that     you    recognise me       .
-# ISg/#r+ VB        I/C/Ddem ISgPl+ VB/Au/Br  NPr/ISg+ .
-> I       analyze how   you    infantilize me       .
-# ISg/#r+ VB      NSg/C ISgPl+ VB          NPr/ISg+ .
+> I       recognize  that     you    recognise me       .
+# ISg/#r+ VB/NoAm/Au I/C/Ddem ISgPl+ VB/Au/Br  NPr/ISg+ .
+> I       analyze    how   you    infantilize me       .
+# ISg/#r+ VB/NoAm/Au NSg/C ISgPl+ VB/NoAm/Au  NPr/ISg+ .
 > I       analyse  how   you    infantilise me       .
 # ISg/#r+ VB/Au/Br NSg/C ISgPl+ VB/Au/Br    NPr/ISg+ .
 > Careful , traveller !
