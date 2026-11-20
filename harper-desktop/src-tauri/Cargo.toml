@@ -66,7 +66,7 @@ objc2-foundation = { version = "0.3.2", default-features = false, features = [
     "objc2-core-foundation",
 ] }
 accessibility-sys = "0.2.0"
-core-graphics = "0.25.0"
+core-graphics = { version = "0.25.0", features = ["elcapitan"] }
 
 [target.'cfg(target_os = "windows")'.dependencies]
 windows = { version = "0.62.2", features = [
