@@ -1,0 +1,23 @@
+expr main <(![dependence, effect, emphasis, focus, hands, impact, influence, reflection, reliance] on practice !NOUN), on>
+
+let message "Did you mean `in practice`?"
+let description "Corrects `on practice` to `in practice`."
+let kind "Usage"
+let becomes "in"
+
+test "What it means on practice is, prohibit Fable read and write code, and instruct to orchestrate subagents instead." "What it means in practice is, prohibit Fable read and write code, and instruct to orchestrate subagents instead."
+test "It's reasonably strong, so that on practice you can trust it to verify the properties it verifies." "It's reasonably strong, so that in practice you can trust it to verify the properties it verifies."
+
+# "on practice" at the end: does the ! operator need a token? Do we need an alternative with an END anchor?
+
+#test "This likely wouldn't work on practice." "This likely wouldn't work in practice."
+
+allows "The impact on practice is clear"
+allows "DevOps labs for guided hands-on practice by LabEx."
+allows "Hands on practice with the book Hands-On Large Language Model 3rd Edition"
+allows "unlike drilling yourself on practice problems, the vast majority of time spent contributing to an existing project will be spent reading"
+
+# "on practice" at the start: does the ! operator need a token? Do we need an alternative with a START anchor?
+
+#test "on practice it works" "in practice it works"
+#test "on practice, it works" "in practice, it works"
