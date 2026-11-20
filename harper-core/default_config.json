@@ -6153,6 +6153,13 @@
 						},
 						{
 							"Bool": {
+								"name": "SynonymousWith",
+								"state": true,
+								"label": "Synonymous with"
+							}
+						},
+						{
+							"Bool": {
 								"name": "TakeControlOf",
 								"state": true,
 								"label": "Take Control of"
