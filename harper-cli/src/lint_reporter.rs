@@ -32,6 +32,11 @@ pub fn single_input_report(
         return;
     }
 
+    // Inputs may be linted in parallel, so hold the stdout lock while this input's report is
+    // printed to keep it from interleaving with reports from other threads.
+    // The lock is reentrant, so the `println!`s below can still take it.
+    let _stdout_lock = std::io::stdout().lock();
+
     let FullInputInfo { input, doc, source } = input_info;
     let (lint_count_before, lint_count_after) = lint_count;
 
