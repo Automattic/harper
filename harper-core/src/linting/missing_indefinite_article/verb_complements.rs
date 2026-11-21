@@ -1,13 +1,13 @@
 use super::phrase::{ArticlePhrase, lint_phrases, previous};
 use crate::{
-    CharStringExt, Dialect, Document, Token,
+    CharStringExt, EnglishDialect, Document, Token,
     linting::{Lint, Linter},
 };
 use harper_brill::UPOS;
 
 /// Checks objects and nominal predicates after verbs, excluding auxiliary
 /// constructions and coordinated adjective predicates.
-pub(super) struct VerbComplements(pub Dialect);
+pub(super) struct VerbComplements(pub EnglishDialect);
 
 impl Linter for VerbComplements {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {

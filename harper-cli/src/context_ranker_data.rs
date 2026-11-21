@@ -6,7 +6,7 @@ use harper_context_ranker::{MAX_CANDIDATES, SentenceWord, Speller};
 use harper_core::language_detection::is_likely_english;
 use harper_core::parsers::{Parser, PlainEnglish};
 use harper_core::spell::{Dictionary, FstDictionary, context_word, spelling_candidates};
-use harper_core::{CharStringExt, Dialect, TokenStringExt};
+use harper_core::{CharStringExt, EnglishDialect, TokenStringExt};
 
 pub struct CuratedSpeller {
     dictionary: Arc<FstDictionary>,
@@ -54,7 +54,7 @@ impl Speller for CuratedSpeller {
         spelling_candidates(
             typo,
             self.dictionary.as_ref(),
-            Dialect::American,
+            EnglishDialect::American,
             MAX_CANDIDATES,
         )
         .into_iter()

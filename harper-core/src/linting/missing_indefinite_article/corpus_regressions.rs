@@ -1,6 +1,6 @@
 use super::MissingIndefiniteArticle;
 use crate::{
-    Dialect, Document,
+    EnglishDialect, Document,
     linting::{
         Linter,
         tests::{assert_first_suggestion_result, assert_no_lints},
@@ -11,9 +11,9 @@ macro_rules! allows {
     ($($name:ident: $text:literal;)*) => {$(
         #[test]
         fn $name() {
-            assert_no_lints($text, MissingIndefiniteArticle::new(Dialect::American));
+            assert_no_lints($text, MissingIndefiniteArticle::new(EnglishDialect::American));
             let document = Document::new_markdown_default_curated($text);
-            assert!(MissingIndefiniteArticle::new(Dialect::American).lint(&document).is_empty(), "Markdown: {}", $text);
+            assert!(MissingIndefiniteArticle::new(EnglishDialect::American).lint(&document).is_empty(), "Markdown: {}", $text);
         }
     )*};
 }
@@ -21,8 +21,8 @@ macro_rules! corrects {
     ($($name:ident: $input:literal => $expected:literal;)*) => {$(
         #[test]
         fn $name() {
-            assert_no_lints($expected, MissingIndefiniteArticle::new(Dialect::American));
-            assert_first_suggestion_result($input, MissingIndefiniteArticle::new(Dialect::American), $expected);
+            assert_no_lints($expected, MissingIndefiniteArticle::new(EnglishDialect::American));
+            assert_first_suggestion_result($input, MissingIndefiniteArticle::new(EnglishDialect::American), $expected);
         }
     )*};
 }

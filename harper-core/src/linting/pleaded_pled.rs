@@ -125,11 +125,13 @@ mod tests {
 
     #[test]
     fn by_default_one_must_be_enabled_and_one_must_be_disabled() {
-        use crate::Dialect;
+        use crate::EnglishDialect;
         use crate::spell::FstDictionary;
 
-        let mut lg =
-            crate::linting::LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
+        let mut lg = crate::linting::LintGroup::new_curated(
+            FstDictionary::curated(),
+            EnglishDialect::American,
+        );
         lg.config.unset_rule_enabled("SpellCheck");
 
         assert_lint_count("I say 'pled' but you say 'pleaded'.", lg, 1);

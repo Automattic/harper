@@ -1,7 +1,7 @@
 use harper_brill::UPOS;
 
 use crate::{
-    CharStringExt, Dialect, Document, Span, Token, TokenStringExt,
+    CharStringExt, EnglishDialect, Document, Span, Token, TokenStringExt,
     indefinite_article::{InitialSound, starts_with_vowel},
     linting::{Lint, LintKind, Suggestion},
 };
@@ -32,7 +32,7 @@ pub(super) fn previous<'a>(tokens: &'a [Token], phrase: &ArticlePhrase<'_>) -> O
 /// The callback owns grammatical-context decisions, not phrase scanning.
 pub(super) fn lint_phrases(
     document: &Document,
-    dialect: Dialect,
+    dialect: EnglishDialect,
     accepts: impl Fn(&[Token], &ArticlePhrase<'_>, &[char]) -> bool,
 ) -> Vec<Lint> {
     let source = document.get_source();
@@ -100,7 +100,7 @@ pub(super) fn suggest_article(
     tokens: &[Token],
     phrase: &ArticlePhrase<'_>,
     source: &[char],
-    dialect: Dialect,
+    dialect: EnglishDialect,
 ) -> Option<Lint> {
     let first = phrase.first;
     if phrase.start != 0
