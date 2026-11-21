@@ -9,35 +9,47 @@ use crate::{Document, LSend, Span, Token};
 
 mod any_pattern;
 mod derived_from;
-mod implies_quantity;
-mod indefinite_article;
-mod inflection_of_be;
 mod invert;
-mod modal_verb;
 mod nominal_phrase;
-mod prepositional_preceder;
-mod relative_pronoun;
 mod upos_set;
 mod whitespace_pattern;
 mod within_edit_distance;
 mod word;
 mod word_set;
 
+use crate::lang::en::patterns as en;
+
 pub use any_pattern::AnyPattern;
 pub use derived_from::DerivedFrom;
-pub use implies_quantity::ImpliesQuantity;
-pub use indefinite_article::IndefiniteArticle;
-pub use inflection_of_be::InflectionOfBe;
 pub use invert::Invert;
-pub use modal_verb::ModalVerb;
 pub use nominal_phrase::NominalPhrase;
-pub use prepositional_preceder::{PrepositionalPrecederPattern, prepositional_preceder};
-pub use relative_pronoun::RelativePronoun;
 pub use upos_set::UPOSSet;
 pub use whitespace_pattern::WhitespacePattern;
 pub use within_edit_distance::WithinEditDistance;
 pub use word::Word;
 pub use word_set::WordSet;
+
+// English patterns used to live here. They are in `lang::en::patterns` now.
+#[deprecated(note = "English only: use `harper_core::lang::en::patterns::ImpliesQuantity`")]
+pub type ImpliesQuantity = en::ImpliesQuantity;
+#[deprecated(note = "English only: use `harper_core::lang::en::patterns::IndefiniteArticle`")]
+pub type IndefiniteArticle = en::IndefiniteArticle;
+#[deprecated(note = "English only: use `harper_core::lang::en::patterns::InflectionOfBe`")]
+pub type InflectionOfBe = en::InflectionOfBe;
+#[deprecated(note = "English only: use `harper_core::lang::en::patterns::ModalVerb`")]
+pub type ModalVerb = en::ModalVerb;
+#[deprecated(
+    note = "English only: use `harper_core::lang::en::patterns::PrepositionalPrecederPattern`"
+)]
+pub type PrepositionalPrecederPattern = en::PrepositionalPrecederPattern;
+#[deprecated(note = "English only: use `harper_core::lang::en::patterns::RelativePronoun`")]
+pub type RelativePronoun = en::RelativePronoun;
+
+/// The shared [`PrepositionalPrecederPattern`](en::PrepositionalPrecederPattern).
+#[deprecated(note = "English only: use `harper_core::lang::en::patterns::prepositional_preceder`")]
+pub fn prepositional_preceder() -> &'static en::PrepositionalPrecederPattern {
+    en::prepositional_preceder()
+}
 
 pub trait Pattern: LSend {
     /// Check if the pattern matches at the start of the given token slice.

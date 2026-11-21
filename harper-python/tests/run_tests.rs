@@ -1,6 +1,6 @@
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::spell::FstDictionary;
-use harper_core::{Dialect, Document};
+use harper_core::{Document, EnglishDialect};
 use harper_python::PythonParser;
 
 /// Creates a unit test checking Python source code parsing.
@@ -21,7 +21,7 @@ macro_rules! create_test {
                  let dict = FstDictionary::curated();
                  let document = Document::new(&source, &parser, &dict);
 
-                 let mut linter = LintGroup::new_curated(dict, Dialect::American);
+                 let mut linter = LintGroup::new_curated(dict, EnglishDialect::American);
                  let lints = linter.lint(&document);
 
                  dbg!(&lints);
