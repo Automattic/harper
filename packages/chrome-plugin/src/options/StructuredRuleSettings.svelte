@@ -236,7 +236,10 @@ function buildRenderNodes(
 				continue;
 			}
 
-			const name = setting.OneOfMany.name ?? setting.OneOfMany.labels?.join(' / ') ?? 'Choose one';
+			// Prefer the readable labels, as a `PreferIse` heading is hard to read.
+			const name =
+				setting.OneOfMany.labels?.join(' / ') ??
+				(setting.OneOfMany.name ? startCase(setting.OneOfMany.name) : 'Choose one');
 			const value = oneOfManyValue(setting.OneOfMany);
 			// Describe the chosen rule, or the first one while the setting is on its default.
 			const describedRule = value === 'default' ? setting.OneOfMany.names[0] : value;
