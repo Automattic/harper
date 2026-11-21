@@ -115,6 +115,14 @@ pub fn try_make_title_case(
             continue;
         }
 
+        // Tracks whether the proper-noun canonical-capitalization pass below
+        // wrote an intentionally camelCase form (e.g., `iPhone`, `eBay`,
+        // `macOS`). When true, the title-case rules below must not overwrite
+        // that intentional lowercase first letter. Detected via the
+        // dictionary's pre-computed `LOWER_CAMEL` orthography flag rather
+        // than by re-inspecting the canonical string.
+        let mut canonical_is_camel_case = false;
+
         if let Some(Some(metadata)) = word.kind.as_word()
             && metadata.is_proper_noun()
         {
@@ -128,6 +136,8 @@ pub fn try_make_title_case(
                         set_output_char(word.span.start - start_index + i, *c);
                     }
                 }
+
+                canonical_is_camel_case = metadata.is_lower_camel();
             }
         };
 
@@ -143,18 +153,24 @@ pub fn try_make_title_case(
             || is_first_alphabetic_word
             || word_likes.peek().is_none();
 
-        if should_capitalize {
-            set_output_char(
-                word.span.start - start_index,
-                relevant_text[word.span.start - start_index].to_ascii_uppercase(),
-            );
-        } else {
-            // The whole word should be lowercase.
-            for i in word.span {
+        // The generic title-case rules below would overwrite the
+        // intentional lowercase first letter of a camelCase canonical
+        // (e.g., `iCloud` → `ICloud`). Skip them in that case; the
+        // proper-noun pass above has already written the correct form.
+        if !canonical_is_camel_case {
+            if should_capitalize {
                 set_output_char(
-                    i - start_index,
-                    relevant_text[i - start_index].to_ascii_lowercase(),
+                    word.span.start - start_index,
+                    relevant_text[word.span.start - start_index].to_ascii_uppercase(),
                 );
+            } else {
+                // The whole word should be lowercase.
+                for i in word.span {
+                    set_output_char(
+                        i - start_index,
+                        relevant_text[i - start_index].to_ascii_lowercase(),
+                    );
+                }
             }
         }
 
@@ -197,6 +213,7 @@ fn should_capitalize_token(tok: &Token, source: &[char]) -> bool {
             !is_short_preposition
                 && !chars.eq_any_ignore_ascii_case_str(&["and", "but", "for", "or", "nor", "as"])
                 && !chars.eq_any_ignore_ascii_case_str(&["a", "an", "the"])
+                && !(chars.len() == 1 && chars[0] == 'x')
         }
         _ => true,
     }
@@ -269,6 +286,30 @@ mod tests {
         assert_eq!(
             make_title_case_str("videopress", &PlainEnglish, &FstDictionary::curated()),
             "VideoPress"
+        )
+    }
+
+    #[test]
+    fn preserves_icloud_camel_case_mid_sentence() {
+        assert_eq!(
+            make_title_case_str(
+                "she backs up photos to icloud",
+                &PlainEnglish,
+                &FstDictionary::curated()
+            ),
+            "She Backs up Photos to iCloud",
+        )
+    }
+
+    #[test]
+    fn preserves_icloud_camel_case_as_first_word() {
+        assert_eq!(
+            make_title_case_str(
+                "icloud syncs your files",
+                &PlainEnglish,
+                &FstDictionary::curated()
+            ),
+            "iCloud Syncs Your Files",
         )
     }
 
@@ -628,6 +669,34 @@ mod tests {
                 &FstDictionary::curated()
             ),
             "# Meeting at 9:05am"
+        );
+    }
+
+    #[test]
+    fn standalone_x_stays_lowercase_between_words() {
+        assert_eq!(
+            make_title_case_str(
+                "Project 1 x Project 2",
+                &PlainEnglish,
+                &FstDictionary::curated()
+            ),
+            "Project 1 x Project 2",
+        );
+    }
+
+    #[test]
+    fn standalone_x_stays_lowercase_at_start_is_capitalized() {
+        assert_eq!(
+            make_title_case_str("x marks the spot", &PlainEnglish, &FstDictionary::curated()),
+            "X Marks the Spot",
+        );
+    }
+
+    #[test]
+    fn standalone_x_stays_lowercase_as_last_word_is_capitalized() {
+        assert_eq!(
+            make_title_case_str("project x", &PlainEnglish, &FstDictionary::curated()),
+            "Project X",
         );
     }
 }

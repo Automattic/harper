@@ -1,0 +1,33 @@
+expr explain [explain, explains, explained, explaining]
+# "Can someone explain me to myself?" is correct: `me` is what gets explained.
+expr main <[(@explain me ![to, NOUN, PROG]), (@explain me,)], me>
+
+let message "Use `explain to me`, or put the thing first: `explain it to me`."
+let description "Corrects `explain me` to `explain to me`."
+let kind "Grammar"
+let scope "Sentence"
+let becomes "to me"
+let strategy "MatchCase"
+
+# real sentences from Hacker News
+test "Sorry, can somebody explain me how this works?" "Sorry, can somebody explain to me how this works?"
+test "could you explain me how you are rendering maths symbol without mathjax ?" "could you explain to me how you are rendering maths symbol without mathjax ?"
+test "Could you please explain me the difference?" "Could you please explain to me the difference?"
+# made-up sentences
+test "She explained me why the build failed." "She explained to me why the build failed."
+test "Please explain me what happened." "Please explain to me what happened."
+test "He keeps explaining me the same thing." "He keeps explaining to me the same thing."
+test "CAN YOU EXPLAIN ME THE PROCESS?" "CAN YOU EXPLAIN TO ME THE PROCESS?"
+test "Can you explain me, briefly, the plan?" "Can you explain to me, briefly, the plan?"
+
+# correct text
+allows "Can you explain the process to me?"
+allows "Could you explain to me why it failed?"
+allows "She explained it to me."
+allows "Let me explain."
+# real look-alikes that must not be flagged (Hacker News)
+allows "Can someone explain me to myself?"
+# made-up look-alikes
+allows "Explain me to my parents, please."
+allows "They asked me to explain."
+allows "Nobody could explain me being here."

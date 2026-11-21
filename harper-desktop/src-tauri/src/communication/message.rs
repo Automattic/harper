@@ -1,16 +1,20 @@
-use crate::config::Integration;
+use crate::config::{InstalledWeirpack, Integration};
 use harper_core::{Dialect, IgnoredLints, linting::FlatConfig};
 use serde::{Deserialize, Serialize};
 
 /// Canonical client-to-server protocol message sent by the highlighter process.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum Request {
+    OpenSettings,
     GetLintConfig,
     GetDictionary,
+    GetWeirpacks,
     GetDialect,
     GetDebounceMs,
     GetIgnoredLints,
     GetIntegrations,
+    GetAutoEnableNewApps,
+    ResolveIntegration { bundle_id: String },
     SetLintConfig { config: FlatConfig },
     IgnoreLint { ignored_lints: IgnoredLints },
     AddToDictionary { word: String },
@@ -24,10 +28,13 @@ pub enum Request {
 pub enum Response {
     GetLintConfig { config: FlatConfig },
     GetDictionary { words: Vec<String> },
+    GetWeirpacks { packs: Vec<InstalledWeirpack> },
     GetDialect { dialect: Dialect },
     GetDebounceMs { debounce_ms: u64 },
     GetIgnoredLints { ignored_lints: IgnoredLints },
     GetIntegrations { integrations: Vec<Integration> },
+    GetAutoEnableNewApps { enabled: bool },
+    ResolveIntegration { enabled: bool },
     Ack,
 }
 

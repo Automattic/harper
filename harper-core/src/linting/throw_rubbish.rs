@@ -1,3 +1,4 @@
+/// See also the linter `ThrowBabyWithBathwater` for a related pattern.
 use std::sync::LazyLock;
 
 use super::{Lint, LintKind, Linter};

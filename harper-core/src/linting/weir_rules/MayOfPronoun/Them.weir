@@ -1,6 +1,6 @@
 expr main (may of them)
 let message "Did you mean `many of them`?"
-let description "Corrects the typo `may of them` to `many of them`"
+let description "Corrects the typo `may of them` to `many of them`."
 let kind "Typo"
 let becomes "many of them"
 

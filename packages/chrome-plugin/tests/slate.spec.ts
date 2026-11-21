@@ -6,7 +6,7 @@ import {
 	testMultipleSuggestionsAndUndo,
 } from './testUtils';
 
-const TEST_PAGE_URL = 'https://slatejs.org';
+const TEST_PAGE_URL = 'http://localhost:8081/slate.html';
 
 testBasicSuggestion(TEST_PAGE_URL, getSlateEditor);
 testCanIgnoreSuggestion(TEST_PAGE_URL, getSlateEditor);

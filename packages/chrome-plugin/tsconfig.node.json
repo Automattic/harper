@@ -1,8 +1,13 @@
 {
 	"compilerOptions": {
-		"composite": true,
+		"target": "ESNext",
 		"module": "ESNext",
-		"moduleResolution": "Node"
+		"moduleResolution": "bundler",
+		"allowSyntheticDefaultImports": true,
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"types": ["node", "chrome"]
 	},
-	"include": ["vite.config.ts"]
+	"include": ["vite.config.ts", "playwright.config.ts", "src/manifest.ts", "tests/**/*.ts"]
 }

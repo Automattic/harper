@@ -1,0 +1,8 @@
+expr main <([(the similar),(the very similar)] [way, fashion]), the>
+
+let message "`Similar way` requires the indefinite article `a` instead of the definite article `the` definite article `the`."
+let description "`Corrects `the similar way` to `a similar way`."
+let kind "Usage"
+let becomes "a"
+
+test "took underapproved actions, ignored orders to stop, and then denied it in the very similar fashion to Muse" "took underapproved actions, ignored orders to stop, and then denied it in a very similar fashion to Muse"

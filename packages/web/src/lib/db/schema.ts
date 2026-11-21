@@ -1,9 +1,10 @@
-import { boolean, int, mysqlTable, text, timestamp } from 'drizzle-orm/mysql-core';
+import { boolean, date, int, mysqlTable, text, timestamp } from 'drizzle-orm/mysql-core';
 
 export const uninstallFeedbackTable = mysqlTable('uninstall_feedback', {
 	id: int().autoincrement().primaryKey(),
 	feedback: text().notNull(),
 	timestamp: timestamp().notNull().defaultNow(),
+	platform: text(),
 });
 
 export const problematicLintTable = mysqlTable('problematic_lint', {
@@ -14,4 +15,17 @@ export const problematicLintTable = mysqlTable('problematic_lint', {
 	feedback: text().notNull(),
 	rule_id: text(),
 	timestamp: timestamp().notNull().defaultNow(),
+});
+
+export const domainReviewTable = mysqlTable('domain_review', {
+	id: int().autoincrement().primaryKey(),
+	works: boolean().notNull(),
+	feedback: text().notNull(),
+	domain: text().notNull(),
+	timestamp: timestamp().notNull().defaultNow(),
+});
+
+export const updateCheckCountTable = mysqlTable('update_check_counts', {
+	date: date().primaryKey(),
+	count: int().notNull(),
 });

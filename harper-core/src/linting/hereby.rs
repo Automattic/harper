@@ -45,7 +45,7 @@ impl ExprLinter for Hereby {
     }
 
     fn description(&self) -> &'static str {
-        "`Here by` in some contexts should be `hereby`"
+        "`Here by` in some contexts should be `hereby`."
     }
 }
 

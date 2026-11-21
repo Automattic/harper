@@ -1,12 +1,19 @@
 import type { Dialect, LintConfig, LintOptions, StructuredLintConfig } from 'harper.js';
 import type { UnpackedLintGroups } from 'lint-framework';
 import { LRUCache } from 'lru-cache';
-import type { ActivationKey, Hotkey, WeirpackMeta } from './protocol';
+import type {
+	ActivationKey,
+	DomainStatus,
+	Hotkey,
+	SetDomainStatusResponse,
+	WeirpackMeta,
+} from './protocol';
 
 export default class ProtocolClient {
 	private static readonly lintCache = new LRUCache<string, Promise<UnpackedLintGroups>>({
 		max: 5000,
-		ttl: 5_000,
+		ttl: 60_000,
+		ttlAutopurge: true,
 	});
 
 	private static cacheKey(text: string, domain: string, options?: LintOptions): string {
@@ -65,6 +72,7 @@ export default class ProtocolClient {
 	}
 
 	public static async setDialect(dialect: Dialect): Promise<void> {
+		this.lintCache.clear();
 		await chrome.runtime.sendMessage({ kind: 'setDialect', dialect });
 	}
 
@@ -77,6 +85,16 @@ export default class ProtocolClient {
 		await chrome.runtime.sendMessage({ kind: 'setIsolateEnglish', isolateEnglish });
 	}
 
+	/** Read whether pointer hover should open suggestion popups. */
+	public static async getOpenSuggestionsOnHover(): Promise<boolean> {
+		return (await chrome.runtime.sendMessage({ kind: 'getOpenSuggestionsOnHover' })).enabled;
+	}
+
+	/** Persist the optional hover behavior for all extension tabs. */
+	public static async setOpenSuggestionsOnHover(enabled: boolean): Promise<void> {
+		await chrome.runtime.sendMessage({ kind: 'setOpenSuggestionsOnHover', enabled });
+	}
+
 	public static async getDelay(): Promise<number> {
 		return (await chrome.runtime.sendMessage({ kind: 'getDelay' })).delay;
 	}
@@ -86,7 +104,6 @@ export default class ProtocolClient {
 	}
 
 	public static async getDomainEnabled(domain: string): Promise<boolean> {
-		this.lintCache.clear();
 		return (await chrome.runtime.sendMessage({ kind: 'getDomainStatus', domain })).enabled;
 	}
 
@@ -99,16 +116,33 @@ export default class ProtocolClient {
 		enabled: boolean,
 		overrideValue = true,
 	): Promise<void> {
-		await chrome.runtime.sendMessage({
+		const response = (await chrome.runtime.sendMessage({
 			kind: 'setDomainStatus',
 			enabled,
 			domain,
 			overrideValue,
-		});
+		})) as SetDomainStatusResponse;
+
+		if (response.changed) {
+			this.lintCache.clear();
+		}
+	}
+
+	public static async getConfiguredDomains(): Promise<DomainStatus[]> {
+		return (await chrome.runtime.sendMessage({ kind: 'getConfiguredDomains' })).domains;
+	}
+
+	public static async setDefaultDomainsEnabled(enabled: boolean): Promise<void> {
+		this.lintCache.clear();
+		await chrome.runtime.sendMessage({ kind: 'setDefaultDomainsStatus', enabled });
+	}
+
+	public static async resetDomain(domain: string): Promise<void> {
+		this.lintCache.clear();
+		await chrome.runtime.sendMessage({ kind: 'resetDomain', domain });
 	}
 
 	public static async getDefaultEnabled(): Promise<boolean> {
-		this.lintCache.clear();
 		return (await chrome.runtime.sendMessage({ kind: 'getDefaultStatus' })).enabled;
 	}
 
@@ -117,6 +151,7 @@ export default class ProtocolClient {
 	}
 
 	public static async setDefaultEnabled(enabled: boolean): Promise<void> {
+		this.lintCache.clear();
 		await chrome.runtime.sendMessage({ kind: 'setDefaultStatus', enabled });
 	}
 
@@ -165,6 +200,14 @@ export default class ProtocolClient {
 
 	public static async setReviewed(reviewed: boolean): Promise<void> {
 		await chrome.runtime.sendMessage({ kind: 'setReviewed', reviewed });
+	}
+
+	/** Clear and persist ignored suggestions for all websites. Open pages may need a reload. */
+	public static async clearIgnoredLints(): Promise<void> {
+		const response = await chrome.runtime.sendMessage({ kind: 'clearIgnoredLints' });
+		if (response?.kind !== 'clearIgnoredLints' || !response.success) {
+			throw new Error('Could not clear ignored suggestions. Please try again.');
+		}
 	}
 
 	public static async ignoreHash(hash: string): Promise<void> {

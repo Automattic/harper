@@ -10,7 +10,23 @@ RUN apt-get update -y && apt-get install clang -y
 RUN mkdir -p /usr/build/
 WORKDIR /usr/build/
 
-RUN cargo install wasm-pack
+# Download a prebuilt wasm-pack instead of compiling it, which took about a minute. Update the
+# checksums whenever the version changes.
+ARG WASM_PACK_VERSION=0.15.1
+RUN set -eu; \
+    arch="$(uname -m)"; \
+    case "$arch" in \
+      x86_64) sha256=410101009739b9d01c7d5affaaad6e9c9a24b4cba6791a4805db8e89b9bf7af2 ;; \
+      aarch64) sha256=7004853c7925ae1984033b5f25866ec604bbc921ef956d5e6c5595bc5af6d30c ;; \
+      *) echo "No prebuilt wasm-pack for $arch" >&2; exit 1 ;; \
+    esac; \
+    name="wasm-pack-v${WASM_PACK_VERSION}-${arch}-unknown-linux-musl"; \
+    curl -sSfL -o /tmp/wasm-pack.tar.gz \
+      "https://github.com/wasm-bindgen/wasm-pack/releases/download/v${WASM_PACK_VERSION}/${name}.tar.gz"; \
+    echo "${sha256}  /tmp/wasm-pack.tar.gz" | sha256sum -c -; \
+    tar -xzf /tmp/wasm-pack.tar.gz -C /tmp; \
+    install "/tmp/${name}/wasm-pack" /usr/local/cargo/bin/wasm-pack; \
+    rm -rf /tmp/wasm-pack.tar.gz "/tmp/${name}"
 
 COPY . .
 
@@ -22,7 +38,7 @@ RUN cargo clean
 FROM node:${NODE_VERSION} AS node-build
 
 RUN apt-get update && apt-get install git parallel -y
-RUN corepack enable
+RUN npm install --global corepack@0.36.0 && corepack enable
 
 RUN mkdir -p /usr/build/
 WORKDIR /usr/build/
@@ -47,6 +63,7 @@ WORKDIR /usr/build/packages/harper-editor
 RUN pnpm build
 
 WORKDIR /usr/build/packages/web
+ENV ENABLE_ADMIN_ROUTES=false
 RUN pnpm install --engine-strict=false --shamefully-hoist
 RUN pnpm build
 

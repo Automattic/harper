@@ -24,7 +24,7 @@ where
     pub fn new(dict: D) -> Self {
         Self {
             expr: Box::new(
-                SequenceExpr::word_set(&["will", "shall"])
+                SequenceExpr::word_set(["will", "shall"])
                     .t_ws()
                     .then_kind_where(|kind| {
                         kind.is_verb()
@@ -165,7 +165,7 @@ impl<D: Dictionary> ExprLinter for WillNonLemma<D> {
     }
 
     fn description(&self) -> &str {
-        "Flags wrong verb forms after `will` or `shall`"
+        "Flags wrong verb forms after `will` or `shall`."
     }
 }
 

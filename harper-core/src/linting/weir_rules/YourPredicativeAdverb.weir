@@ -1,0 +1,25 @@
+expr intensifiers [probably, clearly, likely, certainly, definitely, surely, maybe, perhaps]
+expr predicative [right, wrong, correct, incorrect, fine, okay, ok, crazy, nuts, serious, ready, welcome, safe, sorry]
+expr main <([your, yr, ur, ya] @intensifiers @predicative), [your, yr, ur, ya]>
+
+let message "Use the contraction `you're` (you are) before a predicative adjective instead of the possessive `your` or its variants."
+let description "Catches cases where an intensifying adverb and a predicate adjective follow `your`, `yr`, `ur`, or `ya` (for example `your probably right`) and suggests the proper contraction. Intensifiers are a closed list of sentence adverbs; attributive uses that need a following noun (for example `your probably best option`) are out of scope of this list."
+let kind "Grammar"
+let becomes "you're"
+let strategy "MatchCase"
+
+test "so your probably right" "so you're probably right"
+test "Your probably right." "You're probably right."
+test "your clearly wrong?" "you're clearly wrong?"
+test "UR certainly correct." "YOU'RE certainly correct."
+test "ya definitely fine." "you're definitely fine."
+test "Your maybe crazy." "You're maybe crazy."
+test "yr surely ready?" "you're surely ready?"
+test "Your perhaps sorry." "You're perhaps sorry."
+test "your likely safe." "you're likely safe."
+
+# Possessive uses that must stay (predicative list does not include these heads)
+test "Your probably best option is sleep." "Your probably best option is sleep."
+test "Your clearly marked answer was wrong." "Your clearly marked answer was wrong."
+test "Your favorite color is blue." "Your favorite color is blue."
+test "Your excitement is contagious." "Your excitement is contagious."

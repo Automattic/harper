@@ -11,7 +11,7 @@ pub struct ObsessPreposition {
 impl Default for ObsessPreposition {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["obsess", "obsessed", "obsesses", "obsessing"])
+            expr: SequenceExpr::word_set(["obsess", "obsessed", "obsesses", "obsessing"])
                 .t_ws()
                 .then_preposition(),
         }
@@ -26,7 +26,7 @@ impl ExprLinter for ObsessPreposition {
     }
 
     fn description(&self) -> &str {
-        "Ensures valid prepositions are used with `obsess`"
+        "Ensures valid prepositions are used with `obsess`."
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

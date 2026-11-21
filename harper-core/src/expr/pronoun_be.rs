@@ -14,9 +14,9 @@ impl Default for PronounBe {
                     SequenceExpr::default()
                         .then_subject_pronoun()
                         .t_ws()
-                        .t_set(&["am", "are", "is", "was", "were"]),
+                        .t_set(["am", "are", "is", "was", "were"]),
                 ) as Box<dyn Expr>,
-                Box::new(WordSet::new(&[
+                Box::new(WordSet::new([
                     "i'm", "we're", "you're", "he's", "she's", "it's", "they're",
                 ])),
             ]),

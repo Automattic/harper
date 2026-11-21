@@ -20,7 +20,7 @@ impl Default for NoLongerPronoun {
                 .t_aco("longer")
                 .t_ws()
                 .then_subject_pronoun()
-                .then_optional(SequenceExpr::whitespace().t_set(&["am", "are", "is"])),
+                .then_optional(SequenceExpr::whitespace().t_set(["am", "are", "is"])),
         }
     }
 }

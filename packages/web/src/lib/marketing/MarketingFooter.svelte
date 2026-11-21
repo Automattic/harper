@@ -1,6 +1,12 @@
 <script lang="ts">
 import { marketingLinks } from './data';
 import HarperMark from './HarperMark.svelte';
+
+const chromeUrl = new URL(marketingLinks.chrome);
+chromeUrl.searchParams.set('utm_source', 'harper-footer');
+const chromeHref = chromeUrl.toString();
+
+const currentYear = new Date().getFullYear();
 </script>
 
 <footer class="border-t border-black/10 bg-cream text-black/50 dark:border-white/10 dark:bg-black dark:text-white/50">
@@ -21,18 +27,18 @@ import HarperMark from './HarperMark.svelte';
 		</div>
 
 		<div class="flex flex-col gap-2.5">
-			<h2 class='!m-0 py-0 text-[0.66rem] font-extrabold tracking-[0.14em] text-primary uppercase dark:text-primary-300 [font-family:"JetBrains_Mono",monospace]'>
+			<h2 class='!m-0 py-0 !text-[0.66rem] font-extrabold tracking-[0.14em] !text-[#f1920e] uppercase dark:!text-[#f7be6e] [font-family:"JetBrains_Mono",monospace]'>
 				Get Harper
 			</h2>
 			<a class="!text-black/70 no-underline hover:!text-black hover:no-underline dark:!text-white/70 dark:hover:!text-white" href="/desktop">Harper Desktop</a>
-			<a class="!text-black/70 no-underline hover:!text-black hover:no-underline dark:!text-white/70 dark:hover:!text-white" href={marketingLinks.chrome}>Chrome extension</a>
+			<a class="!text-black/70 no-underline hover:!text-black hover:no-underline dark:!text-white/70 dark:hover:!text-white" href={chromeHref}>Chrome extension</a>
 			<a class="!text-black/70 no-underline hover:!text-black hover:no-underline dark:!text-white/70 dark:hover:!text-white" href={marketingLinks.vscode}>VS Code</a>
 			<a class="!text-black/70 no-underline hover:!text-black hover:no-underline dark:!text-white/70 dark:hover:!text-white" href="/docs/integrations/obsidian">Obsidian plugin</a>
 			<a class="!text-black/70 no-underline hover:!text-black hover:no-underline dark:!text-white/70 dark:hover:!text-white" href="/get">All integrations</a>
 		</div>
 
 		<div class="flex flex-col gap-2.5">
-			<h2 class='!m-0 py-0 text-[0.66rem] font-extrabold tracking-[0.14em] text-primary uppercase dark:text-primary-300 [font-family:"JetBrains_Mono",monospace]'>
+			<h2 class='!m-0 py-0 !text-[0.66rem] font-extrabold tracking-[0.14em] !text-[#f1920e] uppercase dark:!text-[#f7be6e] [font-family:"JetBrains_Mono",monospace]'>
 				Resources
 			</h2>
 			<a class="!text-black/70 no-underline hover:!text-black hover:no-underline dark:!text-white/70 dark:hover:!text-white" href="/docs/about">Documentation</a>
@@ -43,7 +49,7 @@ import HarperMark from './HarperMark.svelte';
 		</div>
 
 		<div class="flex flex-col gap-2.5">
-			<h2 class='!m-0 py-0 text-[0.66rem] font-extrabold tracking-[0.14em] text-primary uppercase dark:text-primary-300 [font-family:"JetBrains_Mono",monospace]'>
+			<h2 class='!m-0 py-0 !text-[0.66rem] font-extrabold tracking-[0.14em] !text-[#f1920e] uppercase dark:!text-[#f7be6e] [font-family:"JetBrains_Mono",monospace]'>
 				Community
 			</h2>
 			<a class="!text-black/70 no-underline hover:!text-black hover:no-underline dark:!text-white/70 dark:hover:!text-white" href={marketingLinks.github}>GitHub</a>
@@ -53,10 +59,9 @@ import HarperMark from './HarperMark.svelte';
 	</div>
 
 	<div class="mx-auto flex max-w-[77.5rem] items-center justify-between gap-4 border-t border-black/10 px-10 py-4 text-[0.78rem] dark:border-white/10 max-[820px]:flex-col max-[820px]:items-start max-[820px]:px-4">
-		<span>An <a class="!text-black/70 hover:!text-black dark:!text-white/70 dark:hover:!text-white" href="https://automattic.com/">Automattic</a> open-source project.</span>
+		<span>© {currentYear} Automattic Inc.</span>
 		<div class="flex gap-4">
-			<a class="!text-black/70 no-underline hover:!text-black hover:no-underline dark:!text-white/70 dark:hover:!text-white" href="/docs/about">Privacy</a>
-			<a class="!text-black/70 no-underline hover:!text-black hover:no-underline dark:!text-white/70 dark:hover:!text-white" href={marketingLinks.github}>License</a>
+			<a class="!text-black/70 no-underline hover:!text-black hover:no-underline dark:!text-white/70 dark:hover:!text-white" href="https://github.com/Automattic/harper/blob/master/LICENSE">License</a>
 		</div>
 	</div>
 </footer>

@@ -18,11 +18,11 @@ impl Default for IfWouldve {
                 .t_ws()
                 .then_any_of([
                     Box::new(
-                        SequenceExpr::word_set(&["would", "had"])
+                        SequenceExpr::word_set(["would", "had"])
                             .t_ws()
-                            .then_word_set(&["have", "of"]),
+                            .then_word_set(["have", "of"]),
                     ) as Box<dyn Expr>,
-                    Box::new(WordSet::new(&["would've", "wouldve", "had've", "hadve"])),
+                    Box::new(WordSet::new(["would've", "wouldve", "had've", "hadve"])),
                 ])
                 .t_ws()
                 .then_verb_past_participle_form(),

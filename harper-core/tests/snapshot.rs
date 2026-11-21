@@ -72,10 +72,12 @@ fn tag_file(
         "No snapshot!".into()
     })
 }
+
 fn get_snapshot_file(text_file: &Path, snapshot_dir: &Path, ext: &str) -> PathBuf {
     let snapshot_name = text_file.file_stem().unwrap().to_string_lossy().to_string() + ext;
     snapshot_dir.join(snapshot_name)
 }
+
 #[allow(dead_code)]
 pub fn snapshot_all_text_files(
     out_dir: &str,

@@ -1,0 +1,593 @@
+mod error;
+mod integration;
+mod weirpack;
+pub use weirpack::InstalledWeirpack;
+
+use crate::{PlatformBroker, os_broker::OsBroker};
+pub use error::Error;
+use harper_core::{
+    Dialect, IgnoredLints,
+    linting::{FlatConfig, LintGroup},
+    spell::{FstDictionary, MergedDictionary, MutableDictionary},
+};
+use harper_dictionary_wordlist::{load_dict, save_dict};
+pub use integration::Integration;
+use serde::de::{DeserializeOwned, Error as _};
+use std::{fs, io, path::PathBuf, sync::Arc};
+
+/// Persisted setup page, or completion once the user finishes onboarding.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "kebab-case")]
+pub enum OnboardingState {
+    Welcome,
+    Accessibility,
+    Integration,
+    TestDrive,
+    Ready,
+    Complete,
+}
+
+/// User-controlled app state needed by Tauri commands and the highlighter process.
+pub struct Config {
+    pub weirpacks: Vec<InstalledWeirpack>,
+    pub mutable_dictionary: MutableDictionary,
+    pub dialect: Dialect,
+    pub ignored_lints: IgnoredLints,
+    pub lint_config: FlatConfig,
+    pub integrations: Vec<Integration>,
+    pub auto_enable_new_apps: bool,
+    pub onboarding_state: OnboardingState,
+    pub debounce_ms: u64,
+    /// Whether the main process may check for and install updates automatically.
+    pub auto_update: bool,
+    /// Unix milliseconds at the start of the last manual or automatic update attempt.
+    /// Failed attempts also count toward the automatic 24-hour interval.
+    pub last_update_check: Option<u64>,
+    pub highlighter_service_enabled: bool,
+}
+
+impl Config {
+    pub fn new() -> Self {
+        Self {
+            weirpacks: Vec::new(),
+            mutable_dictionary: MutableDictionary::new(),
+            dialect: Self::detect_system_dialect(),
+            ignored_lints: IgnoredLints::new(),
+            lint_config: FlatConfig::new_curated(),
+            integrations: Integration::curated_integrations(),
+            auto_enable_new_apps: false,
+            onboarding_state: OnboardingState::Welcome,
+            debounce_ms: 0,
+            auto_update: true,
+            last_update_check: None,
+            highlighter_service_enabled: true,
+        }
+    }
+
+    fn detect_system_dialect() -> Dialect {
+        tauri_plugin_os::locale()
+            .and_then(|bcp47| Dialect::try_from_bcp47(&bcp47))
+            .unwrap_or(Dialect::American)
+    }
+
+    pub fn is_integration_enabled(&self, bundle_id: &str) -> bool {
+        let integrations: &[Integration] = &self.integrations;
+        integrations
+            .iter()
+            .any(|integration| integration.bundle_id == bundle_id && integration.enabled)
+    }
+
+    /// Resolves an app's enabled state, registering unknown apps when automatic enablement is on.
+    /// Existing disabled entries are never re-enabled; removed entries can be discovered again.
+    /// Harper itself is excluded from discovery, but explicitly configured entries are respected.
+    /// The caller is responsible for persisting any newly registered integration.
+    pub fn resolve_integration(&mut self, bundle_id: &str) -> bool {
+        let bundle_id = bundle_id.trim();
+        if bundle_id.is_empty() {
+            return false;
+        }
+        if let Some(integration) = self
+            .integrations
+            .iter()
+            .find(|item| item.bundle_id == bundle_id)
+        {
+            return integration.enabled;
+        }
+        if !self.auto_enable_new_apps || PlatformBroker::is_harper_desktop(bundle_id) {
+            return false;
+        }
+        self.add_integration(bundle_id.to_owned());
+        true
+    }
+
+    pub fn add_integration(&mut self, bundle_id: String) {
+        let bundle_id = bundle_id.trim();
+        if bundle_id.is_empty()
+            || self
+                .integrations
+                .iter()
+                .any(|item| item.bundle_id == bundle_id)
+        {
+            return;
+        }
+
+        self.integrations.push(Integration {
+            bundle_id: bundle_id.to_string(),
+            enabled: true,
+        });
+        self.integrations
+            .sort_by(|a, b| a.bundle_id.cmp(&b.bundle_id));
+    }
+
+    pub fn remove_integration(&mut self, bundle_id: &str) {
+        self.integrations
+            .retain(|integration| integration.bundle_id != bundle_id);
+    }
+
+    pub fn set_integration_enabled(&mut self, bundle_id: &str, enabled: bool) {
+        if let Some(integration) = self
+            .integrations
+            .iter_mut()
+            .find(|integration| integration.bundle_id == bundle_id)
+        {
+            integration.enabled = enabled;
+        }
+    }
+
+    pub async fn save_to_system(&self) -> Result<(), Error> {
+        let folder_path = Self::folder_path().ok_or(Error::ConfigDirUnavailable)?;
+        let main_path = Self::main_path().ok_or(Error::ConfigDirUnavailable)?;
+        let dictionary_path = Self::dictionary_path().ok_or(Error::ConfigDirUnavailable)?;
+
+        fs::create_dir_all(folder_path)?;
+        fs::write(main_path, self.serialize_main()?)?;
+        save_dict(dictionary_path, &self.mutable_dictionary).await?;
+
+        Ok(())
+    }
+
+    pub fn main_config_exists() -> Result<bool, Error> {
+        let main_path = Self::main_path().ok_or(Error::ConfigDirUnavailable)?;
+
+        match fs::metadata(main_path) {
+            Ok(_) => Ok(true),
+            Err(error) if error.kind() == io::ErrorKind::NotFound => Ok(false),
+            Err(error) => Err(error.into()),
+        }
+    }
+
+    pub async fn load_from_system() -> Result<Self, Error> {
+        let main_path = Self::main_path().ok_or(Error::ConfigDirUnavailable)?;
+        let dictionary_path = Self::dictionary_path().ok_or(Error::ConfigDirUnavailable)?;
+        let serialized = fs::read_to_string(main_path)?;
+        let mut config = Self::deserialize_main(&serialized)?;
+        config.lint_config.fill_with_curated();
+        config.mutable_dictionary = load_dict(dictionary_path, config.dialect).await?;
+
+        Ok(config)
+    }
+
+    pub fn dictionary_from_user_dictionary(
+        user_dictionary: MutableDictionary,
+    ) -> Arc<MergedDictionary> {
+        let mut dictionary = MergedDictionary::new();
+        dictionary.add_dictionary(FstDictionary::curated());
+        dictionary.add_dictionary(Arc::new(user_dictionary));
+
+        Arc::new(dictionary)
+    }
+
+    /// Build the dictionary used by both document parsing and the linter, including enabled packs.
+    pub fn create_dictionary(&self) -> Arc<MergedDictionary> {
+        let mut dictionary = MergedDictionary::new();
+        dictionary.add_dictionary(Self::dictionary_from_user_dictionary(
+            self.mutable_dictionary.clone(),
+        ));
+        for pack in self.weirpacks.iter().filter(|pack| pack.enabled) {
+            match pack
+                .unpack()
+                .and_then(|pack| pack.load_dictionary().map_err(|error| error.to_string()))
+            {
+                Ok(Some(pack_dictionary)) => dictionary.add_dictionary(Arc::new(pack_dictionary)),
+                Ok(None) => {}
+                Err(error) => eprintln!("Failed to load dictionary from {}: {error}", pack.name),
+            }
+        }
+        Arc::new(dictionary)
+    }
+
+    /// Rebuild from enabled packs so removed rules cannot remain active. Explicit rule settings win.
+    pub fn create_linter(&self) -> LintGroup {
+        let mut linter = LintGroup::new_curated(self.create_dictionary(), self.dialect);
+        for pack in self.weirpacks.iter().filter(|pack| pack.enabled) {
+            match pack
+                .unpack()
+                .and_then(|pack| pack.to_lint_group().map_err(|error| error.to_string()))
+            {
+                Ok(group) => linter.merge_from(group),
+                Err(error) => eprintln!("Failed to load rules from {}: {error}", pack.name),
+            }
+        }
+        linter.config.merge_from(self.lint_config.clone());
+        linter
+    }
+
+    /// Persist a replacement pack list, restoring in-memory state if persistence fails.
+    pub async fn save_weirpacks(&mut self, packs: Vec<InstalledWeirpack>) -> Result<(), Error> {
+        let path = Self::main_path().ok_or(Error::ConfigDirUnavailable)?;
+        self.save_weirpacks_to(packs, &path)
+    }
+
+    fn save_weirpacks_to(
+        &mut self,
+        packs: Vec<InstalledWeirpack>,
+        path: &std::path::Path,
+    ) -> Result<(), Error> {
+        let previous = std::mem::replace(&mut self.weirpacks, packs);
+        let result = (|| {
+            if let Some(parent) = path.parent() {
+                fs::create_dir_all(parent)?;
+            }
+            let temporary = path.with_extension("json.tmp");
+            fs::write(&temporary, self.serialize_main()?)?;
+            fs::rename(temporary, path)?;
+            Ok(())
+        })();
+        if result.is_err() {
+            self.weirpacks = previous;
+        }
+        result
+    }
+
+    #[allow(dead_code)]
+    fn folder_path() -> Option<PathBuf> {
+        dirs::config_dir().map(|path| path.join("harper-desktop"))
+    }
+
+    #[allow(dead_code)]
+    fn main_path() -> Option<PathBuf> {
+        Self::folder_path().map(|path| path.join("config.json"))
+    }
+
+    #[allow(dead_code)]
+    fn dictionary_path() -> Option<PathBuf> {
+        Self::folder_path().map(|path| path.join("dictionary.txt"))
+    }
+
+    #[allow(dead_code)]
+    fn serialize_main(&self) -> serde_json::Result<String> {
+        serde_json::to_string(&serde_json::json!({
+            "weirpacks": &self.weirpacks,
+            "dialect": &self.dialect,
+            "ignored_lints": &self.ignored_lints,
+            "lint_config": &self.lint_config,
+            "integrations": &self.integrations,
+            "auto_enable_new_apps": self.auto_enable_new_apps,
+            "onboarding_state": self.onboarding_state,
+            "debounce_ms": self.debounce_ms,
+            "auto_update": self.auto_update,
+            "last_update_check": self.last_update_check,
+            "highlighter_service_enabled": self.highlighter_service_enabled,
+        }))
+    }
+
+    #[allow(dead_code)]
+    fn deserialize_main(serialized: &str) -> serde_json::Result<Self> {
+        let mut value = serde_json::from_str::<serde_json::Value>(serialized)?;
+        let object = value
+            .as_object_mut()
+            .ok_or_else(|| serde_json::Error::custom("config must be a JSON object"))?;
+
+        Ok(Self {
+            weirpacks: deserialize_optional_field(object, "weirpacks")?.unwrap_or_default(),
+            mutable_dictionary: MutableDictionary::new(),
+            dialect: deserialize_field(object, "dialect")?,
+            ignored_lints: deserialize_field(object, "ignored_lints")?,
+            lint_config: deserialize_field(object, "lint_config")?,
+            integrations: deserialize_optional_field(object, "integrations")?
+                .unwrap_or_else(Integration::curated_integrations),
+            auto_enable_new_apps: deserialize_optional_field(object, "auto_enable_new_apps")?
+                .unwrap_or(false),
+            onboarding_state: match deserialize_optional_field(object, "onboarding_state")? {
+                Some(state) => state,
+                None => match deserialize_optional_field(object, "onboarding_completed")? {
+                    Some(false) => OnboardingState::Welcome,
+                    // Configs from before onboarding existed belong to established users.
+                    Some(true) | None => OnboardingState::Complete,
+                },
+            },
+            debounce_ms: deserialize_optional_field(object, "debounce_ms")?.unwrap_or(0),
+            auto_update: deserialize_optional_field(object, "auto_update")?.unwrap_or(true),
+            last_update_check: deserialize_optional_field::<Option<u64>>(
+                object,
+                "last_update_check",
+            )?
+            .flatten(),
+            highlighter_service_enabled: deserialize_optional_field(
+                object,
+                "highlighter_service_enabled",
+            )?
+            .unwrap_or(true),
+        })
+    }
+}
+
+#[allow(dead_code)]
+fn deserialize_field<T>(
+    object: &mut serde_json::Map<String, serde_json::Value>,
+    field: &'static str,
+) -> serde_json::Result<T>
+where
+    T: DeserializeOwned,
+{
+    let value = object
+        .remove(field)
+        .ok_or_else(|| serde_json::Error::custom(format!("missing config field `{field}`")))?;
+
+    serde_json::from_value(value)
+}
+
+#[allow(dead_code)]
+fn deserialize_optional_field<T>(
+    object: &mut serde_json::Map<String, serde_json::Value>,
+    field: &'static str,
+) -> serde_json::Result<Option<T>>
+where
+    T: DeserializeOwned,
+{
+    let Some(value) = object.remove(field) else {
+        return Ok(None);
+    };
+
+    serde_json::from_value(value).map(Some)
+}
+
+impl Default for Config {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{Config, Integration, OnboardingState};
+    use harper_core::DictWordMetadata;
+
+    #[test]
+    fn onboarding_states_round_trip_as_strings() {
+        for (state, name) in [
+            (OnboardingState::Welcome, "welcome"),
+            (OnboardingState::Accessibility, "accessibility"),
+            (OnboardingState::Integration, "integration"),
+            (OnboardingState::TestDrive, "test-drive"),
+            (OnboardingState::Ready, "ready"),
+            (OnboardingState::Complete, "complete"),
+        ] {
+            let mut config = Config::new();
+            config.onboarding_state = state;
+            let serialized = config.serialize_main().unwrap();
+            let value: serde_json::Value = serde_json::from_str(&serialized).unwrap();
+            assert_eq!(value["onboarding_state"], name);
+            assert!(value.get("onboarding_completed").is_none());
+            assert_eq!(
+                Config::deserialize_main(&serialized)
+                    .unwrap()
+                    .onboarding_state,
+                state
+            );
+        }
+    }
+
+    #[test]
+    fn onboarding_migrates_legacy_completion_flag() {
+        for (legacy, expected) in [
+            (Some(false), OnboardingState::Welcome),
+            (Some(true), OnboardingState::Complete),
+            (None, OnboardingState::Complete),
+        ] {
+            let mut value: serde_json::Value =
+                serde_json::from_str(&Config::new().serialize_main().unwrap()).unwrap();
+            value.as_object_mut().unwrap().remove("onboarding_state");
+            if let Some(completed) = legacy {
+                value["onboarding_completed"] = completed.into();
+            }
+            assert_eq!(
+                Config::deserialize_main(&value.to_string())
+                    .unwrap()
+                    .onboarding_state,
+                expected
+            );
+        }
+    }
+
+    #[test]
+    fn onboarding_state_takes_precedence_over_legacy_flag() {
+        let mut value: serde_json::Value =
+            serde_json::from_str(&Config::new().serialize_main().unwrap()).unwrap();
+        value["onboarding_state"] = "accessibility".into();
+        value["onboarding_completed"] = true.into();
+        assert_eq!(
+            Config::deserialize_main(&value.to_string())
+                .unwrap()
+                .onboarding_state,
+            OnboardingState::Accessibility
+        );
+    }
+
+    #[test]
+    fn onboarding_rejects_unknown_states() {
+        let mut value: serde_json::Value =
+            serde_json::from_str(&Config::new().serialize_main().unwrap()).unwrap();
+        value["onboarding_state"] = "unknown".into();
+        assert!(Config::deserialize_main(&value.to_string()).is_err());
+    }
+
+    #[test]
+    fn serialize_main_excludes_dictionary_word_list() {
+        let mut config = Config::new();
+        config
+            .mutable_dictionary
+            .append_word_str("blorple", DictWordMetadata::default());
+
+        let serialized = config.serialize_main().unwrap();
+
+        assert!(!serialized.contains("mutable_dictionary"));
+        assert!(!serialized.contains("blorple"));
+        assert!(serialized.contains("dialect"));
+        assert!(serialized.contains("ignored_lints"));
+        assert!(serialized.contains("lint_config"));
+        assert!(serialized.contains("integrations"));
+        assert!(serialized.contains("onboarding_state"));
+        assert!(serialized.contains("debounce_ms"));
+        assert!(serialized.contains("auto_update"));
+        assert!(serialized.contains("last_update_check"));
+        assert!(serialized.contains("highlighter_service_enabled"));
+    }
+
+    #[test]
+    fn deserialize_main_restores_main_serialized_fields() {
+        let mut config = Config::new();
+        config
+            .mutable_dictionary
+            .append_word_str("blorple", DictWordMetadata::default());
+        let serialized = config.serialize_main().unwrap();
+
+        let deserialized = Config::deserialize_main(&serialized).unwrap();
+
+        assert_eq!(deserialized.dialect, config.dialect);
+        assert_eq!(deserialized.lint_config, config.lint_config);
+        assert_eq!(deserialized.integrations, config.integrations);
+        assert_eq!(deserialized.onboarding_state, config.onboarding_state);
+        assert_eq!(deserialized.debounce_ms, config.debounce_ms);
+        assert_eq!(deserialized.auto_update, config.auto_update);
+        assert_eq!(deserialized.last_update_check, config.last_update_check);
+        assert_eq!(
+            deserialized.highlighter_service_enabled,
+            config.highlighter_service_enabled
+        );
+        assert_eq!(
+            serde_json::from_str::<serde_json::Value>(&deserialized.serialize_main().unwrap())
+                .unwrap(),
+            serde_json::from_str::<serde_json::Value>(&serialized).unwrap()
+        );
+    }
+
+    #[test]
+    fn deserialize_main_uses_zero_debounce_when_missing() {
+        let config = Config::new();
+        let mut value =
+            serde_json::from_str::<serde_json::Value>(&config.serialize_main().unwrap()).unwrap();
+        value.as_object_mut().unwrap().remove("debounce_ms");
+
+        let deserialized = Config::deserialize_main(&value.to_string()).unwrap();
+
+        assert_eq!(deserialized.debounce_ms, 0);
+    }
+
+    #[test]
+    fn deserialize_main_uses_default_update_settings_when_missing() {
+        let config = Config::new();
+        let mut value =
+            serde_json::from_str::<serde_json::Value>(&config.serialize_main().unwrap()).unwrap();
+        value.as_object_mut().unwrap().remove("auto_update");
+        value.as_object_mut().unwrap().remove("last_update_check");
+
+        let deserialized = Config::deserialize_main(&value.to_string()).unwrap();
+
+        assert!(deserialized.auto_update);
+        assert_eq!(deserialized.last_update_check, None);
+    }
+
+    #[test]
+    fn deserialize_main_enables_highlighter_service_when_missing() {
+        let config = Config::new();
+        let mut value =
+            serde_json::from_str::<serde_json::Value>(&config.serialize_main().unwrap()).unwrap();
+        value
+            .as_object_mut()
+            .unwrap()
+            .remove("highlighter_service_enabled");
+
+        let deserialized = Config::deserialize_main(&value.to_string()).unwrap();
+
+        assert!(deserialized.highlighter_service_enabled);
+    }
+
+    #[test]
+    fn deserialize_main_preserves_integrations() {
+        let mut config = Config::new();
+        config.integrations = vec![Integration {
+            bundle_id: "com.example.Editor".to_string(),
+            enabled: false,
+        }];
+
+        let deserialized = Config::deserialize_main(&config.serialize_main().unwrap()).unwrap();
+
+        assert_eq!(
+            deserialized.integrations,
+            vec![Integration {
+                bundle_id: "com.example.Editor".to_string(),
+                enabled: false,
+            }]
+        );
+    }
+
+    #[test]
+    fn integration_helpers_add_remove_enable_and_check() {
+        let mut config = Config::new();
+
+        config.add_integration(" com.example.Editor ".to_string());
+        config.add_integration("com.example.Editor".to_string());
+        assert!(config.is_integration_enabled("com.example.Editor"));
+        assert_eq!(
+            config
+                .integrations
+                .iter()
+                .filter(|integration| integration.bundle_id == "com.example.Editor")
+                .count(),
+            1
+        );
+
+        config.set_integration_enabled("com.example.Editor", false);
+        assert!(!config.is_integration_enabled("com.example.Editor"));
+
+        config.remove_integration("com.example.Editor");
+
+        assert!(
+            !config
+                .integrations
+                .iter()
+                .any(|integration| integration.bundle_id == "com.example.Editor")
+        );
+    }
+
+    #[test]
+    fn main_path_points_to_harper_desktop_config_file() {
+        let path = Config::main_path().unwrap();
+
+        assert_eq!(path.file_name().unwrap(), "config.json");
+        assert_eq!(
+            path.parent().unwrap().file_name().unwrap(),
+            "harper-desktop"
+        );
+    }
+
+    #[test]
+    fn main_config_exists_reports_missing_file() {
+        let exists = Config::main_config_exists().unwrap();
+        let expected = Config::main_path().unwrap().exists();
+
+        assert_eq!(exists, expected);
+    }
+
+    #[test]
+    fn dictionary_path_points_to_harper_desktop_dictionary_file() {
+        let path = Config::dictionary_path().unwrap();
+
+        assert_eq!(path.file_name().unwrap(), "dictionary.txt");
+        assert_eq!(
+            path.parent().unwrap().file_name().unwrap(),
+            "harper-desktop"
+        );
+    }
+}

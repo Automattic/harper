@@ -1,0 +1,11 @@
+expr main all well in good
+
+let message "The idiom you are think of is `all well and good`."
+let description "Corrects `all well in good` to `all well and good`."
+let kind "Usage"
+let becomes "all well and good"
+
+test "This was all well in good until we came to CJK and the number characters with semantical overlap was huge" "This was all well and good until we came to CJK and the number characters with semantical overlap was huge"
+test "Using guix build in the CI is all well in good but during development spawning an isolated environment is a bit cumbersome." "Using guix build in the CI is all well and good but during development spawning an isolated environment is a bit cumbersome."
+test "The -n option tells yardoc not to generate documentation, which is all well in good, except that when it starts to finish parsing the arguments" "The -n option tells yardoc not to generate documentation, which is all well and good, except that when it starts to finish parsing the arguments"
+test "Well that is all well in good but you have introduced a breaking change that allow auto-updating to the latest version." "Well that is all well and good but you have introduced a breaking change that allow auto-updating to the latest version."

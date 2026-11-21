@@ -4,11 +4,11 @@ import Graph from '$lib/components/Graph.svelte';
 export let desktop = false;
 </script>
 
-<div class="grid grid-cols-1 gap-7 md:grid-cols-2">
+<div class="grid grid-cols-2 gap-7 max-[560px]:grid-cols-1">
 	<article
-		class="flex min-h-92 flex-col gap-4 overflow-hidden rounded-2xl border border-black/10 bg-white p-6 text-black dark:border-white/10 dark:bg-black dark:text-white md:p-8"
+		class="flex min-h-44 flex-col gap-4 overflow-hidden rounded-2xl border border-black/10 bg-white p-6 text-black dark:border-white/10 dark:bg-black dark:text-white md:p-8"
 	>
-		<h2 class="m-0 py-0 text-[clamp(2rem,4vw,2.25rem)] leading-[1.08] font-semibold tracking-normal">
+		<h2 class="m-0 py-0 text-[clamp(2rem,4vw,2.25rem)] leading-[1.08] font-semibold tracking-normal !text-inherit">
 			{desktop ? 'Your words never leave your device.' : 'Harper is completely private.'}
 		</h2>
 		<p class="!m-0 text-sm leading-relaxed text-black/70 dark:text-white/70">
@@ -49,9 +49,9 @@ export let desktop = false;
 	</article>
 
 	<article
-		class="flex min-h-92 flex-col gap-4 overflow-hidden rounded-2xl bg-black p-6 text-white dark:bg-white dark:text-black md:p-8"
+		class="flex min-h-44 flex-col gap-4 overflow-hidden rounded-2xl bg-black p-6 text-white dark:bg-white dark:text-black md:p-8"
 	>
-		<h2 class="m-0 py-0 text-[clamp(2rem,4vw,2.25rem)] leading-[1.08] font-semibold tracking-normal">
+		<h2 class="m-0 py-0 text-[clamp(2rem,4vw,2.25rem)] leading-[1.08] font-semibold tracking-normal !text-inherit">
 			Suggestions in under 10ms.
 		</h2>
 		<p class="!m-0 text-sm leading-relaxed text-white/70 dark:text-black/70">

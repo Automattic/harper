@@ -300,7 +300,7 @@ export type LintSource = (
 const lintPlugin = ViewPlugin.fromClass(
 	class {
 		lintTime: number;
-		timeout = -1;
+		timeout: ReturnType<typeof setTimeout>;
 		set = true;
 
 		constructor(readonly view: EditorView) {
@@ -323,6 +323,9 @@ const lintPlugin = ViewPlugin.fromClass(
 					Promise.all(sources.map((source) => Promise.resolve(source(this.view)))).then(
 						(annotations) => {
 							const all = annotations.reduce((a, b) => a.concat(b));
+							if ((window as any).app) {
+								(window as any).app.workspace.trigger('harper:lint-updated', all, this.view);
+							}
 							if (this.view.state.doc == state.doc)
 								this.view.dispatch(setDiagnostics(this.view.state, all));
 						},
@@ -471,7 +474,7 @@ function renderDiagnostic(view: EditorView, diagnostic: Diagnostic, inPanel: boo
 					'div',
 					{
 						class: 'cm-diagnosticIgnore',
-						onclick: (e) => {
+						onclick: (e: MouseEvent) => {
 							e.preventDefault();
 							if (diagnostic.ignore) {
 								diagnostic.ignore();
@@ -485,7 +488,7 @@ function renderDiagnostic(view: EditorView, diagnostic: Diagnostic, inPanel: boo
 					'div',
 					{
 						class: 'cm-diagnosticDisable',
-						onclick: (e) => {
+						onclick: (e: MouseEvent) => {
 							e.preventDefault();
 							if (diagnostic.disable) {
 								diagnostic.disable();

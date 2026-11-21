@@ -13,9 +13,9 @@ impl Default for NotOnlyInversion {
         Self {
             expr: SequenceExpr::word_seq(&["not", "only"])
                 .t_ws()
-                .then_word_set(&["I", "we", "you", "he", "she", "it", "they"])
+                .then_word_set(["I", "we", "you", "he", "she", "it", "they"])
                 .t_ws()
-                .then_word_set(&["am", "are", "is", "was", "were"]),
+                .then_word_set(["am", "are", "is", "was", "were"]),
         }
     }
 }
@@ -24,7 +24,7 @@ impl ExprLinter for NotOnlyInversion {
     type Unit = Chunk;
 
     fn description(&self) -> &str {
-        "Corrects `not only it is` to `not only is it`"
+        "Corrects `not only it is` to `not only is it`."
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

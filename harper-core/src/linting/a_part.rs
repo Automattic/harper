@@ -81,7 +81,7 @@ impl ExprLinter for APart {
     }
 
     fn description(&self) -> &'static str {
-        "Finds and corrects common mistakes between 'a part' and 'apart'"
+        "Finds and corrects common mistakes between 'a part' and 'apart'."
     }
 }
 

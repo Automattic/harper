@@ -1,0 +1,46 @@
+expr wh [what, where, when, why, how, who, which]
+# "What is we use ..." is almost always a typo for "What if we ...", so a bare verb after
+# the subject doesn't count. "Why is you leaving early any different?" uses `you leaving`
+# as a gerund subject, so `you` only counts before an adjective, adverb or preposition.
+expr after [ADJ, ADV, ADP]
+expr ending [(we?), (we.), (they?), (they.), (you?), (you.)]
+expr time [yesterday, today, tonight, tomorrow, now, then, there, here, last]
+expr main <[(@wh is [we, they, you] @time), (@wh is [we, they] PROG), (@wh is [we, they, you] @after), (@wh is @ending), (is [we, they] PROG)], is>
+
+let message "The verb should agree with the subject: `are`."
+let description "Corrects `is` before `we`, `they` or `you` in questions, like `Why is they grey?`"
+let kind "Agreement"
+let scope "Sentence"
+let becomes "are"
+let strategy "MatchCase"
+
+# real sentences from GitHub issues and Ask Ubuntu
+test "Why is they grey?" "Why are they grey?"
+test "I remember there was a Broken Radio and Broken Flashlight but where is they?" "I remember there was a Broken Radio and Broken Flashlight but where are they?"
+test "how is they different and what are their differences." "how are they different and what are their differences."
+# made-up sentences
+test "Where is they now?" "Where are they now?"
+test "What is we waiting for?" "What are we waiting for?"
+test "Where is they going?" "Where are they going?"
+test "Is we going now?" "Are we going now?"
+test "Why is you so quiet?" "Why are you so quiet?"
+# harder cases that must still be caught
+test "WHAT IS WE DOING?" "WHAT ARE WE DOING?"
+test "So what is they saying, exactly?" "So what are they saying, exactly?"
+
+# correct text
+allows "What are we waiting for?"
+allows "How is it going?"
+allows "Here is what we are doing next."
+# real look-alikes that must not be flagged (Hacker News, GitHub)
+allows "The problem is we don't know a lot about the probabilities of abiogenesis."
+allows "Sure and the reason why is they were kids and their parents handled everything."
+allows "Does this help you understand what it is we're trying to do?"
+allows "But why is you visiting it okay, but others not?"
+allows "Why is they'll ambiguous?"
+allows "What is we use triangular pyramids instead of triangles?"
+allows "Why is you code panic'in?"
+# made-up look-alikes
+allows "Why is you leaving early any different?"
+allows "All I know is you are doing great."
+allows "What is, they asked, the point?"

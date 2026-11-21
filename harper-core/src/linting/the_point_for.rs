@@ -12,7 +12,7 @@ pub struct ThePointFor {
 impl Default for ThePointFor {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::any_of(vec![Box::new(WordSet::new(&[
+            expr: SequenceExpr::any_of(vec![Box::new(WordSet::new([
                 // "that's" leads to false positives: "that's the point for me"
                 "is", "was", "what's", "whats",
             ]))])
@@ -30,7 +30,7 @@ impl ExprLinter for ThePointFor {
     type Unit = Chunk;
 
     fn description(&self) -> &str {
-        "Corrects `the point for` to `the point of`"
+        "Corrects `the point for` to `the point of`."
     }
 
     fn expr(&self) -> &dyn Expr {

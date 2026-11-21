@@ -116,11 +116,7 @@ fn valid_unquoted_character(c: char) -> bool {
         '~', '.',
     ];
 
-    if others.contains(&c) {
-        return true;
-    }
-
-    false
+    others.contains(&c)
 }
 
 #[cfg(test)]
