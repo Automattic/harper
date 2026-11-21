@@ -459,6 +459,10 @@ impl ExprLinter for MissingTo {
 
         let next_text = next_token.get_str(source).to_lowercase();
 
+        if controller_text == "need" && next_text == "be" && previous_word == Some("if") {
+            return None;
+        }
+
         if controller_text.starts_with("try") && next_text == "and" {
             return None;
         }
@@ -912,5 +916,11 @@ mod tests {
             "After trying stuff for hours, we tried things the docs suggested.",
             test_linter(),
         );
+    }
+
+    #[test]
+    fn no_lint_if_need_be() {
+        assert_no_lints("We can improve it if need be.", test_linter());
+        assert_no_lints("If need be, we can improve it.", test_linter());
     }
 }
