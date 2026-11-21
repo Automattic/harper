@@ -31,7 +31,7 @@ impl ExprLinter for ToTo {
         if toks[1].kind.is_whitespace()
             && surrounded_by_words(ctx, |before, after| {
                 if after.kind.is_verb_lemma()
-                    && before.get_ch(src).eq_any_ignore_ascii_case_str(&[
+                    && before.get_ch(src).eq_any_ignore_ascii_case_str([
                         // Prepositions
                         "according",
                         // Verbs. If this list grows large, adding a dictionary annotation flag should be considered.

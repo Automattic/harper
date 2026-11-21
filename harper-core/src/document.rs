@@ -784,7 +784,7 @@ impl Document {
                 && dr.span.len() <= 3
                 && dr
                     .get_ch(&self.source)
-                    .eq_any_ignore_ascii_case_chars(&[&['d', 'r'], &['d', 'r', 's']]);
+                    .eq_any_ignore_ascii_case_chars([&['d', 'r'] as &[char], &['d', 'r', 's']]);
 
             if is_tldr_chunk {
                 // Update the first token to be the full "tl;dr" as a word

@@ -56,7 +56,7 @@ impl ExprLinter for ThisTypeOfThing {
         let (det_span, type_span) = (det_tok.span, type_tok.span);
         let (det_chars, type_chars) = (det_span.get_content(src), type_span.get_content(src));
         let (det_num, type_num, thing_num) = (
-            if det_chars.eq_any_ignore_ascii_case_str(&["this", "that"]) {
+            if det_chars.eq_any_ignore_ascii_case_str(["this", "that"]) {
                 Num::Sg
             } else {
                 Num::Pl
@@ -80,7 +80,7 @@ impl ExprLinter for ThisTypeOfThing {
             Proximal,
             Distal,
         }
-        let deixis = if det_chars.eq_any_ignore_ascii_case_str(&["this", "these"]) {
+        let deixis = if det_chars.eq_any_ignore_ascii_case_str(["this", "these"]) {
             Deixis::Proximal
         } else {
             Deixis::Distal

@@ -15,7 +15,7 @@ fn is_time_am_pm(word_idx: usize, toks: &[Token], source: &[char]) -> bool {
     let word = &toks[word_idx];
     let chars = word.get_ch(source);
 
-    if !chars.eq_any_ignore_ascii_case_chars(&[&['a', 'm'], &['p', 'm']]) {
+    if !chars.eq_any_ignore_ascii_case_chars([&['a', 'm'], &['p', 'm']]) {
         return false;
     }
 
@@ -206,13 +206,13 @@ fn should_capitalize_token(tok: &Token, source: &[char]) -> bool {
 
             let is_short_preposition = metadata.preposition && tok.span.len() <= 4;
 
-            if chars.eq_any_ignore_ascii_case_chars(&[&['a', 'l', 'l']]) {
+            if chars.eq_any_ignore_ascii_case_chars([&['a', 'l', 'l']]) {
                 return true;
             }
 
             !is_short_preposition
-                && !chars.eq_any_ignore_ascii_case_str(&["and", "but", "for", "or", "nor", "as"])
-                && !chars.eq_any_ignore_ascii_case_str(&["a", "an", "the"])
+                && !chars.eq_any_ignore_ascii_case_str(["and", "but", "for", "or", "nor", "as"])
+                && !chars.eq_any_ignore_ascii_case_str(["a", "an", "the"])
                 && !(chars.len() == 1 && chars[0] == 'x')
         }
         _ => true,

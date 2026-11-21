@@ -45,7 +45,7 @@ impl ExprLinter for DayAndAge {
             && (penult.kind.is_preposition()
                 || penult
                     .get_ch(src)
-                    .eq_any_ignore_ascii_case_chars(&[&['i', 's'], &['i', 't']]))
+                    .eq_any_ignore_ascii_case_chars([&['i', 's'], &['i', 't']]))
         {
             Some(penult.span)
         } else {
@@ -82,7 +82,9 @@ impl ExprLinter for DayAndAge {
                 // We have a preposition and the idiom is correct
                 (Some(prep_chars), true) => {
                     // If the preposition is "in" or "for" there's nothing to fix
-                    if prep_chars.eq_any_ignore_ascii_case_chars(&[&['i', 'n'], &['f', 'o', 'r']]) {
+                    if prep_chars
+                        .eq_any_ignore_ascii_case_chars([&['i', 'n'] as &[char], &['f', 'o', 'r']])
+                    {
                         return None;
                     }
                     // Otherwise replace the preposition

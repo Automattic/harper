@@ -40,7 +40,7 @@ impl ExprLinter for FleshOutVsFullFledged {
             .first()
             .map(|t| {
                 t.get_ch(src)
-                    .eq_any_ignore_ascii_case_str(&["full", "fully"])
+                    .eq_any_ignore_ascii_case_str(["full", "fully"])
             })
             .unwrap_or(false);
 

@@ -20,12 +20,12 @@ impl Default for NominalWants {
         fn is_applicable_pronoun(tok: &Token, src: &[char]) -> bool {
             if tok.kind.is_pronoun() && tok.kind.is_upos(UPOS::PRON) {
                 let pron = tok.get_ch(src);
-                !pron.eq_any_ignore_ascii_case_chars(&[
+                !pron.eq_any_ignore_ascii_case_chars([
                     // "That" can act as two kinds of pronoun: demonstrative and relative.
                     // As a demonstrative pronoun, it's third person singular.
                     // As a relative pronoun, it's behaves as any person:
                     // I am the one that wants to. He is the one that wants to.
-                    &['t', 'h', 'a', 't'],
+                    &['t', 'h', 'a', 't'] as &[char],
                     // Personal pronouns have case. Object case personal pronouns
                     // can come after "want":
                     // Make them want to believe.

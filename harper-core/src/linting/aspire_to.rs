@@ -55,7 +55,7 @@ impl ExprLinter for AspireTo {
                 let chars = wt.span.get_content(src);
 
                 chars == ['N', 'E', 'T']
-                    || chars.eq_any_ignore_ascii_case_str(&[
+                    || chars.eq_any_ignore_ascii_case_str([
                         // verbs that indicate Aspire is a tool or product
                         "use", "used", "uses", "using",
                         // other words that precede Aspire when it's not a verb

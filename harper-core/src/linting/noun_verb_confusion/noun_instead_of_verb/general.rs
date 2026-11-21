@@ -81,7 +81,7 @@ impl ExprLinter for GeneralNounInsteadOfVerb {
                 // But first rule out marginal "nouns"
                 if !following_tok
                     .get_ch(src)
-                    .eq_any_ignore_ascii_case_str(&["it", "me", "on", "that"])
+                    .eq_any_ignore_ascii_case_str(["it", "me", "on", "that"])
                 {
                     return None;
                 }

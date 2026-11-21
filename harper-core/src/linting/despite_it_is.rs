@@ -101,7 +101,7 @@ impl ExprLinter for DespiteItIs {
         let mut suggestions = Vec::with_capacity(3);
 
         // Special case for "it" which can also be omitted
-        if subj_chars.eq_any_ignore_ascii_case_str(&["it", "they"]) {
+        if subj_chars.eq_any_ignore_ascii_case_str(["it", "they"]) {
             suggestions.push(Suggestion::replace_with_match_case_str("being", be_chars));
         }
 

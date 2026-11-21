@@ -53,7 +53,7 @@ pub fn match_to_lint_four_digits(
         (Some(before), _)
             if before
                 .word
-                .eq_any_ignore_ascii_case_str(&["early", "mid", "late"]) =>
+                .eq_any_ignore_ascii_case_str(["early", "mid", "late"]) =>
         {
             UsageJudgment::IsMistake
         }

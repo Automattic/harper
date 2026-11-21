@@ -18,7 +18,7 @@ impl Default for GoMissing {
                     |t: &Token, s: &[char]| {
                         t.kind.is_plural_noun()
                             || t.get_ch(s)
-                                .eq_any_ignore_ascii_case_str(&["child", "person"])
+                                .eq_any_ignore_ascii_case_str(["child", "person"])
                     },
                 )),
         }

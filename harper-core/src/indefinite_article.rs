@@ -227,7 +227,7 @@ mod tests {
     #[test]
     fn test_npm_4139() {
         assert_eq!(
-            starts_with_vowel(&['n', 'p', 'm'].to_vec(), Dialect::American),
+            starts_with_vowel(['n', 'p', 'm'].as_ref(), Dialect::American),
             Some(InitialSound::Vowel)
         );
     }

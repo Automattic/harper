@@ -49,7 +49,7 @@ impl ExprLinter for WhomSubjectOfVerb {
             && ws1.kind.is_whitespace()
             && word
                 .get_ch(src)
-                .eq_any_ignore_ascii_case_str(&["each", "many"])
+                .eq_any_ignore_ascii_case_str(["each", "many"])
         {
             return None;
         }

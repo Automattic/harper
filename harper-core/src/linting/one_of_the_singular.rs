@@ -25,7 +25,7 @@ impl SeqExprExt for SequenceExpr {
                 && !t.kind.is_preposition() // "in" etc.
                 && !t.kind.is_pronoun() // "who" etc.
                 && !t.get_ch(s)
-                    .eq_any_ignore_ascii_case_str(&[
+                    .eq_any_ignore_ascii_case_str([
                         "ah", "few", "first", "former", "latter", "said", "uh",
                     ])
         })

@@ -60,7 +60,7 @@ fn is_comparative(tok: &Token, source: &[char]) -> bool {
     tok.kind.is_comparative_adjective()
         || tok
             .get_ch(source)
-            .eq_any_ignore_ascii_case_chars(&[&['l', 'e', 's', 's'], &['m', 'o', 'r', 'e']])
+            .eq_any_ignore_ascii_case_chars([&['l', 'e', 's', 's'], &['m', 'o', 'r', 'e']])
 }
 
 impl Default for ThenThan {
@@ -79,7 +79,7 @@ impl ExprLinter for ThenThan {
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let span = find_the_only_token_matching(matched_tokens, source, |t, s| {
             t.get_ch(s)
-                .eq_any_ignore_ascii_case_chars(&[&['t', 'h', 'e', 'n'], &['t', 'h', 'a', 'n']])
+                .eq_any_ignore_ascii_case_chars([&['t', 'h', 'e', 'n'], &['t', 'h', 'a', 'n']])
         })?
         .span;
 

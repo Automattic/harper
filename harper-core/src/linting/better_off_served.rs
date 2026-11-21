@@ -61,9 +61,9 @@ impl ExprLinter for BetterOffServed {
             KeepServed
         } else if next_tok.kind.is_verb_progressive_form() || next_ch.eq_str("if") {
             KeepOff
-        } else if next_ch.eq_any_ignore_ascii_case_str(&["with", "as", "over", "in"]) {
+        } else if next_ch.eq_any_ignore_ascii_case_str(["with", "as", "over", "in"]) {
             KeepServed
-        } else if next_ch.eq_any_ignore_ascii_case_str(&["not", "just"]) {
+        } else if next_ch.eq_any_ignore_ascii_case_str(["not", "just"]) {
             if followed_by_word(cttx, |t| t.kind.is_verb_progressive_form()) {
                 KeepOff
             } else {

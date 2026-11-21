@@ -56,7 +56,7 @@ impl ExprLinter for MissingPreposition {
             find_the_only_token_matching(matched_tokens, source, |t, _| t.kind.is_upos(UPOS::AUX))?;
         if aux
             .get_ch(source)
-            .eq_any_ignore_ascii_case_str(&["has", "have", "had", "having"])
+            .eq_any_ignore_ascii_case_str(["has", "have", "had", "having"])
         {
             return None;
         }

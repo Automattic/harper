@@ -35,9 +35,9 @@ impl ExprLinter for SuchShame {
 
         if first
             .get_ch(src)
-            .eq_any_ignore_ascii_case_chars(&[&['i', 's'], &['w', 'a', 's']])
+            .eq_any_ignore_ascii_case_chars([&['i', 's'] as &[char], &['w', 'a', 's']])
             && preceded_by_word(ctx, |t| {
-                t.get_ch(src).eq_any_ignore_ascii_case_chars(&[
+                t.get_ch(src).eq_any_ignore_ascii_case_chars([
                     &['t', 'h', 'e', 'r', 'e'],
                     &['t', 'h', 'e', 'i', 'r'],
                 ])

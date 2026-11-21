@@ -29,7 +29,7 @@ impl ExprLinter for OffLimits {
         ctx: Option<(&[Token], &[Token])>,
     ) -> Option<Lint> {
         if preceded_by_word(ctx, |t| {
-            t.get_ch(src).eq_any_ignore_ascii_case_str(&[
+            t.get_ch(src).eq_any_ignore_ascii_case_str([
                 "back",
                 "backed",
                 "backing",

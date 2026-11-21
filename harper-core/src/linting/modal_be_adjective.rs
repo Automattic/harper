@@ -53,7 +53,7 @@ impl ExprLinter for ModalBeAdjective {
             (nw.kind.is_noun()
                 && !nw
                     .get_ch(src)
-                    .eq_any_ignore_ascii_case_str(&["at", "by", "if"]))
+                    .eq_any_ignore_ascii_case_str(["at", "by", "if"]))
                 || (toks.last().unwrap().get_ch(src).eq_str("kind") && nw.get_ch(src).eq_str("of"))
         }) || followed_by_hyphen(ctx)
         {

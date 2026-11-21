@@ -21,7 +21,7 @@ impl Default for TheProperNounPossessive {
                         && !t.kind.is_lowercase()
                         && !t
                             .get_ch(s)
-                            .eq_any_ignore_ascii_case_str(&["internet's", "internet’s"])
+                            .eq_any_ignore_ascii_case_str(["internet's", "internet’s"])
                 }),
         }
     }

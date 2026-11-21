@@ -45,7 +45,7 @@ impl ExprLinter for SinceDuration {
         let last = toks.last()?;
         if last
             .get_ch(src)
-            .eq_any_ignore_ascii_case_chars(&[&['a', 'g', 'o'], &['o', 'l', 'd']])
+            .eq_any_ignore_ascii_case_chars([&['a', 'g', 'o'], &['o', 'l', 'd']])
         {
             return None;
         }

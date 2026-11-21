@@ -17,7 +17,7 @@ pub(crate) fn is_content_word(tok: &Token, src: &[char]) -> bool {
         && (!meta.preposition
             || tok
                 .get_ch(src)
-                .eq_any_ignore_ascii_case_str(&["bar", "through"]))
+                .eq_any_ignore_ascii_case_str(["bar", "through"]))
 }
 
 pub(crate) fn predicate(

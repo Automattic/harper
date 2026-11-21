@@ -22,8 +22,8 @@ impl<D: Dictionary> RegularIrregulars<D> {
                     && tok
                         .span
                         .get_content(src)
-                        .ends_with_any_ignore_ascii_case_chars(&[
-                            &['s'],
+                        .ends_with_any_ignore_ascii_case_chars([
+                            &['s'] as &[char],
                             &['e', 'd'],
                             &['e', 'r'],
                             &['e', 's', 't'],

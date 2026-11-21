@@ -58,7 +58,7 @@ impl ExprLinter for OldestInTheBook {
         let np = &toks[2..toks.len() - 4];
         let tricky = np.iter().any(|n| {
             n.get_ch(src)
-                .eq_any_ignore_ascii_case_str(&["trick", "tricks"])
+                .eq_any_ignore_ascii_case_str(["trick", "tricks"])
         });
 
         let message = if tricky {

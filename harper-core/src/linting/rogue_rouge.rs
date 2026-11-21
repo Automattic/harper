@@ -53,8 +53,7 @@ impl ExprLinter for RogueRouge {
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let span = find_the_only_token_matching(matched_tokens, source, |t, c| {
-            t.get_ch(c)
-                .eq_any_ignore_ascii_case_str(&["rogue", "rouge"])
+            t.get_ch(c).eq_any_ignore_ascii_case_str(["rogue", "rouge"])
         })?
         .span;
 

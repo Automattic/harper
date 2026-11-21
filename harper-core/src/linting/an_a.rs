@@ -59,7 +59,7 @@ impl Linter for AnA {
                     if let Some(prev) = document.get_next_word_from_offset(first_idx, -1)
                         && prev
                             .get_ch(document.get_source())
-                            .eq_any_ignore_ascii_case_chars(&[&['a'], &['a', 'n']])
+                            .eq_any_ignore_ascii_case_chars([&['a'] as &[char], &['a', 'n']])
                     {
                         continue;
                     }
