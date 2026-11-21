@@ -123,7 +123,7 @@ impl<D: Dictionary> ExprLinter for ThereIsAgreement<D> {
     }
 
     fn description(&self) -> &str {
-        "Checks for `is there` and its variants agreeing with singular vs plural subjects"
+        "Checks for `is there` and its variants agreeing with singular vs plural subjects."
     }
 }
 

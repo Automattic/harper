@@ -642,7 +642,7 @@ Suggest:
 Lint:    Enhancement (31 priority)
 Message: |
      583 | here this summer. I think the home influence will be very good for her.”
-         |                                                      ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`
+         |                                                      ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`.
 Suggest:
   - Replace with: “excellent”
 
@@ -1667,7 +1667,7 @@ Suggest:
 Lint:    Enhancement (31 priority)
 Message: |
     1457 | “I thought you knew, old sport. I’m afraid I’m not a very good host.”
-         |                                                      ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`
+         |                                                      ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`.
 Suggest:
   - Replace with: “excellent”
 
@@ -3702,7 +3702,7 @@ Suggest:
 Lint:    Enhancement (31 priority)
 Message: |
     2594 | “Looks very good,” he remarked vaguely. “One of the papers said they thought the
-         |        ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`
+         |        ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`.
 Suggest:
   - Replace with: “excellent”
 
@@ -4345,7 +4345,7 @@ Suggest:
 Lint:    Enhancement (31 priority)
 Message: |
     3141 | “Very good roads around here.”
-         |  ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`
+         |  ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`.
 Suggest:
   - Replace with: “Excellent”
 

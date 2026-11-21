@@ -42,7 +42,7 @@ impl ExprLinter for NailInCoffin {
                 "in",
                 span.get_content(src),
             )],
-            message: "This idiom uses the preposition `in` rather than `on`".to_owned(),
+            message: "This idiom uses the preposition `in` rather than `on`.".to_owned(),
             ..Default::default()
         })
     }
@@ -52,7 +52,7 @@ impl ExprLinter for NailInCoffin {
     }
 
     fn description(&self) -> &str {
-        "Corrects `nail on the coffin` to `nail in the coffin`"
+        "Corrects `nail on the coffin` to `nail in the coffin`."
     }
 }
 

@@ -30,7 +30,7 @@ impl ExprLinter for ThePointFor {
     type Unit = Chunk;
 
     fn description(&self) -> &str {
-        "Corrects `the point for` to `the point of`"
+        "Corrects `the point for` to `the point of`."
     }
 
     fn expr(&self) -> &dyn Expr {

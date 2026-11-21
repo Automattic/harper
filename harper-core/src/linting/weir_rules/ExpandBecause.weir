@@ -1,6 +1,6 @@
 expr main (cuz)
 
-let message "Use `because` instead of informal `cuz`"
+let message "Use `because` instead of informal `cuz`."
 let description "Expands the informal abbreviation `cuz` to the full word `because` for formality."
 let kind "Style"
 let becomes "because"
