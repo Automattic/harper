@@ -1,0 +1,30 @@
+expr aux [have, has, had]
+expr main <[(@aux be ![PROG, -]), (@aux be.), (@aux be?), (@aux be,)], be>
+
+let message "Add `to` before `be`, or use `been`."
+let description "Catches `have be` where `have to be` or `have been` was meant."
+let kind "Grammar"
+let scope "Sentence"
+let becomes ["to be", "been"]
+let strategy "MatchCase"
+
+# real sentences from Hacker News
+test "It has be trustworthy." "It has to be trustworthy."
+test "Beyond that one issue it has be great." "Beyond that one issue it has been great."
+# made-up sentences
+test "I have be there by nine." "I have to be there by nine."
+test "She has be careful with that." "She has to be careful with that."
+test "We had be quiet during the call." "We had to be quiet during the call."
+test "IT HAS BE DONE TODAY." "IT HAS TO BE DONE TODAY."
+test "That is how it has be." "That is how it has to be."
+test "Sorry, it has be this way." "Sorry, it has to be this way."
+
+# correct text
+allows "I have to be there by nine."
+allows "I have been there before."
+allows "Does it have to be today?"
+allows "It has been a long week."
+# look-alikes that must not be flagged
+allows "We have be-bop records at home."
+allows "We had being on time in mind."
+allows "What we have, be careful with it."
