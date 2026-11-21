@@ -1,0 +1,19 @@
+% Excerpt from arXiv:2307.14310, CC BY 4.0.
+% https://arxiv.org/abs/2307.14310
+\documentclass{article}
+
+\begin{document}
+
+\subsection{Autocallable}
+\label{sec:autocallable}
+For a single underlying asset, an \emph{autocallable} derivative contract consists of
+
+\begin{enumerate}
+    \item A set of $k$ binary payoffs $\{K_i, t_i, f_i \}$, such that if the asset returns at time $t_i$ exceed $K_i$, the holder of the contract receives a return $f_i$ and the contract terminates. The asset's return at time $t$ is defined as $S_t/S_0$, where $S_t$ is the value of the asset at time $t$ and $S_0$ the value of the asset today.
+    \item If none of the binary payoffs have been triggered, and the asset returns have crossed a barrier value $B$ at any time before the contract's expiration, the holder receives a return given by $1-\max(0, K_T - f_T)$, where $K_T \in [0,1]$ is a pre-determined \emph{strike} return and $f_T$ is the asset's return at expiration date $T$.
+\end{enumerate}
+Because an autocallable is typically defined in terms of an asset's performance, it also includes a (dollar) notional value $V$ on which the payoff returns are evaluated to determine a dollar amount to be exchanged.
+For example, if the contract's notional value is $\$1$M, and a binary payoff with $f_i = 1.5$ is triggered, the holder of the contract receives $\$1.5$M in total.
+We now describe how this contract can be priced by employing QSP at the appropriate place.
+
+\end{document}
