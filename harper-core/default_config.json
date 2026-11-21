@@ -6897,6 +6897,13 @@
 						},
 						{
 							"Bool": {
+								"name": "SameSimilarWay",
+								"state": true,
+								"label": "Same/Similar Way"
+							}
+						},
+						{
+							"Bool": {
 								"name": "SaveToSafe",
 								"state": true,
 								"label": "Save To Safe"
