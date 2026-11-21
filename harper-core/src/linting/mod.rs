@@ -169,6 +169,7 @@ mod informal_laughter;
 mod initialism_linter;
 mod initialisms;
 mod interested_in;
+mod ise_ize;
 mod it_are_the_one;
 mod it_is;
 mod it_looks_like_that;
