@@ -1,6 +1,6 @@
 expr main <(scared about), about>
 
-let message "Use `scared of` instead of `scared about`"
+let message "Use `scared of` instead of `scared about`."
 let description "Fixes `scared about` to `scared of`, using the standard preposition."
 let kind "Usage"
 let becomes "of"

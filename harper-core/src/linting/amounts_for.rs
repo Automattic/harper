@@ -88,7 +88,7 @@ impl ExprLinter for AmountsFor {
     }
 
     fn description(&self) -> &str {
-        "Corrects `amounts for` to either `amounts to` or `accounts for`"
+        "Corrects `amounts for` to either `amounts to` or `accounts for`."
     }
 }
 

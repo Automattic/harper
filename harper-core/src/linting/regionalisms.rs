@@ -773,7 +773,7 @@ impl ExprLinter for Regionalisms {
     }
 
     fn description(&self) -> &str {
-        "Regionalisms"
+        "Corrects regionalisms not used in the document's dialect of English."
     }
 }
 

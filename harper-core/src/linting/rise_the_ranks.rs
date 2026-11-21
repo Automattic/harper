@@ -39,7 +39,7 @@ impl ExprLinter for RiseTheRanks {
     type Unit = Chunk;
 
     fn description(&self) -> &str {
-        "Corrects the nonstandard phrase `rise the ranks` to the standard `rise through the ranks` or `rise from the ranks`"
+        "Corrects the nonstandard phrase `rise the ranks` to the standard `rise through the ranks` or `rise from the ranks`."
     }
 
     fn expr(&self) -> &dyn Expr {

@@ -165,7 +165,7 @@ impl<D: Dictionary> ExprLinter for WillNonLemma<D> {
     }
 
     fn description(&self) -> &str {
-        "Flags wrong verb forms after `will` or `shall`"
+        "Flags wrong verb forms after `will` or `shall`."
     }
 }
 

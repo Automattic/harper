@@ -57,7 +57,7 @@ impl ExprLinter for TakeSerious {
             span: whole_phrase_span,
             lint_kind: LintKind::WordChoice,
             suggestions,
-            message: "Take seriously".to_owned(),
+            message: "Use the adverb `seriously` here.".to_owned(),
             priority: 63,
         })
     }

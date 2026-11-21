@@ -46,7 +46,7 @@ impl ExprLinter for ComfortableWith {
                 "with",
                 span.get_content(source),
             )],
-            message: "The standard preposition after `comfortable` is `with`".to_owned(),
+            message: "The standard preposition after `comfortable` is `with`.".to_owned(),
             ..Default::default()
         })
     }

@@ -1,6 +1,6 @@
 expr main (w/o)
 
-let message "Use `without` instead of `w/o`"
+let message "Use `without` instead of `w/o`."
 let description "Expands the abbreviation `w/o` to the full word `without` for clarity."
 let kind "Style"
 let becomes "without"
