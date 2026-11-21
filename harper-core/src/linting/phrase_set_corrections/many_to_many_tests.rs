@@ -1,7 +1,10 @@
-use super::LintGroup;
-use crate::linting::pooled_linter::for_tests::create_test_pool;
-use crate::linting::tests::{
-    assert_good_and_bad_suggestions, assert_lint_count, assert_no_lints, assert_suggestion_result,
+use crate::linting::{
+    LintGroup,
+    pooled_linter::for_tests::create_test_pool,
+    tests::{
+        assert_good_and_bad_suggestions, assert_lint_count, assert_no_lints,
+        assert_suggestion_result,
+    },
 };
 
 use super::lint_group;
@@ -798,6 +801,44 @@ fn fix_high_space_jacks() {
         "This high jacks the issue somewhat but, the Computation Scheduler only runs as many concurrent threads as there are cores",
         test_linter(),
         "This hijacks the issue somewhat but, the Computation Scheduler only runs as many concurrent threads as there are cores",
+    );
+}
+
+// HolyGrail
+
+#[test]
+fn correct_holey_grail() {
+    assert_suggestion_result(
+        "But it seems that some rock-star developers have found the holey grail in one or another strange language.",
+        test_linter(),
+        "But it seems that some rock-star developers have found the holy grail in one or another strange language.",
+    );
+}
+
+#[test]
+fn correct_holly_grail() {
+    assert_suggestion_result(
+        "And last but not least, the holly grail of languages workbenches",
+        test_linter(),
+        "And last but not least, the holy grail of languages workbenches",
+    );
+}
+
+#[test]
+fn correct_holy_grale() {
+    assert_suggestion_result(
+        "We are by no means close to such a holy grale yet but the library will grow",
+        test_linter(),
+        "We are by no means close to such a holy grail yet but the library will grow",
+    );
+}
+
+#[test]
+fn correct_holly_grale_network() {
+    assert_suggestion_result(
+        "and Image toolbox that is not working is the holly grale of network ...",
+        test_linter(),
+        "and Image toolbox that is not working is the holy grail of network ...",
     );
 }
 
