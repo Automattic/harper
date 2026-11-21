@@ -1,7 +1,6 @@
 mod human_readable_structured_config;
 
 use super::FlatConfig;
-use serde_json;
 
 pub use human_readable_structured_config::{HumanReadableSetting, HumanReadableStructuredConfig};
 
@@ -19,13 +18,7 @@ pub struct StructuredConfig {
 impl StructuredConfig {
     /// Build the curated structured config, including labels.
     pub fn curated() -> Self {
-        let human: HumanReadableStructuredConfig = serde_json::from_str(include_str!(concat!(
-            env!("CARGO_MANIFEST_DIR"),
-            "/default_config.json"
-        )))
-        .unwrap();
-
-        human.to_structured_config().unwrap()
+        crate::lang::en::linting::default_config()
     }
 
     /// Validate that the structure of the settings is valid.
@@ -118,7 +111,7 @@ impl Setting {
 mod tests {
     use std::collections::BTreeSet;
 
-    use crate::Dialect;
+    use crate::EnglishDialect;
     use crate::linting::FlatConfig;
     use crate::linting::LintGroup;
     use crate::spell::MutableDictionary;
@@ -315,7 +308,7 @@ mod tests {
         let curated_rule_names = collect_rule_names(&curated);
 
         let runtime_rule_names =
-            LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American)
+            LintGroup::new_curated(MutableDictionary::new().into(), EnglishDialect::American)
                 .iter_keys()
                 .map(str::to_owned)
                 .collect::<BTreeSet<_>>();

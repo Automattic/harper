@@ -47,7 +47,7 @@ impl ExprLinter for ExprLinterSkeleton {
     }
 
     fn description(&self) -> &str {
-        "A linter skeleton for contributors to copy into `harper_core/src/linting/` and rename."
+        "A linter skeleton for contributors to copy into `harper_core/src/lang/en/linting/` and rename."
     }
 }
 

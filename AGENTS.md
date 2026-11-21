@@ -174,8 +174,8 @@ Read the [Desktop contributor documentation](packages/web/src/routes/docs/contri
 ### IPC And App State
 
 - Tauri app state lives in `harper-desktop/src-tauri/src/config/mod.rs`.
-- `Config` currently stores `mutable_dictionary: MutableDictionary`, `dialect: Dialect`, `ignored_lints: IgnoredLints`, `lint_config: FlatConfig`, and `integrations: Vec<Integration>`.
-- `Config::new()` uses `MutableDictionary::new()`, `Dialect::American`, `IgnoredLints::new()`, `FlatConfig::new_curated()`, and curated default integrations.
+- `Config` currently stores `mutable_dictionary: MutableDictionary`, `dialect: EnglishDialect`, `ignored_lints: IgnoredLints`, `lint_config: FlatConfig`, and `integrations: Vec<Integration>`.
+- `Config::new()` uses `MutableDictionary::new()`, `EnglishDialect::American`, `IgnoredLints::new()`, `FlatConfig::new_curated()`, and curated default integrations.
 - Config is persisted under the system config directory in a `harper-desktop` folder. Main settings are serialized to `config.json`; the mutable dictionary is stored separately as `dictionary.txt`.
 - `Config::load_from_system()` loads the serialized config and then hydrates the mutable dictionary with the selected dialect.
 - The Tauri app owns shared config as `Arc<Mutex<Config>>`.
@@ -229,8 +229,8 @@ When asked to write a new rule, keep these guidelines in mind:
 - The user is almost always expecting you to write it to a file. Which file and where is up to you to find out.
 - You should include at least 15 total tests, covering a wide variety of cases. Cover false-positives, false negatives, true positives, and if relevant, true negatives.
 - You should run any and all tests to ensure that you do no break existing behavior and that your new rule runs the way you expect. At minimum, that means `just test-rust`. Make sure to check the snapshots for changes.
-- After adding a new rule, update `harper-core/default_config.json` so it is enabled in the curated default config.
-- Built-in Weir rules can be grouped by putting related `.weir` files in a directory under `harper-core/src/linting/weir_rules`; the directory name becomes the single public rule name.
+- After adding a new rule, update `harper-core/src/lang/en/linting/default_config.json` so it is enabled in the curated default config.
+- Built-in Weir rules can be grouped by putting related `.weir` files in a directory under `harper-core/src/lang/en/linting/weir_rules`; the directory name becomes the single public rule name.
 - If the rule is related to a closed compound noun, see if you can just add an entry to the existing closed compound linter.
 
 Unless you are specifically requested to write the rule in a specific way, choose the language (Rust or Weir) and methodology that fits the task.
@@ -291,4 +291,3 @@ Linters run on every keystroke; avoid heap allocations in hot paths:
 Before finishing your turn, run `just format` or `cargo fmt` if you have made any changes. This can help diffs if a human decides to make a commit.
 
 Try to write in a functional style. Minimize adding state whenever it is possible while also respecting the user's query. If additional state is necessary, please centralize it to increase visibility.
-
