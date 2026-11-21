@@ -34,6 +34,7 @@ mod as_to_interrogative;
 mod asap;
 mod ask_no_preposition;
 mod aspire_to;
+mod atm;
 mod avoid_contractions;
 mod avoid_curses;
 mod back_in_the_day;

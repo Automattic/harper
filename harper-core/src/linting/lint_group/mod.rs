@@ -38,6 +38,7 @@ use super::as_to_interrogative::AsToInterrogative;
 use super::asap::AsSoonAsPossible;
 use super::ask_no_preposition::AskNoPreposition;
 use super::aspire_to::AspireTo;
+use super::atm::Atm;
 use super::avoid_contractions::AvoidContractions;
 use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
@@ -1018,6 +1019,9 @@ impl LintGroup {
 
         // Uses Sentence rather than Chunk
         out.add("AspireTo", AspireTo::default());
+
+        // Uses Sentence rather than Chunk
+        out.add("Atm", Atm::default());
 
         // Uses Sentence rather than Chunk
         out.add("ConvenientStore", ConvenientStore::default());

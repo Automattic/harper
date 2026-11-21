@@ -228,6 +228,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Atm",
+								"state": true,
+								"label": "ATM"
+							}
+						},
+						{
+							"Bool": {
 								"name": "BeRightBack",
 								"state": true,
 								"label": "Be Right Back"
