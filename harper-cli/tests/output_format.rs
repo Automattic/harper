@@ -166,3 +166,54 @@ fn default_format_unchanged() {
         "default format should include lint count summary"
     );
 }
+
+/// Regression test for #4513: files in a directory are linted in parallel,
+/// but each file's report must still be printed in one piece.
+#[test]
+fn directory_reports_do_not_interleave() {
+    let dir = tempfile::tempdir().unwrap();
+    let file_count = 32;
+    for i in 0..file_count {
+        let mut f = std::fs::File::create(dir.path().join(format!("f{i}.md"))).unwrap();
+        write!(f, "{BAD_INPUT}").unwrap();
+    }
+
+    let output = harper_cli()
+        .args([
+            "--no-color",
+            "lint",
+            "--format",
+            "default",
+            dir.path().to_str().unwrap(),
+        ])
+        .output()
+        .unwrap();
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+
+    // Each report starts with a "<path>: N lints" line and ends with a "rules:" line
+    // followed by the rule counts. No other report may start in between.
+    let mut lines = stdout.lines();
+    let mut reports = 0;
+    while let Some(line) = lines.next() {
+        if !line.ends_with(" lints") {
+            continue;
+        }
+        reports += 1;
+        loop {
+            let line = lines
+                .next()
+                .unwrap_or_else(|| panic!("report cut short:\n{stdout}"));
+            assert!(
+                !line.ends_with(" lints"),
+                "a report started inside another one:\n{stdout}"
+            );
+            if line == "rules:" {
+                lines.next();
+                break;
+            }
+        }
+    }
+
+    assert_eq!(reports, file_count, "missing reports:\n{stdout}");
+}
