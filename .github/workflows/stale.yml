@@ -6,14 +6,17 @@ name: Close inactive issues
   schedule:
     - cron: "0 2 * * *"
 
+# Grant each job only the token permissions it needs.
+permissions: {}
+
 jobs:
   close-issues:
     runs-on: ubuntu-latest
     permissions:
-      issues: write
-      pull-requests: write
+      issues: write # To label, comment on and close inactive issues.
+      pull-requests: write # To label, comment on and close inactive pull requests.
     steps:
-      - uses: actions/stale@v11
+      - uses: actions/stale@4391f3da665fdf50b6810c1a66712fb9ba21aa93 # v11.0.0
         with:
           days-before-stale: 60
           days-before-close: 14
