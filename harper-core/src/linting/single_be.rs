@@ -1,9 +1,10 @@
+use crate::lang::en::patterns::InflectionOfBe;
 use crate::{
     Span, Token,
     dict_word_metadata::VerbFormFlags,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
-    patterns::{DerivedFrom, InflectionOfBe},
+    patterns::DerivedFrom,
 };
 
 fn be_forms(token: &Token) -> Option<VerbFormFlags> {

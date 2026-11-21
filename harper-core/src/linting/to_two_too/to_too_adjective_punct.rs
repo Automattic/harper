@@ -1,10 +1,11 @@
+use crate::lang::en::patterns::prepositional_preceder;
 use harper_brill::UPOS;
 
 use crate::{
     Token, TokenKind,
     char_string::CharStringExt,
     expr::{Expr, SequenceExpr},
-    patterns::{SingleTokenPattern, prepositional_preceder},
+    patterns::SingleTokenPattern,
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};

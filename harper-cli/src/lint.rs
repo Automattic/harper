@@ -15,7 +15,7 @@ use harper_core::{
     parsers::MarkdownOptions,
     spell::{Dictionary, MergedDictionary, MutableDictionary},
     weirpack::Weirpack,
-    {Dialect, DictWordMetadata, Document},
+    {DictWordMetadata, Document, EnglishDialect},
 };
 
 use crate::input::{
@@ -89,7 +89,7 @@ pub struct LintOptions {
     pub ignore: Option<Vec<String>>,
     pub only: Option<Vec<String>>,
     pub keep_overlapping_lints: bool,
-    pub dialect: Dialect,
+    pub dialect: EnglishDialect,
     pub weirpack_inputs: Vec<SingleInput>,
     pub color: bool,
     pub format: OutputFormat,
@@ -379,7 +379,7 @@ pub struct FullInputInfo<'a> {
 }
 
 fn final_report(
-    dialect: Dialect,
+    dialect: EnglishDialect,
     batch_mode: bool,
     all_lint_kinds: HashMap<LintKind, usize>,
     all_rules: HashMap<String, usize>,

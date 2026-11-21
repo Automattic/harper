@@ -354,24 +354,30 @@ mod tests {
 
         #[test]
         fn fix_feeded() {
-            use crate::Dialect;
+            use crate::EnglishDialect;
             use crate::spell::FstDictionary;
 
             assert_suggestion_result(
                 "Rune is a TUI editor, so I feeded the same terminal sequences to the old and new apps.",
-                crate::linting::LintGroup::new_curated(FstDictionary::curated(), Dialect::American),
+                crate::linting::LintGroup::new_curated(
+                    FstDictionary::curated(),
+                    EnglishDialect::American,
+                ),
                 "Rune is a TUI editor, so I fed the same terminal sequences to the old and new apps.",
             );
         }
 
         #[test]
         fn fix_gatekepped() {
-            use crate::Dialect;
+            use crate::EnglishDialect;
             use crate::spell::FstDictionary;
 
             assert_suggestion_result(
                 "Foundational principles between languages are the same, I don’t understand why positions are gatekeeped based on implementation trivia.",
-                crate::linting::LintGroup::new_curated(FstDictionary::curated(), Dialect::American),
+                crate::linting::LintGroup::new_curated(
+                    FstDictionary::curated(),
+                    EnglishDialect::American,
+                ),
                 "Foundational principles between languages are the same, I don’t understand why positions are gatekept based on implementation trivia.",
             );
         }

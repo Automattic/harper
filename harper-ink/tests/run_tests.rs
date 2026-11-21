@@ -1,6 +1,6 @@
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::spell::FstDictionary;
-use harper_core::{Dialect, Document};
+use harper_core::{Document, EnglishDialect};
 use harper_ink::InkParser;
 
 /// Creates a unit test checking that the linting of a Ink document (in
@@ -22,7 +22,7 @@ macro_rules! create_test {
                       &FstDictionary::curated()
                       );
 
-                 let mut linter = LintGroup::new_curated(dict, Dialect::American);
+                 let mut linter = LintGroup::new_curated(dict, EnglishDialect::American);
                  let lints = linter.lint(&document);
 
                  dbg!(&lints);

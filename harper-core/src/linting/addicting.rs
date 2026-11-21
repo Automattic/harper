@@ -1,7 +1,8 @@
+use crate::lang::en::expr::ReflexivePronoun;
 use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
-    expr::{All, AnchorEnd, Expr, FirstMatchOf, ReflexivePronoun, SequenceExpr},
+    expr::{All, AnchorEnd, Expr, FirstMatchOf, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
 

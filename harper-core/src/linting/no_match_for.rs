@@ -1,9 +1,10 @@
+use crate::lang::en::patterns::InflectionOfBe;
 use crate::linting::expr_linter::Chunk;
 use crate::{
     CharStringExt, Token, TokenStringExt,
     expr::{Expr, FirstMatchOf, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::{InflectionOfBe, WordSet},
+    patterns::WordSet,
 };
 
 pub struct NoMatchFor {

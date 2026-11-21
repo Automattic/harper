@@ -16,26 +16,22 @@
 mod all;
 mod anchor_end;
 mod anchor_start;
-mod duration_expr;
 mod expr_map;
 mod filter;
 mod first_match_of;
 mod fixed_phrase;
 mod longest_match_of;
-mod mergeable_words;
 mod not;
 mod optional;
-mod pronoun_be;
-mod reflexive_pronoun;
 mod repeating;
 mod sequence_expr;
 mod similar_to_phrase;
 mod space_or_hyphen;
-mod spelled_number_expr;
 mod step;
-mod time_unit_expr;
 mod unless_step;
 mod word_expr_group;
+
+use crate::lang::en::expr as en;
 
 #[cfg(not(feature = "concurrent"))]
 use std::rc::Rc;
@@ -44,26 +40,34 @@ use std::sync::Arc;
 pub use all::All;
 pub use anchor_end::AnchorEnd;
 pub use anchor_start::AnchorStart;
-pub use duration_expr::DurationExpr;
 pub use expr_map::ExprMap;
 pub use filter::Filter;
 pub use first_match_of::FirstMatchOf;
 pub use fixed_phrase::FixedPhrase;
 pub use longest_match_of::LongestMatchOf;
-pub use mergeable_words::MergeableWords;
 pub use not::Not;
 pub use optional::Optional;
-pub use pronoun_be::PronounBe;
-pub use reflexive_pronoun::ReflexivePronoun;
 pub use repeating::Repeating;
 pub use sequence_expr::SequenceExpr;
 pub use similar_to_phrase::SimilarToPhrase;
 pub use space_or_hyphen::SpaceOrHyphen;
-pub use spelled_number_expr::SpelledNumberExpr;
 pub use step::Step;
-pub use time_unit_expr::TimeUnitExpr;
 pub use unless_step::UnlessStep;
 pub use word_expr_group::WordExprGroup;
+
+// English expressions used to live here. They are in `lang::en::expr` now.
+#[deprecated(note = "English only: use `harper_core::lang::en::expr::DurationExpr`")]
+pub type DurationExpr = en::DurationExpr;
+#[deprecated(note = "English only: use `harper_core::lang::en::expr::MergeableWords`")]
+pub type MergeableWords = en::MergeableWords;
+#[deprecated(note = "English only: use `harper_core::lang::en::expr::PronounBe`")]
+pub type PronounBe = en::PronounBe;
+#[deprecated(note = "English only: use `harper_core::lang::en::expr::ReflexivePronoun`")]
+pub type ReflexivePronoun = en::ReflexivePronoun;
+#[deprecated(note = "English only: use `harper_core::lang::en::expr::SpelledNumberExpr`")]
+pub type SpelledNumberExpr = en::SpelledNumberExpr;
+#[deprecated(note = "English only: use `harper_core::lang::en::expr::TimeUnitExpr`")]
+pub type TimeUnitExpr = en::TimeUnitExpr;
 
 use crate::{Document, LSend, Span, Token};
 

@@ -1,6 +1,7 @@
+use crate::lang::en::expr::SpelledNumberExpr;
 use crate::{
     CharStringExt, Lint, Token, TokenStringExt,
-    expr::{All, Expr, OwnedExprExt, SequenceExpr, SpelledNumberExpr},
+    expr::{All, Expr, OwnedExprExt, SequenceExpr},
     linting::{
         ExprLinter, LintKind, Suggestion,
         expr_linter::{Chunk, followed_by_hyphen, followed_by_word},

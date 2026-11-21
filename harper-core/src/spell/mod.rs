@@ -4,7 +4,7 @@
 use itertools::Itertools;
 use smallvec::ToSmallVec;
 
-use crate::{CharString, CharStringExt, Dialect, DictWordMetadata};
+use crate::{CharString, CharStringExt, EnglishDialect, DictWordMetadata};
 
 pub use self::dictionary::Dictionary;
 pub use self::fst_dictionary::FstDictionary;
@@ -419,7 +419,7 @@ pub fn suggest_correct_spelling<'a>(
 pub fn spelling_candidates(
     word: &[char],
     dictionary: &impl Dictionary,
-    dialect: Dialect,
+    dialect: EnglishDialect,
     limit: usize,
 ) -> Vec<(CharString, i32)> {
     (2..5)

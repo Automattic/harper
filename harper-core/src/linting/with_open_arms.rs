@@ -1,8 +1,9 @@
+use crate::lang::en::patterns::InflectionOfBe;
 use crate::{
     CharStringExt, Lint, Token, TokenStringExt,
     expr::{All, Expr, OwnedExprExt, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
-    patterns::{InflectionOfBe, WordSet},
+    patterns::WordSet,
 };
 
 pub struct WithOpenArms {

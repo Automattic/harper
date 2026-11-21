@@ -1,8 +1,9 @@
+use crate::lang::en::patterns::ModalVerb;
 use crate::{
     CharStringExt, Lrc, Token,
     expr::{Expr, FirstMatchOf, LongestMatchOf, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
-    patterns::{ModalVerb, Word, WordSet},
+    patterns::{Word, WordSet},
 };
 
 use super::super::NOUN_VERB_PAIRS;

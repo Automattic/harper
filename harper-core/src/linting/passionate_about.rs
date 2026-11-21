@@ -1,3 +1,4 @@
+use crate::lang::en::patterns::InflectionOfBe;
 use crate::{
     CharStringExt, Lint, Token, TokenStringExt,
     expr::{Expr, LongestMatchOf, OwnedExprExt, SequenceExpr},
@@ -5,7 +6,7 @@ use crate::{
         ExprLinter, LintKind, Suggestion,
         expr_linter::{Chunk, preceded_by_word},
     },
-    patterns::{InflectionOfBe, Word},
+    patterns::Word,
 };
 
 pub struct PassionateAbout {

@@ -1,12 +1,13 @@
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
+use crate::lang::en::patterns::ImpliesQuantity;
 use std::sync::Arc;
 
 use super::{ExprLinter, Lint, LintKind};
 use crate::Token;
 use crate::linting::Suggestion;
 use crate::linting::expr_linter::Chunk;
-use crate::patterns::{ImpliesQuantity, WordSet};
+use crate::patterns::WordSet;
 
 pub struct ExpandTimeShorthands {
     expr: SequenceExpr,

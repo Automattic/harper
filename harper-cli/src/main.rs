@@ -20,7 +20,7 @@ use serde_json::Value;
 #[cfg(feature = "training")]
 use harper_context_ranker::TrainingOptions;
 use harper_core::{
-    CharStringExt, Dialect, DictWordMetadata, OrthFlags, Span, TokenKind, TokenStringExt,
+    CharStringExt, DictWordMetadata, EnglishDialect, OrthFlags, Span, TokenKind, TokenStringExt,
     linting::LintGroup,
     parsers::{IsolateEnglish, MarkdownOptions},
     spell::{CanonicalWordId, Dictionary, FstDictionary, MutableDictionary},
@@ -573,7 +573,7 @@ fn main() -> anyhow::Result<()> {
                 description: String,
             }
 
-            let linter = LintGroup::new_curated(curated_dictionary, Dialect::American);
+            let linter = LintGroup::new_curated(curated_dictionary, EnglishDialect::American);
 
             let default_config: HashMap<String, bool> =
                 serde_json::from_str(&serde_json::to_string(&linter.config).unwrap()).unwrap();
@@ -1121,15 +1121,17 @@ fn main() -> anyhow::Result<()> {
     }
 }
 
-/// Parse a dialect string into a Dialect enum value.
+/// Parse a dialect string into an EnglishDialect enum value.
 /// Supports common synonyms, abbreviations, and codes.
-fn parse_dialect(dialect: &str) -> anyhow::Result<Dialect> {
+fn parse_dialect(dialect: &str) -> anyhow::Result<EnglishDialect> {
     match dialect.to_lowercase().as_str() {
-        "us" | "usa" | "america" | "american" | "en-us" | "en_us" => Ok(Dialect::American),
-        "uk" | "gb" | "british" | "britain" | "en-gb" | "en_gb" => Ok(Dialect::British),
-        "au" | "aus" | "australia" | "australian" | "en-au" | "en_au" => Ok(Dialect::Australian),
-        "in" | "india" | "indian" | "bharat" | "en-in" | "en_in" => Ok(Dialect::Indian),
-        "ca" | "canada" | "canadian" | "en-ca" | "en_ca" => Ok(Dialect::Canadian),
+        "us" | "usa" | "america" | "american" | "en-us" | "en_us" => Ok(EnglishDialect::American),
+        "uk" | "gb" | "british" | "britain" | "en-gb" | "en_gb" => Ok(EnglishDialect::British),
+        "au" | "aus" | "australia" | "australian" | "en-au" | "en_au" => {
+            Ok(EnglishDialect::Australian)
+        }
+        "in" | "india" | "indian" | "bharat" | "en-in" | "en_in" => Ok(EnglishDialect::Indian),
+        "ca" | "canada" | "canadian" | "en-ca" | "en_ca" => Ok(EnglishDialect::Canadian),
         _ => Err(anyhow!("Unknown dialect: {}", dialect)),
     }
 }
