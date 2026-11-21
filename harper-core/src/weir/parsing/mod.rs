@@ -64,7 +64,7 @@ fn parse_collection<T>(
         }
 
         if cursor != tokens.len() && !tokens[cursor].kind.is_comma() {
-            return Err(Error::ExpectedComma);
+            return Err(Error::ExpectedComma.located(tokens[cursor].span.start, source));
         }
 
         cursor += 1;
