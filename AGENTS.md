@@ -16,6 +16,10 @@ If `just format` fails, you can use `just setup` to prepare the relevant depende
 Human coders should periodically review this file and manually migrate stable, human-facing guidance into the real documentation website under `packages/web` so it is available outside agent workflows.
 Agents should remind humans of this when possible.
 
+## Rust Visibility
+
+Keep items private by default. When an item needs to be visible outside its module, use plain `pub`. Never use restricted visibility such as `pub(super)`, `pub(crate)`, or `pub(in ...)`.
+
 ## Read First
 
 1. `packages/web/src/lib/docs/config.ts`: Sidebar source of truth and canonical map of important docs routes. For website architecture, Markdown authoring, theme/search behavior, and validation, read `packages/web/src/routes/docs/contributors/website/+page.md`.
