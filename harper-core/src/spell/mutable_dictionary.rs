@@ -418,6 +418,14 @@ mod tests {
     }
 
     #[test]
+    fn curated_contains_doorframe_and_doorframes() {
+        let dict = MutableDictionary::curated();
+
+        assert!(dict.contains_word_str("doorframe"));
+        assert!(dict.contains_word_str("doorframes"));
+    }
+
+    #[test]
     fn curated_contains_possessive_abandonment() {
         assert!(
             MutableDictionary::curated()
