@@ -405,6 +405,41 @@ mod tests {
     }
 
     #[test]
+    fn flag_fallback_used_as_a_verb_issue_5006() {
+        assert_suggestion_result(
+            "We should fallback to the older version.",
+            PhrasalVerbAsCompoundNoun::default(),
+            "We should fall back to the older version.",
+        );
+    }
+
+    #[test]
+    fn flag_teardown_all_caps_issue_5008() {
+        assert_suggestion_result(
+            "I FINALLY TEARDOWN A VR6!",
+            PhrasalVerbAsCompoundNoun::default(),
+            "I FINALLY TEAR DOWN A VR6!",
+        );
+    }
+
+    #[test]
+    fn flag_teardown_lowercase_issue_5008() {
+        assert_suggestion_result(
+            "We need to teardown the old server before tomorrow.",
+            PhrasalVerbAsCompoundNoun::default(),
+            "We need to tear down the old server before tomorrow.",
+        );
+    }
+
+    #[test]
+    fn dont_flag_fallback_or_teardown_as_nouns() {
+        assert_no_lints(
+            "We have a fallback in place for the server. The teardown went smoothly.",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
+    }
+
+    #[test]
     fn dont_flag_random_words_that_happen_to_end_like_a_particle() {
         assert_no_lints("I like bacon.", test_linter());
     }
