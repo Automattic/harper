@@ -6808,7 +6808,7 @@
 							"Bool": {
 								"name": "FindFine",
 								"state": true,
-								"label": "Find Fine"
+								"label": "Find / Fine"
 							}
 						},
 						{
@@ -6827,9 +6827,16 @@
 						},
 						{
 							"Bool": {
+								"name": "GestureJester",
+								"state": true,
+								"label": "Gesture / Jester"
+							}
+						},
+						{
+							"Bool": {
 								"name": "HopHope",
 								"state": true,
-								"label": "Hop Hope"
+								"label": "Hop / Hope"
 							}
 						},
 						{
