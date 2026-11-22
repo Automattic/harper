@@ -1,0 +1,22 @@
+expr direction [off, back, away, open]
+expr item [sticker, stickers, label, labels, tape, skin, skins, layer, layers, onion, onions, banana, bananas, orange, oranges, apple, apples, potato, potatoes, fruit, fruits, decal, decals, wrapper, wrappers]
+expr determiner [the, a, an, their, his, her, its, my, our, your]
+expr main [
+    <(pealing @direction), pealing>,
+    <(pealing @determiner @item), pealing>,
+    <(pealing @item), pealing>
+]
+
+let message "Did you mean `peeling`? To `peel` is to remove a covering or skin; a `peal` is a loud ringing sound."
+let description "Corrects `pealing` to `peeling` when referring to stripping off an outer layer or sticker."
+let kind "WordChoice"
+let becomes "peeling"
+let strategy "MatchCase"
+
+test "The paint was pealing off the wall." "The paint was peeling off the wall."
+test "He was pealing back the tape." "He was peeling back the tape."
+test "Pealing the sticker revealed the code." "Peeling the sticker revealed the code."
+test "She started pealing an orange." "She started peeling an orange."
+
+allows "The bells were pealing joyfully."
+allows "We heard thunder pealing above."

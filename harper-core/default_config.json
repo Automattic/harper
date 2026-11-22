@@ -6890,6 +6890,13 @@
 						},
 						{
 							"Bool": {
+								"name": "PeelPeal",
+								"state": true,
+								"label": "Peel / Peal"
+							}
+						},
+						{
+							"Bool": {
 								"name": "RogueRouge",
 								"state": true,
 								"label": "Rogue / Rouge"
