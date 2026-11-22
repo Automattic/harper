@@ -406,6 +406,18 @@ mod tests {
     }
 
     #[test]
+    fn curated_contains_waiters_instinctually_and_unholstered() {
+        let dict = MutableDictionary::curated();
+
+        assert!(dict.contains_word_str("waiters"));
+        assert!(dict.contains_word_str("instinctually"));
+        assert!(dict.contains_word_str("unholster"));
+        assert!(dict.contains_word_str("unholstered"));
+        assert!(dict.contains_word_str("unholsters"));
+        assert!(dict.contains_word_str("unholstering"));
+    }
+
+    #[test]
     fn curated_contains_possessive_abandonment() {
         assert!(
             MutableDictionary::curated()
