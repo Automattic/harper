@@ -359,6 +359,7 @@ mod transposed_space;
 mod try_ones_hand_at;
 mod try_ones_luck;
 mod unclosed_quotes;
+mod up_and_coming;
 mod update_place_names;
 mod use_ellipsis_character;
 mod use_title_case;

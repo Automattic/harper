@@ -339,6 +339,7 @@ use super::transposed_space::TransposedSpace;
 use super::try_ones_hand_at::TryOnesHandAt;
 use super::try_ones_luck::TryOnesLuck;
 use super::unclosed_quotes::UnclosedQuotes;
+use super::up_and_coming::UpAndComing;
 use super::update_place_names::UpdatePlaceNames;
 use super::use_ellipsis_character::UseEllipsisCharacter;
 use super::use_title_case::UseTitleCase;
@@ -988,6 +989,7 @@ impl LintGroup {
         insert_expr_rule!(TryOnesHandAt);
         insert_expr_rule!(TryOnesLuck);
         insert_struct_rule!(UnclosedQuotes);
+        insert_expr_rule!(UpAndComing);
         insert_expr_rule!(UpdatePlaceNames);
         insert_struct_rule!(UseEllipsisCharacter);
         insert_struct_rule_with_dict!(UseTitleCase);
