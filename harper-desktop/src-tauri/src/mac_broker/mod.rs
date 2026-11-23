@@ -6,6 +6,8 @@ mod app_icons;
 mod core_foundation_utilities;
 mod focused_target;
 mod focused_window_pid;
+mod screenshot;
+mod text_handler;
 mod window_stability;
 
 use accessibility::TreeWalker;
@@ -46,6 +48,7 @@ use self::accessibility_activation::{
 use self::accessibility_text::RectCollector;
 use self::core_foundation_utilities::ax_element_attribute;
 use self::focused_target::FocusedTarget;
+use self::screenshot::ScreenshotPoll;
 use self::window_stability::{
     WINDOW_MOVEMENT_SETTLE_DURATION, WindowMovementState, frontmost_window_frame_for_pid,
     settled_window_state, window_frame_changed,
@@ -65,8 +68,10 @@ pub struct MacBroker {
     last_focused: Option<SendWrapper<FocusedTarget>>,
     is_integration_enabled: Box<dyn FnMut(&str) -> bool + Send + Sync>,
     application_icon_cache: Mutex<HashMap<String, Vec<u8>>>,
+    text_handler: std::sync::Arc<text_handler::RoutingTextHandler>,
     window_movement: Option<WindowMovementState>,
     accessibility_activation: Option<AccessibilityActivationState>,
+    screenshot_poll: ScreenshotPoll,
 }
 
 impl MacBroker {
@@ -77,8 +82,10 @@ impl MacBroker {
             last_focused: None,
             is_integration_enabled: Box::new(is_integration_enabled),
             application_icon_cache: Mutex::new(HashMap::new()),
+            text_handler: Default::default(),
             window_movement: None,
             accessibility_activation: None,
+            screenshot_poll: ScreenshotPoll::new(Instant::now()),
         }
     }
 
@@ -295,6 +302,10 @@ impl OsBroker for MacBroker {
         app_id == BUNDLE_ID
     }
 
+    fn should_hide_overlay(&mut self) -> bool {
+        self.screenshot_poll.is_running()
+    }
+
     fn get_boxes(&mut self, lint_text: &mut LintCallback) -> Option<Vec<ActionableLint>> {
         let focused_pid = match focused_window_pid::focused_window_pid() {
             Ok(pid) => pid,
@@ -351,7 +362,12 @@ impl OsBroker for MacBroker {
         };
 
         let walker = TreeWalker::new();
-        let collector = RectCollector::new(lint_text);
+        let collector = RectCollector::new(
+            lint_text,
+            pid,
+            bundle_identifier.into(),
+            self.text_handler.clone(),
+        );
 
         walker.walk(&focused, &collector);
 

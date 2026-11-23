@@ -226,6 +226,17 @@ pub fn lint_group() -> LintGroup {
             "Tries to correct typos of `dose` to `does`.",
             LintKind::Typo
         ),
+        "DoubleDown" => (
+            &[
+                ("dabble down", "double down"),
+                ("dabbled down", "doubled down"),
+                ("dabbles down", "doubles down"),
+                ("dabbling down", "doubling down"),
+            ],
+            "Did you mean `double down`?",
+            "Corrects `dabble down` to `double down`.",
+            LintKind::Style
+        ),
         "ExpandAlgorithm" => (
             &[
                 ("algo", "algorithm"),
@@ -729,6 +740,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects `take control over` to `take control of`.",
             LintKind::Usage
         ),
+        "Themselves" => (
+            &[
+                ("them self", "themself"),
+                ("them selves", "themselves"),
+            ],
+            "Use `themselves` instead of `themself`.",
+            "Corrects `themself` to `themselves`.",
+            LintKind::Usage
+        ),
         "UseToUsedTo" => (
             &[
                 // "be" verbs + "use to" -> "used to" (accustomed to)
@@ -983,6 +1003,21 @@ pub fn lint_group() -> LintGroup {
             ],
             "The correct spelling is `hijack`.",
             "Corrects misspellings of `hijack`.",
+            LintKind::Spelling
+        ),
+        "HolyGrail" => (
+            &[
+                (
+                    &["holey grail", "holly grail", "holy grale", "holly grale"],
+                    &["holy grail"]
+                ),
+                (
+                    &["holey grails", "holly grails", "holy grales", "holly grales"],
+                    &["holy grails"]
+                ),
+            ],
+            "Did you mean `holy grail`?",
+            "Corrects misspellings of `holy grail`.",
             LintKind::Spelling
         ),
         "HolyWar" => (

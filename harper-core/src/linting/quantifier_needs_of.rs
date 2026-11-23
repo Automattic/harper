@@ -40,7 +40,7 @@ impl ExprLinter for QuantifierNeedsOf {
     }
 
     fn description(&self) -> &'static str {
-        "Detects missing `of` after the quantifier “a couple” when it precedes a plural noun"
+        "Detects missing `of` after the quantifier “a couple” when it precedes a plural noun."
     }
 }
 

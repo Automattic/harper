@@ -56,7 +56,7 @@ impl ExprLinter for SoughtAfter {
     }
 
     fn description(&self) -> &'static str {
-        "Correct `sort after` to `sought after`"
+        "Correct `sort after` to `sought after`."
     }
 }
 

@@ -47,13 +47,18 @@ const PAGE_EVENTS = [
 export default class LintFramework {
 	private highlights: Highlights;
 	private popupHandler: PopupHandler;
-	private targets: Set<Node>;
+	/** Maps registered nodes to their current registration records and observers. */
+	private targets: Map<Node, { observer?: MutationObserver }>;
 	private scrollableAncestors: Set<HTMLElement>;
 	private lintRequest: Promise<unknown> | null = null;
 	private renderRequested = false;
 	private lintDelayTimer: number | null = null;
 	private lastInputAt = 0;
-	private lastLints: { target: HTMLElement; lints: UnpackedLintGroups }[] = [];
+	private lastLints: {
+		target: HTMLElement;
+		targetIdentity: object;
+		lints: UnpackedLintGroups;
+	}[] = [];
 	private lastBoxes: IgnorableLintBox[] = [];
 	private lastLintBoxes: IgnorableLintBox[] = [];
 
@@ -87,7 +92,7 @@ export default class LintFramework {
 			reportError: actions.reportError,
 			setRuleEnabled: actions.setRuleEnabled,
 		});
-		this.targets = new Set();
+		this.targets = new Map();
 		this.scrollableAncestors = new Set();
 		this.lastLints = [];
 
@@ -116,7 +121,7 @@ export default class LintFramework {
 	onScreenTargets(): Node[] {
 		const onScreen = [] as Node[];
 
-		for (const target of this.targets) {
+		for (const target of this.targets.keys()) {
 			if (isVisible(target)) {
 				onScreen.push(target);
 			}
@@ -176,6 +181,7 @@ export default class LintFramework {
 						return { target: null as HTMLElement | null, lints: {} };
 					}
 
+					const targetIdentity = this.targets.get(target)!;
 					const { text, isCM, newLineIndices } = this.getTargetText(target);
 
 					if (!text) {
@@ -210,7 +216,7 @@ export default class LintFramework {
 								lintsBySource[rule].push(...lints);
 							}
 						}
-						return { target: target as HTMLElement, lints: lintsBySource };
+						return { target: target as HTMLElement, targetIdentity, lints: lintsBySource };
 					}
 					let lintsBySource = await this.lintProvider(text, window.location.hostname, {
 						forceAllHeadings: isHeading(target),
@@ -232,7 +238,7 @@ export default class LintFramework {
 						}
 					}
 
-					return { target: target as HTMLElement, lints: lintsBySource };
+					return { target: target as HTMLElement, targetIdentity, lints: lintsBySource };
 				}),
 			);
 
@@ -294,22 +300,32 @@ export default class LintFramework {
 		);
 	}
 
+	public hasTarget(target: Node): boolean {
+		return this.targets.has(target);
+	}
+
 	public async addTarget(target: Node) {
 		if (!this.targets.has(target)) {
-			this.targets.add(target);
+			this.targets.set(target, {});
 			this.update();
 			this.attachTargetListeners(target);
 		}
 	}
 
 	public async removeTarget(target: HTMLElement) {
-		if (this.targets.has(target)) {
+		const registration = this.targets.get(target);
+		if (registration) {
 			this.targets.delete(target);
 			this.update();
 			this.detachTargetListeners(target);
+			registration.observer?.disconnect();
 		} else {
 			throw new Error('HTMLElement not added.');
 		}
+	}
+
+	private isCurrentTarget(target: Node, identity: object): boolean {
+		return this.targets.get(target) === identity;
 	}
 
 	/** Return the last known ignorable lint boxes rendered on-screen. */
@@ -323,6 +339,7 @@ export default class LintFramework {
 		}
 
 		const observer = new MutationObserver(this.updateEventCallback);
+		this.targets.get(target)!.observer = observer;
 		const config = { subtree: true, characterData: true };
 
 		if ((target as any).tagName == undefined) {
@@ -402,8 +419,8 @@ export default class LintFramework {
 		this.renderRequested = true;
 
 		requestAnimationFrame(() => {
-			const boxes = this.lastLints.flatMap(({ target, lints }) => {
-				if (!target) {
+			const boxes = this.lastLints.flatMap(({ target, targetIdentity, lints }) => {
+				if (!target || !this.isCurrentTarget(target, targetIdentity)) {
 					return [];
 				}
 				const mapped = isGoogleDocsTarget(target);
@@ -425,7 +442,7 @@ export default class LintFramework {
 							return [];
 						}
 
-						return computeLintBoxes(target, currentLint, ruleName, {
+						const lintBoxes = computeLintBoxes(target, currentLint, ruleName, {
 							ignoreLint: this.actions.ignoreLint
 								? async (hash: string) => {
 										await this.actions.ignoreLint?.(hash);
@@ -433,6 +450,15 @@ export default class LintFramework {
 									}
 								: undefined,
 						});
+						for (const box of lintBoxes) {
+							const applySuggestion = box.applySuggestion;
+							box.applySuggestion = (suggestion) => {
+								if (this.isCurrentTarget(target, targetIdentity)) {
+									return applySuggestion(suggestion);
+								}
+							};
+						}
+						return lintBoxes;
 					}),
 				);
 			});

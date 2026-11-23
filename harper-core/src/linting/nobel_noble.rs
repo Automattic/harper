@@ -44,7 +44,7 @@ impl ExprLinter for NobelNoble {
 
         let lint_kind = LintKind::Spelling;
         let message =
-            "Corrects `noble` to `Nobel` when referring to the Nobel Peace Prize".to_owned();
+            "Corrects `noble` to `Nobel` when referring to the Nobel Peace Prize.".to_owned();
 
         match toks.len() {
             5 => {

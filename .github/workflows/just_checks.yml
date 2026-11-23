@@ -7,8 +7,18 @@ on:
     branches: ["master"]
   merge_group:
 
+# Cancel superseded runs when a PR gets new commits, freeing runners for other
+# jobs. Non-PR runs get a unique group, so they are never queued or cancelled.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
 env:
   CARGO_TERM_COLOR: always
+  # Skip wasm-opt when building the WebAssembly module for these checks. It only makes the
+  # module smaller and faster, and took over a minute per job. The Chrome Plugin, WordPress
+  # Plugin and Build Web checks still build it with wasm-opt, as shipped.
+  DISABLE_WASM_OPT: 1
 
 jobs:
   just-checks:
@@ -36,18 +46,21 @@ jobs:
       - uses: actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659 # v1.17.0
         with:
           components: rustfmt,clippy
+          # The Rust Cache step below already caches the build.
+          cache: false
       - name: Install Node.js
         uses: actions/setup-node@v7
         with:
           node-version-file: ".node-version"
       - name: Install Tauri Linux dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            libayatana-appindicator3-dev \
-            librsvg2-dev \
-            libwebkit2gtk-4.1-dev \
-            libxdo-dev 
+        # Only the jobs that build Harper Desktop need these.
+        if: contains(fromJSON('["check-rust", "test-rust", "check-desktop"]'), matrix.task)
+        run: >-
+          .github/scripts/apt-install.sh
+          libayatana-appindicator3-dev
+          librsvg2-dev
+          libwebkit2gtk-4.1-dev
+          libxdo-dev
       - name: Rust Cache
         uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
         with:

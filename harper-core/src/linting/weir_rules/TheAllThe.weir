@@ -1,7 +1,7 @@
 expr main (the all the)
 
-let message "Remove redundant `the`"
-let description "Fixes redundant double `the` in `the all the`"
+let message "Remove redundant `the`."
+let description "Fixes redundant double `the` in `the all the`."
 let kind "Redundancy"
 let becomes "all the"
 

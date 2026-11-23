@@ -87,7 +87,7 @@ fn to_lint(toks: &[Token], src: &[char], pref: Prefer) -> Option<Lint> {
                 nountok.get_ch(src),
             )],
             message: if pref == Prefer::Circle {
-                "This idiom originally used `circle`, not `cycle`".to_owned()
+                "This idiom originally used `circle`, not `cycle`.".to_owned()
             } else {
                 "Though this idiom originally used `circle`, `cycle` is preferred.".to_owned()
             },

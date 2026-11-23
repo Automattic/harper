@@ -53,7 +53,7 @@ impl<D: Dictionary + 'static> ExprLinter for OneOfTheSingular<D> {
     type Unit = Chunk;
 
     fn description(&self) -> &str {
-        "Corrects 'one of the [singular]' to 'one of the [plural]'"
+        "Corrects 'one of the [singular]' to 'one of the [plural]'."
     }
 
     fn match_to_lint_with_context(

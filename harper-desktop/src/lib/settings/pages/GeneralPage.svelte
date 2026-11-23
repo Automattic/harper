@@ -5,6 +5,8 @@ import { onMount } from 'svelte';
 import { Client } from '$lib/client';
 import { DIALECT_OPTIONS } from '../settings-data';
 
+export let onRestartOnboarding: () => void;
+
 const DialectValue = {
 	American: 0,
 	British: 1,
@@ -27,6 +29,9 @@ let isAutoUpdateSaving = false;
 let isCheckingForUpdates = false;
 let autoUpdateError = '';
 let updateStatus = '';
+let isRestartRequired = false;
+let isRestarting = false;
+let restartError = '';
 let currentVersion = '';
 let latestVersion = '';
 let debounceMs = 0;
@@ -182,7 +187,12 @@ async function checkForUpdates() {
 
 	try {
 		const result = await Client.updateToLatest();
-		updateStatus = result.message;
+		if (result.status === 'updated') {
+			isRestartRequired = true;
+			updateStatus = '';
+		} else {
+			updateStatus = result.message;
+		}
 
 		if (result.latestVersion != null) {
 			latestVersion = result.latestVersion;
@@ -194,6 +204,19 @@ async function checkForUpdates() {
 		updateStatus = '';
 	} finally {
 		isCheckingForUpdates = false;
+	}
+}
+
+async function restartHarper() {
+	if (isRestarting || isCheckingForUpdates) return;
+	isRestarting = true;
+	restartError = '';
+
+	try {
+		await Client.restartHarper();
+	} catch (error) {
+		restartError = String(error);
+		isRestarting = false;
 	}
 }
 
@@ -299,6 +322,17 @@ function settingsValueToDialect(value: string): Dialect {
               <p class="result-summary">
                 Current version: {currentVersion || 'loading...'} · Latest version: {latestVersion || 'loading...'}
               </p>
+              <div class="inline-row">
+                <Button
+                  unstyled
+                  class="button"
+                  type="button"
+                  disabled={isCheckingForUpdates || isRestarting}
+                  on:click={checkForUpdates}
+                >
+                  {isCheckingForUpdates ? 'Checking...' : 'Check for updates'}
+                </Button>
+              </div>
               <Checkbox
                 slot="control"
                 appearance="settings"
@@ -309,17 +343,6 @@ function settingsValueToDialect(value: string): Dialect {
                 {#if autoUpdate}<CheckIcon className="control-icon" />{/if}
               </Checkbox>
             </SettingRow>
-            <div class="inline-row">
-              <Button
-                unstyled
-                class="button"
-                type="button"
-                disabled={isCheckingForUpdates}
-                on:click={checkForUpdates}
-              >
-                {isCheckingForUpdates ? 'Checking...' : 'Check for updates'}
-              </Button>
-            </div>
             {#if isAutoUpdateLoading}
               <p class="result-summary">Loading update setting...</p>
             {:else if autoUpdateError}
@@ -329,7 +352,34 @@ function settingsValueToDialect(value: string): Dialect {
             {:else if updateStatus}
               <p class="result-summary">{updateStatus}</p>
             {/if}
+            {#if isRestartRequired}
+              <p class="result-summary restart-summary">
+                Update installed.
+                {#if isRestarting}
+                  Restarting Harper…
+                {:else}
+                  <button type="button" class="restart-link" disabled={isCheckingForUpdates} on:click={restartHarper}>Restart Harper</button> to finish.
+                {/if}
+              </p>
+              {#if restartError}
+                <p class="result-summary" role="alert">{restartError}</p>
+              {/if}
+            {/if}
           </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="stanza">
+          <SettingRow top>
+            <div class="eyebrow">Restart Onboarding from the Beginning</div>
+            <p class="section-copy">
+              Useful to give Harper accessibility permission again or to learn how Harper works.
+            </p>
+            <Button slot="control" unstyled class="button" type="button" on:click={onRestartOnboarding}>
+              Restart onboarding
+            </Button>
+          </SettingRow>
         </div>
 
         <div class="divider"></div>
@@ -395,3 +445,24 @@ function settingsValueToDialect(value: string): Dialect {
           {/if}
         </div>
       </section>
+
+<style>
+.restart-summary {
+  margin-bottom: 0;
+}
+
+.restart-link {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  color: var(--settings-accent);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.restart-link:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+</style>

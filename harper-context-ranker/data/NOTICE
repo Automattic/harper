@@ -1,0 +1,20 @@
+The table.bin and vocab.json files in this directory were built with text from
+The Common Pile v0.1 by EleutherAI (https://blog.eleuther.ai/common-pile/).
+
+Subsets used:
+- youtube_filtered
+- pressbooks_filtered
+- libretexts_filtered
+- oercommons_filtered
+- news_filtered
+- foodista_filtered
+- usgpo_filtered
+- uk_hansard_filtered (from 2000 onward)
+
+Only documents under CC BY, CC0, Public Domain or the Open Parliament Licence
+were used. The source text belongs to its authors and stays under its own
+licenses. This directory does not contain that text.
+
+Contains Parliamentary information licensed under the Open Parliament Licence v3.0.
+https://spdx.org/licenses/OPL-UK-3.0.html
+

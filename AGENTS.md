@@ -16,6 +16,10 @@ If `just format` fails, you can use `just setup` to prepare the relevant depende
 Human coders should periodically review this file and manually migrate stable, human-facing guidance into the real documentation website under `packages/web` so it is available outside agent workflows.
 Agents should remind humans of this when possible.
 
+## Rust Visibility
+
+Keep items private by default. When an item needs to be visible outside its module, use plain `pub`. Never use restricted visibility such as `pub(super)`, `pub(crate)`, or `pub(in ...)`.
+
 ## Read First
 
 1. `packages/web/src/lib/docs/config.ts`: Sidebar source of truth and canonical map of important docs routes. For website architecture, Markdown authoring, theme/search behavior, and validation, read `packages/web/src/routes/docs/contributors/website/+page.md`.
@@ -162,7 +166,6 @@ Read the [Desktop contributor documentation](packages/web/src/routes/docs/contri
 ### OS Integration
 
 - OS integration is behind `harper-desktop/src-tauri/src/os_broker.rs`.
-- macOS uses `harper-desktop/src-tauri/src/mac_broker.rs`.
 - non-macOS currently uses `NoopBroker`.
 - macOS highlighter focus handling depends on `MacBroker.last_focused`; clicking the overlay can make the highlighter process focused, so accessibility reads fall back to the last non-highlighter PID.
 - macOS integrations are bundle-ID based and controlled by persisted `Integration` entries.
@@ -170,14 +173,14 @@ Read the [Desktop contributor documentation](packages/web/src/routes/docs/contri
 
 ### IPC And App State
 
-- Tauri app state lives in `harper-desktop/src-tauri/src/config.rs`.
+- Tauri app state lives in `harper-desktop/src-tauri/src/config/mod.rs`.
 - `Config` currently stores `mutable_dictionary: MutableDictionary`, `dialect: Dialect`, `ignored_lints: IgnoredLints`, `lint_config: FlatConfig`, and `integrations: Vec<Integration>`.
 - `Config::new()` uses `MutableDictionary::new()`, `Dialect::American`, `IgnoredLints::new()`, `FlatConfig::new_curated()`, and curated default integrations.
 - Config is persisted under the system config directory in a `harper-desktop` folder. Main settings are serialized to `config.json`; the mutable dictionary is stored separately as `dictionary.txt`.
 - `Config::load_from_system()` loads the serialized config and then hydrates the mutable dictionary with the selected dialect.
 - The Tauri app owns shared config as `Arc<Mutex<Config>>`.
 - `run_tauri()` loads persisted config, creates `HighlighterService`, starts the highlighter service, and creates the tray/menu-bar UI.
-- The highlighter process is spawned through `harper-desktop/src-tauri/src/highlighter_process.rs`.
+- The highlighter process is spawned through `harper-desktop/src-tauri/src/highlighter_service/highlighter_process.rs`.
 - IPC is implemented under `harper-desktop/src-tauri/src/communication/`.
 - IPC uses newline-delimited JSON over child stdin/stdout.
 - The Tauri app is the protocol server.
@@ -260,6 +263,28 @@ ALWAYS run extensive bullet tests with `cargo run --bin harper-cli --release -- 
 ### Output Format
 
 Write a Weir rule to a new file with a name of your choosing, including `expr main`, `let` fields, and tests. Make sure it has the extension `.weir`.
+
+## Writing or Enhancing Rules in Rust
+
+When a rule cannot be expressed in Weir—or when an existing Rust linter already covers the category—implement or extend it in `harper-core/src/linting/`:
+
+- **Check existing subdirectories first:** Complex rules and rule families live in subdirectories under `harper-core/src/linting/`:
+  - **Split-context `LintGroup`s** (e.g., `to_two_too/`, `plural_decades/`): Combine focused sub-linters in a `mod.rs` under one config setting when different contexts need distinct disambiguation logic. Add a new sub-linter file there rather than creating a standalone rule.
+  - **Macro-generated rule families** (e.g., `compound_nouns/`): Generate distinct configurable rules from shared logic; extend those rather than duplicating boilerplate.
+  - **Multi-way / mutually exclusive rules** (e.g., `oxford_commas/`): Group opposing style preferences under a single multi-way config setting.
+- **`ExprLinter` (default for new standalone rules):** Matches token sequences using regex-like `Expr` combinators.
+- **`Linter` (procedural fallback):** Implement directly only when matching logic cannot be expressed cleanly as an `Expr`.
+- **Registration & testing:** Register new standalone rules or groups in `LintGroup::new_curated` and `harper-core/default_config.json`. Include at least 15 unit tests (true/false positives and negatives) and run `just test-rust` to check snapshots.
+
+## Rust Coding & Zero-Allocation Guidelines
+
+Linters run on every keystroke; avoid heap allocations in hot paths:
+
+- **Avoid `.to_lower()` and `.to_string()`:** Calling `.to_lower()` allocates a new `Vec<char>`. Use the zero-allocation iterator methods on `CharStringExt` (`CharString` / `&[char]`) in `harper-core/src/char_string.rs`.
+- **Put the token/slice on the left-hand side:** Invert standard comparisons so `CharString`/`&[char]` is the receiver (e.g., `chars.eq_str("their")` or `chars.eq_any_ignore_ascii_case_str(&["a", "an"])`).
+- **Assume lowercase ASCII on the right-hand side:** Standard helpers (`.eq_str()`, `.eq_ch()`, `*_ignore_ascii_case_*`) only lowercase the left-hand side and `debug_assert!` that the right-hand side is already lowercase ASCII. Use `_lenient` variants (e.g., `.eq_str_lenient()`, `.eq_ch_lenient()`) when comparing dynamic slices.
+- **Shortened helpers are case-insensitive:** Common short-named methods (`.eq_ch()`, `.eq_str()`, `.get_ch()`, `.get_str()`) across `char_string.rs`, `token_string_ext.rs`, `token.rs`, and `linting/lint.rs` are case-insensitive—document this explicitly if adding or updating them.
+- **Add missing permutations on demand:** `CharStringExt` only implements `_str`, `_chars`, `_any_`, and `_lenient` variants as needed. Add missing zero-allocation variants there when required.
 
 ## Tips
 

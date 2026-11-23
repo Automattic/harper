@@ -26,7 +26,7 @@ impl ExprLinter for LookDownOnesNose {
     type Unit = Chunk;
 
     fn description(&self) -> &str {
-        "Corrects `look one's nose down` to `look down one's nose`"
+        "Corrects `look one's nose down` to `look down one's nose`."
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

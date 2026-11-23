@@ -71,7 +71,7 @@ impl ExprLinter for MostNumber {
     }
 
     fn description(&self) -> &str {
-        "Corrects `most number` and `most amount`"
+        "Corrects `most number` and `most amount`."
     }
 }
 

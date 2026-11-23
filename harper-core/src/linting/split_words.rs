@@ -161,7 +161,7 @@ impl ExprLinter for SplitWords {
                 lint_kind: LintKind::Typo,
                 suggestions,
                 message: message?,
-                priority: 31,
+                priority: 33,
             });
         }
 
@@ -385,6 +385,12 @@ mod tests {
     #[test]
     fn does_not_split_iff() {
         assert_no_lints("iff", SplitWords::default());
+    }
+
+    #[test]
+    fn issue_4794_allows_doorframe() {
+        assert_no_lints("She leaned against the doorframe.", SplitWords::default());
+        assert_no_lints("The doorframes were painted white.", SplitWords::default());
     }
 
     /// Checks for a condition where the SplitWords rule would correct a word to be composed of a

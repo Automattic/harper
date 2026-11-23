@@ -333,7 +333,7 @@ fn lex_plural_digit(src: &[char]) -> Option<FoundToken> {
     let l = src.len();
     let mut i = 0;
 
-    if src.is_empty() || !src[i].is_ascii_alphanumeric() {
+    if src.is_empty() || !src[i].is_alphanumeric() {
         return None;
     }
     i += 1;
@@ -345,7 +345,7 @@ fn lex_plural_digit(src: &[char]) -> Option<FoundToken> {
     if l > i && src[i] == 's' {
         i += 1;
 
-        if l == i || !src[i].is_ascii_alphanumeric() {
+        if l == i || !src[i].is_alphanumeric() {
             return Some(FoundToken {
                 token: TokenKind::Word(None),
                 next_index: i,
