@@ -291,6 +291,7 @@ These configs are under the `markdown` key:
 | Go                  |             `go`              |            ✅ |
 | Groovy              |           `groovy`            |            ✅ |
 | Haskell             |           `haskell`           |            ✅ |
+| HCL / Terraform     | `hcl`/`terraform`/`terraform-vars` |       ✅ |
 | HTML                |            `html`             |               |
 | Ink                 |             `ink`             |               |
 | Java                |            `java`             |            ✅ |
