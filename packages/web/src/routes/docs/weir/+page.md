@@ -208,6 +208,31 @@ For example:
 expr main PROG
 ```
 
+### Anchors
+
+The keyword `START` matches the start of the text a rule runs on, and `END` matches its end.
+That text is a chunk by default (see Matching Scope), so `START` also matches after a comma, a semicolon, a colon or a quotation mark.
+To match only the start or end of a sentence, set the rule's scope to `Sentence`.
+`START` matches at the first word, after any opening punctuation such as a quotation mark or a bracket.
+`END` matches before the last token, such as a closing period, or after it.
+
+For example, to match "no to mention" only when it opens a sentence:
+
+```plaintext
+expr main <(START no to mention), (no to)>
+let scope "Sentence"
+```
+
+Anchors take up no space, so the space between an anchor and its neighbor is only for readability.
+`START` goes first in a sequence and `END` last. Anywhere else, or negated (`!START`), is an error, because it could never match the way it reads.
+To anchor one alternative, put the anchor inside it:
+
+```plaintext
+expr main <[(START long time ago), (!a long time ago)], (long time ago)>
+```
+
+In the later steps of a filter, anchors mark the start and end of what the first step matched.
+
 ### Exceptions
 
 You can add exceptions to expressions by throwing an exclamation mark in front of any other expression.
