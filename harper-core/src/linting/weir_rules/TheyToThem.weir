@@ -4,8 +4,8 @@ expr prepositions [to, with, about, against, between, among, around, toward, tow
 expr verbs [call, contact, invite, remind, ask, see, watch, help, trust, send, support, follow, visit, tell, thank, mention, show]
 expr main [
     <(@prepositions they), they>, 
-    <[(for they ![VERB, AUX]), (for they.)], they>, 
-    <[(@verbs they ![VERB, AUX]), (@verbs they.)], they>
+    <[(for they ![VERB, AUX]), (for they END)], they>, 
+    <[(@verbs they ![VERB, AUX]), (@verbs they END)], they>
 ]
 
 let message "Use `them` when the pronoun follows a preposition or transitive verb."
@@ -13,6 +13,8 @@ let description "Converts `they` to `them` whenever the pronoun serves as an obj
 let kind "Grammar"
 let becomes "them"
 let strategy "MatchCase"
+# In a chunk a comma would count as the end, so END would flag "the help they, in turn, gave".
+let scope "Sentence"
 
 # True positives
 
@@ -35,6 +37,12 @@ test "Mention they in your update." "Mention them in your update."
 test "I will call they." "I will call them."
 test "This gift is for they." "This gift is for them."
 test "Wait for they at the station." "Wait for them at the station."
+test "Did you call they?" "Did you call them?"
+test "Please help they!" "Please help them!"
+test "Remember to call they" "Remember to call them"
+test "- Ask they for a review" "- Ask them for a review"
+test "- Thank they" "- Thank them"
+test "Is this gift for they?" "Is this gift for them?"
 
 # True negatives
 
@@ -50,3 +58,5 @@ allows "The trust they built took years."
 allows "At least their deaths are not meaningless, for they shall all be unified into the white and delightsome hosts of Heaven."
 allows "For they know not what they do."
 allows "Rejoice, for they have returned safely."
+allows "It was the support they, in turn, gave us."
+allows "The help they, and only they, could give."
