@@ -134,6 +134,14 @@ impl Markdown {
     }
 }
 
+/// Whether `html` is an HTML tag starting with `prefix` (e.g. `<code` or `</code`),
+/// ignoring ASCII case. Attributes are allowed.
+fn is_html_tag(html: &str, prefix: &str) -> bool {
+    html.get(..prefix.len())
+        .is_some_and(|start| start.eq_ignore_ascii_case(prefix))
+        && html[prefix.len()..].starts_with(|c: char| c == '>' || c.is_ascii_whitespace())
+}
+
 impl Parser for Markdown {
     /// This implementation is quite gross to look at, but it works.
     /// If any issues arise, it would likely help to refactor this out first.
@@ -154,6 +162,9 @@ impl Parser for Markdown {
         let byte_to_char = build_byte_to_char_map(&source_str);
 
         let mut stack = Vec::new();
+
+        // Depth of inline `<code>` HTML elements we are currently inside.
+        let mut html_code_depth = 0usize;
 
         // NOTE: the range spits out __byte__ indices, not char indices.
         // This is why we keep track above.
@@ -206,6 +217,7 @@ impl Parser for Markdown {
                         kind: TokenKind::ParagraphBreak,
                     });
                     stack.pop();
+                    html_code_depth = 0;
                 }
                 pulldown_cmark::Event::End(_) => {
                     stack.pop();
@@ -222,6 +234,14 @@ impl Parser for Markdown {
                 }
                 pulldown_cmark::Event::Text(_text) => {
                     let chunk_len = span_end - span_start;
+
+                    if html_code_depth > 0 {
+                        tokens.push(Token {
+                            span: Span::new_with_len(span_start, chunk_len),
+                            kind: TokenKind::Unlintable,
+                        });
+                        continue;
+                    }
 
                     if let Some(tag) = stack.last() {
                         use pulldown_cmark::Tag;
@@ -263,7 +283,13 @@ impl Parser for Markdown {
                     tokens.append(&mut new_tokens);
                 }
                 // TO-DO: Support via `harper-html`
-                pulldown_cmark::Event::Html(_) | pulldown_cmark::Event::InlineHtml(_) => {
+                pulldown_cmark::Event::Html(html) | pulldown_cmark::Event::InlineHtml(html) => {
+                    if is_html_tag(&html, "<code") {
+                        html_code_depth += 1;
+                    } else if is_html_tag(&html, "</code") {
+                        html_code_depth = html_code_depth.saturating_sub(1);
+                    }
+
                     let size = span_end - span_start;
                     tokens.push(Token {
                         span: Span::new_with_len(span_start, size),
@@ -433,6 +459,35 @@ mod tests {
         let source = r"The range of inputs from <ctrl-g> to ctrl-z";
         let tokens = Markdown::default().parse_str(source);
         assert_eq!(tokens.iter_unlintables().count(), 1);
+    }
+
+    #[test]
+    fn html_code_contents_are_unlintable() {
+        let source = r"Call the <code>teh_functoin</code> helper.";
+        let tokens = Markdown::default().parse_str(source);
+        assert_eq!(tokens.iter_unlintables().count(), 3);
+        assert_eq!(tokens.iter_words().count(), 3);
+    }
+
+    #[test]
+    fn html_code_with_attributes_and_uppercase() {
+        let source = r#"Call <CODE class="x">recieve</CODE> now."#;
+        let tokens = Markdown::default().parse_str(source);
+        assert_eq!(tokens.iter_words().count(), 2);
+    }
+
+    #[test]
+    fn html_code_does_not_match_similar_tags() {
+        let source = r"Some <codex>words</codex> here.";
+        let tokens = Markdown::default().parse_str(source);
+        assert_eq!(tokens.iter_words().count(), 3);
+    }
+
+    #[test]
+    fn unclosed_html_code_ends_at_paragraph() {
+        let source = "Some <code>hidden\n\nVisible words.";
+        let tokens = Markdown::default().parse_str(source);
+        assert_eq!(tokens.iter_words().count(), 3);
     }
 
     #[test]
