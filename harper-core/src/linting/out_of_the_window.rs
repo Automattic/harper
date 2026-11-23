@@ -39,7 +39,7 @@ impl ExprLinter for OutOfTheWindow {
                 (
                     toks[0].span,
                     Suggestion::InsertAfter(vec![' ', 'o', 'f']),
-                    "If this is the idiom about abandoning a plan, consider using `of` in British English".to_string(),
+                    "If this is the idiom about abandoning a plan, consider using `of` in British English.".to_string(),
                 )
             }
             _ => return None,

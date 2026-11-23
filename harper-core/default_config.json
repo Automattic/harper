@@ -1319,6 +1319,13 @@
 						},
 						{
 							"Bool": {
+								"name": "HolyGrail",
+								"state": true,
+								"label": "Holy Grail"
+							}
+						},
+						{
+							"Bool": {
 								"name": "HolyWar",
 								"state": true,
 								"label": "Holy War"
@@ -6893,6 +6900,13 @@
 								"name": "SafeToSave",
 								"state": true,
 								"label": "Safe To Save"
+							}
+						},
+						{
+							"Bool": {
+								"name": "SameSimilarWay",
+								"state": true,
+								"label": "Same/Similar Way"
 							}
 						},
 						{

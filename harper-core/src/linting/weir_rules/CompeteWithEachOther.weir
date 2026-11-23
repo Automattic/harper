@@ -1,6 +1,6 @@
 expr main <([compete, competed, competes, competing] over [(each other), eachother]), over>
 let message "Avoid `compete over each other`; use `compete with each other` instead."
-let description "Corrects `compete over each other` to `compete with each other`"
+let description "Corrects `compete over each other` to `compete with each other`."
 let kind "Usage"
 let becomes ["with", "against"]
 

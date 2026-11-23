@@ -123,7 +123,7 @@ impl ExprLinter for OpenTheLight {
     }
 
     fn description(&self) -> &'static str {
-        "Corrects using `open` instead of `turn on` or `switch on`"
+        "Corrects using `open` instead of `turn on` or `switch on`."
     }
 }
 

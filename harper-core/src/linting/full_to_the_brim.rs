@@ -52,7 +52,7 @@ impl ExprLinter for FullToTheBrim {
                 "with",
                 span.get_content(source),
             )],
-            message: "The correct preposition with this idiom is 'with', not 'of'".to_owned(),
+            message: "The correct preposition with this idiom is 'with', not 'of'.".to_owned(),
             ..Default::default()
         })
     }

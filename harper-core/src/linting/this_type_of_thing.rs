@@ -41,7 +41,7 @@ impl ExprLinter for ThisTypeOfThing {
     }
 
     fn description(&self) -> &str {
-        "Checks that the parts of `this/these type(s) of thing(s)` agree in grammatical number"
+        "Checks that the parts of `this/these type(s) of thing(s)` agree in grammatical number."
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

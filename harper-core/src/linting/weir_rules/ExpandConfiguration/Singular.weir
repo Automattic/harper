@@ -1,6 +1,6 @@
 expr main [config, conf]
 
-let message "Use `configuration` instead of `config` or `conf`"
+let message "Use `configuration` instead of `config` or `conf`."
 let description "Expands the abbreviation `config` or `conf` to the full word `configuration` for clarity."
 let kind "Style"
 let becomes "configuration"

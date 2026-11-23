@@ -105,7 +105,7 @@ impl ExprLinter for QuantifierNumeralConflict {
     }
 
     fn description(&self) -> &'static str {
-        "Detects quantifier-numeral conflicts"
+        "Detects quantifier-numeral conflicts."
     }
 }
 

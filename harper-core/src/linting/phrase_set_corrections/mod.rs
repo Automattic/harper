@@ -1005,6 +1005,21 @@ pub fn lint_group() -> LintGroup {
             "Corrects misspellings of `hijack`.",
             LintKind::Spelling
         ),
+        "HolyGrail" => (
+            &[
+                (
+                    &["holey grail", "holly grail", "holy grale", "holly grale"],
+                    &["holy grail"]
+                ),
+                (
+                    &["holey grails", "holly grails", "holy grales", "holly grales"],
+                    &["holy grails"]
+                ),
+            ],
+            "Did you mean `holy grail`?",
+            "Corrects misspellings of `holy grail`.",
+            LintKind::Spelling
+        ),
         "HolyWar" => (
             &[
                 (&["holey war", "holly war"], &["holy war"]),

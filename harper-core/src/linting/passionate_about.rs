@@ -74,7 +74,7 @@ impl ExprLinter for PassionateAbout {
                         "about",
                         span.get_content(src),
                     )],
-                    message: "Use `about` instead of `of` with `passionate`".to_owned(),
+                    message: "Use `about` instead of `of` with `passionate`.".to_owned(),
                     ..Default::default()
                 })
             }
@@ -108,7 +108,7 @@ impl ExprLinter for PassionateAbout {
                             content,
                         ),
                     ],
-                    message: "Use `about` instead of `of` with `passionate`".to_owned(),
+                    message: "Use `about` instead of `of` with `passionate`.".to_owned(),
                     ..Default::default()
                 })
             }
