@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package example.v1;
+
+// A request message for fetching libraries from the catalog.
+message GetLibrariesRequest {
+  /*
+   * The unique identifier of the library to retrieve.
+   */
+  string library_id = 1;
+}

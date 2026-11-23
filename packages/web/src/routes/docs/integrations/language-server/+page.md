@@ -308,6 +308,7 @@ These configs are under the `markdown` key:
 | PHP                 |             `php`             |            ✅ |
 | PowerShell          |         `powershell`          |            ✅ |
 | Plain Text          |      `plaintext`/`text`       |               |
+| Protocol Buffers    |  `proto`/`proto3`/`protobuf`  |            ✅ |
 | Python              |           `python`            |            ✅ |
 | R                   |              `r`              |            ✅ |
 | Ruby                |            `ruby`             |            ✅ |

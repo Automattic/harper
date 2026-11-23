@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package example.v1;
+
+// This this is an bad request message.
+message GetLibrrariesRequest {
+  /*
+   * Retrieve the librrary by its identifier.
+   */
+  string librrary_id = 1;
+}
