@@ -28,17 +28,19 @@ impl Linter for DialogueCapitalization {
         let tokens = document.get_tokens();
         let mut lints = Vec::new();
 
-        let source = document.get_source();
-
         for quote_idx in tokens.iter_quote_indices() {
-            let expectation = if is_opening_quote(source, tokens, quote_idx) {
+            let expectation = if is_opening_quote(tokens, quote_idx) {
                 if starts_with_continuation_marker(tokens, quote_idx) {
                     None
                 } else {
                     dialogue_expectation(tokens, quote_idx)
                 }
-            } else if is_closing_quote(source, tokens, quote_idx) {
-                attribution_expectation(tokens, quote_idx)
+            } else if is_closing_quote(tokens, quote_idx) {
+                if starts_with_continuation_marker(tokens, quote_idx) {
+                    None
+                } else {
+                    attribution_expectation(tokens, quote_idx)
+                }
             } else {
                 None
             };
@@ -154,41 +156,18 @@ fn starts_with_continuation_marker(tokens: &[Token], quote_idx: usize) -> bool {
 }
 
 /// Whether the quote at `idx` opens a quoted segment.
-fn is_opening_quote(source: &[char], tokens: &[Token], idx: usize) -> bool {
-    let Some(quote) = tokens[idx].kind.as_quote() else {
-        return false;
-    };
-
-    // Curly quotes point one way, so trust them over pairing.
-    match tokens[idx].get_ch(source).first() {
-        Some('“') => return true,
-        Some('”') => return false,
-        _ => {}
-    }
-
-    if let Some(twin) = quote.twin_loc {
-        return twin > idx;
-    }
-
-    match previous_non_whitespace(tokens, idx) {
-        Some(prev) => !tokens[prev].kind.is_word_like(),
-        None => true,
-    }
+fn is_opening_quote(tokens: &[Token], idx: usize) -> bool {
+    twin_loc(tokens, idx).is_some_and(|twin| twin > idx)
 }
 
 /// Whether the quote at `idx` closes a quoted segment.
-fn is_closing_quote(source: &[char], tokens: &[Token], idx: usize) -> bool {
-    let Some(quote) = tokens[idx].kind.as_quote() else {
-        return false;
-    };
+fn is_closing_quote(tokens: &[Token], idx: usize) -> bool {
+    twin_loc(tokens, idx).is_some_and(|twin| twin < idx)
+}
 
-    match tokens[idx].get_ch(source).first() {
-        Some('“') => return false,
-        Some('”') => return true,
-        _ => {}
-    }
-
-    quote.twin_loc.is_some_and(|twin| twin < idx)
+/// The location of the quote paired with the one at `idx`, as matched by the [`Document`].
+fn twin_loc(tokens: &[Token], idx: usize) -> Option<usize> {
+    tokens[idx].kind.as_quote()?.twin_loc
 }
 
 fn previous_non_whitespace(tokens: &[Token], idx: usize) -> Option<usize> {
