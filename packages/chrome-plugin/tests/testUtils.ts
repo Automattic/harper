@@ -569,7 +569,7 @@ export async function testMultipleSuggestionsAndUndo(
 
 		// Undo
 		await expect(editor).toBeFocused();
-		await editor.press('Control+z');
+		await editor.press('ControlOrMeta+z');
 		await assertEditorContains(editor, 'The second tset');
 	});
 }
