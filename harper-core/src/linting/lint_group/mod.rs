@@ -313,7 +313,6 @@ use super::the_last_days::TheLastDays;
 use super::the_my::TheMy;
 use super::the_point_for::ThePointFor;
 use super::the_proper_noun_possessive::TheProperNounPossessive;
-use super::the_the_to_that_the::TheTheToThatThe;
 use super::themself::Themself;
 use super::then_than::ThenThan;
 use super::there_is_agreement::ThereIsAgreement;
@@ -963,7 +962,6 @@ impl LintGroup {
         insert_expr_rule!(TheMy);
         insert_expr_rule!(ThePointFor);
         insert_expr_rule!(TheProperNounPossessive);
-        insert_expr_rule!(TheTheToThatThe);
         insert_expr_rule!(Themself);
         insert_expr_rule!(ThenThan);
         insert_expr_rule!(ThereOwn);
