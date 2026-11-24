@@ -749,6 +749,14 @@ pub fn lint_group() -> LintGroup {
             "Corrects `themself` to `themselves`.",
             LintKind::Usage
         ),
+        "TheOneOfTheMost" => (
+            &[
+                ("the one of the most", "one of the most"),
+            ],
+            "Use `one of the most` instead of `the one of the most`.",
+            "Corrects `the one of the most` to `one of the most`.",
+            LintKind::Usage
+        ),
         "UseToUsedTo" => (
             &[
                 // "be" verbs + "use to" -> "used to" (accustomed to)
