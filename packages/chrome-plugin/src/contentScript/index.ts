@@ -217,7 +217,14 @@ function scan() {
 		const seenBlockContainers = new Set<Element>();
 
 		for (const leaf of leafs) {
-			if (leaf.parentElement?.closest('[contenteditable="false"],[disabled],[readonly]') != null) {
+			// Use `isContentEditable` rather than `closest('[contenteditable="false"]')`: editors
+			// such as the non-iframed block editor put editable blocks inside a non-editable wrapper.
+			const leafElement = leaf instanceof Element ? leaf : leaf.parentElement;
+			if (
+				!(leafElement instanceof HTMLElement) ||
+				!leafElement.isContentEditable ||
+				leafElement.closest('[disabled],[readonly]') != null
+			) {
 				continue;
 			}
 
