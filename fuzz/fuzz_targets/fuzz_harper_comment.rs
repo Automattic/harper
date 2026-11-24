@@ -7,7 +7,7 @@ use libfuzzer_sys::fuzz_target;
 #[derive(Debug)]
 struct Language(String);
 
-const LANGUAGES: [&str; 35] = [
+const LANGUAGES: [&str; 37] = [
     "cmake",
     "cpp",
     "csharp",
@@ -16,6 +16,7 @@ const LANGUAGES: [&str; 35] = [
     "elixir",
     "go",
     "haskell",
+    "hcl",
     "javascriptreact",
     "javascript",
     "java",
@@ -31,6 +32,7 @@ const LANGUAGES: [&str; 35] = [
     "shellscript",
     "solidity",
     "swift",
+    "terraform",
     "toml",
     "typescriptreact",
     "typescript",

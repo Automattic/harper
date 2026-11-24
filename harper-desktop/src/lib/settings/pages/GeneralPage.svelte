@@ -29,6 +29,9 @@ let isAutoUpdateSaving = false;
 let isCheckingForUpdates = false;
 let autoUpdateError = '';
 let updateStatus = '';
+let isRestartRequired = false;
+let isRestarting = false;
+let restartError = '';
 let currentVersion = '';
 let latestVersion = '';
 let debounceMs = 0;
@@ -184,7 +187,12 @@ async function checkForUpdates() {
 
 	try {
 		const result = await Client.updateToLatest();
-		updateStatus = result.message;
+		if (result.status === 'updated') {
+			isRestartRequired = true;
+			updateStatus = '';
+		} else {
+			updateStatus = result.message;
+		}
 
 		if (result.latestVersion != null) {
 			latestVersion = result.latestVersion;
@@ -196,6 +204,19 @@ async function checkForUpdates() {
 		updateStatus = '';
 	} finally {
 		isCheckingForUpdates = false;
+	}
+}
+
+async function restartHarper() {
+	if (isRestarting || isCheckingForUpdates) return;
+	isRestarting = true;
+	restartError = '';
+
+	try {
+		await Client.restartHarper();
+	} catch (error) {
+		restartError = String(error);
+		isRestarting = false;
 	}
 }
 
@@ -306,7 +327,7 @@ function settingsValueToDialect(value: string): Dialect {
                   unstyled
                   class="button"
                   type="button"
-                  disabled={isCheckingForUpdates}
+                  disabled={isCheckingForUpdates || isRestarting}
                   on:click={checkForUpdates}
                 >
                   {isCheckingForUpdates ? 'Checking...' : 'Check for updates'}
@@ -330,6 +351,19 @@ function settingsValueToDialect(value: string): Dialect {
               <p class="result-summary">Saving update setting...</p>
             {:else if updateStatus}
               <p class="result-summary">{updateStatus}</p>
+            {/if}
+            {#if isRestartRequired}
+              <p class="result-summary restart-summary">
+                Update installed.
+                {#if isRestarting}
+                  Restarting Harper…
+                {:else}
+                  <button type="button" class="restart-link" disabled={isCheckingForUpdates} on:click={restartHarper}>Restart Harper</button> to finish.
+                {/if}
+              </p>
+              {#if restartError}
+                <p class="result-summary" role="alert">{restartError}</p>
+              {/if}
             {/if}
           </div>
         </div>
@@ -411,3 +445,24 @@ function settingsValueToDialect(value: string): Dialect {
           {/if}
         </div>
       </section>
+
+<style>
+.restart-summary {
+  margin-bottom: 0;
+}
+
+.restart-link {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  color: var(--settings-accent);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.restart-link:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+</style>

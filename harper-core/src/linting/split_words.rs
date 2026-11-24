@@ -387,6 +387,12 @@ mod tests {
         assert_no_lints("iff", SplitWords::default());
     }
 
+    #[test]
+    fn issue_4794_allows_doorframe() {
+        assert_no_lints("She leaned against the doorframe.", SplitWords::default());
+        assert_no_lints("The doorframes were painted white.", SplitWords::default());
+    }
+
     /// Checks for a condition where the SplitWords rule would correct a word to be composed of a
     /// single letter (which is not a word), followed by a valid word.
     ///

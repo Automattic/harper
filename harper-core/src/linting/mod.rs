@@ -334,7 +334,6 @@ mod the_last_days;
 mod the_my;
 mod the_point_for;
 mod the_proper_noun_possessive;
-mod the_the_to_that_the;
 mod themself;
 mod then_than;
 mod there_is_agreement;
