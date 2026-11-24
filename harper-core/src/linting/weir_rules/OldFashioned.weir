@@ -1,0 +1,12 @@
+expr main <(old[-, ( )]fashion[-, ( )]![magazine, magazines, model, models, designer, designers, industry, week, show, shows, trend, trends]), fashion>
+
+let message ""
+let description "Corrects `old fashion` to `old fashioned` when used as a compound adjective."
+let kind "Grammar"
+let becomes "fashioned"
+
+test "You can also retrofit \“prompt engineering\” onto good old fashion ML like text classifiers." "You can also retrofit \“prompt engineering\” onto good old fashioned ML like text classifiers."
+test "Old Fashion CSS Framework for nostalgics." "Old Fashioned CSS Framework for nostalgics."
+test "old-fashion-face-detection" "old-fashioned-face-detection"
+
+allows "OP, the term is \“old-fashioned\” not \“old fashion\”."
