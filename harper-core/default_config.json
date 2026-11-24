@@ -3003,13 +3003,6 @@
 						},
 						{
 							"Bool": {
-								"name": "TheTheToThatThe",
-								"state": true,
-								"label": "The The To That The"
-							}
-						},
-						{
-							"Bool": {
 								"name": "ThieveNoun",
 								"state": true,
 								"label": "Thieve Noun"
