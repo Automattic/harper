@@ -18,7 +18,7 @@ Make sure you have [Set up your environment](./environment.md).
 | --- | --- |
 | `packages/web/src/routes/` | Site routes: marketing pages (`.svelte`) and API handlers (`+server.ts`) |
 | `docs/` | Contributor and user documentation (this page is `docs/contributors/website.md`) |
-| `packages/docs-sync/` | Builds the documentation and publishes it to the website |
+| `.github/scripts/publish-docs.mjs` | Sends the documentation to the website when it changes |
 | `packages/web/src/lib/` | Shared Svelte components, marketing sections, and small utilities |
 | `packages/web/vite.config.ts` | Vite config |
 | `packages/lint-framework/` | Browser linting UI (underlines, popups) reused by the site and extensions |
@@ -31,12 +31,21 @@ Make sure you have [Set up your environment](./environment.md).
 The Harper documentation (available on this site) is in the `docs` folder at the root of the repository.
 Each page is one Markdown file: `docs/integrations/obsidian.md` is published at `/docs/integrations/obsidian`.
 
-The docs are plain Markdown, with no HTML and no Svelte.
-When you add a page, register it in `docs/sidebar.yml` so it appears in the left navigation pane.
-Link to other pages with a relative link to the file, such as `[the language server](../integrations/language-server.md)`.
+When a change to `docs` merges to `master`, the **Docs** workflow sends the changed files to the website, which turns them into pages.
+Adding a file adds a page, and deleting a file removes its page.
 
-`packages/docs-sync` checks the docs on every pull request and publishes them when a change merges to `master`.
-Its [README](../../packages/docs-sync/README.md) describes the format in full, including how to show a file from the repository on a page.
+The docs are plain Markdown, as on GitHub, with no HTML and no Svelte.
+
+- Start each page with frontmatter that has a `title` and a one-sentence `description`.
+- Register a new page in `docs/sidebar.json` so it appears in the left navigation pane. A new folder of pages needs a group with a `section` in that file.
+- Link to another page with a relative link to its file, such as `[the language server](../integrations/language-server.md#Configuration)`. Each heading's anchor is its text with punctuation dropped and spaces turned into hyphens: "Code Actions" is `#Code-Actions`.
+- Put images in `packages/web/static/images` and write them as `/images/name.png`.
+
+Three things Markdown cannot say are written as code fences with a special label.
+
+- To show a file from the repository, write an empty code fence labelled with the language and `file=`, followed by the file's path from the repository root. For example, a fence labelled `ts file=packages/harper.js/src/Linter.ts` shows that file.
+- A fence labelled `harper-editor` becomes a live editor that starts with the text inside the fence.
+- A fence labelled `harper-rules` becomes the table of every rule.
 
 ## Running the Site
 
