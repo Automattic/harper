@@ -1,0 +1,121 @@
+name: Docs
+
+# Builds the documentation in `docs/` and, on `master`, publishes it to the website.
+#
+# The website checks who is publishing with the OpenID Connect token GitHub issues to
+# this run. It accepts a token only from this file, on `master`, in this repository.
+# Renaming this file or the branch stops publishing until the site is told the new name
+# (`plugins/harper-docs` in wpcomvip/harper-wp).
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+    # The docs, what builds them, and the source files that pages show.
+    paths:
+      - "docs/**"
+      - "packages/docs-sync/**"
+      - "packages/harper.js/**"
+      - "packages/chrome-plugin/src/contentScript/**"
+      - "packages/web/static/images/**"
+      - "Cargo.toml"
+      - ".github/workflows/docs_sync.yml"
+  merge_group:
+  workflow_dispatch:
+
+# One run per pull request, and publishes to the site one at a time and in order.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  CARGO_TERM_COLOR: always
+  # Skip wasm-opt: the module is only used here to list the rules.
+  DISABLE_WASM_OPT: 1
+
+# Grant each job only the token permissions it needs.
+permissions: {}
+
+jobs:
+  build:
+    name: Build and check the docs
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read # To check out the repository.
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4.0.0
+        with:
+          just-version: 1.59.0
+      - name: Install pnpm
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+      - uses: actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659 # v1.17.0
+        with:
+          # The Rust Cache step below already caches the build.
+          cache: false
+      - name: Install Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: ".node-version"
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
+        with:
+          key: docs
+      - uses: cargo-bins/cargo-binstall@b874e25ea559687bec77e281e9b271aa1367b624 # v1.23.0
+      - name: Install `wasm-pack`
+        run: cargo binstall wasm-pack --force --no-confirm
+      # The rule reference and the API reference are generated from `harper.js`.
+      - name: Build `harper.js` and its API reference
+        run: just build-harperjs
+      - name: Install the docs builder
+        run: pnpm install --filter docs-sync...
+      - name: Test the docs builder
+        run: pnpm --filter docs-sync test
+      # Fails on a broken link, a missing image, raw HTML, or a heading that installed
+      # Harper clients link to going missing.
+      - name: Build the docs
+        run: pnpm --filter docs-sync build
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: docs-bundle
+          path: packages/docs-sync/dist/bundle.json
+          if-no-files-found: error
+          retention-days: 7
+
+  publish:
+    name: Publish to the website
+    needs: build
+    # Never for pull requests or the merge queue: those runs only check the docs.
+    # Skipped until the repository variable DOCS_SITE_URL says where the website is.
+    if: >-
+      github.repository == 'Automattic/harper' &&
+      github.ref == 'refs/heads/master' &&
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch') &&
+      vars.DOCS_SITE_URL != ''
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read # To check out the publish script.
+      id-token: write # To ask GitHub for the token the website checks.
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          sparse-checkout: packages/docs-sync
+      - name: Install Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: ".node-version"
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: docs-bundle
+          path: packages/docs-sync/dist
+      # This script imports nothing outside `packages/docs-sync/src`, so no dependency is
+      # installed in the one job that can obtain a publishing token.
+      - name: Publish
+        working-directory: packages/docs-sync
+        env:
+          DOCS_SITE_URL: ${{ vars.DOCS_SITE_URL }}
+        run: node src/publish.js --url "$DOCS_SITE_URL"
