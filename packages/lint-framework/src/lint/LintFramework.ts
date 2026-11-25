@@ -289,7 +289,7 @@ export default class LintFramework {
 						const previousBox = this.lastBoxes[closestIdx];
 						const suggestions = previousBox.lint.suggestions;
 						if (suggestions.length > 0) {
-							previousBox.applySuggestion(suggestions[0]);
+							previousBox.applySuggestion(suggestions[0], { preserveCaret: true });
 						} else {
 							previousBox.ignoreLint?.();
 						}
@@ -452,9 +452,9 @@ export default class LintFramework {
 						});
 						for (const box of lintBoxes) {
 							const applySuggestion = box.applySuggestion;
-							box.applySuggestion = (suggestion) => {
+							box.applySuggestion = (suggestion, options) => {
 								if (this.isCurrentTarget(target, targetIdentity)) {
-									return applySuggestion(suggestion);
+									return applySuggestion(suggestion, options);
 								}
 							};
 						}

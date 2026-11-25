@@ -17,6 +17,7 @@ import {
 	type UnpackedSpan,
 	type UnpackedSuggestion,
 } from '../unpackLint';
+import { captureEditorCaret, mapCaretOffset } from './preserveCaret';
 
 /**
  * Converts a lint span into one or more on-screen boxes for the active editor.
@@ -85,11 +86,16 @@ export default function computeLintBoxes(
 				source,
 				rule,
 				range: range instanceof Range ? range : undefined,
-				applySuggestion: (sug: UnpackedSuggestion) => {
+				applySuggestion: (sug, options) => {
 					const current = isFormEl(el)
 						? (el as HTMLInputElement | HTMLTextAreaElement).value
 						: el.innerText;
-					replaceValue(el, lint.span, suggestionToReplacementText(sug, lint.span, current));
+					replaceValue(
+						el,
+						lint.span,
+						suggestionToReplacementText(sug, lint.span, current),
+						options?.preserveCaret ?? false,
+					);
 				},
 				ignoreLint: opts.ignoreLint ? () => opts.ignoreLint!(lint.context_hash) : undefined,
 			});
@@ -121,19 +127,20 @@ function replaceValue(
 	el: HTMLElement,
 	span: { start: number; end: number },
 	replacementText: string,
+	preserveCaret: boolean,
 ) {
 	if (isFormEl(el)) {
-		replaceFormElementValue(el as HTMLTextAreaElement | HTMLInputElement, span, replacementText);
+		replaceFormElementValue(el, span, replacementText, preserveCaret);
 	} else if (getLexicalRoot(el) != null) {
-		replaceLexicalValue(el, span, replacementText);
+		replaceLexicalValue(el, span, replacementText, preserveCaret);
 	} else if (getDraftRoot(el) != null) {
-		replaceDraftValue(el, span, replacementText);
+		replaceDraftValue(el, span, replacementText, preserveCaret);
 	} else if (getCMRoot(el) != null) {
-		replaceCodeMirrorValue(el, span, replacementText);
+		replaceCodeMirrorValue(el, span, replacementText, preserveCaret);
 	} else if (getSlateRoot(el) != null || getCkEditorRoot(el) != null) {
-		replaceRichTextEditorValue(el, span, replacementText);
+		replaceRichTextEditorValue(el, span, replacementText, preserveCaret);
 	} else {
-		replaceGenericContentEditable(el, span, replacementText);
+		replaceGenericContentEditable(el, span, replacementText, preserveCaret);
 	}
 
 	el.dispatchEvent(new Event('change', { bubbles: true }));
@@ -143,24 +150,42 @@ function replaceFormElementValue(
 	el: HTMLTextAreaElement | HTMLInputElement,
 	span: { start: number; end: number },
 	replacementText: string,
+	preserveCaret: boolean,
 ) {
+	const doc = el.ownerDocument;
+	const caret =
+		preserveCaret && doc.activeElement === el && el.selectionStart === el.selectionEnd
+			? el.selectionStart
+			: null;
+	const before = el.value;
 	el.focus();
 	el.setSelectionRange(span.start, span.end);
-	document.execCommand('insertText', false, replacementText);
+	doc.execCommand('insertText', false, replacementText);
+	if (caret != null && doc.activeElement === el) {
+		const expected = before.slice(0, span.start) + replacementText + before.slice(span.end);
+		if (el.value === expected) {
+			const offset = mapCaretOffset(caret, span.start, span.end, replacementText.length);
+			el.setSelectionRange(offset, offset);
+		} else if (el.value === before) {
+			el.setSelectionRange(caret, caret);
+		}
+	}
 }
 
 function replaceLexicalValue(
 	el: HTMLElement,
 	span: { start: number; end: number },
 	replacementText: string,
+	preserveCaret: boolean,
 ) {
-	const setup = selectSpanInEditor(el, span);
+	const setup = selectSpanInEditor(el, span, replacementText, preserveCaret);
 	if (!setup) return;
 
 	const { doc, sel, range } = setup;
 
 	// Direct DOM replacement
 	replaceTextInRange(doc, sel, range, replacementText);
+	setup.restoreCaret?.();
 
 	// Notify
 	el.dispatchEvent(new InputEvent('input', { bubbles: true, cancelable: false }));
@@ -170,8 +195,9 @@ function replaceDraftValue(
 	el: HTMLElement,
 	span: { start: number; end: number },
 	replacementText: string,
+	preserveCaret: boolean,
 ) {
-	const setup = selectSpanInEditor(el, span);
+	const setup = selectSpanInEditor(el, span, replacementText, preserveCaret);
 	if (!setup) return;
 
 	const { doc, sel, range } = setup;
@@ -189,11 +215,18 @@ function replaceDraftValue(
 			replaceTextInRange(doc, sel, range, replacementText);
 		}
 
+		// Draft reads the selection to identify the edited text leaf during input.
 		el.dispatchEvent(new InputEvent('input', { bubbles: true, inputType: 'insertText' }));
+		setup.restoreCaret?.();
 	}, 0);
 }
 
-function selectSpanInEditor(el: HTMLElement, span: { start: number; end: number }) {
+function selectSpanInEditor(
+	el: HTMLElement,
+	span: { start: number; end: number },
+	replacementText: string,
+	preserveCaret: boolean,
+) {
 	const doc = el.ownerDocument;
 	const sel = doc.defaultView?.getSelection();
 
@@ -208,18 +241,20 @@ function selectSpanInEditor(el: HTMLElement, span: { start: number; end: number 
 		return null;
 	}
 
+	const restoreCaret = preserveCaret ? captureEditorCaret(el, range, replacementText) : undefined;
 	sel.removeAllRanges();
 	sel.addRange(range);
 
-	return { doc, sel, range };
+	return { doc, sel, range, restoreCaret };
 }
 
 function replaceRichTextEditorValue(
 	el: HTMLElement,
 	span: { start: number; end: number },
 	replacementText: string,
+	preserveCaret: boolean,
 ) {
-	const setup = selectSpanInEditor(el, span);
+	const setup = selectSpanInEditor(el, span, replacementText, preserveCaret);
 	if (!setup) return;
 
 	const { doc, sel, range } = setup;
@@ -238,18 +273,22 @@ function replaceRichTextEditorValue(
 	const beforeEvt = new InputEvent('beforeinput', evInit);
 	el.dispatchEvent(beforeEvt);
 
-	if (!beforeEvt.defaultPrevented) {
-		replaceTextInRange(doc, sel, range, replacementText);
-		el.dispatchEvent(new InputEvent('input', { bubbles: true, cancelable: false }));
+	if (beforeEvt.defaultPrevented) {
+		setup.restoreCaret?.('after-editor-commit');
+		return;
 	}
+	replaceTextInRange(doc, sel, range, replacementText);
+	setup.restoreCaret?.();
+	el.dispatchEvent(new InputEvent('input', { bubbles: true, cancelable: false }));
 }
 
 function replaceCodeMirrorValue(
 	el: HTMLElement,
 	span: { start: number; end: number },
 	replacementText: string,
+	preserveCaret: boolean,
 ) {
-	const setup = selectSpanInEditor(el, span);
+	const setup = selectSpanInEditor(el, span, replacementText, preserveCaret);
 	if (!setup) return;
 
 	const { doc, sel, range } = setup;
@@ -270,17 +309,20 @@ function replaceCodeMirrorValue(
 
 	// CodeMirror-style editors can handle replacement during beforeinput.
 	// If not handled, fall back to direct DOM replacement.
-	if (!beforeEvt.defaultPrevented) {
-		replaceTextInRange(doc, sel, range, replacementText);
-		el.dispatchEvent(
-			new InputEvent('input', {
-				bubbles: true,
-				cancelable: false,
-				inputType: 'insertReplacementText',
-				data: replacementText,
-			}),
-		);
+	if (beforeEvt.defaultPrevented) {
+		setup.restoreCaret?.('after-editor-commit');
+		return;
 	}
+	replaceTextInRange(doc, sel, range, replacementText);
+	setup.restoreCaret?.();
+	el.dispatchEvent(
+		new InputEvent('input', {
+			bubbles: true,
+			cancelable: false,
+			inputType: 'insertReplacementText',
+			data: replacementText,
+		}),
+	);
 }
 
 function replaceTextInRange(doc: Document, sel: Selection, range: Range, replacementText: string) {
@@ -323,12 +365,14 @@ function replaceGenericContentEditable(
 	el: HTMLElement,
 	span: { start: number; end: number },
 	replacementText: string,
+	preserveCaret: boolean,
 ) {
 	if (span && replacementText !== undefined) {
-		const setup = selectSpanInEditor(el, span);
+		const setup = selectSpanInEditor(el, span, replacementText, preserveCaret);
 		if (setup) {
 			const { doc, sel, range } = setup;
 			replaceTextInRange(doc, sel, range, replacementText);
+			setup.restoreCaret?.();
 			el.dispatchEvent(new InputEvent('input', { bubbles: true, cancelable: false }));
 			return;
 		}

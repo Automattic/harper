@@ -17,7 +17,10 @@ export type LintBox = Box & {
 	source: SourceElement;
 	/** Optionally provided to improve highlight rendering performance. */
 	range?: Range;
-	applySuggestion: (sug: UnpackedSuggestion) => void | Promise<void>;
+	applySuggestion: (
+		sug: UnpackedSuggestion,
+		options?: { preserveCaret?: boolean },
+	) => void | Promise<void>;
 };
 
 export type IgnorableLintBox = LintBox & {
