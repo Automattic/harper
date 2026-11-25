@@ -80,11 +80,7 @@ jobs:
     needs: collect
     # Never for pull requests: those runs only exercise the script.
     # Skipped until the repository variable DOCS_SITE_URL says where the website is.
-    if: >-
-      github.repository == 'Automattic/harper' &&
-      github.ref == 'refs/heads/master' &&
-      (github.event_name == 'push' || github.event_name == 'workflow_dispatch') &&
-      vars.DOCS_SITE_URL != ''
+    if: github.event_name != 'pull_request' && vars.DOCS_SITE_URL != ''
     runs-on: ubuntu-latest
     permissions:
       contents: read # To check out the publish script.
