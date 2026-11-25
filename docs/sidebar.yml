@@ -1,0 +1,64 @@
+# The documentation sidebar, in reading order.
+#
+# `page` is a Markdown file in this folder, without `.md`. `href` is any other link.
+# An entry with `items` is a group. A group with a `section` gets its own page at
+# /docs/<section> that lists the group's pages.
+
+title: Documentation
+description: Guides and reference for Harper, the private grammar checker.
+
+sidebar:
+  - items:
+      - { title: About, page: about }
+  - items:
+      - { title: Weir, page: weir }
+  - title: Integrations
+    section: integrations
+    description: Use Harper in your editor, your browser, and the other places you write.
+    items:
+      - { title: Obsidian, page: integrations/obsidian }
+      - { title: Chrome Extension, page: integrations/chrome-extension }
+      - { title: Firefox Extension, page: integrations/firefox-extension }
+      - { title: WordPress, page: integrations/wordpress }
+      - { title: Language Server, page: integrations/language-server }
+      - { title: Visual Studio Code, page: integrations/visual-studio-code }
+      - { title: Neovim, page: integrations/neovim }
+      - { title: Helix, page: integrations/helix }
+      - { title: Emacs, page: integrations/emacs }
+      - { title: Zed, page: integrations/zed }
+      - { title: Sublime Text, page: integrations/sublime-text }
+  - title: harper.js
+    section: harperjs
+    description: Add Harper grammar checking to JavaScript and TypeScript applications.
+    items:
+      - { title: Introduction, page: harperjs/introduction }
+      - { title: Linting, page: harperjs/linting }
+      - { title: Spans, page: harperjs/spans }
+      - { title: Configure Rules, page: harperjs/configurerules }
+      - { title: Node.js, page: harperjs/node }
+      - { title: CDN, page: harperjs/CDN }
+      - { title: API Reference, href: /docs/harperjs/ref/index.html }
+  - title: Contributors
+    section: contributors
+    description: Set up a development environment and contribute to Harper.
+    items:
+      - { title: Introduction, page: contributors/introduction }
+      - { title: Environment, page: contributors/environment }
+      - { title: Committing, page: contributors/committing }
+      - { title: Architecture, page: contributors/architecture }
+      - { title: Dictionary, page: contributors/dictionary }
+      - { title: Testing Strategy, page: contributors/testing-strategy }
+      - { title: Author a Rule, page: contributors/author-a-rule }
+      - { title: Visual Studio Code, page: contributors/visual-studio-code }
+      - { title: Chrome Extension, page: contributors/chrome-extension }
+      - { title: Harper Desktop, page: contributors/desktop }
+      - { title: Website, page: contributors/website }
+      - { title: WordPress, page: contributors/wordpress }
+      - { title: Obsidian, page: contributors/obsidian }
+      - { title: Reviewing Pull Requests, page: contributors/review }
+      - { title: Committer, page: contributors/committer }
+      - { title: Local Statistics, page: contributors/local-stats }
+      - { title: Brill Tagging, page: contributors/brill }
+      - { title: FAQ, page: contributors/faq }
+  - { title: Rust Reference, href: "https://docs.rs/harper-core/latest/harper_core/" }
+  - { title: Rules, page: rules }
