@@ -1,0 +1,17 @@
+[
+	{
+		"path": "docs/integrations/chrome-extension",
+		"anchor": "Updating-the-Extension",
+		"usedBy": "The Chrome extension's popup, when an update is available"
+	},
+	{
+		"path": "docs/integrations/firefox-extension",
+		"anchor": "Updating-the-Extension",
+		"usedBy": "The Firefox extension's popup, when an update is available"
+	},
+	{
+		"path": "docs/weir",
+		"anchor": "Weirpacks",
+		"usedBy": "The extension's options page and Harper Desktop"
+	}
+]
