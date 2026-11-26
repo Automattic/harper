@@ -1,7 +1,7 @@
 use crate::{
     Lint, Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, LintKind, Suggestion, debug::format_lint_match, expr_linter::Chunk},
+    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
 };
 
 pub struct ManyAPlural {
@@ -23,25 +23,18 @@ impl Default for ManyAPlural {
 impl ExprLinter for ManyAPlural {
     type Unit = Chunk;
 
-    fn match_to_lint_with_context(
-        &self,
-        toks: &[Token],
-        source: &[char],
-        context: Option<(&[Token], &[Token])>,
-    ) -> Option<Lint> {
-        eprintln!("🚨 {}", format_lint_match(toks, context, source));
-
+    fn match_to_lint(&self, toks: &[Token], _source: &[char]) -> Option<Lint> {
         let mut suggestions = vec![];
 
-        // TODO: 2 fixes
-        // 1. "many a" should be "many"
-        // 2. "plural noun" should be "plural nouns"
+        // 2 fixes
+        // 1. "many a" should be "many" - DONE
+        // 2. "plural noun" should be "plural nouns" - TODO
 
         suggestions.push(Suggestion::Remove);
 
         Some(Lint {
             span: toks[1..3].span()?,
-            lint_kind: LintKind::Miscellaneous,
+            lint_kind: LintKind::Agreement,
             suggestions,
             message: "Drop the indefinite article `a` or make the noun singular.".to_owned(),
             ..Default::default()
