@@ -136,6 +136,10 @@ export default class LintFramework {
 	}
 
 	async requestLintUpdate(immediate = false): Promise<void> {
+		if (this.targets.size === 0) {
+			return;
+		}
+
 		const delay = (await this.actions.getDelay?.()) ?? 0;
 		const remainingDelay = delay - (Date.now() - this.lastInputAt);
 
