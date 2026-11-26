@@ -28,9 +28,14 @@ impl Linter for LeadingZeroYear {
                     return None;
                 }
 
-                // The lexer can split a number from a following identifier suffix.
-                if source[..span.start].last().is_some_and(is_identifier_char)
-                    || source.get(span.end).is_some_and(is_identifier_char)
+                let (before, after) = (&source[..span.start], &source[span.end..]);
+                let is_identifier_letter = |c: char| c.is_alphabetic() || c == '_';
+                // The lexer can split off a decimal point or part of an identifier.
+                if before.last() == Some(&'.')
+                    || before.last().is_some_and(is_identifier_char)
+                    || after.first().is_some_and(is_identifier_char)
+                    || matches!(before, [.., c, '-'] if is_identifier_letter(*c))
+                    || matches!(after, ['-', c, ..] if is_identifier_letter(*c))
                 {
                     return None;
                 }

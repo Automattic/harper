@@ -16,6 +16,8 @@ fn leading_zero_year() {
         ("02100", Some("2100")),
         ("January 1, 02012", Some("January 1, 2012")),
         ("(01979)", Some("(1979)")),
+        ("01979-05-08", Some("1979-05-08")),
+        ("05-08-01979", Some("05-08-1979")),
         ("It happened in 1979.", None),
         ("It happened in 2012.", None),
         ("01699", None),
@@ -40,4 +42,29 @@ fn leading_zero_year() {
             assert_eq!(output.iter().collect::<String>(), expected, "{input}");
         }
     }
+}
+
+fn assert_not_flagged(input: &str) {
+    let mut group = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
+    let doc = Document::new_markdown_default_curated(input);
+    let lints = group.organized_lints(&doc);
+    assert!(
+        lints.get("LeadingZeroYear").is_none_or(Vec::is_empty),
+        "{input}"
+    );
+}
+
+#[test]
+fn leading_zero_year_ignores_fraction_without_integer_part() {
+    assert_not_flagged("The result was .01979.");
+}
+
+#[test]
+fn leading_zero_year_ignores_hyphenated_identifier_prefix() {
+    assert_not_flagged("The product code is SKU-01979.");
+}
+
+#[test]
+fn leading_zero_year_ignores_hyphenated_identifier_suffix() {
+    assert_not_flagged("The product code is 01979-SKU.");
 }
