@@ -194,6 +194,7 @@ mod long_sentences;
 mod long_time_ago;
 mod look_down_ones_nose;
 mod looking_forward_to;
+mod many_a_plural;
 mod map_phrase_linter;
 mod map_phrase_set_linter;
 mod mass_nouns;

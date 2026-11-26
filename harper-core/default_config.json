@@ -4650,7 +4650,7 @@
 							"Bool": {
 								"name": "BareInMind",
 								"state": true,
-								"label": "Bare In Mind"
+								"label": "Bare in Mind"
 							}
 						},
 						{
@@ -5624,6 +5624,13 @@
 								"name": "ManagerialReins",
 								"state": true,
 								"label": "Managerial Reins"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ManyAPlural",
+								"state": true,
+								"label": "Many a Plural"
 							}
 						},
 						{
