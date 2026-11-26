@@ -23,21 +23,15 @@ impl Default for ManyAPlural {
 impl ExprLinter for ManyAPlural {
     type Unit = Chunk;
 
-    #[allow(clippy::vec_init_then_push)]
     fn match_to_lint(&self, toks: &[Token], _source: &[char]) -> Option<Lint> {
-        #[allow(unused_mut)]
-        let mut suggestions = vec![];
-
         // 2 fixes
         // 1. "many a" should be "many" - DONE
         // 2. "plural noun" should be "plural nouns" - TODO
 
-        suggestions.push(Suggestion::Remove);
-
         Some(Lint {
             span: toks[1..3].span()?,
             lint_kind: LintKind::Agreement,
-            suggestions,
+            suggestions: vec![Suggestion::Remove],
             message: "Drop the indefinite article `a` or make the noun singular.".to_owned(),
             ..Default::default()
         })
