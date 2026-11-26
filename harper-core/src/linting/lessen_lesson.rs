@@ -1,29 +1,16 @@
 use crate::{
     CharStringExt, Lint, Token,
     expr::{Expr, FirstMatchOf, SequenceExpr},
-    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
+    linting::{
+        ExprLinter, LintKind, Suggestion,
+        expr_linter::{Chunk, find_the_only_token_index_matching},
+    },
+    patterns::{ModalVerb, Pattern},
     token_kind::TokenKind,
 };
 
-const MODALS: &[&str] = &[
-    "will",
-    "would",
-    "can",
-    "could",
-    "may",
-    "might",
-    "must",
-    "shall",
-    "should",
-    "cannot",
-    "won't",
-    "wouldn't",
-    "can't",
-    "couldn't",
-    "shouldn't",
-    "mustn't",
-    "shan't",
-];
+/// The four words this rule tells apart.
+const CONFUSABLES: &[&str] = &["lesson", "lessons", "lessen", "lessens"];
 
 const DO_FORMS: &[&str] = &["did", "do", "does"];
 
@@ -48,8 +35,37 @@ const SINGULAR_SUBJECT_PRONOUNS: &[&str] = &[
 /// object follows it.
 const CLAUSE_SUBJECTS: &[&str] = &["this", "that", "which", "what", "who"];
 
-fn is_modal_or_auxiliary(word: &str) -> bool {
-    MODALS.contains(&word) || DO_FORMS.contains(&word) || DO_NEGATIONS.contains(&word)
+/// True when `tok` is one of English's modal verbs.
+fn is_modal(tok: &Token, src: &[char]) -> bool {
+    ModalVerb::default()
+        .matches(std::slice::from_ref(tok), src)
+        .is_some()
+}
+
+/// `ought` is the one modal that takes a `to`-infinitive, so its fix needs an
+/// extra word: `ought to lessen`, not `ought lessen`.
+fn is_ought(tok: &Token, src: &[char]) -> bool {
+    tok.get_ch(src).eq_str("ought")
+}
+
+/// Index of the closest non-whitespace token before `idx`.
+fn previous_word_index(toks: &[Token], idx: usize) -> Option<usize> {
+    toks[..idx]
+        .iter()
+        .rposition(|tok| !tok.kind.is_whitespace())
+}
+
+/// The modal governing the confused word at `conf_idx`, stepping over
+/// whitespace and any intervening `not` (`will not lesson` -> `will`).
+///
+/// Walking backwards keeps this robust when unexpected tokens appear between
+/// the words, unlike fixed index arithmetic such as `conf_idx - 2`.
+fn governing_word<'a>(toks: &'a [Token], src: &[char], conf_idx: usize) -> Option<&'a Token> {
+    let mut idx = previous_word_index(toks, conf_idx)?;
+    if toks[idx].get_ch(src).eq_str("not") {
+        idx = previous_word_index(toks, idx)?;
+    }
+    Some(&toks[idx])
 }
 
 /// A lesson/lessen confusion is only flagged when a noun phrase object
@@ -87,14 +103,14 @@ impl Default for LessenLesson {
                 // "will lesson the impact" / "will not lesson the impact" /
                 // "will lesson greatly"
                 Box::new(followed_by_determiner_or_adverb(
-                    SequenceExpr::word_set(MODALS)
+                    SequenceExpr::with(ModalVerb::default())
                         .t_ws()
                         .then_optional(SequenceExpr::aco("not").t_ws())
                         .then(SequenceExpr::aco("lesson")),
                 )) as Box<dyn Expr>,
                 // "will lessons the pain" -> "will lessen the pain"
                 Box::new(followed_by_determiner(
-                    SequenceExpr::word_set(MODALS)
+                    SequenceExpr::with(ModalVerb::default())
                         .t_ws()
                         .then_optional(SequenceExpr::aco("not").t_ws())
                         .then(SequenceExpr::aco("lessons")),
@@ -181,38 +197,37 @@ impl ExprLinter for LessenLesson {
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
-        let conf_idx = toks.iter().position(|tok| {
-            let word = tok.span.get_content(src);
-            word.eq_str("lesson")
-                || word.eq_str("lessons")
-                || word.eq_str("lessen")
-                || word.eq_str("lessens")
+        let conf_idx = find_the_only_token_index_matching(toks, src, |tok, src| {
+            tok.get_ch(src).eq_any_ignore_ascii_case_str(CONFUSABLES)
         })?;
 
         let conf_tok = &toks[conf_idx];
         let conf_span = conf_tok.span;
-        let conf_chars = conf_span.get_content(src);
+        let conf_chars = conf_tok.get_ch(src);
 
-        // The word before the confused one, skipping an intervening "not"
-        // ("will not lesson" -> predecessor is "will").
-        let mut pred_word = toks[conf_idx - 2]
-            .span
-            .get_content_string(src)
-            .to_lowercase();
-        if pred_word == "not" && conf_idx >= 4 {
-            pred_word = toks[conf_idx - 4]
-                .span
-                .get_content_string(src)
-                .to_lowercase();
-        }
+        let pred = governing_word(toks, src, conf_idx);
+        let after_modal = pred.is_some_and(|tok| is_modal(tok, src));
+        let after_ought = pred.is_some_and(|tok| is_ought(tok, src));
 
         let (suggestion, message) = if conf_chars.eq_str("lesson") {
-            (
-                "lessen",
-                "`Lesson` is a unit of learning; the verb meaning \"to make less\" is `lessen`.",
-            )
+            if after_ought {
+                (
+                    "to lessen",
+                    "`Ought` takes a `to`-infinitive: use `ought to lessen` here.",
+                )
+            } else {
+                (
+                    "lessen",
+                    "`Lesson` is a unit of learning; the verb meaning \"to make less\" is `lessen`.",
+                )
+            }
         } else if conf_chars.eq_str("lessons") {
-            if is_modal_or_auxiliary(&pred_word) {
+            if after_ought {
+                (
+                    "to lessen",
+                    "`Ought` takes a `to`-infinitive: use `ought to lessen` here.",
+                )
+            } else if after_modal {
                 (
                     "lessen",
                     "After a modal or auxiliary verb, use the base form `lessen`.",
@@ -237,7 +252,7 @@ impl ExprLinter for LessenLesson {
 
         Some(Lint {
             span: conf_span,
-            lint_kind: LintKind::Malapropism,
+            lint_kind: LintKind::Spelling,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 suggestion, conf_chars,
             )],
@@ -337,6 +352,15 @@ mod tests {
             "Nothing will lessons the blow.",
             Rule::default(),
             "Nothing will lessen the blow.",
+        );
+    }
+
+    #[test]
+    fn correct_ought_lesson_to_lessen() {
+        assert_suggestion_result(
+            "You ought lesson the risk.",
+            Rule::default(),
+            "You ought to lessen the risk.",
         );
     }
 
@@ -525,5 +549,15 @@ mod tests {
     #[test]
     fn allow_which_lessons_interrogative() {
         assert_no_lints("Which lessons do you remember?", Rule::default());
+    }
+
+    #[test]
+    fn allow_modal_lessons_noun_phrase() {
+        assert_no_lints("May lessons teach patience?", Rule::default());
+    }
+
+    #[test]
+    fn allow_can_lesson_noun_object() {
+        assert_no_lints("Can lesson time be shortened?", Rule::default());
     }
 }
