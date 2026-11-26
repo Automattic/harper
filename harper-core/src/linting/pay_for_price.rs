@@ -35,14 +35,14 @@ impl ExprLinter for PayForPrice {
 
     fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
         let span = matched_tokens[2..4].span()?;
-        let lint_kind = LintKind::Usage;
-        let suggestions = vec![Suggestion::Remove];
-        let message = "You `pay for` things or services, but just `pay prices/fees`, etc with no preposition.".to_owned();
+
         Some(Lint {
             span,
-            lint_kind,
-            suggestions,
-            message,
+            lint_kind: LintKind::Usage,
+            suggestions: vec![Suggestion::Remove],
+            message:
+                "Omit 'for' before a price or fee (e.g., pay the price, not pay for the price)."
+                    .to_owned(),
             ..Default::default()
         })
     }
