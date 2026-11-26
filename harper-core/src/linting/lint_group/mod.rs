@@ -171,6 +171,7 @@ use super::jealous_of::JealousOf;
 use super::johns_hopkins::JohnsHopkins;
 use super::jump_the_gun::JumpTheGun;
 use super::lead_rise_to::LeadRiseTo;
+use super::leading_zero_year::LeadingZeroYear;
 use super::leaving_in_droves::LeavingInDroves;
 use super::left_right_hand::LeftRightHand;
 use super::less_worse::LessWorse;
@@ -822,6 +823,7 @@ impl LintGroup {
         insert_expr_rule!(JohnsHopkins);
         insert_expr_rule!(JumpTheGun);
         insert_expr_rule!(LeadRiseTo);
+        insert_struct_rule!(LeadingZeroYear);
         insert_expr_rule!(LeavingInDroves);
         insert_expr_rule!(LeftRightHand);
         insert_expr_rule!(LessWorse);

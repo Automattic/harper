@@ -2091,6 +2091,13 @@
 						},
 						{
 							"Bool": {
+								"name": "LeadingZeroYear",
+								"state": true,
+								"label": "Leading Zero in Year"
+							}
+						},
+						{
+							"Bool": {
 								"name": "LinesOfCode",
 								"state": true,
 								"label": "Lines Of Code"
