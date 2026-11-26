@@ -814,6 +814,52 @@ mod tests {
         assert!(!allowed_text("A \\text{QQQ} B").contains("QQQ"));
     }
 
+    #[test]
+    fn real_world_nlp_conditional_probabilities_equation_with_text() {
+        let src = r"
+\begin{equation}
+    P(w_i \mid w_{i-1}) = \begin{cases}
+        \frac{C(w_{i-1}, w_i)}{C(w_{i-1})} & \text{if } C(w_{i-1}) > 0, \\
+        0 & \text{otherwise.}
+    \end{cases}
+\end{equation}";
+        let out = allowed_text(src);
+        assert!(out.contains("if "), "Expected 'if ' visible, got: {out:?}");
+        assert!(
+            out.contains("otherwise."),
+            "Expected 'otherwise.' visible, got: {out:?}"
+        );
+        assert!(!out.contains("frac"), "Math command leaked: {out:?}");
+    }
+
+    #[test]
+    fn real_world_code_and_math_mixture() {
+        let src = r"We evaluate the model using \lstinline[language=Python]{eval(x)} with threshold $\tau = 0.05$.";
+        let out = allowed_text(src);
+        assert!(
+            out.contains("We evaluate the model using")
+                && out.contains("with threshold")
+                && out.contains("."),
+            "Prose was hidden: {out:?}"
+        );
+        assert!(!out.contains("eval(x)"), "Code leaked: {out:?}");
+        assert!(!out.contains("tau"), "Math leaked: {out:?}");
+    }
+
+    #[test]
+    fn real_world_theorem_definition_with_inline_math() {
+        let src = r"Let $f: \mathbb{R} \to \mathbb{R}$ be a continuous function. If $\lim_{x \to \infty} f(x) = L$, then $f$ is bounded.";
+        let out = allowed_text(src);
+        assert!(
+            out.contains("Let")
+                && out.contains("be a continuous function. If")
+                && out.contains("then")
+                && out.contains("is bounded."),
+            "Prose was hidden: {out:?}"
+        );
+        assert!(!out.contains("mathbb"), "Math leaked: {out:?}");
+    }
+
     fn allowed_text(src: &str) -> String {
         let source: Vec<_> = src.chars().collect();
         let mask = Masker::default().create_mask(&source);
