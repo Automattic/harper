@@ -23,7 +23,9 @@ impl Default for ManyAPlural {
 impl ExprLinter for ManyAPlural {
     type Unit = Chunk;
 
+    #[allow(clippy::vec_init_then_push)]
     fn match_to_lint(&self, toks: &[Token], _source: &[char]) -> Option<Lint> {
+        #[allow(unused_mut)]
         let mut suggestions = vec![];
 
         // 2 fixes
