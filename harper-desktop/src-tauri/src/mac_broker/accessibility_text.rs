@@ -1,3 +1,4 @@
+use super::text_handler::{TextHandler, TextTarget};
 use accessibility::attribute::AXUIElementAttributes;
 use accessibility::ui_element::AXUIElement;
 use accessibility::{Error, TreeVisitor, TreeWalker, TreeWalkerFlow};
@@ -10,8 +11,8 @@ use accessibility_sys::{
 use core::{ffi::c_void, mem::MaybeUninit};
 use core_foundation::base::{CFRange, CFType, TCFType};
 use core_foundation::string::CFString;
-use harper_core::linting::{Lint, Suggestion};
 use objc2_foundation::NSRect;
+use std::sync::Arc;
 use std::{
     cell::{Cell, RefCell},
     ptr,
@@ -136,6 +137,9 @@ fn rect_has_usable_text_metrics(rect: Rect) -> bool {
 /// Collects lint rectangles while walking supported text elements in an AX tree.
 pub struct RectCollector<'a> {
     rects: RefCell<Vec<ActionableLint>>,
+    pid: i32,
+    bundle_id: Arc<str>,
+    handler: Arc<dyn TextHandler>,
     expected_rect_count: Cell<usize>,
     read_failed: Cell<bool>,
     lint_text: RefCell<&'a mut LintCallback<'a>>,
@@ -147,13 +151,16 @@ impl TreeVisitor for RectCollector<'_> {
             return TreeWalkerFlow::Continue;
         }
 
-        let Ok(value) = element.value() else {
+        let target = TextTarget {
+            pid: self.pid,
+            bundle_id: self.bundle_id.clone(),
+            element: element.clone(),
+        };
+        let Ok(string) = self.handler.read_text(&target) else {
             self.read_failed.set(true);
             return TreeWalkerFlow::Continue;
         };
 
-        let string =
-            unsafe { CFString::wrap_under_get_rule(value.as_CFTypeRef() as _).to_string() };
         let mut rects = self.rects.borrow_mut();
         let organized_lints = (self.lint_text.borrow_mut())(&string);
 
@@ -168,10 +175,11 @@ impl TreeVisitor for RectCollector<'_> {
                     lint.span.start,
                     lint.span.len(),
                 ) {
-                    let element = element.clone();
+                    let target = target.clone();
                     let source_text = string.clone();
                     let suggestion_source_text = string.clone();
-                    let suggestion_lint = lint.clone();
+                    let span = lint.span;
+                    let handler = self.handler.clone();
 
                     rects.push(ActionableLint::new(
                         rect,
@@ -179,12 +187,14 @@ impl TreeVisitor for RectCollector<'_> {
                         lint,
                         source_text,
                         move |suggestion| {
-                            apply_suggestion_to_element(
-                                element,
-                                suggestion_source_text,
-                                suggestion_lint,
-                                suggestion,
-                            );
+                            if let Err(error) = handler.write_text(
+                                &target,
+                                &suggestion_source_text,
+                                span,
+                                &suggestion,
+                            ) {
+                                eprintln!("Unable to apply suggestion: {error}");
+                            }
                         },
                     ));
                 }
@@ -197,8 +207,16 @@ impl TreeVisitor for RectCollector<'_> {
 }
 
 impl<'a> RectCollector<'a> {
-    pub fn new(lint_text: &'a mut LintCallback) -> Self {
+    pub fn new(
+        lint_text: &'a mut LintCallback,
+        pid: i32,
+        bundle_id: Arc<str>,
+        handler: Arc<dyn TextHandler>,
+    ) -> Self {
         Self {
+            pid,
+            bundle_id,
+            handler,
             rects: RefCell::new(Vec::new()),
             expected_rect_count: Cell::new(0),
             read_failed: Cell::new(false),
@@ -214,22 +232,6 @@ impl<'a> RectCollector<'a> {
         } else {
             Some(rects)
         }
-    }
-}
-
-fn apply_suggestion_to_element(
-    element: AXUIElement,
-    source_text: String,
-    lint: Lint,
-    suggestion: Suggestion,
-) {
-    let mut chars = source_text.chars().collect::<Vec<_>>();
-    suggestion.apply(lint.span, &mut chars);
-    let updated = chars.into_iter().collect::<String>();
-    let value = CFString::new(&updated);
-
-    if let Err(error) = element.set_value(value.as_CFType()) {
-        eprintln!("Unable to apply suggestion: {error}");
     }
 }
 

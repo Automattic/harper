@@ -1,7 +1,11 @@
 # "at the depends of" is a typo for "expense", so `depends` right after `the` is skipped.
 expr verb [depend, depended, depending]
 # "depends of course on ..." is correct, but "depends of course of ..." still needs a fix.
-expr main [<(@verb of ![course]), of>, <(![the] depends of ![course]), of>, <<([@verb, depends] of course of), (course of)>, of>]
+expr main [
+    <(@verb of ![course]), of>,
+    <(![the] depends of ![course]), of>,
+    <<([@verb, depends] of course of), (course of)>, of>
+]
 
 let message "In English it's `depend on`, not `depend of`."
 let description "Corrects the wrong preposition in `depend of`."

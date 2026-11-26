@@ -102,7 +102,7 @@ impl ExprLinter for ThrowBabyWithBathwater {
     }
 
     fn description(&self) -> &str {
-        "Corrects wrong or nonstandard variants of the idiom 'to throw the baby out with the bathwater'"
+        "Corrects wrong or nonstandard variants of the idiom 'to throw the baby out with the bathwater'."
     }
 }
 

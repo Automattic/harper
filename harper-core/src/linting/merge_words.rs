@@ -30,6 +30,38 @@ impl Linter for MergeWords {
 
         let mut merged_word = CharString::new();
 
+        for (i, (a, w, apostrophe, s)) in document.tokens().tuple_windows().enumerate() {
+            if !a.kind.is_word()
+                || !w.kind.is_space()
+                || !apostrophe.kind.is_apostrophe()
+                || !s.kind.is_word()
+                || !matches!(document.get_span_content(&s.span), ['s' | 'S'])
+                || document
+                    .get_tokens()
+                    .get(i + 4)
+                    .is_some_and(|next| next.kind.is_apostrophe())
+            {
+                continue;
+            }
+
+            let a_chars = document.get_span_content(&a.span);
+            merged_word.clear();
+            merged_word.extend_from_slice(a_chars);
+            merged_word.push('\'');
+            merged_word.extend_from_slice(document.get_span_content(&s.span));
+
+            if self.dict.contains_word(&merged_word) {
+                merged_word[a_chars.len()] = document.get_span_content(&apostrophe.span)[0];
+                lints.push(Lint {
+                    span: Span::new(a.span.start, s.span.end),
+                    lint_kind: LintKind::WordChoice,
+                    suggestions: vec![Suggestion::ReplaceWith(merged_word.to_vec())],
+                    message: "Remove the space before the apostrophe.".to_owned(),
+                    priority: 31,
+                });
+            }
+        }
+
         for (a, w, b) in document.tokens().tuple_windows() {
             if !a.kind.is_word() || !w.kind.is_whitespace() || !b.kind.is_word() {
                 continue;
@@ -93,9 +125,104 @@ impl Linter for MergeWords {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{
+        assert_first_suggestion_result, assert_lint_count, assert_suggestion_result,
+    };
 
     use super::MergeWords;
+
+    #[test]
+    fn merges_separated_possessive() {
+        assert_first_suggestion_result(
+            "The carrier 's family.",
+            MergeWords::default(),
+            "The carrier's family.",
+        );
+    }
+
+    #[test]
+    fn merges_proper_noun_possessive() {
+        assert_first_suggestion_result(
+            "Huntington 's disease.",
+            MergeWords::default(),
+            "Huntington's disease.",
+        );
+    }
+
+    #[test]
+    fn merges_separated_contraction() {
+        assert_first_suggestion_result("That 's fine.", MergeWords::default(), "That's fine.");
+    }
+
+    #[test]
+    fn merges_curly_apostrophe() {
+        assert_first_suggestion_result("That ’s fine.", MergeWords::default(), "That’s fine.");
+    }
+
+    #[test]
+    fn merges_multiple_spaces() {
+        assert_first_suggestion_result("That   's fine.", MergeWords::default(), "That's fine.");
+    }
+
+    #[test]
+    fn merges_tab() {
+        assert_first_suggestion_result("That\t's fine.", MergeWords::default(), "That's fine.");
+    }
+
+    #[test]
+    fn preserves_uppercase_suffix() {
+        assert_first_suggestion_result("JOHN 'S car.", MergeWords::default(), "JOHN'S car.");
+    }
+
+    #[test]
+    fn merges_multiple_suffixes() {
+        assert_first_suggestion_result(
+            "Huntington 's disease affects the carrier 's family.",
+            MergeWords::default(),
+            "Huntington's disease affects the carrier's family.",
+        );
+    }
+
+    #[test]
+    fn allows_quoted_letters() {
+        for text in [
+            "The letter 's' is lowercase.",
+            "The letter ’s’ is lowercase.",
+        ] {
+            assert_lint_count(text, MergeWords::default(), 0);
+        }
+    }
+
+    #[test]
+    fn allows_joined_suffixes() {
+        assert_lint_count("That's the carrier's family.", MergeWords::default(), 0);
+    }
+
+    #[test]
+    fn allows_other_suffixes() {
+        for text in ["We 're ready.", "I 'll leave.", "They 've finished."] {
+            assert_lint_count(text, MergeWords::default(), 0);
+        }
+    }
+
+    #[test]
+    fn allows_line_break_before_quoted_s() {
+        assert_lint_count("Huntington\n's", MergeWords::default(), 0);
+    }
+
+    #[test]
+    fn allows_unrecognized_merged_word() {
+        assert_lint_count("and 's", MergeWords::default(), 0);
+    }
+
+    #[test]
+    fn curated_merge_precedes_suffix_spelling_and_following_word_merge() {
+        let group = crate::linting::LintGroup::new_curated(
+            crate::spell::FstDictionary::curated(),
+            crate::Dialect::American,
+        );
+        assert_first_suggestion_result("It 's our family.", group, "It's our family.");
+    }
 
     #[test]
     fn clean() {

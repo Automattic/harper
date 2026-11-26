@@ -12,12 +12,19 @@ export default defineConfig({
 	testDir: './tests',
 	testIgnore: ['**/google_docs*.spec.ts', '**/googleDocs*.spec.ts'],
 	fullyParallel: true,
+	/* GitHub's Linux runners have four CPUs. This is the total across projects: a project's own
+	   `workers` setting can only lower it, never raise it. */
+	workers: process.env.CI ? 4 : '50%',
 	/* Fail the build on CI if you accidentally left test.only in the source code. */
 	forbidOnly: !!process.env.CI,
 	/** Extremely important to avoid flaky tests. DO NOT CHANGE or I will kill you. */
 	retries: 0,
-	/** Extremely important to avoid flaky tests. DO NOT CHANGE or I will kill you. */
-	repeatEach: 3,
+	/**
+	 * Extremely important to avoid flaky tests. Each test runs three times in the merge queue, on
+	 * master and locally, and every copy has to pass: that's what stops flaky tests reaching master.
+	 * Pull requests run each test once, so an unrelated flaky test doesn't hold up their authors.
+	 */
+	repeatEach: process.env.GITHUB_EVENT_NAME === 'pull_request' ? 1 : 3,
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
 	reporter: 'html',
 	use: {
@@ -38,7 +45,6 @@ export default defineConfig({
 	projects: [
 		{
 			name: 'chromium',
-			workers: process.env.CI ? 2 : '50%',
 			use: {
 				...devices['Desktop Chrome'],
 				launchOptions: {
@@ -56,7 +62,6 @@ export default defineConfig({
 		},
 		{
 			name: 'firefox',
-			workers: process.env.CI ? 2 : '50%',
 			use: { ...devices['Desktop Firefox'] },
 		},
 	],

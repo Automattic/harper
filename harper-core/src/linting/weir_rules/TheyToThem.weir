@@ -2,7 +2,11 @@ expr prepositions [to, with, about, against, between, among, around, toward, tow
 # `for` can also act as a coordinating conjunction introducing a finite clause, where `they` is the subject
 # Most of these are also nouns. In "the help they received", `they` is the subject of the verb that follows, so skip those
 expr verbs [call, contact, invite, remind, ask, see, watch, help, trust, send, support, follow, visit, tell, thank, mention, show]
-expr main [<(@prepositions they), they>, <[(for they ![VERB, AUX]), (for they.)], they>, <[(@verbs they ![VERB, AUX]), (@verbs they.)], they>]
+expr main [
+    <(@prepositions they), they>, 
+    <[(for they ![VERB, AUX]), (for they.)], they>, 
+    <[(@verbs they ![VERB, AUX]), (@verbs they.)], they>
+]
 
 let message "Use `them` when the pronoun follows a preposition or transitive verb."
 let description "Converts `they` to `them` whenever the pronoun serves as an object after common prepositions or actions that take direct objects."

@@ -2261,7 +2261,7 @@ dependencies = [
 
 [[package]]
 name = "fuzz"
-version = "3.2.0"
+version = "3.3.0"
 dependencies = [
  "harper-comments",
  "harper-core",
@@ -2468,9 +2468,9 @@ checksum = "e4eba85ea1d0a966a983acd07deee566e67395d2d96b6fb39e62b5a833f1eb0b"
 
 [[package]]
 name = "globset"
-version = "0.4.20"
+version = "0.4.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "07c34a9410465b45bd9787443bc7370f37735bad04b0f0cd57ff1a3186c98988"
+checksum = "f98b0d85522dc0a824cfebbc9594ff4a9b289c568bea0370319dfbdf20ccdd2d"
 dependencies = [
  "aho-corasick",
  "bstr",
@@ -2588,7 +2588,7 @@ dependencies = [
 
 [[package]]
 name = "harper-asciidoc"
-version = "3.2.0"
+version = "3.3.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2599,7 +2599,7 @@ dependencies = [
 
 [[package]]
 name = "harper-brill"
-version = "3.2.0"
+version = "3.3.0"
 dependencies = [
  "harper-pos-utils",
  "serde_json",
@@ -2607,7 +2607,7 @@ dependencies = [
 
 [[package]]
 name = "harper-cli"
-version = "3.2.0"
+version = "3.3.0"
 dependencies = [
  "anyhow",
  "ariadne",
@@ -2617,6 +2617,7 @@ dependencies = [
  "enum_dispatch",
  "harper-asciidoc",
  "harper-comments",
+ "harper-context-ranker",
  "harper-core",
  "harper-ink",
  "harper-literate-haskell",
@@ -2637,7 +2638,7 @@ dependencies = [
 
 [[package]]
 name = "harper-comments"
-version = "3.2.0"
+version = "3.3.0"
 dependencies = [
  "harper-core",
  "harper-html",
@@ -2657,6 +2658,7 @@ dependencies = [
  "tree-sitter-go",
  "tree-sitter-groovy",
  "tree-sitter-haskell",
+ "tree-sitter-hcl",
  "tree-sitter-java",
  "tree-sitter-javascript",
  "tree-sitter-kotlin-ng",
@@ -2676,8 +2678,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "harper-context-ranker"
+version = "3.3.0"
+dependencies = [
+ "burn",
+ "burn-ndarray",
+ "flate2",
+ "hashbrown 0.16.1",
+ "rand 0.10.3",
+ "rayon",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
 name = "harper-core"
-version = "3.2.0"
+version = "3.3.0"
 dependencies = [
  "ammonia",
  "bitflags 2.13.2",
@@ -2687,6 +2704,7 @@ dependencies = [
  "foldhash 0.2.0",
  "fst",
  "harper-brill",
+ "harper-context-ranker",
  "harper-thesaurus",
  "hashbrown 0.16.1",
  "indexmap",
@@ -2717,7 +2735,7 @@ dependencies = [
 
 [[package]]
 name = "harper-dictionary-wordlist"
-version = "3.2.0"
+version = "3.3.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -2726,7 +2744,7 @@ dependencies = [
 
 [[package]]
 name = "harper-git-commit"
-version = "3.2.0"
+version = "3.3.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2737,7 +2755,7 @@ dependencies = [
 
 [[package]]
 name = "harper-html"
-version = "3.2.0"
+version = "3.3.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2748,7 +2766,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ink"
-version = "3.2.0"
+version = "3.3.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2759,7 +2777,7 @@ dependencies = [
 
 [[package]]
 name = "harper-jjdescription"
-version = "3.2.0"
+version = "3.3.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2770,7 +2788,7 @@ dependencies = [
 
 [[package]]
 name = "harper-literate-haskell"
-version = "3.2.0"
+version = "3.3.0"
 dependencies = [
  "harper-comments",
  "harper-core",
@@ -2781,7 +2799,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ls"
-version = "3.2.0"
+version = "3.3.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -2813,7 +2831,7 @@ dependencies = [
 
 [[package]]
 name = "harper-pos-utils"
-version = "3.2.0"
+version = "3.3.0"
 dependencies = [
  "burn",
  "burn-ndarray",
@@ -2831,7 +2849,7 @@ dependencies = [
 
 [[package]]
 name = "harper-python"
-version = "3.2.0"
+version = "3.3.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2842,7 +2860,7 @@ dependencies = [
 
 [[package]]
 name = "harper-stats"
-version = "3.2.0"
+version = "3.3.0"
 dependencies = [
  "chrono",
  "harper-core",
@@ -2853,7 +2871,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tex"
-version = "3.2.0"
+version = "3.3.0"
 dependencies = [
  "harper-core",
  "paste",
@@ -2861,7 +2879,7 @@ dependencies = [
 
 [[package]]
 name = "harper-thesaurus"
-version = "3.2.0"
+version = "3.3.0"
 dependencies = [
  "hashbrown 0.16.1",
  "indexmap",
@@ -2871,7 +2889,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tree-sitter"
-version = "3.2.0"
+version = "3.3.0"
 dependencies = [
  "harper-core",
  "tree-sitter",
@@ -2890,7 +2908,7 @@ dependencies = [
 
 [[package]]
 name = "harper-typst"
-version = "3.2.0"
+version = "3.3.0"
 dependencies = [
  "harper-core",
  "itertools 0.15.0",
@@ -2901,7 +2919,7 @@ dependencies = [
 
 [[package]]
 name = "harper-wasm"
-version = "3.2.0"
+version = "3.3.0"
 dependencies = [
  "console_error_panic_hook",
  "getrandom 0.3.4",
@@ -5876,6 +5894,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "tree-sitter-hcl"
+version = "1.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5a7b2cc3d7121553b84309fab9d11b3ff3d420403eef9ae50f9fd1cd9d9cf012"
+dependencies = [
+ "cc",
+ "tree-sitter-language",
+]
+
+[[package]]
 name = "tree-sitter-html"
 version = "0.23.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -6209,9 +6237,9 @@ dependencies = [
 
 [[package]]
 name = "unicode-script"
-version = "0.5.8"
+version = "0.5.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "383ad40bb927465ec0ce7720e033cb4ca06912855fc35db31b5755d0de75b1ee"
+checksum = "aa04c955db05429d464c74d495c1ee677e1866e783a4c3747f9c0cef7756cabf"
 
 [[package]]
 name = "unicode-segmentation"

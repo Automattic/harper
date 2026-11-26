@@ -34,7 +34,7 @@ impl ExprLinter for AnotherThingComing {
                 "another thing coming",
                 toks.span()?.get_content(src),
             )],
-            message: "Corrects `another think coming` to `another thing coming`".to_owned(),
+            message: "Corrects `another think coming` to `another thing coming`.".to_owned(),
             priority: 63,
         })
     }

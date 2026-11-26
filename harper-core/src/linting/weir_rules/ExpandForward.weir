@@ -1,6 +1,6 @@
 expr main (fwd)
 
-let message "Use `forward` instead of `fwd`"
+let message "Use `forward` instead of `fwd`."
 let description "Expands the abbreviation `fwd` to the full word `forward` for clarity."
 let kind "Style"
 let becomes "forward"

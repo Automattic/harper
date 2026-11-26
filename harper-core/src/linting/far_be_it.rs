@@ -41,7 +41,7 @@ impl ExprLinter for FarBeIt {
                     vec!['f', 'r', 'o', 'm'],
                     content,
                 )],
-                "`Far be it for` is a common error for `far be it from`".to_owned(),
+                "`Far be it for` is a common error for `far be it from`.".to_owned(),
             )
         } else {
             (vec![], "The correct usage of the idiom is `far be it from` [someone] to [do something]. Try to rephrase the sentence.".to_owned())
@@ -57,7 +57,7 @@ impl ExprLinter for FarBeIt {
     }
 
     fn description(&self) -> &'static str {
-        "Flags misuse of `far be it` and suggests using `from` when it is followed by `for`"
+        "Flags misuse of `far be it` and suggests using `from` when it is followed by `for`."
     }
 }
 

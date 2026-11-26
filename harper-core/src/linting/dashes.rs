@@ -34,7 +34,20 @@ impl ExprLinter for Dashes {
         &self.expr
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
+    fn match_to_lint_with_context(
+        &self,
+        matched_tokens: &[Token],
+        _source: &[char],
+        context: Option<(&[Token], &[Token])>,
+    ) -> Option<Lint> {
+        // The hyphens in ASCII arrows like `-->` and `<--` aren't dashes.
+        if let Some((before, after)) = context
+            && (before.last().is_some_and(|t| t.kind.is_less_than())
+                || after.first().is_some_and(|t| t.kind.is_greater_than()))
+        {
+            return None;
+        }
+
         let span = matched_tokens.span()?;
         let lint_kind = LintKind::Formatting;
 
@@ -65,7 +78,9 @@ impl ExprLinter for Dashes {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_suggestion_count, assert_suggestion_result};
+    use crate::linting::tests::{
+        assert_no_lints, assert_suggestion_count, assert_suggestion_result,
+    };
 
     use super::Dashes;
     use super::{EM_DASH, EN_DASH};
@@ -96,5 +111,78 @@ mod tests {
     #[test]
     fn no_lint_for_long_hyphen_sequences() {
         assert_suggestion_count("'There is no box' ------ Scott", Dashes::default(), 0);
+    }
+
+    #[test]
+    fn ignores_right_arrow() {
+        assert_no_lints("Go from A --> B now.", Dashes::default());
+    }
+
+    #[test]
+    fn ignores_left_arrow() {
+        assert_no_lints("Go from A <-- B now.", Dashes::default());
+    }
+
+    #[test]
+    fn ignores_bidirectional_arrow() {
+        assert_no_lints("Go from A <--> B now.", Dashes::default());
+    }
+
+    #[test]
+    fn ignores_long_right_arrow() {
+        assert_no_lints("Go from A ---> B now.", Dashes::default());
+    }
+
+    #[test]
+    fn ignores_long_left_arrow() {
+        assert_no_lints("Go from A <--- B now.", Dashes::default());
+    }
+
+    #[test]
+    fn ignores_long_bidirectional_arrow() {
+        assert_no_lints("Go from A <---> B now.", Dashes::default());
+    }
+
+    #[test]
+    fn ignores_longer_right_arrow() {
+        assert_no_lints("Go from A ----> B now.", Dashes::default());
+    }
+
+    #[test]
+    fn ignores_single_hyphen_arrow() {
+        assert_no_lints("Go from A -> B now.", Dashes::default());
+    }
+
+    #[test]
+    fn ignores_unspaced_arrow() {
+        assert_no_lints("Click File-->Save now.", Dashes::default());
+    }
+
+    #[test]
+    fn ignores_arrow_at_start() {
+        assert_no_lints("--> Start here.", Dashes::default());
+    }
+
+    #[test]
+    fn ignores_arrow_at_end() {
+        assert_no_lints("Start here -->", Dashes::default());
+    }
+
+    #[test]
+    fn catches_dash_separated_from_angle_bracket() {
+        assert_suggestion_result(
+            "The result -- > 5 in most cases",
+            Dashes::default(),
+            &format!("The result {EN_DASH} > 5 in most cases"),
+        );
+    }
+
+    #[test]
+    fn catches_dash_alongside_arrow() {
+        assert_suggestion_result(
+            "Go from A --> B -- quickly",
+            Dashes::default(),
+            &format!("Go from A --> B {EN_DASH} quickly"),
+        );
     }
 }

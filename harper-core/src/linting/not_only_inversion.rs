@@ -24,7 +24,7 @@ impl ExprLinter for NotOnlyInversion {
     type Unit = Chunk;
 
     fn description(&self) -> &str {
-        "Corrects `not only it is` to `not only is it`"
+        "Corrects `not only it is` to `not only is it`."
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

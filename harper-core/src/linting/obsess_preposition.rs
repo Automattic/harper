@@ -26,7 +26,7 @@ impl ExprLinter for ObsessPreposition {
     }
 
     fn description(&self) -> &str {
-        "Ensures valid prepositions are used with `obsess`"
+        "Ensures valid prepositions are used with `obsess`."
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

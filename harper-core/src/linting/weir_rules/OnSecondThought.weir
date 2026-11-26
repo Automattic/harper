@@ -1,6 +1,6 @@
 expr main <([on, my] second though), (second though)>
 
-let message "Idiomatic expression: use `on second thought` instead of `on second though`"
+let message "Idiomatic expression: use `on second thought` instead of `on second though`."
 let description "Replaces the nonstandard `on second though` with the common idiom `on second thought` to indicate reconsideration."
 let kind "Typo"
 let becomes "second thought"

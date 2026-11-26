@@ -39,21 +39,27 @@ impl Window {
         let context = super::fonts::context();
         let position = monitor.position();
         let size = monitor.size();
-        let window = Arc::new(
-            event_loop.create_window(
-                WinitWindow::default_attributes()
-                    .with_title("Harper")
-                    .with_inner_size(size)
-                    .with_position(position)
-                    .with_resizable(false)
-                    .with_enabled_buttons(WindowButtons::empty())
-                    .with_decorations(false)
-                    .with_transparent(true)
-                    .with_window_level(WindowLevel::AlwaysOnTop)
-                    .with_visible(visible)
-                    .with_active(false),
-            )?,
-        );
+        let attributes = WinitWindow::default_attributes()
+            .with_title("Harper")
+            .with_inner_size(size)
+            .with_position(position)
+            .with_resizable(false)
+            .with_enabled_buttons(WindowButtons::empty())
+            .with_decorations(false)
+            .with_transparent(true)
+            .with_window_level(WindowLevel::AlwaysOnTop)
+            .with_visible(visible)
+            .with_active(false);
+
+        // DWM blur-behind alone leaves the Win32 redirection surface opaque white, hiding the
+        // transparent wgpu swapchain. Skipping the redirection bitmap lets its alpha composite.
+        #[cfg(target_os = "windows")]
+        let attributes = {
+            use winit::platform::windows::WindowAttributesExtWindows;
+            attributes.with_no_redirection_bitmap(true)
+        };
+
+        let window = Arc::new(event_loop.create_window(attributes)?);
 
         window.set_outer_position(PhysicalPosition::new(position.x, position.y));
         let _ = window.request_inner_size(PhysicalSize::new(size.width, size.height));

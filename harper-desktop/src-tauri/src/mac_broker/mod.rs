@@ -7,6 +7,7 @@ mod core_foundation_utilities;
 mod focused_target;
 mod focused_window_pid;
 mod screenshot;
+mod text_handler;
 mod window_stability;
 
 use accessibility::TreeWalker;
@@ -67,6 +68,7 @@ pub struct MacBroker {
     last_focused: Option<SendWrapper<FocusedTarget>>,
     is_integration_enabled: Box<dyn FnMut(&str) -> bool + Send + Sync>,
     application_icon_cache: Mutex<HashMap<String, Vec<u8>>>,
+    text_handler: std::sync::Arc<text_handler::RoutingTextHandler>,
     window_movement: Option<WindowMovementState>,
     accessibility_activation: Option<AccessibilityActivationState>,
     screenshot_poll: ScreenshotPoll,
@@ -80,6 +82,7 @@ impl MacBroker {
             last_focused: None,
             is_integration_enabled: Box::new(is_integration_enabled),
             application_icon_cache: Mutex::new(HashMap::new()),
+            text_handler: Default::default(),
             window_movement: None,
             accessibility_activation: None,
             screenshot_poll: ScreenshotPoll::new(Instant::now()),
@@ -359,7 +362,12 @@ impl OsBroker for MacBroker {
         };
 
         let walker = TreeWalker::new();
-        let collector = RectCollector::new(lint_text);
+        let collector = RectCollector::new(
+            lint_text,
+            pid,
+            bundle_identifier.into(),
+            self.text_handler.clone(),
+        );
 
         walker.walk(&focused, &collector);
 

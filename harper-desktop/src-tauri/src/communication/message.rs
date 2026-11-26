@@ -1,4 +1,4 @@
-use crate::config::Integration;
+use crate::config::{InstalledWeirpack, Integration};
 use harper_core::{Dialect, IgnoredLints, linting::FlatConfig};
 use serde::{Deserialize, Serialize};
 
@@ -8,6 +8,7 @@ pub enum Request {
     OpenSettings,
     GetLintConfig,
     GetDictionary,
+    GetWeirpacks,
     GetDialect,
     GetDebounceMs,
     GetIgnoredLints,
@@ -27,6 +28,7 @@ pub enum Request {
 pub enum Response {
     GetLintConfig { config: FlatConfig },
     GetDictionary { words: Vec<String> },
+    GetWeirpacks { packs: Vec<InstalledWeirpack> },
     GetDialect { dialect: Dialect },
     GetDebounceMs { debounce_ms: u64 },
     GetIgnoredLints { ignored_lints: IgnoredLints },

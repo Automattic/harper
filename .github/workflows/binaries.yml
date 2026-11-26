@@ -4,7 +4,9 @@ on:
   push:
     branches: ["master"]
     tags: ["v*"]
-  merge_group:
+
+# Grant each job only the token permissions it needs.
+permissions: {}
 
 jobs:
   binaries:
@@ -114,16 +116,19 @@ jobs:
             command: build
 
     runs-on: ${{ matrix.platform.os }}
+    permissions:
+      contents: write # Only needed on tag pushes, to attach the built files to the draft release.
     steps:
       - name: Checkout
-        uses: actions/checkout@v7.0.1
-      - name: Rust Cache
-        uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          cache-bin: "true"
+          persist-credentials: false
       - name: Build binary
         uses: houseabsolute/actions-rust-cross@21b0f18dc621b25bfae556ff2791fca4173121e8 # v1.0.8
         with:
+          # Release builds run after merging, so nobody waits on them. Their caches filled
+          # most of the repo's cache quota and evicted the ones PR checks rely on.
+          use-rust-cache: false
           command: ${{ matrix.platform.command }}
           target: ${{ matrix.platform.target }}
           args: "--locked --release --bin ${{ matrix.platform.project }}"
@@ -140,7 +145,7 @@ jobs:
           fi
           cd -
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: ${{ matrix.platform.bin }}-${{ matrix.platform.target }}
           path: ${{ matrix.platform.name }}

@@ -62,7 +62,7 @@ impl ExprLinter for NoMatchFor {
     }
 
     fn description(&self) -> &str {
-        "No match for"
+        "Corrects the idiom `no match for` using the wrong preposition."
     }
 }
 
