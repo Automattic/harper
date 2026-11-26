@@ -114,7 +114,14 @@ fn lex_number(source: &[char]) -> Option<FoundToken> {
         return None;
     }
 
-    let end = source
+    // `f64::from_str` only accepts ASCII digits, '.', 'e'/'E' and signs after a leading digit, so a
+    // longer prefix can never parse.
+    let run = source
+        .iter()
+        .position(|c| !matches!(c, '0'..='9' | '.' | 'e' | 'E' | '+' | '-'))
+        .unwrap_or(source.len());
+
+    let end = source[..run]
         .iter()
         .enumerate()
         .rev()
@@ -448,6 +455,31 @@ mod tests {
                 ..
             })
         ));
+    }
+
+    #[test]
+    fn lexes_number_followed_by_text() {
+        for (text, len) in [
+            ("3.5% of users", 3),
+            ("1,200 users", 1),
+            ("10:30am", 2),
+            ("1e5x", 3),
+            ("2.5.6 is a version", 3),
+            ("3.00e8m/s", 6),
+            ("42.", 2),
+        ] {
+            let source: Vec<_> = text.chars().collect();
+            assert!(
+                matches!(
+                    lex_number(&source),
+                    Some(FoundToken {
+                        token: TokenKind::Number(_),
+                        next_index,
+                    }) if next_index == len
+                ),
+                "{text}"
+            );
+        }
     }
 
     #[test]
