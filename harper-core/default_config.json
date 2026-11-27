@@ -6785,6 +6785,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ComposeCompost",
+								"state": true,
+								"label": "Compose / Compost"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ConvenientStore",
 								"state": true,
 								"label": "Convenient Store"

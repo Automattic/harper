@@ -70,6 +70,7 @@ mod code_in_write_in;
 mod comfortable_with;
 mod comma_fixes;
 mod complain_as_noun;
+mod compose_compost;
 mod compound_nouns;
 mod compound_subject_i;
 mod confident;
