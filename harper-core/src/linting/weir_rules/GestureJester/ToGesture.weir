@@ -1,0 +1,10 @@
+expr main <([facial, finger, hand, mouse, mousepad, musical, noble, obscene, smartphone, swipe, symbolic, trackpad] jester), jester>
+
+let message "Did you mean `gesture` (a meaningful hand movement)?"
+let description "Flags `jester` when used in place of `gesture` in contexts referring to hand movements."
+let kind "Malapropism"
+let becomes "gesture"
+
+test "I use to have a galaxy s3 with built in swipe jester this works almost similar to that" "I use to have a galaxy s3 with built in swipe gesture this works almost similar to that"
+test "Swipe jester doesn't work at the end of The game." "Swipe gesture doesn't work at the end of The game."
+test "I'm going to explain the two finger jester that is now your new back button" "I'm going to explain the two finger gesture that is now your new back button"

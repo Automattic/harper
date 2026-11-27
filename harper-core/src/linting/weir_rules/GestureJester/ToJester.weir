@@ -1,0 +1,8 @@
+expr main <([court, jolly, king's, royal, three] gesture), gesture>
+
+let message "Did you mean `jester` (medieval court entertainer)?"
+let description "Flags `gesture` when used in place of `jester` in contexts referring to a medieval entertainer."
+let kind "Malapropism"
+let becomes "jester"
+
+test "Almost like a court gesture performing?" "Almost like a court jester performing?"
