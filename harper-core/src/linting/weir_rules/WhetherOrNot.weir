@@ -1,0 +1,10 @@
+expr main [weather, wether, wheather] or not
+let message "Use `whether` to introduce a choice between alternatives. `Weather` refers to atmospheric conditions."
+let description "Corrects `weather or not` (and similar misspellings) to `whether or not`."
+let becomes "whether or not"
+
+test "I don't know weather or not it will work." "I don't know whether or not it will work."
+test "She asked wether or not we were coming." "She asked whether or not we were coming."
+test "Weather or not we go depends on the schedule." "Whether or not we go depends on the schedule."
+test "I don't know whether or not it will work." "I don't know whether or not it will work."
+test "The weather is nice, or not." "The weather is nice, or not."
