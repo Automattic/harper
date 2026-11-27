@@ -1,0 +1,12 @@
+expr beforeWielded [be, eloquence, i, is, once, power, she, they, who]
+#expr beforeWieldedWith [are, been, they, was, were]
+
+expr afterWielded [as, at, considerable, global, great, his, in, it, power]
+#expr afterWieldedWith [both, care, one, skill, such, two]
+
+expr main <[(@beforeWielded yielded), (yielded @afterWielded)], yielded>
+
+let message "Are you confusing ‘wield’ and ‘yield’?"
+let description "Looks for ‘weild’ used where ‘yield’ is intended, or vice versa."
+let kind "Eggcorn"
+let becomes "wielded"

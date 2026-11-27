@@ -1,0 +1,11 @@
+#expr beforeWield [can, could, David, dual, inspector, lower, may, sergeant, they, upper, who, you]
+expr beforeWield [could, David, dual, inspector, lower, may, sergeant, they, upper, who, you]
+ 
+expr main <(@beforeWield yield), yield>
+
+let message "Are you confusing ‘wield’ (to hold or use) and ‘yield’ (to produce or give up)?"
+let description "Looks for ‘wield’ used where ‘yield’ is intended, or vice versa."
+let kind "Eggcorn"
+let becomes "wield"
+
+test "bad guys who yield weapons" "bad guys who wield weapons"
