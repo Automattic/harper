@@ -1,0 +1,35 @@
+expr main (for sell)
+
+let message "The standard phrase is `for sale`. `Sell` is the verb; the noun `sale` is required after `for`."
+let description "Corrects the common eggcorn `for sell` to the fixed idiom `for sale`."
+let kind "WordChoice"
+let becomes "for sale"
+
+# True positives
+
+test "This house is for sell." "This house is for sale."
+test "The car is for sell." "The car is for sale."
+test "Put the bike up for sell on the marketplace." "Put the bike up for sale on the marketplace."
+test "FOR SELL: vintage records." "FOR SALE: vintage records."
+test "is this jacket for sell?" "is this jacket for sale?"
+test "The boat was listed for sell last week." "The boat was listed for sale last week."
+test "FOR SELL!" "FOR SALE!"
+test "A sign read \"for sell\", but nobody bought." "A sign read \"for sale\", but nobody bought."
+test "These plots are for sell, cheap." "These plots are for sale, cheap."
+test "Everything here is for sell." "Everything here is for sale."
+test "FOR SELL" "FOR SALE"
+test "Looking for a dog for sell." "Looking for a dog for sale."
+test "is for sell, not for rent" "is for sale, not for rent"
+test "For sell: antique desk." "For sale: antique desk."
+test "For Sell" "For Sale"
+
+# The rule must not touch correct uses of "sale" or "sell"
+
+allows "This house is for sale."
+allows "I want to sell my house."
+allows "They sell cars here."
+allows "The sale ends on Friday."
+allows "The boat was for sale last week."
+allows "The car is for sale on the marketplace."
+allows "FOR SALE"
+allows "This tool is great for selling houses."
