@@ -401,4 +401,16 @@ mod tests {
         let md2 = md("esim");
         assert!(md2.orth_info.contains(OrthFlags::LOWER_CAMEL));
     }
+
+    #[test]
+    fn test_orthflags_titlecase_on_str() {
+        let go_str: &str = "Go";
+        assert!(orth_flags(go_str).contains(OrthFlags::TITLECASE));
+    }
+
+    #[test]
+    fn test_orthflags_allcaps_on_string() {
+        let go_string: String = "GO".to_string();
+        assert!(orth_flags(&go_string).contains(OrthFlags::ALLCAPS));
+    }
 }
