@@ -230,6 +230,7 @@ mod nobody;
 mod nominal_wants;
 mod nor_modal_pronoun;
 mod not_only_inversion;
+mod noun_and_noun_are;
 mod noun_verb_confusion;
 mod noun_verb_spelling;
 mod number_suffix_capitalization;
