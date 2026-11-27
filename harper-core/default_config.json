@@ -5376,6 +5376,13 @@
 						},
 						{
 							"Bool": {
+								"name": "InPractice",
+								"state": true,
+								"label": "In Practice"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Insensitive",
 								"state": true,
 								"label": "Insensitive"
