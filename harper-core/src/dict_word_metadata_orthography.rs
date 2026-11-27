@@ -1,4 +1,3 @@
-use crate::CharStringExt;
 use crate::char_ext::CharExt;
 use serde::{Deserialize, Serialize};
 
@@ -25,8 +24,6 @@ pub enum Orthography {
 }
 
 /// The underlying type used for OrthographyFlags.
-/// At the time of writing, this is currently a `u8`. If we want to define more than 8 orthographic
-/// properties in the future, we will need to switch this to a larger type.
 type OrthographyFlagsUnderlyingType = u16;
 
 bitflags::bitflags! {
@@ -67,7 +64,7 @@ impl OrthFlags {
     }
 
     /// Construct orthography flags for a given sequence of letters.
-    pub fn from_letters(letters: &[char]) -> Self {
+    pub fn from_letters(letters: impl IntoIterator<Item = char>) -> Self {
         let mut ortho_flags = Self::default();
         let mut all_lower = true;
         let mut all_upper = true;
@@ -76,11 +73,38 @@ impl OrthFlags {
         let mut saw_upper_after_first = false;
         let mut saw_lower_after_first = false;
         let mut is_first_char = true;
-        let mut upper_to_lower = false;
-        let mut lower_to_upper = false;
-        let letter_count = letters.iter().filter(|c| c.is_english_lingual()).count();
+        let mut letter_count = 0usize;
 
-        for &c in letters {
+        // Track Roman numeral candidacy in a single pass without heap allocation.
+        // Longest standard Roman numeral is 15 chars ("MMMDCCCLXXXVIII"), 16 handles up to 4 M's.
+        let mut roman_buf = ['\0'; 16];
+        let mut roman_len = 0usize;
+        let mut roman_first_upper: Option<bool> = None;
+        let mut could_be_roman = true;
+
+        for c in letters {
+            if could_be_roman {
+                let lower = c.to_ascii_lowercase();
+                let is_upper = c.is_uppercase();
+                let same_case = match roman_first_upper {
+                    Some(first_upper) => is_upper == first_upper,
+                    None => {
+                        roman_first_upper = Some(is_upper);
+                        true
+                    }
+                };
+
+                if same_case
+                    && matches!(lower, 'm' | 'd' | 'c' | 'l' | 'x' | 'v' | 'i')
+                    && roman_len < roman_buf.len()
+                {
+                    roman_buf[roman_len] = lower;
+                    roman_len += 1;
+                } else {
+                    could_be_roman = false;
+                }
+            }
+
             if c == ' ' {
                 ortho_flags |= Self::MULTIWORD;
                 continue;
@@ -100,16 +124,14 @@ impl OrthFlags {
                 continue;
             }
 
+            letter_count += 1;
+
             if c.is_lowercase() {
                 all_upper = false;
                 if is_first_char {
                     first_is_lower = true;
                 } else {
                     saw_lower_after_first = true;
-                    if upper_to_lower {
-                        lower_to_upper = true;
-                    }
-                    upper_to_lower = true;
                 }
             } else if c.is_uppercase() {
                 all_lower = false;
@@ -117,16 +139,10 @@ impl OrthFlags {
                     first_is_upper = true;
                 } else {
                     saw_upper_after_first = true;
-                    if lower_to_upper {
-                        upper_to_lower = true;
-                    }
-                    lower_to_upper = true;
                 }
             } else {
                 first_is_upper = false;
                 first_is_lower = false;
-                upper_to_lower = false;
-                lower_to_upper = false;
             }
             is_first_char = false;
         }
@@ -149,7 +165,10 @@ impl OrthFlags {
             }
         }
 
-        if looks_like_roman_numerals(letters) && is_really_roman_numerals(&letters.to_lower()) {
+        if could_be_roman
+            && roman_len > 0
+            && is_really_roman_numerals(roman_buf[..roman_len].iter().copied())
+        {
             ortho_flags |= Self::ROMAN_NUMERALS;
         }
 
@@ -157,28 +176,8 @@ impl OrthFlags {
     }
 }
 
-fn looks_like_roman_numerals(word: &[char]) -> bool {
-    let mut is_roman = false;
-    let first_char_upper;
-
-    if let Some((&first, rest)) = word.split_first()
-        && "mdclxvi".contains(first.to_ascii_lowercase())
-    {
-        first_char_upper = first.is_uppercase();
-
-        for &c in rest {
-            if !"mdclxvi".contains(c.to_ascii_lowercase()) || c.is_uppercase() != first_char_upper {
-                return false;
-            }
-        }
-        is_roman = true;
-    }
-    is_roman
-}
-
-fn is_really_roman_numerals(word: &[char]) -> bool {
-    let s: String = word.iter().collect();
-    let mut chars = s.chars().peekable();
+fn is_really_roman_numerals(word: impl IntoIterator<Item = char>) -> bool {
+    let mut chars = word.into_iter().peekable();
 
     let mut m_count = 0;
     while m_count < 4 && chars.peek() == Some(&'m') {
@@ -198,11 +197,7 @@ fn is_really_roman_numerals(word: &[char]) -> bool {
         return false;
     }
 
-    if chars.next().is_some() {
-        return false;
-    }
-
-    true
+    chars.next().is_none()
 }
 
 fn check_roman_group<I: Iterator<Item = char>>(
@@ -250,7 +245,7 @@ mod tests {
 
     fn orth_flags(s: &str) -> OrthFlags {
         let letters: CharString = s.chars().collect();
-        OrthFlags::from_letters(&letters)
+        OrthFlags::from_letters(letters)
     }
 
     #[test]

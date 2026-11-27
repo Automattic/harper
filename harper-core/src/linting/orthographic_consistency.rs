@@ -71,7 +71,7 @@ impl ExprLinter for OrthographicConsistency {
             return None;
         }
 
-        let cur_flags = OrthFlags::from_letters(chars);
+        let cur_flags = OrthFlags::from_letters(chars.iter().copied());
 
         if metadata.is_allcaps()
             && !cur_flags.contains(OrthFlags::ALLCAPS)
@@ -97,7 +97,7 @@ impl ExprLinter for OrthographicConsistency {
             && chars[1].is_ascii_uppercase()
             && chars[2..].iter().all(char::is_ascii_lowercase)
             && let Some(canonical) = self.dict.get_correct_capitalization_of(chars)
-            && OrthFlags::from_letters(canonical)
+            && OrthFlags::from_letters(canonical.iter().copied())
                 .intersects(OrthFlags::LOWERCASE | OrthFlags::TITLECASE)
         {
             let mut corrected = chars.to_vec();
