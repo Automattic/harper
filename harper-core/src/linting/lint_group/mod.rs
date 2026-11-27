@@ -176,6 +176,7 @@ use super::left_right_hand::LeftRightHand;
 use super::less_worse::LessWorse;
 use super::let_to_do::LetToDo;
 use super::lets_confusion::LetsConfusion;
+use super::life_saver::LifeSaver;
 use super::likewise::Likewise;
 use super::little_known::LittleKnown;
 use super::little_to_no::LittleToNo;
@@ -827,6 +828,7 @@ impl LintGroup {
         insert_expr_rule!(LessWorse);
         insert_expr_rule!(LetToDo);
         insert_struct_rule!(LetsConfusion);
+        insert_expr_rule!(LifeSaver);
         insert_expr_rule!(Likewise);
         insert_struct_rule!(LittleKnown);
         insert_struct_rule!(LittleToNo);

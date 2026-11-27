@@ -2814,6 +2814,13 @@
 						},
 						{
 							"Bool": {
+								"name": "LifeSaver",
+								"state": true,
+								"label": "Life Saver"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Lookalike",
 								"state": true,
 								"label": "Lookalike"
