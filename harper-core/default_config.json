@@ -4599,6 +4599,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AverseVsAvert",
+								"state": true,
+								"label": "Averse vs Avert"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AvoidCurses",
 								"state": true,
 								"label": "Avoid Curses"

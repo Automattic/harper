@@ -8,6 +8,7 @@
 use crate::{Document, LSend, Span, Token};
 
 mod any_pattern;
+mod contraction_of_be;
 mod derived_from;
 mod implies_quantity;
 mod indefinite_article;
@@ -24,6 +25,7 @@ mod word;
 mod word_set;
 
 pub use any_pattern::AnyPattern;
+pub use contraction_of_be::ContractionOfBe;
 pub use derived_from::DerivedFrom;
 pub use implies_quantity::ImpliesQuantity;
 pub use indefinite_article::IndefiniteArticle;
