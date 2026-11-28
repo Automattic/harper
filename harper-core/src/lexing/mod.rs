@@ -64,6 +64,7 @@ pub fn lex_weir_token(source: &[char]) -> FoundToken {
 
 pub fn lex_english_token(source: &[char]) -> FoundToken {
     [
+        lex_html_tag, // Before lex_punctuation, which would match the opening <
         lex_regexish,
         lex_punctuation,
         lex_tabs,
@@ -144,6 +145,83 @@ fn lex_number(source: &[char]) -> Option<FoundToken> {
     }
 
     None
+}
+
+/// Lex a single HTML-like tag, such as `<s>`, `</s>`, `<br/>` or `<a href="x">`.
+/// The tag name is not English, so it should not be linted.
+fn lex_html_tag(source: &[char]) -> Option<FoundToken> {
+    if source.first() != Some(&'<') {
+        return None;
+    }
+
+    let mut i = 1;
+    if source.get(i) == Some(&'/') {
+        i += 1;
+    }
+
+    if !source.get(i)?.is_ascii_alphabetic() {
+        return None;
+    }
+    i = skip_while(source, i, |c| c.is_ascii_alphanumeric() || c == '-');
+
+    loop {
+        let after_space = skip_while(source, i, |c| c == ' ' || c == '\t');
+
+        match source.get(after_space)? {
+            '>' => return Some(html_tag_token(after_space)),
+            '/' if source.get(after_space + 1) == Some(&'>') => {
+                return Some(html_tag_token(after_space + 1));
+            }
+            _ if after_space == i => return None,
+            _ => i = lex_html_attribute(source, after_space)?,
+        }
+    }
+}
+
+/// Lex one `name=value` attribute and return the index after it.
+///
+/// shortcut: bare attributes like `disabled` are not accepted, so text such as
+/// `x<limit and y >0` is not read as a tag. Accept them if real markup needs it.
+fn lex_html_attribute(source: &[char], start: usize) -> Option<usize> {
+    let is_name_char = |c: char| c.is_ascii_alphanumeric() || matches!(c, '-' | '_' | ':' | '.');
+
+    if !source.get(start)?.is_ascii_alphabetic() {
+        return None;
+    }
+    let mut i = skip_while(source, start, is_name_char);
+
+    if source.get(i) != Some(&'=') {
+        return None;
+    }
+    i += 1;
+
+    match *source.get(i)? {
+        quote @ ('"' | '\'') => {
+            let close = skip_while(source, i + 1, |c| c != quote && c != '\n');
+            (source.get(close) == Some(&quote)).then_some(close + 1)
+        }
+        _ => {
+            let end = skip_while(source, i, |c| {
+                !c.is_whitespace() && !matches!(c, '"' | '\'' | '<' | '>' | '=' | '`')
+            });
+            (end > i).then_some(end)
+        }
+    }
+}
+
+fn skip_while(source: &[char], start: usize, pred: impl Fn(char) -> bool) -> usize {
+    start
+        + source[start.min(source.len())..]
+            .iter()
+            .take_while(|c| pred(**c))
+            .count()
+}
+
+fn html_tag_token(close_index: usize) -> FoundToken {
+    FoundToken {
+        next_index: close_index + 1,
+        token: TokenKind::Unlintable,
+    }
 }
 
 // Often in comments we mention partial- or pseudo- regexes. Here's an example from Ghidra:
@@ -360,10 +438,104 @@ mod tests {
 
     use super::lex_english_token;
     use super::lex_hex_number;
+    use super::lex_html_tag;
     use super::lex_long_decade;
     use super::lex_number;
     use super::lex_word;
     use super::{FoundToken, TokenKind};
+
+    fn html_tag_len(s: &str) -> Option<usize> {
+        let source: Vec<_> = s.chars().collect();
+        lex_html_tag(&source).map(|found| {
+            assert_eq!(found.token, TokenKind::Unlintable);
+            found.next_index
+        })
+    }
+
+    #[test]
+    fn lexes_html_open_tag() {
+        assert_eq!(html_tag_len("<s> He even"), Some(3));
+    }
+
+    #[test]
+    fn lexes_html_close_tag() {
+        assert_eq!(html_tag_len("</s> world"), Some(4));
+    }
+
+    #[test]
+    fn lexes_html_tag_with_attributes() {
+        assert_eq!(html_tag_len(r#"<a href="x" class="y">link"#), Some(22));
+    }
+
+    #[test]
+    fn lexes_html_self_closing_tag() {
+        assert_eq!(html_tag_len("<br/>"), Some(5));
+        assert_eq!(html_tag_len("<br />"), Some(6));
+    }
+
+    #[test]
+    fn lexes_html_custom_element() {
+        assert_eq!(html_tag_len("<my-tag>"), Some(8));
+    }
+
+    #[test]
+    fn does_not_lex_less_than_comparison() {
+        assert_eq!(html_tag_len("< b > c"), None);
+        assert_eq!(html_tag_len("<3 you"), None);
+        assert_eq!(html_tag_len("<- arrow"), None);
+    }
+
+    #[test]
+    fn does_not_lex_unclosed_tag() {
+        assert_eq!(html_tag_len("<s and more text"), None);
+    }
+
+    #[test]
+    fn does_not_lex_tag_across_lines() {
+        assert_eq!(html_tag_len("<a href\n=\"x\">"), None);
+    }
+
+    #[test]
+    fn lexes_html_quoted_attribute_with_angle_brackets() {
+        assert_eq!(html_tag_len(r#"<a title="x > y">"#), Some(17));
+        assert_eq!(html_tag_len(r#"<a title='x < y'>"#), Some(17));
+    }
+
+    #[test]
+    fn lexes_html_unquoted_attribute() {
+        assert_eq!(html_tag_len("<td colspan=2>"), Some(14));
+    }
+
+    #[test]
+    fn does_not_lex_comparison_spanning_prose() {
+        assert_eq!(
+            html_tag_len("<limit and the result is teh expected value >0"),
+            None
+        );
+    }
+
+    #[test]
+    fn does_not_lex_unterminated_quoted_attribute() {
+        assert_eq!(html_tag_len(r#"<a href="x>"#), None);
+    }
+
+    #[test]
+    fn does_not_lex_nested_angle_brackets() {
+        assert_eq!(html_tag_len("<a <b>"), None);
+    }
+
+    #[test]
+    fn english_lexer_skips_html_tag_names() {
+        let source: Vec<_> = "<s> He even</s> looked.".chars().collect();
+        let first = lex_english_token(&source);
+        assert_eq!(
+            first,
+            FoundToken {
+                next_index: 3,
+                token: TokenKind::Unlintable
+            }
+        );
+    }
 
     // test various kinds of number
     #[test]
