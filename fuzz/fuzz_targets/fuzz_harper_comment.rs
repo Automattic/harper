@@ -7,7 +7,7 @@ use libfuzzer_sys::fuzz_target;
 #[derive(Debug)]
 struct Language(String);
 
-const LANGUAGES: [&str; 37] = [
+const LANGUAGES: [&str; 38] = [
     "cmake",
     "cpp",
     "csharp",
@@ -25,6 +25,7 @@ const LANGUAGES: [&str; 37] = [
     "nix",
     "php",
     "powershell",
+    "proto",
     "python",
     "ruby",
     "rust",

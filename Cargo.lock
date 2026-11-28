@@ -2666,6 +2666,7 @@ dependencies = [
  "tree-sitter-nix",
  "tree-sitter-php",
  "tree-sitter-powershell",
+ "tree-sitter-proto",
  "tree-sitter-r",
  "tree-sitter-ruby",
  "tree-sitter-rust",
@@ -6004,6 +6005,16 @@ name = "tree-sitter-powershell"
 version = "0.26.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3faf304d44b9ddd4a7d97804bb8de7daf564336dd5a526dc6de5b39238243022"
+dependencies = [
+ "cc",
+ "tree-sitter-language",
+]
+
+[[package]]
+name = "tree-sitter-proto"
+version = "0.6.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "968b11baece8316bb26363c0c2c54900c35b71d4e85e5617dda2687bc4368c2d"
 dependencies = [
  "cc",
  "tree-sitter-language",

@@ -74,6 +74,8 @@ create_test!(complex_groovy_strings_regex.groovy, 1);
 create_test!(issue_1097.lua, 0);
 create_test!(basic.clj, 12);
 create_test!(mean.r, 1);
+create_test!(clean.proto, 0);
+create_test!(dirty.proto, 3);
 create_test!(clean.tf, 0);
 create_test!(dirty.tf, 4);
 create_test!(clean.hcl, 0);
