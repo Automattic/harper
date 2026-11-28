@@ -1,0 +1,14 @@
+expr main <[([single, double][-, ( )]backlash), (backlash [character, characters, key]), ([escaped, escaping] backlash)], backlash>
+
+let message "Did you mean `backslash`?"
+let description "Corrects `backlash` to `backslash` when it looks like a typo."
+let kind "Typo"
+let becomes "backslash"
+
+test "Exporting adds backlash characters after each row" "Exporting adds backslash characters after each row"
+test "Backlash character in the prompt needs to be escaped" "Backslash character in the prompt needs to be escaped"
+test "It was written as a double backslash but it renders as a single backlash." "It was written as a double backslash but it renders as a single backslash."
+test "string representation of a JSON with escaped backlash is incorrect" "string representation of a JSON with escaped backslash is incorrect"
+test "which does not differentiate between the escaping backlash and the literal character" "which does not differentiate between the escaping backslash and the literal character"
+test "Mapping the yen/backlash key didn't seem to work" "Mapping the yen/backslash key didn't seem to work"
+test "note the double backlash only on the first backslash" "note the double backslash only on the first backslash"

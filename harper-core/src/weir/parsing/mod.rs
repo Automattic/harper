@@ -46,8 +46,12 @@ fn parse_collection<T>(
     let mut cursor = 0;
 
     while cursor < tokens.len() {
-        while tokens[cursor].kind.is_space() {
+        while cursor < tokens.len() && tokens[cursor].kind.is_whitespace() {
             cursor += 1;
+        }
+
+        if cursor >= tokens.len() {
+            break;
         }
 
         let new_child = el_parser(&tokens[cursor..], source)?;
@@ -55,17 +59,17 @@ fn parse_collection<T>(
 
         cursor += new_child.next_idx;
 
-        while cursor != tokens.len() && tokens[cursor].kind.is_space() {
+        while cursor != tokens.len() && tokens[cursor].kind.is_whitespace() {
             cursor += 1;
         }
 
         if cursor != tokens.len() && !tokens[cursor].kind.is_comma() {
-            return Err(Error::ExpectedComma);
+            return Err(Error::ExpectedComma.located(tokens[cursor].span.start, source));
         }
 
         cursor += 1;
 
-        if cursor < tokens.len() && tokens[cursor].kind.is_space() {
+        while cursor < tokens.len() && tokens[cursor].kind.is_whitespace() {
             cursor += 1;
         }
     }

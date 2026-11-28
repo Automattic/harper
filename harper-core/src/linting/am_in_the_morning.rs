@@ -12,8 +12,8 @@ pub struct AmInTheMorning {
 
 impl Default for AmInTheMorning {
     fn default() -> Self {
-        let am = WordSet::new(&["am", "a.m."]);
-        let pm = WordSet::new(&["pm", "p.m."]);
+        let am = WordSet::new(["am", "a.m."]);
+        let pm = WordSet::new(["pm", "p.m."]);
 
         let maybe_ws_am = LongestMatchOf::new(vec![
             Box::new(SequenceExpr::with(am.clone())),
@@ -24,7 +24,7 @@ impl Default for AmInTheMorning {
             Box::new(SequenceExpr::whitespace().then(pm)),
         ]);
 
-        let ws_in_periods = SequenceExpr::fixed_phrase(" in the ").then_word_set(&[
+        let ws_in_periods = SequenceExpr::fixed_phrase(" in the ").then_word_set([
             "morning",
             "afternoon",
             "evening",

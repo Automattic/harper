@@ -1,9 +1,8 @@
-use crate::linting::expr_linter::Chunk;
 use crate::{
-    Token,
+    Token, TokenKind,
     expr::{All, Expr, FirstMatchOf, SequenceExpr},
     irregular_verbs::IrregularVerbs,
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
     patterns::{InflectionOfBe, WordSet},
 };
 
@@ -20,22 +19,25 @@ impl Default for SimplePastToPastParticiple {
                 Box::new(
                     SequenceExpr::any_of([
                         // for perfect tenses
-                        Box::new(WordSet::new(&["have", "had", "has", "having"])) as Box<dyn Expr>,
+                        Box::new(WordSet::new(["have", "had", "has", "having"])) as Box<dyn Expr>,
                         // for passive voice
                         Box::new(InflectionOfBe::default()),
                         // pronoun + have contractions
-                        Box::new(WordSet::new(&[
+                        Box::new(WordSet::new([
                             "I've", "I'd", "we've", "we'd", "you've", "you'd", "he's", "he'd",
                             "she's", "she'd", "it's", "it'd", "they've", "they'd",
                         ])),
                         // pronoun + have contractions missing apostrophes
-                        Box::new(WordSet::new(&[
+                        Box::new(WordSet::new([
                             "Ive", "Id", "weve", "wed", "youve", "youd", "hes", "hed", "shes",
                             "shed", "its", "itd", "theyve", "theyd",
                         ])),
                     ])
                     .t_ws()
-                    .then_verb_simple_past_form(),
+                    .then_kind_is_but_is_not(
+                        TokenKind::is_verb_simple_past_form,
+                        TokenKind::is_verb_past_participle_form,
+                    ),
                 ),
                 // negative: exceptions
                 Box::new(SequenceExpr::unless(FirstMatchOf::new(vec![
@@ -47,7 +49,7 @@ impl Default for SimplePastToPastParticiple {
                     Box::new(
                         SequenceExpr::aco("id")
                             .t_any()
-                            .then_word_set(&["came", "did", "went"]),
+                            .then_word_set(["came", "did", "went"]),
                     ),
                 ]))),
             ]),
@@ -526,5 +528,18 @@ mod tests {
     #[test]
     fn dont_flag_has_lost() {
         assert_no_lints("He has lost his keys.", test_linter());
+    }
+
+    #[test]
+    fn alice() {
+        assert_no_lints("it had struck her foot!", test_linter());
+    }
+
+    #[test]
+    fn gatsby() {
+        assert_no_lints(
+            "the tuning-fork that had been struck upon a star",
+            test_linter(),
+        );
     }
 }

@@ -1,0 +1,8 @@
+expr main <(a same [way, fashion]), a>
+
+let message "`Same way` requires the definite article `the` instead of the indefinite article `a`."
+let description "`Corrects `a same way` to `the same way`."
+let kind "Usage"
+let becomes "the"
+
+test "Translate two different strings in a same way." "Translate two different strings in the same way."

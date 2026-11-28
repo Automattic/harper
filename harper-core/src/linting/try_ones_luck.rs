@@ -11,7 +11,7 @@ pub struct TryOnesLuck {
 impl Default for TryOnesLuck {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["try", "tried", "tries", "trying"])
+            expr: SequenceExpr::word_set(["try", "tried", "tries", "trying"])
                 .t_ws()
                 .t_aco("out")
                 .t_ws()
@@ -30,7 +30,7 @@ impl ExprLinter for TryOnesLuck {
     }
 
     fn description(&self) -> &str {
-        "Corrects `try out one’s luck` to `try one’s luck`"
+        "Corrects `try out one’s luck` to `try one’s luck`."
     }
 
     fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
@@ -38,7 +38,7 @@ impl ExprLinter for TryOnesLuck {
         Some(Lint {
             lint_kind: LintKind::Usage,
             span: ws_out_span,
-            message: "`Try out` is a different idiom than `try one's luck`".to_owned(),
+            message: "`Try out` is a different idiom than `try one's luck`.".to_owned(),
             suggestions: vec![Suggestion::Remove],
             ..Default::default()
         })

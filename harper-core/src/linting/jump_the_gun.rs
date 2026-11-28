@@ -11,11 +11,11 @@ pub struct JumpTheGun {
 impl Default for JumpTheGun {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["jump", "jumped", "jumping", "jumps"])
+            expr: SequenceExpr::word_set(["jump", "jumped", "jumping", "jumps"])
                 .t_ws()
-                .t_set(&["a", "an", "the"])
+                .t_set(["a", "an", "the"])
                 .t_ws()
-                .t_set(&["gun", "guns"])
+                .t_set(["gun", "guns"])
                 .but_not(
                     SequenceExpr::anything()
                         .t_any()
@@ -40,7 +40,7 @@ impl ExprLinter for JumpTheGun {
                 "the gun",
                 det_ws_gun_span.get_content(source),
             )],
-            message: "The correct idiom is `jump the gun`".to_owned(),
+            message: "The correct idiom is `jump the gun`.".to_owned(),
             ..Default::default()
         })
     }

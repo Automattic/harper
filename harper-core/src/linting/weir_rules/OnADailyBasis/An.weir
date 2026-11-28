@@ -1,0 +1,18 @@
+# These modifiers take "an" before "basis".
+expr modifier [hourly, annual]
+expr main <(on @modifier basis), on>
+
+let message "The definite article `a`/`an` is missing."
+let description "Corrects `on daily/weekly/etc. basis` to `on a daily/weekly/etc. basis`."
+let kind "Usage"
+let becomes "on an"
+
+test "on hourly basis" "on an hourly basis"
+test "on annual basis" "on an annual basis"
+test "A Big Query SQL request to monitor and explain GA4 metrics on hourly basis." "A Big Query SQL request to monitor and explain GA4 metrics on an hourly basis."
+test "Schedule the campain for two weeks and to automatically repeat on annual basis." "Schedule the campain for two weeks and to automatically repeat on an annual basis."
+test "On annual basis, they send an update." "On an annual basis, they send an update."
+allows "on an hourly basis"
+allows "on an annual basis"
+allows "We check in on an hourly basis."
+allows "The team reports on an annual basis."

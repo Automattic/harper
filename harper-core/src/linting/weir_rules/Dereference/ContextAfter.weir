@@ -1,0 +1,9 @@
+expr main <(deference [operation, operator, pointer]), deference>
+let message "Did you mean `dereference`?"
+let description "Corrects `deference` to `dereference`."
+let kind "Typo"
+let becomes "dereference"
+
+test "as efficient as one pointer arithmetic and deference operation" "as efficient as one pointer arithmetic and dereference operation"
+test "Value-at or Deference operator is used to access the variable to which a pointer is pointing." "Value-at or Dereference operator is used to access the variable to which a pointer is pointing."
+test "Fix to RC2 to not deference pointer before ARGCHK" "Fix to RC2 to not dereference pointer before ARGCHK"

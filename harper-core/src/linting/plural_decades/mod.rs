@@ -33,7 +33,7 @@ impl ExprLinter for PluralDecades {
     }
 
     fn description(&self) -> &str {
-        "Flags plural decades erroneously using an apostrophe before the `s`"
+        "Flags plural decades erroneously using an apostrophe before the `s`."
     }
 
     fn match_to_lint_with_context(

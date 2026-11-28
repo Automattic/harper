@@ -1,0 +1,8 @@
+expr main (lot's on)
+
+let message "Are you confusing `lots` and `let's`? There is no apostrophe in `lots`."
+let description "Corrects `lot's on` to `lots on`."
+let kind "Punctuation"
+let becomes "lots on"
+
+test "I'm finding lot's on how to do this once the array is created" "I'm finding lots on how to do this once the array is created"

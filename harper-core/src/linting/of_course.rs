@@ -18,12 +18,12 @@ impl Default for OfCourse {
         let curse_or_corse = SequenceExpr::default()
             .t_aco("of")
             .then_whitespace()
-            .then(WordSet::new(&["curse", "corse"]));
+            .then(WordSet::new(["curse", "corse"]));
 
         let off_course_or_coarse = SequenceExpr::default()
             .t_aco("off")
             .then_whitespace()
-            .then(WordSet::new(&["course", "coarse"]));
+            .then(WordSet::new(["course", "coarse"]));
 
         let expr = curse_or_corse
             .or_longest(off_course_or_coarse)
@@ -33,7 +33,7 @@ impl Default for OfCourse {
                     .then_whitespace()
                     .t_aco("course"),
             )
-            .or_longest(WordSet::new(&["ofcourse"]));
+            .or_longest(WordSet::new(["ofcourse"]));
 
         Self { expr }
     }

@@ -1,6 +1,6 @@
 use harper_core::{
-    linting::{FlatConfig, Lint, LintKind},
     Document, FatStringToken,
+    linting::{FlatConfig, Lint, LintKind},
 };
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;

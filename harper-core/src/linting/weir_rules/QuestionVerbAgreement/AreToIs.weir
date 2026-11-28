@@ -1,0 +1,41 @@
+expr wh [what, where, when, why, how, who, which]
+expr subj [he, she, it]
+# "But why are it and twitter the only whitelisted entries?" has a compound subject, which takes "are".
+expr after ![NOUN, PROPN, and, or]
+expr time [yesterday, today, tonight, tomorrow, now, then, there, here, last]
+expr main <[(@wh are @subj @time), (@wh are @subj @after), (@wh are @subj?), (@wh are @subj.), (are @subj PROG)], are>
+
+let message "The verb should agree with the subject: `is`."
+let description "Corrects `are` before `he`, `she` or `it` in questions, like `Where are it?`"
+let kind "Agreement"
+let scope "Sentence"
+let becomes "is"
+let strategy "MatchCase"
+
+# real sentences from GitHub issues and Hacker News
+test "Where are it in this new version?" "Where is it in this new version?"
+test "Where are it trying to get them from?" "Where is it trying to get them from?"
+test "Why are it looking for them?" "Why is it looking for them?"
+test "i saw it has permission,so where are it?" "i saw it has permission,so where is it?"
+test "Are it working?" "Is it working?"
+test "Why are it now the car companies who decide how it works?" "Why is it now the car companies who decide how it works?"
+# made-up sentences
+test "Where are she today?" "Where is she today?"
+test "What are he doing?" "What is he doing?"
+test "Why are she so late?" "Why is she so late?"
+# harder cases that must still be caught
+test "WHAT ARE HE SAYING?" "WHAT IS HE SAYING?"
+
+# correct text
+allows "What is he doing?"
+allows "Where are they now?"
+allows "What are his plans?"
+# real look-alikes that must not be flagged (Hacker News)
+allows "But why are it and twitter the only whitelisted entries?"
+allows "What are it's limitations?"
+# made-up look-alikes
+allows "Who are she and her team?"
+allows "Where are he and Ana?"
+allows "The odds are he will say yes."
+allows "Chances are it is fine."
+allows "Where are its docs?"

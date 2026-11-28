@@ -12,7 +12,7 @@ pub struct RedundantAdditiveAdverbs {
 
 impl Default for RedundantAdditiveAdverbs {
     fn default() -> Self {
-        let also_too = WordSet::new(&["also", "too"]);
+        let also_too = WordSet::new(["also", "too"]);
         let as_well = FixedPhrase::from_phrase("as well");
 
         let additive_adverb = Lrc::new(FirstMatchOf::new([

@@ -11,7 +11,7 @@ pub struct RiseTheRanks {
 impl Default for RiseTheRanks {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&[
+            expr: SequenceExpr::word_set([
                 // legit forms of the legit verb "rise"
                 "rise", "risen", "rising", "rose",
                 // wrong forms of the legit verb "rise"
@@ -39,7 +39,7 @@ impl ExprLinter for RiseTheRanks {
     type Unit = Chunk;
 
     fn description(&self) -> &str {
-        "Corrects the nonstandard phrase `rise the ranks` to the standard `rise through the ranks` or `rise from the ranks`"
+        "Corrects the nonstandard phrase `rise the ranks` to the standard `rise through the ranks` or `rise from the ranks`."
     }
 
     fn expr(&self) -> &dyn Expr {

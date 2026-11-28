@@ -110,7 +110,6 @@ test('Lint keys can be enabled, then set to default.', async () => {
 	expect(settings.lintSettings.RepeatedWords).toBe(null);
 });
 
-// packages/obsidian-plugin/src/State.test.ts (use ref 5173e96f5c9f6fea80c2fabf7c2940672090ec5f)
 test('Lint settings and descriptions have the same keys', async () => {
 	const state = createEphemeralState();
 
@@ -275,4 +274,19 @@ test('can overwrite dictionary words in settings', async () => {
 	settings = await state.getSettings();
 
 	expect(settings.userDictionary).toStrictEqual([]);
+});
+
+test('Settings are only saved when asked to.', async () => {
+	let saves = 0;
+	const state = new State(
+		(_) => {
+			saves++;
+			return Promise.resolve();
+		},
+		() => {},
+	);
+	await state.initializeFromSettings(null, false);
+	expect(saves).toBe(0);
+	await state.initializeFromSettings(null);
+	expect(saves).toBe(1);
 });

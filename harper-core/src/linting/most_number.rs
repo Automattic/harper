@@ -19,7 +19,7 @@ impl Default for MostNumber {
                     SequenceExpr::default()
                         .t_aco("most")
                         .t_ws()
-                        .then_word_set(&["amount", "number"]),
+                        .then_word_set(["amount", "number"]),
                 ),
                 // Context pattern
                 Box::new(
@@ -71,7 +71,7 @@ impl ExprLinter for MostNumber {
     }
 
     fn description(&self) -> &str {
-        "Corrects `most number` and `most amount`"
+        "Corrects `most number` and `most amount`."
     }
 }
 

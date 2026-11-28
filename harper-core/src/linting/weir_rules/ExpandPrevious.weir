@@ -1,6 +1,6 @@
 expr main (prev)
 
-let message "Use `previous` instead of `prev`"
+let message "Use `previous` instead of `prev`."
 let description "Expands the abbreviation `prev` to the full word `previous` for clarity."
 let kind "Style"
 let becomes "previous"

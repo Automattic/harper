@@ -31,9 +31,9 @@ impl BeAdjectiveLinter {
                         SequenceExpr::default()
                             .then_subject_pronoun()
                             .t_ws()
-                            .t_set(&["am", "are", "is", "was", "were"]),
+                            .t_set(["am", "are", "is", "was", "were"]),
                     ) as Box<dyn Expr>,
-                    Box::new(WordSet::new(&[
+                    Box::new(WordSet::new([
                         // Correct contractions
                         "i'm", "we're", "you're", "he's", "she's", "they're",
                         // Incorrect contractions missing their apostrophes that should not cause problems

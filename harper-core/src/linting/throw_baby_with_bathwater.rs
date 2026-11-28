@@ -16,7 +16,7 @@ impl Default for ThrowBabyWithBathwater {
         let away_sp = Lrc::new(SequenceExpr::word_seq(&["away"]).t_ws());
 
         Self {
-            expr: SequenceExpr::word_set(&[
+            expr: SequenceExpr::word_set([
                 // Correct spellings
                 "throw", "threw", "thrown", "throwing", "throws",
                 // Tolerate common misspelling, leaving it for its own linter to correct
@@ -102,7 +102,7 @@ impl ExprLinter for ThrowBabyWithBathwater {
     }
 
     fn description(&self) -> &str {
-        "Corrects wrong or nonstandard variants of the idiom 'to throw the baby out with the bathwater'"
+        "Corrects wrong or nonstandard variants of the idiom 'to throw the baby out with the bathwater'."
     }
 }
 

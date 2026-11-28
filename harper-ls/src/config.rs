@@ -79,6 +79,9 @@ pub struct Config {
     /// Above this limit, the file will not be linted.
     pub max_file_length: usize,
     pub exclude_patterns: GlobSet,
+    /// Delay in milliseconds after typing stops before diagnostics are published.
+    /// Set to 0 to publish diagnostics immediately.
+    pub diagnostic_delay_ms: u64,
 }
 
 impl Config {
@@ -147,9 +150,9 @@ impl Config {
 
         if let Some(v) = value.get("statsPath") {
             if let Value::String(path) = v {
-                base.file_dict_path = path.try_resolve_in(workspace_root)?.to_path_buf();
+                base.stats_path = path.try_resolve_in(workspace_root)?.to_path_buf();
             } else {
-                bail!("fileDict path must be a string.");
+                bail!("statsPath must be a string.");
             }
         }
 
@@ -204,6 +207,10 @@ impl Config {
             }
         }
 
+        if let Some(v) = value.get("diagnosticDelayMs") {
+            base.diagnostic_delay_ms = serde_json::from_value(v.clone())?;
+        }
+
         Ok(base)
     }
 }
@@ -226,6 +233,57 @@ impl Default for Config {
             dialect: Dialect::American,
             max_file_length: 120_000,
             exclude_patterns: GlobSet::empty(),
+            diagnostic_delay_ms: 0,
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use serde_json::json;
+
+    use super::Config;
+
+    #[test]
+    fn parses_diagnostic_delay() {
+        let config = Config::from_lsp_config(
+            std::path::Path::new("."),
+            json!({
+                "harper-ls": {
+                    "diagnosticDelayMs": 750
+                }
+            }),
+        )
+        .unwrap();
+
+        assert_eq!(config.diagnostic_delay_ms, 750);
+    }
+
+    #[test]
+    fn defaults_diagnostic_delay_to_zero() {
+        let config = Config::default();
+
+        assert_eq!(config.diagnostic_delay_ms, 0);
+    }
+
+    #[test]
+    fn parses_stats_path_without_touching_file_dict_path() {
+        let config = Config::from_lsp_config(
+            std::path::Path::new("."),
+            json!({
+                "harper-ls": {
+                    "statsPath": ".harper-stats.txt"
+                }
+            }),
+        )
+        .unwrap();
+
+        assert!(config.stats_path.ends_with(".harper-stats.txt"));
+        assert!(
+            config
+                .file_dict_path
+                .ends_with("harper-ls/file_dictionaries/"),
+            "file dictionary path should keep its default value"
+        );
     }
 }

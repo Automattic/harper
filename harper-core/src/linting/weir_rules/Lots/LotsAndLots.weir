@@ -1,0 +1,8 @@
+expr main [(lot's and lot's), (lot's and lots), (lots and lot's)]
+
+let message "Are you confusing `lots` and `let's`? There is no apostrophe in `lots`."
+let description "Corrects `lot's and lot's` to `lots and lots`."
+let kind "Punctuation"
+let becomes "lots and lots"
+
+test "and repeat the 2 and 3 lot's and lot's of times" "and repeat the 2 and 3 lots and lots of times"

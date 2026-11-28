@@ -1,6 +1,6 @@
 expr main pref
 
-let message "Use `preference` instead of `pref`"
+let message "Use `preference` instead of `pref`."
 let description "Expands the abbreviation `pref` to the full word `preference` for clarity."
 let kind "Style"
 let becomes "preference"

@@ -12,17 +12,17 @@ pub struct ThisTypeOfThing {
 impl Default for ThisTypeOfThing {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["this", "these", "that", "those"])
+            expr: SequenceExpr::word_set(["this", "these", "that", "those"])
                 .t_ws()
                 .then(
-                    SequenceExpr::word_set(&["kind", "kinds", "sort", "sorts", "type", "types"])
+                    SequenceExpr::word_set(["kind", "kinds", "sort", "sorts", "type", "types"])
                         .t_ws(),
                 )
                 .t_aco("of")
                 .t_ws()
                 .then_any_of([
                     // "thing" is common in this construction and won't be part of a compound noun.
-                    Box::new(WordSet::new(&["thing", "things"])) as Box<dyn Expr>,
+                    Box::new(WordSet::new(["thing", "things"])) as Box<dyn Expr>,
                     // Other singular nouns may be part of hard-to-determine compound nouns, but plural nouns won't.
                     Box::new(
                         SequenceExpr::default()
@@ -41,7 +41,7 @@ impl ExprLinter for ThisTypeOfThing {
     }
 
     fn description(&self) -> &str {
-        "Checks that the parts of `this/these type(s) of thing(s)` agree in grammatical number"
+        "Checks that the parts of `this/these type(s) of thing(s)` agree in grammatical number."
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

@@ -12,7 +12,7 @@ pub struct VeryUnique {
 impl Default for VeryUnique {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&[
+            expr: SequenceExpr::word_set([
                 "fairly", "pretty", "rather", "quite", "somewhat", "very",
             ])
             .t_ws()

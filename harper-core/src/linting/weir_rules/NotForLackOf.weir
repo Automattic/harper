@@ -1,0 +1,18 @@
+expr main (not without a lack of)
+
+let message "This is a confusing double negative. The idiom you're looking for is `not for lack of`."
+let description "Replaces `not without a lack of` with `not for lack of`."
+let kind "Usage"
+let becomes "not for lack of"
+
+test "... even harder to implement, and that’s not without a lack of trying!" "... even harder to implement, and that’s not for lack of trying!"
+test "I'm sorry, I am leaving, but it is not without a lack of trying, though." "I'm sorry, I am leaving, but it is not for lack of trying, though."
+test "I am without a Software Engineering job, though, not without a lack of trying." "I am without a Software Engineering job, though, not for lack of trying."
+test "In 2025, sadly we had no kittens, not without a lack of trying." "In 2025, sadly we had no kittens, not for lack of trying."
+test "Not without a lack of fans, everyone from the Barbie director Greta Gerwig to the Safdie brothers" "Not for lack of fans, everyone from the Barbie director Greta Gerwig to the Safdie brothers"
+test "Not without a lack of trying, but a 6pm start time would just be pushing it and the track isn't cooperating the way we need." "Not for lack of trying, but a 6pm start time would just be pushing it and the track isn't cooperating the way we need."
+test "We don't really understand why or how she ticks in the films and it's not without a lack of trying from the charismatic Shailene Woodley." "We don't really understand why or how she ticks in the films and it's not for lack of trying from the charismatic Shailene Woodley."
+test "Not without a lack of ideas and cool stop motion, miniatures, and matte paintings, but maybe someone should've told him to pick idk, two ideas" "Not for lack of ideas and cool stop motion, miniatures, and matte paintings, but maybe someone should've told him to pick idk, two ideas"
+
+# Known edge case that fails. Left here for future contributors who might want to tackle it.
+# allows "as my father would have said, \“they were not without a lack of couth.\”"

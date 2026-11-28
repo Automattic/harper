@@ -1,0 +1,8 @@
+expr main (way with which)
+
+let message "Change `way with which` to `way`."
+let description "Suggests removing the redundant `with which` from `way with which`."
+let kind "Redundancy"
+let becomes "way"
+
+test "maybe eventually with all of that context, uh they'll have a way with which to solve the problem" "maybe eventually with all of that context, uh they'll have a way to solve the problem"

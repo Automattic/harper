@@ -1,6 +1,6 @@
 expr main (thru)
 
-let message "Use `thru` instead of `through`"
+let message "Use `thru` instead of `through`."
 let description "Expands the informal spelling `thru` to the standard word `through`."
 let kind "Style"
 let becomes "through"

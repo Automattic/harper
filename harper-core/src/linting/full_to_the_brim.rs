@@ -14,7 +14,7 @@ pub struct FullToTheBrim {
 impl Default for FullToTheBrim {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["full", "filled"])
+            expr: SequenceExpr::word_set(["full", "filled"])
                 .t_ws()
                 .then_word_seq(&["to", "the", "brim", "of"])
                 .but_not(
@@ -52,7 +52,7 @@ impl ExprLinter for FullToTheBrim {
                 "with",
                 span.get_content(source),
             )],
-            message: "The correct preposition with this idiom is 'with', not 'of'".to_owned(),
+            message: "The correct preposition with this idiom is 'with', not 'of'.".to_owned(),
             ..Default::default()
         })
     }

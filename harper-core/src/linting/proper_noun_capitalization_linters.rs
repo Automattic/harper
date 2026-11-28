@@ -1,4 +1,4 @@
-use crate::expr::{Expr, ExprMap, FixedPhrase};
+use crate::expr::{Expr, ExprMap, FixedPhrase, LongestMatchOf};
 use hashbrown::HashMap;
 use serde::{Deserialize, Serialize};
 
@@ -113,6 +113,19 @@ pub fn lint_group() -> LintGroup {
     lint_group_from_json(include_str!("../../proper_noun_rules.json"))
 }
 
+/// Matches every proper noun in `proper_noun_rules.json`, in any capitalization.
+pub(super) fn proper_nouns_expr() -> LongestMatchOf {
+    let rules: HashMap<String, RuleEntry> =
+        serde_json::from_str(include_str!("../../proper_noun_rules.json")).unwrap();
+
+    LongestMatchOf::new(
+        rules
+            .into_values()
+            .flat_map(|rule| rule.canonical)
+            .map(|name| Box::new(FixedPhrase::from_phrase(&name)) as Box<dyn Expr>),
+    )
+}
+
 #[cfg(test)]
 mod tests {
     use super::lint_group;
@@ -121,6 +134,25 @@ mod tests {
     use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     create_test_pool!(LintGroup, LintGroup, lint_group());
+
+    #[test]
+    fn name_with_american_spelling_lowercase() {
+        assert_suggestion_result("pearl harbor", test_linter(), "Pearl Harbor");
+    }
+
+    #[test]
+    fn world_health_organization_lowercase() {
+        assert_suggestion_result(
+            "world health organization",
+            test_linter(),
+            "World Health Organization",
+        );
+    }
+
+    #[test]
+    fn name_with_british_spelling_lowercase() {
+        assert_suggestion_result("ministry of defence", test_linter(), "Ministry of Defence");
+    }
 
     #[test]
     fn americas_lowercase() {
@@ -189,6 +221,52 @@ mod tests {
             test_linter(),
             "Microsoft Visual Studio",
         );
+    }
+
+    #[test]
+    fn apple_ipod_lowercase() {
+        assert_suggestion_result("apple ipod", lint_group(), "Apple iPod");
+    }
+
+    #[test]
+    fn apple_ipod_allow_correct() {
+        assert_lint_count("Apple iPod", lint_group(), 0);
+    }
+
+    #[test]
+    fn apple_macbook_family_lowercase() {
+        assert_suggestion_result("macbook pro", lint_group(), "MacBook Pro");
+        assert_suggestion_result("macbook air", lint_group(), "MacBook Air");
+    }
+
+    #[test]
+    fn apple_macbook_family_allow_correct() {
+        assert_lint_count("MacBook Pro", lint_group(), 0);
+        assert_lint_count("MacBook Air", lint_group(), 0);
+    }
+
+    #[test]
+    fn apple_mac_family_lowercase() {
+        assert_suggestion_result("mac pro", lint_group(), "Mac Pro");
+        assert_suggestion_result("mac mini", lint_group(), "Mac Mini");
+    }
+
+    #[test]
+    fn apple_mac_family_allow_correct() {
+        assert_lint_count("Mac Pro", lint_group(), 0);
+        assert_lint_count("Mac Mini", lint_group(), 0);
+    }
+
+    #[test]
+    fn apple_airpods_family_lowercase() {
+        assert_suggestion_result("airpods pro", lint_group(), "AirPods Pro");
+        assert_suggestion_result("airpods max", lint_group(), "AirPods Max");
+    }
+
+    #[test]
+    fn apple_airpods_family_allow_correct() {
+        assert_lint_count("AirPods Pro", lint_group(), 0);
+        assert_lint_count("AirPods Max", lint_group(), 0);
     }
 
     #[test]
@@ -371,5 +449,23 @@ mod tests {
     #[test]
     fn browser_extension_not_flagged() {
         assert_lint_count("browser extension", test_linter(), 0);
+    }
+
+    #[test]
+    fn fix_baton_rogue() {
+        assert_suggestion_result(
+            "The programs know you dont care about the bronx or baton rouge, you just want a spot",
+            test_linter(),
+            "The programs know you dont care about the bronx or Baton Rouge, you just want a spot",
+        );
+    }
+
+    #[test]
+    fn fix_khmer_rouge() {
+        assert_suggestion_result(
+            "I read that the khmer rouge still existed as a group after vietnam invaded cambodia and they still had a seat in the UN until 1993.",
+            test_linter(),
+            "I read that the Khmer Rouge still existed as a group after vietnam invaded cambodia and they still had a seat in the UN until 1993.",
+        );
     }
 }

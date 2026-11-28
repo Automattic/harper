@@ -1,0 +1,525 @@
+{
+	"collection": "The Common Pile v0.1",
+	"citation": "Kandpal et al. 2025, arXiv:2506.05209",
+	"retrieved": "2026-11-08",
+	"policy": "Train only on documents whose metadata.license is CC BY, CC0, Public Domain, or Open Parliament Licence. Exclude share-alike documents.",
+	"subsets": {
+		"youtube_filtered": {
+			"repo": "common-pile/youtube_filtered",
+			"revision": "dff8c8a54e98bce64c2e7ce9a8466c144c1cddd6",
+			"files": [
+				{
+					"file": "README.md",
+					"bytes": 2555,
+					"sha256": null,
+					"url": "https://huggingface.co/datasets/common-pile/youtube_filtered/resolve/dff8c8a54e98bce64c2e7ce9a8466c144c1cddd6/README.md"
+				},
+				{
+					"file": "youtube-commons-0000.json.gz",
+					"bytes": 831811801,
+					"sha256": "c90b82cff8b9550184a063ab71e5e8bf46ac9bf6640c19f3a9647095c9112005",
+					"url": "https://huggingface.co/datasets/common-pile/youtube_filtered/resolve/dff8c8a54e98bce64c2e7ce9a8466c144c1cddd6/youtube-commons-0000.json.gz"
+				},
+				{
+					"file": "youtube-commons-0001.json.gz",
+					"bytes": 837857674,
+					"sha256": "d2016ce3c1594de463e2cd5b13d848a4b0d762713d6425d21bfcf7f4989547c5",
+					"url": "https://huggingface.co/datasets/common-pile/youtube_filtered/resolve/dff8c8a54e98bce64c2e7ce9a8466c144c1cddd6/youtube-commons-0001.json.gz"
+				},
+				{
+					"file": "youtube-commons-0002.json.gz",
+					"bytes": 829625886,
+					"sha256": "864e66b322bd869382095c8eafab8de2324161bd1e20704697bba7ce93866422",
+					"url": "https://huggingface.co/datasets/common-pile/youtube_filtered/resolve/dff8c8a54e98bce64c2e7ce9a8466c144c1cddd6/youtube-commons-0002.json.gz"
+				},
+				{
+					"file": "youtube-commons-0003.json.gz",
+					"bytes": 837105580,
+					"sha256": "8198c390a24f65eaf4e7fb2028d28079a923e26a7d3a7e68d478e33bf92614a2",
+					"url": "https://huggingface.co/datasets/common-pile/youtube_filtered/resolve/dff8c8a54e98bce64c2e7ce9a8466c144c1cddd6/youtube-commons-0003.json.gz"
+				},
+				{
+					"file": "youtube-commons-0004.json.gz",
+					"bytes": 829340111,
+					"sha256": "cffb361f3b854f95a40ca4260e8be7eaffe7344d33c507203fd5878dbce723b7",
+					"url": "https://huggingface.co/datasets/common-pile/youtube_filtered/resolve/dff8c8a54e98bce64c2e7ce9a8466c144c1cddd6/youtube-commons-0004.json.gz"
+				},
+				{
+					"file": "youtube-commons-0005.json.gz",
+					"bytes": 834298787,
+					"sha256": "ed3240b93c8568d16e4eafe4dbd2045efff2dcc42ed0d898fbe078526e6c8d38",
+					"url": "https://huggingface.co/datasets/common-pile/youtube_filtered/resolve/dff8c8a54e98bce64c2e7ce9a8466c144c1cddd6/youtube-commons-0005.json.gz"
+				},
+				{
+					"file": "youtube-commons-0006.json.gz",
+					"bytes": 831714748,
+					"sha256": "947a8c8a82b0153b7b8c65fd3e06d4725dbf55b198429f051309f71d53abd06f",
+					"url": "https://huggingface.co/datasets/common-pile/youtube_filtered/resolve/dff8c8a54e98bce64c2e7ce9a8466c144c1cddd6/youtube-commons-0006.json.gz"
+				},
+				{
+					"file": "youtube-commons-0007.json.gz",
+					"bytes": 829094131,
+					"sha256": "4f8c7b726d40f4148a4738e1b80e4060d6bb50e81cb038eac9f1a7458b16ac9c",
+					"url": "https://huggingface.co/datasets/common-pile/youtube_filtered/resolve/dff8c8a54e98bce64c2e7ce9a8466c144c1cddd6/youtube-commons-0007.json.gz"
+				},
+				{
+					"file": "youtube-commons-0008.json.gz",
+					"bytes": 269705271,
+					"sha256": "19048f0e05624b18ef2020533cdb1476a68819b6f00ca1fbede18f148708bf01",
+					"url": "https://huggingface.co/datasets/common-pile/youtube_filtered/resolve/dff8c8a54e98bce64c2e7ce9a8466c144c1cddd6/youtube-commons-0008.json.gz"
+				}
+			],
+			"census": {
+				"counts": {
+					"docs": 988253,
+					"words": 3445234864,
+					"docs_permissive": 988253,
+					"words_permissive": 3445234864,
+					"s_docs": 49313,
+					"s_t": 162627286,
+					"s_known": 160626820,
+					"s_non_en": 159
+				},
+				"licenses": [
+					["Creative Commons - Attribution - https://creativecommons.org/licenses/by/4.0/", 988253]
+				],
+				"hansard_words_by_decade": {},
+				"dictionary_known_pct_sample": 98.77,
+				"non_english_pct_sample": 0.32
+			}
+		},
+		"pressbooks_filtered": {
+			"repo": "common-pile/pressbooks_filtered",
+			"revision": "1a1d3b50d77f834370f8eb4c0d174668dd1676bb",
+			"files": [
+				{
+					"file": "README.md",
+					"bytes": 2323,
+					"sha256": null,
+					"url": "https://huggingface.co/datasets/common-pile/pressbooks_filtered/resolve/1a1d3b50d77f834370f8eb4c0d174668dd1676bb/README.md"
+				},
+				{
+					"file": "pressbooks-0000.json.gz",
+					"bytes": 191725499,
+					"sha256": "dd251acfa9b535a0aadeb7f61743a61934a1783bd1bdac947d4d136781b22d22",
+					"url": "https://huggingface.co/datasets/common-pile/pressbooks_filtered/resolve/1a1d3b50d77f834370f8eb4c0d174668dd1676bb/pressbooks-0000.json.gz"
+				}
+			],
+			"census": {
+				"counts": {
+					"docs": 54455,
+					"words": 91934268,
+					"docs_permissive": 46623,
+					"words_permissive": 77986956,
+					"s_docs": 2722,
+					"s_non_en": 40,
+					"s_t": 4505149,
+					"s_known": 4398464,
+					"docs_share_alike": 7832,
+					"words_share_alike": 13947312
+				},
+				"licenses": [
+					["Creative Commons - Attribution - https://creativecommons.org/licenses/by/4.0/", 41868],
+					[
+						"Creative Commons - Attribution Share-Alike - https://creativecommons.org/licenses/by-sa/4.",
+						7832
+					],
+					["Public Domain", 2880],
+					[
+						"Creative Commons Zero - Public Domain - https://creativecommons.org/publicdomain/zero/1.0/",
+						1875
+					]
+				],
+				"hansard_words_by_decade": {},
+				"dictionary_known_pct_sample": 97.63,
+				"non_english_pct_sample": 1.47
+			}
+		},
+		"libretexts_filtered": {
+			"repo": "common-pile/libretexts_filtered",
+			"revision": "70388bca52b4a93515e14b1d56618fd7944988fd",
+			"files": [
+				{
+					"file": "README.md",
+					"bytes": 2413,
+					"sha256": null,
+					"url": "https://huggingface.co/datasets/common-pile/libretexts_filtered/resolve/70388bca52b4a93515e14b1d56618fd7944988fd/README.md"
+				},
+				{
+					"file": "libretexts-0000.json.gz",
+					"bytes": 115037937,
+					"sha256": "71851a2b5acfccf80659729a0eccd07ab6ed737f0edc659a662aa9c1cd2194db",
+					"url": "https://huggingface.co/datasets/common-pile/libretexts_filtered/resolve/70388bca52b4a93515e14b1d56618fd7944988fd/libretexts-0000.json.gz"
+				}
+			],
+			"census": {
+				"counts": {
+					"docs": 40049,
+					"words": 58064494,
+					"docs_permissive": 26456,
+					"words_permissive": 40017634,
+					"s_docs": 2002,
+					"s_t": 2527714,
+					"s_known": 2442508,
+					"docs_share_alike": 13593,
+					"words_share_alike": 18046860,
+					"s_non_en": 36
+				},
+				"licenses": [
+					["Creative Commons - Attribution - https://creativecommons.org/licenses/by/4.0/", 24205],
+					[
+						"Creative Commons - Attribution Share-Alike - https://creativecommons.org/licenses/by-sa/4.",
+						12141
+					],
+					["Public Domain", 1191],
+					["Creative Commons - Attribution - https://creativecommons.org/licenses/by/3.0/", 1060],
+					["GNU Free Documentation License", 757],
+					[
+						"Creative Commons - Attribution Share-Alike - https://creativecommons.org/licenses/by-sa/3.",
+						692
+					],
+					[
+						"Creative Commons - Attribution Share-Alike - https://creativecommons.org/licenses/by-sa/2.",
+						3
+					]
+				],
+				"hansard_words_by_decade": {},
+				"dictionary_known_pct_sample": 96.63,
+				"non_english_pct_sample": 1.8
+			}
+		},
+		"oercommons_filtered": {
+			"repo": "common-pile/oercommons_filtered",
+			"revision": "506b6159dadcbc0dc67611cea024eedb04232fb2",
+			"files": [
+				{
+					"file": "README.md",
+					"bytes": 2487,
+					"sha256": null,
+					"url": "https://huggingface.co/datasets/common-pile/oercommons_filtered/resolve/506b6159dadcbc0dc67611cea024eedb04232fb2/README.md"
+				},
+				{
+					"file": "oercommons-0000.json.gz",
+					"bytes": 17028282,
+					"sha256": "e1c5fcbd9232183cbbd3d1967f637cc0371fcc6fce3e14d9da7f75ee2c66bec5",
+					"url": "https://huggingface.co/datasets/common-pile/oercommons_filtered/resolve/506b6159dadcbc0dc67611cea024eedb04232fb2/oercommons-0000.json.gz"
+				}
+			],
+			"census": {
+				"counts": {
+					"docs": 5249,
+					"words": 8169032,
+					"docs_permissive": 4825,
+					"words_permissive": 7649060,
+					"s_docs": 263,
+					"s_t": 362882,
+					"s_known": 355310,
+					"s_non_en": 2,
+					"docs_share_alike": 424,
+					"words_share_alike": 519972
+				},
+				"licenses": [
+					["Creative Commons - Attribution - https://creativecommons.org/licenses/by/4.0/", 4617],
+					[
+						"Creative Commons - Attribution Share-Alike - https://creativecommons.org/licenses/by-sa/4.",
+						424
+					],
+					["Public Domain", 208]
+				],
+				"hansard_words_by_decade": {},
+				"dictionary_known_pct_sample": 97.91,
+				"non_english_pct_sample": 0.76
+			}
+		},
+		"news_filtered": {
+			"repo": "common-pile/news_filtered",
+			"revision": "59aaa8f104e189e6fb8033f0ed319c5c343a03b1",
+			"files": [
+				{
+					"file": "README.md",
+					"bytes": 3133,
+					"sha256": null,
+					"url": "https://huggingface.co/datasets/common-pile/news_filtered/resolve/59aaa8f104e189e6fb8033f0ed319c5c343a03b1/README.md"
+				},
+				{
+					"file": "news-dolma-0000.json.gz",
+					"bytes": 98092770,
+					"sha256": "ade98699a88ef29390fad9dbbdf5d310fc3f3ccb2d9210f9d8fcc1de3ca09755",
+					"url": "https://huggingface.co/datasets/common-pile/news_filtered/resolve/59aaa8f104e189e6fb8033f0ed319c5c343a03b1/news-dolma-0000.json.gz"
+				}
+			],
+			"census": {
+				"counts": {
+					"docs": 126673,
+					"words": 38917518,
+					"docs_permissive": 109938,
+					"words_permissive": 33874150,
+					"s_docs": 6334,
+					"s_t": 1847931,
+					"s_known": 1740465,
+					"s_non_en": 376,
+					"docs_share_alike": 16735,
+					"words_share_alike": 5043368
+				},
+				"licenses": [
+					["Creative Commons - Attribution - https://creativecommons.org/licenses/by/4.0/", 109938],
+					[
+						"Creative Commons - Attribution Share-Alike - https://creativecommons.org/licenses/by-sa/4.",
+						16735
+					]
+				],
+				"hansard_words_by_decade": {},
+				"dictionary_known_pct_sample": 94.18,
+				"non_english_pct_sample": 5.94
+			}
+		},
+		"foodista_filtered": {
+			"repo": "common-pile/foodista_filtered",
+			"revision": "bf2c7aaa2d32be1e7d4d4779a6017407236831de",
+			"files": [
+				{
+					"file": "README.md",
+					"bytes": 2086,
+					"sha256": null,
+					"url": "https://huggingface.co/datasets/common-pile/foodista_filtered/resolve/bf2c7aaa2d32be1e7d4d4779a6017407236831de/README.md"
+				},
+				{
+					"file": "foodista-dolma-0000.json.gz",
+					"bytes": 33786046,
+					"sha256": "c39b3e7efc54ec03a38fbf2aa0e471d9bcb898879b2df1ff1e6646fdbcc4476f",
+					"url": "https://huggingface.co/datasets/common-pile/foodista_filtered/resolve/bf2c7aaa2d32be1e7d4d4779a6017407236831de/foodista-dolma-0000.json.gz"
+				}
+			],
+			"census": {
+				"counts": {
+					"docs": 65640,
+					"words": 14339478,
+					"docs_permissive": 65640,
+					"words_permissive": 14339478,
+					"s_docs": 3282,
+					"s_t": 630478,
+					"s_known": 614050,
+					"s_non_en": 326
+				},
+				"licenses": [
+					["Creative Commons - Attribution - https://creativecommons.org/licenses/by/3.0/", 65640]
+				],
+				"hansard_words_by_decade": {},
+				"dictionary_known_pct_sample": 97.39,
+				"non_english_pct_sample": 9.93
+			}
+		},
+		"uk_hansard_filtered": {
+			"repo": "common-pile/uk_hansard_filtered",
+			"revision": "c88adc44309aa255a41b51cef93ba783f775fe23",
+			"files": [
+				{
+					"file": "README.md",
+					"bytes": 2506,
+					"sha256": null,
+					"url": "https://huggingface.co/datasets/common-pile/uk_hansard_filtered/resolve/c88adc44309aa255a41b51cef93ba783f775fe23/README.md"
+				},
+				{
+					"file": "uk_hansard-0000.json.gz",
+					"bytes": 930329219,
+					"sha256": "ce9c35eb800d385f2f163a190227ed4031f9b6d73d386098ad5a4b76b1829812",
+					"url": "https://huggingface.co/datasets/common-pile/uk_hansard_filtered/resolve/c88adc44309aa255a41b51cef93ba783f775fe23/uk_hansard-0000.json.gz"
+				},
+				{
+					"file": "uk_hansard-0001.json.gz",
+					"bytes": 946587845,
+					"sha256": "325542421788aa6afe305eb62b56420335affc4af59258cd223545b11d445056",
+					"url": "https://huggingface.co/datasets/common-pile/uk_hansard_filtered/resolve/c88adc44309aa255a41b51cef93ba783f775fe23/uk_hansard-0001.json.gz"
+				},
+				{
+					"file": "uk_hansard-0002.json.gz",
+					"bytes": 920256831,
+					"sha256": "35ef9c775a3bcc8f551159b75afa35d9a515f86cfb570711491e617968c1fe8c",
+					"url": "https://huggingface.co/datasets/common-pile/uk_hansard_filtered/resolve/c88adc44309aa255a41b51cef93ba783f775fe23/uk_hansard-0002.json.gz"
+				},
+				{
+					"file": "uk_hansard-0003.json.gz",
+					"bytes": 281092411,
+					"sha256": "cb37f5a6f066776e1642e832d549296c2c8bdc9ebabb5e57e7c3f33d0642471f",
+					"url": "https://huggingface.co/datasets/common-pile/uk_hansard_filtered/resolve/c88adc44309aa255a41b51cef93ba783f775fe23/uk_hansard-0003.json.gz"
+				}
+			],
+			"census": {
+				"counts": {
+					"docs": 47909,
+					"words": 1633804092,
+					"docs_permissive": 47909,
+					"words_permissive": 1633804092,
+					"s_docs": 2396,
+					"s_t": 77999896,
+					"s_known": 76824815,
+					"s_non_en": 9
+				},
+				"licenses": [
+					[
+						"Open Parliament Licence - https://www.parliament.uk/site-information/copyright-parliament/",
+						47909
+					]
+				],
+				"hansard_words_by_decade": {
+					"1910": 8385003,
+					"1920": 62039962,
+					"1930": 83656805,
+					"1940": 72693829,
+					"1950": 94540190,
+					"1960": 109990783,
+					"1970": 109872556,
+					"1980": 115953881,
+					"1990": 110425453,
+					"2000": 389673644,
+					"2010": 319991155,
+					"2020": 156580831
+				},
+				"dictionary_known_pct_sample": 98.49,
+				"non_english_pct_sample": 0.38
+			}
+		},
+		"usgpo_filtered": {
+			"repo": "common-pile/usgpo_filtered",
+			"revision": "b150cc22211de4d57f1b7f570097a00e65042424",
+			"files": [
+				{
+					"file": "README.md",
+					"bytes": 2105,
+					"sha256": null,
+					"url": "https://huggingface.co/datasets/common-pile/usgpo_filtered/resolve/b150cc22211de4d57f1b7f570097a00e65042424/README.md"
+				},
+				{
+					"file": "usgpo-0000.json.gz",
+					"bytes": 760402814,
+					"sha256": "4b99b5043d40e205e578b26e0827f86541bd86f4f11bd04868f61e4259fe4c20",
+					"url": "https://huggingface.co/datasets/common-pile/usgpo_filtered/resolve/b150cc22211de4d57f1b7f570097a00e65042424/usgpo-0000.json.gz"
+				},
+				{
+					"file": "usgpo-0001.json.gz",
+					"bytes": 628208166,
+					"sha256": "5c37f1726615bde8ba5dda46186a266f1e41fa321d89cd6859cff66a32b66070",
+					"url": "https://huggingface.co/datasets/common-pile/usgpo_filtered/resolve/b150cc22211de4d57f1b7f570097a00e65042424/usgpo-0001.json.gz"
+				},
+				{
+					"file": "usgpo-0002.json.gz",
+					"bytes": 498658522,
+					"sha256": "9f08dacf82536bf326f4250850592999acb456bedc9f2507f5fe117fb1f24b49",
+					"url": "https://huggingface.co/datasets/common-pile/usgpo_filtered/resolve/b150cc22211de4d57f1b7f570097a00e65042424/usgpo-0002.json.gz"
+				},
+				{
+					"file": "usgpo-0003.json.gz",
+					"bytes": 542118464,
+					"sha256": "3f33831ecd8eb53bf8702bf752056b35b75cdcd6596d3f8d5a50ec5e7c0f350c",
+					"url": "https://huggingface.co/datasets/common-pile/usgpo_filtered/resolve/b150cc22211de4d57f1b7f570097a00e65042424/usgpo-0003.json.gz"
+				},
+				{
+					"file": "usgpo-0004.json.gz",
+					"bytes": 329087825,
+					"sha256": "b24b1a8c61c0ce9df2a425beee315f583037675e160e9ca36668423ec50a4936",
+					"url": "https://huggingface.co/datasets/common-pile/usgpo_filtered/resolve/b150cc22211de4d57f1b7f570097a00e65042424/usgpo-0004.json.gz"
+				},
+				{
+					"file": "usgpo-0005.json.gz",
+					"bytes": 632715871,
+					"sha256": "e96dc456c55bb5be9774e359fb757d6fa9c81e6c4c303fb52d143b11770907bf",
+					"url": "https://huggingface.co/datasets/common-pile/usgpo_filtered/resolve/b150cc22211de4d57f1b7f570097a00e65042424/usgpo-0005.json.gz"
+				},
+				{
+					"file": "usgpo-0006.json.gz",
+					"bytes": 557940073,
+					"sha256": "e66c06862341c9b452fc3e49910854af220d247c69cfc226e8f6dbbdaf86e5fb",
+					"url": "https://huggingface.co/datasets/common-pile/usgpo_filtered/resolve/b150cc22211de4d57f1b7f570097a00e65042424/usgpo-0006.json.gz"
+				},
+				{
+					"file": "usgpo-0007.json.gz",
+					"bytes": 585635257,
+					"sha256": "b60d57ba8e6d7029825c634b046d6c99471fde1fdceeefa9d9db344457b65053",
+					"url": "https://huggingface.co/datasets/common-pile/usgpo_filtered/resolve/b150cc22211de4d57f1b7f570097a00e65042424/usgpo-0007.json.gz"
+				},
+				{
+					"file": "usgpo-0008.json.gz",
+					"bytes": 640216992,
+					"sha256": "91d0352b81b6710088d699caeeb863746e823b9a2a9a2d2c67099e35313219cb",
+					"url": "https://huggingface.co/datasets/common-pile/usgpo_filtered/resolve/b150cc22211de4d57f1b7f570097a00e65042424/usgpo-0008.json.gz"
+				},
+				{
+					"file": "usgpo-0009.json.gz",
+					"bytes": 690905747,
+					"sha256": "f05223f9fa5b1318225f57a138273887eb629cf847c664e7f802ff8b7a6240bc",
+					"url": "https://huggingface.co/datasets/common-pile/usgpo_filtered/resolve/b150cc22211de4d57f1b7f570097a00e65042424/usgpo-0009.json.gz"
+				},
+				{
+					"file": "usgpo-0010.json.gz",
+					"bytes": 575262849,
+					"sha256": "8b71e9e465becb83b425c6e07e3a21fb5ee48e03e6bf0064078e8f0b11c79d2b",
+					"url": "https://huggingface.co/datasets/common-pile/usgpo_filtered/resolve/b150cc22211de4d57f1b7f570097a00e65042424/usgpo-0010.json.gz"
+				},
+				{
+					"file": "usgpo-0011.json.gz",
+					"bytes": 209487146,
+					"sha256": "158bb66265ab7c655a37908b772389780b92dc5db9d8c0194880e803bb5e5f4f",
+					"url": "https://huggingface.co/datasets/common-pile/usgpo_filtered/resolve/b150cc22211de4d57f1b7f570097a00e65042424/usgpo-0011.json.gz"
+				},
+				{
+					"file": "usgpo-0012.json.gz",
+					"bytes": 254386932,
+					"sha256": "2fc1913e93d51018a132bbc994c16a4225910aeb2954840fb02089600ee45b39",
+					"url": "https://huggingface.co/datasets/common-pile/usgpo_filtered/resolve/b150cc22211de4d57f1b7f570097a00e65042424/usgpo-0012.json.gz"
+				},
+				{
+					"file": "usgpo-0013.json.gz",
+					"bytes": 488407213,
+					"sha256": "1e98b6b6967d40080e9d5bd4a9d64f2cc2de02acdd0250c5fab6e4e95eb9cc18",
+					"url": "https://huggingface.co/datasets/common-pile/usgpo_filtered/resolve/b150cc22211de4d57f1b7f570097a00e65042424/usgpo-0013.json.gz"
+				},
+				{
+					"file": "usgpo-0014.json.gz",
+					"bytes": 305861086,
+					"sha256": "c9032ecdf3efbb1a4915bd7ecdc4c605cdf297bd0cb449f13c6119fc1b9dff06",
+					"url": "https://huggingface.co/datasets/common-pile/usgpo_filtered/resolve/b150cc22211de4d57f1b7f570097a00e65042424/usgpo-0014.json.gz"
+				},
+				{
+					"file": "usgpo-0015.json.gz",
+					"bytes": 508415189,
+					"sha256": "6525f3da3eae1d57b6963373e44bd6a05103cb66cefb0310d41a295c471e62d0",
+					"url": "https://huggingface.co/datasets/common-pile/usgpo_filtered/resolve/b150cc22211de4d57f1b7f570097a00e65042424/usgpo-0015.json.gz"
+				},
+				{
+					"file": "usgpo-0016.json.gz",
+					"bytes": 627842654,
+					"sha256": "53866cff8bd678cae6efd477d9d3909c4f630387d1f275d8d7b1259fc0ea34b8",
+					"url": "https://huggingface.co/datasets/common-pile/usgpo_filtered/resolve/b150cc22211de4d57f1b7f570097a00e65042424/usgpo-0016.json.gz"
+				},
+				{
+					"file": "usgpo-0017.json.gz",
+					"bytes": 524563692,
+					"sha256": "9608f36501dff7c2c62ad2bfd2b7f81fb7c740ff0df1140288f926a5fbcfe6c7",
+					"url": "https://huggingface.co/datasets/common-pile/usgpo_filtered/resolve/b150cc22211de4d57f1b7f570097a00e65042424/usgpo-0017.json.gz"
+				},
+				{
+					"file": "usgpo-0018.json.gz",
+					"bytes": 544854913,
+					"sha256": "3c096e3234986bde46b03322a512ec5b6b083dc34625c127543da88be966fe61",
+					"url": "https://huggingface.co/datasets/common-pile/usgpo_filtered/resolve/b150cc22211de4d57f1b7f570097a00e65042424/usgpo-0018.json.gz"
+				}
+			],
+			"census": {
+				"counts": {
+					"docs": 2009402,
+					"words": 5003012082,
+					"docs_permissive": 2009402,
+					"words_permissive": 5003012082,
+					"s_docs": 100479,
+					"s_t": 238285489,
+					"s_known": 232901206,
+					"s_non_en": 2712
+				},
+				"licenses": [["Public Domain", 2009402]],
+				"hansard_words_by_decade": {},
+				"dictionary_known_pct_sample": 97.74,
+				"non_english_pct_sample": 2.7
+			}
+		}
+	}
+}
