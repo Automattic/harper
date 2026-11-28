@@ -18,7 +18,7 @@ impl Default for ContractionOfBe {
 impl ContractionOfBe {
     pub fn new() -> Self {
         Self {
-            inner: WordSet::new(&["i'm", "we're", "you're", "he's", "she's", "it's", "they're"]),
+            inner: WordSet::new(["i'm", "we're", "you're", "he's", "she's", "it's", "they're"]),
         }
     }
     // TODO: include_common_errors() ctor à la `ReflexivePronoun``

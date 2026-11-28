@@ -46,7 +46,7 @@ impl Default for AverseVsAvert {
                         .t_aco("eyes"),
                 ),
                 Box::new(
-                    SequenceExpr::word_set(&["risk", "conflict"])
+                    SequenceExpr::word_set(["risk", "conflict"])
                         .t_ws_h()
                         .t_aco("avert"),
                 ),
