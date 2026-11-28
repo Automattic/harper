@@ -1,0 +1,29 @@
+expr aux [have, has, had]
+expr main <[(@aux take ![PROG, -]), (@aux take.), (@aux take?), (@aux take,)], take>
+
+let message "Add `to` before `take`, or use `taken`."
+let description "Catches `have take` where `have to take` or `have taken` was meant."
+let kind "Grammar"
+let scope "Sentence"
+let becomes ["to take", "taken"]
+let strategy "MatchCase"
+
+# made-up sentences
+test "I have take the bus today." "I have to take the bus today."
+test "She has take a break." "She has to take a break."
+test "We had take turns driving." "We had to take turns driving."
+test "I HAVE TAKE THIS CALL." "I HAVE TO TAKE THIS CALL."
+test "That is the risk we have take." "That is the risk we have to take."
+test "Sorry, I have take this call." "Sorry, I have to take this call."
+test "Which train do we have take?" "Which train do we have to take?"
+
+# correct text
+allows "Take it or leave it."
+allows "I have to take the bus today."
+allows "She has taken a break."
+allows "Do we have to take turns?"
+allows "They had taken the risk."
+# look-alikes that must not be flagged
+allows "We have take-home exercises for candidates."
+allows "We had taking turns in mind."
+allows "What we have, take care of it."

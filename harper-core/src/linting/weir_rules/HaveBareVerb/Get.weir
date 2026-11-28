@@ -1,0 +1,29 @@
+expr aux [have, has, had]
+expr main <[(@aux get ![PROG, -]), (@aux get.), (@aux get?), (@aux get,)], get>
+
+let message "Add `to` before `get`, or use `gotten`."
+let description "Catches `have get` where `have to get` or `have gotten` was meant."
+let kind "Grammar"
+let scope "Sentence"
+let becomes ["to get", "gotten"]
+let strategy "MatchCase"
+
+# made-up sentences
+test "I have get the kids at five." "I have to get the kids at five."
+test "She has get approval first." "She has to get approval first."
+test "We had get there by noon." "We had to get there by noon."
+test "I HAVE GET THIS DONE." "I HAVE TO GET THIS DONE."
+test "That is the form you have get signed." "That is the form you have to get signed."
+test "Sorry, I have get back to work." "Sorry, I have to get back to work."
+test "What do I have get from the store?" "What do I have to get from the store?"
+
+# correct text
+allows "I've got to get going."
+allows "I have to get the kids at five."
+allows "She has gotten approval."
+allows "Do I have to get it signed?"
+allows "We had got there by noon."
+# look-alikes that must not be flagged
+allows "We have get-togethers every quarter."
+allows "We had getting there early in mind."
+allows "What we have, get it checked."

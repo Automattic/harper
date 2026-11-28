@@ -1,0 +1,29 @@
+expr aux [have, has, had]
+expr main <[(@aux go ![PROG, -]), (@aux go.), (@aux go?), (@aux go,)], go>
+
+let message "Add `to` before `go`, or use `gone`."
+let description "Catches `have go` where `have to go` or `have gone` was meant."
+let kind "Grammar"
+let scope "Sentence"
+let becomes ["to go", "gone"]
+let strategy "MatchCase"
+
+# made-up sentences
+test "I have go to the bank." "I have to go to the bank."
+test "She has go home early." "She has to go home early."
+test "We had go back for the keys." "We had to go back for the keys."
+test "I HAVE GO NOW." "I HAVE TO GO NOW."
+test "That is where I have go." "That is where I have to go."
+test "Sorry, I have go, my ride is here." "Sorry, I have to go, my ride is here."
+test "Where do we have go next?" "Where do we have to go next?"
+
+# correct text
+allows "Let's go next week."
+allows "I have to go to the bank."
+allows "She has gone home."
+allows "Do we have to go now?"
+allows "They had gone already."
+# look-alikes that must not be flagged
+allows "They have go-to tools for this."
+allows "We have go/no-go meetings on Fridays."
+allows "We had going out in mind."
