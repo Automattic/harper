@@ -163,7 +163,7 @@ impl Parser for Markdown {
 
         let mut stack = Vec::new();
 
-        // Depth of inline `<code>` HTML elements we are currently inside.
+        // Depth of inline HTML code elements (`<code>`, `<kbd>`, `<samp>`) we are currently inside.
         let mut html_code_depth = 0usize;
 
         // NOTE: the range spits out __byte__ indices, not char indices.
@@ -284,9 +284,15 @@ impl Parser for Markdown {
                 }
                 // TO-DO: Support via `harper-html`
                 pulldown_cmark::Event::Html(html) | pulldown_cmark::Event::InlineHtml(html) => {
-                    if is_html_tag(&html, "<code") {
+                    if ["<code", "<kbd", "<samp"]
+                        .iter()
+                        .any(|tag| is_html_tag(&html, tag))
+                    {
                         html_code_depth += 1;
-                    } else if is_html_tag(&html, "</code") {
+                    } else if ["</code", "</kbd", "</samp"]
+                        .iter()
+                        .any(|tag| is_html_tag(&html, tag))
+                    {
                         html_code_depth = html_code_depth.saturating_sub(1);
                     }
 
@@ -479,6 +485,13 @@ mod tests {
     #[test]
     fn html_code_does_not_match_similar_tags() {
         let source = r"Some <codex>words</codex> here.";
+        let tokens = Markdown::default().parse_str(source);
+        assert_eq!(tokens.iter_words().count(), 3);
+    }
+
+    #[test]
+    fn html_kbd_and_samp_contents_are_unlintable() {
+        let source = r"Press <kbd>Ctrl</kbd>+<kbd>Shft</kbd> to see <samp>Eror: teh fiel</samp>.";
         let tokens = Markdown::default().parse_str(source);
         assert_eq!(tokens.iter_words().count(), 3);
     }
