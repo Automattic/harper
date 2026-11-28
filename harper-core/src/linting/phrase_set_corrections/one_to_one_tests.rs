@@ -2458,6 +2458,26 @@ fn them_self() {
     );
 }
 
+// TheOneOfTheMost
+
+#[test]
+fn the_one_of_the_most_convenient() {
+    assert_suggestion_result(
+        "At the time this was probably the one of the most convenient ways to share videos with loved ones.",
+        test_linter(),
+        "At the time this was probably one of the most convenient ways to share videos with loved ones.",
+    );
+}
+
+#[test]
+fn the_one_of_the_most_ultimate() {
+    assert_suggestion_result(
+        "This repository will provide you the one of the most ultimate barebone images of windows!",
+        test_linter(),
+        "This repository will provide you one of the most ultimate barebone images of windows!",
+    );
+}
+
 // UseToUsedTo
 
 #[test]
