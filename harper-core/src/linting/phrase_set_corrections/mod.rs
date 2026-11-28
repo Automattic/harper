@@ -1074,7 +1074,7 @@ pub fn lint_group() -> LintGroup {
                 (&["looks forward for", "looks forwards to"], &["looks forward to"]),
                 (&["looking forward for", "looking forwards to"], &["looking forward to"])
             ],
-            "The correct preposition in this phrase is `to`.",
+            "While `forwards` is a valid adverb, the fixed idiom always uses `forward` (`look forward to`).",
             "Corrects `look forward for` to `look forward to`.",
             LintKind::Usage
         ),
