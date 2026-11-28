@@ -5,7 +5,8 @@ use harper_brill::UPOS;
 use crate::{CharString, Currency, Punctuation, Token, TokenKind};
 
 use super::{
-    AstExprNode, Error, FoundNode, lex, locate_matching_brace, optimize_expr, parse_collection,
+    AstExprNode, Error, FoundNode, inc_by_spaces, lex, locate_matching_brace, optimize_expr,
+    parse_collection,
 };
 
 /// Parse a raw expression string.
@@ -32,8 +33,25 @@ pub fn parse_seq(tokens: &[Token], source: &[char]) -> Result<Vec<AstExprNode>, 
         && !remainder.is_empty()
     {
         let res = parse_single_expr(remainder, source)?;
-        seq.push(res.node);
         cursor += res.next_idx;
+
+        // Anchors are zero-width, so the spaces beside one (`START no to`) are only for readability.
+        if matches!(res.node, AstExprNode::Start | AstExprNode::End) {
+            if seq.last().is_some_and(AstExprNode::is_whitespace) {
+                seq.pop();
+            }
+            inc_by_spaces(&mut cursor, tokens);
+        }
+
+        // An anchor anywhere else in a sequence could never match.
+        if matches!(seq.last(), Some(AstExprNode::End)) {
+            return Err(Error::MisplacedAnchor("END"));
+        }
+        if res.node == AstExprNode::Start && !seq.is_empty() {
+            return Err(Error::MisplacedAnchor("START"));
+        }
+
+        seq.push(res.node);
     }
 
     Ok(seq)
@@ -76,6 +94,8 @@ fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstE
                 let node = match text.as_str() {
                     "PROG" => AstExprNode::Progressive,
                     "NUMBER" => AstExprNode::Number,
+                    "START" => AstExprNode::Start,
+                    "END" => AstExprNode::End,
                     _ => AstExprNode::Word(text.chars().collect()),
                 };
 
@@ -97,6 +117,13 @@ fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstE
         // The _not_ or _unless_ notation
         TokenKind::Punctuation(Punctuation::Bang) => {
             let res = parse_single_expr(&tokens[1..], source)?;
+
+            // `!X` consumes a token, so `!START` would mean "any token but the first".
+            match res.node {
+                AstExprNode::Start => return Err(Error::MisplacedAnchor("!START")),
+                AstExprNode::End => return Err(Error::MisplacedAnchor("!END")),
+                _ => {}
+            }
 
             Ok(FoundNode::new(
                 AstExprNode::Not(Box::new(res.node)),
@@ -139,7 +166,7 @@ mod tests {
     use crate::Punctuation;
     use crate::char_string::char_string;
 
-    use super::{AstExprNode, parse_expr_str};
+    use super::{AstExprNode, Error, parse_expr_str};
 
     #[test]
     fn parses_whitespace() {
@@ -503,6 +530,59 @@ mod tests {
                 }
             );
         }
+    }
+
+    #[test]
+    fn rejects_misplaced_anchors() {
+        for (expr, anchor) in [
+            ("no START to", "START"),
+            ("(no START to)", "START"),
+            ("no END to", "END"),
+            ("END END", "END"),
+            ("(a END b)", "END"),
+            ("!START no", "!START"),
+            ("no !END", "!END"),
+        ] {
+            assert_eq!(
+                parse_expr_str(expr, true),
+                Err(Error::MisplacedAnchor(anchor)),
+                "{expr}"
+            );
+        }
+    }
+
+    #[test]
+    fn anchors_absorb_the_space_on_either_side() {
+        assert_eq!(
+            parse_expr_str("( START no END )", true).unwrap(),
+            parse_expr_str("(START no END)", true).unwrap()
+        )
+    }
+
+    #[test]
+    fn start_absorbs_the_following_space() {
+        assert_eq!(
+            parse_expr_str("START no to", true).unwrap(),
+            AstExprNode::Seq(vec![
+                AstExprNode::Start,
+                AstExprNode::Word(char_string!("no")),
+                AstExprNode::Whitespace,
+                AstExprNode::Word(char_string!("to")),
+            ])
+        )
+    }
+
+    #[test]
+    fn end_absorbs_the_preceding_space() {
+        assert_eq!(
+            parse_expr_str("no to END", true).unwrap(),
+            AstExprNode::Seq(vec![
+                AstExprNode::Word(char_string!("no")),
+                AstExprNode::Whitespace,
+                AstExprNode::Word(char_string!("to")),
+                AstExprNode::End,
+            ])
+        )
     }
 
     #[test]
