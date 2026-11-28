@@ -1,9 +1,9 @@
+use crate::lang::en::patterns::ModalVerb;
 use crate::linting::expr_linter::Chunk;
 use crate::{
     CharStringExt, Token,
     expr::{Expr, ExprMap, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::ModalVerb,
 };
 
 #[derive(Clone, Copy, Default)]

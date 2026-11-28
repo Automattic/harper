@@ -1,3 +1,4 @@
+use crate::lang::en::patterns::InflectionOfBe;
 use harper_brill::UPOS;
 
 use crate::linting::expr_linter::Chunk;
@@ -5,7 +6,7 @@ use crate::{
     Token, TokenKind,
     expr::{All, Expr, OwnedExprExt, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::{InflectionOfBe, NominalPhrase, UPOSSet},
+    patterns::{NominalPhrase, UPOSSet},
 };
 
 pub struct HowTo {

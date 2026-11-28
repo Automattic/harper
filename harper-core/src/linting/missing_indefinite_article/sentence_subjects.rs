@@ -1,12 +1,12 @@
 use super::phrase::{ArticlePhrase, lint_phrases};
 use crate::{
-    CharStringExt, Dialect, Document, Token,
+    CharStringExt, Document, EnglishDialect, Token,
     linting::{Lint, Linter},
 };
 use harper_brill::UPOS;
 
 /// Checks initial subjects with a finite predicate, not headings or passive labels.
-pub(super) struct SentenceSubjects(pub Dialect);
+pub(super) struct SentenceSubjects(pub EnglishDialect);
 
 impl Linter for SentenceSubjects {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {

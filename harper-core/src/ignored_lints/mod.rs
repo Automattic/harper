@@ -64,14 +64,14 @@ mod tests {
     use crate::linting::create_test_pool;
     use crate::spell::FstDictionary;
     use crate::{
-        Dialect, Document,
+        Document, EnglishDialect,
         linting::{LintGroup, Linter},
     };
 
     create_test_pool!(
         LintGroup,
         LintGroup,
-        LintGroup::new_curated(FstDictionary::curated(), Dialect::American)
+        LintGroup::new_curated(FstDictionary::curated(), EnglishDialect::American)
     );
 
     #[quickcheck]

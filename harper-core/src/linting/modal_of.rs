@@ -1,8 +1,9 @@
+use crate::lang::en::patterns::ModalVerb;
 use crate::{
     Lrc, Token, TokenStringExt,
     expr::{Expr, FirstMatchOf, LongestMatchOf, OwnedExprExt, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
-    patterns::{ModalVerb, Word},
+    patterns::Word,
 };
 
 pub struct ModalOf {

@@ -1,9 +1,9 @@
 use crate::expr::All;
 use crate::expr::Expr;
-use crate::expr::MergeableWords;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
-use crate::patterns::InflectionOfBe;
+use crate::lang::en::expr::MergeableWords;
+use crate::lang::en::patterns::InflectionOfBe;
 use crate::{CharStringExt, TokenStringExt, linting::ExprLinter};
 
 use super::{Lint, LintKind, Suggestion, is_content_word, predicate};

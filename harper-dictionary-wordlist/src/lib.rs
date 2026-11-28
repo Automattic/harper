@@ -1,7 +1,7 @@
 use std::path::Path;
 
 use harper_core::{
-    Dialect, DialectFlags, DictWordMetadata,
+    DialectFlags, DictWordMetadata, EnglishDialect,
     spell::{Dictionary, MutableDictionary},
 };
 use itertools::Itertools;
@@ -40,7 +40,10 @@ async fn write_word_list(dict: impl Dictionary, mut w: impl AsyncWrite + Unpin) 
 }
 
 /// Load a dictionary from a file on disk.
-pub async fn load_dict(path: impl AsRef<Path>, dialect: Dialect) -> Result<MutableDictionary> {
+pub async fn load_dict(
+    path: impl AsRef<Path>,
+    dialect: EnglishDialect,
+) -> Result<MutableDictionary> {
     let file = File::open(path.as_ref()).await?;
     let read = BufReader::new(file);
 
@@ -52,7 +55,7 @@ pub async fn load_dict(path: impl AsRef<Path>, dialect: Dialect) -> Result<Mutab
 /// Right now it isn't an issue.
 async fn dict_from_word_list(
     mut r: impl AsyncRead + Unpin,
-    dialect: Dialect,
+    dialect: EnglishDialect,
 ) -> Result<MutableDictionary> {
     let mut str = String::new();
 

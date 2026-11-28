@@ -1,3 +1,4 @@
+use crate::lang::en::patterns::ModalVerb;
 use harper_brill::UPOS;
 
 use crate::expr::Expr;
@@ -5,7 +6,7 @@ use crate::expr::LongestMatchOf;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::linting::expr_linter::Chunk;
-use crate::patterns::{ModalVerb, UPOSSet, WordSet};
+use crate::patterns::{UPOSSet, WordSet};
 use crate::{
     Token,
     linting::{ExprLinter, Lint, LintKind, Suggestion},

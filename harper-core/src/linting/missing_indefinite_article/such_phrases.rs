@@ -1,12 +1,12 @@
 use super::phrase::{lint_phrases, previous};
 use crate::{
-    CharStringExt, Dialect, Document,
+    CharStringExt, Document, EnglishDialect,
     linting::{Lint, Linter},
 };
 
 /// Places an indefinite article after `such`, rather than before the quantifier.
 /// Unmodified phrases remain unchecked because some permit a bare use.
-pub(super) struct SuchPhrases(pub Dialect);
+pub(super) struct SuchPhrases(pub EnglishDialect);
 
 impl Linter for SuchPhrases {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {

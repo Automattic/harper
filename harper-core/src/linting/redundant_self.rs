@@ -1,7 +1,8 @@
+use crate::lang::en::expr::ReflexivePronoun;
 use crate::{
     Lint, Token, TokenStringExt,
     char_string::CharStringExt,
-    expr::{Expr, FirstMatchOf, OwnedExprExt, ReflexivePronoun, SequenceExpr},
+    expr::{Expr, FirstMatchOf, OwnedExprExt, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
 };
 

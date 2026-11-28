@@ -1,3 +1,4 @@
+use crate::lang::en::patterns::ModalVerb;
 use crate::{
     CharStringExt, Lint, Token, TokenKind,
     expr::{Expr, SequenceExpr},
@@ -5,7 +6,6 @@ use crate::{
         ExprLinter, Suggestion,
         expr_linter::{Chunk, followed_by_hyphen, followed_by_word},
     },
-    patterns::ModalVerb,
 };
 
 pub struct ModalBeAdjective {

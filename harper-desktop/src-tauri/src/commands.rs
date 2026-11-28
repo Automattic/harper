@@ -8,7 +8,7 @@ use crate::os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker}
 use crate::{IntegrationView, PlatformBroker};
 use base64::{Engine as _, engine::general_purpose};
 use harper_core::{
-    Dialect, DictWordMetadata, IgnoredLints,
+    DictWordMetadata, EnglishDialect, IgnoredLints,
     linting::FlatConfig,
     spell::{Dictionary, MutableDictionary},
 };
@@ -159,7 +159,7 @@ async fn get_lint_config(config: State<'_, Arc<Mutex<Config>>>) -> Result<FlatCo
 }
 
 #[tauri::command]
-async fn get_dialect(config: State<'_, Arc<Mutex<Config>>>) -> Result<Dialect, String> {
+async fn get_dialect(config: State<'_, Arc<Mutex<Config>>>) -> Result<EnglishDialect, String> {
     Ok(config.lock().await.dialect)
 }
 
@@ -250,7 +250,7 @@ async fn set_onboarding_state(
 
 #[tauri::command]
 async fn set_dialect(
-    dialect: Dialect,
+    dialect: EnglishDialect,
     config: State<'_, Arc<Mutex<Config>>>,
 ) -> Result<(), String> {
     let mut config = config.lock().await;
