@@ -503,7 +503,20 @@ impl ExprLinter for MissingTo {
 
         if matches!(
             controller_text,
-            "learn"
+            "arrange"
+                | "arranged"
+                | "arranges"
+                | "arranging"
+                | "expect"
+                | "expected"
+                | "expecting"
+                | "expects"
+                | "forget"
+                | "forgets"
+                | "forgetting"
+                | "forgot"
+                | "forgotten"
+                | "learn"
                 | "learned"
                 | "learning"
                 | "learns"
@@ -511,6 +524,14 @@ impl ExprLinter for MissingTo {
                 | "mean"
                 | "means"
                 | "meant"
+                | "neglect"
+                | "neglected"
+                | "neglecting"
+                | "neglects"
+                | "prepare"
+                | "prepared"
+                | "prepares"
+                | "preparing"
                 | "tried"
                 | "tries"
                 | "try"
@@ -922,5 +943,13 @@ mod tests {
     fn no_lint_if_need_be() {
         assert_no_lints("We can improve it if need be.", test_linter());
         assert_no_lints("If need be, we can improve it.", test_linter());
+    }
+
+    #[test]
+    fn allows_noun_objects_after_prepare_expect_and_forget() {
+        assert_no_lints(
+            "I prepared coffee, we expect rain tomorrow and I forgot lunch again.",
+            test_linter(),
+        );
     }
 }
