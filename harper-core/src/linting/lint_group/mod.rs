@@ -899,12 +899,12 @@ impl LintGroup {
         insert_expr_rule!(PluralWrongWordOfPhrase);
         insert_struct_rule_with_dict!(PossessiveNoun);
         insert_expr_rule!(PossessiveYour);
-        insert_expr_rule!(PreferEachToTheirOwn);
+        out.add_sentence_expr_linter("PreferEachToTheirOwn", PreferEachToTheirOwn::default());
         insert_struct_rule!(PreferPleaded);
         insert_struct_rule!(PreferPled);
         insert_struct_rule!(PreferSneaked);
         insert_struct_rule!(PreferSnuck);
-        insert_expr_rule!(PreferToEachTheirOwn);
+        out.add_sentence_expr_linter("PreferToEachTheirOwn", PreferToEachTheirOwn::default());
         insert_expr_rule!(ProgressiveNeedsBe);
         insert_expr_rule!(PronounAre);
         insert_struct_rule!(PronounContraction);

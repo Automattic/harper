@@ -1,10 +1,12 @@
+use pulldown_cmark::{Event, LinkType, Parser, Tag};
+
 use crate::{
     Lint, Token, TokenStringExt,
     case::copy_casing,
     expr::{Expr, FixedPhrase},
     linting::{
         ExprLinter, LintKind, Suggestion,
-        expr_linter::{Chunk, followed_by_hyphen},
+        expr_linter::{Sentence, followed_by_hyphen},
     },
 };
 
@@ -71,13 +73,22 @@ fn starts_noun_phrase(mut rest: &[Token]) -> bool {
     };
 
     if first.kind.is_open_round() || first.kind.is_open_square() {
-        let is_close = if first.kind.is_open_round() {
-            |t: &Token| t.kind.is_close_round()
-        } else {
-            |t: &Token| t.kind.is_close_square()
-        };
-
-        if let Some(close_rel) = rest[1..].iter().position(is_close) {
+        let round = first.kind.is_open_round();
+        let mut depth = 1;
+        let close = rest[1..].iter().position(|tok| {
+            let (opens, closes) = if round {
+                (tok.kind.is_open_round(), tok.kind.is_close_round())
+            } else {
+                (tok.kind.is_open_square(), tok.kind.is_close_square())
+            };
+            if opens {
+                depth += 1;
+            } else if closes {
+                depth -= 1;
+            }
+            depth == 0
+        });
+        if let Some(close_rel) = close {
             let after_close = &rest[close_rel + 2..];
             return after_close.first().is_some_and(|t| t.kind.is_whitespace())
                 && starts_noun_phrase(after_close);
@@ -86,8 +97,19 @@ fn starts_noun_phrase(mut rest: &[Token]) -> bool {
         return starts_noun_phrase(&rest[1..]);
     }
 
-    if first.kind.is_quote() {
-        return starts_noun_phrase(&rest[1..]);
+    if first.kind.is_quote() || first.kind.is_open_single() {
+        let close = rest[1..].iter().position(|tok| {
+            if first.kind.is_open_single() {
+                tok.kind.is_apostrophe()
+            } else {
+                tok.kind.is_quote()
+            }
+        });
+        return close.is_some_and(|close_rel| {
+            let after_close = &rest[close_rel + 2..];
+            after_close.first().is_some_and(|t| t.kind.is_whitespace())
+                && starts_noun_phrase(after_close)
+        });
     }
 
     if is_pure_adverb(first) {
@@ -122,6 +144,9 @@ fn starts_noun_phrase(mut rest: &[Token]) -> bool {
     }
 
     is_nominal_or_modifier_word(first)
+        || (first.kind.is_adjective()
+            && rest.get(1).is_some_and(|tok| tok.kind.is_whitespace())
+            && rest.get(2).is_some_and(|tok| tok.kind.is_noun()))
 }
 
 /// Skip non-idiomatic uses where `own` modifies a following noun phrase
@@ -141,6 +166,30 @@ fn followed_by_modifier_or_noun(ctx: Option<(&[Token], &[Token])>) -> bool {
     }
 
     starts_noun_phrase(after)
+}
+
+fn changes_reference_label(src: &[char], first: &Token, second: &Token) -> bool {
+    if !src[..second.span.start].contains(&'[') || !src.windows(2).any(|chars| chars == [']', ':'])
+    {
+        return false;
+    }
+
+    // These links use their visible text as the lookup key for the definition.
+    let source: String = src.iter().collect();
+    let byte_offset = |tok: &Token| src[..tok.span.start].iter().map(|ch| ch.len_utf8()).sum();
+    let first_start = byte_offset(first);
+    let second_start = byte_offset(second);
+    Parser::new(&source)
+        .into_offset_iter()
+        .any(|(event, span)| {
+            matches!(
+                event,
+                Event::Start(Tag::Link {
+                    link_type: LinkType::Shortcut | LinkType::Collapsed,
+                    ..
+                })
+            ) && (span.contains(&first_start) || span.contains(&second_start))
+        })
 }
 
 fn to_lint(
@@ -164,6 +213,9 @@ fn to_lint(
 
     let first_tok = &toks[first_idx];
     let second_tok = &toks[second_idx];
+    if changes_reference_label(src, first_tok, second_tok) {
+        return None;
+    }
     let prefix = src.get(span.start..first_tok.span.start)?;
     let between = src.get(first_tok.span.end..second_tok.span.start)?;
     let rest = src.get(second_tok.span.end..span.end)?;
@@ -204,7 +256,7 @@ macro_rules! impl_expr_linter {
         }
 
         impl ExprLinter for $name {
-            type Unit = Chunk;
+            type Unit = Sentence;
 
             fn description(&self) -> &str {
                 $desc
@@ -245,6 +297,7 @@ mod tests {
         assert_lint_count, assert_lint_message, assert_markdown_suggestion_result, assert_no_lints,
         assert_suggestion_result,
     };
+    use crate::{Document, linting::Linter};
 
     // Prefer "to each their own"
 
@@ -374,6 +427,45 @@ mod tests {
             "We moved each to their own newly created branch.",
             PreferToEachTheirOwn::default(),
         );
+    }
+
+    #[test]
+    fn dont_flag_quoted_modifiers() {
+        for text in [
+            "We assigned each to their own \"private\" room.",
+            "We assigned each to their own “private” room.",
+            "We assigned each to their own ‘private’ room.",
+        ] {
+            assert_no_lints(text, PreferToEachTheirOwn::default());
+        }
+    }
+
+    #[test]
+    fn dont_flag_nested_parenthetical_modifiers() {
+        assert_no_lints(
+            "We assigned each to their own (private (but tiny)) room.",
+            PreferToEachTheirOwn::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_adverb_and_ambiguous_adjective_before_noun() {
+        assert_no_lints(
+            "We assigned each to their own unusually round table.",
+            PreferToEachTheirOwn::default(),
+        );
+    }
+
+    #[test]
+    fn doesnt_rename_markdown_reference_labels() {
+        for text in [
+            "[Each] to their own.\n\n[Each]: /choices",
+            "Each [to] their own.\n\n[to]: /choices",
+            "[Each to their own].\n\n[Each to their own]: /choices",
+        ] {
+            let doc = Document::new_markdown_default_curated(text);
+            assert!(PreferToEachTheirOwn::default().lint(&doc).is_empty());
+        }
     }
 
     #[test]
