@@ -25,19 +25,44 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          # On pull requests this is the merge commit, so its first parent is the base branch.
+          fetch-depth: 2
+      # Build Web is a required check, so it has to report on every pull request. But check-js
+      # already builds the website from the same sources, so on pull requests this job only
+      # builds the image when something specific to it changes. The merge queue and pushes
+      # always build it.
+      - name: Check whether the image needs building
+        id: inputs
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" != "pull_request" ]]; then
+            echo "build=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          changed=$(git diff --name-only HEAD^1 HEAD)
+          pattern='^(Dockerfile|\.dockerignore|\.node-version|\.npmrc|rust-toolchain\.toml|pnpm-lock\.yaml|pnpm-workspace\.yaml|(.*/)?package\.json|packages/web/.*|\.github/workflows/build_web\.yml)$'
+          if grep -qE "$pattern" <<< "$changed"; then
+            echo "build=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "build=false" >> "$GITHUB_OUTPUT"
+            echo "::notice title=Build Web skipped::This pull request doesn't change the Dockerfile, its dependencies or the website, and check-js builds the website from the same sources. The merge queue builds the image in full."
+          fi
       - name: Setup node
+        if: steps.inputs.outputs.build == 'true'
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version-file: ".node-version"
       - name: Retrieve version after install
+        if: steps.inputs.outputs.build == 'true'
         id: nodenv
         run: echo "node-version=$(node -v | sed 's/^v//')" >> $GITHUB_OUTPUT
       - uses: redhat-actions/buildah-build@719e3c40d8af9790c23eca13f7daa339f2867034 # v3.1.0
+        if: steps.inputs.outputs.build == 'true'
         with:
           image: web
           containerfiles: |
             Dockerfile
           build-args: |
             NODE_VERSION=${{ steps.nodenv.outputs.node-version }}-slim
+            DISABLE_WASM_OPT=${{ github.event_name == 'pull_request' && '1' || '0' }}
           extra-args: |
             --ulimit nofile=65536:65536

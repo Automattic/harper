@@ -31,8 +31,13 @@ RUN set -eu; \
 COPY . .
 
 WORKDIR /usr/build/harper-wasm
-RUN wasm-pack build --target web --out-name harper_wasm
-RUN wasm-pack build --target web --out-name harper_wasm_slim --no-default-features 
+# CI sets this to 1 on pull requests to skip wasm-opt, which only shrinks and speeds up the
+# module. The merge queue, master and real deployments build it as shipped.
+ARG DISABLE_WASM_OPT=0
+RUN wasm-pack build --target web --out-name harper_wasm \
+    $([ "$DISABLE_WASM_OPT" = 1 ] && echo --no-opt)
+RUN wasm-pack build --target web --out-name harper_wasm_slim --no-default-features \
+    $([ "$DISABLE_WASM_OPT" = 1 ] && echo --no-opt)
 RUN cargo clean
 
 FROM node:${NODE_VERSION} AS node-build
