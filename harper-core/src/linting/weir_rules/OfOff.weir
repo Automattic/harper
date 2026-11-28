@@ -1,7 +1,9 @@
-expr quantNum [bazillions, billions, dozens, gazillions, hundreds, millions, tens, trillions, zillions]
+expr quantNum [bazillions, billions, dozens, gazillions, hundreds, millions, tens, thousands, trillions, zillions]
 expr quantDet [all, any, couple, few, many, much, several, some]
+expr idiomNoun [air, balance, base, budget, center, centre, color, colour, course, duty, grid, guard, hand, hook, limits, mark, peak, screen, script, stage, target, track, work]
+expr offNoun <NOUN, !@idiomNoun>
 
-expr main <([@quantNum, @quantDet] off [them, these, those]), off>
+expr main <[([@quantNum, @quantDet] off [them, these, those]), (@quantNum off @offNoun)], off>
 
 let message "Is `off` here a typo for `of`?"
 let description "Looks for instances of `off` that might be typos for `of`."
@@ -13,7 +15,15 @@ let becomes "of"
 test "All off them are more precise, reliable and even cheaper" "All of them are more precise, reliable and even cheaper"
 test "there are usually threshold of acceptable performance in all off those cases" "there are usually threshold of acceptable performance in all of those cases"
 test "Do all clients requests, some off them or none at all?" "Do all clients requests, some of them or none at all?"
+test "I was just saying it doesn’t take millions off examples" "I was just saying it doesn’t take millions of examples"
+test "Thousands off users ran into the same issue" "Thousands of users ran into the same issue"
+test "We reviewed dozens off files before merging" "We reviewed dozens of files before merging"
 
 # real-word false positives
 
 allows "And, to top it all off, those ads were utterly ineffective"
+allows "The project was millions off target"
+allows "The launch drifted hundreds off course"
+allows "The cabin sits thousands off grid"
+allows "We had many off days last month"
+allows "They finished hundreds off the pace"
