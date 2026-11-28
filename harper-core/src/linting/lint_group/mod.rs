@@ -174,6 +174,7 @@ use super::lead_rise_to::LeadRiseTo;
 use super::leaving_in_droves::LeavingInDroves;
 use super::left_right_hand::LeftRightHand;
 use super::less_worse::LessWorse;
+use super::lessen_lesson::LessenLesson;
 use super::let_to_do::LetToDo;
 use super::lets_confusion::LetsConfusion;
 use super::likewise::Likewise;
@@ -825,6 +826,7 @@ impl LintGroup {
         insert_expr_rule!(LeavingInDroves);
         insert_expr_rule!(LeftRightHand);
         insert_expr_rule!(LessWorse);
+        insert_expr_rule!(LessenLesson);
         insert_expr_rule!(LetToDo);
         insert_struct_rule!(LetsConfusion);
         insert_expr_rule!(Likewise);

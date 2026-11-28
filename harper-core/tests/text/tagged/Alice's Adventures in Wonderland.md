@@ -111,7 +111,7 @@
 > think  — ” ( for   , you    see    , Alice had learnt several things of this    sort    in        her
 # NSg/VB . . . R/C/P . ISgPl+ NSg/VB . NPr+  VP  VP     J/Dq    NPl    P  I/Ddem+ NSg/VB+ NPr/J/R/P ISg/D$+
 > lessons in        the schoolroom , and  though this    was  not     a   very good     opportunity for
-# NPl/V3+ NPr/J/R/P D   NSg        . VB/C C      I/Ddem+ VLPt NSg/R/C D/P J/R  NPr/VB/J N🅪Sg+       R/C/P
+# NPl+    NPr/J/R/P D   NSg        . VB/C C      I/Ddem+ VLPt NSg/R/C D/P J/R  NPr/VB/J N🅪Sg+       R/C/P
 > showing    off        her     knowledge , as    there was  no       one      to listen to her     , still      it       was
 # N🅪Sg/Vg/J+ NSg/VB/J/P ISg/D$+ Nᴹ+       . R/C/P R+    VLPt NSg/Dq/P NSg/I/J+ P  NSg/VB P  ISg/D$+ . NSg/VB/J/R NSg/ISg+ VLPt
 > good     practice to say    it       over    ) “ — yes    , that’s about the right    distance — but     then      I
@@ -499,7 +499,7 @@
 > try      and  say    ‘ How   doth the little     — ’ ” and  she  crossed her     hands   on  her     lap       as    if
 # NSg/VB/J VB/C NSg/VB . NSg/C V3   D   NPr/I/J/Dq . . . VB/C ISg+ VP/J    ISg/D$+ NPl/V3+ J/P ISg/D$+ NSg/VB/J+ R/C/P NSg/C
 > she  were saying    lessons , and  began to repeat it       , but     her     voice    sounded hoarse
-# ISg+ VLPt N🅪Sg/Vg/J NPl/V3+ . VB/C VPt   P  NSg/VB NSg/ISg+ . NSg/C/P ISg/D$+ N🅪Sg/VB+ VP/J    NSg/VB/J
+# ISg+ VLPt N🅪Sg/Vg/J NPl+    . VB/C VPt   P  NSg/VB NSg/ISg+ . NSg/C/P ISg/D$+ N🅪Sg/VB+ VP/J    NSg/VB/J
 > and  strange  , and  the words   did  not     come       the same as    they used to do  : —
 # VB/C NSg/VB/J . VB/C D   NPl/V3+ VXPt NSg/R/C NSg/VBPp/P D   I/J  R/C/P IPl+ VP/J P  VXB . .
 >
@@ -523,7 +523,7 @@
 > go       and  live in        that     poky  little     house   , and  have    next    to no       toys    to play    with ,
 # NSg/VB/J VB/C VB/J NPr/J/R/P I/C/Ddem NSg/J NPr/I/J/Dq NPr/VB+ . VB/C NSg/VXB NSg/J/P P  NSg/Dq/P NPl/V3+ P  N🅪Sg/VB P    .
 > and  oh     ! ever so          many       lessons to learn  ! No       , I’ve made up         my  mind    about it       ; if    I’m
-# VB/C NPr/VB . J/R  NSg/I/J/R/C NSg/I/J/Dq NPl/V3+ P  NSg/VB . NSg/Dq/P . K    VP   NSg/VB/J/P D$+ NSg/VB+ J/P   NSg/ISg+ . NSg/C K
+# VB/C NPr/VB . J/R  NSg/I/J/R/C NSg/I/J/Dq NPl+    P  NSg/VB . NSg/Dq/P . K    VP   NSg/VB/J/P D$+ NSg/VB+ J/P   NSg/ISg+ . NSg/C K
 > Mabel , I’ll stay     down        here ! It’ll be       no       use     their putting their heads   down        and
 # NPr   . K    NSg/VB/J N🅪Sg/VB/J/P R    . K     NSg/VLXB NSg/Dq/P N🅪Sg/VB D$+   Nᴹ/Vg/J D$+   NPl/V3+ N🅪Sg/VB/J/P VB/C
 > saying    ‘ Come       up         again , dear     ! ’ I       shall only  look   up         and  say    ‘ Who    am        I       then      ? Tell
@@ -638,8 +638,8 @@
 # N🅪Sg+   . NPr+  VP  NSg/Dq/P J/R  NSg/VB/J+ NSg+   NSg/C NPr/VB/J J/P NSg/I/VB+ VP  VP/J     . . NSg/I/J/R/C
 > she  began again : “ Où est  ma     chatte ? ” which was  the first sentence in        her     French
 # ISg+ VPt   R     . . ?  NPr+ NPr/J+ ?      . . I/C+  VLPt D   NSg/J NSg/VB   NPr/J/R/P ISg/D$+ NPr🅪Sg/VB/J
-> lesson  - book    . The Mouse   gave a    sudden leap      out          of the water    , and  seemed to quiver
-# NSg/VB+ . NSg/VB+ . D+  NSg/VB+ VPt  D/P+ NSg/J+ NSg/VB/J+ NSg/VB/J/R/P P  D+  N🅪Sg/VB+ . VB/C VP/J   P  NSg/VB/J
+> lesson - book    . The Mouse   gave a    sudden leap      out          of the water    , and  seemed to quiver
+# NSg+   . NSg/VB+ . D+  NSg/VB+ VPt  D/P+ NSg/J+ NSg/VB/J+ NSg/VB/J/R/P P  D+  N🅪Sg/VB+ . VB/C VP/J   P  NSg/VB/J
 > all          over     with fright   . “ Oh     , I       beg    your pardon ! ” cried Alice hastily , afraid that
 # NSg/I/J/C/Dq NSg/J/P+ P    NSg/VB/J . . NPr/VB . ISg/#r+ NSg/VB D$+  NSg/VB . . VP/J  NPr+  R       . J      I/C/Ddem
 > she  had hurt      the poor     animal’s feelings . “ I       quite forgot you    didn’t like         cats    . ”
@@ -1057,7 +1057,7 @@
 > sight    ; and  an  old   Crab    took the opportunity of saying    to her     daughter “ Ah       , my
 # N🅪Sg/VB+ . VB/C D/P NSg/J NSg/VB+ VPt  D   N🅪Sg        P  N🅪Sg/Vg/J P  ISg/D$+ NSg+     . NSg/I/VB . D$+
 > dear     ! Let     this    be       a   lesson to you    never to lose your temper     ! ” “ Hold     your tongue   ,
-# NSg/VB/J . NSg/VBP I/Ddem+ NSg/VLXB D/P NSg/VB P  ISgPl+ R     P  VB   D$+  NSg/VB/JC+ . . . NSg/VB/J D$+  N🅪Sg/VB+ .
+# NSg/VB/J . NSg/VBP I/Ddem+ NSg/VLXB D/P NSg    P  ISgPl+ R     P  VB   D$+  NSg/VB/JC+ . . . NSg/VB/J D$+  N🅪Sg/VB+ .
 > Ma     ! ” said the young     Crab    , a   little     snappishly . “ You’re enough to try      the
 # NPr/J+ . . VP/J D+  NPr/VB/J+ NSg/VB+ . D/P NPr/I/J/Dq R          . . K      NSg/I  P  NSg/VB/J D
 > patience of an  oyster    ! ”
@@ -1261,17 +1261,17 @@
 > “ But     then      , ” thought Alice , “ shall I       never get    any    older than I       am        now       ? That’ll
 # . NSg/C/P NSg/J/R/C . . N🅪Sg/VP NPr+  . . VXB   ISg/#r+ R     NSg/VB I/R/Dq JC    C/P  ISg/#r+ NPr/VLB/J NSg/J/R/C . K
 > be       a   comfort  , one     way    — never to be       an  old   woman   — but     then      — always to have    lessons
-# NSg/VLXB D/P N🅪Sg/VB+ . NSg/I/J NSg/J+ . R     P  NSg/VLXB D/P NSg/J NSg/VB+ . NSg/C/P NSg/J/R/C . R      P  NSg/VXB NPl/V3+
+# NSg/VLXB D/P N🅪Sg/VB+ . NSg/I/J NSg/J+ . R     P  NSg/VLXB D/P NSg/J NSg/VB+ . NSg/C/P NSg/J/R/C . R      P  NSg/VXB NPl+
 > to learn  ! Oh     , I       shouldn’t like         that      ! ”
 # P  NSg/VB . NPr/VB . ISg/#r+ VXB       NSg/VB/J/C/P I/C/Ddem+ . .
 >
 #
 > “ Oh     , you    foolish Alice ! ” she  answered herself . “ How   can     you    learn  lessons in
-# . NPr/VB . ISgPl+ J+      NPr+  . . ISg+ VP/J     ISg+    . . NSg/C NPr/VXB ISgPl+ NSg/VB NPl/V3+ NPr/J/R/P
+# . NPr/VB . ISgPl+ J+      NPr+  . . ISg+ VP/J     ISg+    . . NSg/C NPr/VXB ISgPl+ NSg/VB NPl+    NPr/J/R/P
 > here ? Why    , there’s hardly room     for   you    , and  no       room     at    all          for   any
 # R    . NSg/VB . K       R      N🅪Sg/VB+ R/C/P ISgPl+ . VB/C NSg/Dq/P N🅪Sg/VB+ NSg/P NSg/I/J/C/Dq R/C/P I/R/Dq
-> lesson  - books   ! ”
-# NSg/VB+ . NPl/V3+ . .
+> lesson - books   ! ”
+# NSg+   . NPl/V3+ . .
 >
 #
 > And  so          she  went on  , taking   first  one      side      and  then      the other    , and  making  quite a
@@ -2967,7 +2967,7 @@
 > clock   . For   instance , suppose it       were nine o’clock in        the morning    , just time       to
 # NSg/VB+ . R/C/P NSg/VB+  . VB      NSg/ISg+ VLPt NSg  R       NPr/J/R/P D+  N🅪Sg/Vg/J+ . J/R  N🅪Sg/VB/J+ P
 > begin  lessons : you’d only  have    to whisper a   hint    to Time      , and  round      goes   the
-# NSg/VB NPl/V3+ . K     J/R/C NSg/VXB P  NSg/VB  D/P NSg/VB+ P  N🅪Sg/VB/J . VB/C NSg/VB/J/P NPl/V3 D
+# NSg/VB NPl+    . K     J/R/C NSg/VXB P  NSg/VB  D/P NSg/VB+ P  N🅪Sg/VB/J . VB/C NSg/VB/J/P NPl/V3 D
 > clock   in        a   twinkling ! Half      - past       one     , time      for   dinner   ! ”
 # NSg/VB+ NPr/J/R/P D/P N🅪Sg/Vg/J . N🅪Sg/J/P+ . NSg/VB/J/P NSg/I/J . N🅪Sg/VB/J R/C/P N🅪Sg/VB+ . .
 >
@@ -4447,7 +4447,7 @@
 >
 #
 > “ And  how   many        hours a    day     did  you    do  lessons ? ” said Alice , in        a    hurry   to change
-# . VB/C NSg/C NSg/I/J/Dq+ NPl+  D/P+ NPr🅪Sg+ VXPt ISgPl+ VXB NPl/V3+ . . VP/J NPr+  . NPr/J/R/P D/P+ NSg/VB+ P  N🅪Sg/VB
+# . VB/C NSg/C NSg/I/J/Dq+ NPl+  D/P+ NPr🅪Sg+ VXPt ISgPl+ VXB NPl+    . . VP/J NPr+  . NPr/J/R/P D/P+ NSg/VB+ P  N🅪Sg/VB
 > the subject   .
 # D+  NSg/VB/J+ .
 >
@@ -4461,9 +4461,9 @@
 >
 #
 > “ That’s the reason   they’re called lessons , ” the Gryphon remarked : “ because they
-# . K      D+  N🅪Sg/VB+ K       VP/J   NPl/V3+ . . D   ?       VP/J     . . C/P     IPl+
+# . K      D+  N🅪Sg/VB+ K       VP/J   NPl+    . . D   ?       VP/J     . . C/P     IPl+
 > lessen from day     to day    . ”
-# VB/C   P    NPr🅪Sg+ P  NPr🅪Sg . .
+# VB     P    NPr🅪Sg+ P  NPr🅪Sg . .
 >
 #
 > This    was  quite a   new   idea to Alice , and  she  thought it       over    a   little     before she
@@ -4481,7 +4481,7 @@
 >
 #
 > “ That’s enough about lessons , ” the Gryphon interrupted in        a   very decided  tone       :
-# . K      NSg/I  J/P   NPl/V3+ . . D   ?       VP/J        NPr/J/R/P D/P J/R  NSg/VP/J N🅪Sg/I/VB+ .
+# . K      NSg/I  J/P   NPl+    . . D   ?       VP/J        NPr/J/R/P D/P J/R  NSg/VP/J N🅪Sg/I/VB+ .
 > “ tell   her     something about the games   now       . ”
 # . NPr/VB ISg/D$+ NSg/I/J+  J/P   D   NPl/V3+ NSg/J/R/C . .
 >
@@ -4839,7 +4839,7 @@
 >
 #
 > “ How   the creatures order    one     about , and  make   one     repeat lessons ! ” thought Alice ;
-# . NSg/C D+  NPl+      N🅪Sg/VB+ NSg/I/J J/P   . VB/C NSg/VB NSg/I/J NSg/VB NPl/V3+ . . N🅪Sg/VP NPr+  .
+# . NSg/C D+  NPl+      N🅪Sg/VB+ NSg/I/J J/P   . VB/C NSg/VB NSg/I/J NSg/VB NPl+    . . N🅪Sg/VP NPr+  .
 > “ I       might    as    well       be       at    school   at    once  . ” However , she  got up         , and  began to repeat
 # . ISg/#r+ Nᴹ/VXB/J R/C/P NSg/VB/J/R NSg/VLXB NSg/P N🅪Sg/VB+ NSg/P NSg/C . . C       . ISg+ VP  NSg/VB/J/P . VB/C VPt   P  NSg/VB
 > it       , but     her     head      was  so          full     of the Lobster   Quadrille , that     she  hardly knew what
