@@ -330,6 +330,7 @@ use super::throw_baby_with_bathwater::ThrowBabyWithBathwater;
 use super::throw_rubbish::ThrowRubbish;
 use super::till_date::TillDate;
 use super::to_adverb::ToAdverb;
+use super::to_each_their_own::{PreferEachToTheirOwn, PreferToEachTheirOwn};
 use super::to_to::ToTo;
 use super::to_two_too::ToTwoToo;
 use super::tote_tout::ToteTout;
@@ -1043,6 +1044,12 @@ impl LintGroup {
 
         // Uses Sentence rather than Chunk
         out.add("PluralDecades", PluralDecades::default());
+
+        // Uses Sentence rather than Chunk
+        out.add_sentence_expr_linter("PreferEachToTheirOwn", PreferEachToTheirOwn::default());
+
+        // Uses Sentence rather than Chunk
+        out.add_sentence_expr_linter("PreferToEachTheirOwn", PreferToEachTheirOwn::default());
 
         // Uses Dictionary and Dialect
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));

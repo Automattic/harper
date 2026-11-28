@@ -5928,6 +5928,13 @@
 							}
 						},
 						{
+							"OneOfMany": {
+								"names": ["PreferToEachTheirOwn", "PreferEachToTheirOwn"],
+								"name": "PreferToEachTheirOwn",
+								"labels": ["Prefer ‘To Each Their Own’", "Prefer ‘Each to Their Own’"]
+							}
+						},
+						{
 							"Bool": {
 								"name": "QuiteMany",
 								"state": true,
