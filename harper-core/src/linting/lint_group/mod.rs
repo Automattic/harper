@@ -183,6 +183,7 @@ use super::long_sentences::LongSentences;
 use super::long_time_ago::LongTimeAgo;
 use super::look_down_ones_nose::LookDownOnesNose;
 use super::looking_forward_to::LookingForwardTo;
+use super::many_a_plural::ManyAPlural;
 use super::mass_nouns::MassNouns;
 use super::means_a_lot_to::MeansALotTo;
 use super::merge_words::MergeWords;
@@ -834,6 +835,7 @@ impl LintGroup {
         insert_expr_rule!(LongTimeAgo);
         insert_expr_rule!(LookDownOnesNose);
         insert_expr_rule!(LookingForwardTo);
+        insert_expr_rule!(ManyAPlural);
         insert_struct_rule_with_dict!(MassNouns);
         insert_expr_rule!(MeansALotTo);
         insert_struct_rule!(MergeWords);
