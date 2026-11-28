@@ -11,18 +11,18 @@ pub struct PayForPrice {
 impl Default for PayForPrice {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["pay", "paid", "pays", "paying"])
+            expr: SequenceExpr::word_set(["pay", "paid", "pays", "paying"])
                 .t_ws()
                 .t_aco("for")
                 .t_ws()
                 .then_optional(SequenceExpr::default().then_determiner().t_ws())
                 .then(
-                    SequenceExpr::word_set(&[
+                    SequenceExpr::word_set([
                         "bill", "bills", "check", "checks", "cheque", "cheques", "charge",
                         "charges", "cost", "costs", "fee", "fees", "price", "prices",
                     ])
                     .but_not(SequenceExpr::any_of(vec![
-                        Box::new(SequenceExpr::aco("check").t_ws_h().t_set(&["in", "out"])),
+                        Box::new(SequenceExpr::aco("check").t_ws_h().t_set(["in", "out"])),
                         Box::new(SequenceExpr::aco("price").t_ws_h().t_aco("increase")),
                     ])),
                 ),
@@ -35,14 +35,14 @@ impl ExprLinter for PayForPrice {
 
     fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
         let span = matched_tokens[2..4].span()?;
-        let lint_kind = LintKind::Usage;
-        let suggestions = vec![Suggestion::Remove];
-        let message = "You `pay for` things or services, but just `pay prices/fees`, etc with no preposition.".to_owned();
+
         Some(Lint {
             span,
-            lint_kind,
-            suggestions,
-            message,
+            lint_kind: LintKind::Usage,
+            suggestions: vec![Suggestion::Remove],
+            message:
+                "Omit 'for' before a price or fee (e.g., pay the price, not pay for the price)."
+                    .to_owned(),
             ..Default::default()
         })
     }
@@ -143,7 +143,7 @@ mod tests {
         );
     }
 
-    // Edge cases / False positives / Not yet handlec
+    // Edge cases / False positives / Not yet handled
 
     #[test]
     #[ignore = "Detecting this pattery will require more thought"]

@@ -1,9 +1,11 @@
 <script lang="ts">
+import { Button, Checkbox, CheckIcon, Input, Select, SettingRow } from 'components';
 import type { Dialect } from 'harper.js';
 import { onMount } from 'svelte';
 import { Client } from '$lib/client';
-import { DesktopUpdater } from '$lib/DesktopUpdater';
 import { DIALECT_OPTIONS } from '../settings-data';
+
+export let onRestartOnboarding: () => void;
 
 const DialectValue = {
 	American: 0,
@@ -13,7 +15,6 @@ const DialectValue = {
 	Indian: 4,
 } as const;
 
-let menuBar = true;
 let launchAtStartup = false;
 let autoUpdate = true;
 let dialect = 'american';
@@ -28,6 +29,9 @@ let isAutoUpdateSaving = false;
 let isCheckingForUpdates = false;
 let autoUpdateError = '';
 let updateStatus = '';
+let isRestartRequired = false;
+let isRestarting = false;
+let restartError = '';
 let currentVersion = '';
 let latestVersion = '';
 let debounceMs = 0;
@@ -166,8 +170,8 @@ async function setAutoUpdate(enabled: boolean) {
 async function loadUpdateVersions() {
 	try {
 		const [current, latest] = await Promise.all([
-			DesktopUpdater.getCurrentVersion(),
-			DesktopUpdater.getLatestVersion(),
+			Client.getCurrentVersion(),
+			Client.getLatestVersion(),
 		]);
 		currentVersion = current;
 		latestVersion = latest;
@@ -182,20 +186,37 @@ async function checkForUpdates() {
 	updateStatus = 'Checking for updates...';
 
 	try {
-		await Client.setLastUpdateCheck(Date.now());
-		const result = await DesktopUpdater.updateToLatest();
-		updateStatus = result.message;
+		const result = await Client.updateToLatest();
+		if (result.status === 'updated') {
+			isRestartRequired = true;
+			updateStatus = '';
+		} else {
+			updateStatus = result.message;
+		}
 
 		if (result.latestVersion != null) {
 			latestVersion = result.latestVersion;
 		}
 
-		currentVersion = result.currentVersion ?? (await DesktopUpdater.getCurrentVersion());
+		currentVersion = result.currentVersion ?? (await Client.getCurrentVersion());
 	} catch (error) {
 		autoUpdateError = `Unable to check for updates: ${error}`;
 		updateStatus = '';
 	} finally {
 		isCheckingForUpdates = false;
+	}
+}
+
+async function restartHarper() {
+	if (isRestarting || isCheckingForUpdates) return;
+	isRestarting = true;
+	restartError = '';
+
+	try {
+		await Client.restartHarper();
+	} catch (error) {
+		restartError = String(error);
+		isRestarting = false;
 	}
 }
 
@@ -274,41 +295,19 @@ function settingsValueToDialect(value: string): Dialect {
         <div class="stanza">
           <div class="eyebrow">General</div>
           <div class="rows">
-            <div class="row top">
-              <div>
-                <strong>Keep Harper in the menu bar</strong>
-                <p>Shows the Harper icon so you can open settings without opening the main app.</p>
-              </div>
-              <button
-                class:checked={menuBar}
-                class="checkbox"
-                type="button"
-                role="checkbox"
-                disabled
-                title="Not wired yet"
-                aria-checked={menuBar}
-              >
-                {#if menuBar}<span class="settings-icon icon-check" aria-hidden="true"></span>{/if}
-              </button>
-            </div>
-
-            <div class="row">
-              <div>
-                <strong>Launch Harper at startup</strong>
-                <p>Harper will start silently when you log in.</p>
-              </div>
-              <button
-                class:checked={launchAtStartup}
-                class="checkbox"
-                type="button"
-                role="checkbox"
+            <SettingRow top>
+              <strong>Launch Harper at startup</strong>
+              <p>Harper will start silently when you log in.</p>
+              <Checkbox
+                slot="control"
+                appearance="settings"
+                checked={launchAtStartup}
                 disabled={isLaunchAtStartupLoading || isLaunchAtStartupSaving}
-                aria-checked={launchAtStartup}
                 on:click={() => setLaunchAtStartup(!launchAtStartup)}
               >
-                {#if launchAtStartup}<span class="settings-icon icon-check" aria-hidden="true"></span>{/if}
-              </button>
-            </div>
+                {#if launchAtStartup}<CheckIcon className="control-icon" />{/if}
+              </Checkbox>
+            </SettingRow>
             {#if isLaunchAtStartupLoading}
               <p class="result-summary">Loading startup setting...</p>
             {:else if launchAtStartupError}
@@ -317,36 +316,33 @@ function settingsValueToDialect(value: string): Dialect {
               <p class="result-summary">Saving startup setting...</p>
             {/if}
 
-            <div class="row top">
-              <div>
-                <strong>Automatically check for updates</strong>
-                <p>Harper will check for new versions daily.</p>
-                <p class="result-summary">
-                  Current version: {currentVersion || 'loading...'} · Latest version: {latestVersion || 'loading...'}
-                </p>
+            <SettingRow top>
+              <strong>Automatically check for updates</strong>
+              <p>Harper will check for new versions daily.</p>
+              <p class="result-summary">
+                Current version: {currentVersion || 'loading...'} · Latest version: {latestVersion || 'loading...'}
+              </p>
+              <div class="inline-row">
+                <Button
+                  unstyled
+                  class="button"
+                  type="button"
+                  disabled={isCheckingForUpdates || isRestarting}
+                  on:click={checkForUpdates}
+                >
+                  {isCheckingForUpdates ? 'Checking...' : 'Check for updates'}
+                </Button>
               </div>
-              <button
-                class:checked={autoUpdate}
-                class="checkbox"
-                type="button"
-                role="checkbox"
+              <Checkbox
+                slot="control"
+                appearance="settings"
+                checked={autoUpdate}
                 disabled={isAutoUpdateLoading || isAutoUpdateSaving}
-                aria-checked={autoUpdate}
                 on:click={() => setAutoUpdate(!autoUpdate)}
               >
-                {#if autoUpdate}<span class="settings-icon icon-check" aria-hidden="true"></span>{/if}
-              </button>
-            </div>
-            <div class="inline-row">
-              <button
-                class="button"
-                type="button"
-                disabled={isCheckingForUpdates}
-                on:click={checkForUpdates}
-              >
-                {isCheckingForUpdates ? 'Checking...' : 'Check for updates'}
-              </button>
-            </div>
+                {#if autoUpdate}<CheckIcon className="control-icon" />{/if}
+              </Checkbox>
+            </SettingRow>
             {#if isAutoUpdateLoading}
               <p class="result-summary">Loading update setting...</p>
             {:else if autoUpdateError}
@@ -356,7 +352,34 @@ function settingsValueToDialect(value: string): Dialect {
             {:else if updateStatus}
               <p class="result-summary">{updateStatus}</p>
             {/if}
+            {#if isRestartRequired}
+              <p class="result-summary restart-summary">
+                Update installed.
+                {#if isRestarting}
+                  Restarting Harper…
+                {:else}
+                  <button type="button" class="restart-link" disabled={isCheckingForUpdates} on:click={restartHarper}>Restart Harper</button> to finish.
+                {/if}
+              </p>
+              {#if restartError}
+                <p class="result-summary" role="alert">{restartError}</p>
+              {/if}
+            {/if}
           </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="stanza">
+          <SettingRow top>
+            <div class="eyebrow">Restart Onboarding from the Beginning</div>
+            <p class="section-copy">
+              Useful to give Harper accessibility permission again or to learn how Harper works.
+            </p>
+            <Button slot="control" unstyled class="button" type="button" on:click={onRestartOnboarding}>
+              Restart onboarding
+            </Button>
+          </SettingRow>
         </div>
 
         <div class="divider"></div>
@@ -368,17 +391,18 @@ function settingsValueToDialect(value: string): Dialect {
           </p>
           <div class="inline-row">
             <label for="dialect">English dialect:</label>
-            <select
+            <Select
+              unstyled
               id="dialect"
               class="select wide"
               disabled={isDialectLoading || isDialectSaving}
               bind:value={dialect}
-              on:change={(event) => setDialect(event.currentTarget.value)}
+              on:change={(event) => setDialect((event.detail.currentTarget as HTMLSelectElement).value)}
             >
               {#each DIALECT_OPTIONS as option}
                 <option value={option.value}>{option.label}</option>
               {/each}
-            </select>
+            </Select>
           </div>
           {#if isDialectLoading}
             <p class="result-summary">Loading dialect...</p>
@@ -399,15 +423,15 @@ function settingsValueToDialect(value: string): Dialect {
           </p>
           <div class="inline-row">
             <label for="debounce-ms">Debounce delay:</label>
-            <input
+            <Input
+              unstyled
               id="debounce-ms"
               class="select"
               type="number"
               min="0"
               step="50"
               disabled={isDebounceLoading || isDebounceSaving}
-              value={debounceMsInput}
-              on:input={(event) => (debounceMsInput = event.currentTarget.value)}
+              bind:value={debounceMsInput}
               on:change={saveDebounceMs}
             />
             <span>ms</span>
@@ -421,3 +445,24 @@ function settingsValueToDialect(value: string): Dialect {
           {/if}
         </div>
       </section>
+
+<style>
+.restart-summary {
+  margin-bottom: 0;
+}
+
+.restart-link {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  color: var(--settings-accent);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.restart-link:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+</style>

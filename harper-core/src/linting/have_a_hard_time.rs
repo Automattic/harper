@@ -13,8 +13,8 @@ pub struct HaveAHardTime {
 impl HaveAHardTime {
     pub fn new(dialect: Dialect) -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["have", "had", "has", "having"])
-                .then_optional(SequenceExpr::whitespace().t_set(&["extremely", "real"]))
+            expr: SequenceExpr::word_set(["have", "had", "has", "having"])
+                .then_optional(SequenceExpr::whitespace().t_set(["extremely", "real"]))
                 .t_ws()
                 .then_word_seq(&["hard", "time"]),
             dialect,

@@ -1,15 +1,20 @@
-<script module>
+<script module lang="ts">
 export const frontmatter = {
 	home: false,
+	title: 'Free Grammar & Spell Checker — Private, No AI',
+	description: 'Harper is the free, private, open-source grammar checker that runs on your device.',
 };
 </script>
 
+<PageMetadata metadata={frontmatter} standaloneTitle />
+
 <script lang="ts">
-import { browser } from '$app/environment';
-import { Arrow } from 'components';
+import PageMetadata from '$lib/PageMetadata.svelte';
+import { Arrow, StarIcon } from 'components';
 import { TestimonialCollection } from 'components';
 import { createEditorLinter } from '$lib/createEditorLinter';
 import FaqSection from '$lib/marketing/FaqSection.svelte';
+import FeaturedIntegrations from '$lib/marketing/FeaturedIntegrations.svelte';
 import HarperMark from '$lib/marketing/HarperMark.svelte';
 import IntegrationTile from '$lib/marketing/IntegrationTile.svelte';
 import MarketingFooter from '$lib/marketing/MarketingFooter.svelte';
@@ -17,14 +22,18 @@ import MarketingHeader from '$lib/marketing/MarketingHeader.svelte';
 import PillButton from '$lib/marketing/PillButton.svelte';
 import PrivacySpeedCards from '$lib/marketing/PrivacySpeedCards.svelte';
 import { featuredIntegrationIds, integrations, marketingLinks } from '$lib/marketing/data';
-import { LazyEditor } from 'harper-editor';
 import type { Linter } from 'harper.js';
 import { isUpToDate, loadLiveVersions, liveVersions } from '$lib/marketing/versions';
 import { onMount } from 'svelte';
 import demoText from '../../../../demo.md?raw';
+    import Loader from '$lib/components/Loader.svelte';
 
+const chromeHref =
+	'https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb?utm_source=harper-homepage&utm_medium=referral';
 const editorContent = demoText.trim();
 let linter: Linter | null = null;
+let Editor: typeof import('harper-editor').Editor | null = null;
+let editorFailed = false;
 
 const VERSION_UPTODATE = 'Up-to-date';
 const VERSION_BEHIND = 'This version is slightly behind the core engine due to a delay';
@@ -67,11 +76,10 @@ const testimonials = [
 		source: 'https://obsidian.rocks/resource-harper/',
 	},
 	{
-		authorName: 'imbolc',
-		authorSubtitle: 'Chrome Extension Review',
-		testimonial: "I’ve been using Harper in Neovim for a long time and am glad to see it as an extension!",
-		source:
-			'https://chromewebstore.google.com/detail/private-grammar-checker-h/lodbfhdipoipcjmlebjbgmmgekckhpfb/reviews',
+		authorName: 'MordeStack',
+		authorSubtitle: '@MordeStack',
+		testimonial: 'Uninstalled LanguageTool and replaced with Harper. Huge upgrade.',
+		source: 'https://x.com/MordeStack',
 	},
 	{
 		authorName: 'Martijn Gribnau',
@@ -140,10 +148,6 @@ const faqs = [
 		q: "What Do I Do If My Question Isn’t Here?",
 		a: 'You can join our Discord and ask your questions there or you can start a discussion over at GitHub.',
 	},
-	{
-		q: "Why Isn’t Harper Working in Gmail?",
-		a: 'Harper will not run in Gmail unless the built-in grammar checker is disabled. If you wish to use Harper in Gmail, please disable the built-in grammar checker.',
-	},
 ];
 
 let liveFxVer = '';
@@ -152,22 +156,39 @@ let liveRustVer = '';
 let liveVscodeVer = '';
 
 onMount(() => {
+	let active = true;
+	// Worker startup errors can leave setup() pending instead of rejecting.
+	const timeout = setTimeout(() => {
+		editorFailed = true;
+	}, 30_000);
+
 	void (async () => {
-		linter = await createEditorLinter();
+		try {
+			// Keep the entire package entry out of the homepage's static import graph.
+			const editorModule = await import('harper-editor');
+			if (!active || editorFailed) return;
+			const instance = await createEditorLinter();
+			if (!active || editorFailed) {
+				await instance.dispose();
+				return;
+			}
+			Editor = editorModule.Editor;
+			linter = instance;
+		} catch {
+			if (active) editorFailed = true;
+		} finally {
+			clearTimeout(timeout);
+		}
 	})();
 
-    void loadLiveVersions();
+	void loadLiveVersions();
+	return () => {
+		active = false;
+		clearTimeout(timeout);
+	};
 });
 
 </script>
-
-<svelte:head>
-	<title>Harper: The Private Grammar Checker</title>
-	<meta
-		name="description"
-		content="Harper is the free, private, open-source grammar checker that runs on your device."
-	/>
-</svelte:head>
 
 <div class="min-h-screen bg-[#f6f1e6] text-[#1c1a16] dark:bg-black dark:text-white">
 	<MarketingHeader active="home" />
@@ -182,9 +203,15 @@ onMount(() => {
 				The <strong class="inline-block -rotate-1 bg-primary-100 p-1 text-black">Free</strong> Grammar Checker
 				That Respects Your Privacy
 			</p>
+			<div class="mt-7 w-full">
+				<FeaturedIntegrations source="harper-homepage" />
+			</div>
 			<div class="mt-7 flex flex-wrap gap-[0.65rem] max-[620px]:flex-col max-[620px]:items-stretch">
-				<PillButton href="/get" size="lg">Get Harper</PillButton>
-				<PillButton href={marketingLinks.github} kind="secondary" size="lg">Star on GitHub</PillButton>
+				<PillButton href="/get" size="lg">Explore more integrations</PillButton>
+				<PillButton href={marketingLinks.github} kind="secondary" size="lg">
+					<StarIcon slot="icon" />
+					Star on GitHub
+				</PillButton>
 			</div>
 		</div>
 	</section>
@@ -201,11 +228,15 @@ onMount(() => {
 				>
 			</div>
 			<div class="h-[35rem] overflow-hidden rounded-[0.9rem] border-[0.5px] border-[rgba(28,26,22,0.16)] bg-[#fbfaf6] shadow-[0_30px_60px_-24px_rgba(28,26,22,0.22),0_6px_14px_rgba(28,26,22,0.06),0_0_0_0.5px_rgba(0,0,0,0.04)] dark:border-white/15 dark:bg-black max-[620px]:h-[40rem]">
-				{#if browser && linter}
-					<LazyEditor content={editorContent} {linter} />
+				{#if editorFailed}
+					<p role="status" class="flex h-full items-center justify-center p-6 text-center">
+						The demo could not load. Reload the page to try again.
+					</p>
+				{:else if Editor && linter}
+					<svelte:component this={Editor} content={editorContent} {linter} />
 				{:else}
 					<div class='flex h-full items-center justify-center text-[0.82rem] text-[#807a6e] dark:text-white/55 [font-family:"JetBrains_Mono",monospace]'>
-						Loading Harper’s grammar engine...
+            <Loader />
 					</div>
 				{/if}
 			</div>
@@ -253,7 +284,7 @@ onMount(() => {
 						{@const titleText = upToDate ? VERSION_UPTODATE : upToDate === false ? VERSION_BEHIND : null}
 						<a
 							class="flex items-center gap-3 rounded-[0.65rem] px-3 py-[0.65rem] !text-[#1c1a16] no-underline hover:bg-black/[0.04] hover:no-underline dark:!text-white dark:hover:bg-white/10"
-							href={integration.href}
+							href={integration.id === 'chrome' ? chromeHref : integration.href}
 						>
 							<IntegrationTile {integration} size={32} />
 							<span class="flex min-w-0 flex-col">
@@ -291,14 +322,58 @@ onMount(() => {
 		<div class="mx-auto max-w-[73.75rem] px-10 max-[880px]:px-4">
 			<div class="mb-11 text-center">
 				<h2 class="!mt-3 !mb-0 py-0 !font-serif text-[clamp(2.2rem,5vw,2.5rem)] font-[650] leading-[1.08] tracking-normal text-inherit">
-					Loved by writers, journalists, and devs.
+					Loved by students, journalists, and devs.
 				</h2>
 			</div>
 			<TestimonialCollection {testimonials} />
 		</div>
 	</section>
 
+	<section
+		class="border-t-[0.5px] border-[rgba(28,26,22,0.1)] bg-[#fdfbf5] py-[4.8rem] dark:border-white/10 dark:bg-black"
+		aria-labelledby="made-by-title"
+	>
+		<div
+			class="mx-auto grid max-w-[68.75rem] grid-cols-[minmax(14rem,22rem)_minmax(0,1fr)] items-center gap-14 px-10 max-[880px]:grid-cols-1 max-[880px]:px-4"
+		>
+			<img
+				class="aspect-square w-full rounded-[0.9rem] object-cover shadow-[0_24px_50px_-24px_rgba(28,26,22,0.35)] max-[880px]:max-w-[22rem]"
+				src="/marketing/elijah-potter.webp"
+				alt="Elijah Potter"
+				width="720"
+				height="720"
+				loading="lazy"
+			/>
+			<div>
+				<h2
+					id="made-by-title"
+					class="!mt-0 !mb-0 py-0 !font-serif text-[clamp(2.2rem,5vw,2.5rem)] font-[650] leading-[1.08] tracking-normal text-inherit"
+				>
+					Made by Me and You
+				</h2>
+				<p class="!mt-5 !mb-0 text-base leading-[1.65] text-[#4a463e] dark:text-white/70">
+					Harper was originally created by me,
+					<a
+						class="font-semibold !text-[#b06a1b] underline decoration-[#b06a1b]/35 underline-offset-4 hover:decoration-current dark:!text-primary-300"
+						href="https://elijahpotter.dev">Elijah Potter</a
+					>. Today, I work at Automattic and build it alongside Harper's users and maintainers.
+				</p>
+				<p class="!mt-5 !mb-0 text-base leading-[1.65] text-[#4a463e] dark:text-white/70">
+					The Harper project seeks to enable everyone on Earth to speak their mind. We believe
+					that each human being has the right to express their thoughts and emotions freely. To
+					do that, we hope to provide universal access to great grammar checking at a low price
+					($0).
+				</p>
+				<p class="!mt-5 !mb-0 text-base leading-[1.65] text-[#4a463e] dark:text-white/70">
+					We believe that your thoughts are yours, so we see it as a moral obligation to do
+					everything we can to keep all of your data on your device. So far, we have succeeded.
+				</p>
+			</div>
+		</div>
+	</section>
+
 	<FaqSection
+		id="faqs"
 		items={faqs}
 		title="Questions, answered."
 		intro="Don’t see yours?"
@@ -319,7 +394,10 @@ onMount(() => {
 				and we’d love your help.
 			</p>
 			<div class="mt-7 flex flex-col flex-wrap items-center justify-center gap-[0.65rem]">
-				<PillButton href={marketingLinks.github} size="lg">Star on GitHub</PillButton>
+				<PillButton href={marketingLinks.github} size="lg">
+					<StarIcon slot="icon" />
+					Star on GitHub
+				</PillButton>
 				<PillButton href="/docs/contributors/introduction" size="lg">Contribute</PillButton>
 			</div>
 		</div>

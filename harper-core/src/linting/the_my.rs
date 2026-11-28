@@ -15,7 +15,7 @@ pub struct TheMy {
 impl Default for TheMy {
     fn default() -> Self {
         let the = Word::new("the");
-        let any_possessive = WordSet::new(&["my", "your", "his", "her", "its", "our", "their"]);
+        let any_possessive = WordSet::new(["my", "your", "his", "her", "its", "our", "their"]);
 
         let the_poss = SequenceExpr::with(the.clone())
             .then_whitespace()

@@ -1,0 +1,8 @@
+expr main (lot's of)
+
+let message "Are you confusing `lots` and `let's`? There is no apostrophe in `lots`."
+let description "Corrects `lot's of` to `lots of`."
+let kind "Punctuation"
+let becomes "lots of"
+
+test "Lot's of (rough WIP) work to bring the repo current with gpui-ce v0.3.3." "Lots of (rough WIP) work to bring the repo current with gpui-ce v0.3.3."

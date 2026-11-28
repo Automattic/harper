@@ -15,7 +15,7 @@ impl Default for InTimeFromNow {
             expr: SequenceExpr::aco("in")
                 .t_ws()
                 .then_optional(
-                    SequenceExpr::word_set(&[
+                    SequenceExpr::word_set([
                         "about",
                         "almost",
                         "approximately",

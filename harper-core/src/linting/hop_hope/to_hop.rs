@@ -12,13 +12,13 @@ pub struct ToHop {
 
 impl Default for ToHop {
     fn default() -> Self {
-        let pattern = SequenceExpr::word_set(&["hoping", "hoped", "hope"])
+        let pattern = SequenceExpr::word_set(["hoping", "hoped", "hope"])
             .then_whitespace()
             .t_aco("on")
             .then_whitespace()
             .then_determiner()
             .then_whitespace()
-            .then_word_set(&["airplane", "plane", "bus", "call", "train"]);
+            .then_word_set(["airplane", "plane", "bus", "call", "train"]);
 
         Self {
             expr: Box::new(pattern),

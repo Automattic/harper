@@ -1,0 +1,10 @@
+expr main (strike of luck)
+
+let message "Did you mean `stroke of luck`?"
+let description "Detects incorrect usage of `strike of luck` and suggests `stroke of luck` as the correct phrase."
+let kind "Usage"
+let becomes "stroke of luck"
+
+test "But that's a one in a million strike of luck" "But that's a one in a million stroke of luck"
+test "Is this a happy coincidence and a strike of luck?" "Is this a happy coincidence and a stroke of luck?"
+

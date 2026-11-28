@@ -19,7 +19,7 @@ pub struct BackInTheDay {
 
 impl Default for BackInTheDay {
     fn default() -> Self {
-        let exceptions = Lrc::new(WordSet::new(&["before", "of", "when"]));
+        let exceptions = Lrc::new(WordSet::new(["before", "of", "when"]));
         let phrase = Lrc::new(FixedPhrase::from_phrase("back in the days"));
 
         let pattern = SequenceExpr::with(phrase.clone())

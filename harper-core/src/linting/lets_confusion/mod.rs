@@ -76,4 +76,24 @@ mod tests {
             0,
         );
     }
+
+    #[test]
+    fn issue_4037_all() {
+        assert_lint_count("Let's all go home.", LetsConfusion::default(), 0);
+    }
+
+    #[test]
+    fn issue_4037_both() {
+        assert_lint_count("Let's both try again.", LetsConfusion::default(), 0);
+    }
+
+    #[test]
+    fn issue_4037_everyone() {
+        assert_lint_count("Let's everyone take a seat.", LetsConfusion::default(), 0);
+    }
+
+    #[test]
+    fn issue_4037_everybody() {
+        assert_lint_count("Let's everybody take a seat.", LetsConfusion::default(), 0);
+    }
 }

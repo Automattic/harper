@@ -1,6 +1,6 @@
 expr main [(per say), (per-se), (per-say)]
 
-let message "The correct spelling is `per se` (with no hyphen)"
+let message "The correct spelling is `per se` (with no hyphen)."
 let description "Corrects common misspellings of `per se`."
 let kind "Spelling"
 let becomes "per se"

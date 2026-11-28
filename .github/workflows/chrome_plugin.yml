@@ -8,21 +8,39 @@ on:
     branches: ["master"]
   merge_group:
 
+# Cancel superseded runs when a PR gets new commits, freeing runners for other
+# jobs. Non-PR runs get a unique group, so they are never queued or cancelled.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
 env:
   CARGO_TERM_COLOR: always
+
+# Grant each job only the token permissions it needs.
+permissions: {}
 
 jobs:
   chrome-plugin:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Only needed on tag pushes, to attach the built files to the draft release.
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4.0.0
-      - uses: actions/setup-node@v7
+        with:
+          just-version: 1.59.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version-file: ".node-version"
+          # This job builds release files, so it shouldn't restore a package cache that
+          # another job could have tampered with.
+          package-manager-cache: false
       - name: Enable Corepack
         run: corepack enable
-      - uses: cargo-bins/cargo-binstall@910d9e4456ce4b039662d2a02a34ef1d23c3c50c # main
+      - uses: cargo-bins/cargo-binstall@b874e25ea559687bec77e281e9b271aa1367b624 # v1.23.0
       - name: Install `wasm-pack`
         run: cargo binstall wasm-pack --force --no-confirm
       - name: Build Chrome Plugin
@@ -30,12 +48,12 @@ jobs:
       - name: Build Firefox Plugin
         run: just build-firefox-plugin
       - name: Upload Chrome extension
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: harper-chrome-plugin.zip
           path: "packages/chrome-plugin/package/harper-chrome-plugin.zip"
       - name: Upload Firefox extension
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: harper-firefox-plugin.zip
           path: "packages/chrome-plugin/package/harper-firefox-plugin.zip"

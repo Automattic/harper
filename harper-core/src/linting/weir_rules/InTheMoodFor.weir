@@ -1,0 +1,28 @@
+expr be [am, are, aren't, be, been, being, he's, I'm, is, isn't, it's, she's, they're, was, wasn't, were, we're, weren't, you're]
+expr adv [ADV, not]
+expr main [<(@be in [a, the] mood of), of>, <(@adv in [a, the] mood of), of>]
+
+let message "The correct preposition to use with being `in` a `mood`is `for`."
+let description "Corrects wrong preposition usage with `mood`."
+let kind "Usage"
+let becomes "for"
+
+# to be
+test "If you are in the mood of experimenting around, you could try the following:" "If you are in the mood for experimenting around, you could try the following:"
+test "but I wasn't in the mood of investigating" "but I wasn't in the mood for investigating"
+test "whenever I'll be in the mood of wanting to sharpen my artistic sword I'll take a shot at this" "whenever I'll be in the mood for wanting to sharpen my artistic sword I'll take a shot at this"
+test "I was in a mood of experimenting how to render a python code" "I was in a mood for experimenting how to render a python code"
+
+# pronoun + 's contractions
+test "so I'm in a mood of rhetoric and reason" "so I'm in a mood for rhetoric and reason"
+
+# adverb
+test "sometimes I am really in the mood of having 40+ little colored cuber" "sometimes I am really in the mood for having 40+ little colored cuber"
+test "I'm not in the mood of discussing this or convincing you otherwise." "I'm not in the mood for discussing this or convincing you otherwise."
+test "I believe we are already in the mood of moving away from geom_map()" "I believe we are already in the mood for moving away from geom_map()"
+test "i'm not quite in the mood of installing others only for numba" "i'm not quite in the mood for installing others only for numba"
+
+# some contexts are legit
+allows "statements seem to be made in the mood of a man who didn't leave voluntarily"
+allows "One day Subhuti, in a mood of sublime emptiness, was sitting under a tree."
+allows "in December 1968, in a mood of black depression, I attended the meeting"

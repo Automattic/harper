@@ -1,0 +1,9 @@
+expr main (underneath of)
+
+let message "`Underneath of` is not idiomatic English. `Underneath`, and `under` express a position below without requiring a second preposition such as `of`."
+let description "Corrects `underneath of`."
+let kind "Usage"
+let becomes ["underneath", "under"]
+
+test "When user tries to pick a date, the display is hidden underneath of my map." "When user tries to pick a date, the display is hidden underneath my map."
+test "At the top is the YouTube channel's name; underneath of that is the hyperlinked YouTube video's title with the hyperlink" "At the top is the YouTube channel's name; under that is the hyperlinked YouTube video's title with the hyperlink"

@@ -1,6 +1,9 @@
 ---
 title: Committing
+description: Prepare Harper contributions with conventional commits, formatting checks, and the required review process.
 ---
+
+# Committing
 
 Harper follows [conventional commit practices](https://www.conventionalcommits.org/en/v1.0.0/).
 Before creating a pull request, please make sure all your commits follow the linked conventions.

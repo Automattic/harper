@@ -2,21 +2,24 @@
 //! dictionary lookups).
 
 use itertools::Itertools;
+use smallvec::ToSmallVec;
 
-use crate::{CharString, CharStringExt, DictWordMetadata};
+use crate::{CharString, CharStringExt, Dialect, DictWordMetadata};
 
 pub use self::dictionary::Dictionary;
 pub use self::fst_dictionary::FstDictionary;
 pub use self::merged_dictionary::MergedDictionary;
 pub use self::mutable_dictionary::MutableDictionary;
+pub use self::surrounding_words::{context_word, surrounding_words};
 pub use self::trie_dictionary::TrieDictionary;
-pub use self::word_id::WordId;
+pub use self::word_id::{CanonicalWordId, CaseFoldedWordId};
 
 mod dictionary;
 mod fst_dictionary;
 mod merged_dictionary;
 mod mutable_dictionary;
 mod rune;
+mod surrounding_words;
 mod trie_dictionary;
 mod word_id;
 mod word_map;
@@ -379,14 +382,16 @@ fn score_suggestion(misspelled_word: &[char], sug: &FuzzyMatchResult) -> i32 {
     score
 }
 
-/// Order the suggestions to be shown to the user.
+/// Order the suggestions to be shown to the user, each with its score. Lower scores are better.
 fn order_suggestions<'b>(
     misspelled_word: &[char],
-    mut matches: Vec<FuzzyMatchResult<'b>>,
-) -> Vec<&'b [char]> {
-    matches.sort_by_cached_key(|v| score_suggestion(misspelled_word, v));
-
-    matches.into_iter().map(|v| v.word).collect()
+    matches: Vec<FuzzyMatchResult<'b>>,
+) -> Vec<(&'b [char], i32)> {
+    matches
+        .into_iter()
+        .map(|v| (v.word, score_suggestion(misspelled_word, &v)))
+        .sorted_by_key(|(_, score)| *score)
+        .collect()
 }
 
 /// Get the closest matches in the provided [`Dictionary`] and rank them
@@ -403,6 +408,36 @@ pub fn suggest_correct_spelling<'a>(
         .collect();
 
     order_suggestions(misspelled_word, matches)
+        .into_iter()
+        .map(|(word, _)| word)
+        .collect()
+}
+
+/// Spelling candidates for a misspelled word with their scores, in Harper's spelling order.
+///
+/// Widens the edit distance until a match appears.
+pub fn spelling_candidates(
+    word: &[char],
+    dictionary: &impl Dictionary,
+    dialect: Dialect,
+    limit: usize,
+) -> Vec<(CharString, i32)> {
+    (2..5)
+        .map(|dist| {
+            order_suggestions(word, dictionary.fuzzy_match(word, dist, 200))
+                .into_iter()
+                .filter(|(candidate, _)| {
+                    dictionary
+                        .get_word_metadata(candidate)
+                        .is_some_and(|meta| meta.dialects.is_dialect_enabled(dialect))
+                })
+                .unique_by(|(candidate, _)| candidate.to_lower())
+                .map(|(candidate, score)| (candidate.to_smallvec(), score))
+                .take(limit)
+                .collect::<Vec<_>>()
+        })
+        .find(|suggestions| !suggestions.is_empty())
+        .unwrap_or_default()
 }
 
 /// Convenience function over [`suggest_correct_spelling`] that does conversions

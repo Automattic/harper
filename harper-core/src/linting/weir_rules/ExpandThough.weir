@@ -1,6 +1,6 @@
 expr main (tho)
 
-let message "Use `though` instead of `tho`"
+let message "Use `though` instead of `tho`."
 let description "Expands the informal spelling `tho` to the standard word `though`."
 let kind "Style"
 let becomes "though"

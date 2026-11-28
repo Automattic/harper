@@ -4,19 +4,19 @@ about: Propose a new feature
 title: ''
 labels: enhancement
 ---
-**What problem does this solve?**
+## What problem does this solve?
 Brief description.
 
-**Proposed Solution**
+## Proposed Solution
 How should it work?
 
-**Examples**
+## Examples
 Show, don't tell.
 
-**Component**
+## Component
 - [ ] Core engine
 - [ ] Plugin/Extension
 - [ ] Other: _____
 
-**Additional Context**
+## Additional Context
 Any other relevant info.

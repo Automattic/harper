@@ -57,6 +57,7 @@ enum Context {
     ItsFollowedByThatOrWhich,
     ItsActuallyPartOfANounPhrase,
     ItsFollowedByVerb,
+    ItsFollowedByAModalVerb,
 }
 
 impl PhrasalVerbAsCompoundNoun {
@@ -200,6 +201,18 @@ impl PhrasalVerbAsCompoundNoun {
             ])
         {
             return Err(Why::Contextual(Context::ItsFollowedByThatOrWhich));
+        }
+
+        // At the start, a modal verb after it means it's the subject, so it's a noun:
+        // "setup can optionally install Hopper". After another word it can be a phrasal
+        // verb ending a clause: "people that don't clean up can and will be banned".
+        if maybe_prev_tok.is_none()
+            && let Some(next_tok) = maybe_next_tok
+            && next_tok.get_ch(source).eq_any_ignore_ascii_case_str(&[
+                "can", "could", "may", "might", "must", "shall", "should", "will", "would",
+            ])
+        {
+            return Err(Why::Contextual(Context::ItsFollowedByAModalVerb));
         }
 
         // If the compound noun is followed by another noun, check for larger compound nouns.
@@ -387,6 +400,41 @@ mod tests {
     fn dont_flag_rollback_or_comeback_as_nouns_issue_3239() {
         assert_no_lints(
             "I already did a rollback. It was quite a comeback.",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
+    }
+
+    #[test]
+    fn flag_fallback_used_as_a_verb_issue_5006() {
+        assert_suggestion_result(
+            "We should fallback to the older version.",
+            PhrasalVerbAsCompoundNoun::default(),
+            "We should fall back to the older version.",
+        );
+    }
+
+    #[test]
+    fn flag_teardown_all_caps_issue_5008() {
+        assert_suggestion_result(
+            "I FINALLY TEARDOWN A VR6!",
+            PhrasalVerbAsCompoundNoun::default(),
+            "I FINALLY TEAR DOWN A VR6!",
+        );
+    }
+
+    #[test]
+    fn flag_teardown_lowercase_issue_5008() {
+        assert_suggestion_result(
+            "We need to teardown the old server before tomorrow.",
+            PhrasalVerbAsCompoundNoun::default(),
+            "We need to tear down the old server before tomorrow.",
+        );
+    }
+
+    #[test]
+    fn dont_flag_fallback_or_teardown_as_nouns() {
+        assert_no_lints(
+            "We have a fallback in place for the server. The teardown went smoothly.",
             PhrasalVerbAsCompoundNoun::default(),
         );
     }
@@ -806,6 +854,34 @@ mod tests {
         assert_no_lints(
             "Unfortunately, Meltdown ended up being problematic.",
             test_linter(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_setup_before_modal_issue_4627() {
+        assert_no_lints(
+            "setup can optionally install Hopper with approval",
+            test_linter(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_compound_noun_before_other_modals() {
+        assert_no_lints("Cleanup will remove the cache.", test_linter());
+        assert_no_lints("Backup should run nightly.", test_linter());
+    }
+
+    #[test]
+    fn flag_phrasal_verb_ending_a_clause_before_a_modal() {
+        assert_suggestion_result(
+            "People that don't cleanup can and will be banned from the space.",
+            test_linter(),
+            "People that don't clean up can and will be banned from the space.",
+        );
+        assert_suggestion_result(
+            "Couples that decide to breakup can still choose to remain good friends.",
+            test_linter(),
+            "Couples that decide to break up can still choose to remain good friends.",
         );
     }
 }

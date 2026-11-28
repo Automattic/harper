@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lexical Test</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 2rem;
+      }
+      #editor {
+        border: 1px solid #ccc;
+        padding: 1rem;
+        min-height: 150px;
+        max-width: 600px;
+        white-space: pre-wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Lexical Editor</h1>
+    <p id="status" role="status">Loading Lexical…</p>
+    <div id="editor" role="textbox" aria-label="Lexical editor" aria-multiline="true"></div>
+
+    <!-- Real Lexical fixture. Keep all CDN versions in sync so plugins share one Lexical instance. -->
+    <script type="module">
+      const status = document.getElementById('status');
+
+      try {
+        const [lexical, richText, history] = await Promise.all([
+          import('https://cdn.jsdelivr.net/npm/lexical@0.52.0/+esm'),
+          import('https://cdn.jsdelivr.net/npm/@lexical/rich-text@0.52.0/+esm'),
+          import('https://cdn.jsdelivr.net/npm/@lexical/history@0.52.0/+esm'),
+        ]);
+        const editor = lexical.createEditor({
+          namespace: 'HarperLexicalTest',
+          onError(error) {
+            throw error;
+          },
+        });
+
+        richText.registerRichText(editor);
+        history.registerHistory(editor, history.createEmptyHistoryState(), 300);
+        const root = document.getElementById('editor');
+        editor.setRootElement(root);
+        editor.update(() => {
+          lexical.$getRoot().append(lexical.$createParagraphNode());
+        }, { discrete: true });
+        // Expose the editable only after its initial paragraph exists, as on the playground.
+        root.contentEditable = 'true';
+        status.textContent = 'Ready';
+      } catch (error) {
+        status.textContent = `Lexical initialization failed: ${error.message}`;
+        throw error;
+      }
+    </script>
+  </body>
+</html>

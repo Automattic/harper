@@ -1,6 +1,6 @@
 expr main (very good)
 
-let message "Vocabulary enhancement: use `excellent` instead of `very good`"
+let message "Vocabulary enhancement: use `excellent` instead of `very good`."
 let description "Provides a stronger word choice by replacing `very good` with `excellent` for clarity and emphasis."
 let kind "Enhancement"
 let becomes "excellent"

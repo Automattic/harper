@@ -17,7 +17,7 @@ impl<D: Dictionary> DidPast<D> {
     pub fn new(dict: D) -> Self {
         Self {
             expr: SequenceExpr::longest_of([
-                Box::new(WordSet::new(&["did", "didn't", "didnt"])) as Box<dyn Expr>,
+                Box::new(WordSet::new(["did", "didn't", "didnt"])) as Box<dyn Expr>,
                 Box::new(FixedPhrase::from_phrase("did not")),
             ])
             .then_optional(SequenceExpr::default().t_ws().then_subject_pronoun())
@@ -301,6 +301,41 @@ mod tests {
         assert_no_lints(
             "Did You Read the Instructions?",
             DidPast::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn issue_3916_didnt_understood() {
+        assert_suggestion_result(
+            "I didn't understood the problem.",
+            DidPast::new(FstDictionary::curated()),
+            "I didn't understand the problem.",
+        );
+    }
+
+    #[test]
+    fn issue_3916_did_understood() {
+        assert_suggestion_result(
+            "I did understood the problem.",
+            DidPast::new(FstDictionary::curated()),
+            "I did understand the problem.",
+        );
+    }
+
+    #[test]
+    fn issue_3916_correct_usage() {
+        assert_no_lints(
+            "I didn't understand the problem.",
+            DidPast::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn issue_did_not_matched() {
+        assert_suggestion_result(
+            "like in my case golang packages did not matched Rust crates. Bun did file by file.",
+            DidPast::new(FstDictionary::curated()),
+            "like in my case golang packages did not match Rust crates. Bun did file by file.",
         );
     }
 }

@@ -12,13 +12,13 @@ impl Default for ProgressiveNeedsBe {
     fn default() -> Self {
         // Support both contracted (I've/We've/You've/They've) and non-contracted
         // (I have/We have/You have/They have) forms before a progressive verb.
-        let contracted = SequenceExpr::word_set(&[
+        let contracted = SequenceExpr::word_set([
             "I've", "We've", "You've", "They've", "Ive", "Weve", "Youve", "Theyve",
         ])
         .t_ws()
         .then_verb_progressive_form();
 
-        let non_contracted = SequenceExpr::word_set(&["I", "We", "You", "They"])
+        let non_contracted = SequenceExpr::word_set(["I", "We", "You", "They"])
             .t_ws()
             .then_any_capitalization_of("have")
             .t_ws()

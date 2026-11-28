@@ -52,7 +52,7 @@ impl ExprLinter for AsHow {
                 "as to how",
                 span.get_content(src),
             )],
-            message: "Consider rephrasing to 'as to how'".to_owned(),
+            message: "Consider rephrasing to 'as to how'.".to_owned(),
             ..Default::default()
         })
     }

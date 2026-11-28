@@ -97,6 +97,16 @@ impl ExprLinter for EffectToAffect {
             return None;
         }
 
+        // "The greenhouse effect causes warming": the verb `effect` can't follow a singular noun.
+        if target.get_str(source).eq_ignore_ascii_case("effect")
+            && first_following
+                .kind
+                .is_verb_third_person_singular_present_form()
+            && preceding.is_some_and(|tok| tok.kind.is_singular_noun())
+        {
+            return None;
+        }
+
         // Skip when the context already shows a clear noun usage (e.g., "the effect your idea had").
         if let Some(prev) = preceding
             && (prev.kind.is_upos(UPOS::DET) || prev.kind.is_upos(UPOS::ADJ))

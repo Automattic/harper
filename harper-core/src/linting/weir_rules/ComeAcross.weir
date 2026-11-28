@@ -1,0 +1,26 @@
+expr main <([came, camed, come, comed, comes, coming] [acrossed, acrosst, acrost]), [acrossed, acrosst, acrost]>
+
+let message "Did you mean `across`?"
+let description "Corrects common errors in `come across`."
+let kind "Spelling"
+let becomes "across"
+
+# come acrossed
+test "various aspects of machines learning that I have come acrossed and also as my Machine Learning portfolio" "various aspects of machines learning that I have come across and also as my Machine Learning portfolio"
+# come acrost
+test "ONE OF THE WORST textbooks I've come acrost for beginning Java students." "ONE OF THE WORST textbooks I've come across for beginning Java students."
+
+# came acrossed
+test "But I came acrossed some issues here and here." "But I came across some issues here and here."
+# came acrost
+test "The bug I've came acrost is I go through 3-5 jumps and the game crashes." "The bug I've came across is I go through 3-5 jumps and the game crashes."
+# came acrosst
+test "luckily during my search I came acrosst his post" "luckily during my search I came across his post"
+
+# coming acrossed
+test "however I'm coming acrossed a problem in validating if a spot is clear or not" "however I'm coming across a problem in validating if a spot is clear or not"
+
+# comes acrossed
+test "sad for him and sad for anyone he comes acrossed and hurts" "sad for him and sad for anyone he comes across and hurts"
+# comes acrost
+test "i rate itunes 1.5 star but if anyone comes acrost this error please let me know" "i rate itunes 1.5 star but if anyone comes across this error please let me know"
