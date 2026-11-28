@@ -1,0 +1,20 @@
+# `morale` (spirit or confidence) is often written in place of `moral` (lesson or ethics).
+expr modifier [compass, dilemma, dilemmas, duty, duties, fiber, fibre, hazard, hazards, obligation, obligations, philosophy, principle, principles, relativism, responsibility, responsibilities, standard, standards, turpitude, value, values, victory, victories]
+expr main [<(morale of [the, this, that] story), morale>, <(morale high ground), morale>, <(morale @modifier), morale>]
+
+let message "Did you mean `moral`? `Morale` refers to spirit or confidence; `moral` relates to ethics or a lesson."
+let description "Corrects `morale` to `moral` in expressions about ethics or the lesson of a story."
+let kind "Malapropism"
+let becomes "moral"
+let strategy "MatchCase"
+
+test "Morale of the Story. Don't Trust Banks. Trust yourself." "Moral of the Story. Don't Trust Banks. Trust yourself."
+test "What is the morale of this story?" "What is the moral of this story?"
+test "We claimed the morale high ground." "We claimed the moral high ground."
+test "They faced a difficult morale dilemma." "They faced a difficult moral dilemma."
+test "Strong morale values guide the organization." "Strong moral values guide the organization."
+test "It was only a morale victory for the visitors." "It was only a moral victory for the visitors."
+
+allows "The morale of the team improved after the win."
+allows "Low morale affected the whole department."
+allows "Morale among the troops remained high."
