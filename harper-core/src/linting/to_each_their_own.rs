@@ -32,8 +32,101 @@ fn build_expr(flag: Prefer) -> FixedPhrase {
     }
 }
 
+fn is_pure_adverb(tok: &Token) -> bool {
+    tok.kind.is_word()
+        && tok.kind.is_adverb()
+        && !tok.kind.is_adjective()
+        && !tok.kind.is_noun()
+        && !tok.kind.is_conjunction()
+        && !tok.kind.is_preposition()
+        && !tok.kind.is_pronoun()
+}
+
+fn is_nominal_or_modifier_word(tok: &Token) -> bool {
+    if tok.kind.is_number() || tok.kind.is_unlintable() || tok.kind.is_oov() {
+        return true;
+    }
+
+    if !tok.kind.is_word() {
+        return false;
+    }
+
+    let is_clause_continuation = tok.kind.is_conjunction()
+        || tok.kind.is_preposition()
+        || tok.kind.is_pronoun()
+        || tok.kind.is_auxiliary_verb()
+        || tok.kind.is_linking_verb()
+        || (tok.kind.is_adverb() && !tok.kind.is_adjective() && !tok.kind.is_noun());
+
+    !is_clause_continuation && (tok.kind.is_noun() || tok.kind.is_adjective())
+}
+
+fn starts_noun_phrase(mut rest: &[Token]) -> bool {
+    while rest.first().is_some_and(|t| t.kind.is_whitespace()) {
+        rest = &rest[1..];
+    }
+
+    let Some(first) = rest.first() else {
+        return false;
+    };
+
+    if first.kind.is_open_round() || first.kind.is_open_square() {
+        let is_close = if first.kind.is_open_round() {
+            |t: &Token| t.kind.is_close_round()
+        } else {
+            |t: &Token| t.kind.is_close_square()
+        };
+
+        if let Some(close_rel) = rest[1..].iter().position(is_close) {
+            let after_close = &rest[close_rel + 2..];
+            return after_close.first().is_some_and(|t| t.kind.is_whitespace())
+                && starts_noun_phrase(after_close);
+        }
+
+        return starts_noun_phrase(&rest[1..]);
+    }
+
+    if first.kind.is_quote() {
+        return starts_noun_phrase(&rest[1..]);
+    }
+
+    if is_pure_adverb(first) {
+        let after_adverb = &rest[1..];
+        if !after_adverb
+            .first()
+            .is_some_and(|t| t.kind.is_whitespace() || t.kind.is_hyphen())
+        {
+            return false;
+        }
+
+        let mut next_slice = after_adverb;
+        while next_slice
+            .first()
+            .is_some_and(|t| t.kind.is_whitespace() || t.kind.is_hyphen())
+        {
+            next_slice = &next_slice[1..];
+        }
+
+        if let Some(next_tok) = next_slice.first()
+            && (next_tok.kind.is_verb_past_participle_form()
+                || next_tok.kind.is_verb_progressive_form())
+            && next_slice
+                .get(1)
+                .is_some_and(|t| t.kind.is_whitespace() || t.kind.is_hyphen())
+            && starts_noun_phrase(&next_slice[2..])
+        {
+            return true;
+        }
+
+        return starts_noun_phrase(next_slice);
+    }
+
+    is_nominal_or_modifier_word(first)
+}
+
 /// Skip non-idiomatic uses where `own` modifies a following noun phrase
-/// (e.g. "returned each to their own home" or "give to each their own key").
+/// (e.g. "returned each to their own home", "each to their own (private) room",
+/// or "each to their own unusually quiet room").
 fn followed_by_modifier_or_noun(ctx: Option<(&[Token], &[Token])>) -> bool {
     if followed_by_hyphen(ctx) {
         return true;
@@ -47,26 +140,7 @@ fn followed_by_modifier_or_noun(ctx: Option<(&[Token], &[Token])>) -> bool {
         return false;
     }
 
-    let Some(next) = after.iter().find(|t| !t.kind.is_whitespace()) else {
-        return false;
-    };
-
-    if next.kind.is_number() || next.kind.is_unlintable() || next.kind.is_oov() {
-        return true;
-    }
-
-    if !next.kind.is_word() {
-        return false;
-    }
-
-    let is_clause_continuation = next.kind.is_conjunction()
-        || next.kind.is_preposition()
-        || next.kind.is_pronoun()
-        || next.kind.is_auxiliary_verb()
-        || next.kind.is_linking_verb()
-        || (next.kind.is_adverb() && !next.kind.is_adjective() && !next.kind.is_noun());
-
-    !is_clause_continuation && (next.kind.is_noun() || next.kind.is_adjective())
+    starts_noun_phrase(after)
 }
 
 fn to_lint(
@@ -90,21 +164,24 @@ fn to_lint(
 
     let first_tok = &toks[first_idx];
     let second_tok = &toks[second_idx];
-    let between_span = toks[first_idx + 1..second_idx].span()?;
-    let rest_span = toks[second_idx + 1..].span()?;
+    let prefix = src.get(span.start..first_tok.span.start)?;
+    let between = src.get(first_tok.span.end..second_tok.span.start)?;
+    let rest = src.get(second_tok.span.end..span.end)?;
 
     let (first_word, second_word, target_phrase, source_phrase) = match pref {
         Prefer::ToEachTheirOwn => ("to", "each", TO_EACH_THEIR_OWN, EACH_TO_THEIR_OWN),
         Prefer::EachToTheirOwn => ("each", "to", EACH_TO_THEIR_OWN, TO_EACH_THEIR_OWN),
     };
 
-    // Match casing word-by-word so Title Case ("Each To Their Own" -> "To Each Their Own")
-    // does not shift uppercase letters across words of different lengths.
-    let replacement: Vec<char> = copy_casing(first_tok.get_ch(src), first_word.chars())
-        .into_iter()
-        .chain(between_span.get_content(src).iter().copied())
+    // Match casing word-by-word and preserve raw source gaps between tokens so Title Case
+    // and omitted Markdown delimiters (e.g. `**Each** to their own`) stay intact.
+    let replacement: Vec<char> = prefix
+        .iter()
+        .copied()
+        .chain(copy_casing(first_tok.get_ch(src), first_word.chars()))
+        .chain(between.iter().copied())
         .chain(copy_casing(second_tok.get_ch(src), second_word.chars()))
-        .chain(rest_span.get_content(src).iter().copied())
+        .chain(rest.iter().copied())
         .collect();
 
     Some(Lint {
@@ -165,7 +242,8 @@ impl_expr_linter!(
 mod tests {
     use super::{PreferEachToTheirOwn, PreferToEachTheirOwn};
     use crate::linting::tests::{
-        assert_lint_count, assert_lint_message, assert_no_lints, assert_suggestion_result,
+        assert_lint_count, assert_lint_message, assert_markdown_suggestion_result, assert_no_lints,
+        assert_suggestion_result,
     };
 
     // Prefer "to each their own"
@@ -274,6 +352,75 @@ mod tests {
         );
     }
 
+    #[test]
+    fn dont_flag_each_to_their_own_before_parenthesized_modifier() {
+        assert_no_lints(
+            "We assigned each to their own (private) room.",
+            PreferToEachTheirOwn::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_each_to_their_own_before_adverb_modified_noun() {
+        assert_no_lints(
+            "We assigned each to their own unusually quiet room.",
+            PreferToEachTheirOwn::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_each_to_their_own_before_adverb_and_participle() {
+        assert_no_lints(
+            "We moved each to their own newly created branch.",
+            PreferToEachTheirOwn::default(),
+        );
+    }
+
+    #[test]
+    fn correct_each_to_their_own_before_parenthetical_aside() {
+        assert_suggestion_result(
+            "Each to their own (I suppose).",
+            PreferToEachTheirOwn::default(),
+            "To each their own (I suppose).",
+        );
+    }
+
+    #[test]
+    fn correct_each_to_their_own_before_trailing_adverb() {
+        assert_suggestion_result(
+            "Each to their own indeed.",
+            PreferToEachTheirOwn::default(),
+            "To each their own indeed.",
+        );
+    }
+
+    #[test]
+    fn correct_each_to_their_own_in_parentheses() {
+        assert_suggestion_result(
+            "Well (each to their own).",
+            PreferToEachTheirOwn::default(),
+            "Well (to each their own).",
+        );
+    }
+
+    #[test]
+    fn preserves_markdown_emphasis_on_first_word() {
+        assert_markdown_suggestion_result(
+            "**Each** to their own.",
+            PreferToEachTheirOwn::default(),
+            "**To** each their own.",
+        );
+    }
+
+    #[test]
+    fn preserves_markdown_emphasis_on_second_word() {
+        assert_markdown_suggestion_result(
+            "Each **to** their own.",
+            PreferToEachTheirOwn::default(),
+            "To **each** their own.",
+        );
+    }
+
     // Prefer "each to their own"
 
     #[test]
@@ -331,6 +478,27 @@ mod tests {
         assert_no_lints(
             "Give to each their own key.",
             PreferEachToTheirOwn::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_to_each_their_own_before_parenthesized_and_adverb_modifiers() {
+        assert_no_lints(
+            "Give to each their own (private) key.",
+            PreferEachToTheirOwn::default(),
+        );
+        assert_no_lints(
+            "Give to each their own unusually quiet room.",
+            PreferEachToTheirOwn::default(),
+        );
+    }
+
+    #[test]
+    fn preserves_markdown_emphasis_prefer_each_to_their_own() {
+        assert_markdown_suggestion_result(
+            "*To* each their own.",
+            PreferEachToTheirOwn::default(),
+            "*Each* to their own.",
         );
     }
 
