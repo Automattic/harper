@@ -383,7 +383,7 @@ use crate::{
         {ExprLinter, HtmlDescriptionLinter, Lint, Linter},
     },
     spell::Dictionary,
-    {Dialect, Document, Span, TokenStringExt},
+    {Document, EnglishDialect, Language, Span, TokenStringExt},
 };
 
 pub use flat_config::FlatConfig;
@@ -603,7 +603,20 @@ impl LintGroup {
         self
     }
 
-    pub fn new_curated(dictionary: Arc<impl Dictionary + 'static>, dialect: Dialect) -> Self {
+    /// Create the curated group of rules for `language`.
+    pub fn new_curated_for_language(
+        dictionary: Arc<impl Dictionary + 'static>,
+        language: Language,
+    ) -> Self {
+        match language {
+            Language::English(dialect) => Self::new_curated(dictionary, dialect),
+        }
+    }
+
+    pub fn new_curated(
+        dictionary: Arc<impl Dictionary + 'static>,
+        dialect: EnglishDialect,
+    ) -> Self {
         let mut out = Self::empty();
 
         /// Add a `Linter` to the group, setting it to be enabled or disabled.
@@ -620,7 +633,7 @@ impl LintGroup {
             };
         }
 
-        /// Add a `Linter` that requires a `Dialect` to the group, setting it to be enabled or disabled.
+        /// Add a `Linter` that requires an `EnglishDialect` to the group, setting it to be enabled or disabled.
         macro_rules! insert_struct_rule_with_dialect {
             ($rule:ident) => {
                 out.add(stringify!($rule), $rule::new(dialect));
@@ -643,7 +656,7 @@ impl LintGroup {
             };
         }
 
-        /// Add a chunk-based `ExprLinter` that requires a `Dialect` to the group, setting it to be enabled or disabled.
+        /// Add a chunk-based `ExprLinter` that requires an `EnglishDialect` to the group, setting it to be enabled or disabled.
         macro_rules! insert_expr_rule_with_dialect {
             ($rule:ident) => {
                 out.add_chunk_expr_linter(stringify!($rule), $rule::new(dialect));
@@ -1044,7 +1057,7 @@ impl LintGroup {
         // Uses Sentence rather than Chunk
         out.add("PluralDecades", PluralDecades::default());
 
-        // Uses Dictionary and Dialect
+        // Uses Dictionary and EnglishDialect
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
 
         // Uses Dictionary, and Sentence rather than Chunk
@@ -1068,7 +1081,7 @@ impl LintGroup {
     /// Create a new curated group with all config values cleared out.
     pub fn new_curated_empty_config(
         dictionary: Arc<impl Dictionary + 'static>,
-        dialect: Dialect,
+        dialect: EnglishDialect,
     ) -> Self {
         let mut group = Self::new_curated(dictionary, dialect);
         group.config.clear();
@@ -1199,12 +1212,12 @@ mod tests {
     use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
     use crate::spell::{FstDictionary, MutableDictionary};
     use crate::weir::WeirLinter;
-    use crate::{Dialect, Document, linting::Linter};
+    use crate::{Document, EnglishDialect, Language, linting::Linter};
 
     create_test_pool!(
         LintGroup,
         LintGroup,
-        LintGroup::new_curated(FstDictionary::curated(), Dialect::American)
+        LintGroup::new_curated(FstDictionary::curated(), EnglishDialect::American)
     );
 
     #[test]
@@ -1295,15 +1308,19 @@ mod tests {
 
     #[test]
     fn can_get_all_descriptions() {
-        let group =
-            LintGroup::new_curated(Arc::new(MutableDictionary::default()), Dialect::American);
+        let group = LintGroup::new_curated(
+            Arc::new(MutableDictionary::default()),
+            EnglishDialect::American,
+        );
         group.all_descriptions();
     }
 
     #[test]
     fn can_get_all_descriptions_as_html() {
-        let group =
-            LintGroup::new_curated(Arc::new(MutableDictionary::default()), Dialect::American);
+        let group = LintGroup::new_curated(
+            Arc::new(MutableDictionary::default()),
+            EnglishDialect::American,
+        );
         group.all_descriptions_html();
     }
 
@@ -1407,7 +1424,8 @@ mod tests {
     ///    in the context of another linter's description.
     #[test]
     fn lint_descriptions_are_clean() {
-        let lints_to_check = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
+        let lints_to_check =
+            LintGroup::new_curated(FstDictionary::curated(), EnglishDialect::American);
 
         let name_description_pairs: Vec<_> = lints_to_check
             .all_descriptions()
@@ -1434,8 +1452,10 @@ mod tests {
 
     #[test]
     fn no_linter_names_clash() {
-        let group =
-            LintGroup::new_curated(Arc::new(MutableDictionary::default()), Dialect::American);
+        let group = LintGroup::new_curated(
+            Arc::new(MutableDictionary::default()),
+            EnglishDialect::American,
+        );
 
         if let Some(names) = &group.clashing_linter_names {
             if !names.is_empty() {
@@ -1455,5 +1475,16 @@ mod tests {
             test_linter(),
             "IMO these kind of advice never matters.",
         );
+    }
+
+    #[test]
+    fn english_group_matches_new_curated() {
+        let dict = FstDictionary::curated();
+        let english = LintGroup::new_curated_for_language(
+            dict.clone(),
+            Language::English(EnglishDialect::British),
+        );
+        let curated = LintGroup::new_curated(dict, EnglishDialect::British);
+        assert_eq!(english.config, curated.config);
     }
 }

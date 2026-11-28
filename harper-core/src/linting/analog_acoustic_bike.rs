@@ -1,5 +1,5 @@
 use crate::{
-    Dialect, Lint, Token, TokenStringExt,
+    EnglishDialect, Lint, Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
     patterns::IndefiniteArticle,
@@ -7,11 +7,11 @@ use crate::{
 
 pub struct AnalogAcousticBike {
     expr: SequenceExpr,
-    dialect: Dialect,
+    dialect: EnglishDialect,
 }
 
 impl AnalogAcousticBike {
-    pub fn new(dialect: Dialect) -> Self {
+    pub fn new(dialect: EnglishDialect) -> Self {
         let expr = SequenceExpr::optional(SequenceExpr::with(IndefiniteArticle::default()).t_ws())
             .t_set(["acoustic", "analog", "analogue"])
             .t_ws()
@@ -38,7 +38,10 @@ impl ExprLinter for AnalogAcousticBike {
         };
 
         let is_bike = cycle.contains(&'k');
-        let use_push = matches!(self.dialect, Dialect::British | Dialect::Australian);
+        let use_push = matches!(
+            self.dialect,
+            EnglishDialect::British | EnglishDialect::Australian
+        );
 
         Some(Lint {
             span: full_span,
@@ -72,7 +75,7 @@ impl ExprLinter for AnalogAcousticBike {
 
 #[cfg(test)]
 mod tests {
-    use crate::{Dialect, linting::tests::assert_good_and_bad_suggestions};
+    use crate::{EnglishDialect, linting::tests::assert_good_and_bad_suggestions};
 
     use super::AnalogAcousticBike;
 
@@ -80,7 +83,7 @@ mod tests {
     fn fix_acoustic_bike_us() {
         assert_good_and_bad_suggestions(
             "you might get something that helps you move around your city faster and with less sweat than an acoustic bike",
-            AnalogAcousticBike::new(Dialect::American),
+            AnalogAcousticBike::new(EnglishDialect::American),
             &[
                 "you might get something that helps you move around your city faster and with less sweat than an pedal bike",
             ],
@@ -94,7 +97,7 @@ mod tests {
     fn fix_acoustic_bikes_uk() {
         assert_good_and_bad_suggestions(
             "Subjectively, it feels as adequately braked as any of my acoustic bikes",
-            AnalogAcousticBike::new(Dialect::British),
+            AnalogAcousticBike::new(EnglishDialect::British),
             &[
                 "Subjectively, it feels as adequately braked as any of my pedal bikes",
                 "Subjectively, it feels as adequately braked as any of my pushbikes",
@@ -107,7 +110,7 @@ mod tests {
     fn fix_analog_bike_ca() {
         assert_good_and_bad_suggestions(
             "Pretty sure almost anyone can go faster downhill on an analog bike than the 25kph that Ebike pedal assistance is limited to.",
-            AnalogAcousticBike::new(Dialect::Canadian),
+            AnalogAcousticBike::new(EnglishDialect::Canadian),
             &[
                 "Pretty sure almost anyone can go faster downhill on an pedal bike than the 25kph that Ebike pedal assistance is limited to.",
             ],
@@ -121,7 +124,7 @@ mod tests {
     fn fix_analog_bikes_au() {
         assert_good_and_bad_suggestions(
             "These bikes are not modified analog bikes — they are ground-up designs built for assisted momentum.",
-            AnalogAcousticBike::new(Dialect::Australian),
+            AnalogAcousticBike::new(EnglishDialect::Australian),
             &[
                 "These bikes are not modified pedal bikes — they are ground-up designs built for assisted momentum.",
                 "These bikes are not modified pushbikes — they are ground-up designs built for assisted momentum.",
@@ -134,7 +137,7 @@ mod tests {
     fn fix_acoustic_bicycle_uk() {
         assert_good_and_bad_suggestions(
             "I still play alcohol powered instruments (double bass, cello), and ride an acoustic bicycle",
-            AnalogAcousticBike::new(Dialect::British),
+            AnalogAcousticBike::new(EnglishDialect::British),
             &[
                 "I still play alcohol powered instruments (double bass, cello), and ride an pedal bicycle",
             ],
@@ -148,7 +151,7 @@ mod tests {
     fn fix_analog_bicycles_us() {
         assert_good_and_bad_suggestions(
             "both light electric bicycles and heavy analog bicycles exist",
-            AnalogAcousticBike::new(Dialect::American),
+            AnalogAcousticBike::new(EnglishDialect::American),
             &["both light electric bicycles and heavy pedal bicycles exist"],
             &["both light electric bicycles and heavy pushbikes exist"],
         );
@@ -158,7 +161,7 @@ mod tests {
     fn fix_analogue_bicycle_au() {
         assert_good_and_bad_suggestions(
             "There's crossover with a good ol' analogue bicycle, but I found it awkward to rock up at places and events sweating.",
-            AnalogAcousticBike::new(Dialect::Australian),
+            AnalogAcousticBike::new(EnglishDialect::Australian),
             &[
                 "There's crossover with a good ol' pedal bicycle, but I found it awkward to rock up at places and events sweating.",
                 "There's crossover with a good ol' push bicycle, but I found it awkward to rock up at places and events sweating.",

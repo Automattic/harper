@@ -4,7 +4,7 @@ use itertools::Itertools;
 
 use crate::case::Case::Upper;
 use crate::char_ext::CharExt;
-use crate::{CaseIterExt, Dialect};
+use crate::{CaseIterExt, EnglishDialect};
 
 #[derive(Debug, PartialEq)]
 pub enum InitialSound {
@@ -18,7 +18,7 @@ pub enum InitialSound {
 /// It was produced through trial and error.
 /// Matches with 99.71% and 99.77% of vowels and non-vowels in the
 /// Carnegie-Mellon University word -> pronunciation dataset.
-pub fn starts_with_vowel(word: &[char], dialect: Dialect) -> Option<InitialSound> {
+pub fn starts_with_vowel(word: &[char], dialect: EnglishDialect) -> Option<InitialSound> {
     if word.is_empty() {
         return None;
     }
@@ -106,7 +106,7 @@ pub fn starts_with_vowel(word: &[char], dialect: Dialect) -> Option<InitialSound
         return Some(InitialSound::Vowel);
     }
 
-    if matches!(word, ['h', 'e', 'r', 'b', ..] if dialect == Dialect::American || dialect == Dialect::Canadian)
+    if matches!(word, ['h', 'e', 'r', 'b', ..] if dialect == EnglishDialect::American || dialect == EnglishDialect::Canadian)
     {
         return Some(InitialSound::Vowel);
     }
@@ -227,7 +227,7 @@ mod tests {
     #[test]
     fn test_npm_4139() {
         assert_eq!(
-            starts_with_vowel(&['n', 'p', 'm'].to_vec(), Dialect::American),
+            starts_with_vowel(&['n', 'p', 'm'].to_vec(), EnglishDialect::American),
             Some(InitialSound::Vowel)
         );
     }

@@ -1,6 +1,6 @@
 use harper_core::linting::{LintGroup, LintKind, Linter};
 use harper_core::spell::FstDictionary;
-use harper_core::{Dialect, Document};
+use harper_core::{Document, EnglishDialect};
 use harper_git_commit::GitCommitParser;
 
 /// Creates a unit test checking that the linting of a git commit document (in
@@ -20,7 +20,7 @@ macro_rules! create_test {
                 let dict = FstDictionary::curated();
                 let document = Document::new(source, &GitCommitParser::default(), &dict);
 
-                let mut linter = LintGroup::new_curated(dict, Dialect::American);
+                let mut linter = LintGroup::new_curated(dict, EnglishDialect::American);
                 let lints = linter.lint(&document);
 
                 dbg!(&lints);
@@ -71,7 +71,7 @@ fn conventional_commit_prefixes_are_not_parsed() {
 #[test]
 fn conventional_commit_descriptions_are_still_spellchecked() {
     let dict = FstDictionary::curated();
-    let mut linter = LintGroup::new_curated(dict.clone(), Dialect::American);
+    let mut linter = LintGroup::new_curated(dict.clone(), EnglishDialect::American);
 
     for source in [
         "feat(harper): add mising files\n",
@@ -95,7 +95,7 @@ fn conventional_commit_descriptions_are_still_spellchecked() {
 #[test]
 fn ordinary_subjects_and_commit_bodies_are_still_spellchecked() {
     let dict = FstDictionary::curated();
-    let mut linter = LintGroup::new_curated(dict.clone(), Dialect::American);
+    let mut linter = LintGroup::new_curated(dict.clone(), EnglishDialect::American);
 
     for source in [
         "add mising files\n",
@@ -117,7 +117,7 @@ fn ordinary_subjects_and_commit_bodies_are_still_spellchecked() {
 #[test]
 fn hash_prefixed_descriptions_are_not_treated_as_comments() {
     let dict = FstDictionary::curated();
-    let mut linter = LintGroup::new_curated(dict.clone(), Dialect::American);
+    let mut linter = LintGroup::new_curated(dict.clone(), EnglishDialect::American);
 
     for source in [
         "feat(harper): #123 add mising files\n",

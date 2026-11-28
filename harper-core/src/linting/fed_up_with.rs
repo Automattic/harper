@@ -1,16 +1,16 @@
 use crate::{
-    Dialect, Token,
+    EnglishDialect, Token,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
 };
 
 pub struct FedUpWith {
     expr: SequenceExpr,
-    dialect: Dialect,
+    dialect: EnglishDialect,
 }
 
 impl FedUpWith {
-    pub fn new(dialect: Dialect) -> Self {
+    pub fn new(dialect: EnglishDialect) -> Self {
         let expr = SequenceExpr::word_seq(&["fed", "up", "of"]);
 
         Self { expr, dialect }
@@ -25,7 +25,7 @@ impl ExprLinter for FedUpWith {
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
-        if self.dialect == Dialect::British {
+        if self.dialect == EnglishDialect::British {
             return None;
         }
 
@@ -52,14 +52,14 @@ impl ExprLinter for FedUpWith {
 #[cfg(test)]
 mod tests {
     use super::FedUpWith;
-    use crate::Dialect;
+    use crate::EnglishDialect;
     use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn correct_fed_up_of_in_us_english() {
         assert_suggestion_result(
             "I am fed up of Bugzilla reports being ignored.",
-            FedUpWith::new(Dialect::American),
+            FedUpWith::new(EnglishDialect::American),
             "I am fed up with Bugzilla reports being ignored.",
         );
     }
@@ -68,7 +68,7 @@ mod tests {
     fn correct_fed_up_of_in_canadian_english() {
         assert_suggestion_result(
             "Fed up of long links ??? Use ✨ Linsh ✨, a CLI tool to shorten links.",
-            FedUpWith::new(Dialect::Canadian),
+            FedUpWith::new(EnglishDialect::Canadian),
             "Fed up with long links ??? Use ✨ Linsh ✨, a CLI tool to shorten links.",
         );
     }
@@ -77,7 +77,7 @@ mod tests {
     fn correct_fed_up_of_in_aus_english() {
         assert_suggestion_result(
             "Fed up of the lack of Twitter embedded timeline styling options?",
-            FedUpWith::new(Dialect::Australian),
+            FedUpWith::new(EnglishDialect::Australian),
             "Fed up with the lack of Twitter embedded timeline styling options?",
         );
     }
@@ -86,7 +86,7 @@ mod tests {
     fn correct_fed_up_of_in_indian_english() {
         assert_suggestion_result(
             "I got fed up of finding my IP (v4) address in the big pile of text that ifconfig outputs on OS X.",
-            FedUpWith::new(Dialect::Indian),
+            FedUpWith::new(EnglishDialect::Indian),
             "I got fed up with finding my IP (v4) address in the big pile of text that ifconfig outputs on OS X.",
         );
     }
@@ -95,7 +95,7 @@ mod tests {
     fn dont_flag_fed_up_of_in_british_english() {
         assert_no_lints(
             "Fed up of having to repeat the same actions for installing webmin so here's a script for 16.04+",
-            FedUpWith::new(Dialect::British),
+            FedUpWith::new(EnglishDialect::British),
         );
     }
 }
