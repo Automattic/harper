@@ -23,8 +23,8 @@ impl Default for QuantifierNumeralConflict {
                         ]),
                 ),
                 Box::new(SequenceExpr::unless(SequenceExpr::any_of([
-                    Box::new(WordSet::new(["all", "any", "every", "no"])) as Box<dyn Expr>,
-                    Box::new(SequenceExpr::word_set(["each", "some"]).t_ws().t_aco("one")),
+                    Box::new(WordSet::new(["all", "any", "every", "no", "some"])) as Box<dyn Expr>,
+                    Box::new(SequenceExpr::word_set(["each"]).t_ws().t_aco("one")),
                 ]))),
             ]),
         }
@@ -169,6 +169,14 @@ mod tests {
     fn ignore_no_two_adjacent_characters_2486() {
         assert_no_lints(
             "No two adjacent characters are the same.",
+            QuantifierNumeralConflict::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_some_meaning_about() {
+        assert_no_lints(
+            "The war ended some 15 years later, when some 300 people returned.",
             QuantifierNumeralConflict::default(),
         );
     }
