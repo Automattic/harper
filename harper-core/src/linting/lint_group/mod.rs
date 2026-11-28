@@ -899,12 +899,10 @@ impl LintGroup {
         insert_expr_rule!(PluralWrongWordOfPhrase);
         insert_struct_rule_with_dict!(PossessiveNoun);
         insert_expr_rule!(PossessiveYour);
-        out.add_sentence_expr_linter("PreferEachToTheirOwn", PreferEachToTheirOwn::default());
         insert_struct_rule!(PreferPleaded);
         insert_struct_rule!(PreferPled);
         insert_struct_rule!(PreferSneaked);
         insert_struct_rule!(PreferSnuck);
-        out.add_sentence_expr_linter("PreferToEachTheirOwn", PreferToEachTheirOwn::default());
         insert_expr_rule!(ProgressiveNeedsBe);
         insert_expr_rule!(PronounAre);
         insert_struct_rule!(PronounContraction);
@@ -1046,6 +1044,12 @@ impl LintGroup {
 
         // Uses Sentence rather than Chunk
         out.add("PluralDecades", PluralDecades::default());
+
+        // Uses Sentence rather than Chunk
+        out.add_sentence_expr_linter("PreferEachToTheirOwn", PreferEachToTheirOwn::default());
+
+        // Uses Sentence rather than Chunk
+        out.add_sentence_expr_linter("PreferToEachTheirOwn", PreferToEachTheirOwn::default());
 
         // Uses Dictionary and Dialect
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
