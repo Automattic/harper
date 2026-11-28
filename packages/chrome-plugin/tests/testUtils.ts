@@ -115,6 +115,11 @@ export async function replaceEditorContent(editorEl: Locator, text: string, soft
 	await editorEl.focus();
 	await editorEl.press('ControlOrMeta+a');
 	await editorEl.press('Backspace');
+	// Lexical reads its selection from `selectionchange`, which fires after the deletion. Text inserted
+	// before then goes into the deleted node and is lost, so let a couple of frames pass first.
+	await editorEl.evaluate(
+		() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))),
+	);
 
 	const lines = text.split('\n');
 	const breakKey = softBreaks ? 'Shift+Enter' : 'Enter';
@@ -569,7 +574,7 @@ export async function testMultipleSuggestionsAndUndo(
 
 		// Undo
 		await expect(editor).toBeFocused();
-		await editor.press('Control+z');
+		await editor.press('ControlOrMeta+z');
 		await assertEditorContains(editor, 'The second tset');
 	});
 }
