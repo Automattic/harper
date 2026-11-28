@@ -7,9 +7,10 @@ expr verb [VERB, AUX, (ADV VERB), (ADV AUX)]
 expr afterAdjective [(![DET, ADV] ADJ no to @verb), (!DET ADV ADJ no to @verb)]
 # An "-ing" form after "no to" is a noun use ("say no to adding"); a dropped verb
 # ("I prefer no to.") is a typo.
-# Weir cannot anchor the start of a sentence, so a typo there is missed
-# ("No to be rude, but..."), except "no to mention".
-expr main [<([(![@guard, ADJ] no to @verb), @afterAdjective, (no to mention)]), (no to !PROG), (no to)>, <([(![@guard, ADJ] no to.), (![@guard, ADJ] no to,), (![@guard, ADJ] no to?)]), (no to)>]
+# At the start of a sentence, "No to" before a disclaimer verb is a typo ("No to be rude,
+# but..."). Before other verbs it's usually a slogan ("No to war"), so those are left alone.
+expr disclaimer [(be ![fair, clear, honest, frank, sure]), (ADV VERB), (say [PRON, DET, ADV, that]), (discuss [PRON, DET, NOUN]), seem, offend, confuse, belittle, disagree, dissuade, nitpick, brag, detract, diminish, downplay, criticize, complain, derail, hijack, interrupt, digress, overstate, oversimplify, generalize]
+expr main [<([(![@guard, ADJ] no to @verb), @afterAdjective, (no to mention), (START no to @disclaimer)]), (no to !PROG), (no to)>, <([(![@guard, ADJ] no to.), (![@guard, ADJ] no to,), (![@guard, ADJ] no to?)]), (no to)>]
 
 let message "Did you mean `not to`?"
 let description "Corrects `no to` to `not to` before a verb, as in `try no to laugh`."
@@ -25,6 +26,14 @@ test "Try no to just copy the code." "Try not to just copy the code."
 test "Try no to ever be late." "Try not to ever be late."
 test "It is fine, no to worry." "It is fine, not to worry."
 test "No to mention the cost." "Not to mention the cost."
+
+# At the start of a sentence, from Hacker News comments (items 28458240, 28935713, 47855985,
+# 50343442, 47711756)
+test "No to be flippant." "Not to be flippant."
+test "No to be critical of America." "Not to be critical of America."
+test "No to disagree with you here because I wholly support this position." "Not to disagree with you here because I wholly support this position."
+test "No to actually manipulate figures for me or fill something." "Not to actually manipulate figures for me or fill something."
+test "No to say that that flips the calculation (I don't have the answer), but it does leave a lot of power out." "Not to say that that flips the calculation (I don't have the answer), but it does leave a lot of power out."
 
 # From a Hacker News comment (item 33894399)
 test "you remove/hide them in order no to have issues if police officer stop you" "you remove/hide them in order not to have issues if police officer stop you"
@@ -84,3 +93,13 @@ allows "It was a hard no to change."
 allows "It was a really strong no to change."
 allows "They told them no to training on that data."
 allows "The startup had no to little funding."
+
+# Slogans and answers at the start of a sentence, from Hacker News comments (items 47281960,
+# 47046251, 47393737, 49386852, 32976780, 32925324, 15317272)
+allows "'No to War.' That's all."
+allows "No to proprietary connectors."
+allows "No to be fair I do see what he's saying."
+allows "No to sorting tables where all the data is already available locally."
+allows "No to \"counter offers\", unless they are golden handcuffs."
+allows "No to breaking changes."
+allows "No to two clipboards on the same system."

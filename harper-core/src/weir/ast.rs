@@ -3,7 +3,7 @@ use hashbrown::HashMap;
 use is_macro::Is;
 use itertools::Itertools;
 
-use crate::expr::{Expr, Filter, LongestMatchOf, SequenceExpr, UnlessStep};
+use crate::expr::{AnchorEnd, AnchorStart, Expr, Filter, LongestMatchOf, SequenceExpr, UnlessStep};
 use crate::patterns::{AnyPattern, DerivedFrom, UPOSSet, WhitespacePattern, Word};
 use crate::{CharString, CharStringExt, Lrc, Punctuation, Token};
 
@@ -87,6 +87,11 @@ pub enum AstExprNode {
     Progressive,
     /// A numeric token, matched using [`crate::TokenKind::is_number`] rather than a UPOS tag.
     Number,
+    /// The start of the matched scope (the chunk or the sentence): its first word.
+    Start,
+    /// The end of the matched scope: it matches at the scope's last token, such as a closing
+    /// period, or past it.
+    End,
     UPOSSet(Vec<UPOS>),
     Word(CharString),
     DerivativeOf(CharString),
@@ -113,6 +118,8 @@ impl AstExprNode {
                 tok.kind.is_verb_progressive_form()
             })),
             AstExprNode::Number => Ok(Box::new(|tok: &Token, _: &[char]| tok.kind.is_number())),
+            AstExprNode::Start => Ok(Box::new(AnchorStart)),
+            AstExprNode::End => Ok(Box::new(AnchorEnd)),
             AstExprNode::UPOSSet(upos) => Ok(Box::new(UPOSSet::new(upos))),
             AstExprNode::Whitespace => Ok(Box::new(WhitespacePattern)),
             AstExprNode::Word(word) => Ok(Box::new(Word::from_chars(word))),

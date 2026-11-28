@@ -24,6 +24,10 @@ pub enum Error {
     ExpectedDifferentVariableType,
     #[error("Unable to resolve expression reference {0}")]
     UnableToResolveExpr(String),
+    #[error(
+        "{0} can't go there. START must come first in a sequence, END last, and neither can be negated."
+    )]
+    MisplacedAnchor(&'static str),
     #[error("Line {line}, column {column}: {error}")]
     Located {
         line: usize,
