@@ -53,27 +53,22 @@ fn position_to_index(source: &[char], position: Position) -> usize {
     };
 
     // Get a pointer to the char we seek.
-    // Check if specified character index is within bounds of the target line.
-    let target_char_pointer = if position.character
-        < target_line
-            .len()
-            .try_into()
-            .expect("target_line.len() can fit in u32")
-    {
-        // Character index is inside the bounds of the specified line.
-        // Calculate pointer to the char we're looking for.
-        target_line
-            .as_ptr()
-            .wrapping_add(position.character as usize)
-    } else {
+    // `position.character` counts UTF-16 code units (the LSP default encoding), not chars, so
+    // walk the line until we reach the char that contains that code unit.
+    let mut utf16_offset = 0;
+    let target_char_pointer = target_line
+        .iter()
+        .find(|c| {
+            utf16_offset += c.len_utf16();
+            utf16_offset > position.character as usize
+        })
         // Character index is outside the bounds of the specified line.
         // Get pointer to the last character of the line.
-        target_line.last().expect("line cannot be empty")
-    };
+        .unwrap_or_else(|| target_line.last().expect("line cannot be empty"));
 
     // Convert the char pointer to its index within `source`.
     // Note: this could be simplified with `offset_from`, but that would require `unsafe`.
-    (target_char_pointer as usize - source.as_ptr() as usize) / size_of::<char>()
+    (target_char_pointer as *const char as usize - source.as_ptr() as usize) / size_of::<char>()
 }
 
 pub fn range_to_span(source: &[char], range: Range) -> Span<char> {
@@ -87,7 +82,7 @@ pub fn range_to_span(source: &[char], range: Range) -> Span<char> {
 mod tests {
     use tower_lsp_server::lsp_types::{Position, Range};
 
-    use super::{index_to_position, position_to_index, range_to_span};
+    use super::{index_to_position, position_to_index, range_to_span, span_to_range};
 
     #[test]
     fn first_line_correct() {
@@ -242,6 +237,58 @@ mod tests {
 
         let out_index = position_to_index(&source, position);
         assert_eq!(out_index, 2);
+    }
+
+    /// Ensures `position_to_index` reads `Position::character` as UTF-16 code units, like
+    /// `index_to_position` writes it, on a line with characters outside the BMP.
+    /// Related to: https://github.com/Automattic/harper/issues/4992
+    #[test]
+    fn pos_to_index_counts_utf16_code_units() {
+        let source: Vec<_> = "🎉🎉🎉🎉 Look at teh launch.".chars().collect();
+        let range = Range {
+            start: Position {
+                line: 0,
+                character: 17,
+            },
+            end: Position {
+                line: 0,
+                character: 20,
+            },
+        };
+
+        let span = range_to_span(&source, range);
+        assert_eq!(span.start, 13);
+        assert_eq!(span.end, 16);
+        assert_eq!(span.get_content_string(&source), "teh");
+        assert_eq!(span_to_range(&source, span), range);
+    }
+
+    /// Ensures `position_to_index` and `index_to_position` round-trip on every char of a
+    /// multi-line source with characters outside the BMP.
+    #[test]
+    fn reversible_position_conv_utf16() {
+        let source: Vec<_> = "a🎉b\n𝄞 c\n\nd🎉".chars().collect();
+
+        for i in 0..source.len() {
+            let p = index_to_position(&source, i);
+            assert_eq!(
+                position_to_index(&source, p),
+                i,
+                "index {i}, position {p:?}"
+            );
+        }
+    }
+
+    /// Ensures a position in the middle of a surrogate pair resolves to the char it is part of.
+    #[test]
+    fn pos_to_index_inside_surrogate_pair() {
+        let source: Vec<_> = "a🎉b".chars().collect();
+        let position = Position {
+            line: 0,
+            character: 2,
+        };
+
+        assert_eq!(position_to_index(&source, position), 1);
     }
 
     /// Ensures `position_to_index` gives the last character of the line when indexing an out of
