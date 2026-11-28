@@ -1,0 +1,26 @@
+expr main <(top dollars), dollars>
+let message "Use the singular 'top dollar' for the idiom meaning the highest price or pay."
+let description "Corrects `top dollars` to the idiomatic `top dollar`."
+let kind "Redundancy"
+let becomes "dollar"
+
+# YouTube (where I first spotted this)
+test "They charge top dollars for their services for what?" "They charge top dollar for their services for what?"
+
+# GitHub
+test "If it was that easy those tools you mention would not be getting top dollars just to have those features working the way they do." "If it was that easy those tools you mention would not be getting top dollar just to have those features working the way they do."
+
+# Hacker News
+test "A lot of devs really feel open source software can be written for free while they themselves need to be paid top dollars." "A lot of devs really feel open source software can be written for free while they themselves need to be paid top dollar."
+
+# Stack Overflow
+test "I love my iMac and do not mind paying top dollars for it." "I love my iMac and do not mind paying top dollar for it."
+
+# Slashdot
+test "They pay top dollars and change core algorithms on the fly as each millisecond costs money" "They pay top dollar and change core algorithms on the fly as each millisecond costs money"
+
+# Medium
+test "15 Top Online Hustles That Can Make You Top Dollars in 2023" "15 Top Online Hustles That Can Make You Top Dollar in 2023"
+
+# Reddit
+test "Conventional dating is a huge waste of time and money for people who earn top dollars." "Conventional dating is a huge waste of time and money for people who earn top dollar."
