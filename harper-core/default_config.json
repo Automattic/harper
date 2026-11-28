@@ -5341,9 +5341,16 @@
 						},
 						{
 							"Bool": {
+								"name": "InextricableFrom",
+								"state": true,
+								"label": "Inextricable from"
+							}
+						},
+						{
+							"Bool": {
 								"name": "InFavourOfDoing",
 								"state": true,
-								"label": "In Favour Of Doing"
+								"label": "In Favour of Doing"
 							}
 						},
 						{

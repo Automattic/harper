@@ -1,0 +1,10 @@
+expr main <(inextricable with), with>
+let message "Did you mean `inextricably from`?"
+let description "Corrects `inextricable with` to `inextricably from`."
+let kind "Usage"
+let becomes "from"
+
+test "Today, the word camp is inextricable with gay culture." "Today, the word camp is inextricable from gay culture."
+test "I think looks and activities is inextricable with \"bro\"-ness." "I think looks and activities is inextricable from \"bro\"-ness."
+test "But the distribution of updates for IE is also inextricable with the updates of Microsoft Windows." "But the distribution of updates for IE is also inextricable from the updates of Microsoft Windows."
+test "Math is inextricable with our modern world and it's incredibly important that it be taught to students." "Math is inextricable from our modern world and it's incredibly important that it be taught to students."
