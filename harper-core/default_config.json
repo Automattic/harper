@@ -4023,6 +4023,13 @@
 						},
 						{
 							"Bool": {
+								"name": "OldFashioned",
+								"state": true,
+								"label": "Old Fashioned"
+							}
+						},
+						{
+							"Bool": {
 								"name": "OneAndTheSame",
 								"state": true,
 								"label": "One And The Same"
