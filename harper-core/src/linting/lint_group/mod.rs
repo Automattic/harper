@@ -163,6 +163,7 @@ use super::in_stock::InStock;
 use super::in_time_from_now::InTimeFromNow;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
 use super::interested_in::InterestedIn;
+use super::ise_ize::{PreferIse, PreferIze};
 use super::it_are_the_one::ItAreTheOne;
 use super::it_looks_like_that::ItLooksLikeThat;
 use super::its_contraction::ItsContraction;
@@ -902,6 +903,8 @@ impl LintGroup {
         insert_struct_rule!(PreferPled);
         insert_struct_rule!(PreferSneaked);
         insert_struct_rule!(PreferSnuck);
+        insert_struct_rule_with_dialect!(PreferIse);
+        insert_struct_rule_with_dialect!(PreferIze);
         insert_expr_rule!(ProgressiveNeedsBe);
         insert_expr_rule!(PronounAre);
         insert_struct_rule!(PronounContraction);

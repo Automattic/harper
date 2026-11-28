@@ -114,7 +114,7 @@ pub fn lint_group() -> LintGroup {
 }
 
 /// Matches every proper noun in `proper_noun_rules.json`, in any capitalization.
-pub(super) fn proper_nouns_expr() -> LongestMatchOf {
+pub fn proper_nouns_expr() -> LongestMatchOf {
     let rules: HashMap<String, RuleEntry> =
         serde_json::from_str(include_str!("../../proper_noun_rules.json")).unwrap();
 

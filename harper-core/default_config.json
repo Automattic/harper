@@ -6407,6 +6407,13 @@
 							}
 						},
 						{
+							"OneOfMany": {
+								"names": ["PreferIse", "PreferIze"],
+								"name": "PreferIse",
+								"labels": ["Prefer ‘-ise’", "Prefer ‘-ize’ (Oxford spelling)"]
+							}
+						},
+						{
 							"Bool": {
 								"name": "Regionalisms",
 								"state": true,

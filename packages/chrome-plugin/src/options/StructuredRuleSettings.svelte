@@ -37,6 +37,7 @@ type OneOfManyRenderNode = {
 	kind: 'oneOfMany';
 	name: string;
 	title: string;
+	description: string;
 	options: { value: string; label: string }[];
 	value: string;
 	setting: StructuredOneOfManySetting;
@@ -235,7 +236,13 @@ function buildRenderNodes(
 				continue;
 			}
 
-			const name = setting.OneOfMany.name ?? setting.OneOfMany.labels?.join(' / ') ?? 'Choose one';
+			// Prefer the readable labels, as a `PreferIse` heading is hard to read.
+			const name =
+				setting.OneOfMany.labels?.join(' / ') ??
+				(setting.OneOfMany.name ? startCase(setting.OneOfMany.name) : 'Choose one');
+			const value = oneOfManyValue(setting.OneOfMany);
+			// Describe the chosen rule, or the first one while the setting is on its default.
+			const describedRule = value === 'default' ? setting.OneOfMany.names[0] : value;
 			out.push({
 				kind: 'oneOfMany',
 				name,
@@ -247,7 +254,8 @@ function buildRenderNodes(
 						label: setting.OneOfMany.labels?.[index] ?? value,
 					})),
 				],
-				value: oneOfManyValue(setting.OneOfMany),
+				description: lintDescriptions[describedRule] ?? '',
+				value,
 				setting: setting.OneOfMany,
 				indent: currentIndent,
 			});
@@ -433,14 +441,17 @@ const dividerClass = 'border-t border-gray-100 pt-3 dark:border-white/10!';
             </div>
         {:else if node.kind === 'oneOfMany'}
             {@const labelId = idFor('choice-label', node.name)}
+            {@const descId = idFor('choice-desc', node.name)}
             <div class="flex items-start justify-between gap-4 {dividerClass}" style={rowStyle(node.indent)}>
                 <div class="min-w-0 space-y-0.5">
                     <h3 id={labelId} class="text-sm font-bold text-gray-900 dark:text-white">{node.name}</h3>
+                    <p id={descId} class="text-xs text-gray-600 dark:text-[#d1d5db]!">{@html node.description}</p>
                 </div>
                 <Select
                     size="sm"
                     title={node.title}
                     aria-labelledby={labelId}
+                    aria-describedby={descId}
                     value={node.value}
                     class={selectClass}
                     onchange={(event: Event) => updateOneOfMany(node.setting, (event.target as HTMLSelectElement).value)}
