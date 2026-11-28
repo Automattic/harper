@@ -1,0 +1,64 @@
+---
+title: What Is Harper?
+description: Learn how Harper checks English grammar, how releases are versioned, and which projects use Harper.
+---
+
+# What Is Harper?
+
+Harper is a grammar checker designed to run anywhere there is text (so really, anywhere).
+Most Harper users are catching their mistakes in [Neovim](./integrations/neovim.md), [Obsidian](./integrations/obsidian.md), or [Visual Studio Code](./integrations/visual-studio-code.md).
+
+```harper-editor
+You can try out a editor that uses
+Harper under the hood here.
+
+It is rnning in your browser right now. 
+
+No server required!
+```
+
+## How Does It Work?
+
+Harper takes advantage of decades of natural language research to analyze exactly how your words come together.
+If something is off, Harper lets you know.
+
+In a way, Harper is an error-tolerant parser for English.
+
+## Versioning Policy
+
+Harper uses [semantic versioning](https://semver.org/).
+
+All components and integrations of Harper stay in version sync, including but not limited to:
+
+- `harper.js`
+- `harper-core`
+- `harper-comments`
+- `harper-ls`
+- The Obsidian Plugin
+- The VS Code Plugin
+- The Chrome Extension
+
+That means that a change in `harper.js` can cause a release of the Obsidian plugin with a version bump, even if nothing has directly changed in the Obsidian plugin.
+We do this because we view Harper not as a disparate set of integrations, but as a holistic system accessible in a wide variety of places.
+
+For the time being, we only actively develop and maintain the latest version of Harper (seen in the `master` branch on GitHub). 
+If long-term support for older versions is desired, please let us know and we will do our best to accommodate you.
+
+## Projects Using Harper
+
+Some of the open-source projects using Harper include:
+
+- [Gherlint](https://github.com/gherlint/gherlint)
+- [walletbeat](https://github.com/walletbeat/walletbeat)
+- [Stencila](https://github.com/stencila/stencila)
+- [fixmyspelling](https://github.com/samedwardes/fixmyspelling)
+- [Tally](https://tally.johng.io)
+- [`local-harper`](https://kraxen72.github.io/local-harper/)
+- [QOwnNotes](https://www.qownnotes.org/)
+- [Grammate](https://grammate.goodishlab.com/)
+- [PhrAIse](https://github.com/hqrrr/Phraise)
+- [inline-scribe](https://github.com/mk668a/inline-scribe)
+
+Are you using Harper in your open source work and want to be included in this list?
+If so, please open a PR. 
+We would be happy to add it.
