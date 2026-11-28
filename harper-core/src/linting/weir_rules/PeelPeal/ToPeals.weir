@@ -1,0 +1,15 @@
+expr sound [bells, laughter, thunder, joy]
+expr main <(peels of @sound), peels>
+
+let message "Did you mean `peals`? A `peal` is a loud ringing sound or burst of thunder or laughter."
+let description "Corrects `peels` to `peals` in phrases like `peels of laughter` or `peels of thunder`."
+let kind "WordChoice"
+let becomes "peals"
+let strategy "MatchCase"
+
+test "Peels of laughter filled the classroom." "Peals of laughter filled the classroom."
+test "Loud peels of thunder rattled the windows." "Loud peals of thunder rattled the windows."
+test "The peels of bells announced the celebration." "The peals of bells announced the celebration."
+
+allows "Orange peels were left on the counter."
+allows "Save the potato peels for the compost."

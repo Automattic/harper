@@ -1,0 +1,27 @@
+expr direction [off, back, away, open]
+expr item [sticker, stickers, label, labels, tape, skin, skins, layer, layers, onion, onions, banana, bananas, orange, oranges, apple, apples, potato, potatoes, fruit, fruits, decal, decals, wrapper, wrappers]
+expr determiner [the, a, an, their, his, her, its, my, our, your]
+expr main [
+    <(pealed @direction), pealed>,
+    <(pealed @determiner @item), pealed>,
+    <(pealed @item), pealed>,
+    <([keep, keeping, kept] [your, ones, their, his, her, its, my, our] eyes pealed), pealed>,
+    <(eyes pealed), pealed>
+]
+
+let message "Did you mean `peeled`? To `peel` is to remove a covering or skin; a `peal` is a loud ringing sound."
+let description "Corrects `pealed` to `peeled` when referring to stripping off a layer or keeping eyes peeled."
+let kind "WordChoice"
+let becomes "peeled"
+let strategy "MatchCase"
+
+test "He pealed off the sticker carefully." "He peeled off the sticker carefully."
+test "She pealed back the protective cover." "She peeled back the protective cover."
+test "He pealed the sticker of the macbook." "He peeled the sticker of the macbook."
+test "I pealed the orange for breakfast." "I peeled the orange for breakfast."
+test "Keep your eyes pealed for discounts." "Keep your eyes peeled for discounts."
+test "With eyes pealed, they watched the horizon." "With eyes peeled, they watched the horizon."
+
+allows "The church bells pealed across the valley."
+allows "Thunder pealed in the distance."
+allows "Laughter pealed through the hall."

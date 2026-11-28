@@ -1,0 +1,23 @@
+expr direction [off, back, away, open]
+expr item [sticker, stickers, label, labels, tape, skin, skins, layer, layers, onion, onions, banana, bananas, orange, oranges, apple, apples, potato, potatoes, fruit, fruits, decal, decals, wrapper, wrappers]
+expr determiner [the, a, an, their, his, her, its, my, our, your]
+expr main [
+    <(peal @direction), peal>,
+    <(peal @determiner @item), peal>,
+    <(peal @item), peal>,
+    <([keep, keeping] [your, ones, their, his, her, its, my, our] eyes peal), peal>
+]
+
+let message "Did you mean `peel`? To `peel` is to remove a covering or skin; a `peal` is a loud ringing sound."
+let description "Corrects `peal` to `peel` when referring to removing a covering, label, or skin."
+let kind "WordChoice"
+let becomes "peel"
+let strategy "MatchCase"
+
+test "Carefully peal off the label." "Carefully peel off the label."
+test "You can peal the sticker now." "You can peel the sticker now."
+test "Peal back the corner to open." "Peel back the corner to open."
+test "Peal the orange before eating." "Peel the orange before eating."
+
+allows "Hear the bells peal on Sunday morning."
+allows "Let the bells peal."
