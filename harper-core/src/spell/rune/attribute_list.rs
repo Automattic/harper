@@ -61,7 +61,7 @@ impl AttributeList {
         let mut base_metadata = DictWordMetadata::default();
 
         // Store metadata that should only be applied if certain conditions are met
-        let orth_flags = OrthFlags::from_letters(&annotated_word.letters);
+        let orth_flags = OrthFlags::from_letters(annotated_word.letters.iter().copied());
         base_metadata.orth_info = orth_flags;
 
         let annotated_word_id = CanonicalWordId::from_word_chars(&annotated_word.letters);
