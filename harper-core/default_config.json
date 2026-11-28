@@ -6251,6 +6251,13 @@
 						},
 						{
 							"Bool": {
+								"name": "TopDollar",
+								"state": true,
+								"label": "Top Dollar"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ToTheMannerBorn",
 								"state": true,
 								"label": "To The Manner Born"
