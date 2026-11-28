@@ -1,0 +1,30 @@
+% Excerpt from arXiv:2404.19737, "Better & Faster Large Language Models via Multi-token Prediction", CC BY 4.0.
+% https://arxiv.org/abs/2404.19737
+\documentclass{article}
+
+\begin{document}
+
+\subsection{Searching for the optimal $n$}
+\label{sect:optimal-future}
+
+To better understand the effect of the number of predicted tokens, we did comprehensive ablations on models of scale 7B trained on 200B tokens of code. We try $n=1,2,4,6$ and $8$ in this setting. Results in table \ref{tab:future_tokens_results} show that training with 4-future tokens outperforms all the other models consistently throughout HumanEval and MBPP for pass at 1, 10 and 100 metrics: +3.8\%, +2.1\% and +3.2\% for MBPP and +1.2\%, +3.7\% and +4.1\% for HumanEval. Interestingly, for APPS/Intro, $n=6$ takes the lead with +0.7\%, +3.0\% and +5.3\%. It is very likely that the optimal window size depends on input data distribution. As for the byte level models the optimal window size is more consistent (8 bytes) across these benchmarks. 
+
+
+\begin{figure}[t!]
+    \centering
+    \includegraphics[width=0.8\linewidth]{img/induction.pdf}
+    \caption{\textbf{Induction capability of $n$-token prediction models.} 
+     Shown is accuracy on the second token of two token names that have already been mentioned previously. Shown are numbers for models trained with a next-token and a 2-token prediction loss, respectively, with two independent runs each. The lines denote per-loss averages. For small model sizes, next-token prediction models learn practically no or significantly worse induction capability than 2-token prediction models, with their disadvantage disappearing at the size of 100M nonembedding parameters.
+}
+
+    \label{fig:induction_size}
+\end{figure}
+
+\begin{figure}[t!]
+    \centering
+    \includegraphics[width=\linewidth]{img/backward_order.png}
+    \caption{\textbf{Order of the forward/backward in an $n$-token prediction model with $n = 2$ heads.} By performing the forward/backward on the heads in sequential order, we avoid materializing all unembedding layer gradients in memory simultaneously and reduce peak GPU memory usage.}
+    \label{fig:backward}
+\end{figure}
+
+\end{document}

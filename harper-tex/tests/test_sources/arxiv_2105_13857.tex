@@ -1,0 +1,20 @@
+% Excerpt from arXiv:2105.13857, "Learning Approximate and Exact Numeral Systems via Reinforcement Learning", CC BY 4.0.
+% https://arxiv.org/abs/2105.13857
+\documentclass{article}
+
+\begin{document}
+
+One round of the signaling game is visualized in Figure \ref{fig:signaling_game} and one could interpret it as follows: the agents are playing a \emph{cooperative game} which involves solving a common task in which success depends on how well the listener reconstructed the number the sender had in mind. The reward functions considered were chosen in order to model different pressure for how precise the listener's reconstruction has to be. % and in Figure \ref{fig:reward_functions} we illustrate of the reward functions behave w.r.t to how close the listener's reconstruction is to the number the sender had in mind. 
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.45\textwidth]{figures/models/signaling_game.png}
+\caption{Illustration of one round of our Lewis signaling game, which will be formally introduced in later sections. The sender is given a number $n$ and samples a model $f_S$ from $F_S$ using dropout and conveys the word $w$ giving highest reward according to $f_S$. The listener proceeds in similar fashion, given $w$ it samples a model $f_L$ from $F_L$ and guesses the number $\hat{n}$ that yields most reward according to $f_L$. A shared reward is given to both agent based on how close $\hat{n}$ is to $n$.}\label{fig:signaling_game} 
+\end{figure}
+
+\begin{table}
+\centering
+\caption{The Weber fractions corresponding the Gaussian model that on average fits the listener distribution best along with the average MSE $\pm 1$ standard deviation for that Weber fraction, averaged over all sender-listener pairs trained using the particular reward function. }\label{tab:MSE}
+\end{table}
+
+\end{document}
