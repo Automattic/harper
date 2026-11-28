@@ -1,0 +1,34 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{listings}
+
+\begin{document}
+
+\section{Formal Grammars}
+
+A formal grammar consists of variables, terminal symbols, and production rules.
+We define a context-free grammar as a tuple with a set $V$ of variables and a set $\Sigma$ of terminals.
+Each production rule replaces a variable with a string of symbols.
+
+The derivation of a sentence yields valid strings:
+\begin{equation}
+    S \implies^* w.
+\end{equation}
+
+The yield probability of deriving a sentence is well defined:
+\begin{align*}
+    S \implies \alpha \implies^* w \quad \text{providng that } w \in L(G).
+\end{align*}
+
+In our parsing pipeline, we represent productions using the \verb|A -> B C| syntax or \lstinline{A -> 'token'} rules.
+A sample grammar rule file is specified in the following format:
+\begin{lstlisting}[language=caml]
+S -> NP VP
+NP -> Det N
+VP -> V NP
+\end{lstlisting}
+
+The parsing algorithm analyzes input tokens in $O(n^3)$ time complexity.
+The parser calculates the most probable derivation quiickly when the grammar is in Chomsky normal form.
+
+\end{document}
