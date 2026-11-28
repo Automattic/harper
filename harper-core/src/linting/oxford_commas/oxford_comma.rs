@@ -73,10 +73,25 @@ impl Linter for OxfordComma {
             let sentence = &sentence[skip..];
 
             for match_span in self.expr.iter_matches(sentence, document.get_source()) {
-                let lint = self.match_to_lint(
-                    &sentence[match_span.start..match_span.end],
-                    document.get_source(),
-                );
+                let matched = &sentence[match_span.start..match_span.end];
+                let mut prefix = sentence[..match_span.start]
+                    .iter()
+                    .filter(|t| !t.kind.is_whitespace());
+                // An imperative's object can look like the first item of a compound subject.
+                if prefix.next().is_some_and(|t| t.kind.is_verb_lemma())
+                    && prefix.all(|t| t.kind.is_determiner())
+                    && matched.iter_commas().count() == 1
+                    && matched
+                        .iter()
+                        .skip_while(|t| !t.kind.is_comma())
+                        .any(|t| t.kind.is_subject_pronoun() && !t.kind.is_object_pronoun())
+                    && sentence[match_span.end..]
+                        .first_non_whitespace()
+                        .is_some_and(|t| t.kind.is_verb())
+                {
+                    continue;
+                }
+                let lint = self.match_to_lint(matched, document.get_source());
                 lints.extend(lint);
             }
         }
@@ -94,6 +109,15 @@ mod tests {
     use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     use super::OxfordComma;
+
+    #[test]
+    fn allows_compound_subject_after_imperative() {
+        assert_lint_count(
+            "Make no mistake, he and I are done.",
+            OxfordComma::default(),
+            0,
+        );
+    }
 
     #[test]
     fn fruits() {
